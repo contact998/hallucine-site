@@ -1,64 +1,38 @@
-# Audit contenu Hallucine — Ce qui manque
+# Audit complet — Site actuel vs Site de référence
 
-## Page Accueil (Home.tsx)
-- [x] Hero avec titre, citation, CTA
-- [x] Section Produits (2 gammes écrans + tentes + mobilier)
-- [x] Section Technologie (comparatif poids, tissu airbag)
-- [x] Section Histoire (timeline résumée)
-- [x] Section Réalisations (galerie)
-- [x] Section Contact (formulaire 3 étapes)
-- [ ] Ajouter une section FAQ (questions fréquentes) — bon pour SEO
-- [ ] Ajouter une section "Cas d'usage" plus développée (festivals, corporate, mariage, sport, drive-in)
-- [ ] Enrichir les textes produits avec plus de détails techniques
+## ERREURS À CORRIGER
+- [ ] Home.tsx importe UseCasesSection et FaqSection — vérifier les imports
 
-## Page Écrans (Ecrans.tsx)
-- [x] Intro gamme étanche (2-8m)
-- [x] Intro gamme soufflerie (5-24m)
-- [x] Tableau comparatif étanche vs soufflerie
-- [ ] Ajouter les fiches techniques détaillées par taille (poids, dimensions pliées, surface de projection, ratio)
-- [ ] Ajouter une section "Comment choisir son écran" (guide d'achat)
-- [ ] Ajouter les accessoires inclus par écran (sac, pompe, haubans, piquets)
-- [ ] Ajouter une section FAQ spécifique écrans
+## PAGES MANQUANTES À CRÉER
+- [ ] /ecran-gonflable-geant — Écran soufflerie (specs + tarifs 9 tailles)
+- [ ] /ecran-gonflable-etanche — Écran étanche (specs + tarifs 8 tailles)
+- [ ] /ecran-economique — Écran économique (specs avec/sans souffleur)
+- [ ] /tentes-x — Tentes X (specs, personnalisation, accessoires)
+- [ ] /tentes-n — Tentes N (specs, personnalisation)
+- [ ] /tentes-v — Tentes V (specs, tailles 4x4 à 6x6)
+- [ ] /tentes-araignees — Tentes Araignées (specs, FAQ)
+- [ ] /arches-gonflables — Arches (tarifs 11 tailles + accessoires)
+- [ ] /accessoires — Casques, Transats, Transmetteur FM, Canapé, Cabine, Forfaits AV
+- [ ] /demande-de-prix — Formulaire gate + page tarifs
+- [ ] /galerie — Galerie photos
+- [ ] /a-propos — Histoire de Daniel (chapitres 1 et 2)
 
-## Page Tentes (Tentes.tsx)
-- [x] Hero + intro technologie étanche
-- [x] Features (légères, montage rapide, étanches, sans soufflerie)
-- [x] Galerie (3 photos)
-- [x] Liste avantages
-- [ ] Ajouter les modèles/tailles disponibles
-- [ ] Ajouter les cas d'utilisation détaillés
-- [ ] Ajouter les options de personnalisation (marquage, couleurs)
-- [ ] Ajouter une section FAQ spécifique tentes
+## PAGES EXISTANTES À METTRE À JOUR
+- [ ] Home — chiffres clés, équipe, "Pourquoi Choisir"
+- [ ] Ecrans → page hub vers 3 sous-pages
+- [ ] Tentes → page hub vers 4 types + arches + mobilier
+- [ ] Mobilier — données exactes référence
+- [ ] Histoire → À propos avec texte Daniel
+- [ ] Contact — Wechat, Vente/Location, multi-sélection produits
 
-## Page Mobilier (Mobilier.tsx)
-- [x] Hero + intro
-- [x] Features
-- [x] Galerie produits (4 items)
-- [x] Cas d'utilisation
-- [ ] Détailler chaque type de mobilier (canapés, fauteuils, bars, comptoirs)
-- [ ] Ajouter les dimensions et capacités
-- [ ] Ajouter les options de personnalisation
-- [ ] Ajouter une section accessoires de transport (chariots, flycases) plus détaillée
+## NAVIGATION
+- [ ] Top bar (email, tel, réseaux sociaux)
+- [ ] Dropdowns (Ecran, Tente Arche & Meuble, Galerie, Plus)
 
-## Page Histoire (Histoire.tsx)
-- [x] Timeline complète (10 chapitres de 1995 à aujourd'hui)
-- [x] Section valeurs (Légèreté, Fiabilité, Innovation)
-- [ ] Ajouter une section "L'équipe" ou "Le fondateur"
-- [ ] Ajouter les chiffres clés (nombre de pays, nombre d'écrans vendus, etc.)
-- [ ] Enrichir la section valeurs avec plus de profondeur
+## FOOTER
+- [ ] 3 colonnes : Menu, Contact complet, Newsletter
 
-## Page Contact (Contact.tsx)
-- [x] Formulaire 3 étapes intelligent
-- [x] Infos de contact (email, tel, adresse)
-- [ ] Ajouter les horaires de réponse
-- [ ] Ajouter une mention RGPD / confidentialité
-- [ ] Ajouter un texte de réassurance ("réponse sous 24h", "devis gratuit")
-
-## SEO Global
-- [ ] Schema.org Organization sur toutes les pages
-- [ ] Schema.org Product sur la page Écrans
-- [ ] Schema.org FAQPage sur les pages avec FAQ
-- [ ] Meta descriptions uniques par page
-- [ ] Balises title uniques par page
-- [ ] Sitemap.xml
-- [ ] robots.txt
+## TARIFS À INTÉGRER
+- [ ] Écrans soufflerie (12554€ à 48258€)
+- [ ] Écrans étanches (3900€ à 15200€)
+- [ ] Arches (756€ à 3717€)

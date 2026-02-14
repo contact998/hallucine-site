@@ -96,7 +96,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <div className="text-white font-medium text-sm">Téléphone</div>
-                    <div className="text-white/50 text-sm">+33 (0)6 XX XX XX XX</div>
+                    <div className="text-white/50 text-sm">+33 6 80 14 76 94</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -105,7 +105,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <div className="text-white font-medium text-sm">Siège</div>
-                    <div className="text-white/50 text-sm">France — Fabrication Chine (Dongguan)</div>
+                    <div className="text-white/50 text-sm">Shenzhen, Chine — Fabrication : Dongguan, Chine</div>
                   </div>
                 </div>
               </div>
