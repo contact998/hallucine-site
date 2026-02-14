@@ -30,33 +30,33 @@ function Router() {
     <Switch>
       <Route path={"/"} component={Home} />
       {/* Écrans */}
-      <Route path={"/ecrans"} component={Ecrans} />
-      <Route path={"/ecran-gonflable-geant"} component={EcranGeant} />
-      <Route path={"/ecran-gonflable-etanche"} component={EcranEtanche} />
-      <Route path={"/ecran-economique"} component={EcranEconomique} />
+      <Route path={"/ecran-gonflable"} component={Ecrans} />
+      <Route path={"/ecran-gonflable-geant-soufflerie"} component={EcranGeant} />
+      <Route path={"/ecran-gonflable-etanche-air"} component={EcranEtanche} />
+      <Route path={"/ecran-gonflable-economique"} component={EcranEconomique} />
       {/* Tentes */}
-      <Route path={"/tentes"} component={Tentes} />
-      <Route path={"/tentes-x"} component={TentesX} />
-      <Route path={"/tentes-n"} component={TentesN} />
-      <Route path={"/tentes-v"} component={TentesV} />
-      <Route path={"/tentes-araignees"} component={TentesAraignees} />
+      <Route path={"/tente-gonflable"} component={Tentes} />
+      <Route path={"/tente-gonflable-x"} component={TentesX} />
+      <Route path={"/tente-gonflable-n"} component={TentesN} />
+      <Route path={"/tente-gonflable-v"} component={TentesV} />
+      <Route path={"/tente-gonflable-araignee"} component={TentesAraignees} />
       {/* Arches */}
-      <Route path={"/arches-gonflables"} component={ArchesGonflables} />
+      <Route path={"/arche-gonflable"} component={ArchesGonflables} />
       {/* Mobilier */}
-      <Route path={"/mobilier"} component={Mobilier} />
+      <Route path={"/mobilier-gonflable"} component={Mobilier} />
       {/* Accessoires */}
-      <Route path={"/accessoires"} component={Accessoires} />
+      <Route path={"/accessoire-cinema-plein-air"} component={Accessoires} />
       {/* Galerie */}
-      <Route path={"/galerie"} component={Galerie} />
+      <Route path={"/galerie-evenements"} component={Galerie} />
       {/* Contact */}
-      <Route path={"/contact"} component={Contact} />
+      <Route path={"/contactez-nous"} component={Contact} />
       {/* Plus */}
-      <Route path={"/a-propos"} component={APropos} />
-      <Route path={"/notre-histoire"} component={Histoire} />
-      <Route path={"/demande-de-prix"} component={DemandePrix} />
+      <Route path={"/a-propos-hallucine"} component={APropos} />
+      <Route path={"/histoire-hallucine"} component={Histoire} />
+      <Route path={"/tarifs-ecran-gonflable"} component={DemandePrix} />
       {/* Légal */}
       <Route path={"/mentions-legales"} component={MentionsLegales} />
-      <Route path={"/confidentialite"} component={Confidentialite} />
+      <Route path={"/politique-confidentialite"} component={Confidentialite} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>

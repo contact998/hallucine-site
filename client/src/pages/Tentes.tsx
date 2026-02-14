@@ -11,32 +11,32 @@ const categories = [
   {
     title: "Tentes X",
     desc: "Tentes gonflables en forme de X. Design unique, installation rapide, personnalisation complète. Disponibles de 3m à 8m.",
-    href: "/tentes-x",
+    href: "/tente-gonflable-x",
   },
   {
     title: "Tentes N",
     desc: "Tentes gonflables en forme de N. Structure robuste et élégante pour événements professionnels. Plusieurs tailles disponibles.",
-    href: "/tentes-n",
+    href: "/tente-gonflable-n",
   },
   {
     title: "Tentes V",
     desc: "Tentes gonflables en forme de V. Élégance et praticité combinées pour vos événements en plein air.",
-    href: "/tentes-v",
+    href: "/tente-gonflable-v",
   },
   {
     title: "Tentes Araignées",
     desc: "Tentes araignées gonflables avec pieds gonflables pour une stabilité exceptionnelle. De 4m à 10m de diamètre.",
-    href: "/tentes-araignees",
+    href: "/tente-gonflable-araignee",
   },
   {
     title: "Arches Gonflables",
     desc: "Arches gonflables personnalisables de 4m à 12m de large. Étanches — un seul gonflage suffit. Idéales pour événements sportifs et promotionnels.",
-    href: "/arches-gonflables",
+    href: "/arche-gonflable",
   },
   {
     title: "Mobilier Gonflable",
     desc: "Canapés, fauteuils, bars et comptoirs gonflables. Technologie étanche, design élégant, personnalisation possible.",
-    href: "/mobilier",
+    href: "/mobilier-gonflable",
   },
 ];
 
@@ -113,10 +113,10 @@ export default function Tentes() {
             la plus adaptée à votre événement.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contact" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Nous Contacter
             </Link>
-            <Link href="/demande-de-prix" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href="/tarifs-ecran-gonflable" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               Demande de prix
             </Link>
           </div>

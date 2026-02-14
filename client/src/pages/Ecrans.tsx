@@ -13,21 +13,21 @@ const gammes = [
   {
     title: "Écran Gonflable Géant (Soufflerie)",
     desc: "De 8m à 24m de large. Utilise un souffleur permanent pour maintenir la structure. Tissu polyamide d'airbag automobile — jusqu'à 3× plus léger que la concurrence. Idéal pour les grands événements, festivals, drive-in.",
-    href: "/ecran-gonflable-geant",
+    href: "/ecran-gonflable-geant-soufflerie",
     highlight: "8m à 24m — Le plus grand écran gonflable au monde",
     prix: "De 12 554 € à 48 258 € HT",
   },
   {
     title: "Écran Gonflable Étanche (sans soufflerie)",
     desc: "De 3m à 10m de large. Technologie à chambre à air scellée — un seul gonflage suffit, pas de bruit, pas d'électricité permanente. Tissu polyamide de kitesurf. Parfait pour les soirées privées, hôtels, camping.",
-    href: "/ecran-gonflable-etanche",
+    href: "/ecran-gonflable-etanche-air",
     highlight: "3m à 10m — Silencieux, sans électricité",
     prix: "De 3 900 € à 15 200 € HT",
   },
   {
     title: "Écran Économique",
     desc: "Solution abordable pour les budgets serrés. Disponible avec ou sans souffleur. Qualité professionnelle à prix accessible. Idéal pour les associations, les collectivités et les premiers équipements.",
-    href: "/ecran-economique",
+    href: "/ecran-gonflable-economique",
     highlight: "Solution accessible — Qualité professionnelle",
     prix: "Nous consulter",
   },
@@ -160,10 +160,10 @@ export default function Ecrans() {
           <h2 className="text-3xl font-bold text-ivory mb-4">Prêt à équiper votre événement ?</h2>
           <p className="text-white/60 mb-8">Contactez-nous pour un devis personnalisé ou consultez nos tarifs.</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contact" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Nous Contacter
             </Link>
-            <Link href="/demande-de-prix" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href="/tarifs-ecran-gonflable" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               Demande de prix
             </Link>
           </div>

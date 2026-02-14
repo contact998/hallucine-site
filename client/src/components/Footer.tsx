@@ -38,12 +38,12 @@ export default function Footer() {
             <h4 className="text-white font-semibold text-sm mb-4 tracking-wide uppercase">Menu</h4>
             <ul className="space-y-2.5 text-sm">
               {[
-                { label: "Contactez-nous", href: "/contact" },
-                { label: "Demande de prix", href: "/demande-de-prix" },
-                { label: "À propos", href: "/a-propos" },
-                { label: "Galerie", href: "/galerie" },
-                { label: "Accessoires", href: "/accessoires" },
-                { label: "Politique de confidentialité", href: "/confidentialite" },
+                { label: "Contactez-nous", href: "/contactez-nous" },
+                { label: "Demande de prix", href: "/tarifs-ecran-gonflable" },
+                { label: "À propos", href: "/a-propos-hallucine" },
+                { label: "Galerie", href: "/galerie-evenements" },
+                { label: "Accessoires", href: "/accessoire-cinema-plein-air" },
+                { label: "Politique de confidentialité", href: "/politique-confidentialite" },
                 { label: "Mentions Légales", href: "/mentions-legales" },
               ].map((link) => (
                 <li key={link.href}>
@@ -133,7 +133,7 @@ export default function Footer() {
           </p>
           <div className="flex gap-6">
             <Link href="/mentions-legales" className="text-white/30 text-xs hover:text-warm transition-colors">Mentions légales</Link>
-            <Link href="/confidentialite" className="text-white/30 text-xs hover:text-warm transition-colors">Politique de confidentialité</Link>
+            <Link href="/politique-confidentialite" className="text-white/30 text-xs hover:text-warm transition-colors">Politique de confidentialité</Link>
           </div>
         </div>
       </div>

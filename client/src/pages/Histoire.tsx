@@ -297,7 +297,7 @@ export default function Histoire() {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Envie d'écrire la suite avec nous ?</h2>
             <p className="text-white/50 mb-8 max-w-xl mx-auto">Que vous soyez organisateur d'événements, loueur de matériel ou simplement curieux, nous serions ravis de discuter avec vous.</p>
-            <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all glow-gold">
+            <Link href="/contactez-nous" className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all glow-gold">
               Contactez-nous <ChevronRight className="w-5 h-5" />
             </Link>
           </motion.div>

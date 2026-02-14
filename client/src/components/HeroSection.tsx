@@ -89,14 +89,14 @@ export default function HeroSection() {
             className="flex flex-wrap gap-5"
           >
             <Link
-              href="/contact"
+              href="/contactez-nous"
               className="group flex items-center gap-3 px-8 py-4 bg-gold text-navy-deep font-semibold text-base hover:bg-gold-light transition-all duration-500 glow-gold"
             >
               Demander un devis gratuit
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
-              href="/ecrans"
+              href="/ecran-gonflable"
               className="group flex items-center gap-3 px-8 py-4 border border-white/15 text-white/90 font-medium text-base hover:border-gold/40 hover:text-gold transition-all duration-500"
             >
               <Play className="w-4 h-4" />

@@ -77,7 +77,7 @@ export default function Galerie() {
         <div className="container text-center">
           <h2 className="text-3xl font-bold text-ivory mb-4">Envie de voir votre événement ici ?</h2>
           <p className="text-white/60 mb-8">Contactez-nous pour organiser votre prochain événement avec Hallucine.</p>
-          <Link href="/contact" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors inline-block">
+          <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors inline-block">
             Nous Contacter
           </Link>
         </div>

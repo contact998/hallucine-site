@@ -357,7 +357,7 @@ export default function DemandePrix() {
             contact@hallucine.fr — +33 6 80 14 76 94 — WhatsApp : +33 6 80 14 76 94
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contact" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Nous Contacter
             </Link>
           </div>

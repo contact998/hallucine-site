@@ -232,7 +232,7 @@ export default function Mobilier() {
                       </div>
                     ))}
                   </div>
-                  <Link href="/contact" className="mt-5 inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all text-sm">
+                  <Link href="/contactez-nous" className="mt-5 inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all text-sm">
                     Demander un devis <ChevronRight className="w-4 h-4" />
                   </Link>
                 </div>
@@ -277,7 +277,7 @@ export default function Mobilier() {
                       </div>
                     ))}
                   </div>
-                  <Link href="/contact" className="mt-5 inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all text-sm">
+                  <Link href="/contactez-nous" className="mt-5 inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all text-sm">
                     Demander un devis <ChevronRight className="w-4 h-4" />
                   </Link>
                 </div>
@@ -346,7 +346,7 @@ export default function Mobilier() {
           </div>
 
           <div className="text-center mt-12">
-            <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all glow-gold">
+            <Link href="/contactez-nous" className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all glow-gold">
               Demander un devis mobilier <ChevronRight className="w-5 h-5" />
             </Link>
           </div>

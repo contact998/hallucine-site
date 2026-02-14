@@ -26,30 +26,30 @@ const navItems: NavItem[] = [
   {
     label: "Ecran gonflable",
     dropdown: [
-      { label: "Écran gonflable géant (soufflerie)", href: "/ecran-gonflable-geant" },
-      { label: "Écran gonflable étanche à l'air", href: "/ecran-gonflable-etanche" },
-      { label: "Écran économique", href: "/ecran-economique" },
+      { label: "Écran gonflable géant (soufflerie)", href: "/ecran-gonflable-geant-soufflerie" },
+      { label: "Écran gonflable étanche à l'air", href: "/ecran-gonflable-etanche-air" },
+      { label: "Écran économique", href: "/ecran-gonflable-economique" },
     ],
   },
   {
     label: "Tente Arche & Meuble",
     dropdown: [
-      { label: "Tentes X", href: "/tentes-x" },
-      { label: "Tentes N", href: "/tentes-n" },
-      { label: "Tentes V", href: "/tentes-v" },
-      { label: "Tentes araignées", href: "/tentes-araignees" },
-      { label: "Arches gonflables", href: "/arches-gonflables" },
-      { label: "Mobilier gonflable", href: "/mobilier" },
+      { label: "Tentes X", href: "/tente-gonflable-x" },
+      { label: "Tentes N", href: "/tente-gonflable-n" },
+      { label: "Tentes V", href: "/tente-gonflable-v" },
+      { label: "Tentes araignées", href: "/tente-gonflable-araignee" },
+      { label: "Arches gonflables", href: "/arche-gonflable" },
+      { label: "Mobilier gonflable", href: "/mobilier-gonflable" },
     ],
   },
-  { label: "Accessoires", href: "/accessoires" },
-  { label: "Galerie", href: "/galerie" },
-  { label: "Contactez-nous", href: "/contact" },
+  { label: "Accessoires", href: "/accessoire-cinema-plein-air" },
+  { label: "Galerie", href: "/galerie-evenements" },
+  { label: "Contactez-nous", href: "/contactez-nous" },
   {
     label: "Plus",
     dropdown: [
-      { label: "À propos", href: "/a-propos" },
-      { label: "Demande de prix", href: "/demande-de-prix" },
+      { label: "À propos", href: "/a-propos-hallucine" },
+      { label: "Demande de prix", href: "/tarifs-ecran-gonflable" },
     ],
   },
 ];
@@ -189,7 +189,7 @@ export default function Navbar() {
 
           {/* CTA Desktop */}
           <Link
-            href="/demande-de-prix"
+            href="/tarifs-ecran-gonflable"
             className="hidden xl:flex items-center gap-2 px-5 py-2 bg-warm text-charcoal font-semibold text-sm rounded hover:bg-warm-light transition-all duration-300 shrink-0"
           >
             Demande de prix
@@ -261,7 +261,7 @@ export default function Navbar() {
                   </div>
                 ))}
                 <Link
-                  href="/demande-de-prix"
+                  href="/tarifs-ecran-gonflable"
                   onClick={() => setMobileOpen(false)}
                   className="mt-3 flex items-center justify-center gap-2 px-6 py-3 bg-warm text-charcoal font-semibold rounded"
                 >

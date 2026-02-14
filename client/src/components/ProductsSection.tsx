@@ -54,7 +54,7 @@ export default function ProductsSection() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <Link href="/ecrans" className="group block relative overflow-hidden border border-white/[0.06] bg-white/[0.02] hover:border-gold/20 transition-all duration-700 h-full">
+            <Link href="/ecran-gonflable" className="group block relative overflow-hidden border border-white/[0.06] bg-white/[0.02] hover:border-gold/20 transition-all duration-700 h-full">
               <div className="relative h-72 overflow-hidden">
                 <img
                   src={ECRAN_ETANCHE}
@@ -99,7 +99,7 @@ export default function ProductsSection() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.35 }}
           >
-            <Link href="/ecrans" className="group block relative overflow-hidden border border-white/[0.06] bg-white/[0.02] hover:border-gold/20 transition-all duration-700 h-full">
+            <Link href="/ecran-gonflable" className="group block relative overflow-hidden border border-white/[0.06] bg-white/[0.02] hover:border-gold/20 transition-all duration-700 h-full">
               <div className="relative h-72 overflow-hidden">
                 <img
                   src={ECRAN_SOUFFLERIE}
@@ -146,7 +146,7 @@ export default function ProductsSection() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
-            <Link href="/tentes" className="group flex gap-6 p-6 border border-white/[0.06] bg-white/[0.02] hover:border-gold/20 transition-all duration-700 h-full">
+            <Link href="/tente-gonflable" className="group flex gap-6 p-6 border border-white/[0.06] bg-white/[0.02] hover:border-gold/20 transition-all duration-700 h-full">
               <div className="w-28 h-28 shrink-0 overflow-hidden">
                 <img src={TENTE_IMG} alt="Tente gonflable Hallucine" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               </div>
@@ -170,7 +170,7 @@ export default function ProductsSection() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            <Link href="/mobilier" className="group flex gap-6 p-6 border border-white/[0.06] bg-white/[0.02] hover:border-gold/20 transition-all duration-700 h-full">
+            <Link href="/mobilier-gonflable" className="group flex gap-6 p-6 border border-white/[0.06] bg-white/[0.02] hover:border-gold/20 transition-all duration-700 h-full">
               <div className="w-28 h-28 shrink-0 overflow-hidden">
                 <img src={MOBILIER_IMG} alt="Mobilier gonflable Hallucine" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               </div>
