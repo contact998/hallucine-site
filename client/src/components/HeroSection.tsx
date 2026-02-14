@@ -1,13 +1,13 @@
 /*
- * Design: "Nuit Étoilée" – Hero plein écran immersif
- * Photo principale : écran soufflerie 24m de nuit (la plus spectaculaire)
- * Citation emblématique, CTA doré, chiffres clés
+ * Hero Section — Design cinématographique premium
+ * Grande image de fond, titre puissant, citation, CTA doré
+ * Le client changera les photos à la fin
  */
-import { motion } from "framer-motion";
-import { ChevronDown, Play } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ChevronDown, ArrowRight, Play } from "lucide-react";
 import { Link } from "wouter";
+import { useRef } from "react";
 
-// Photo réelle : écran soufflerie 24m de nuit - la plus spectaculaire
 const HERO_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/KzXxmgVsjMoEdlML.jpg";
 
 const stats = [
@@ -18,73 +18,86 @@ const stats = [
 ];
 
 export default function HeroSection() {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
   return (
-    <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background Image - VRAIE PHOTO soufflerie 24m */}
-      <div className="absolute inset-0">
+    <section ref={ref} id="hero" className="relative min-h-screen flex items-end overflow-hidden">
+      {/* Parallax Background */}
+      <motion.div style={{ y: imgY }} className="absolute inset-0 -top-[10%] -bottom-[10%]">
         <img
           src={HERO_IMG}
-          alt="Écran de cinéma gonflable géant Hallucine 24m en projection nocturne"
-          className="w-full h-full object-cover"
+          alt="Écran de cinéma gonflable géant Hallucine en projection nocturne"
+          className="w-full h-full object-cover scale-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.10_0.03_260_/_0.92)] via-[oklch(0.12_0.03_260_/_0.75)] to-[oklch(0.10_0.03_260_/_0.5)]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260)] via-transparent to-transparent" />
-      </div>
+      </motion.div>
+
+      {/* Cinematic overlays */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.08_0.02_260)] via-[oklch(0.10_0.03_260_/_0.5)] to-[oklch(0.12_0.03_260_/_0.3)]" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.08_0.02_260_/_0.85)] via-transparent to-transparent" />
+      
+      {/* Film grain texture */}
+      <div className="absolute inset-0 opacity-[0.03]" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
+      }} />
 
       {/* Content */}
-      <div className="relative container pt-32 pb-20">
+      <motion.div style={{ opacity }} className="relative container pb-32 pt-48">
         <div className="max-w-3xl">
           {/* Badge */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold/30 bg-gold/10 mb-8"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="flex items-center gap-3 mb-10"
           >
-            <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
-            <span className="text-gold text-sm font-medium tracking-wide">Fabricant français depuis 1995</span>
+            <div className="w-12 h-[1px] bg-gold" />
+            <span className="text-gold text-xs font-semibold tracking-[0.3em] uppercase">Fabricant français depuis 1995</span>
           </motion.div>
 
           {/* Title */}
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-6"
+            transition={{ duration: 1, delay: 0.2 }}
+            className="text-5xl sm:text-6xl lg:text-8xl font-bold leading-[0.95] tracking-tight mb-8"
           >
-            <span className="text-white">L'écran de cinéma</span>
-            <br />
-            <span className="text-gradient-gold">le plus léger</span>
-            <br />
-            <span className="text-white">au monde</span>
+            <span className="text-white block">L'écran de cinéma</span>
+            <span className="text-gradient-gold block mt-2">le plus léger</span>
+            <span className="text-white block mt-2">au monde</span>
           </motion.h1>
 
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
+          {/* Quote */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-lg sm:text-xl text-white/70 max-w-xl mb-10 font-serif italic leading-relaxed"
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="relative pl-6 border-l-2 border-gold/40 mb-12 max-w-xl"
           >
-            Nos concurrents n'ont jamais eu, à 3h du matin, à devoir replier un écran pour aller se coucher. Nous, si. C'est pour cela que nous avons tout repensé.
-          </motion.p>
+            <p className="text-lg text-white/60 font-serif italic leading-relaxed">
+              «&nbsp;Nos concurrents n'ont jamais eu, à 3h du matin, à devoir replier un écran pour aller se coucher. Nous, si. C'est pour cela que nous avons tout repensé.&nbsp;»
+            </p>
+          </motion.div>
 
           {/* CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-wrap gap-4"
+            transition={{ duration: 0.8, delay: 0.7 }}
+            className="flex flex-wrap gap-5"
           >
             <Link
               href="/contact"
-              className="px-8 py-4 bg-gold text-navy-deep font-semibold text-base rounded-sm hover:bg-gold-light transition-all duration-300 glow-gold inline-block"
+              className="group flex items-center gap-3 px-8 py-4 bg-gold text-navy-deep font-semibold text-base hover:bg-gold-light transition-all duration-500 glow-gold"
             >
               Demander un devis gratuit
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               href="/ecrans"
-              className="flex items-center gap-2 px-8 py-4 border border-white/20 text-white font-medium text-base rounded-sm hover:border-gold/50 hover:text-gold transition-all duration-300"
+              className="group flex items-center gap-3 px-8 py-4 border border-white/15 text-white/90 font-medium text-base hover:border-gold/40 hover:text-gold transition-all duration-500"
             >
               <Play className="w-4 h-4" />
               Découvrir nos écrans
@@ -94,30 +107,31 @@ export default function HeroSection() {
 
         {/* Stats Bar */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0 md:divide-x md:divide-white/10 p-6 md:p-8 bg-white/5 backdrop-blur-sm rounded-sm border border-white/10"
+          transition={{ duration: 1, delay: 1 }}
+          className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-0 divide-x divide-white/[0.06]"
         >
           {stats.map((stat, i) => (
-            <div key={i} className="text-center px-4">
-              <div className="text-3xl md:text-4xl font-bold text-gold">
+            <div key={i} className="text-center py-6 px-4">
+              <div className="text-3xl md:text-4xl font-bold text-white tracking-tight">
                 {stat.value}
-                <span className="text-gold/70">{stat.suffix}</span>
+                <span className="text-gold">{stat.suffix}</span>
               </div>
-              <div className="text-sm text-white/50 mt-1 tracking-wide uppercase">{stat.label}</div>
+              <div className="text-[11px] text-white/35 mt-2 tracking-[0.2em] uppercase font-medium">{stat.label}</div>
             </div>
           ))}
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Scroll indicator */}
       <motion.div
-        animate={{ y: [0, 8, 0] }}
-        transition={{ repeat: Infinity, duration: 2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        animate={{ y: [0, 10, 0] }}
+        transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <ChevronDown className="w-6 h-6 text-white/40" />
+        <span className="text-[10px] text-white/25 tracking-[0.3em] uppercase">Scroll</span>
+        <ChevronDown className="w-5 h-5 text-white/25" />
       </motion.div>
     </section>
   );

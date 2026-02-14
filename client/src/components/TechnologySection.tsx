@@ -1,173 +1,169 @@
 /*
- * Design: "Nuit Étoilée" – Section Technologie
- * Photos réelles : écran étanche vue éclatée + écran soufflerie 12m
- * Comparatif poids Hallucine vs concurrence
- * Histoire du tissu d'airbag automobile
+ * Section Technologie — Design premium
+ * Comparatif de poids multi-tailles avec barres animées
+ * Histoire du tissu d'airbag + technologie kitesurf
  */
-import { motion } from "framer-motion";
-import { Scale, Zap, ShieldCheck, Award } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { Feather, Shield, Zap, Award } from "lucide-react";
 
-// Photo réelle : vue éclatée d'un écran étanche montrant la structure technique
 const ECRAN_ECLATE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HGkkpfyaxsgmapYw.jpg";
-// Photo réelle : écran soufflerie 12m montrant le tissu polyamide
 const ECRAN_SOUFFLERIE_12 = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/AFizhJVCNHvXVtJS.jpg";
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, delay: i * 0.15 },
-  }),
-};
+const weightData = [
+  { size: "10m", hallucine: 45, competitor: 150 },
+  { size: "15m", hallucine: 80, competitor: 300 },
+  { size: "20m", hallucine: 140, competitor: 500 },
+  { size: "24m", hallucine: 200, competitor: 600 },
+];
 
 export default function TechnologySection() {
-  return (
-    <section id="technologie" className="py-24 md:py-32 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[oklch(0.12_0.04_260_/_0.5)] to-transparent" />
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-100px" });
 
-      <div className="container relative">
+  return (
+    <section id="technologie" className="relative py-32 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-[oklch(0.12_0.04_260)] to-background" />
+
+      <div ref={ref} className="container relative">
         {/* Header */}
         <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeInUp}
-          custom={0}
-          className="text-center max-w-3xl mx-auto mb-20"
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="mb-20"
         >
-          <span className="text-gold text-sm font-semibold tracking-widest uppercase">Notre technologie</span>
-          <h2 className="text-3xl md:text-5xl font-bold text-white mt-3 leading-tight">
-            Le secret des airbags automobiles,<br />
-            <span className="text-gradient-gold">au service du cinéma</span>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-12 h-[1px] bg-gold" />
+            <span className="text-gold text-xs font-semibold tracking-[0.3em] uppercase">Technologie</span>
+          </div>
+          <h2 className="text-4xl lg:text-6xl font-bold text-white leading-tight max-w-3xl">
+            3× plus léger.<br />
+            <span className="text-gradient-gold">Ce n'est pas un slogan.</span>
           </h2>
-          <p className="text-white/60 mt-6 text-lg leading-relaxed">
-            Quand les constructeurs automobiles nous ont dit que leur tissu était "secret défense", nous ne nous sommes pas découragés. Nous avons trouvé la réponse à Lyon : un polyamide haute ténacité de DuPont de Nemours.
-          </p>
         </motion.div>
 
-        {/* Two technologies side by side */}
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 mb-20">
-          {/* Technologie Étanche */}
+        {/* Two-column layout */}
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
+          {/* Left: Innovation story */}
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeInUp}
-            custom={1}
-            className="relative"
+            initial={{ opacity: 0, x: -30 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="overflow-hidden rounded-sm border border-white/10">
-              <img
-                src={ECRAN_ECLATE}
-                alt="Vue éclatée d'un écran étanche Hallucine montrant la chambre à air et la structure"
-                className="w-full h-64 md:h-80 object-cover"
-              />
-            </div>
-            <div className="mt-6">
-              <h3 className="text-xl font-bold text-white mb-2">Technologie Étanche</h3>
-              <p className="text-white/60 text-sm leading-relaxed">
-                Inspirée du kitesurf. Une chambre à air scellée, comme un boudin de kitesurf, qui se gonfle une seule fois. Pas de soufflerie, pas de bruit, pas de dépendance électrique. L'écran est autonome.
-              </p>
-            </div>
-          </motion.div>
-
-          {/* Technologie Soufflerie */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeInUp}
-            custom={2}
-            className="relative"
-          >
-            <div className="overflow-hidden rounded-sm border border-white/10">
-              <img
-                src={ECRAN_SOUFFLERIE_12}
-                alt="Écran soufflerie 12m Hallucine en tissu polyamide haute ténacité"
-                className="w-full h-64 md:h-80 object-cover"
-              />
-            </div>
-            <div className="mt-6">
-              <h3 className="text-xl font-bold text-white mb-2">Technologie Soufflerie</h3>
-              <p className="text-white/60 text-sm leading-relaxed">
-                Pour les grands formats (5-24m), un tissu de polyamide haute ténacité — le même que celui des airbags automobiles. Soufflerie permanente, et l'écran tombe dans un grand sac à voile après la projection. Pas de pliage.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Weight comparison */}
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeInUp}
-            custom={3}
-          >
-            <h3 className="text-xl font-bold text-white mb-6">Comparatif de poids — Écran 15m</h3>
-            <div className="space-y-4">
-              <div>
-                <div className="flex justify-between text-sm mb-2">
-                  <span className="text-white/70">Concurrence (bâche camion)</span>
-                  <span className="text-white font-semibold">600 kg</span>
-                </div>
-                <div className="h-3 bg-white/10 rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    whileInView={{ width: "100%" }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1.2, delay: 0.3 }}
-                    className="h-full bg-white/30 rounded-full"
-                  />
+            {/* Two tech images side by side */}
+            <div className="grid grid-cols-2 gap-4 mb-10">
+              <div className="relative overflow-hidden">
+                <img src={ECRAN_ECLATE} alt="Structure écran étanche Hallucine" className="w-full aspect-[3/4] object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.12_0.04_260)] via-transparent to-transparent" />
+                <div className="absolute bottom-3 left-3">
+                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-gold bg-navy-deep/80 px-2 py-1">Étanche</span>
                 </div>
               </div>
-              <div>
-                <div className="flex justify-between text-sm mb-2">
-                  <span className="text-gold font-medium">Hallucine (polyamide)</span>
-                  <span className="text-gold font-bold">200 kg</span>
-                </div>
-                <div className="h-3 bg-white/10 rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    whileInView={{ width: "33%" }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1.2, delay: 0.5 }}
-                    className="h-full bg-gradient-to-r from-gold-dark to-gold rounded-full"
-                  />
+              <div className="relative overflow-hidden">
+                <img src={ECRAN_SOUFFLERIE_12} alt="Écran soufflerie 12m Hallucine" className="w-full aspect-[3/4] object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.12_0.04_260)] via-transparent to-transparent" />
+                <div className="absolute bottom-3 left-3">
+                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-white bg-navy-deep/80 px-2 py-1">Soufflerie</span>
                 </div>
               </div>
             </div>
 
-            <p className="text-white/40 text-sm mt-6 italic">
-              « Nos concurrents n'ont jamais eu, à 3h du matin, à devoir replier un écran pour aller se coucher. »
-            </p>
-          </motion.div>
+            <h3 className="text-2xl font-bold text-white mb-6">Du secret défense à l'écran de cinéma</h3>
 
-          {/* Feature list */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeInUp}
-            custom={4}
-          >
-            <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-5 text-white/50 text-[15px] leading-relaxed">
+              <p>
+                Tout commence à Lyon, capitale historique du textile. En cherchant un tissu à la fois léger et indestructible, nous avons découvert que les <strong className="text-white/70">airbags automobiles</strong> utilisaient exactement ce que nous cherchions.
+              </p>
+              <p>
+                Les constructeurs nous ont dit que c'était «&nbsp;secret défense&nbsp;». Nous ne nous sommes pas découragés. Après des mois d'enquête, nous avons identifié le tissu : un <strong className="text-white/70">polyamide haute ténacité de Dupont de Nemours</strong>.
+              </p>
+              <p>
+                Pour la gamme étanche, l'inspiration est venue d'ailleurs : sur une plage de Hong Kong, en observant des kitesurfs. Leurs boudins gonflables étaient légers, résistants, et parfaitement étanches. La technologie était là, sous nos yeux.
+              </p>
+            </div>
+
+            {/* Innovation badges */}
+            <div className="grid grid-cols-2 gap-4 mt-8">
               {[
-                { icon: Scale, title: "Ultra-léger", desc: "Polyamide haute ténacité DuPont de Nemours — 3× plus léger que la bâche camion" },
-                { icon: Zap, title: "Tissu d'airbag", desc: "Le même tissu que les airbags automobiles, trouvé après une enquête à Lyon" },
-                { icon: ShieldCheck, title: "Garanti 10 ans", desc: "Durabilité éprouvée sur le terrain, de la Bretagne à la Chine" },
-                { icon: Award, title: "Savoir-faire voilier", desc: "Né dans une voilerie bretonne à La Trinité-sur-Mer avec Jean-Christophe" },
-              ].map((feat, i) => (
-                <div key={i} className="flex gap-3 p-4 bg-white/[0.03] border border-white/10 rounded-sm">
-                  <feat.icon className="w-6 h-6 text-gold mt-0.5 shrink-0" />
+                { icon: Feather, label: "Ultra-léger", desc: "Polyamide haute ténacité" },
+                { icon: Shield, label: "Garanti 10 ans", desc: "Tissu d'airbag automobile" },
+                { icon: Zap, label: "Montage rapide", desc: "3 min pour un écran étanche" },
+                { icon: Award, label: "Conception française", desc: "Design et R&D en France" },
+              ].map((item) => (
+                <div key={item.label} className="flex items-start gap-3 p-4 bg-white/[0.02] border border-white/[0.05]">
+                  <item.icon className="w-5 h-5 text-gold shrink-0 mt-0.5" />
                   <div>
-                    <div className="text-white text-sm font-semibold mb-1">{feat.title}</div>
-                    <div className="text-white/40 text-xs leading-relaxed">{feat.desc}</div>
+                    <div className="text-white text-sm font-semibold">{item.label}</div>
+                    <div className="text-white/35 text-xs mt-0.5">{item.desc}</div>
                   </div>
                 </div>
               ))}
+            </div>
+          </motion.div>
+
+          {/* Right: Weight comparison */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <div className="sticky top-32">
+              <h3 className="text-2xl font-bold text-white mb-3">Comparatif de poids</h3>
+              <p className="text-white/40 text-sm mb-8">
+                Écrans à soufflerie — Hallucine vs. concurrence (bâche camion)
+              </p>
+
+              {/* Weight bars */}
+              <div className="space-y-6 mb-12">
+                {weightData.map((item, i) => (
+                  <motion.div
+                    key={item.size}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={inView ? { opacity: 1, x: 0 } : {}}
+                    transition={{ duration: 0.6, delay: 0.5 + i * 0.1 }}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-white font-semibold text-sm">Écran {item.size}</span>
+                      <span className="text-gold font-bold text-sm">{(item.competitor / item.hallucine).toFixed(1)}× plus léger</span>
+                    </div>
+                    {/* Hallucine bar */}
+                    <div className="relative h-8 bg-white/[0.03] border border-white/[0.06] mb-1.5 overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={inView ? { width: `${(item.hallucine / item.competitor * 100)}%` } : {}}
+                        transition={{ duration: 1.2, delay: 0.7 + i * 0.1, ease: "easeOut" }}
+                        className="absolute inset-y-0 left-0 bg-gradient-to-r from-gold/80 to-gold/40"
+                      />
+                      <div className="relative h-full flex items-center px-3 justify-between">
+                        <span className="text-[11px] font-semibold text-navy-deep">Hallucine</span>
+                        <span className="text-[11px] font-bold text-navy-deep">{item.hallucine} kg</span>
+                      </div>
+                    </div>
+                    {/* Competitor bar */}
+                    <div className="relative h-8 bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={inView ? { width: "100%" } : {}}
+                        transition={{ duration: 1.2, delay: 0.7 + i * 0.1, ease: "easeOut" }}
+                        className="absolute inset-y-0 left-0 bg-white/[0.08]"
+                      />
+                      <div className="relative h-full flex items-center px-3 justify-between">
+                        <span className="text-[11px] font-medium text-white/40">Concurrence</span>
+                        <span className="text-[11px] font-medium text-white/40">~{item.competitor} kg</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Quote */}
+              <div className="border-l-2 border-gold/40 pl-6 py-2">
+                <p className="text-white/60 text-sm font-serif italic leading-relaxed">
+                  «&nbsp;Nos concurrents n'ont jamais eu, à 3h du matin, à devoir replier un écran pour aller se coucher.&nbsp;»
+                </p>
+                <p className="text-gold/50 text-xs mt-2 font-medium">— Fondateur d'Hallucine</p>
+              </div>
             </div>
           </motion.div>
         </div>

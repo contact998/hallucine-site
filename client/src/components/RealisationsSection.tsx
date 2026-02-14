@@ -1,9 +1,10 @@
 /*
- * Design: "Nuit Étoilée" – Section Réalisations / Galerie
- * Photos variées de TOUTES les catégories : étanches, soufflerie, tentes, accessoires
- * Aucune répétition, chaque photo est unique
+ * Section Réalisations — Galerie masonry premium
+ * Photos variées de toutes les catégories
  */
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef, useState } from "react";
+import { X } from "lucide-react";
 
 const photos = [
   {
@@ -14,113 +15,110 @@ const photos = [
   },
   {
     src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CzprNCGHiOGRIkTg.jpg",
-    alt: "Écran étanche 5m installé au Ritz - événement privé",
+    alt: "Écran étanche 5m installé au Ritz",
     caption: "Écran étanche 5m — Ritz",
     span: "col-span-1 row-span-1",
   },
   {
     src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YqpLPgGtuwNJbHEB.png",
-    alt: "Tente gonflable Hallucine - technologie étanche",
+    alt: "Tente gonflable Hallucine",
     caption: "Tente gonflable",
     span: "col-span-1 row-span-1",
   },
   {
     src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bWqLOjfHSsVoXNHz.jpg",
-    alt: "Écran soufflerie 13m devant les arènes - événement culturel",
+    alt: "Écran soufflerie 13m devant les arènes",
     caption: "Écran 13m — Arènes",
     span: "col-span-2 row-span-1",
   },
   {
     src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VEbmfwItAbfpcPkZ.jpg",
-    alt: "Écran étanche 8m au bord d'une piscine - soirée privée",
+    alt: "Écran étanche 8m au bord d'une piscine",
     caption: "Écran étanche 8m — Piscine",
     span: "col-span-1 row-span-1",
   },
   {
     src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bejqCXUcdKFhPUrA.jpg",
-    alt: "Fauteuil gonflable Hallucine - mobilier événementiel",
+    alt: "Fauteuil gonflable Hallucine",
     caption: "Mobilier gonflable",
     span: "col-span-1 row-span-1",
   },
   {
     src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/xEbWQMioMZQLtuDK.jpg",
-    alt: "Écran soufflerie 15m - projection nocturne en plein air",
+    alt: "Écran soufflerie 15m - projection nocturne",
     caption: "Écran 15m — Soufflerie",
     span: "col-span-2 row-span-2",
   },
   {
     src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/UsYUSDaqdvtdYUuR.jpg",
-    alt: "Écran étanche 4m à Paris - événement urbain",
+    alt: "Écran étanche 4m à Paris",
     caption: "Écran étanche 4m — Paris",
     span: "col-span-1 row-span-1",
   },
   {
     src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wQxSrNHWpcNFqINL.jpg",
-    alt: "Écran soufflerie 10m - cinéma en plein air drive-in",
+    alt: "Écran soufflerie 10m - cinéma drive-in",
     caption: "Écran 10m — Drive-in",
     span: "col-span-1 row-span-1",
   },
   {
     src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ozhVXCxOcuYoBREY.png",
-    alt: "Tente gonflable Hallucine - modèle événementiel",
+    alt: "Tente gonflable événementielle",
     caption: "Tente événementielle",
     span: "col-span-1 row-span-1",
   },
   {
     src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CAeHAHuCCqWzSkLI.jpg",
-    alt: "Écran soufflerie 17m noir - grand format",
+    alt: "Écran soufflerie 17m noir",
     caption: "Écran 17m — Grand format",
     span: "col-span-1 row-span-1",
   },
   {
     src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HGkkpfyaxsgmapYw.jpg",
-    alt: "Écran étanche 5m vue éclatée - détail technique",
-    caption: "Écran étanche — Vue éclatée",
+    alt: "Écran étanche vue éclatée",
+    caption: "Écran étanche — Vue technique",
     span: "col-span-2 row-span-1",
   },
 ];
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, delay: i * 0.08 },
-  }),
-};
-
 export default function RealisationsSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const [lightbox, setLightbox] = useState<number | null>(null);
+
   return (
-    <section id="realisations" className="py-24 md:py-32 relative">
-      <div className="container">
+    <section id="realisations" className="relative py-32 overflow-hidden">
+      <div ref={ref} className="container relative">
+        {/* Header */}
         <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeInUp}
-          custom={0}
-          className="max-w-2xl mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="mb-16"
         >
-          <span className="text-gold text-sm font-semibold tracking-widest uppercase">Nos réalisations</span>
-          <h2 className="text-3xl md:text-5xl font-bold text-white mt-3 leading-tight">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-12 h-[1px] bg-gold" />
+            <span className="text-gold text-xs font-semibold tracking-[0.3em] uppercase">Réalisations</span>
+          </div>
+          <h2 className="text-4xl lg:text-6xl font-bold text-white leading-tight max-w-3xl">
             Ils nous font confiance<br />
             <span className="text-gradient-gold">dans le monde entier</span>
           </h2>
-          <p className="text-white/60 mt-4 text-lg leading-relaxed">
-            Des festivals aux événements corporate, des plages aux stades, nos écrans, tentes et mobilier transforment chaque lieu en espace unique.
+          <p className="text-white/45 text-lg mt-6 max-w-xl leading-relaxed">
+            Des festivals aux événements corporate, des plages aux stades, nos écrans transforment chaque lieu en expérience unique.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 auto-rows-[160px] md:auto-rows-[200px]">
+        {/* Masonry Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 auto-rows-[140px] md:auto-rows-[200px]">
           {photos.map((photo, i) => (
             <motion.div
               key={i}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-              variants={fadeInUp}
-              custom={i + 1}
-              className={`${photo.span} group relative overflow-hidden rounded-sm border border-white/10`}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={inView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.5, delay: 0.1 + i * 0.05 }}
+              className={`${photo.span} group relative overflow-hidden cursor-pointer`}
+              onClick={() => setLightbox(i)}
             >
               <img
                 src={photo.src}
@@ -136,6 +134,32 @@ export default function RealisationsSection() {
           ))}
         </div>
       </div>
+
+      {/* Lightbox */}
+      {lightbox !== null && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
+          onClick={() => setLightbox(null)}
+        >
+          <button
+            onClick={() => setLightbox(null)}
+            className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors"
+          >
+            <X className="w-8 h-8" />
+          </button>
+          <img
+            src={photos[lightbox].src}
+            alt={photos[lightbox].alt}
+            className="max-w-full max-h-[85vh] object-contain"
+          />
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+            <p className="text-white/70 text-sm font-medium">{photos[lightbox].caption}</p>
+          </div>
+        </motion.div>
+      )}
     </section>
   );
 }

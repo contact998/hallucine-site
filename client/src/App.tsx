@@ -10,6 +10,8 @@ import Tentes from "./pages/Tentes";
 import Mobilier from "./pages/Mobilier";
 import Histoire from "./pages/Histoire";
 import Contact from "./pages/Contact";
+import MentionsLegales from "./pages/MentionsLegales";
+import Confidentialite from "./pages/Confidentialite";
 
 function Router() {
   return (
@@ -20,6 +22,8 @@ function Router() {
       <Route path={"/mobilier"} component={Mobilier} />
       <Route path={"/notre-histoire"} component={Histoire} />
       <Route path={"/contact"} component={Contact} />
+      <Route path={"/mentions-legales"} component={MentionsLegales} />
+      <Route path={"/confidentialite"} component={Confidentialite} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>
