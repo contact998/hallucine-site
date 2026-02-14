@@ -9,15 +9,15 @@ import { Link } from "wouter";
 import { Wind, Clock, Shield, Feather, Users, ArrowRight } from "lucide-react";
 
 const specsData = [
-  { taille: "8m × 6m", toile: "7m × 5m", poids: "35 kg", hauteur: "—", montage: "30 min", personnes: "1", prix: "12 554 €" },
-  { taille: "10m × 7m", toile: "9m × 6m", poids: "50 kg", hauteur: "160 cm", montage: "30 min", personnes: "1", prix: "15 024 €" },
-  { taille: "10,32m × 7,90m", toile: "9m × 5m", poids: "60 kg", hauteur: "220 cm", montage: "30 min", personnes: "1", prix: "16 024 €" },
-  { taille: "13m × 8m", toile: "12m × 6,5m", poids: "80 kg", hauteur: "—", montage: "30 min", personnes: "2", prix: "18 705 €" },
-  { taille: "14m × 9m", toile: "13m × 7m", poids: "90 kg", hauteur: "—", montage: "45 min", personnes: "2", prix: "23 767 €" },
-  { taille: "15m × 10m", toile: "14m × 8m", poids: "110 kg", hauteur: "—", montage: "45 min", personnes: "2", prix: "31 105 €" },
-  { taille: "17m × 12m", toile: "15m × 10m", poids: "180 kg", hauteur: "—", montage: "1h", personnes: "3", prix: "34 105 €" },
-  { taille: "20m × 14m", toile: "18m × 12m", poids: "220 kg", hauteur: "—", montage: "1h15", personnes: "3", prix: "41 233 €" },
-  { taille: "24m × 14m", toile: "22m × 12m", poids: "280 kg", hauteur: "—", montage: "1h30", personnes: "4", prix: "48 258 €" },
+  { taille: "8m × 6m", toile: "7m × 5m", poids: "35 kg", hauteur: "—", montage: "30 min", personnes: "1" },
+  { taille: "10m × 7m", toile: "9m × 6m", poids: "50 kg", hauteur: "160 cm", montage: "30 min", personnes: "1" },
+  { taille: "10,32m × 7,90m", toile: "9m × 5m", poids: "60 kg", hauteur: "220 cm", montage: "30 min", personnes: "1" },
+  { taille: "13m × 8m", toile: "12m × 6,5m", poids: "80 kg", hauteur: "—", montage: "30 min", personnes: "2" },
+  { taille: "14m × 9m", toile: "13m × 7m", poids: "90 kg", hauteur: "—", montage: "45 min", personnes: "2" },
+  { taille: "15m × 10m", toile: "14m × 8m", poids: "110 kg", hauteur: "—", montage: "45 min", personnes: "2" },
+  { taille: "17m × 12m", toile: "15m × 10m", poids: "180 kg", hauteur: "—", montage: "1h", personnes: "3" },
+  { taille: "20m × 14m", toile: "18m × 12m", poids: "220 kg", hauteur: "—", montage: "1h15", personnes: "3" },
+  { taille: "24m × 14m", toile: "22m × 12m", poids: "280 kg", hauteur: "—", montage: "1h30", personnes: "4" },
 ];
 
 const avantages = [
@@ -92,8 +92,8 @@ export default function EcranGeant() {
       {/* Tableau specs + tarifs */}
       <section className="py-20 bg-background">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-4">Spécifications techniques et tarifs</h2>
-          <p className="text-white/60 mb-8">Tarifs H.T. des Écrans Gonflables à soufflerie — Hallucine</p>
+          <h2 className="text-3xl font-bold text-ivory mb-4">Spécifications techniques</h2>
+          <p className="text-white/60 mb-8">9 tailles disponibles, de 8m à 24m de large</p>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
@@ -104,7 +104,6 @@ export default function EcranGeant() {
                   <th className="text-left py-4 px-3 text-warm font-semibold">Hauteur base image</th>
                   <th className="text-left py-4 px-3 text-warm font-semibold">Temps de montage</th>
                   <th className="text-left py-4 px-3 text-warm font-semibold">Nb. personnes</th>
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Prix H.T. EUR</th>
                 </tr>
               </thead>
               <tbody>
@@ -116,7 +115,6 @@ export default function EcranGeant() {
                     <td className="py-4 px-3 text-white/70">{row.hauteur}</td>
                     <td className="py-4 px-3 text-white/70">{row.montage}</td>
                     <td className="py-4 px-3 text-white/70">{row.personnes}</td>
-                    <td className="py-4 px-3 text-warm font-semibold">{row.prix}</td>
                   </tr>
                 ))}
               </tbody>

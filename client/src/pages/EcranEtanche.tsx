@@ -8,15 +8,15 @@ import { Link } from "wouter";
 import { VolumeX, Droplets, Clock, Feather } from "lucide-react";
 
 const specsData = [
-  { taille: "245 × 200 cm", toile: "218 × 122 cm", poids: "7 kg", hauteur: "50 cm", personnes: "1", prix: "—" },
-  { taille: "314 × 234 cm", toile: "300 × 170 cm", poids: "8 kg", hauteur: "50 cm", personnes: "1", prix: "3 900 €" },
-  { taille: "426 × 352 cm", toile: "400 × 225 cm", poids: "15 kg", hauteur: "100 cm", personnes: "1", prix: "5 900 €" },
-  { taille: "530 × 430 cm", toile: "500 × 280 cm", poids: "20 kg", hauteur: "120 cm", personnes: "1", prix: "6 700 €" },
-  { taille: "620 × 505 cm", toile: "600 × 338 cm", poids: "32 kg", hauteur: "150 cm", personnes: "1", prix: "7 700 €" },
-  { taille: "724 × 580 cm", toile: "700 × 395 cm", poids: "45 kg", hauteur: "160 cm", personnes: "2", prix: "9 500 €" },
-  { taille: "820 × 630 cm", toile: "800 × 450 cm", poids: "50 kg", hauteur: "160 cm", personnes: "2", prix: "12 200 €" },
-  { taille: "920 × 685 cm", toile: "900 × 506 cm", poids: "62 kg", hauteur: "160 cm", personnes: "2 ou 3", prix: "13 500 €" },
-  { taille: "1024 × 753 cm", toile: "1000 × 570 cm", poids: "73 kg", hauteur: "160 cm", personnes: "2 ou 3", prix: "15 200 €" },
+  { taille: "245 × 200 cm", toile: "218 × 122 cm", poids: "7 kg", hauteur: "50 cm", personnes: "1" },
+  { taille: "314 × 234 cm", toile: "300 × 170 cm", poids: "8 kg", hauteur: "50 cm", personnes: "1" },
+  { taille: "426 × 352 cm", toile: "400 × 225 cm", poids: "15 kg", hauteur: "100 cm", personnes: "1" },
+  { taille: "530 × 430 cm", toile: "500 × 280 cm", poids: "20 kg", hauteur: "120 cm", personnes: "1" },
+  { taille: "620 × 505 cm", toile: "600 × 338 cm", poids: "32 kg", hauteur: "150 cm", personnes: "1" },
+  { taille: "724 × 580 cm", toile: "700 × 395 cm", poids: "45 kg", hauteur: "160 cm", personnes: "2" },
+  { taille: "820 × 630 cm", toile: "800 × 450 cm", poids: "50 kg", hauteur: "160 cm", personnes: "2" },
+  { taille: "920 × 685 cm", toile: "900 × 506 cm", poids: "62 kg", hauteur: "160 cm", personnes: "2 ou 3" },
+  { taille: "1024 × 753 cm", toile: "1000 × 570 cm", poids: "73 kg", hauteur: "160 cm", personnes: "2 ou 3" },
 ];
 
 const avantages = [
@@ -79,7 +79,6 @@ export default function EcranEtanche() {
                   <th className="text-left py-4 px-3 text-warm font-semibold">Poids</th>
                   <th className="text-left py-4 px-3 text-warm font-semibold">Hauteur base image</th>
                   <th className="text-left py-4 px-3 text-warm font-semibold">Nb. personnes</th>
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Prix H.T.</th>
                 </tr>
               </thead>
               <tbody>
@@ -90,7 +89,6 @@ export default function EcranEtanche() {
                     <td className="py-4 px-3 text-white/70">{row.poids}</td>
                     <td className="py-4 px-3 text-white/70">{row.hauteur}</td>
                     <td className="py-4 px-3 text-white/70">{row.personnes}</td>
-                    <td className="py-4 px-3 text-warm font-semibold">{row.prix}</td>
                   </tr>
                 ))}
               </tbody>

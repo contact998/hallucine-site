@@ -15,21 +15,18 @@ const gammes = [
     desc: "De 8m à 24m de large. Utilise un souffleur permanent pour maintenir la structure. Tissu polyamide d'airbag automobile — jusqu'à 3× plus léger que la concurrence. Idéal pour les grands événements, festivals, drive-in.",
     href: "/ecran-gonflable-geant-soufflerie",
     highlight: "8m à 24m — Le plus grand écran gonflable au monde",
-    prix: "De 12 554 € à 48 258 € HT",
   },
   {
     title: "Écran Gonflable Étanche (sans soufflerie)",
     desc: "De 3m à 10m de large. Technologie à chambre à air scellée — un seul gonflage suffit, pas de bruit, pas d'électricité permanente. Tissu polyamide de kitesurf. Parfait pour les soirées privées, hôtels, camping.",
     href: "/ecran-gonflable-etanche-air",
     highlight: "3m à 10m — Silencieux, sans électricité",
-    prix: "De 3 900 € à 15 200 € HT",
   },
   {
     title: "Écran Économique",
     desc: "Solution abordable pour les budgets serrés. Disponible avec ou sans souffleur. Qualité professionnelle à prix accessible. Idéal pour les associations, les collectivités et les premiers équipements.",
     href: "/ecran-gonflable-economique",
     highlight: "Solution accessible — Qualité professionnelle",
-    prix: "Nous consulter",
   },
 ];
 
@@ -99,7 +96,6 @@ export default function Ecrans() {
                 </h3>
                 <p className="text-warm text-sm font-medium mb-3">{g.highlight}</p>
                 <p className="text-white/60 text-sm leading-relaxed mb-4">{g.desc}</p>
-                <p className="text-white/50 text-xs mb-4">{g.prix}</p>
                 <span className="inline-flex items-center gap-2 text-warm text-sm font-medium">
                   Voir les détails <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </span>

@@ -9,24 +9,24 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
 const archesData = [
-  { ref: "CA-4/2.6/0.45", taille: "400×260(H)×45cm", prixBlanc: "756 €", prixImprime: "978 €" },
-  { ref: "CA-5/3.2/0.6", taille: "500×320(H)×60cm", prixBlanc: "1 044 €", prixImprime: "1 395 €" },
-  { ref: "CA-6/3.8/0.6", taille: "600×380(H)×60cm", prixBlanc: "1 203 €", prixImprime: "1 608 €" },
-  { ref: "CA-6/3.8/0.8", taille: "600×380(H)×80cm", prixBlanc: "1 614 €", prixImprime: "2 058 €" },
-  { ref: "CA-8/4.6/0.8", taille: "800×460(H)×80cm", prixBlanc: "2 007 €", prixImprime: "2 571 €" },
-  { ref: "CA-8/4.8/0.9", taille: "800×480(H)×90cm", prixBlanc: "2 199 €", prixImprime: "2 793 €" },
-  { ref: "CA-10/4.8/0.8", taille: "1000×480(H)×80cm", prixBlanc: "2 313 €", prixImprime: "2 952 €" },
-  { ref: "CA-10/4.8/0.9", taille: "1000×480(H)×90cm", prixBlanc: "2 457 €", prixImprime: "3 126 €" },
-  { ref: "CA-10/5.8/0.9", taille: "1000×580(H)×90cm", prixBlanc: "2 610 €", prixImprime: "3 327 €" },
-  { ref: "CA-12/4.8/0.9", taille: "1200×480(H)×90cm", prixBlanc: "2 691 €", prixImprime: "3 408 €" },
-  { ref: "CA-12/5.8/0.9", taille: "1200×580(H)×90cm", prixBlanc: "2 919 €", prixImprime: "3 717 €" },
+  { ref: "CA-4/2.6/0.45", taille: "400×260(H)×45cm" },
+  { ref: "CA-5/3.2/0.6", taille: "500×320(H)×60cm" },
+  { ref: "CA-6/3.8/0.6", taille: "600×380(H)×60cm" },
+  { ref: "CA-6/3.8/0.8", taille: "600×380(H)×80cm" },
+  { ref: "CA-8/4.6/0.8", taille: "800×460(H)×80cm" },
+  { ref: "CA-8/4.8/0.9", taille: "800×480(H)×90cm" },
+  { ref: "CA-10/4.8/0.8", taille: "1000×480(H)×80cm" },
+  { ref: "CA-10/4.8/0.9", taille: "1000×480(H)×90cm" },
+  { ref: "CA-10/5.8/0.9", taille: "1000×580(H)×90cm" },
+  { ref: "CA-12/4.8/0.9", taille: "1200×480(H)×90cm" },
+  { ref: "CA-12/5.8/0.9", taille: "1200×580(H)×90cm" },
 ];
 
 const accessoires = [
-  { ref: "CA-EP", nom: "Pompe électrique", desc: "Prises en fonction de votre pays", prix: "35 €" },
-  { ref: "CA-HP", nom: "Pompe manuelle", desc: "Utilisation extérieur", prix: "10 €" },
-  { ref: "CA-ACC-1", nom: "Cordes/Piquets", desc: "Pour la sécurité et la stabilité", prix: "10 €" },
-  { ref: "CA-ACC-2", nom: "Valve de rechange", desc: "Standby application", prix: "5 €" },
+  { ref: "CA-EP", nom: "Pompe électrique", desc: "Prises en fonction de votre pays" },
+  { ref: "CA-HP", nom: "Pompe manuelle", desc: "Utilisation extérieur" },
+  { ref: "CA-ACC-1", nom: "Cordes/Piquets", desc: "Pour la sécurité et la stabilité" },
+  { ref: "CA-ACC-2", nom: "Valve de rechange", desc: "Standby application" },
 ];
 
 const faqItems = [
@@ -91,17 +91,15 @@ export default function ArchesGonflables() {
       {/* Tarifs arches */}
       <section className="py-20 bg-charcoal-light">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-4">Tarifs des arches gonflables</h2>
+          <h2 className="text-3xl font-bold text-ivory mb-4">Gamme d'arches gonflables</h2>
           <p className="text-white/60 mb-2 text-sm">Tissu blanc + vessie TPU. Les arches sont étanches — un seul gonflage suffit.</p>
-          <p className="text-white/60 mb-8 text-sm">Le diamètre maximal est de 90 cm.</p>
+          <p className="text-white/60 mb-8 text-sm">11 références disponibles, de 4m à 12m de large. Diamètre maximal : 90 cm.</p>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-warm/30">
                   <th className="text-left py-4 px-3 text-warm font-semibold">Référence</th>
                   <th className="text-left py-4 px-3 text-warm font-semibold">Taille</th>
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Prix blanc (EUR)</th>
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Prix avec impression (EUR)</th>
                 </tr>
               </thead>
               <tbody>
@@ -109,8 +107,6 @@ export default function ArchesGonflables() {
                   <tr key={i} className="border-b border-border hover:bg-white/5 transition-colors">
                     <td className="py-3 px-3 text-ivory font-medium">{row.ref}</td>
                     <td className="py-3 px-3 text-white/70">{row.taille}</td>
-                    <td className="py-3 px-3 text-white/70">{row.prixBlanc}</td>
-                    <td className="py-3 px-3 text-warm font-semibold">{row.prixImprime}</td>
                   </tr>
                 ))}
               </tbody>
@@ -130,7 +126,6 @@ export default function ArchesGonflables() {
                   <th className="text-left py-4 px-3 text-warm font-semibold">Référence</th>
                   <th className="text-left py-4 px-3 text-warm font-semibold">Nom</th>
                   <th className="text-left py-4 px-3 text-warm font-semibold">Description</th>
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Prix</th>
                 </tr>
               </thead>
               <tbody>
@@ -139,7 +134,6 @@ export default function ArchesGonflables() {
                     <td className="py-3 px-3 text-ivory font-medium">{a.ref}</td>
                     <td className="py-3 px-3 text-white/70">{a.nom}</td>
                     <td className="py-3 px-3 text-white/60 text-xs">{a.desc}</td>
-                    <td className="py-3 px-3 text-warm font-semibold">{a.prix}</td>
                   </tr>
                 ))}
               </tbody>
