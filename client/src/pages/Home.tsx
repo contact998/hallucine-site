@@ -1,25 +1,29 @@
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { Streamdown } from 'streamdown';
-
-/**
- * All content in this page are only for example, replace with your own feature implementation
- * When building pages, remember your instructions in Frontend Best Practices, Design Guide and Common Pitfalls
+/*
+ * Design: "Nuit Étoilée" – Élégance Nocturne Contemporaine
+ * Page d'accueil complète du site Hallucine
+ * Objectif : faire connaître Hallucine et générer des demandes de devis
+ * Priorité : écrans de cinéma gonflables (produit phare)
  */
-export default function Home() {
-  // If theme is switchable in App.tsx, we can implement theme toggling like this:
-  // const { theme, toggleTheme } = useTheme();
+import Navbar from "@/components/Navbar";
+import HeroSection from "@/components/HeroSection";
+import ProductsSection from "@/components/ProductsSection";
+import TechnologySection from "@/components/TechnologySection";
+import StorySection from "@/components/StorySection";
+import RealisationsSection from "@/components/RealisationsSection";
+import ContactSection from "@/components/ContactSection";
+import Footer from "@/components/Footer";
 
+export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <main>
-        {/* Example: lucide-react for icons */}
-        <Loader2 className="animate-spin" />
-        Example Page
-        {/* Example: Streamdown for markdown rendering */}
-        <Streamdown>Any **markdown** content</Streamdown>
-        <Button variant="default">Example Button</Button>
-      </main>
+    <div className="min-h-screen bg-background text-foreground">
+      <Navbar />
+      <HeroSection />
+      <ProductsSection />
+      <TechnologySection />
+      <StorySection />
+      <RealisationsSection />
+      <ContactSection />
+      <Footer />
     </div>
   );
 }
