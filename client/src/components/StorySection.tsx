@@ -1,23 +1,22 @@
 /*
  * Design: "Nuit Étoilée" – Section Notre Histoire
+ * UNIQUEMENT des photos réelles du client
  * Timeline narrative du fondateur
- * Kitesurf Hong Kong, forains, voilerie Bretagne, COVID Chine
- * Images générées IA + photos réelles
  */
 import { motion } from "framer-motion";
 
-const KITESURF_IMG = "https://private-us-east-1.manuscdn.com/sessionFile/7Bcdpi5Y0PpsE2J1vijXRa/sandbox/CTa0TN55Kezk7Ad6MSpJ8X-img-2_1771086736000_na1fn_a2l0ZXN1cmYtaG9uZ2tvbmc.jpg?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvN0JjZHBpNVkwUHBzRTJKMXZpalhSYS9zYW5kYm94L0NUYTBUTjU1S2V6azdBZDZNU3BKOFgtaW1nLTJfMTc3MTA4NjczNjAwMF9uYTFmbl9hMmwwWlhOMWNtWXRhRzl1WjJ0dmJtYy5qcGc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=ALgDAVmO3J9qVMrh00eJZHBBpIZo4zKNzsdbpbymPE9qAtaK8Ev8dRNa0VRhm3LVgys7I8VyvbSuPowoBJpmZBIrZKhZoILyCkFXW4D28YL5FWIAhzFjnhjBdC1pnJMdokABA9WqFhxDTqPFOUL5z04sCnboic5lgyWr1nw4CgLGxmDJd4qTZRWmfnBRbz1b9-tmRtqVWz5ERo-GYIebIC5OVSRfBIOlnHtuo8Kma8lcLudlwkmRpFtKEXbsKRyYqei0hHc6yuGBGedDd48eXyGPiA76VFfyup6fcEuVCmIW3bDICMgDs-0ZY8Vm~JG6jL5tU2eK7YvCEpd6omhREA__";
-
-const VOILERIE_IMG = "https://private-us-east-1.manuscdn.com/sessionFile/7Bcdpi5Y0PpsE2J1vijXRa/sandbox/CTa0TN55Kezk7Ad6MSpJ8X-img-4_1771086733000_na1fn_ZmFicmljYXRpb24tdm9pbGVyaWU.jpg?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvN0JjZHBpNVkwUHBzRTJKMXZpalhSYS9zYW5kYm94L0NUYTBUTjU1S2V6azdBZDZNU3BKOFgtaW1nLTRfMTc3MTA4NjczMzAwMF9uYTFmbl9abUZpY21sallYUnBiMjR0ZG05cGJHVnlhV1UuanBnP3gtb3NzLXByb2Nlc3M9aW1hZ2UvcmVzaXplLHdfMTkyMCxoXzE5MjAvZm9ybWF0LHdlYnAvcXVhbGl0eSxxXzgwIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=pS8bkzP5gYGtH2VL8XMvJgHCoSBrJ7x6sWKUCkZ6TQ9IYXiMyP-PGhCof8CBP5QDugtwETv~QDu7om4C3q0u-Z0sOac9VHiOiXo3c5r68g9kyj0baE2WZqIqdxDrhxXO-JFgbtgNBgglIV~FBfnu3w-nrz51MjsCG~WyMa00KL0Vfm6qeB9W4okPy5PmFxbx23hoEKOxORFYOsfMXuKm~H2BwyoZEzuLs-BJn8dJcAVLt8il0EMwl~LUYWFzZgS0w9caOTths32fhrw7D~mVVEYERr3Q~BbVWrk-ZFKOgEjvhYSKTaftufcbYfE~SCuNuCDX8PjSoYql2vNREQ~kFw__";
-
-const ECRAN_NIGHT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IbNUEdhyhiTLcBgz.JPG";
+// Photos réelles du client
+const ECRAN_AERIEN = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PGaRdZUncWXjznrw.JPG";
+const EQUIPE_TECH = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/LPVfubaILVbKKVMa.jpg";
+const ECRAN_NUIT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IbNUEdhyhiTLcBgz.JPG";
+const PROJECTION_FOULE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qIDIIXPgHeWcNdTq.jpg";
 
 const timeline = [
   {
     year: "1995",
     title: "L'étincelle — Hong Kong",
     text: "Sur une plage de Hong Kong, un kitesurf attire l'attention. Ses boudins gonflables, légers et résistants, font naître une idée folle : et si on pouvait projeter des films en plein air avec un écran aussi léger qu'une voile ?",
-    image: KITESURF_IMG,
+    image: null,
     side: "left" as const,
   },
   {
@@ -31,7 +30,7 @@ const timeline = [
     year: "1998",
     title: "La voilerie bretonne",
     text: "À La Trinité-sur-Mer, en Bretagne, une voilerie devient le berceau des premiers écrans. Jean-Christophe, maître voilier, maîtrise les techniques de couture. Ensemble, ils mettent au point un écran révolutionnaire qui tombe dans un sac à voile après chaque projection.",
-    image: VOILERIE_IMG,
+    image: EQUIPE_TECH,
     side: "left" as const,
   },
   {
@@ -45,14 +44,14 @@ const timeline = [
     year: "2020",
     title: "Bloqué en Chine — Le COVID",
     text: "Février 2020, Shenzhen. Le COVID frappe. Impossible de rentrer. Plutôt que de ne rien faire, inscription à l'université pour apprendre le chinois. La Chine devient une seconde maison, et une usine dans le Dongguan devient un partenaire et un ami.",
-    image: null,
+    image: ECRAN_AERIEN,
     side: "left" as const,
   },
   {
     year: "Aujourd'hui",
     title: "30 ans d'innovation",
     text: "Depuis la Chine, avec une usine partenaire dans le Dongguan, Hallucine continue sa mission : faire connaître ses écrans au plus large public. De la Bretagne à Shenzhen, l'aventure continue.",
-    image: ECRAN_NIGHT,
+    image: PROJECTION_FOULE,
     side: "right" as const,
   },
 ];
@@ -114,7 +113,7 @@ export default function StorySection() {
                 <p className="text-white/60 leading-relaxed">{item.text}</p>
               </div>
 
-              {/* Image (if available) */}
+              {/* Image (if available) - PHOTOS RÉELLES */}
               {item.image && (
                 <div className="flex-1 w-full">
                   <div className="overflow-hidden rounded-sm border border-white/10">

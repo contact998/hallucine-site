@@ -1,26 +1,24 @@
 /*
- * Design: "Nuit Étoilée" – Footer élégant
- * Logo, liens rapides, réseaux sociaux, mentions légales
+ * Design: "Nuit Étoilée" – Footer multi-pages
+ * Logo, liens vers pages, réseaux sociaux, mentions légales
  */
 import { Monitor, Tent, Armchair } from "lucide-react";
+import { Link } from "wouter";
 
 const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/NRDnSpRiukeKCoUC.jpg";
 
 export default function Footer() {
-  const scrollTo = (href: string) => {
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <footer className="border-t border-white/10 bg-[oklch(0.10_0.03_260)]">
       <div className="container py-16">
         <div className="grid md:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="md:col-span-1">
-            <img src={LOGO_URL} alt="Hallucine" className="h-12 w-auto rounded mb-4" />
+            <Link href="/">
+              <img src={LOGO_URL} alt="Hallucine" className="h-12 w-auto rounded mb-4" />
+            </Link>
             <p className="text-white/40 text-sm leading-relaxed">
-              Fabricant français d'écrans de cinéma gonflables depuis 1995. Technologie Airtight et soufflerie permanente, de 2m à 24m.
+              Fabricant français d'écrans de cinéma gonflables depuis 30 ans. Technologie Airtight et soufflerie permanente, de 2m à 24m.
             </p>
           </div>
 
@@ -29,19 +27,19 @@ export default function Footer() {
             <h4 className="text-white font-semibold text-sm mb-4 tracking-wide uppercase">Nos produits</h4>
             <ul className="space-y-3">
               <li>
-                <button onClick={() => scrollTo("#produits")} className="flex items-center gap-2 text-white/50 text-sm hover:text-gold transition-colors">
+                <Link href="/ecrans" className="flex items-center gap-2 text-white/50 text-sm hover:text-gold transition-colors">
                   <Monitor className="w-4 h-4" /> Écrans de cinéma
-                </button>
+                </Link>
               </li>
               <li>
-                <button onClick={() => scrollTo("#produits")} className="flex items-center gap-2 text-white/50 text-sm hover:text-gold transition-colors">
+                <Link href="/tentes" className="flex items-center gap-2 text-white/50 text-sm hover:text-gold transition-colors">
                   <Tent className="w-4 h-4" /> Tentes gonflables
-                </button>
+                </Link>
               </li>
               <li>
-                <button onClick={() => scrollTo("#produits")} className="flex items-center gap-2 text-white/50 text-sm hover:text-gold transition-colors">
+                <Link href="/mobilier" className="flex items-center gap-2 text-white/50 text-sm hover:text-gold transition-colors">
                   <Armchair className="w-4 h-4" /> Mobilier gonflable
-                </button>
+                </Link>
               </li>
             </ul>
           </div>
@@ -51,19 +49,17 @@ export default function Footer() {
             <h4 className="text-white font-semibold text-sm mb-4 tracking-wide uppercase">Navigation</h4>
             <ul className="space-y-3">
               {[
-                { label: "Accueil", href: "#hero" },
-                { label: "Technologie", href: "#technologie" },
-                { label: "Notre Histoire", href: "#histoire" },
-                { label: "Réalisations", href: "#realisations" },
-                { label: "Contact", href: "#contact" },
+                { label: "Accueil", href: "/" },
+                { label: "Notre Histoire", href: "/notre-histoire" },
+                { label: "Contact", href: "/contact" },
               ].map((link) => (
                 <li key={link.href}>
-                  <button
-                    onClick={() => scrollTo(link.href)}
+                  <Link
+                    href={link.href}
                     className="text-white/50 text-sm hover:text-gold transition-colors"
                   >
                     {link.label}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>

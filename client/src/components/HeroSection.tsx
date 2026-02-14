@@ -1,13 +1,16 @@
 /*
  * Design: "Nuit Étoilée" – Hero plein écran immersif
- * Image de cinéma en plein air nocturne en fond
+ * UNIQUEMENT des photos réelles du client
+ * Photo principale : projection nocturne avec foule (IMG20251017191800)
  * Titre dramatique, sous-titre, CTA doré
  * Chiffres clés animés
  */
 import { motion } from "framer-motion";
 import { ChevronDown, Play } from "lucide-react";
+import { Link } from "wouter";
 
-const HERO_IMG = "https://private-us-east-1.manuscdn.com/sessionFile/7Bcdpi5Y0PpsE2J1vijXRa/sandbox/CTa0TN55Kezk7Ad6MSpJ8X-img-1_1771086728000_na1fn_aGVyby1jaW5lbWEtcGxlaW4tYWly.jpg?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvN0JjZHBpNVkwUHBzRTJKMXZpalhSYS9zYW5kYm94L0NUYTBUTjU1S2V6azdBZDZNU3BKOFgtaW1nLTFfMTc3MTA4NjcyODAwMF9uYTFmbl9hR1Z5YnkxamFXNWxiV0V0Y0d4bGFXNHRZV2x5LmpwZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSx3XzE5MjAsaF8xOTIwL2Zvcm1hdCx3ZWJwL3F1YWxpdHkscV84MCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=BeRMorQXTBnoM8UDxB0jnnhEXJXwFMvNzeW-vTqK9dLfBUK9cfo2I7Y3KAcUug8tnOovgOBerK1DAf5qPg~3cAjWM6NjoNrYAyt~1W6bqra9HEgYrw8KTeobQW5xFYyYOBP03xrxE1ul5DG11bu0jIFKBQ5Dc1x0nprmExCJRJ5~mA4JBjMuUQQ~ivBZGX-BgCLESdxwa5CTU-nohhWXWUFxPCDbvt~mWwG0ET52My1LJLvSSUb79gvQv2q7-IEK2oOUXPDeu4zjVFfb-ft3UpHOUwwD2IpJ3zj2fAVNaGjQlHL8jBxpddcXvpoZAjSsyCG0gkuueJDcPCfIsEF33w__";
+// Photo réelle : projection nocturne avec foule dense devant écran gonflable
+const HERO_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jPYZoxFIkhGeMpkL.jpg";
 
 const stats = [
   { value: "30", suffix: " ans", label: "d'expertise" },
@@ -17,23 +20,15 @@ const stats = [
 ];
 
 export default function HeroSection() {
-  const scrollToContact = () => {
-    const el = document.querySelector("#contact");
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
 
-  const scrollToProducts = () => {
-    const el = document.querySelector("#produits");
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background Image */}
+      {/* Background Image - VRAIE PHOTO */}
       <div className="absolute inset-0">
         <img
           src={HERO_IMG}
-          alt="Cinéma en plein air avec écran gonflable Hallucine"
+          alt="Projection cinéma en plein air avec écran gonflable Hallucine - foule nombreuse"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.10_0.03_260_/_0.92)] via-[oklch(0.12_0.03_260_/_0.75)] to-[oklch(0.10_0.03_260_/_0.5)]" />
@@ -85,19 +80,19 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="flex flex-wrap gap-4"
           >
-            <button
-              onClick={scrollToContact}
-              className="px-8 py-4 bg-gold text-navy-deep font-semibold text-base rounded-sm hover:bg-gold-light transition-all duration-300 glow-gold"
+            <Link
+              href="/contact"
+              className="px-8 py-4 bg-gold text-navy-deep font-semibold text-base rounded-sm hover:bg-gold-light transition-all duration-300 glow-gold inline-block"
             >
               Demander un devis gratuit
-            </button>
-            <button
-              onClick={scrollToProducts}
+            </Link>
+            <Link
+              href="/ecrans"
               className="flex items-center gap-2 px-8 py-4 border border-white/20 text-white font-medium text-base rounded-sm hover:border-gold/50 hover:text-gold transition-all duration-300"
             >
               <Play className="w-4 h-4" />
               Découvrir nos écrans
-            </button>
+            </Link>
           </motion.div>
         </div>
 

@@ -1,13 +1,14 @@
 /*
  * Design: "Nuit Étoilée" – Section Technologie
+ * UNIQUEMENT des photos réelles du client
  * Comparatif poids Hallucine vs concurrence
  * Histoire du tissu d'airbag automobile
- * Image macro du tissu technique
  */
 import { motion } from "framer-motion";
 import { Scale, Zap, ShieldCheck, Award } from "lucide-react";
 
-const TISSU_IMG = "https://private-us-east-1.manuscdn.com/sessionFile/7Bcdpi5Y0PpsE2J1vijXRa/sandbox/CTa0TN55Kezk7Ad6MSpJ8X-img-3_1771086728000_na1fn_dGlzc3UtdGVjaG5pcXVl.jpg?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvN0JjZHBpNVkwUHBzRTJKMXZpalhSYS9zYW5kYm94L0NUYTBUTjU1S2V6azdBZDZNU3BKOFgtaW1nLTNfMTc3MTA4NjcyODAwMF9uYTFmbl9kR2x6YzNVdGRHVmphRzVwY1hWbC5qcGc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=fi2sON3If1oXGLhHd452Ch~0hbcVAlF-3nFij~FliqyBVMK0NIao4uhOXPONSrd7p6PEE8nWHX~ZdzuKdQyuEh3k3hl5dGsKCGJWro3UjL~x-EBZwwmi29uZ7~K0sjJFkcvO5y9jq0UGVfR3PE8Wu8xnXWeyNdv-3HX6BgGK4YGqwHHNNQozLWMVmz7IinHax8a-lpHnYSinhy3jNLGBPr6OnRODnMgi6zuPUo1dQOEB-8oCCE6uiFC1S--4mmDbaCEQAOdzaKsiBYICXEY-gLoQTIAdKs6-CgbUHEDIV9hCW64lc~7~nDo0zJ~zZbOPoa8b1qfcfNddaAefap31ow__";
+// Photo réelle : vue rapprochée de l'écran gonflable montrant la structure et le tissu
+const ECRAN_STRUCTURE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/UjFqdXoLutZxgPuy.JPG";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -21,7 +22,6 @@ const fadeInUp = {
 export default function TechnologySection() {
   return (
     <section id="technologie" className="py-24 md:py-32 relative overflow-hidden">
-      {/* Subtle background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[oklch(0.12_0.04_260_/_0.5)] to-transparent" />
 
       <div className="container relative">
@@ -46,7 +46,7 @@ export default function TechnologySection() {
 
         {/* Content grid */}
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Image */}
+          {/* Image réelle */}
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -57,8 +57,8 @@ export default function TechnologySection() {
           >
             <div className="overflow-hidden rounded-sm">
               <img
-                src={TISSU_IMG}
-                alt="Tissu technique polyamide haute ténacité utilisé pour les écrans Hallucine"
+                src={ECRAN_STRUCTURE}
+                alt="Structure gonflable et tissu technique d'un écran Hallucine - vue rapprochée"
                 className="w-full h-auto object-cover"
               />
             </div>

@@ -1,26 +1,27 @@
 /*
- * Design: "Nuit Étoilée" – Élégance Nocturne Contemporaine
- * Navigation sticky transparente qui se solidifie au scroll
- * Logo Hallucine + liens principaux + CTA doré
+ * Design: "Nuit Étoilée" – Navigation multi-pages
+ * Logo Hallucine + liens vers pages dédiées + CTA doré
  */
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone } from "lucide-react";
+import { Link, useLocation } from "wouter";
 
 const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/NRDnSpRiukeKCoUC.jpg";
 
 const navLinks = [
-  { label: "Accueil", href: "#hero" },
-  { label: "Nos Écrans", href: "#produits" },
-  { label: "Technologie", href: "#technologie" },
-  { label: "Notre Histoire", href: "#histoire" },
-  { label: "Réalisations", href: "#realisations" },
-  { label: "Contact", href: "#contact" },
+  { label: "Accueil", href: "/" },
+  { label: "Nos Écrans", href: "/ecrans" },
+  { label: "Tentes", href: "/tentes" },
+  { label: "Mobilier", href: "/mobilier" },
+  { label: "Notre Histoire", href: "/notre-histoire" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [location] = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -28,11 +29,10 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleClick = (href: string) => {
-    setMobileOpen(false);
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
+  // Scroll to top on page change
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [location]);
 
   return (
     <nav
@@ -44,36 +44,40 @@ export default function Navbar() {
     >
       <div className="container flex items-center justify-between py-4">
         {/* Logo */}
-        <a href="#hero" onClick={() => handleClick("#hero")} className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3">
           <img
             src={LOGO_URL}
             alt="Hallucine"
             className="h-12 w-auto rounded"
           />
-        </a>
+        </Link>
 
         {/* Desktop Nav */}
         <div className="hidden lg:flex items-center gap-8">
           {navLinks.map((link) => (
-            <button
+            <Link
               key={link.href}
-              onClick={() => handleClick(link.href)}
-              className="text-sm font-medium tracking-wide text-white/80 hover:text-gold transition-colors duration-300 relative group"
+              href={link.href}
+              className={`text-sm font-medium tracking-wide transition-colors duration-300 relative group ${
+                location === link.href ? "text-gold" : "text-white/80 hover:text-gold"
+              }`}
             >
               {link.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-gold transition-all duration-300 group-hover:w-full" />
-            </button>
+              <span className={`absolute -bottom-1 left-0 h-[2px] bg-gold transition-all duration-300 ${
+                location === link.href ? "w-full" : "w-0 group-hover:w-full"
+              }`} />
+            </Link>
           ))}
         </div>
 
         {/* CTA Desktop */}
-        <button
-          onClick={() => handleClick("#contact")}
+        <Link
+          href="/contact"
           className="hidden lg:flex items-center gap-2 px-6 py-2.5 bg-gold text-navy-deep font-semibold text-sm rounded-sm hover:bg-gold-light transition-all duration-300 glow-gold"
         >
           <Phone className="w-4 h-4" />
           Demander un devis
-        </button>
+        </Link>
 
         {/* Mobile Toggle */}
         <button
@@ -95,21 +99,25 @@ export default function Navbar() {
           >
             <div className="container py-6 flex flex-col gap-4">
               {navLinks.map((link) => (
-                <button
+                <Link
                   key={link.href}
-                  onClick={() => handleClick(link.href)}
-                  className="text-left text-lg font-medium text-white/90 hover:text-gold transition-colors py-2"
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={`text-left text-lg font-medium transition-colors py-2 ${
+                    location === link.href ? "text-gold" : "text-white/90 hover:text-gold"
+                  }`}
                 >
                   {link.label}
-                </button>
+                </Link>
               ))}
-              <button
-                onClick={() => handleClick("#contact")}
+              <Link
+                href="/contact"
+                onClick={() => setMobileOpen(false)}
                 className="mt-4 flex items-center justify-center gap-2 px-6 py-3 bg-gold text-navy-deep font-semibold rounded-sm"
               >
                 <Phone className="w-4 h-4" />
                 Demander un devis
-              </button>
+              </Link>
             </div>
           </motion.div>
         )}

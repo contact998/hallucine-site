@@ -1,34 +1,59 @@
 /*
- * Design: "Nuit Étoilée" – Section Réalisations
- * Galerie de photos réelles du client
- * Grille asymétrique avec hover effects
+ * Design: "Nuit Étoilée" – Section Réalisations / Galerie
+ * UNIQUEMENT des photos réelles du client - TOUTES les photos disponibles
+ * Galerie de photos avec descriptions
  */
 import { motion } from "framer-motion";
 
+// Toutes les photos réelles du client
 const photos = [
   {
     src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PGaRdZUncWXjznrw.JPG",
-    alt: "Écran gonflable Hallucine - Vue aérienne d'un événement en plein air",
-    caption: "Événement en plein air",
+    alt: "Vue aérienne drone - Écran gonflable géant installé sur parking événementiel",
+    caption: "Écran géant — Vue aérienne",
+    span: "col-span-2 row-span-2",
+  },
+  {
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qIDIIXPgHeWcNdTq.jpg",
+    alt: "Projection cinéma en plein air au crépuscule - foule nombreuse devant écran gonflable",
+    caption: "Cinéma en plein air — Projection au crépuscule",
+    span: "col-span-2 row-span-1",
+  },
+  {
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jPYZoxFIkhGeMpkL.jpg",
+    alt: "Projection nocturne avec foule dense devant écran gonflable Hallucine",
+    caption: "Soirée cinéma — Foule enthousiaste",
     span: "col-span-2 row-span-2",
   },
   {
     src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/UjFqdXoLutZxgPuy.JPG",
-    alt: "Écran gonflable Hallucine - Vue rapprochée de l'écran",
-    caption: "Écran gonflable en action",
+    alt: "Vue rapprochée structure gonflable noire et toile de projection blanche",
+    caption: "Montage — Structure gonflable",
     span: "col-span-1 row-span-1",
   },
   {
     src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/LPVfubaILVbKKVMa.jpg",
-    alt: "Équipe technique Hallucine avec projecteur",
-    caption: "Notre équipe technique",
+    alt: "Équipe technique Hallucine sous tente avec projecteur professionnel",
+    caption: "Équipe technique — Coulisses",
     span: "col-span-1 row-span-1",
   },
   {
     src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IbNUEdhyhiTLcBgz.JPG",
-    alt: "Projection nocturne avec écran Hallucine",
-    caption: "Projection nocturne",
+    alt: "Événement en plein air avec fresque murale colorée et équipe Hallucine",
+    caption: "Événement communautaire",
     span: "col-span-2 row-span-1",
+  },
+  {
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yFxdRfFWnZJYfkSG.JPG",
+    alt: "Vue aérienne nocturne de la ville avec stade illuminé",
+    caption: "Vue aérienne nocturne",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IMfKxomKDDcwBwvT.JPG",
+    alt: "Vue aérienne maisons provençales - cadre événementiel",
+    caption: "Cadre provençal",
+    span: "col-span-1 row-span-1",
   },
 ];
 
@@ -65,7 +90,7 @@ export default function RealisationsSection() {
         </motion.div>
 
         {/* Photo grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 auto-rows-[200px] md:auto-rows-[250px]">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 auto-rows-[180px] md:auto-rows-[220px]">
           {photos.map((photo, i) => (
             <motion.div
               key={i}
@@ -80,6 +105,7 @@ export default function RealisationsSection() {
                 src={photo.src}
                 alt={photo.alt}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
