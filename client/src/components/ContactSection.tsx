@@ -13,12 +13,12 @@ import { toast } from "sonner";
 type ProductType = "ecran" | "tente" | "mobilier" | null;
 
 const screenSizes = [
-  { value: "2m", label: "2m", tech: "Airtight" },
-  { value: "3m", label: "3m", tech: "Airtight" },
-  { value: "4m", label: "4m", tech: "Airtight" },
-  { value: "5m", label: "5m", tech: "Airtight" },
-  { value: "6m", label: "6m", tech: "Airtight" },
-  { value: "8m", label: "8m", tech: "Airtight" },
+  { value: "2m", label: "2m", tech: "Étanche" },
+  { value: "3m", label: "3m", tech: "Étanche" },
+  { value: "4m", label: "4m", tech: "Étanche" },
+  { value: "5m", label: "5m", tech: "Étanche" },
+  { value: "6m", label: "6m", tech: "Étanche" },
+  { value: "8m", label: "8m", tech: "Étanche" },
   { value: "10m", label: "10m", tech: "Soufflerie" },
   { value: "12m", label: "12m", tech: "Soufflerie" },
   { value: "15m", label: "15m", tech: "Soufflerie" },
@@ -50,9 +50,9 @@ export default function ContactSection() {
   };
 
   const products = [
-    { type: "ecran" as const, icon: Monitor, label: "Écran de cinéma", desc: "De 2m à 24m, Airtight ou Soufflerie" },
-    { type: "tente" as const, icon: Tent, label: "Tente gonflable", desc: "Technologie Airtight, montage rapide" },
-    { type: "mobilier" as const, icon: Armchair, label: "Mobilier gonflable", desc: "Technologie Airtight, design élégant" },
+    { type: "ecran" as const, icon: Monitor, label: "Écran de cinéma", desc: "De 2m à 24m, étanche ou soufflerie" },
+    { type: "tente" as const, icon: Tent, label: "Tente gonflable", desc: "Technologie étanche, montage rapide" },
+    { type: "mobilier" as const, icon: Armchair, label: "Mobilier gonflable", desc: "Technologie étanche, design élégant" },
   ];
 
   const selectedSize = screenSizes.find((s) => s.value === screenSize);
@@ -220,7 +220,7 @@ export default function ContactSection() {
                                 >
                                   <div className="text-white font-bold text-lg">{size.label}</div>
                                   <div className={`text-xs mt-0.5 ${
-                                    size.tech === "Airtight" ? "text-gold/70" : "text-blue-400/70"
+                                    size.tech === "Étanche" ? "text-gold/70" : "text-blue-400/70"
                                   }`}>
                                     {size.tech}
                                   </div>
@@ -230,7 +230,7 @@ export default function ContactSection() {
                             {selectedSize && (
                               <div className="p-3 bg-gold/5 border border-gold/20 rounded-sm">
                                 <span className="text-gold text-sm">
-                                  Technologie {selectedSize.tech} — {selectedSize.tech === "Airtight" ? "Étanche, sans soufflerie" : "Soufflerie permanente, tissu polyamide haute ténacité"}
+                                  Technologie {selectedSize.tech} — {selectedSize.tech === "Étanche" ? "Chambre à air scellée, sans soufflerie" : "Soufflerie permanente, tissu polyamide haute ténacité"}
                                 </span>
                               </div>
                             )}

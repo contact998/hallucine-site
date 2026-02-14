@@ -1,59 +1,82 @@
 /*
  * Design: "Nuit Étoilée" – Section Réalisations / Galerie
- * UNIQUEMENT des photos réelles du client - TOUTES les photos disponibles
- * Galerie de photos avec descriptions
+ * Photos variées de TOUTES les catégories : étanches, soufflerie, tentes, accessoires
+ * Aucune répétition, chaque photo est unique
  */
 import { motion } from "framer-motion";
 
-// Toutes les photos réelles du client
 const photos = [
   {
-    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PGaRdZUncWXjznrw.JPG",
-    alt: "Vue aérienne drone - Écran gonflable géant installé sur parking événementiel",
-    caption: "Écran géant — Vue aérienne",
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/KzXxmgVsjMoEdlML.jpg",
+    alt: "Écran soufflerie 24m - projection nocturne spectaculaire",
+    caption: "Écran 24m — Soufflerie",
     span: "col-span-2 row-span-2",
   },
   {
-    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qIDIIXPgHeWcNdTq.jpg",
-    alt: "Projection cinéma en plein air au crépuscule - foule nombreuse devant écran gonflable",
-    caption: "Cinéma en plein air — Projection au crépuscule",
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CzprNCGHiOGRIkTg.jpg",
+    alt: "Écran étanche 5m installé au Ritz - événement privé",
+    caption: "Écran étanche 5m — Ritz",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YqpLPgGtuwNJbHEB.png",
+    alt: "Tente gonflable Hallucine - technologie étanche",
+    caption: "Tente gonflable",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bWqLOjfHSsVoXNHz.jpg",
+    alt: "Écran soufflerie 13m devant les arènes - événement culturel",
+    caption: "Écran 13m — Arènes",
     span: "col-span-2 row-span-1",
   },
   {
-    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jPYZoxFIkhGeMpkL.jpg",
-    alt: "Projection nocturne avec foule dense devant écran gonflable Hallucine",
-    caption: "Soirée cinéma — Foule enthousiaste",
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VEbmfwItAbfpcPkZ.jpg",
+    alt: "Écran étanche 8m au bord d'une piscine - soirée privée",
+    caption: "Écran étanche 8m — Piscine",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bejqCXUcdKFhPUrA.jpg",
+    alt: "Fauteuil gonflable Hallucine - mobilier événementiel",
+    caption: "Mobilier gonflable",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/xEbWQMioMZQLtuDK.jpg",
+    alt: "Écran soufflerie 15m - projection nocturne en plein air",
+    caption: "Écran 15m — Soufflerie",
     span: "col-span-2 row-span-2",
   },
   {
-    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/UjFqdXoLutZxgPuy.JPG",
-    alt: "Vue rapprochée structure gonflable noire et toile de projection blanche",
-    caption: "Montage — Structure gonflable",
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/UsYUSDaqdvtdYUuR.jpg",
+    alt: "Écran étanche 4m à Paris - événement urbain",
+    caption: "Écran étanche 4m — Paris",
     span: "col-span-1 row-span-1",
   },
   {
-    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/LPVfubaILVbKKVMa.jpg",
-    alt: "Équipe technique Hallucine sous tente avec projecteur professionnel",
-    caption: "Équipe technique — Coulisses",
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wQxSrNHWpcNFqINL.jpg",
+    alt: "Écran soufflerie 10m - cinéma en plein air drive-in",
+    caption: "Écran 10m — Drive-in",
     span: "col-span-1 row-span-1",
   },
   {
-    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IbNUEdhyhiTLcBgz.JPG",
-    alt: "Événement en plein air avec fresque murale colorée et équipe Hallucine",
-    caption: "Événement communautaire",
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ozhVXCxOcuYoBREY.png",
+    alt: "Tente gonflable Hallucine - modèle événementiel",
+    caption: "Tente événementielle",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CAeHAHuCCqWzSkLI.jpg",
+    alt: "Écran soufflerie 17m noir - grand format",
+    caption: "Écran 17m — Grand format",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HGkkpfyaxsgmapYw.jpg",
+    alt: "Écran étanche 5m vue éclatée - détail technique",
+    caption: "Écran étanche — Vue éclatée",
     span: "col-span-2 row-span-1",
-  },
-  {
-    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yFxdRfFWnZJYfkSG.JPG",
-    alt: "Vue aérienne nocturne de la ville avec stade illuminé",
-    caption: "Vue aérienne nocturne",
-    span: "col-span-1 row-span-1",
-  },
-  {
-    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IMfKxomKDDcwBwvT.JPG",
-    alt: "Vue aérienne maisons provençales - cadre événementiel",
-    caption: "Cadre provençal",
-    span: "col-span-1 row-span-1",
   },
 ];
 
@@ -62,7 +85,7 @@ const fadeInUp = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, delay: i * 0.1 },
+    transition: { duration: 0.7, delay: i * 0.08 },
   }),
 };
 
@@ -70,7 +93,6 @@ export default function RealisationsSection() {
   return (
     <section id="realisations" className="py-24 md:py-32 relative">
       <div className="container">
-        {/* Header */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -85,12 +107,11 @@ export default function RealisationsSection() {
             <span className="text-gradient-gold">dans le monde entier</span>
           </h2>
           <p className="text-white/60 mt-4 text-lg leading-relaxed">
-            Des festivals aux événements corporate, des plages aux stades, nos écrans transforment chaque lieu en salle de cinéma.
+            Des festivals aux événements corporate, des plages aux stades, nos écrans, tentes et mobilier transforment chaque lieu en espace unique.
           </p>
         </motion.div>
 
-        {/* Photo grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 auto-rows-[180px] md:auto-rows-[220px]">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 auto-rows-[160px] md:auto-rows-[200px]">
           {photos.map((photo, i) => (
             <motion.div
               key={i}

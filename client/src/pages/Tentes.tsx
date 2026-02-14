@@ -1,15 +1,18 @@
 /*
  * Page dédiée : Tentes Gonflables
- * Technologie Airtight — même que les écrans étanches
- * Photos réelles uniquement
+ * Technologie étanche — même que les écrans étanches
+ * Photos RÉELLES de tentes
  */
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
-import { Check, ChevronRight, Wind, Shield, Feather, Clock } from "lucide-react";
+import { Check, ChevronRight, Wind, Shield, Feather, Clock, ArrowLeft } from "lucide-react";
+import { Link } from "wouter";
 
-const HERO_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IbNUEdhyhiTLcBgz.JPG";
-const DETAIL_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/UjFqdXoLutZxgPuy.JPG";
+// Photos RÉELLES de tentes
+const TENTE_1 = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YqpLPgGtuwNJbHEB.png";
+const TENTE_2 = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ozhVXCxOcuYoBREY.png";
+const TENTE_3 = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/JfqHqNzmClwigWcR.png";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -17,10 +20,6 @@ const fadeIn = {
     opacity: 1, y: 0,
     transition: { duration: 0.6, delay: i * 0.1 },
   }),
-};
-
-const scrollToContact = () => {
-  window.location.href = "/#contact";
 };
 
 export default function Tentes() {
@@ -31,16 +30,19 @@ export default function Tentes() {
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <img src={HERO_IMG} alt="Tente gonflable Hallucine lors d'un événement" className="w-full h-full object-cover" />
+          <img src={TENTE_1} alt="Tente gonflable Hallucine lors d'un événement" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.10_0.03_260_/_0.92)] via-[oklch(0.12_0.03_260_/_0.75)] to-[oklch(0.10_0.03_260_/_0.4)]" />
           <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260)] via-transparent to-transparent" />
         </div>
         <div className="relative container pt-32 pb-16">
+          <Link href="/" className="inline-flex items-center gap-2 text-white/50 hover:text-gold transition-colors mb-8 text-sm">
+            <ArrowLeft className="w-4 h-4" /> Retour à l'accueil
+          </Link>
           <motion.div initial="hidden" animate="visible" variants={fadeIn} custom={0}>
             <span className="text-gold text-sm font-semibold tracking-widest uppercase">Tentes gonflables</span>
             <h1 className="text-4xl md:text-6xl font-bold text-white mt-3 leading-tight max-w-3xl">
               Tentes gonflables<br />
-              <span className="text-gradient-gold">Technologie Airtight</span>
+              <span className="text-gradient-gold">technologie étanche</span>
             </h1>
             <p className="text-white/70 mt-6 text-lg max-w-2xl leading-relaxed">
               La même technologie que nos écrans étanches, appliquée aux structures événementielles. Montage rapide, ultra-légères, sans soufflerie.
@@ -59,7 +61,7 @@ export default function Tentes() {
                 <span className="text-white/60 text-2xl">au service de l'événementiel</span>
               </h2>
               <p className="text-white/60 mt-6 leading-relaxed">
-                Nos tentes gonflables utilisent la même technologie Airtight que nos écrans de 2 à 8 mètres. Inspirée des boudins de kitesurf, cette technologie à chambre à air scellée permet un gonflage unique : une fois en place, la tente est autonome, sans soufflerie, sans bruit, sans câble.
+                Nos tentes gonflables utilisent la même technologie étanche que nos écrans de 2 à 8 mètres. Inspirée des boudins de kitesurf, cette technologie à chambre à air scellée permet un gonflage unique : une fois en place, la tente est autonome, sans soufflerie, sans bruit, sans câble.
               </p>
               <p className="text-white/60 mt-4 leading-relaxed">
                 Le résultat : des structures événementielles ultra-légères, montées en quelques minutes, qui tiennent au vent et à la pluie. Idéales pour les festivals, les événements corporate, les marchés et les salons.
@@ -80,14 +82,47 @@ export default function Tentes() {
                 ))}
               </div>
 
-              <button onClick={scrollToContact} className="mt-8 flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all glow-gold">
+              <Link href="/contact" className="mt-8 inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all glow-gold">
                 Demander un devis <ChevronRight className="w-4 h-4" />
-              </button>
+              </Link>
             </motion.div>
 
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={1}>
-              <img src={DETAIL_IMG} alt="Détail structure gonflable Hallucine" className="w-full rounded-sm border border-white/10" />
+              <img src={TENTE_2} alt="Tente gonflable Hallucine en situation" className="w-full rounded-sm border border-white/10" />
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Galerie */}
+      <section className="py-16 md:py-24">
+        <div className="container">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={0} className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white">Nos tentes en images</h2>
+          </motion.div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { src: TENTE_1, alt: "Tente gonflable Hallucine - vue extérieure" },
+              { src: TENTE_2, alt: "Tente gonflable Hallucine - en situation" },
+              { src: TENTE_3, alt: "Tente gonflable Hallucine - détail structure" },
+            ].map((img, i) => (
+              <motion.div
+                key={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeIn}
+                custom={i}
+                className="group overflow-hidden rounded-sm border border-white/10"
+              >
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
+                />
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -100,7 +135,7 @@ export default function Tentes() {
           </motion.div>
           <div className="space-y-6">
             {[
-              "Technologie Airtight éprouvée — la même que nos écrans depuis 30 ans",
+              "Technologie étanche éprouvée — la même que nos écrans depuis 30 ans",
               "Chambre à air scellée — un seul gonflage suffit pour toute la durée de l'événement",
               "Aucune soufflerie nécessaire — pas de bruit, pas de câble électrique",
               "Ultra-légères — une seule personne peut transporter et monter la tente",
@@ -115,9 +150,9 @@ export default function Tentes() {
             ))}
           </div>
           <div className="text-center mt-12">
-            <button onClick={scrollToContact} className="px-8 py-4 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all glow-gold">
-              Demander un devis personnalisé
-            </button>
+            <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all glow-gold">
+              Demander un devis personnalisé <ChevronRight className="w-5 h-5" />
+            </Link>
           </div>
         </div>
       </section>

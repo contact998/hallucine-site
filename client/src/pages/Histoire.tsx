@@ -1,18 +1,22 @@
 /*
  * Page dédiée : Notre Histoire
  * Timeline narrative complète du fondateur
- * Photos réelles uniquement
+ * Photos RÉELLES variées de toutes les catégories
  */
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
+import { Link } from "wouter";
 
-// Photos réelles
-const ECRAN_AERIEN = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PGaRdZUncWXjznrw.JPG";
-const EQUIPE_TECH = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/LPVfubaILVbKKVMa.jpg";
-const PROJECTION = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qIDIIXPgHeWcNdTq.jpg";
-const ECRAN_FOULE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jPYZoxFIkhGeMpkL.jpg";
-const EVENEMENT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IbNUEdhyhiTLcBgz.JPG";
+// Photos RÉELLES variées - une différente pour chaque chapitre illustré
+const ETANCHE_3M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XkmcCQJvGfnRZRxz.jpg";
+const ETANCHE_5M_RITZ = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CzprNCGHiOGRIkTg.jpg";
+const SOUFFLERIE_13M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bWqLOjfHSsVoXNHz.jpg";
+const SOUFFLERIE_24M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/KzXxmgVsjMoEdlML.jpg";
+const SOUFFLERIE_15M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/xEbWQMioMZQLtuDK.jpg";
+const SOUFFLERIE_12M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/AFizhJVCNHvXVtJS.jpg";
+const TENTE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YqpLPgGtuwNJbHEB.png";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -31,7 +35,7 @@ const chapters = [
     year: "1996",
     title: "Le premier écran — et la première leçon",
     text: "Le premier écran est tubulaire, commandé en Angleterre. À la livraison : de gros tuyaux lourds et aucune idée de comment les monter. C'est un échec, mais c'est aussi le début d'une quête : trouver la bonne technologie.",
-    image: null,
+    image: ETANCHE_3M,
     quote: null,
   },
   {
@@ -45,21 +49,21 @@ const chapters = [
     year: "1998",
     title: "La voilerie bretonne — La Trinité-sur-Mer",
     text: "En Bretagne, à La Trinité-sur-Mer, une voilerie devient le berceau des premiers vrais écrans Hallucine. Jean-Christophe, maître voilier, maîtrise toutes les techniques de couture. Ensemble, ils mettent au point un écran révolutionnaire : après la projection, il tombe dans un grand sac à voile. Pas besoin de le replier.",
-    image: EQUIPE_TECH,
+    image: SOUFFLERIE_12M,
     quote: null,
   },
   {
     year: "2000",
     title: "Hallucine, la boîte de prestation",
     text: "Hallucine devient une entreprise de prestation événementielle. L'équipe tourne dans le monde entier pour faire des projections en plein air. C'est cette expérience terrain qui forge la philosophie de l'entreprise : chaque produit doit être pensé par ceux qui l'utilisent.",
-    image: PROJECTION,
+    image: SOUFFLERIE_24M,
     quote: "« Nos concurrents n'ont jamais eu, à 3h du matin, à devoir replier un écran pour aller se coucher. Nous, si. »",
   },
   {
     year: "2005",
     title: "Le secret des airbags — Lyon",
     text: "À Lyon, ancienne capitale du tissu, une enquête commence. Les airbags de voiture utilisent un tissu léger et très résistant. Quand les constructeurs automobiles disent que c'est « secret défense », le fondateur ne se décourage pas. Il finit par trouver la réponse dans une usine lyonnaise : un polyamide haute ténacité de DuPont de Nemours. Le même tissu pour tous les constructeurs.",
-    image: null,
+    image: ETANCHE_5M_RITZ,
     quote: null,
   },
   {
@@ -73,7 +77,7 @@ const chapters = [
     year: "2012",
     title: "La Chine — Répondre au marché",
     text: "Des clients demandent des écrans moins chers. Direction la Chine pour fabriquer des écrans économiques de 5 à 6 mètres avec un tissu enduit plus lourd. Ce n'est pas la qualité habituelle, mais c'est la loi du marché. Les voyages en Chine deviennent réguliers : tous les 15 jours.",
-    image: ECRAN_AERIEN,
+    image: SOUFFLERIE_13M,
     quote: null,
   },
   {
@@ -87,7 +91,7 @@ const chapters = [
     year: "Aujourd'hui",
     title: "Shenzhen — L'aventure continue",
     text: "Installé en Chine, le fondateur travaille avec une usine partenaire dans le Dongguan. On peut dire qu'ils sont devenus amis. La partie prestation a été revendue pour se recentrer sur la fabrication et la vente. Mais l'esprit reste le même : des produits conçus par des gens qui les utilisent. L'objectif est clair : faire connaître les écrans Hallucine au plus large public.",
-    image: ECRAN_FOULE,
+    image: SOUFFLERIE_15M,
     quote: null,
   },
 ];
@@ -100,11 +104,14 @@ export default function Histoire() {
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <img src={EVENEMENT} alt="Événement Hallucine" className="w-full h-full object-cover" />
+          <img src={TENTE} alt="Événement Hallucine" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.10_0.03_260_/_0.95)] via-[oklch(0.12_0.03_260_/_0.80)] to-[oklch(0.10_0.03_260_/_0.6)]" />
           <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260)] via-transparent to-transparent" />
         </div>
         <div className="relative container pt-32 pb-16">
+          <Link href="/" className="inline-flex items-center gap-2 text-white/50 hover:text-gold transition-colors mb-8 text-sm">
+            <ArrowLeft className="w-4 h-4" /> Retour à l'accueil
+          </Link>
           <motion.div initial="hidden" animate="visible" variants={fadeIn}>
             <span className="text-gold text-sm font-semibold tracking-widest uppercase">Notre histoire</span>
             <h1 className="text-4xl md:text-6xl font-bold text-white mt-3 leading-tight max-w-3xl">

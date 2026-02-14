@@ -1,18 +1,32 @@
 /*
- * Page dédiée : Nos Écrans de Cinéma Gonflables
- * Détails complets des deux gammes technologiques
- * Photos réelles uniquement
+ * Page dédiée Écrans - Gamme Étanche + Gamme Soufflerie
+ * Photos CORRECTES par catégorie et par taille
+ * Terminologie française : "étanche" (pas "Airtight")
  */
+import { motion } from "framer-motion";
+import { Shield, Wind, Feather, Ruler, ChevronRight, Check, ArrowLeft, ArrowDown } from "lucide-react";
+import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { motion } from "framer-motion";
-import { Shield, Feather, Wind, Ruler, ChevronRight, Check, ArrowDown } from "lucide-react";
 
-// Photos réelles
-const HERO_ECRAN = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qIDIIXPgHeWcNdTq.jpg";
-const ECRAN_AERIEN = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PGaRdZUncWXjznrw.JPG";
-const ECRAN_RAPPROCHE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/UjFqdXoLutZxgPuy.JPG";
-const ECRAN_FOULE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jPYZoxFIkhGeMpkL.jpg";
+// Photos CORRECTES - Écrans étanches
+const ETANCHE_3M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XkmcCQJvGfnRZRxz.jpg";
+const ETANCHE_4M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/UsYUSDaqdvtdYUuR.jpg";
+const ETANCHE_5M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CzprNCGHiOGRIkTg.jpg";
+const ETANCHE_5M_ECLATE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HGkkpfyaxsgmapYw.jpg";
+const ETANCHE_6M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wjOpqTzVwXDYFRcz.jpg";
+const ETANCHE_7M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ztusfncqjZbnObZq.jpg";
+const ETANCHE_8M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VEbmfwItAbfpcPkZ.jpg";
+
+// Photos CORRECTES - Écrans soufflerie
+const SOUFFLERIE_8M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/KFRWoeCersYiDqXf.jpg";
+const SOUFFLERIE_10M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wQxSrNHWpcNFqINL.jpg";
+const SOUFFLERIE_12M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/AFizhJVCNHvXVtJS.jpg";
+const SOUFFLERIE_13M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bWqLOjfHSsVoXNHz.jpg";
+const SOUFFLERIE_15M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/xEbWQMioMZQLtuDK.jpg";
+const SOUFFLERIE_17M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CAeHAHuCCqWzSkLI.jpg";
+const SOUFFLERIE_24M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/KzXxmgVsjMoEdlML.jpg";
+const SOUFFLERIE_24M_B = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/FdcsGRVCOGXGHcKi.jpg";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -22,41 +36,41 @@ const fadeIn = {
   }),
 };
 
-const airtightSizes = [
-  { size: "2m", usage: "Privé / Petit événement", weight: "~8 kg" },
-  { size: "3m", usage: "Jardin / Terrasse", weight: "~12 kg" },
-  { size: "4m", usage: "Petit événement", weight: "~18 kg" },
-  { size: "5m", usage: "Événement moyen", weight: "~25 kg" },
-  { size: "6m", usage: "Festival / Corporate", weight: "~35 kg" },
-  { size: "8m", usage: "Grand événement", weight: "~50 kg" },
+const etancheScreens = [
+  { size: "3m", img: ETANCHE_3M, usage: "Jardin / Terrasse", weight: "~12 kg", desc: "Idéal pour les événements intimes" },
+  { size: "4m", img: ETANCHE_4M, usage: "Petit événement", weight: "~18 kg", desc: "Soirées privées et petits festivals" },
+  { size: "5m", img: ETANCHE_5M, usage: "Événement moyen", weight: "~25 kg", desc: "Le format polyvalent, du Ritz aux plages" },
+  { size: "6m", img: ETANCHE_6M, usage: "Festival / Corporate", weight: "~35 kg", desc: "Grand format étanche, événements corporate" },
+  { size: "7m", img: ETANCHE_7M, usage: "Grand événement", weight: "~40 kg", desc: "Format intermédiaire avec pieds stabilisateurs" },
+  { size: "8m", img: ETANCHE_8M, usage: "Le plus grand étanche", weight: "~50 kg", desc: "Le plus grand de la gamme étanche" },
 ];
 
-const soufflerieSizes = [
-  { size: "10m", usage: "Festival / Cinéma plein air", weight: "~80 kg" },
-  { size: "12m", usage: "Grand événement", weight: "~100 kg" },
-  { size: "15m", usage: "Événement majeur", weight: "~130 kg" },
-  { size: "18m", usage: "Stade / Arena", weight: "~160 kg" },
-  { size: "20m", usage: "Événement exceptionnel", weight: "~180 kg" },
-  { size: "24m", usage: "Le plus grand", weight: "~200 kg" },
+const soufflerieScreens = [
+  { size: "8m", img: SOUFFLERIE_8M, usage: "Projection nocturne", weight: "~60 kg", desc: "Format compact avec soufflerie" },
+  { size: "10m", img: SOUFFLERIE_10M, usage: "Drive-in / Plein air", weight: "~80 kg", desc: "Cinéma en plein air et drive-in" },
+  { size: "12m", img: SOUFFLERIE_12M, usage: "Festival", weight: "~100 kg", desc: "Festivals et événements de taille moyenne" },
+  { size: "13m", img: SOUFFLERIE_13M, usage: "Culturel / Arènes", weight: "~110 kg", desc: "Événements culturels, arènes, places publiques" },
+  { size: "15m", img: SOUFFLERIE_15M, usage: "Événement majeur", weight: "~130 kg", desc: "Grand format pro, 3× plus léger que la concurrence" },
+  { size: "17m", img: SOUFFLERIE_17M, usage: "Spectaculaire", weight: "~160 kg", desc: "Format spectaculaire pour grands événements" },
+  { size: "24m", img: SOUFFLERIE_24M, usage: "Le plus grand", weight: "~200 kg", desc: "Le plus grand écran gonflable au monde" },
 ];
-
-const scrollToContact = () => {
-  window.location.href = "/#contact";
-};
 
 export default function Ecrans() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
 
-      {/* Hero */}
+      {/* Hero avec photo soufflerie 24m */}
       <section className="relative min-h-[70vh] flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <img src={HERO_ECRAN} alt="Écran gonflable Hallucine en projection" className="w-full h-full object-cover" />
+          <img src={SOUFFLERIE_24M_B} alt="Écran gonflable Hallucine 24m en projection" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.10_0.03_260_/_0.92)] via-[oklch(0.12_0.03_260_/_0.75)] to-[oklch(0.10_0.03_260_/_0.4)]" />
           <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260)] via-transparent to-transparent" />
         </div>
         <div className="relative container pt-32 pb-16">
+          <Link href="/" className="inline-flex items-center gap-2 text-white/50 hover:text-gold transition-colors mb-8 text-sm">
+            <ArrowLeft className="w-4 h-4" /> Retour à l'accueil
+          </Link>
           <motion.div initial="hidden" animate="visible" variants={fadeIn} custom={0}>
             <span className="text-gold text-sm font-semibold tracking-widest uppercase">Nos écrans</span>
             <h1 className="text-4xl md:text-6xl font-bold text-white mt-3 leading-tight max-w-3xl">
@@ -73,17 +87,17 @@ export default function Ecrans() {
         </motion.div>
       </section>
 
-      {/* Gamme Airtight */}
+      {/* Gamme Étanche */}
       <section className="py-24 md:py-32">
         <div className="container">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-16">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={0}>
               <div className="inline-block px-3 py-1 bg-gold/10 border border-gold/20 rounded-sm mb-4">
-                <span className="text-gold text-sm font-bold">Technologie Airtight</span>
+                <span className="text-gold text-sm font-bold">Technologie Étanche</span>
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
-                Gamme Airtight<br />
-                <span className="text-white/60 text-2xl md:text-3xl">2m à 8m — Étanche, sans soufflerie</span>
+                Gamme Étanche<br />
+                <span className="text-white/60 text-2xl md:text-3xl">2m à 8m — Sans soufflerie</span>
               </h2>
               <p className="text-white/60 mt-4 leading-relaxed">
                 Inspirée directement du kitesurf, cette technologie utilise des chambres à air scellées. Une fois gonflé, l'écran est autonome : pas de soufflerie, pas de bruit, pas de câble électrique. Idéal pour les événements où le silence compte.
@@ -102,31 +116,50 @@ export default function Ecrans() {
                   </div>
                 ))}
               </div>
-              <button onClick={scrollToContact} className="mt-8 flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all glow-gold">
+              <Link href="/contact" className="mt-8 inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all glow-gold">
                 Demander un devis <ChevronRight className="w-4 h-4" />
-              </button>
+              </Link>
             </motion.div>
 
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={1}>
-              <img src={ECRAN_FOULE} alt="Écran Airtight en projection devant un public" className="w-full rounded-sm border border-white/10" />
+              <img src={ETANCHE_5M_ECLATE} alt="Vue éclatée d'un écran étanche Hallucine montrant la chambre à air" className="w-full rounded-sm border border-white/10" />
             </motion.div>
           </div>
 
-          {/* Tailles Airtight */}
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={2} className="mt-16">
-            <h3 className="text-xl font-bold text-white mb-6">Tailles disponibles — Gamme Airtight</h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-              {airtightSizes.map((s, i) => (
-                <div key={i} className="p-4 border border-white/10 rounded-sm bg-white/[0.02] hover:border-gold/30 transition-colors text-center">
-                  <div className="text-2xl font-bold text-gold">{s.size}</div>
-                  <div className="text-white/50 text-xs mt-1">{s.usage}</div>
-                  <div className="text-white/30 text-xs mt-2 flex items-center justify-center gap-1">
-                    <Feather className="w-3 h-3" /> {s.weight}
+          {/* Grille photos écrans étanches */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {etancheScreens.map((screen, i) => (
+              <motion.div
+                key={screen.size}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-50px" }}
+                variants={fadeIn}
+                custom={i + 1}
+                className="group overflow-hidden rounded-sm border border-white/10 bg-white/[0.03] hover:border-gold/30 transition-colors duration-300"
+              >
+                <div className="aspect-[4/3] overflow-hidden relative">
+                  <img
+                    src={screen.img}
+                    alt={`Écran étanche Hallucine ${screen.size}`}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                  <div className="absolute top-3 left-3 px-3 py-1 bg-gold text-navy-deep text-xs font-bold rounded-sm">
+                    {screen.size}
                   </div>
                 </div>
-              ))}
-            </div>
-          </motion.div>
+                <div className="p-5">
+                  <h3 className="text-lg font-bold text-white mb-1">Écran étanche {screen.size}</h3>
+                  <p className="text-white/50 text-sm mb-2">{screen.desc}</p>
+                  <div className="flex items-center gap-4 text-xs text-white/30">
+                    <span className="flex items-center gap-1"><Feather className="w-3 h-3" /> {screen.weight}</span>
+                    <span>{screen.usage}</span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -136,9 +169,9 @@ export default function Ecrans() {
       {/* Gamme Soufflerie */}
       <section className="py-24 md:py-32">
         <div className="container">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-16">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={0} className="order-2 lg:order-1">
-              <img src={ECRAN_RAPPROCHE} alt="Écran géant Hallucine - structure gonflable" className="w-full rounded-sm border border-white/10" />
+              <img src={SOUFFLERIE_15M} alt="Écran soufflerie Hallucine 15m en projection nocturne" className="w-full rounded-sm border border-white/10" />
             </motion.div>
 
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={1} className="order-1 lg:order-2">
@@ -147,7 +180,7 @@ export default function Ecrans() {
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
                 Gamme Pro<br />
-                <span className="text-white/60 text-2xl md:text-3xl">10m à 24m — Tissu d'airbag automobile</span>
+                <span className="text-white/60 text-2xl md:text-3xl">5m à 24m — Tissu d'airbag automobile</span>
               </h2>
               <p className="text-white/60 mt-4 leading-relaxed">
                 Née dans une voilerie bretonne à La Trinité-sur-Mer, cette gamme utilise un polyamide haute ténacité de DuPont de Nemours — le même tissu que les airbags automobiles. Résultat : un écran de 15m qui pèse 200 kg au lieu de 600 kg chez la concurrence.
@@ -166,27 +199,46 @@ export default function Ecrans() {
                   </div>
                 ))}
               </div>
-              <button onClick={scrollToContact} className="mt-8 flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all glow-gold">
+              <Link href="/contact" className="mt-8 inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all glow-gold">
                 Demander un devis <ChevronRight className="w-4 h-4" />
-              </button>
+              </Link>
             </motion.div>
           </div>
 
-          {/* Tailles Soufflerie */}
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={2} className="mt-16">
-            <h3 className="text-xl font-bold text-white mb-6">Tailles disponibles — Gamme Pro (Soufflerie)</h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-              {soufflerieSizes.map((s, i) => (
-                <div key={i} className="p-4 border border-white/10 rounded-sm bg-white/[0.02] hover:border-gold/30 transition-colors text-center">
-                  <div className="text-2xl font-bold text-white">{s.size}</div>
-                  <div className="text-white/50 text-xs mt-1">{s.usage}</div>
-                  <div className="text-white/30 text-xs mt-2 flex items-center justify-center gap-1">
-                    <Feather className="w-3 h-3" /> {s.weight}
+          {/* Grille photos écrans soufflerie */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {soufflerieScreens.map((screen, i) => (
+              <motion.div
+                key={screen.size}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-50px" }}
+                variants={fadeIn}
+                custom={i + 1}
+                className="group overflow-hidden rounded-sm border border-white/10 bg-white/[0.03] hover:border-white/20 transition-colors duration-300"
+              >
+                <div className="aspect-[4/3] overflow-hidden relative">
+                  <img
+                    src={screen.img}
+                    alt={`Écran soufflerie Hallucine ${screen.size}`}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                  <div className="absolute top-3 left-3 px-3 py-1 bg-white text-navy-deep text-xs font-bold rounded-sm">
+                    {screen.size}
                   </div>
                 </div>
-              ))}
-            </div>
-          </motion.div>
+                <div className="p-5">
+                  <h3 className="text-lg font-bold text-white mb-1">Écran soufflerie {screen.size}</h3>
+                  <p className="text-white/50 text-sm mb-2">{screen.desc}</p>
+                  <div className="flex items-center gap-4 text-xs text-white/30">
+                    <span className="flex items-center gap-1"><Feather className="w-3 h-3" /> {screen.weight}</span>
+                    <span>{screen.usage}</span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -203,25 +255,25 @@ export default function Ecrans() {
               <thead>
                 <tr className="border-b border-white/10">
                   <th className="text-left py-4 px-4 text-white/50 font-medium">Critère</th>
-                  <th className="text-center py-4 px-4 text-gold font-bold">Airtight (2-8m)</th>
-                  <th className="text-center py-4 px-4 text-white font-bold">Soufflerie (10-24m)</th>
+                  <th className="text-center py-4 px-4 text-gold font-bold">Étanche (2-8m)</th>
+                  <th className="text-center py-4 px-4 text-white font-bold">Soufflerie (5-24m)</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
                 {[
                   ["Technologie", "Chambre à air scellée", "Soufflerie permanente"],
-                  ["Tailles", "2m à 8m", "10m à 24m"],
+                  ["Tailles", "2m à 8m", "5m à 24m"],
                   ["Soufflerie requise", "Non", "Oui (incluse)"],
                   ["Bruit", "Silencieux", "Léger bruit de soufflerie"],
                   ["Montage", "1 personne, 5 min", "2 personnes, 30 min"],
-                  ["Tissu", "Polyamide Airtight", "Polyamide haute ténacité (airbag)"],
+                  ["Tissu", "Polyamide étanche", "Polyamide haute ténacité (airbag)"],
                   ["Garantie", "10 ans", "10 ans"],
                   ["Rangement", "Sac compact", "Sac à voile"],
                   ["Idéal pour", "Événements privés, petits festivals", "Grands festivals, stades, corporate"],
-                ].map(([critere, airtight, soufflerie], i) => (
+                ].map(([critere, etanche, soufflerie], i) => (
                   <tr key={i} className="hover:bg-white/[0.02] transition-colors">
                     <td className="py-3 px-4 text-white/70 font-medium">{critere}</td>
-                    <td className="py-3 px-4 text-center text-white/60">{airtight}</td>
+                    <td className="py-3 px-4 text-center text-white/60">{etanche}</td>
                     <td className="py-3 px-4 text-center text-white/60">{soufflerie}</td>
                   </tr>
                 ))}
@@ -230,26 +282,9 @@ export default function Ecrans() {
           </motion.div>
 
           <div className="text-center mt-12">
-            <button onClick={scrollToContact} className="px-8 py-4 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all glow-gold">
-              Demander un devis personnalisé
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Gallery */}
-      <section className="py-24 md:py-32">
-        <div className="container">
-          <h2 className="text-3xl font-bold text-white mb-12 text-center">Nos écrans en action</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              { src: ECRAN_AERIEN, alt: "Vue aérienne d'un écran géant Hallucine" },
-              { src: ECRAN_FOULE, alt: "Projection avec foule devant écran Hallucine" },
-            ].map((img, i) => (
-              <motion.div key={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={i} className="overflow-hidden rounded-sm border border-white/10">
-                <img src={img.src} alt={img.alt} className="w-full h-80 object-cover hover:scale-105 transition-transform duration-700" />
-              </motion.div>
-            ))}
+            <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all glow-gold">
+              Demander un devis personnalisé <ChevronRight className="w-5 h-5" />
+            </Link>
           </div>
         </div>
       </section>

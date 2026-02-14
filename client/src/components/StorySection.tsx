@@ -1,15 +1,15 @@
 /*
  * Design: "Nuit Étoilée" – Section Notre Histoire
- * UNIQUEMENT des photos réelles du client
+ * Photos réelles variées pour illustrer chaque étape
  * Timeline narrative du fondateur
  */
 import { motion } from "framer-motion";
 
-// Photos réelles du client
-const ECRAN_AERIEN = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PGaRdZUncWXjznrw.JPG";
-const EQUIPE_TECH = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/LPVfubaILVbKKVMa.jpg";
-const ECRAN_NUIT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IbNUEdhyhiTLcBgz.JPG";
-const PROJECTION_FOULE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qIDIIXPgHeWcNdTq.jpg";
+// Photos réelles variées pour chaque étape
+const ECRAN_ETANCHE_3M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XkmcCQJvGfnRZRxz.jpg";
+const ECRAN_SOUFFLERIE_15 = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/sXHwwugjLCgZdqTA.jpg";
+const ECRAN_24M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/FdcsGRVCOGXGHcKi.jpg";
+const ECRAN_ETANCHE_6M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/lnVfJDBlokHJPkwN.jpg";
 
 const timeline = [
   {
@@ -30,29 +30,36 @@ const timeline = [
     year: "1998",
     title: "La voilerie bretonne",
     text: "À La Trinité-sur-Mer, en Bretagne, une voilerie devient le berceau des premiers écrans. Jean-Christophe, maître voilier, maîtrise les techniques de couture. Ensemble, ils mettent au point un écran révolutionnaire qui tombe dans un sac à voile après chaque projection.",
-    image: EQUIPE_TECH,
+    image: ECRAN_SOUFFLERIE_15,
     side: "left" as const,
   },
   {
     year: "2005",
     title: "Le secret des airbags",
-    text: "À Lyon, ancienne capitale du tissu, une enquête mène au secret le mieux gardé de l'automobile : le tissu des airbags. Un polyamide haute ténacité de DuPont de Nemours. Léger, indestructible, parfait.",
-    image: null,
+    text: "À Lyon, ancienne capitale du tissu, une enquête mène au secret le mieux gardé de l'automobile : le tissu des airbags. Un polyamide haute ténacité de DuPont de Nemours. Léger, indestructible, parfait. Les constructeurs disaient « secret défense ». Nous avons trouvé quand même.",
+    image: ECRAN_ETANCHE_6M,
     side: "right" as const,
+  },
+  {
+    year: "2010",
+    title: "La gamme étanche est née",
+    text: "Inspirés du kitesurf, les premiers écrans étanches voient le jour. Chambre à air scellée, pas de soufflerie, ultra-légers. De 2m à 8m, ils révolutionnent le marché des petits et moyens écrans.",
+    image: ECRAN_ETANCHE_3M,
+    side: "left" as const,
   },
   {
     year: "2020",
     title: "Bloqué en Chine — Le COVID",
     text: "Février 2020, Shenzhen. Le COVID frappe. Impossible de rentrer. Plutôt que de ne rien faire, inscription à l'université pour apprendre le chinois. La Chine devient une seconde maison, et une usine dans le Dongguan devient un partenaire et un ami.",
-    image: ECRAN_AERIEN,
-    side: "left" as const,
+    image: ECRAN_24M,
+    side: "right" as const,
   },
   {
     year: "Aujourd'hui",
     title: "30 ans d'innovation",
     text: "Depuis la Chine, avec une usine partenaire dans le Dongguan, Hallucine continue sa mission : faire connaître ses écrans au plus large public. De la Bretagne à Shenzhen, l'aventure continue.",
-    image: PROJECTION_FOULE,
-    side: "right" as const,
+    image: null,
+    side: "left" as const,
   },
 ];
 
@@ -113,7 +120,7 @@ export default function StorySection() {
                 <p className="text-white/60 leading-relaxed">{item.text}</p>
               </div>
 
-              {/* Image (if available) - PHOTOS RÉELLES */}
+              {/* Image (if available) - PHOTOS RÉELLES VARIÉES */}
               {item.image && (
                 <div className="flex-1 w-full">
                   <div className="overflow-hidden rounded-sm border border-white/10">

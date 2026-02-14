@@ -1,16 +1,14 @@
 /*
  * Design: "Nuit Étoilée" – Hero plein écran immersif
- * UNIQUEMENT des photos réelles du client
- * Photo principale : projection nocturne avec foule (IMG20251017191800)
- * Titre dramatique, sous-titre, CTA doré
- * Chiffres clés animés
+ * Photo principale : écran soufflerie 24m de nuit (la plus spectaculaire)
+ * Citation emblématique, CTA doré, chiffres clés
  */
 import { motion } from "framer-motion";
 import { ChevronDown, Play } from "lucide-react";
 import { Link } from "wouter";
 
-// Photo réelle : projection nocturne avec foule dense devant écran gonflable
-const HERO_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jPYZoxFIkhGeMpkL.jpg";
+// Photo réelle : écran soufflerie 24m de nuit - la plus spectaculaire
+const HERO_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/KzXxmgVsjMoEdlML.jpg";
 
 const stats = [
   { value: "30", suffix: " ans", label: "d'expertise" },
@@ -20,15 +18,13 @@ const stats = [
 ];
 
 export default function HeroSection() {
-
-
   return (
     <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background Image - VRAIE PHOTO */}
+      {/* Background Image - VRAIE PHOTO soufflerie 24m */}
       <div className="absolute inset-0">
         <img
           src={HERO_IMG}
-          alt="Projection cinéma en plein air avec écran gonflable Hallucine - foule nombreuse"
+          alt="Écran de cinéma gonflable géant Hallucine 24m en projection nocturne"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.10_0.03_260_/_0.92)] via-[oklch(0.12_0.03_260_/_0.75)] to-[oklch(0.10_0.03_260_/_0.5)]" />

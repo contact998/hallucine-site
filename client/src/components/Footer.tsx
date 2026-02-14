@@ -18,7 +18,7 @@ export default function Footer() {
               <img src={LOGO_URL} alt="Hallucine" className="h-12 w-auto rounded mb-4" />
             </Link>
             <p className="text-white/40 text-sm leading-relaxed">
-              Fabricant français d'écrans de cinéma gonflables depuis 30 ans. Technologie Airtight et soufflerie permanente, de 2m à 24m.
+              Fabricant français d'écrans de cinéma gonflables depuis 30 ans. Technologie étanche et soufflerie permanente, de 2m à 24m.
             </p>
           </div>
 

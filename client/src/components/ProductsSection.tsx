@@ -1,17 +1,20 @@
 /*
  * Design: "Nuit Étoilée" – Section Produits
- * UNIQUEMENT des photos réelles du client
- * Deux gammes technologiques : Airtight (2-8m) et Soufflerie permanente (10-24m)
- * Écrans = produit phare, tentes et mobilier en secondaire
+ * Photos CORRECTES par catégorie :
+ * - Gamme Étanche : photo d'un écran étanche (5m Ritz)
+ * - Gamme Soufflerie : photo d'un écran soufflerie (15m nuit)
+ * - Tentes : photo de tente réelle
+ * - Mobilier : photo de mobilier réel
  */
 import { motion } from "framer-motion";
 import { Wind, Shield, Feather, Ruler, ChevronRight } from "lucide-react";
 import { Link } from "wouter";
 
-// Photos réelles du client
-const ECRAN_AERIEN = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PGaRdZUncWXjznrw.JPG";
-const ECRAN_RAPPROCHE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/UjFqdXoLutZxgPuy.JPG";
-const ECRAN_PROJECTION = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qIDIIXPgHeWcNdTq.jpg";
+// Photos CORRECTES par catégorie
+const ECRAN_ETANCHE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CzprNCGHiOGRIkTg.jpg"; // Écran étanche 5m Ritz
+const ECRAN_SOUFFLERIE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/xEbWQMioMZQLtuDK.jpg"; // Écran soufflerie 15m nuit
+const TENTE_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YqpLPgGtuwNJbHEB.png"; // Tente gonflable réelle
+const MOBILIER_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bejqCXUcdKFhPUrA.jpg"; // Fauteuil gonflable réel
 
 const scrollToContact = () => {
   const el = document.querySelector("#contact");
@@ -50,7 +53,7 @@ export default function ProductsSection() {
 
         {/* Two product families */}
         <div className="grid lg:grid-cols-2 gap-8">
-          {/* Gamme Airtight */}
+          {/* Gamme Étanche */}
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -61,18 +64,18 @@ export default function ProductsSection() {
           >
             <div className="aspect-[16/10] overflow-hidden relative">
               <img
-                src={ECRAN_PROJECTION}
-                alt="Écran gonflable Airtight Hallucine en projection - événement en plein air avec public"
+                src={ECRAN_ETANCHE}
+                alt="Écran gonflable étanche Hallucine 5m installé au Ritz - technologie étanche"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute top-4 left-4 px-3 py-1 bg-gold text-navy-deep text-xs font-bold tracking-wider uppercase rounded-sm">
-                Technologie Airtight
+                Technologie Étanche
               </div>
             </div>
             <div className="p-8">
-              <h3 className="text-2xl font-bold text-white mb-2">Gamme Airtight — 2m à 8m</h3>
+              <h3 className="text-2xl font-bold text-white mb-2">Gamme Étanche — 2m à 8m</h3>
               <p className="text-white/50 text-sm mb-6 font-serif italic">
-                Inspirée du kitesurf. Étanche, autonome, sans soufflerie.
+                Inspirée du kitesurf. Chambre à air scellée, autonome, sans soufflerie.
               </p>
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="flex items-start gap-3">
@@ -104,12 +107,9 @@ export default function ProductsSection() {
                   </div>
                 </div>
               </div>
-              <button
-                onClick={scrollToContact}
-                className="flex items-center gap-2 text-gold font-semibold text-sm hover:gap-3 transition-all duration-300"
-              >
-                Demander un devis <ChevronRight className="w-4 h-4" />
-              </button>
+              <Link href="/ecrans" className="flex items-center gap-2 text-gold font-semibold text-sm hover:gap-3 transition-all duration-300">
+                Voir la gamme étanche <ChevronRight className="w-4 h-4" />
+              </Link>
             </div>
           </motion.div>
 
@@ -124,8 +124,8 @@ export default function ProductsSection() {
           >
             <div className="aspect-[16/10] overflow-hidden relative">
               <img
-                src={ECRAN_RAPPROCHE}
-                alt="Écran gonflable géant Hallucine - vue rapprochée structure gonflable et toile de projection"
+                src={ECRAN_SOUFFLERIE}
+                alt="Écran gonflable géant Hallucine 15m à soufflerie permanente - projection nocturne"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute top-4 left-4 px-3 py-1 bg-white text-navy-deep text-xs font-bold tracking-wider uppercase rounded-sm">
@@ -133,7 +133,7 @@ export default function ProductsSection() {
               </div>
             </div>
             <div className="p-8">
-              <h3 className="text-2xl font-bold text-white mb-2">Gamme Pro — 10m à 24m</h3>
+              <h3 className="text-2xl font-bold text-white mb-2">Gamme Pro — 5m à 24m</h3>
               <p className="text-white/50 text-sm mb-6 font-serif italic">
                 Tissu d'airbag automobile. Né dans une voilerie bretonne.
               </p>
@@ -162,22 +162,19 @@ export default function ProductsSection() {
                 <div className="flex items-start gap-3">
                   <Ruler className="w-5 h-5 text-gold mt-0.5 shrink-0" />
                   <div>
-                    <div className="text-white text-sm font-medium">10m à 24m</div>
+                    <div className="text-white text-sm font-medium">5m à 24m</div>
                     <div className="text-white/40 text-xs">Événements majeurs</div>
                   </div>
                 </div>
               </div>
-              <button
-                onClick={scrollToContact}
-                className="flex items-center gap-2 text-gold font-semibold text-sm hover:gap-3 transition-all duration-300"
-              >
-                Demander un devis <ChevronRight className="w-4 h-4" />
-              </button>
+              <Link href="/ecrans" className="flex items-center gap-2 text-gold font-semibold text-sm hover:gap-3 transition-all duration-300">
+                Voir la gamme soufflerie <ChevronRight className="w-4 h-4" />
+              </Link>
             </div>
           </motion.div>
         </div>
 
-        {/* Secondary products */}
+        {/* Secondary products - Tentes et Mobilier avec VRAIES photos */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -186,24 +183,38 @@ export default function ProductsSection() {
           custom={3}
           className="mt-12 grid md:grid-cols-2 gap-6"
         >
-          <div className="p-6 border border-white/10 rounded-sm bg-white/[0.02] hover:border-gold/30 transition-colors duration-300">
-            <h4 className="text-lg font-semibold text-white mb-2">Tentes gonflables Airtight</h4>
-            <p className="text-white/50 text-sm mb-4">
-              Même technologie que nos écrans Airtight. Montage en quelques minutes, sans soufflerie permanente. Idéales pour l'événementiel.
-            </p>
-            <Link href="/tentes" className="text-gold text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all">
-              En savoir plus <ChevronRight className="w-4 h-4" />
-            </Link>
-          </div>
-          <div className="p-6 border border-white/10 rounded-sm bg-white/[0.02] hover:border-gold/30 transition-colors duration-300">
-            <h4 className="text-lg font-semibold text-white mb-2">Mobilier gonflable Airtight</h4>
-            <p className="text-white/50 text-sm mb-4">
-              Canapés, fauteuils, comptoirs. Technologie Airtight pour un mobilier événementiel léger, élégant et facile à transporter.
-            </p>
-            <Link href="/mobilier" className="text-gold text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all">
-              En savoir plus <ChevronRight className="w-4 h-4" />
-            </Link>
-          </div>
+          <Link href="/tentes" className="group block overflow-hidden rounded-sm border border-white/10 bg-white/[0.02] hover:border-gold/30 transition-colors duration-300">
+            <div className="flex gap-4 p-4">
+              <div className="w-28 h-28 shrink-0 overflow-hidden rounded-sm">
+                <img src={TENTE_IMG} alt="Tente gonflable Hallucine - technologie étanche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div className="flex-1">
+                <h4 className="text-lg font-semibold text-white mb-2">Tentes gonflables</h4>
+                <p className="text-white/50 text-sm mb-3">
+                  Même technologie étanche que nos écrans. Montage en quelques minutes, sans soufflerie permanente.
+                </p>
+                <span className="text-gold text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
+                  En savoir plus <ChevronRight className="w-4 h-4" />
+                </span>
+              </div>
+            </div>
+          </Link>
+          <Link href="/mobilier" className="group block overflow-hidden rounded-sm border border-white/10 bg-white/[0.02] hover:border-gold/30 transition-colors duration-300">
+            <div className="flex gap-4 p-4">
+              <div className="w-28 h-28 shrink-0 overflow-hidden rounded-sm">
+                <img src={MOBILIER_IMG} alt="Fauteuil gonflable Hallucine - mobilier événementiel" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div className="flex-1">
+                <h4 className="text-lg font-semibold text-white mb-2">Mobilier gonflable</h4>
+                <p className="text-white/50 text-sm mb-3">
+                  Canapés, fauteuils, comptoirs. Technologie étanche pour un mobilier léger et élégant.
+                </p>
+                <span className="text-gold text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
+                  En savoir plus <ChevronRight className="w-4 h-4" />
+                </span>
+              </div>
+            </div>
+          </Link>
         </motion.div>
       </div>
     </section>
