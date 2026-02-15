@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import FilmCountdown from "@/components/FilmCountdown";
 import { Link } from "wouter";
 import { Wind, Clock, Shield, Feather, Users, ArrowRight, Film, Trophy, Music, Presentation, CheckCircle, Phone, Mail } from "lucide-react";
+import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 
 const specsData = [
   { taille: "8m × 6m", toile: "7m × 5m", poids: "35 kg", montage: "30 min", personnes: "1" },
@@ -66,10 +67,16 @@ export default function EcranGeant() {
             Transformez vos événements en plein air grâce à nos écrans gonflables géants, disponibles 
             dans des tailles allant de <strong className="text-ivory">8 à 30 mètres</strong>.
           </p>
-          <p className="text-white/70 text-lg max-w-3xl leading-relaxed">
+          <p className="text-white/70 text-lg max-w-3xl leading-relaxed mb-8">
             Pour des projections de films, des événements sportifs ou des festivals, nos écrans allient 
             <strong className="text-warm"> légèreté</strong>, <strong className="text-warm">durabilité</strong> et <strong className="text-warm">facilité d'installation</strong>.
           </p>
+          <div className="flex flex-wrap gap-4">
+            <Link href="/tarifs-ecran-gonflable" className="inline-flex items-center gap-2 px-6 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-all">
+              Demander un devis <ArrowRight className="w-4 h-4" />
+            </Link>
+            <BrochureDownloadButton productSlug="ecran-soufflerie" productName="Écran Soufflerie" />
+          </div>
         </div>
       </section>
 

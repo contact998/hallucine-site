@@ -10,6 +10,7 @@ import TechnologySection from "@/components/TechnologySection";
 import UseCasesSection from "@/components/UseCasesSection";
 import StorySection from "@/components/StorySection";
 import RealisationsSection from "@/components/RealisationsSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import FaqSection from "@/components/FaqSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
@@ -26,6 +27,7 @@ export default function Home() {
       <UseCasesSection />
       <StorySection />
       <RealisationsSection />
+      <TestimonialsSection />
       <FaqSection />
       <ContactSection />
       <Footer />

@@ -69,3 +69,19 @@
 - [x] Ajouter l'export CSV des demandes
 - [x] Ajouter le lien Admin dans la navbar (visible uniquement pour admin)
 - [x] Tests vitest pour les routes admin (20 tests passent)
+
+## Interconnexion CRM Hallucine
+- [ ] Examiner le CRM Hallucine (hallucinecrm.manus.space) pour comprendre son API
+- [ ] Créer un service d'interconnexion pour envoyer les demandes de devis au CRM
+- [ ] Synchroniser automatiquement chaque nouvelle soumission comme prospect dans le CRM
+- [ ] Tests vitest pour l'interconnexion
+
+## Audit Comparatif
+- [ ] Audit comparatif complet Hallucine vs Airscreen (airscreen.com/fr/)
+
+## Améliorations pour surpasser Airscreen
+- [x] Bouton WhatsApp flottant sur toutes les pages
+- [x] Liens réseaux sociaux dans le footer (Facebook, Instagram, YouTube, LinkedIn) — déjà présents
+- [x] Section Témoignages clients sur la page d'accueil + page dédiée
+- [x] Chatbot IA (LLM) — assistant commercial intelligent pour répondre aux questions produits
+- [x] Brochures PDF téléchargeables sur les pages produits

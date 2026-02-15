@@ -15,6 +15,8 @@ import {
   getSubmissionStats,
 } from "./db";
 import { notifyOwner } from "./_core/notification";
+import { chatWithAssistant } from "./chatbot";
+import { generateBrochure } from "./brochure";
 
 export const appRouter = router({
   system: systemRouter,
@@ -96,6 +98,37 @@ export const appRouter = router({
       .mutation(async ({ input, ctx }) => {
         await cancelSubmission(input.submissionId, ctx.user.id);
         return { success: true };
+      }),
+  }),
+
+  brochure: router({
+    generate: publicProcedure
+      .input(
+        z.object({
+          productSlug: z.string(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        const result = generateBrochure(input.productSlug);
+        return result;
+      }),
+  }),
+
+  chatbot: router({
+    chat: publicProcedure
+      .input(
+        z.object({
+          messages: z.array(
+            z.object({
+              role: z.enum(["user", "assistant"]),
+              content: z.string(),
+            })
+          ),
+        })
+      )
+      .mutation(async ({ input }) => {
+        const response = await chatWithAssistant(input.messages);
+        return { response };
       }),
   }),
 

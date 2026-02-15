@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import FilmCountdown from "@/components/FilmCountdown";
 import { Link } from "wouter";
 import { ChevronDown } from "lucide-react";
+import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 
 const avecSouffleur = [
   { taille: "4.50 × 4.00 × 2.00 m", toile: "400 × 250 cm", poids: "15 kg", hauteur: "50 cm", personnes: "1" },
@@ -91,6 +92,7 @@ export default function EcranEconomique() {
             <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               Nous Contacter
             </Link>
+            <BrochureDownloadButton productSlug="ecran-economique" productName="Écran Économique" variant="compact" />
           </div>
         </div>
       </section>

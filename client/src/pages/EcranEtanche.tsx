@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import FilmCountdown from "@/components/FilmCountdown";
 import { Link } from "wouter";
 import { VolumeX, Droplets, Clock, Feather, ChevronDown, Shield, Wind, Zap } from "lucide-react";
+import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 
 const specsData = [
   { taille: "245 × 200 cm", toile: "218 × 122 cm", poids: "7 kg", hauteur: "50 cm", personnes: "1" },
@@ -99,6 +100,7 @@ export default function EcranEtanche() {
             <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               Nous Contacter
             </Link>
+            <BrochureDownloadButton productSlug="ecran-etanche" productName="Écran Étanche" variant="compact" />
           </div>
         </div>
       </section>
