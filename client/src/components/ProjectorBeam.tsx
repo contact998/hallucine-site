@@ -1,6 +1,6 @@
 /*
  * ProjectorBeam — Faisceau de projecteur de cinéma animé
- * Halo doré qui balaye de gauche à droite + cône de lumière statique coin supérieur droit
+ * Halo blanc qui balaye de gauche à droite + cône de lumière statique coin supérieur droit
  */
 import { useEffect, useRef } from "react";
 
@@ -35,12 +35,12 @@ export default function ProjectorBeam() {
       const sweepX = (Math.sin(time) * 0.5 + 0.5) * canvas.width;
       const beamWidth = canvas.width * 0.25;
 
-      // Gradient vertical pour le faisceau
+      // Gradient vertical pour le faisceau — BLANC
       const beamGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      beamGrad.addColorStop(0, "rgba(212, 175, 55, 0.12)");
-      beamGrad.addColorStop(0.3, "rgba(212, 175, 55, 0.06)");
-      beamGrad.addColorStop(0.7, "rgba(212, 175, 55, 0.02)");
-      beamGrad.addColorStop(1, "rgba(212, 175, 55, 0)");
+      beamGrad.addColorStop(0, "rgba(255, 255, 255, 0.10)");
+      beamGrad.addColorStop(0.3, "rgba(255, 255, 255, 0.05)");
+      beamGrad.addColorStop(0.7, "rgba(255, 255, 255, 0.02)");
+      beamGrad.addColorStop(1, "rgba(255, 255, 255, 0)");
 
       ctx.save();
       ctx.beginPath();
@@ -54,19 +54,19 @@ export default function ProjectorBeam() {
       ctx.fillStyle = beamGrad;
       ctx.fill();
 
-      // Halo central du faisceau
+      // Halo central du faisceau — BLANC
       const haloGrad = ctx.createRadialGradient(
         sweepX, canvas.height * 0.15, 0,
         sweepX, canvas.height * 0.15, beamWidth * 0.6
       );
-      haloGrad.addColorStop(0, "rgba(255, 215, 0, 0.15)");
-      haloGrad.addColorStop(0.5, "rgba(212, 175, 55, 0.05)");
-      haloGrad.addColorStop(1, "rgba(212, 175, 55, 0)");
+      haloGrad.addColorStop(0, "rgba(255, 255, 255, 0.12)");
+      haloGrad.addColorStop(0.5, "rgba(255, 255, 255, 0.04)");
+      haloGrad.addColorStop(1, "rgba(255, 255, 255, 0)");
       ctx.fillStyle = haloGrad;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.restore();
 
-      // === Cône de lumière statique depuis le coin supérieur droit ===
+      // === Cône de lumière statique depuis le coin supérieur droit — BLANC ===
       ctx.save();
       const coneX = canvas.width * 0.92;
       const coneY = 0;
@@ -76,10 +76,10 @@ export default function ProjectorBeam() {
         coneX, coneY, 0,
         coneX, coneY, coneSpread
       );
-      coneGrad.addColorStop(0, "rgba(255, 223, 100, 0.10)");
-      coneGrad.addColorStop(0.3, "rgba(212, 175, 55, 0.05)");
-      coneGrad.addColorStop(0.7, "rgba(212, 175, 55, 0.02)");
-      coneGrad.addColorStop(1, "rgba(212, 175, 55, 0)");
+      coneGrad.addColorStop(0, "rgba(255, 255, 255, 0.08)");
+      coneGrad.addColorStop(0.3, "rgba(255, 255, 255, 0.04)");
+      coneGrad.addColorStop(0.7, "rgba(255, 255, 255, 0.015)");
+      coneGrad.addColorStop(1, "rgba(255, 255, 255, 0)");
 
       ctx.beginPath();
       ctx.moveTo(coneX, coneY);
@@ -89,11 +89,11 @@ export default function ProjectorBeam() {
       ctx.fillStyle = coneGrad;
       ctx.fill();
 
-      // Point lumineux source (projecteur)
+      // Point lumineux source (projecteur) — BLANC
       const dotGrad = ctx.createRadialGradient(coneX, coneY + 5, 0, coneX, coneY + 5, 30);
-      dotGrad.addColorStop(0, "rgba(255, 230, 150, 0.35)");
-      dotGrad.addColorStop(0.5, "rgba(255, 215, 0, 0.10)");
-      dotGrad.addColorStop(1, "rgba(255, 215, 0, 0)");
+      dotGrad.addColorStop(0, "rgba(255, 255, 255, 0.30)");
+      dotGrad.addColorStop(0.5, "rgba(255, 255, 255, 0.08)");
+      dotGrad.addColorStop(1, "rgba(255, 255, 255, 0)");
       ctx.fillStyle = dotGrad;
       ctx.fillRect(coneX - 40, coneY - 10, 80, 50);
       ctx.restore();

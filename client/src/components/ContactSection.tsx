@@ -9,7 +9,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Monitor, Tent, Armchair, ArrowRight, ArrowLeft, Send, CheckCircle, MapPin, Mail, Phone } from "lucide-react";
 import { toast } from "sonner";
-import GoldenParticles from "./GoldenParticles";
+
 
 type ProductType = "ecran" | "tente" | "mobilier" | null;
 
@@ -61,7 +61,7 @@ export default function ContactSection() {
   return (
     <section id="contact" className="py-24 md:py-32 relative overflow-hidden">
       {/* ✨ Particules dorées flottantes — 20 sur la section CTA */}
-      <GoldenParticles count={20} id="cta-particles" />
+
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[oklch(0.10_0.04_260_/_0.5)] to-[oklch(0.14_0.03_260)]" />
 
       <div className="container relative">

@@ -9,7 +9,7 @@ import { ChevronDown, ArrowRight, Play } from "lucide-react";
 import { Link } from "wouter";
 import { useRef } from "react";
 import ProjectorBeam from "./ProjectorBeam";
-import GoldenParticles from "./GoldenParticles";
+
 
 const HERO_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/KzXxmgVsjMoEdlML.jpg";
 
@@ -49,8 +49,7 @@ export default function HeroSection() {
       {/* 🔦 Faisceau de projecteur animé */}
       <ProjectorBeam />
 
-      {/* ✨ Particules dorées flottantes — 35 particules montant depuis le bas */}
-      <GoldenParticles count={35} id="hero-particles" />
+
 
       {/* Content */}
       <motion.div style={{ opacity, zIndex: 5 }} className="relative container pb-32 pt-48">
