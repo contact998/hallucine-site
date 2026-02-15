@@ -1,6 +1,11 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { appRouter } from "./routers";
 import type { TrpcContext } from "./_core/context";
+
+vi.mock("./crmSync", () => ({
+  syncSubmissionToCrm: vi.fn().mockResolvedValue({ success: false, error: "not configured" }),
+  isCrmSyncConfigured: vi.fn().mockReturnValue(false),
+}));
 
 type AuthenticatedUser = NonNullable<TrpcContext["user"]>;
 
@@ -98,6 +103,6 @@ describe("contact.submit", () => {
       objectif: "achat",
     });
 
-    expect(result).toEqual({ success: true });
+    expect(result.success).toBe(true);
   });
 });

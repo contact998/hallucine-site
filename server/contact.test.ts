@@ -2,13 +2,18 @@ import { describe, expect, it, vi } from "vitest";
 import { appRouter } from "./routers";
 import type { TrpcContext } from "./_core/context";
 
-// Mock the database and notification functions
+// Mock the database, notification, and CRM sync functions
 vi.mock("./db", () => ({
   insertContactSubmission: vi.fn().mockResolvedValue(true),
 }));
 
 vi.mock("./_core/notification", () => ({
   notifyOwner: vi.fn().mockResolvedValue(true),
+}));
+
+vi.mock("./crmSync", () => ({
+  syncSubmissionToCrm: vi.fn().mockResolvedValue({ success: false, error: "not configured" }),
+  isCrmSyncConfigured: vi.fn().mockReturnValue(false),
 }));
 
 function createPublicContext(): TrpcContext {
@@ -41,7 +46,7 @@ describe("contact.submit", () => {
       objectif: "festival",
     });
 
-    expect(result).toEqual({ success: true });
+    expect(result.success).toBe(true);
   });
 
   it("accepts a minimal contact submission (nom + email only)", async () => {
@@ -54,7 +59,7 @@ describe("contact.submit", () => {
       email: "marie@example.com",
     });
 
-    expect(result).toEqual({ success: true });
+    expect(result.success).toBe(true);
   });
 
   it("rejects submission with invalid email", async () => {
@@ -95,6 +100,6 @@ describe("contact.submit", () => {
       message: "Nous souhaitons devenir distributeur.",
     });
 
-    expect(result).toEqual({ success: true });
+    expect(result.success).toBe(true);
   });
 });

@@ -12,7 +12,8 @@ import Footer from "@/components/Footer";
 import {
   ArrowUpDown, ArrowUp, ArrowDown, Download, Trash2, MessageSquare,
   Search, Filter, RefreshCw, Clock, CheckCircle, XCircle, Loader2,
-  AlertTriangle, ChevronDown, X, FileText, Mail, Phone, Building2, User
+  AlertTriangle, ChevronDown, X, FileText, Mail, Phone, Building2, User,
+  Send, ExternalLink, Wifi, WifiOff
 } from "lucide-react";
 
 type SortField = "id" | "createdAt" | "type" | "nom" | "email" | "status" | "produit";
@@ -70,6 +71,23 @@ export default function Admin() {
       utils.admin.allSubmissions.invalidate();
       utils.admin.stats.invalidate();
       setConfirmDelete(null);
+    },
+  });
+
+  const { data: crmStatus } = trpc.admin.crmStatus.useQuery(undefined, {
+    enabled: isAuthenticated && user?.role === "admin",
+  });
+
+  const syncToCrm = trpc.admin.syncToCrm.useMutation({
+    onSuccess: (data) => {
+      if (data.success) {
+        alert("Prospect envoyé au CRM avec succès !");
+      } else {
+        alert(`Erreur CRM : ${data.error || "Erreur inconnue"}`);
+      }
+    },
+    onError: (err) => {
+      alert(`Erreur : ${err.message}`);
     },
   });
 
@@ -227,8 +245,46 @@ export default function Admin() {
               >
                 <Download className="w-4 h-4" /> Exporter CSV
               </button>
+              <a
+                href="https://hallucinecrm.manus.space"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 border border-cyan-500/30 text-cyan-400 rounded hover:bg-cyan-500/10 text-sm transition-colors"
+              >
+                <ExternalLink className="w-4 h-4" /> Ouvrir CRM
+              </a>
             </div>
           </div>
+
+          {/* CRM Status Banner */}
+          {crmStatus && (
+            <div className={`flex items-center gap-3 px-4 py-3 rounded-lg border mb-4 ${
+              crmStatus.configured
+                ? "bg-green-500/10 border-green-500/20 text-green-400"
+                : "bg-yellow-500/10 border-yellow-500/20 text-yellow-400"
+            }`}>
+              {crmStatus.configured ? (
+                <Wifi className="w-5 h-5" />
+              ) : (
+                <WifiOff className="w-5 h-5" />
+              )}
+              <div className="flex-1">
+                <span className="font-medium text-sm">
+                  {crmStatus.configured
+                    ? "Synchronisation CRM active — Les demandes de devis sont automatiquement envoyées au CRM Hallucine"
+                    : "Synchronisation CRM non configurée — Configurez CRM_WEBHOOK_URL et CRM_WEBHOOK_TOKEN dans les secrets"}
+                </span>
+              </div>
+              <a
+                href="https://hallucinecrm.manus.space"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 text-xs font-medium hover:underline"
+              >
+                Ouvrir le CRM <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          )}
 
           {/* Stats Cards */}
           {stats && (
@@ -336,6 +392,9 @@ export default function Admin() {
                       onCancelDelete={() => setConfirmDelete(null)}
                       onConfirmDelete={() => deleteMutation.mutate({ submissionId: sub.id })}
                       isSavingNote={updateNote.isPending}
+                      onSyncToCrm={() => syncToCrm.mutate({ submissionId: sub.id })}
+                      isSyncingCrm={syncToCrm.isPending}
+                      crmConfigured={crmStatus?.configured}
                     />
                   ))}
                 </tbody>
@@ -388,12 +447,16 @@ interface SubmissionRowProps {
   onCancelDelete: () => void;
   onConfirmDelete: () => void;
   isSavingNote: boolean;
+  onSyncToCrm?: () => void;
+  isSyncingCrm?: boolean;
+  crmConfigured?: boolean;
 }
 
 function SubmissionRow({
   sub, isExpanded, onToggleExpand, onUpdateStatus,
   isEditingNote, noteText, onStartEditNote, onCancelEditNote, onSaveNote, onNoteChange,
   isConfirmingDelete, onStartDelete, onCancelDelete, onConfirmDelete, isSavingNote,
+  onSyncToCrm, isSyncingCrm, crmConfigured,
 }: SubmissionRowProps) {
   const statusInfo = STATUS_LABELS[sub.status] ?? STATUS_LABELS.en_attente;
   const typeInfo = TYPE_LABELS[sub.type] ?? TYPE_LABELS.contact;
@@ -427,9 +490,18 @@ function SubmissionRow({
             <button onClick={onToggleExpand} className="p-1.5 hover:bg-white/10 rounded transition-colors" title="Détails">
               <ChevronDown className={`w-4 h-4 transition-transform ${isExpanded ? "rotate-180" : ""}`} />
             </button>
-            <button onClick={onStartEditNote} className="p-1.5 hover:bg-white/10 rounded transition-colors" title="Note">
-              <MessageSquare className="w-4 h-4 text-white/50 hover:text-white" />
-            </button>
+                      <button onClick={onStartEditNote} className="p-1.5 hover:bg-white/10 rounded transition-colors" title="Note">
+                              <MessageSquare className="w-4 h-4 text-white/50 hover:text-white" />
+                            </button>
+                            {crmConfigured && sub.type !== "contact" && (
+                              <button
+                                onClick={() => onSyncToCrm?.()}
+                                disabled={isSyncingCrm}
+                                className="p-1.5 hover:bg-cyan-500/10 rounded transition-colors" title="Envoyer au CRM"
+                              >
+                                {isSyncingCrm ? <Loader2 className="w-4 h-4 animate-spin text-cyan-400" /> : <Send className="w-4 h-4 text-cyan-400/50 hover:text-cyan-400" />}
+                              </button>
+                            )}
             {isConfirmingDelete ? (
               <div className="flex items-center gap-1">
                 <button onClick={onConfirmDelete} className="px-2 py-1 bg-red-500/20 text-red-400 text-xs rounded hover:bg-red-500/30">Oui</button>

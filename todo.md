@@ -85,3 +85,10 @@
 - [x] Section Témoignages clients sur la page d'accueil + page dédiée
 - [x] Chatbot IA (LLM) — assistant commercial intelligent pour répondre aux questions produits
 - [x] Brochures PDF téléchargeables sur les pages produits
+
+## Synchronisation CRM Hallucine
+- [ ] Ajouter l'utilisateur "Site Web" comme 3ème commercial dans le CRM
+- [x] Examiner l'API du CRM Hallucine (hallucinecrm.manus.space)
+- [x] Créer le service de synchronisation côté serveur
+- [x] Connecter la synchronisation au flux de soumission de devis existant
+- [x] Tests vitest pour la synchronisation CRM

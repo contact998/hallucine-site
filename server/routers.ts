@@ -17,6 +17,7 @@ import {
 import { notifyOwner } from "./_core/notification";
 import { chatWithAssistant } from "./chatbot";
 import { generateBrochure } from "./brochure";
+import { syncSubmissionToCrm, isCrmSyncConfigured } from "./crmSync";
 
 export const appRouter = router({
   system: systemRouter,
@@ -77,7 +78,20 @@ export const appRouter = router({
           ].filter(Boolean).join("\n"),
         });
 
-        return { success: true };
+        // Synchronisation automatique avec le CRM Hallucine
+        let crmSync: { success: boolean; error?: string } = { success: false, error: "not configured" };
+        try {
+          crmSync = await syncSubmissionToCrm(input);
+          if (crmSync.success) {
+            console.log(`[CRM] Prospect syncé pour ${input.nom}`);
+          } else {
+            console.warn(`[CRM] Sync échouée pour ${input.nom}: ${crmSync.error}`);
+          }
+        } catch (err) {
+          console.error(`[CRM] Erreur sync pour ${input.nom}:`, err);
+        }
+
+        return { success: true, crmSynced: crmSync.success };
       }),
   }),
 
@@ -163,6 +177,38 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         await updateAdminNote(input.submissionId, input.note);
         return { success: true };
+      }),
+
+    /** Vérifier le statut de la synchronisation CRM */
+    crmStatus: adminProcedure.query(async () => {
+      return {
+        configured: isCrmSyncConfigured(),
+        webhookUrl: process.env.CRM_WEBHOOK_URL ? "Configuré" : "Non configuré",
+        webhookToken: process.env.CRM_WEBHOOK_TOKEN ? "Configuré" : "Non configuré",
+      };
+    }),
+
+    /** Envoyer manuellement une soumission au CRM */
+    syncToCrm: adminProcedure
+      .input(z.object({ submissionId: z.number() }))
+      .mutation(async ({ input }) => {
+        const allSubs = await getAllSubmissions(500);
+        const submission = allSubs.find(s => s.id === input.submissionId);
+        if (!submission) throw new Error("Soumission introuvable");
+
+        const result = await syncSubmissionToCrm({
+          type: submission.type,
+          nom: submission.nom,
+          email: submission.email,
+          telephone: submission.telephone,
+          entreprise: submission.entreprise,
+          produit: submission.produit,
+          message: submission.message,
+          objectif: submission.objectif,
+          sujet: submission.sujet,
+        });
+
+        return result;
       }),
 
     /** Supprimer une soumission */
