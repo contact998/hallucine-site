@@ -32,8 +32,8 @@ import TrouverDistributeur from "./pages/TrouverDistributeur";
 import ModeEmploi from "./pages/ModeEmploi";
 import GalerieVideo from "./pages/GalerieVideo";
 import Blog from "./pages/Blog";
-
 function Router() {
+  // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
       <Route path={"/"} component={Home} />

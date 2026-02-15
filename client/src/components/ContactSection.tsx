@@ -7,8 +7,9 @@
  */
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Monitor, Tent, Armchair, ArrowRight, ArrowLeft, Send, CheckCircle, MapPin, Mail, Phone } from "lucide-react";
+import { Monitor, Tent, Armchair, ArrowRight, ArrowLeft, Send, CheckCircle, MapPin, Mail, Phone, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { trpc } from "@/lib/trpc";
 
 
 type ProductType = "ecran" | "tente" | "mobilier" | null;
@@ -41,13 +42,33 @@ export default function ContactSection() {
   const [country, setCountry] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
+  const submitMutation = trpc.contact.submit.useMutation({
+    onSuccess: () => {
+      setSubmitted(true);
+      toast.success("Votre demande a bien été envoyée. Nous vous répondrons dans les 24h.");
+    },
+    onError: (err) => {
+      toast.error(err.message || "Erreur lors de l'envoi. Veuillez réessayer.");
+    },
+  });
+
   const handleSubmit = () => {
     if (!name || !email) {
       toast.error("Veuillez remplir au moins votre nom et votre email.");
       return;
     }
-    setSubmitted(true);
-    toast.success("Votre demande a bien été envoyée. Nous vous répondrons dans les 24h.");
+    const productLabel = product === "ecran" ? `Écran ${screenSize}` : product === "tente" ? "Tente gonflable" : "Mobilier gonflable";
+    submitMutation.mutate({
+      type: "contact",
+      nom: name,
+      email,
+      telephone: phone || undefined,
+      entreprise: company || undefined,
+      sujet: `${productLabel} — Usage: ${usage || "Non précisé"} — Pays: ${country || "Non précisé"}`,
+      message: message || undefined,
+      produit: productLabel,
+      objectif: usage || undefined,
+    });
   };
 
   const products = [
@@ -364,7 +385,7 @@ export default function ContactSection() {
                             onClick={handleSubmit}
                             className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gold text-navy-deep font-bold text-sm rounded-sm hover:bg-gold-light transition-colors glow-gold"
                           >
-                            <Send className="w-4 h-4" /> Envoyer ma demande
+                            {submitMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />} {submitMutation.isPending ? "Envoi en cours..." : "Envoyer ma demande"}
                           </button>
                         </div>
                       </motion.div>
