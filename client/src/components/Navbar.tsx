@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone, Mail, ChevronDown } from "lucide-react";
 import { Link, useLocation } from "wouter";
 
-const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/NRDnSpRiukeKCoUC.jpg";
+const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fCazlcDpANMEbcFp.png";
 
 interface DropdownItem {
   label: string;

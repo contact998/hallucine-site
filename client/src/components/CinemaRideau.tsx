@@ -170,13 +170,12 @@ export default function CinemaRideau() {
         }}
       >
         <div className="text-center">
-          <h2 className="text-4xl md:text-6xl font-bold text-[#e8b84a] tracking-wider" style={{
-            fontFamily: "'Playfair Display', serif",
-            textShadow: "0 2px 20px rgba(232,184,74,0.3)",
-          }}>
-            HALLUCINE
-          </h2>
-          <p className="text-white/60 text-sm tracking-[0.3em] mt-2 uppercase">Écrans de cinéma gonflables</p>
+          <img
+            src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fCazlcDpANMEbcFp.png"
+            alt="Hallucine"
+            className="w-48 md:w-72 h-auto mx-auto drop-shadow-[0_2px_20px_rgba(232,184,74,0.3)]"
+          />
+          <p className="text-white/60 text-sm tracking-[0.3em] mt-4 uppercase">Écrans de cinéma gonflables</p>
         </div>
       </div>
     </div>
