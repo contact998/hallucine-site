@@ -37,6 +37,7 @@ import {
   COMMON_TIMEZONES,
 } from "./businessHours";
 import { invokeLLM } from "./_core/llm";
+import { executeWeeklyAudit, formatAuditEmail } from "./weeklyAudit";
 
 /** Helper pour obtenir l'offset UTC d'un fuseau horaire en minutes */
 function getTimezoneOffset(tz: string, date: Date): number {
@@ -576,6 +577,36 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
           return { recommendations: [], summary: "Erreur lors de l'analyse IA", conversionRate: "N/A" };
         }
       }),
+  }),
+
+  // ─── Audit IA hebdomadaire ──────────────────────────────────────
+  audit: router({
+    /** Déclencher manuellement un audit IA (admin only) */
+    runNow: adminProcedure.mutation(async () => {
+      const result = await executeWeeklyAudit();
+      if (!result.success) {
+        return { success: false, error: result.error };
+      }
+      return {
+        success: true,
+        report: result.report,
+        email: result.email,
+      };
+    }),
+
+    /** Récupérer le dernier rapport d'audit (si disponible en mémoire) */
+    getLastReport: adminProcedure.query(async () => {
+      // On déclenche un audit frais pour afficher les données
+      const result = await executeWeeklyAudit();
+      if (!result.success) {
+        return { success: false, error: result.error };
+      }
+      return {
+        success: true,
+        report: result.report,
+        email: result.email,
+      };
+    }),
   }),
 });
 

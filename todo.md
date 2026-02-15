@@ -201,3 +201,12 @@
 - [x] Feedback visuel pendant l'écoute (animation micro, texte en cours)
 - [x] Fallback gracieux si le navigateur ne supporte pas la reconnaissance vocale
 - [x] Tests vitest pour le remplissage vocal (intégré dans tests SIRET)
+
+## Audit IA hebdomadaire automatique (lundi 6h)
+- [x] Lire le fuseau horaire configuré dans le CRM (businessHours)
+- [x] Service d'audit IA : analyser le code (qualité, erreurs, dépendances)
+- [x] Service d'audit IA : analyser le workflow (taux conversion SmartForm, abandons, pages populaires, chatbot)
+- [x] Service d'audit IA : générer des recommandations d'amélioration priorisées
+- [x] Envoyer le rapport par email via Gmail MCP chaque lundi à 6h (fuseau CRM)
+- [x] Programmer la tâche planifiée (cron)
+- [x] Tests vitest pour le service d'audit IA (25 tests)
