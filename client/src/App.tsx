@@ -6,6 +6,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import WhatsAppButton from "./components/WhatsAppButton";
 import HallucineChatbot from "./components/HallucineChatbot";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { usePageTracking } from "./hooks/useAnalytics";
 import Home from "./pages/Home";
 import Ecrans from "./pages/Ecrans";
 import EcranGeant from "./pages/EcranGeant";
@@ -36,6 +37,7 @@ import GalerieVideo from "./pages/GalerieVideo";
 import Blog from "./pages/Blog";
 import Profil from "./pages/Profil";
 import Admin from "./pages/Admin";
+import AdminDashboard from "./pages/AdminDashboard";
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
@@ -81,6 +83,7 @@ function Router() {
       <Route path={"/profil"} component={Profil} />
       {/* Admin */}
       <Route path={"/admin"} component={Admin} />
+      <Route path={"/admin/analytics"} component={AdminDashboard} />
       {/* Légal */}
       <Route path={"/mentions-legales"} component={MentionsLegales} />
       <Route path={"/politique-confidentialite"} component={Confidentialite} />
@@ -91,12 +94,18 @@ function Router() {
   );
 }
 
+function AnalyticsTracker() {
+  usePageTracking();
+  return null;
+}
+
 function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
           <Toaster />
+          <AnalyticsTracker />
           <Router />
           <WhatsAppButton />
           <HallucineChatbot />

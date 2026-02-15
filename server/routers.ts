@@ -19,6 +19,33 @@ import { chatWithAssistant } from "./chatbot";
 import { generateBrochure } from "./brochure";
 import { syncSubmissionToCrm, isCrmSyncConfigured } from "./crmSync";
 import { prepareAdminEmailNotification } from "./emailNotification";
+import {
+  trackPageView,
+  trackEvent,
+  getAnalyticsOverview,
+  getTopPages,
+  getTrafficSources,
+  getDeviceBreakdown,
+  getDailyPageViews,
+  getTopEvents,
+  getTopReferrers,
+} from "./analytics";
+import {
+  getBusinessHoursConfig,
+  updateBusinessHoursSetting,
+  isCurrentlyAvailable,
+  COMMON_TIMEZONES,
+} from "./businessHours";
+import { invokeLLM } from "./_core/llm";
+
+/** Helper pour obtenir l'offset UTC d'un fuseau horaire en minutes */
+function getTimezoneOffset(tz: string, date: Date): number {
+  const utcStr = date.toLocaleString("en-US", { timeZone: "UTC" });
+  const tzStr = date.toLocaleString("en-US", { timeZone: tz });
+  const utcDate = new Date(utcStr);
+  const tzDate = new Date(tzStr);
+  return (tzDate.getTime() - utcDate.getTime()) / 60000;
+}
 
 // File d'attente des notifications email en attente d'envoi via Gmail
 const pendingEmailNotifications: Array<{
@@ -132,6 +159,144 @@ export const appRouter = router({
       .mutation(async ({ input, ctx }) => {
         await cancelSubmission(input.submissionId, ctx.user.id);
         return { success: true };
+      }),
+  }),
+
+  analytics: router({
+    /** Tracker une page vue (appelé par le pixel frontend) */
+    trackPageView: publicProcedure
+      .input(
+        z.object({
+          path: z.string(),
+          pageTitle: z.string().optional(),
+          referrer: z.string().optional(),
+          sessionId: z.string().optional(),
+          duration: z.number().optional(),
+          utmSource: z.string().optional(),
+          utmMedium: z.string().optional(),
+          utmCampaign: z.string().optional(),
+        })
+      )
+      .mutation(async ({ input, ctx }) => {
+        await trackPageView({
+          ...input,
+          userAgent: ctx.req.headers["user-agent"] ?? undefined,
+          userId: ctx.user?.id ?? undefined,
+        });
+        return { success: true };
+      }),
+
+    /** Tracker un événement (clic CTA, téléchargement, etc.) */
+    trackEvent: publicProcedure
+      .input(
+        z.object({
+          eventType: z.string(),
+          eventData: z.string().optional(),
+          path: z.string().optional(),
+          sessionId: z.string().optional(),
+        })
+      )
+      .mutation(async ({ input, ctx }) => {
+        await trackEvent({
+          ...input,
+          userId: ctx.user?.id ?? undefined,
+        });
+        return { success: true };
+      }),
+  }),
+
+  businessHours: router({
+    /** Récupérer les heures de présence et le statut en ligne (public) */
+    getStatus: publicProcedure.query(async () => {
+      const config = await getBusinessHoursConfig();
+      const available = isCurrentlyAvailable(config);
+      return {
+        timezone: config.timezone,
+        startTime: config.startTime,
+        endTime: config.endTime,
+        workDays: config.workDays,
+        isAvailable: available,
+      };
+    }),
+
+    /** Récupérer la config complète + liste des fuseaux horaires (admin) */
+    getConfig: adminProcedure.query(async () => {
+      const config = await getBusinessHoursConfig();
+      return { config, timezones: COMMON_TIMEZONES };
+    }),
+
+    /** Mettre à jour le fuseau horaire (admin) */
+    updateTimezone: adminProcedure
+      .input(z.object({ timezone: z.string() }))
+      .mutation(async ({ input }) => {
+        await updateBusinessHoursSetting("business_timezone", JSON.stringify(input.timezone));
+        return { success: true };
+      }),
+
+    /** Mettre à jour les heures de présence (admin) */
+    updateHours: adminProcedure
+      .input(z.object({ startTime: z.string(), endTime: z.string() }))
+      .mutation(async ({ input }) => {
+        await updateBusinessHoursSetting("business_hours_start", JSON.stringify(input.startTime));
+        await updateBusinessHoursSetting("business_hours_end", JSON.stringify(input.endTime));
+        return { success: true };
+      }),
+
+    /** Mettre à jour les jours de travail (admin) */
+    updateWorkDays: adminProcedure
+      .input(z.object({ workDays: z.array(z.number().min(1).max(7)) }))
+      .mutation(async ({ input }) => {
+        await updateBusinessHoursSetting("business_days", JSON.stringify(input.workDays));
+        return { success: true };
+      }),
+
+    /** IA génère un message WhatsApp adapté selon la disponibilité et le fuseau du visiteur */
+    getSmartMessage: publicProcedure
+      .input(z.object({ visitorTimezone: z.string().optional() }))
+      .query(async ({ input }) => {
+        const config = await getBusinessHoursConfig();
+        const available = isCurrentlyAvailable(config);
+        const visitorTz = input.visitorTimezone || "Europe/Paris";
+
+        // Calculer les heures dans le fuseau du visiteur
+        const now = new Date();
+        const startToday = new Date(now);
+        const [sH, sM] = config.startTime.split(":").map(Number);
+        const [eH, eM] = config.endTime.split(":").map(Number);
+
+        // Formater les heures dans le fuseau du visiteur
+        const formatInVisitorTz = (hour: number, minute: number) => {
+          // Créer une date dans le fuseau business
+          const dateStr = now.toLocaleDateString("en-CA", { timeZone: config.timezone });
+          const bizDate = new Date(`${dateStr}T${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}:00`);
+          // Ajuster pour le décalage entre les fuseaux
+          const bizOffset = getTimezoneOffset(config.timezone, now);
+          const visitorOffset = getTimezoneOffset(visitorTz, now);
+          const diffMs = (visitorOffset - bizOffset) * 60000;
+          const visitorDate = new Date(bizDate.getTime() + diffMs);
+          return visitorDate.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit", timeZone: visitorTz });
+        };
+
+        let visitorStart: string;
+        let visitorEnd: string;
+        try {
+          visitorStart = formatInVisitorTz(sH, sM);
+          visitorEnd = formatInVisitorTz(eH, eM);
+        } catch {
+          visitorStart = config.startTime;
+          visitorEnd = config.endTime;
+        }
+
+        return {
+          isAvailable: available,
+          businessTimezone: config.timezone,
+          visitorTimezone: visitorTz,
+          hoursInVisitorTz: { start: visitorStart, end: visitorEnd },
+          hoursInBusinessTz: { start: config.startTime, end: config.endTime },
+          message: available
+            ? `Nous sommes en ligne ! Réponse immédiate.`
+            : `Hors ligne. Nos horaires : ${visitorStart} - ${visitorEnd} (votre heure). Laissez un message, nous répondrons dès notre retour.`,
+        };
       }),
   }),
 
@@ -251,12 +416,105 @@ export const appRouter = router({
       return { cleared: count };
     }),
 
+    /** Dashboard analytics complet */
+    analyticsOverview: adminProcedure
+      .input(z.object({ daysBack: z.number().min(1).max(365).default(30) }).optional())
+      .query(async ({ input }) => {
+        const days = input?.daysBack ?? 30;
+        const [overview, topPages, trafficSources, devices, dailyViews, topEvents, topReferrers] = await Promise.all([
+          getAnalyticsOverview(days),
+          getTopPages(days),
+          getTrafficSources(days),
+          getDeviceBreakdown(days),
+          getDailyPageViews(days),
+          getTopEvents(days),
+          getTopReferrers(days),
+        ]);
+        return { overview, topPages, trafficSources, devices, dailyViews, topEvents, topReferrers };
+      }),
+
     /** Supprimer une soumission */
     deleteSubmission: adminProcedure
       .input(z.object({ submissionId: z.number() }))
       .mutation(async ({ input }) => {
         await deleteSubmission(input.submissionId);
         return { success: true };
+      }),
+
+    /** IA analyse les analytics et génère des recommandations pour améliorer la conversion */
+    aiInsights: adminProcedure
+      .input(z.object({ daysBack: z.number().min(1).max(365).default(30) }).optional())
+      .query(async ({ input }) => {
+        const days = input?.daysBack ?? 30;
+        const [overview, topPages, trafficSources, topEvents, stats] = await Promise.all([
+          getAnalyticsOverview(days),
+          getTopPages(days, 10),
+          getTrafficSources(days),
+          getTopEvents(days, 10),
+          getSubmissionStats(),
+        ]);
+
+        const prompt = `Tu es un expert en marketing digital et conversion pour Hallucine, fabricant français d'écrans de cinéma gonflables.
+L'objectif ULTIME du site est la CAPTURE DE COORDONNÉES (demandes de devis, contacts, leads).
+
+Voici les données analytics des ${days} derniers jours :
+- Pages vues : ${overview?.totalPageViews ?? 0}
+- Visiteurs uniques : ${overview?.uniqueVisitors ?? 0}
+- Durée moyenne : ${overview?.avgDuration ?? 0}s
+- Événements : ${overview?.totalEvents ?? 0}
+- Demandes reçues : ${stats.total} (${stats.devis} devis, ${stats.contact} contacts, ${stats.distributeur} distributeurs)
+- Taux conversion estimé : ${overview?.uniqueVisitors ? ((stats.total / overview.uniqueVisitors) * 100).toFixed(1) : 0}%
+- Pages les plus visitées : ${topPages.map(p => p.path + " (" + p.views + " vues)").join(", ")}
+- Sources de trafic : ${trafficSources.map(s => (s.source ?? "direct") + " (" + s.views + ")").join(", ")}
+- Événements fréquents : ${topEvents.map(e => e.eventType + " (" + e.count + ")").join(", ")}
+
+Génère 5 recommandations concrètes et actionables pour AMÉLIORER LE TAUX DE CONVERSION (capture de coordonnées).
+Chaque recommandation doit avoir : un titre court, une description détaillée, et une priorité (haute/moyenne/basse).
+Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...", "priority": "haute|moyenne|basse" }], "summary": "...", "conversionRate": "..." }`;
+
+        try {
+          const response = await invokeLLM({
+            messages: [
+              { role: "system", content: "Tu es un expert en marketing digital et optimisation de conversion. Réponds uniquement en JSON valide." },
+              { role: "user", content: prompt },
+            ],
+            response_format: {
+              type: "json_schema",
+              json_schema: {
+                name: "ai_insights",
+                strict: true,
+                schema: {
+                  type: "object",
+                  properties: {
+                    recommendations: {
+                      type: "array",
+                      items: {
+                        type: "object",
+                        properties: {
+                          title: { type: "string" },
+                          description: { type: "string" },
+                          priority: { type: "string", enum: ["haute", "moyenne", "basse"] },
+                        },
+                        required: ["title", "description", "priority"],
+                        additionalProperties: false,
+                      },
+                    },
+                    summary: { type: "string" },
+                    conversionRate: { type: "string" },
+                  },
+                  required: ["recommendations", "summary", "conversionRate"],
+                  additionalProperties: false,
+                },
+              },
+            },
+          });
+          const rawContent = response.choices?.[0]?.message?.content;
+          const content = typeof rawContent === "string" ? rawContent : "";
+          return content ? JSON.parse(content) : { recommendations: [], summary: "Analyse indisponible", conversionRate: "N/A" };
+        } catch (err) {
+          console.error("[AI Insights] Erreur:", err);
+          return { recommendations: [], summary: "Erreur lors de l'analyse IA", conversionRate: "N/A" };
+        }
       }),
   }),
 });

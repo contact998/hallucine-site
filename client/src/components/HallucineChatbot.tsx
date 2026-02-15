@@ -1,17 +1,31 @@
-/*
+/**
  * Chatbot IA Hallucine — Assistant commercial intelligent
  * Bulle flottante en bas à droite, ouvre un panneau de chat
  * Utilise le LLM via tRPC pour répondre aux questions produits
+ * Après quelques échanges, propose un bouton "Demander un devis" pré-rempli
  */
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { trpc } from "@/lib/trpc";
-import { MessageCircle, X, Send, Loader2, Sparkles, User, ChevronDown } from "lucide-react";
+import { MessageCircle, X, Send, Loader2, Sparkles, User, ChevronDown, FileText } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Streamdown } from "streamdown";
+import { useLocation } from "wouter";
 
 interface ChatMessage {
   role: "user" | "assistant";
   content: string;
+}
+
+interface LeadData {
+  product: "ecran" | "tente" | "mobilier" | "arche" | null;
+  size: string;
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  city: string;
+  country: string;
+  ready: boolean;
 }
 
 const SUGGESTED_PROMPTS = [
@@ -26,19 +40,66 @@ const WELCOME_MESSAGE: ChatMessage = {
   content: "Bonjour ! 🎬 Je suis l'assistant Hallucine. Je peux vous aider à choisir le bon écran de cinéma gonflable, vous renseigner sur nos produits ou vous orienter vers un devis. Comment puis-je vous aider ?",
 };
 
+/** Parse le bloc LEAD_DATA caché dans la réponse du chatbot */
+function parseLeadData(content: string): LeadData | null {
+  const match = content.match(/<!--LEAD_DATA:(.*?)-->/);
+  if (!match) return null;
+  try {
+    return JSON.parse(match[1]);
+  } catch {
+    return null;
+  }
+}
+
+/** Nettoie le contenu du message en retirant le bloc LEAD_DATA */
+function cleanContent(content: string): string {
+  return content.replace(/<!--LEAD_DATA:.*?-->/g, "").trim();
+}
+
 export default function HallucineChatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([WELCOME_MESSAGE]);
   const [input, setInput] = useState("");
   const [showBadge, setShowBadge] = useState(true);
+  const [leadData, setLeadData] = useState<LeadData | null>(null);
+  const [showDevisButton, setShowDevisButton] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const [, navigate] = useLocation();
+  const messageCountRef = useRef(0);
 
   const chatMutation = trpc.chatbot.chat.useMutation({
     onSuccess: (data) => {
+      const rawContent = data.response;
+      const extracted = parseLeadData(rawContent);
+      const cleaned = cleanContent(rawContent);
+
+      if (extracted) {
+        setLeadData(prev => ({
+          product: extracted.product || prev?.product || null,
+          size: extracted.size || prev?.size || "",
+          name: extracted.name || prev?.name || "",
+          email: extracted.email || prev?.email || "",
+          phone: extracted.phone || prev?.phone || "",
+          company: extracted.company || prev?.company || "",
+          city: extracted.city || prev?.city || "",
+          country: extracted.country || prev?.country || "",
+          ready: extracted.ready || prev?.ready || false,
+        }));
+        if (extracted.ready) {
+          setShowDevisButton(true);
+        }
+      }
+
+      messageCountRef.current += 1;
+      // Après 3 échanges, montrer le bouton devis même sans LEAD_DATA ready
+      if (messageCountRef.current >= 3 && !showDevisButton) {
+        setShowDevisButton(true);
+      }
+
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: data.response },
+        { role: "assistant", content: cleaned },
       ]);
     },
     onError: () => {
@@ -67,7 +128,7 @@ export default function HallucineChatbot() {
     }
   }, [isOpen]);
 
-  const sendMessage = (content: string) => {
+  const sendMessage = useCallback((content: string) => {
     if (!content.trim() || chatMutation.isPending) return;
 
     const userMsg: ChatMessage = { role: "user", content: content.trim() };
@@ -75,12 +136,11 @@ export default function HallucineChatbot() {
     setMessages(newMessages);
     setInput("");
 
-    // Send only user/assistant messages (not the welcome message if it's the first)
     const conversationHistory = newMessages.filter(
       (m) => m !== WELCOME_MESSAGE || m.role === "user"
     );
     chatMutation.mutate({ messages: conversationHistory });
-  };
+  }, [messages, chatMutation]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,6 +153,23 @@ export default function HallucineChatbot() {
       sendMessage(input);
     }
   };
+
+  /** Naviguer vers le formulaire avec les données pré-remplies */
+  const goToDevis = useCallback(() => {
+    const params = new URLSearchParams();
+    if (leadData?.product) params.set("product", leadData.product);
+    if (leadData?.size) params.set("size", leadData.size);
+    if (leadData?.name) params.set("name", leadData.name);
+    if (leadData?.email) params.set("email", leadData.email);
+    if (leadData?.phone) params.set("phone", leadData.phone);
+    if (leadData?.company) params.set("company", leadData.company);
+    if (leadData?.city) params.set("city", leadData.city);
+    if (leadData?.country) params.set("country", leadData.country);
+    
+    const queryString = params.toString();
+    navigate(`/contactez-nous${queryString ? `?${queryString}` : ""}`);
+    setIsOpen(false);
+  }, [leadData, navigate]);
 
   return (
     <>
@@ -194,6 +271,26 @@ export default function HallucineChatbot() {
                     </button>
                   ))}
                 </div>
+              )}
+
+              {/* CTA Devis button — apparaît après quelques échanges */}
+              {showDevisButton && !chatMutation.isPending && messages.length > 2 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-3"
+                >
+                  <button
+                    onClick={goToDevis}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-warm to-[oklch(0.72_0.14_55)] text-charcoal font-semibold text-sm rounded-xl hover:shadow-lg hover:shadow-warm/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    <FileText className="w-4 h-4" />
+                    Demander un devis gratuit →
+                  </button>
+                  <p className="text-center text-white/30 text-[10px] mt-1.5">
+                    Formulaire pré-rempli avec les infos de notre conversation
+                  </p>
+                </motion.div>
               )}
             </div>
 

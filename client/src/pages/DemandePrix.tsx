@@ -5,10 +5,10 @@
  */
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SmartForm from "@/components/SmartForm";
 import { useState } from "react";
 import { Link } from "wouter";
-import { Check, ChevronDown, Loader2 } from "lucide-react";
-import { trpc } from "@/lib/trpc";
+import { ChevronDown } from "lucide-react";
 
 const produits = [
   { id: "ecrans", label: "Écran gonflable" },
@@ -234,41 +234,6 @@ function TarifTable({ headers, rows }: { headers: string[]; rows: Record<string,
 
 export default function DemandePrix() {
   const [submitted, setSubmitted] = useState(false);
-  const [selectedProduits, setSelectedProduits] = useState<string[]>([]);
-  const [formData, setFormData] = useState({ nom: "", prenom: "", email: "", telephone: "", organisation: "" });
-  const [submitError, setSubmitError] = useState("");
-
-  const contactMutation = trpc.contact.submit.useMutation({
-    onSuccess: () => {
-      setSubmitted(true);
-      setSubmitError("");
-    },
-    onError: (err) => {
-      setSubmitError("Erreur lors de l'envoi. Veuillez réessayer.");
-      console.error(err);
-    },
-  });
-
-  const toggleProduit = (id: string) => {
-    setSelectedProduits((prev) =>
-      prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id]
-    );
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const produitsLabels = selectedProduits.map(id => produits.find(p => p.id === id)?.label).filter(Boolean).join(", ");
-    contactMutation.mutate({
-      type: "devis",
-      nom: `${formData.nom} ${formData.prenom}`.trim(),
-      email: formData.email,
-      telephone: formData.telephone || undefined,
-      entreprise: formData.organisation || undefined,
-      sujet: `Demande de prix — Produits: ${produitsLabels || "Non spécifié"}`,
-      message: `Demande de prix via le formulaire.\nProduits sélectionnés: ${produitsLabels || "Aucun"}\nOrganisation: ${formData.organisation || "Non renseigné"}`,
-      produit: produitsLabels || undefined,
-    });
-  };
 
   /* ═══════════ FORMULAIRE (avant soumission) ═══════════ */
   if (!submitted) {
@@ -284,68 +249,9 @@ export default function DemandePrix() {
               Nous vous enverrons également un devis personnalisé si vous le souhaitez.
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm text-white/60 mb-2">Nom *</label>
-                  <input type="text" required value={formData.nom} onChange={(e) => setFormData({ ...formData, nom: e.target.value })}
-                    className="w-full px-4 py-3 bg-card border border-border rounded text-ivory focus:border-warm focus:outline-none transition-colors" />
-                </div>
-                <div>
-                  <label className="block text-sm text-white/60 mb-2">Prénom *</label>
-                  <input type="text" required value={formData.prenom} onChange={(e) => setFormData({ ...formData, prenom: e.target.value })}
-                    className="w-full px-4 py-3 bg-card border border-border rounded text-ivory focus:border-warm focus:outline-none transition-colors" />
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm text-white/60 mb-2">Email *</label>
-                <input type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-3 bg-card border border-border rounded text-ivory focus:border-warm focus:outline-none transition-colors" />
-              </div>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm text-white/60 mb-2">Téléphone</label>
-                  <input type="tel" value={formData.telephone} onChange={(e) => setFormData({ ...formData, telephone: e.target.value })}
-                    className="w-full px-4 py-3 bg-card border border-border rounded text-ivory focus:border-warm focus:outline-none transition-colors" />
-                </div>
-                <div>
-                  <label className="block text-sm text-white/60 mb-2">Organisation</label>
-                  <input type="text" value={formData.organisation} onChange={(e) => setFormData({ ...formData, organisation: e.target.value })}
-                    className="w-full px-4 py-3 bg-card border border-border rounded text-ivory focus:border-warm focus:outline-none transition-colors" />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm text-white/60 mb-3">Produits qui vous intéressent</label>
-                <div className="grid grid-cols-2 gap-3">
-                  {produits.map((p) => (
-                    <button key={p.id} type="button" onClick={() => toggleProduit(p.id)}
-                      className={`flex items-center gap-3 p-4 rounded border transition-colors text-left ${
-                        selectedProduits.includes(p.id) ? "border-warm bg-warm/10 text-warm" : "border-border bg-card text-white/70 hover:border-warm/30"
-                      }`}>
-                      <div className={`w-5 h-5 rounded border flex items-center justify-center shrink-0 ${
-                        selectedProduits.includes(p.id) ? "border-warm bg-warm" : "border-white/30"
-                      }`}>
-                        {selectedProduits.includes(p.id) && <Check className="w-3 h-3 text-charcoal" />}
-                      </div>
-                      <span className="text-sm font-medium">{p.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {submitError && (
-                <p className="text-red-400 text-sm text-center">{submitError}</p>
-              )}
-
-              <button type="submit" disabled={contactMutation.isPending} className="w-full py-4 bg-warm text-charcoal font-bold text-lg rounded hover:bg-warm-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
-                {contactMutation.isPending ? (
-                  <><Loader2 className="w-5 h-5 animate-spin" /> Envoi en cours...</>
-                ) : (
-                  "Accéder aux tarifs"
-                )}
-              </button>
-            </form>
+            <div className="bg-white/[0.04] border border-white/10 rounded-sm p-6 md:p-8">
+              <SmartForm mode="gate" onSubmitSuccess={() => setSubmitted(true)} />
+            </div>
 
             <div className="mt-8 p-6 bg-card border border-border rounded-lg">
               <h3 className="text-warm font-semibold mb-2">Personnalisation sur mesure</h3>

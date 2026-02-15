@@ -49,3 +49,68 @@ export const contactSubmissions = mysqlTable("contact_submissions", {
 
 export type ContactSubmission = typeof contactSubmissions.$inferSelect;
 export type InsertContactSubmission = typeof contactSubmissions.$inferInsert;
+
+// Table pour le tracking analytics des visites de pages
+export const pageViews = mysqlTable("page_views", {
+  id: int("id").autoincrement().primaryKey(),
+  /** Chemin de la page visitée (ex: /ecran-gonflable-geant-soufflerie) */
+  path: varchar("path", { length: 500 }).notNull(),
+  /** Titre de la page */
+  pageTitle: varchar("pageTitle", { length: 500 }),
+  /** Referrer (source de trafic) */
+  referrer: varchar("referrer", { length: 1000 }),
+  /** Source de trafic catégorisée (direct, organic, social, referral, email, paid) */
+  trafficSource: varchar("trafficSource", { length: 50 }),
+  /** User agent du navigateur */
+  userAgent: varchar("userAgent", { length: 1000 }),
+  /** Type d'appareil détecté (desktop, mobile, tablet) */
+  deviceType: varchar("deviceType", { length: 20 }),
+  /** Pays (détecté via headers ou IP) */
+  country: varchar("country", { length: 100 }),
+  /** Identifiant de session anonyme (hash) */
+  sessionId: varchar("sessionId", { length: 64 }),
+  /** ID utilisateur si connecté */
+  userId: int("userId"),
+  /** Durée de la visite en secondes */
+  duration: int("duration"),
+  /** Paramètres UTM */
+  utmSource: varchar("utmSource", { length: 255 }),
+  utmMedium: varchar("utmMedium", { length: 255 }),
+  utmCampaign: varchar("utmCampaign", { length: 255 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type PageView = typeof pageViews.$inferSelect;
+export type InsertPageView = typeof pageViews.$inferInsert;
+
+// Table pour le tracking des événements (clics CTA, téléchargements, chatbot, etc.)
+export const analyticsEvents = mysqlTable("analytics_events", {
+  id: int("id").autoincrement().primaryKey(),
+  /** Type d'événement (cta_click, brochure_download, chatbot_open, form_submit, whatsapp_click) */
+  eventType: varchar("eventType", { length: 100 }).notNull(),
+  /** Détails de l'événement (ex: nom du produit, bouton cliqué) */
+  eventData: text("eventData"),
+  /** Page où l'événement s'est produit */
+  path: varchar("path", { length: 500 }),
+  /** Identifiant de session anonyme */
+  sessionId: varchar("sessionId", { length: 64 }),
+  /** ID utilisateur si connecté */
+  userId: int("userId"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type AnalyticsEvent = typeof analyticsEvents.$inferSelect;
+export type InsertAnalyticsEvent = typeof analyticsEvents.$inferInsert;
+
+// Table de paramètres du site (fuseau horaire, heures de présence, etc.)
+export const siteSettings = mysqlTable("site_settings", {
+  id: int("id").autoincrement().primaryKey(),
+  /** Clé du paramètre */
+  settingKey: varchar("settingKey", { length: 100 }).notNull().unique(),
+  /** Valeur du paramètre (JSON ou texte) */
+  settingValue: text("settingValue").notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type SiteSetting = typeof siteSettings.$inferSelect;
+export type InsertSiteSetting = typeof siteSettings.$inferInsert;

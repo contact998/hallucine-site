@@ -98,3 +98,50 @@
 - [x] Implémenter le service d'envoi d'email côté serveur
 - [x] Connecter les notifications au flux de soumission de devis
 - [x] Tests vitest pour les notifications email
+
+## Tableau de bord Analytics admin
+- [x] Examiner la structure admin existante et les données disponibles
+- [x] Créer le schéma de base de données pour le tracking analytics (page views, events)
+- [x] Implémenter le service de tracking côté serveur et le pixel de collecte frontend
+- [x] Créer la page Dashboard Analytics avec graphiques (visites, conversions, sources, pages populaires)
+- [ ] Colonnes triables dans tous les tableaux du dashboard
+- [ ] Tests vitest pour le tracking et les statistiques
+
+## Heures de présence avec fuseau horaire configurable
+- [x] Table DB pour stocker le fuseau horaire et les heures de présence (configurable par admin)
+- [x] Routes backend pour lire/modifier le fuseau horaire et les heures
+- [x] Section admin pour changer le fuseau horaire (quand on voyage)
+- [x] Affichage des heures de présence sur le bouton WhatsApp avec conversion automatique au fuseau du visiteur
+- [x] Indicateur en temps réel "En ligne" / "Hors ligne" sur le bouton WhatsApp
+- [ ] Afficher le fuseau horaire du visiteur dans le panneau admin quand il contacte via WhatsApp
+- [x] IA analyse les analytics et génère des recommandations automatiques dans le dashboard
+- [x] IA contrôle le message WhatsApp adapté selon le fuseau horaire et la disponibilité
+
+## Objectif ultime : capture de coordonnées
+- [x] WhatsApp : message IA adapté au fuseau + incitation à laisser ses coordonnées
+- [ ] Chatbot IA : après quelques échanges, proposer automatiquement de laisser ses coordonnées
+- [x] Dashboard analytics : recommandations IA pour améliorer le taux de conversion
+- [ ] Toutes les fonctionnalités convergent vers la capture de leads
+
+## Formulaires boostés IA (minimum de saisie)
+- [ ] Auto-complétion IA du nom d'entreprise à partir du SIRET ou du nom partiel
+- [ ] Chatbot qui pré-remplit le formulaire de devis après la conversation (nom, email, produit, besoin)
+- [ ] Formulaire simplifié : seul l'email est obligatoire, l'IA déduit le reste
+- [ ] Suggestions intelligentes de produits basées sur le parcours de navigation du visiteur
+- [ ] Bouton "Demander un devis" contextuel sur chaque page produit avec produit pré-sélectionné
+
+## Formulaire unifié intelligent "Le Devis en Douceur"
+- [x] Composant SmartForm : étape 1 — choix du produit (4 cartes visuelles)
+- [x] Composant SmartForm : étape 2 — besoin adapté au produit (taille écran/type tente/type mobilier/usage arche)
+- [x] Composant SmartForm : étape 3 — email + téléphone (indicatif auto-détecté)
+- [x] Composant SmartForm : étape 4 — prénom, nom, entreprise (IA auto-complétion depuis domaine email)
+- [x] Composant SmartForm : étape 5 — pays (détection IP) + ville (API gouv.fr si France)
+- [x] Composant SmartForm : étape 6 — message libre optionnel + bouton final
+- [x] Animations fluides entre les étapes (slide/fade)
+- [x] Comportement contextuel : pré-sélection produit sur les pages produits
+- [x] Comportement contextuel : gate sur la page tarifs
+- [x] Remplacer ContactSection par SmartForm sur la page d'accueil et /contactez-nous
+- [x] Remplacer le formulaire DemandePrix par SmartForm en mode gate
+- [x] Connecter SmartForm au CRM + notifications email (via la route contact.submit existante)
+- [x] Chatbot IA pré-remplit le SmartForm après conversation
+- [x] Tests vitest pour le SmartForm

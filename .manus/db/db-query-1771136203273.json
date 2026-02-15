@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO site_settings (settingKey, settingValue) VALUES \n('business_timezone', '\"Asia/Shanghai\"'),\n('business_hours_start', '\"08:00\"'),\n('business_hours_end', '\"18:00\"'),\n('business_days', '[1,2,3,4,5]')\nON DUPLICATE KEY UPDATE settingValue = VALUES(settingValue);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user khoDaLNR7QanKY6.24e870245d7c --database e2MtNjHsQcTUTnWGsGBMg7 --execute INSERT INTO site_settings (settingKey, settingValue) VALUES \n('business_timezone', '\"Asia/Shanghai\"'),\n('business_hours_start', '\"08:00\"'),\n('business_hours_end', '\"18:00\"'),\n('business_days', '[1,2,3,4,5]')\nON DUPLICATE KEY UPDATE settingValue = VALUES(settingValue);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1648
+}
