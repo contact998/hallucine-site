@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import ConfettiEffect from "@/components/ConfettiEffect";
 
 const archesData = [
   { ref: "CA-4/2.6/0.45", taille: "400×260(H)×45cm" },
@@ -52,7 +53,8 @@ export default function ArchesGonflables() {
       <Navbar />
 
       {/* Hero */}
-      <section className="pt-32 pb-16 bg-charcoal-light">
+      <section className="relative overflow-hidden pt-32 pb-16 bg-charcoal-light">
+        <ConfettiEffect />
         <div className="container">
           <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">Structures gonflables</p>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight mb-6">

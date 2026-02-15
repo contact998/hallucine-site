@@ -5,6 +5,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
+import WeatherEffect from "@/components/WeatherEffect";
 
 const specs = [
   { label: "Chambre étanche", value: "Polyuréthane (TPU), autonomie 60 jours sans regonflage" },
@@ -24,7 +25,8 @@ export default function TentesN() {
       <Navbar />
 
       {/* Hero */}
-      <section className="pt-32 pb-16 bg-charcoal-light">
+      <section className="relative overflow-hidden pt-32 pb-16 bg-charcoal-light">
+        <WeatherEffect intensity="moderate" />
         <div className="container">
           <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">Tentes gonflables</p>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight mb-6">

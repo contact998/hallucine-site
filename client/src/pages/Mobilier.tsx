@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import { Check, ChevronRight, ChevronDown, Feather, Clock, Shield, Palette, ArrowLeft, Package, HelpCircle, Sofa, Wine, Truck, Ruler } from "lucide-react";
 import { Link } from "wouter";
+import BokehEffect from "@/components/BokehEffect";
 
 const MOBILIER_SUPPORT = "https://www.hallucinecran.com/Tentes/meubles/fauteuils%20tabouret.jpg";
 const MOBILIER_FAUTEUIL = "https://www.hallucinecran.com/Tentes/meubles/fauteuil.jpg";
@@ -134,6 +135,7 @@ export default function Mobilier() {
 
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center overflow-hidden">
+        <BokehEffect />
         <div className="absolute inset-0">
           <img src={MOBILIER_FAUTEUIL} alt="Mobilier gonflable Hallucine" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.10_0.03_260_/_0.92)] via-[oklch(0.12_0.03_260_/_0.75)] to-[oklch(0.10_0.03_260_/_0.4)]" />
