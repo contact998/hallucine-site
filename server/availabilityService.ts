@@ -24,6 +24,7 @@ export interface CommercialAvailability {
   minute: number;
   available: boolean;
   dayOfWeek: number; // 1=lundi à 7=dimanche
+  workHoursInVisitorTz?: string; // ex: "08:00 - 16:00" converti dans le fuseau du visiteur
 }
 
 export interface AvailabilityResult {
@@ -55,7 +56,7 @@ const COMMERCIALS: CommercialConfig[] = [
     initials: "JB",
     name: "Jean-Baptiste",
     settingKey: "commercial_jb_timezone",
-    defaultTimezone: "Europe/Paris",
+    defaultTimezone: "Asia/Shanghai",
   },
 ];
 
@@ -240,6 +241,64 @@ async function tryGetFromCrm(visitorTimezone: string): Promise<AvailabilityResul
   return null;
 }
 
+// ─── Conversion d'heures entre fuseaux ──────────────────────────────
+
+/**
+ * Convertit une heure d'un fuseau horaire à un autre.
+ * Retourne l'heure formatée "HH:MM" dans le fuseau cible.
+ */
+function convertHourBetweenTimezones(
+  hour: number,
+  minute: number,
+  fromTimezone: string,
+  toTimezone: string,
+  referenceDate?: Date
+): string {
+  const ref = referenceDate || new Date();
+
+  // Obtenir la date actuelle dans le fuseau source
+  const dateFmt = new Intl.DateTimeFormat("en-US", {
+    timeZone: fromTimezone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+  const dateParts = dateFmt.formatToParts(ref);
+  const year = parseInt(dateParts.find(p => p.type === "year")?.value ?? "2026");
+  const month = parseInt(dateParts.find(p => p.type === "month")?.value ?? "1");
+  const day = parseInt(dateParts.find(p => p.type === "day")?.value ?? "1");
+
+  // Construire un timestamp UTC qui représente "hour:minute" dans fromTimezone
+  // En utilisant un calcul d'offset
+  const tempDate = new Date(Date.UTC(year, month - 1, day, hour, minute, 0));
+
+  // Obtenir l'offset du fuseau source par rapport à UTC
+  const sourceFormatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: fromTimezone,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+  const sourceTime = sourceFormatter.format(tempDate);
+  const [sourceH, sourceM] = sourceTime.split(":").map(Number);
+  const sourceMinutes = sourceH * 60 + sourceM;
+  const targetMinutes = hour * 60 + minute;
+  const offsetMinutes = sourceMinutes - targetMinutes;
+
+  // Ajuster pour obtenir le vrai UTC
+  const utcDate = new Date(tempDate.getTime() - offsetMinutes * 60000);
+
+  // Formater dans le fuseau cible
+  const targetFormatter = new Intl.DateTimeFormat("fr-FR", {
+    timeZone: toTimezone,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+
+  return targetFormatter.format(utcDate);
+}
+
 // ─── Génération du message IA ─────────────────────────────────────
 
 /**
@@ -268,21 +327,38 @@ async function generateAiMessage(
     });
   }
 
+  // Pré-calculer les horaires de travail de chaque commercial convertis dans le fuseau du visiteur
+  const commercialSchedules = commercials.map(c => {
+    // Créer une date fictive pour 8h00 dans le fuseau du commercial
+    const today = new Date();
+    const startInVisitorTz = convertHourBetweenTimezones(WORK_START_HOUR, 0, c.timezone, visitorTimezone, today);
+    const endInVisitorTz = convertHourBetweenTimezones(WORK_END_HOUR, 0, c.timezone, visitorTimezone, today);
+    return {
+      name: c.name,
+      initials: c.initials,
+      available: c.available,
+      localTime: c.localTime,
+      timezone: c.timezone,
+      workHoursInVisitorTz: `${startInVisitorTz} - ${endInVisitorTz}`,
+    };
+  });
+
   const prompt = `Tu es l'assistant commercial d'Hallucine, une entreprise française de location et vente d'écrans géants gonflables.
 
 Contexte actuel :
 - Heure du visiteur : ${visitorLocalTime} (fuseau : ${visitorTimezone})
 - Commerciaux :
-${commercials.map(c => `  - ${c.name} (${c.initials}) : ${c.localTime} à ${c.timezone}, ${c.available ? "DISPONIBLE" : "INDISPONIBLE"}`).join("\n")}
+${commercialSchedules.map(c => `  - ${c.name} (${c.initials}) : il est ${c.localTime} chez lui (${c.timezone}), ${c.available ? "DISPONIBLE" : "INDISPONIBLE"}, horaires de travail en heure du visiteur : ${c.workHoursInVisitorTz}`).join("\n")}
 - Au moins un commercial disponible : ${anyAvailable ? "OUI" : "NON"}
-${!anyAvailable && nextAvailHours !== null ? `- Prochaine disponibilité dans environ ${nextAvailHours}h (${nextAvailVisitorTime} heure locale du visiteur)` : ""}
+${!anyAvailable && nextAvailHours !== null ? `- Prochaine disponibilité dans environ ${nextAvailHours}h (à ${nextAvailVisitorTime} heure du visiteur)` : ""}
 
 Génère un message court (2 phrases max) et chaleureux pour le visiteur du site web :
 - Si quelqu'un est disponible : encourage à nous contacter maintenant (appel, email, formulaire)
-- Si personne n'est disponible : indique quand nous serons disponibles (en heure locale du visiteur) et encourage à laisser un email
+- Si personne n'est disponible : indique les horaires de travail EN HEURE DU VISITEUR (utilise EXACTEMENT les horaires pré-calculés ci-dessus, NE LES RECALCULE PAS) et encourage à laisser un email
 - Adapte le ton selon l'heure du visiteur (bonjour le matin, bonsoir le soir)
 - Mentionne le prénom du commercial disponible si possible
-- Ne mentionne PAS les fuseaux horaires techniques, parle en heure locale du visiteur
+- Ne mentionne PAS les fuseaux horaires techniques, parle uniquement en heure du visiteur
+- UTILISE UNIQUEMENT les horaires fournis ci-dessus, ne fais AUCUN calcul de conversion toi-même
 - Sois naturel et commercial, pas robotique`;
 
   try {
@@ -334,6 +410,9 @@ export async function getAvailability(visitorTimezone: string): Promise<Availabi
     const { hour, minute, localTime, dayOfWeek } = getLocalTimeInfo(timezone, now);
     const available = isCommercialAvailable(hour, dayOfWeek);
 
+    const startInVisitorTz = convertHourBetweenTimezones(WORK_START_HOUR, 0, timezone, visitorTimezone, now);
+    const endInVisitorTz = convertHourBetweenTimezones(WORK_END_HOUR, 0, timezone, visitorTimezone, now);
+
     commercials.push({
       initials: config.initials,
       name: config.name,
@@ -343,6 +422,7 @@ export async function getAvailability(visitorTimezone: string): Promise<Availabi
       minute,
       available,
       dayOfWeek,
+      workHoursInVisitorTz: `${startInVisitorTz} - ${endInVisitorTz}`,
     });
   }
 
@@ -386,6 +466,9 @@ export async function getAvailabilityFast(visitorTimezone: string): Promise<Omit
     const { hour, minute, localTime, dayOfWeek } = getLocalTimeInfo(timezone, now);
     const available = isCommercialAvailable(hour, dayOfWeek);
 
+    const startInVisitorTz = convertHourBetweenTimezones(WORK_START_HOUR, 0, timezone, visitorTimezone, now);
+    const endInVisitorTz = convertHourBetweenTimezones(WORK_END_HOUR, 0, timezone, visitorTimezone, now);
+
     commercials.push({
       initials: config.initials,
       name: config.name,
@@ -395,6 +478,7 @@ export async function getAvailabilityFast(visitorTimezone: string): Promise<Omit
       minute,
       available,
       dayOfWeek,
+      workHoursInVisitorTz: `${startInVisitorTz} - ${endInVisitorTz}`,
     });
   }
 

@@ -10,6 +10,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { trpc } from "@/lib/trpc";
+import { useAuth } from "@/_core/hooks/useAuth";
 import { Phone, Mail, MessageCircle, X, Clock, ChevronDown, ChevronUp } from "lucide-react";
 
 // ─── Types ─────────────────────────────────────────────────────────
@@ -37,9 +38,14 @@ interface AvailabilityData {
 // ─── Hook partagé ──────────────────────────────────────────────────
 
 function useAvailability() {
-  const visitorTz = typeof window !== "undefined"
-    ? Intl.DateTimeFormat().resolvedOptions().timeZone
-    : "Europe/Paris";
+  const { user } = useAuth();
+
+  // Priorité : 1) fuseau du profil utilisateur connecté, 2) fuseau de l'appareil du visiteur
+  const visitorTz = user?.timezone
+    ? user.timezone
+    : typeof window !== "undefined"
+      ? Intl.DateTimeFormat().resolvedOptions().timeZone
+      : "Europe/Paris";
 
   const { data, isLoading, error, refetch } = trpc.availability.check.useQuery(
     { visitorTimezone: visitorTz },
@@ -57,6 +63,7 @@ function useAvailability() {
 
 export function AvailabilityWidget() {
   const { data, isLoading } = useAvailability();
+  const { isAuthenticated } = useAuth();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
 
@@ -125,7 +132,7 @@ export function AvailabilityWidget() {
                   {c.initials}
                 </div>
                 <span className="text-[10px] text-gray-400">
-                  {c.localTime}
+                  {isAuthenticated ? c.localTime : (c.available ? "En ligne" : "Hors ligne")}
                 </span>
               </div>
             ))}
@@ -272,6 +279,7 @@ export function AvailabilityBadge() {
 
 export function AvailabilityExtended() {
   const { data, isLoading } = useAvailability();
+  const { isAuthenticated } = useAuth();
 
   if (isLoading) {
     return (
@@ -347,10 +355,12 @@ export function AvailabilityExtended() {
                 <p className={`font-semibold ${c.available ? "text-green-300" : "text-gray-400"}`}>
                   {c.name}
                 </p>
-                <div className="flex items-center gap-1.5 text-xs text-gray-500">
-                  <Clock className="w-3 h-3" />
-                  <span>{c.localTime} (heure locale)</span>
-                </div>
+                {isAuthenticated && (
+                  <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                    <Clock className="w-3 h-3" />
+                    <span>{c.localTime} (heure locale)</span>
+                  </div>
+                )}
                 <span
                   className={`text-xs font-medium ${
                     c.available ? "text-green-400" : "text-orange-400"
@@ -364,20 +374,22 @@ export function AvailabilityExtended() {
         ))}
       </div>
 
-      {/* Heures d'ouverture */}
-      <div className="rounded-xl bg-gray-800/30 border border-gray-700/30 p-4 mb-5">
-        <h4 className="text-sm font-semibold text-gray-300 mb-2 flex items-center gap-2">
-          <Clock className="w-4 h-4" />
-          Heures d'ouverture
-        </h4>
-        <p className="text-xs text-gray-400">
-          Du lundi au vendredi, de 8h00 à 16h00 (heure locale de chaque commercial).
-          Les fuseaux horaires sont automatiquement convertis pour vous.
-        </p>
-        <p className="text-xs text-gray-500 mt-1">
-          Il est actuellement <strong className="text-gray-300">{data.visitorLocalTime}</strong> chez vous ({data.visitorTimezone}).
-        </p>
-      </div>
+      {/* Heures d'ouverture - visible uniquement pour les utilisateurs connectés */}
+      {isAuthenticated && (
+        <div className="rounded-xl bg-gray-800/30 border border-gray-700/30 p-4 mb-5">
+          <h4 className="text-sm font-semibold text-gray-300 mb-2 flex items-center gap-2">
+            <Clock className="w-4 h-4" />
+            Heures d'ouverture
+          </h4>
+          <p className="text-xs text-gray-400">
+            Du lundi au vendredi, de 8h00 à 16h00 (heure locale de chaque commercial).
+            Les fuseaux horaires sont automatiquement convertis pour vous.
+          </p>
+          <p className="text-xs text-gray-500 mt-1">
+            Il est actuellement <strong className="text-gray-300">{data.visitorLocalTime}</strong> chez vous ({data.visitorTimezone}).
+          </p>
+        </div>
+      )}
 
       {/* Boutons d'action */}
       <div className="flex flex-col sm:flex-row gap-3">

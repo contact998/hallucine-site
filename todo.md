@@ -238,3 +238,10 @@
 - [x] SmartForm accepte les données pré-remplies depuis le chatbot (URL params enrichis : message, eventType, audience, date, budget, need)
 - [x] Transition fluide chatbot → formulaire pré-rempli avec bandeau "Pré-rempli par le chatbot IA"
 - [x] Tests vitest pour le pré-remplissage chatbot (18 tests, 236 au total)
+
+## Bug fixes
+- [x] Fix indicateur de disponibilité : affiche "21h-07h" au lieu de "08h-16h" (conversion fuseau horaire inversée)
+- [x] Fix indicateur de disponibilité : utilisateur connecté → fuseau depuis profil DB, visiteur anonyme → fuseau depuis appareil
+- [x] Différenciation visiteur/connecté : anonyme voit seulement statut (Disponible/Absent), connecté voit statut + heures locales
+- [x] Fuseau par défaut de JB corrigé : Asia/Shanghai au lieu de Europe/Paris
+- [x] Heures d'ouverture et horaires locaux masqués pour les visiteurs anonymes (vie privée)
