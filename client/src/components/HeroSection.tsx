@@ -65,29 +65,27 @@ export default function HeroSection() {
             <span className="text-gold text-xs font-semibold tracking-[0.3em] uppercase">Fabricant français depuis 1995</span>
           </motion.div>
 
-          {/* 💫 Title avec text glow renforcé */}
-          <motion.h1
+          {/* 💫 Citation principale — slogan accrocheur */}
+          <motion.blockquote
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="text-5xl sm:text-6xl lg:text-8xl font-bold leading-[0.95] tracking-tight mb-8"
+            className="mb-10 max-w-4xl"
           >
-            <span className="text-white block text-glow-gold">L'écran de cinéma</span>
-            <span className="text-gradient-gold block mt-2 text-glow-gold-intense">le plus léger</span>
-            <span className="text-white block mt-2 text-glow-gold">au monde</span>
-          </motion.h1>
+            <p className="text-3xl sm:text-4xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-white font-serif italic">
+              «&nbsp;Nos concurrents n'ont jamais eu, à 3h du matin, à devoir replier un écran pour aller se coucher. <span className="text-gradient-gold text-glow-gold-intense">Nous, si.</span> C'est pour cela que nous avons tout repensé.&nbsp;»
+            </p>
+          </motion.blockquote>
 
-          {/* Quote */}
-          <motion.div
+          {/* Sous-titre — L'écran de cinéma le plus léger au monde */}
+          <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="relative pl-6 border-l-2 border-gold/40 mb-12 max-w-xl"
+            className="text-xl sm:text-2xl lg:text-3xl font-semibold tracking-wide uppercase text-white/70 mb-12"
           >
-            <p className="text-lg text-white/60 font-serif italic leading-relaxed">
-              «&nbsp;Nos concurrents n'ont jamais eu, à 3h du matin, à devoir replier un écran pour aller se coucher. Nous, si. C'est pour cela que nous avons tout repensé.&nbsp;»
-            </p>
-          </motion.div>
+            L'écran de cinéma <span className="text-gradient-gold">le plus léger</span> au monde
+          </motion.h1>
 
           {/* CTAs */}
           <motion.div
