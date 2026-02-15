@@ -143,8 +143,53 @@ export default function EcranGeant() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* Vidéos tutorielles */}
       <section className="py-20 bg-background">
+        <div className="container">
+          <h2 className="text-3xl font-bold text-ivory mb-4">Nos écrans en vidéo</h2>
+          <p className="text-white/60 mb-8 max-w-2xl">Découvrez le montage et le démontage de nos écrans gonflables géants en vidéo.</p>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-card border border-border rounded-lg overflow-hidden">
+              <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+                <iframe
+                  className="absolute inset-0 w-full h-full"
+                  src="https://www.youtube.com/embed/bAxDUrxFUXw"
+                  title="Montage écran soufflerie 10m"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="text-ivory font-semibold">Montage écran soufflerie 10m</h3>
+                <p className="text-white/60 text-sm">Tutoriel complet pour le montage d'un écran gonflable à soufflerie.</p>
+              </div>
+            </div>
+            <div className="bg-card border border-border rounded-lg overflow-hidden">
+              <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+                <iframe
+                  className="absolute inset-0 w-full h-full"
+                  src="https://www.youtube.com/embed/sHeVec7oZfQ"
+                  title="Démontage écran soufflerie"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="text-ivory font-semibold">Démontage écran soufflerie</h3>
+                <p className="text-white/60 text-sm">Comment démonter et ranger votre écran gonflable en toute simplicité.</p>
+              </div>
+            </div>
+          </div>
+          <div className="mt-6 text-center">
+            <Link href="/mode-emploi" className="text-warm hover:underline font-medium inline-flex items-center gap-2">
+              Voir le mode d'emploi complet <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-20 bg-charcoal-light">
         <div className="container text-center">
           <h2 className="text-3xl font-bold text-ivory mb-4">Vous organisez un événement ?</h2>
           <p className="text-white/60 mb-8 max-w-xl mx-auto">

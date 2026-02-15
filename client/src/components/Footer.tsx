@@ -43,6 +43,9 @@ export default function Footer() {
                 { label: "À propos", href: "/a-propos-hallucine" },
                 { label: "Galerie", href: "/galerie-evenements" },
                 { label: "Accessoires", href: "/accessoire-cinema-plein-air" },
+                { label: "Mode d'emploi", href: "/mode-emploi" },
+                { label: "Galerie vidéo", href: "/galerie-video" },
+                { label: "Blog", href: "/blog" },
                 { label: "Politique de confidentialité", href: "/politique-confidentialite" },
                 { label: "Mentions Légales", href: "/mentions-legales" },
               ].map((link) => (

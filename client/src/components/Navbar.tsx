@@ -50,6 +50,9 @@ const navItems: NavItem[] = [
     dropdown: [
       { label: "À propos", href: "/a-propos-hallucine" },
       { label: "Demande de prix", href: "/tarifs-ecran-gonflable" },
+      { label: "Mode d'emploi", href: "/mode-emploi" },
+      { label: "Galerie vidéo", href: "/galerie-video" },
+      { label: "Blog", href: "/blog" },
     ],
   },
 ];

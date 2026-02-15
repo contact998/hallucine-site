@@ -24,6 +24,9 @@ import DemandePrix from "./pages/DemandePrix";
 import Histoire from "./pages/Histoire";
 import MentionsLegales from "./pages/MentionsLegales";
 import Confidentialite from "./pages/Confidentialite";
+import ModeEmploi from "./pages/ModeEmploi";
+import GalerieVideo from "./pages/GalerieVideo";
+import Blog from "./pages/Blog";
 
 function Router() {
   return (
@@ -54,6 +57,11 @@ function Router() {
       <Route path={"/a-propos-hallucine"} component={APropos} />
       <Route path={"/histoire-hallucine"} component={Histoire} />
       <Route path={"/tarifs-ecran-gonflable"} component={DemandePrix} />
+      {/* Mode d'emploi & Vidéos */}
+      <Route path={"/mode-emploi"} component={ModeEmploi} />
+      <Route path={"/galerie-video"} component={GalerieVideo} />
+      {/* Blog */}
+      <Route path={"/blog"} component={Blog} />
       {/* Légal */}
       <Route path={"/mentions-legales"} component={MentionsLegales} />
       <Route path={"/politique-confidentialite"} component={Confidentialite} />

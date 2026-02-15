@@ -127,8 +127,33 @@ export default function TentesV() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* Vidéo */}
       <section className="py-20 bg-background">
+        <div className="container">
+          <h2 className="text-3xl font-bold text-ivory mb-4">La tente V en vidéo</h2>
+          <p className="text-white/60 mb-8 max-w-2xl">Découvrez le montage et l'utilisation de notre tente gonflable en V.</p>
+          <div className="max-w-2xl">
+            <div className="bg-card border border-border rounded-lg overflow-hidden">
+              <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+                <iframe
+                  className="absolute inset-0 w-full h-full"
+                  src="https://www.youtube.com/embed/-cga1EVZQtg"
+                  title="Tente gonflable V — Montage"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="text-ivory font-semibold">Tente gonflable V — Montage</h3>
+                <p className="text-white/60 text-sm">Tutoriel de montage de la tente gonflable en V Hallucine.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-20 bg-charcoal-light">
         <div className="container text-center">
           <h2 className="text-3xl font-bold text-ivory mb-4">Intéressé par nos tentes V ?</h2>
           <p className="text-white/60 mb-8">Contactez-nous pour un devis personnalisé ou consultez nos tarifs.</p>
