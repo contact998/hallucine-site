@@ -54,3 +54,10 @@
 ## En attente (côté client)
 - [ ] Rendre publique la vidéo YouTube _lLdMYZhz7s depuis YouTube Studio
 - [x] Connecter le formulaire Demande de devis au backend tRPC
+
+## Page Profil Utilisateur
+- [x] Mettre à jour le schéma DB pour lier les soumissions aux utilisateurs (userId, status, adminNote)
+- [x] Créer les routes backend pour récupérer/gérer les devis de l'utilisateur
+- [x] Créer la page de profil avec la liste des devis (tri par colonnes, compteurs par statut)
+- [x] Ajouter le lien profil/connexion dans la navbar (desktop + mobile)
+- [x] Tests vitest pour les routes profil (11 tests passent)

@@ -15,6 +15,13 @@
       "when": 1771129689831,
       "tag": "0001_breezy_serpent_society",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1771130243341,
+      "tag": "0002_clever_inhumans",
+      "breakpoints": true
     }
   ]
 }

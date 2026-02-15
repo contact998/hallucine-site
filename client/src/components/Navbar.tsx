@@ -5,8 +5,10 @@
  */
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone, Mail, ChevronDown } from "lucide-react";
+import { Menu, X, Phone, Mail, ChevronDown, User } from "lucide-react";
 import { Link, useLocation } from "wouter";
+import { useAuth } from "@/_core/hooks/useAuth";
+import { getLoginUrl } from "@/const";
 
 const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fCazlcDpANMEbcFp.png";
 
@@ -93,6 +95,7 @@ export default function Navbar() {
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const [location] = useLocation();
   const dropdownTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -193,13 +196,32 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* CTA Desktop */}
-          <Link
-            href="/tarifs-ecran-gonflable"
-            className="hidden xl:flex items-center gap-2 px-5 py-2 bg-warm text-charcoal font-semibold text-sm rounded hover:bg-warm-light transition-all duration-300 shrink-0"
-          >
-            Demande de prix
-          </Link>
+          {/* CTA Desktop + Profil */}
+          <div className="hidden xl:flex items-center gap-2 shrink-0">
+            <Link
+              href="/tarifs-ecran-gonflable"
+              className="flex items-center gap-2 px-5 py-2 bg-warm text-charcoal font-semibold text-sm rounded hover:bg-warm-light transition-all duration-300"
+            >
+              Demande de prix
+            </Link>
+            {isAuthenticated ? (
+              <Link
+                href="/profil"
+                className="flex items-center gap-1.5 px-3 py-2 border border-white/20 text-white/80 text-sm rounded hover:border-warm/50 hover:text-warm transition-colors"
+              >
+                <User className="w-4 h-4" />
+                Profil
+              </Link>
+            ) : (
+              <a
+                href={getLoginUrl()}
+                className="flex items-center gap-1.5 px-3 py-2 border border-white/20 text-white/80 text-sm rounded hover:border-warm/50 hover:text-warm transition-colors"
+              >
+                <User className="w-4 h-4" />
+                Connexion
+              </a>
+            )}
+          </div>
 
           {/* Mobile Toggle */}
           <button
@@ -273,6 +295,24 @@ export default function Navbar() {
                 >
                   Demande de prix
                 </Link>
+                {isAuthenticated ? (
+                  <Link
+                    href="/profil"
+                    onClick={() => setMobileOpen(false)}
+                    className="mt-2 flex items-center justify-center gap-2 px-6 py-3 border border-white/20 text-white/80 font-semibold rounded hover:border-warm/50 hover:text-warm"
+                  >
+                    <User className="w-4 h-4" />
+                    Mon Profil
+                  </Link>
+                ) : (
+                  <a
+                    href={getLoginUrl()}
+                    className="mt-2 flex items-center justify-center gap-2 px-6 py-3 border border-white/20 text-white/80 font-semibold rounded hover:border-warm/50 hover:text-warm"
+                  >
+                    <User className="w-4 h-4" />
+                    Connexion
+                  </a>
+                )}
               </div>
             </motion.div>
           )}

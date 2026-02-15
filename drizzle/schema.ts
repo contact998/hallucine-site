@@ -37,7 +37,14 @@ export const contactSubmissions = mysqlTable("contact_submissions", {
   message: text("message"),
   produit: varchar("produit", { length: 255 }),
   objectif: varchar("objectif", { length: 50 }),
+  /** ID de l'utilisateur connecté (null si soumission anonyme) */
+  userId: int("userId"),
+  /** Statut de la demande */
+  status: mysqlEnum("status", ["en_attente", "en_cours", "traite", "annule"]).default("en_attente").notNull(),
+  /** Note admin interne */
+  adminNote: text("adminNote"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
 
 export type ContactSubmission = typeof contactSubmissions.$inferSelect;

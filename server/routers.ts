@@ -1,9 +1,9 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, router } from "./_core/trpc";
+import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
-import { insertContactSubmission } from "./db";
+import { insertContactSubmission, getSubmissionsByUserId, getSubmissionsByEmail, cancelSubmission } from "./db";
 import { notifyOwner } from "./_core/notification";
 
 export const appRouter = router({
@@ -34,8 +34,8 @@ export const appRouter = router({
           objectif: z.string().optional(),
         })
       )
-      .mutation(async ({ input }) => {
-        // Sauvegarder en base de données
+      .mutation(async ({ input, ctx }) => {
+        // Sauvegarder en base de données avec userId si connecté
         await insertContactSubmission({
           type: input.type,
           nom: input.nom,
@@ -46,6 +46,8 @@ export const appRouter = router({
           message: input.message ?? null,
           produit: input.produit ?? null,
           objectif: input.objectif ?? null,
+          userId: ctx.user?.id ?? null,
+          status: "en_attente",
         });
 
         // Notifier le propriétaire
@@ -65,6 +67,33 @@ export const appRouter = router({
           ].filter(Boolean).join("\n"),
         });
 
+        return { success: true };
+      }),
+  }),
+
+  profile: router({
+    /** Récupérer les devis de l'utilisateur connecté */
+    mySubmissions: protectedProcedure.query(async ({ ctx }) => {
+      // Chercher par userId d'abord, puis par email pour les soumissions faites avant connexion
+      const byUserId = await getSubmissionsByUserId(ctx.user.id);
+      
+      if (byUserId.length > 0) {
+        return byUserId;
+      }
+      
+      // Fallback: chercher par email pour les soumissions anonymes
+      if (ctx.user.email) {
+        return getSubmissionsByEmail(ctx.user.email);
+      }
+      
+      return [];
+    }),
+
+    /** Annuler une demande */
+    cancelSubmission: protectedProcedure
+      .input(z.object({ submissionId: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        await cancelSubmission(input.submissionId, ctx.user.id);
         return { success: true };
       }),
   }),

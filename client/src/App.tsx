@@ -32,6 +32,7 @@ import TrouverDistributeur from "./pages/TrouverDistributeur";
 import ModeEmploi from "./pages/ModeEmploi";
 import GalerieVideo from "./pages/GalerieVideo";
 import Blog from "./pages/Blog";
+import Profil from "./pages/Profil";
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
@@ -73,6 +74,8 @@ function Router() {
       {/* Distributeurs */}
       <Route path={"/devenir-distributeur"} component={DevenirDistributeur} />
       <Route path={"/trouver-distributeur"} component={TrouverDistributeur} />
+      {/* Profil */}
+      <Route path={"/profil"} component={Profil} />
       {/* Légal */}
       <Route path={"/mentions-legales"} component={MentionsLegales} />
       <Route path={"/politique-confidentialite"} component={Confidentialite} />

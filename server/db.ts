@@ -105,3 +105,54 @@ export async function getContactSubmissions() {
   }
   return db.select().from(contactSubmissions).orderBy(desc(contactSubmissions.createdAt)).limit(100);
 }
+
+/** Récupérer les soumissions d'un utilisateur par userId */
+export async function getSubmissionsByUserId(userId: number) {
+  const db = await getDb();
+  if (!db) {
+    return [];
+  }
+  return db.select().from(contactSubmissions)
+    .where(eq(contactSubmissions.userId, userId))
+    .orderBy(desc(contactSubmissions.createdAt))
+    .limit(50);
+}
+
+/** Récupérer les soumissions d'un utilisateur par email */
+export async function getSubmissionsByEmail(email: string) {
+  const db = await getDb();
+  if (!db) {
+    return [];
+  }
+  return db.select().from(contactSubmissions)
+    .where(eq(contactSubmissions.email, email))
+    .orderBy(desc(contactSubmissions.createdAt))
+    .limit(50);
+}
+
+/** Annuler une soumission (seul le propriétaire ou un admin peut le faire) */
+export async function cancelSubmission(submissionId: number, userId: number) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+  const [submission] = await db.select().from(contactSubmissions)
+    .where(eq(contactSubmissions.id, submissionId))
+    .limit(1);
+  
+  if (!submission) {
+    throw new Error("Soumission introuvable");
+  }
+  if (submission.userId !== userId) {
+    throw new Error("Non autorisé");
+  }
+  if (submission.status === "traite") {
+    throw new Error("Impossible d'annuler une demande déjà traitée");
+  }
+  
+  await db.update(contactSubmissions)
+    .set({ status: "annule" })
+    .where(eq(contactSubmissions.id, submissionId));
+  
+  return true;
+}
