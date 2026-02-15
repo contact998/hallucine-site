@@ -9,10 +9,14 @@ import { motion } from "framer-motion";
 import { Check, ChevronRight, ChevronDown, Feather, Clock, Shield, Palette, ArrowLeft, Package, HelpCircle, Sofa, Wine, Truck, Ruler } from "lucide-react";
 import { Link } from "wouter";
 
-const MOBILIER_SUPPORT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wUlrsuGxNIzhQWtt.jpg";
-const MOBILIER_FAUTEUIL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bejqCXUcdKFhPUrA.jpg";
-const ACCESSOIRE_CHARIOT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/DoSomqHuWBbunOHC.jpg";
-const ACCESSOIRE_FLYCASE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tTDGORaRVTsImQcZ.jpg";
+const MOBILIER_SUPPORT = "https://www.hallucinecran.com/Tentes/meubles/fauteuils%20tabouret.jpg";
+const MOBILIER_FAUTEUIL = "https://www.hallucinecran.com/Tentes/meubles/fauteuil.jpg";
+const MOBILIER_CANAPE = "https://www.hallucinecran.com/Tentes/meubles/canape%20fauteuil%20noir%20rouge.jpg";
+const MOBILIER_BAR = "https://www.hallucinecran.com/Tentes/meubles/Bar.jpg";
+const MOBILIER_MANGE_DEBOUT = "https://www.hallucinecran.com/Tentes/meubles/mange%20debout.jpg";
+const MOBILIER_CANAPE_BLEU = "https://www.hallucinecran.com/Tentes/meubles/canape%20bleu.jpg";
+const ACCESSOIRE_CHARIOT = "https://www.hallucinecran.com/Tentes/meubles/fauteuils%20tabouret.jpg";
+const ACCESSOIRE_FLYCASE = "https://www.hallucinecran.com/Tentes/meubles/canape%20fauteuil%20noir%20rouge.jpg";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -25,7 +29,7 @@ const fadeIn = {
 const mobilierProducts = [
   {
     title: "Canapé gonflable",
-    img: MOBILIER_FAUTEUIL,
+    img: MOBILIER_CANAPE,
     desc: "Le canapé gonflable Hallucine accueille confortablement 2 à 3 personnes. Sa structure en chambre à air scellée offre un maintien ferme et un confort surprenant. Idéal pour les espaces lounge, les zones VIP et les espaces de détente lors de festivals ou d'événements corporate.",
     specs: [
       { label: "Dimensions", value: "180 × 80 × 70 cm (L×P×H)" },
@@ -49,7 +53,7 @@ const mobilierProducts = [
   },
   {
     title: "Bar / Comptoir gonflable",
-    img: MOBILIER_SUPPORT,
+    img: MOBILIER_BAR,
     desc: "Le bar gonflable transforme n'importe quel espace en point de vente ou d'accueil. Sa surface supérieure rigide (plateau amovible inclus) permet de poser verres, bouteilles et matériel. Disponible en version droite ou courbe, personnalisable aux couleurs de votre marque.",
     specs: [
       { label: "Dimensions", value: "200 × 60 × 110 cm (L×P×H)" },
@@ -61,7 +65,7 @@ const mobilierProducts = [
   },
   {
     title: "Comptoir d'accueil",
-    img: MOBILIER_SUPPORT,
+    img: MOBILIER_MANGE_DEBOUT,
     desc: "Le comptoir d'accueil gonflable est la solution idéale pour les entrées de festival, les salons professionnels et les événements corporate. Sa forme en arc de cercle permet d'accueillir 1 à 2 personnes derrière le comptoir. Grande surface d'impression pour votre branding.",
     specs: [
       { label: "Dimensions", value: "250 × 70 × 100 cm (L×P×H)" },

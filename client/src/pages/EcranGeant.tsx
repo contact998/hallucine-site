@@ -48,6 +48,57 @@ export default function EcranGeant() {
         </div>
       </section>
 
+      {/* Galerie photos */}
+      <section className="py-16 bg-background">
+        <div className="container">
+          <h2 className="text-3xl font-bold text-ivory mb-8">Nos écrans géants en images</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {[
+              { src: "https://www.hallucinecran.com/Giant%20Inf/1.webp", alt: "Écran géant gonflable centre-ville de Paris" },
+              { src: "https://www.hallucinecran.com/Products/21.PNG", alt: "Écran géant gonflable au château de Vincennes" },
+              { src: "https://www.hallucinecran.com/Products/ecran-geant-gonflable-24x15-metres.PNG", alt: "Écran géant gonflable 24×15m au stade Vélodrome" },
+              { src: "https://www.hallucinecran.com/Products/23.PNG", alt: "Écran géant gonflable Air Tahiti Nui" },
+              { src: "https://www.hallucinecran.com/Products/24.PNG", alt: "Écran géant gonflable Orange Vélodrome Marseille" },
+              { src: "https://www.hallucinecran.com/Gallery/46.webp", alt: "Écran géant pour concert de musique classique" },
+              { src: "https://www.hallucinecran.com/Giant%20Inf/4.webp", alt: "Écran géant gonflable sur bateau de croisière" },
+              { src: "https://www.hallucinecran.com/Giant%20Inf/6.webp", alt: "Trois écrans géants gonflables avec feu d'artifice" },
+              { src: "https://www.hallucinecran.com/Giant%20Inf/8.webp", alt: "Trois écrans géants au coucher du soleil" },
+              { src: "https://www.hallucinecran.com/Giant%20Inf/9.webp", alt: "Montage écran géant — 3 personnes suffisent" },
+              { src: "https://www.hallucinecran.com/Giant%20Inf/10.webp", alt: "Écran géant au stade Vélodrome Orange Marseille" },
+              { src: "https://www.hallucinecran.com/Gallery/37.webp", alt: "Écran géant gonflable événement Canal+" },
+            ].map((img, i) => (
+              <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden group">
+                <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-end">
+                  <p className="text-white text-xs p-2 opacity-0 group-hover:opacity-100 transition-opacity">{img.alt}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Accessoires inclus */}
+      <section className="py-16 bg-charcoal-light">
+        <div className="container">
+          <h2 className="text-3xl font-bold text-ivory mb-8">Accessoires inclus</h2>
+          <div className="grid grid-cols-3 gap-8 max-w-2xl">
+            <div className="text-center">
+              <img src="https://www.hallucinecran.com/Accessories/4-removebg-preview%20-1-.png" alt="Ancre marine" className="w-24 h-24 object-contain mx-auto mb-3" />
+              <p className="text-ivory text-sm font-medium">Ancre marine</p>
+            </div>
+            <div className="text-center">
+              <img src="https://www.hallucinecran.com/Accessories/5-removebg-preview.png" alt="Garantie 10 ans" className="w-24 h-24 object-contain mx-auto mb-3" />
+              <p className="text-ivory text-sm font-medium">Garantie 10 ans</p>
+            </div>
+            <div className="text-center">
+              <img src="https://www.hallucinecran.com/Accessories/6-removebg-preview.png" alt="Souffleur permanent" className="w-24 h-24 object-contain mx-auto mb-3" />
+              <p className="text-ivory text-sm font-medium">Souffleur permanent</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Avantages */}
       <section className="py-20 bg-background">
         <div className="container">

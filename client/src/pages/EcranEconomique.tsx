@@ -40,8 +40,32 @@ export default function EcranEconomique() {
         </div>
       </section>
 
+      {/* Galerie photos */}
+      <section className="py-16 bg-background">
+        <div className="container">
+          <h2 className="text-3xl font-bold text-ivory mb-8">Nos écrans économiques en images</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+              { src: "https://www.hallucinecran.com/1/20160902_183937.jpg", alt: "Écran économique dans la cour d'un bâtiment" },
+              { src: "https://www.hallucinecran.com/Gallery/48.webp", alt: "Écran économique pour un petit public" },
+              { src: "https://www.hallucinecran.com/Giant%20Inf/2.PNG", alt: "Écran économique installé dans un parc" },
+              { src: "https://www.hallucinecran.com/ecran%20etanches.jpg", alt: "Écran économique sur la plage" },
+              { src: "https://www.hallucinecran.com/Le%20cin%C3%A9ma%20%C3%A0%20la%20maison%20037.jpg", alt: "Écran économique — comparaison taille humaine" },
+              { src: "https://www.hallucinecran.com/ECRAN%207-5.jpg", alt: "Écran économique vue arrière" },
+            ].map((img, i) => (
+              <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden group">
+                <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-end">
+                  <p className="text-white text-xs p-2 opacity-0 group-hover:opacity-100 transition-opacity">{img.alt}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Avec souffleur */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-charcoal-light">
         <div className="container">
           <h2 className="text-3xl font-bold text-ivory mb-4">Écrans économiques avec souffleur</h2>
           <p className="text-white/70 mb-8 max-w-3xl">

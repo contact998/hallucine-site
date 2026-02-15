@@ -11,31 +11,37 @@ const accessoires = [
   {
     icon: Headphones,
     title: "Casques",
+    img: "https://www.hallucinecran.com/Accessories/1-removebg-preview.png",
     desc: "Casque pour tous les événements Hallucine, cinéma en plein air. Obtenez une expérience sonore étonnante pour votre corps et votre âme. Idéal pour les projections silencieuses et les événements en zone résidentielle.",
   },
   {
     icon: Armchair,
     title: "Transats",
+    img: "https://www.hallucinecran.com/Accessories/2-removebg-preview.png",
     desc: "Détendez-vous, soyez à l'aise tout en regardant des films, des jeux de sport avec vos amis et votre famille. Nos transats sont conçus pour le confort lors de longues projections en extérieur.",
   },
   {
     icon: Radio,
     title: "Transmetteur FM",
+    img: "https://www.hallucinecran.com/Accessories/3-removebg-preview.png",
     desc: "Atteignez les gens dans les véhicules à proximité. Délivrez des sons exceptionnels en temps réel pour une expérience de cinéma drive-in. Parfait pour les ciné-parcs et les événements en voiture.",
   },
   {
     icon: Sofa,
     title: "Canapé gonflable",
+    img: "https://www.hallucinecran.com/Tentes/meubles/canape%20fauteuil%20noir%20rouge.jpg",
     desc: "Facile à gonfler, avec une excellente conception anti-dégonflement. Ces canapés extrêmement durables conviennent à vous, votre famille et vos amis pour tout événement Hallucine.",
   },
   {
     icon: Monitor,
     title: "Cabine de projection",
+    img: "https://www.hallucinecran.com/Gallery/48.webp",
     desc: "La cabine de projection fonctionne parfaitement avec les écrans gonflables d'Hallucine. Placez votre projecteur directement et assurez-vous qu'il est en sécurité pour des effets vidéo étonnants.",
   },
   {
     icon: Package,
     title: "Forfaits AV",
+    img: "https://www.hallucinecran.com/Gallery/46.webp",
     desc: "De 50 à plus de 400 personnes, quelle que soit la taille de l'événement, vous pouvez offrir une expérience audio et vidéo étonnante à votre public. Forfaits complets incluant projecteur, son et accessoires.",
   },
 ];
@@ -65,10 +71,17 @@ export default function Accessoires() {
         <div className="container">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {accessoires.map((a) => (
-              <div key={a.title} className="p-8 bg-card border border-border rounded-lg card-hover">
-                <a.icon className="w-10 h-10 text-warm mb-5" />
-                <h2 className="text-xl font-bold text-ivory mb-3">{a.title}</h2>
-                <p className="text-white/60 text-sm leading-relaxed">{a.desc}</p>
+              <div key={a.title} className="bg-card border border-border rounded-lg overflow-hidden card-hover">
+                <div className="aspect-[4/3] bg-charcoal-light">
+                  <img src={a.img} alt={a.title} className="w-full h-full object-contain p-4" loading="lazy" />
+                </div>
+                <div className="p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <a.icon className="w-6 h-6 text-warm" />
+                    <h2 className="text-xl font-bold text-ivory">{a.title}</h2>
+                  </div>
+                  <p className="text-white/60 text-sm leading-relaxed">{a.desc}</p>
+                </div>
               </div>
             ))}
           </div>

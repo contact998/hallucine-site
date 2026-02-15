@@ -42,8 +42,37 @@ export default function TentesV() {
         </div>
       </section>
 
+      {/* Galerie photos */}
+      <section className="py-16 bg-background">
+        <div className="container">
+          <h2 className="text-3xl font-bold text-ivory mb-8">Tentes V en images</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            {[
+              { src: "https://www.hallucinecran.com/photoset/Tentes%20V/blanc%201.jpg", alt: "Tente V blanche — vue 1" },
+              { src: "https://www.hallucinecran.com/photoset/Tentes%20V/blanc%202.jpg", alt: "Tente V blanche — vue 2" },
+              { src: "https://www.hallucinecran.com/photoset/Tentes%20V/blanc%203.jpg", alt: "Tente V blanche — vue 3" },
+              { src: "https://www.hallucinecran.com/photoset/Tentes%20V/blanc%204.jpg", alt: "Tente V blanche — vue 4" },
+              { src: "https://www.hallucinecran.com/photoset/Tentes%20V/15b4c24de8e92b7b9047951a3057fe0.jpg", alt: "Tente V personnalisée" },
+              { src: "https://www.hallucinecran.com/photoset/Tentes%20V/d871ba2388a592607d77921d311069a.jpg", alt: "Tente V en situation" },
+              { src: "https://www.hallucinecran.com/photoset/Tentes%20V/Weixin%20Image_20240530130153.png", alt: "Tente V — détail" },
+            ].map((img, i) => (
+              <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden group">
+                <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-end">
+                  <p className="text-white text-xs p-2 opacity-0 group-hover:opacity-100 transition-opacity">{img.alt}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="bg-card border border-border rounded-lg p-6">
+            <h3 className="text-xl font-bold text-ivory mb-4">Schéma technique éclaté</h3>
+            <img src="https://www.hallucinecran.com/photoset/Tentes%20V/eclate%20en%20francais.jpg" alt="Schéma éclaté technique tente gonflable V" className="w-full max-w-3xl mx-auto rounded" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
       {/* Avantages */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-charcoal-light">
         <div className="container">
           <h2 className="text-3xl font-bold text-ivory mb-8">Avantages de la gamme</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

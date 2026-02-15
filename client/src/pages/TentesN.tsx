@@ -37,8 +37,35 @@ export default function TentesN() {
         </div>
       </section>
 
+      {/* Galerie photos */}
+      <section className="py-16 bg-background">
+        <div className="container">
+          <h2 className="text-3xl font-bold text-ivory mb-8">Tentes N en images</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-12">
+            {[
+              { src: "https://www.hallucinecran.com/Tentes/Tentes%20N/ntent.jpg", alt: "Tente N Hallucine — vue de côté" },
+              { src: "https://www.hallucinecran.com/Tentes/Tentes%20N/761c537e749de68e706a65456057742.jpg", alt: "Tente N Volvo" },
+              { src: "https://www.hallucinecran.com/Tentes/Tentes%20N/Weixin%20Image_20240530160054.jpg", alt: "Tente N Hallucine — vue de face" },
+              { src: "https://www.hallucinecran.com/Tentes/Tentes%20N/Weixin%20Image_20240530160133.jpg", alt: "Tente N Hallucine — vue latérale" },
+              { src: "https://www.hallucinecran.com/Tentes/Tentes%20N/tentes-gonflables-n-croix-rouge.jpg", alt: "Tente N premiers secours Croix-Rouge" },
+            ].map((img, i) => (
+              <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden group">
+                <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-end">
+                  <p className="text-white text-xs p-2 opacity-0 group-hover:opacity-100 transition-opacity">{img.alt}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="bg-card border border-border rounded-lg p-6">
+            <h3 className="text-xl font-bold text-ivory mb-4">Schéma technique éclaté</h3>
+            <img src="https://www.hallucinecran.com/Tentes/Tentes%20N/ntent%20eclate%20french.jpg" alt="Schéma éclaté technique tente gonflable N" className="w-full max-w-3xl mx-auto rounded" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
       {/* Ultra-résistante */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-charcoal-light">
         <div className="container">
           <h2 className="text-3xl font-bold text-ivory mb-8">Une tente ultra-résistante</h2>
           <div className="grid md:grid-cols-2 gap-8">
