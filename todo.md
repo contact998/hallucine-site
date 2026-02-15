@@ -254,3 +254,6 @@
 ## Suppression widget disponibilité flottant
 - [x] Supprimer le widget AvailabilityWidget (bulle fixe en bas à gauche) — trop gros et inutile
 - [x] Garder le badge header et la version étendue sur la page contact
+
+## Simplification tooltip WhatsApp
+- [x] Supprimer le gros tooltip blanc avec heures au-dessus du bouton WhatsApp — trop encombrant
