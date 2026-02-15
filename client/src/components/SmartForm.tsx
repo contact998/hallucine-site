@@ -24,6 +24,8 @@ import {
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 import { extractFromEmail, isGenericDomain, type EmailExtraction } from "@/lib/emailIntelligence";
+import VoiceMicButton from "@/components/VoiceMicButton";
+import SiretLookupField from "@/components/SiretLookupField";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 type ProductType = "ecran" | "tente" | "mobilier" | "arche" | null;
@@ -573,15 +575,32 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                 <label className={labelClass}>
                   <Mail className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Votre adresse email *
                 </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="votre@email.com"
-                  className={inputClass}
-                  autoFocus
-                  onKeyDown={(e) => { if (e.key === "Enter" && canProceed()) goNext(); }}
-                />
+                <div className="flex items-center gap-2">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="votre@email.com"
+                    className={`${inputClass} flex-1`}
+                    autoFocus
+                    onKeyDown={(e) => { if (e.key === "Enter" && canProceed()) goNext(); }}
+                  />
+                  <VoiceMicButton
+                    onResult={(text) => {
+                      // Convertir la dictée vocale en email (remplacer espaces, "arobase", "point")
+                      const cleaned = text
+                        .toLowerCase()
+                        .replace(/\s*arobase\s*/gi, "@")
+                        .replace(/\s*arrobase\s*/gi, "@")
+                        .replace(/\s*at\s*/gi, "@")
+                        .replace(/\s*point\s*/gi, ".")
+                        .replace(/\s+/g, "")
+                        .trim();
+                      setEmail(cleaned);
+                    }}
+                    tooltip="Dicter votre email"
+                  />
+                </div>
               </div>
 
               {/* Apercu de l'extraction IA */}
@@ -782,14 +801,44 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   <Phone className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Telephone
                   <span className="text-white/30 ml-1">(recommande)</span>
                 </label>
-                <input
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+33 6 12 34 56 78"
-                  className={inputClass}
-                  autoFocus
-                />
+                <div className="flex items-center gap-2">
+                  <input
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="+33 6 12 34 56 78"
+                    className={`${inputClass} flex-1`}
+                    autoFocus
+                  />
+                  <VoiceMicButton
+                    onResult={(text) => {
+                      // Convertir la dictée vocale en numéro de téléphone
+                      const cleaned = text
+                        .replace(/z[eé]ro/gi, "0")
+                        .replace(/un\b/gi, "1")
+                        .replace(/deux/gi, "2")
+                        .replace(/trois/gi, "3")
+                        .replace(/quatre/gi, "4")
+                        .replace(/cinq/gi, "5")
+                        .replace(/six/gi, "6")
+                        .replace(/sept/gi, "7")
+                        .replace(/huit/gi, "8")
+                        .replace(/neuf/gi, "9")
+                        .replace(/dix/gi, "10")
+                        .replace(/plus/gi, "+")
+                        .replace(/[^0-9+\s]/g, "")
+                        .replace(/\s+/g, " ")
+                        .trim();
+                      setPhone(prev => {
+                        // Ajouter au numéro existant (préfixe pays)
+                        const prefix = prev.trim();
+                        if (prefix && !cleaned.startsWith("+")) return `${prefix}${cleaned}`;
+                        return cleaned;
+                      });
+                    }}
+                    tooltip="Dicter votre num\u00e9ro"
+                  />
+                </div>
               </div>
 
               {/* Preference de rappel - visible uniquement si telephone renseigne */}
@@ -887,14 +936,20 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   <label className={labelClass}>
                     <User className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Prenom
                   </label>
-                  <input
-                    type="text"
-                    value={prenom}
-                    onChange={(e) => setPrenom(e.target.value)}
-                    placeholder={emailExtraction?.prenom || "Jean"}
-                    className={inputClass}
-                    autoFocus
-                  />
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      value={prenom}
+                      onChange={(e) => setPrenom(e.target.value)}
+                      placeholder={emailExtraction?.prenom || "Jean"}
+                      className={`${inputClass} flex-1`}
+                      autoFocus
+                    />
+                    <VoiceMicButton
+                      onResult={(text) => setPrenom(text.trim())}
+                      tooltip="Dicter votre prenom"
+                    />
+                  </div>
                   {emailExtraction?.prenom && !prenom && !aiAcceptedPrenom && (
                     <button
                       onClick={acceptAiPrenom}
@@ -907,13 +962,19 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                 </div>
                 <div>
                   <label className={labelClass}>Nom</label>
-                  <input
-                    type="text"
-                    value={nom}
-                    onChange={(e) => setNom(e.target.value)}
-                    placeholder={emailExtraction?.nom || "Dupont"}
-                    className={inputClass}
-                  />
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      value={nom}
+                      onChange={(e) => setNom(e.target.value)}
+                      placeholder={emailExtraction?.nom || "Dupont"}
+                      className={`${inputClass} flex-1`}
+                    />
+                    <VoiceMicButton
+                      onResult={(text) => setNom(text.trim())}
+                      tooltip="Dicter votre nom"
+                    />
+                  </div>
                   {emailExtraction?.nom && !nom && !aiAcceptedNom && (
                     <button
                       onClick={acceptAiNom}
@@ -929,13 +990,19 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                 <label className={labelClass}>
                   <Building2 className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Entreprise / Organisation
                 </label>
-                <input
-                  type="text"
-                  value={entreprise}
-                  onChange={(e) => setEntreprise(e.target.value)}
-                  placeholder={emailExtraction?.entreprise || "Nom de votre structure"}
-                  className={inputClass}
-                />
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={entreprise}
+                    onChange={(e) => setEntreprise(e.target.value)}
+                    placeholder={emailExtraction?.entreprise || "Nom de votre structure"}
+                    className={`${inputClass} flex-1`}
+                  />
+                  <VoiceMicButton
+                    onResult={(text) => setEntreprise(text.trim())}
+                    tooltip="Dicter le nom de l'entreprise"
+                  />
+                </div>
                 {emailExtraction?.entreprise && !entreprise && !aiAcceptedEntreprise && (
                   <button
                     onClick={acceptAiEntreprise}
@@ -946,6 +1013,19 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   </button>
                 )}
               </div>
+
+              {/* Recherche SIRET / SIREN */}
+              <SiretLookupField
+                onSelect={(result) => {
+                  if (result.entreprise && !entreprise) setEntreprise(result.entreprise);
+                  if (result.ville && !city) setCity(result.ville);
+                  if (result.codePostal && !postalCode) setPostalCode(result.codePostal);
+                  if (result.ville || result.codePostal) {
+                    // Pre-remplir le pays comme France si SIRET
+                    if (!country) setCountry("France");
+                  }
+                }}
+              />
             </div>
 
             <div className="flex gap-3 mt-6">
@@ -1051,13 +1131,19 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   <label className={labelClass}>
                     <MapPin className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Ville
                   </label>
-                  <input
-                    type="text"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    placeholder="Votre ville"
-                    className={inputClass}
-                  />
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                      placeholder="Votre ville"
+                      className={`${inputClass} flex-1`}
+                    />
+                    <VoiceMicButton
+                      onResult={(text) => setCity(text.trim())}
+                      tooltip="Dicter votre ville"
+                    />
+                  </div>
                 </div>
               )}
             </div>
@@ -1083,20 +1169,27 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             <p className="text-white/50 text-sm mb-5">Optionnel -- date d'evenement, budget, contraintes...</p>
 
             <div>
-              <label className={labelClass}>
-                <MessageSquare className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Message
-                <span className="text-white/30 ml-1">(optionnel)</span>
-              </label>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="text-white/60 text-sm">
+                  <MessageSquare className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Message
+                  <span className="text-white/30 ml-1">(optionnel)</span>
+                </label>
+                <VoiceMicButton
+                  onResult={(text) => setMessage(prev => prev ? `${prev} ${text}` : text)}
+                  tooltip="Dicter votre message"
+                  size="md"
+                />
+              </div>
               <textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 rows={4}
                 placeholder={
-                  product === "ecran" ? "Date de l'evenement, lieu, nombre de spectateurs, budget estime..."
-                  : product === "tente" ? "Dimensions souhaitees, personnalisation, date d'utilisation..."
-                  : product === "mobilier" ? "Quantite, couleurs, evenement prevu..."
-                  : product === "arche" ? "Dimensions, personnalisation, type d'evenement..."
-                  : "Decrivez votre projet..."
+                  product === "ecran" ? "Date de l'evenement, lieu, nombre de spectateurs, budget estime... (ou cliquez sur le micro pour dicter)"
+                  : product === "tente" ? "Dimensions souhaitees, personnalisation, date d'utilisation... (ou dictez)"
+                  : product === "mobilier" ? "Quantite, couleurs, evenement prevu... (ou dictez)"
+                  : product === "arche" ? "Dimensions, personnalisation, type d'evenement... (ou dictez)"
+                  : "Decrivez votre projet... (ou cliquez sur le micro pour dicter)"
                 }
                 className={`${inputClass} resize-none`}
                 autoFocus

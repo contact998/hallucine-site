@@ -188,3 +188,16 @@
 - [x] Notification admin des abandons avec les infos deja saisies
 - [x] IA extraction nom/prenom depuis email (jean.dupont@... -> Jean Dupont) + entreprise depuis domaine
 - [x] Tests vitest pour l'extraction email (42 tests) et la route d'abandon (3 tests)
+
+## Auto-complétion SIRET
+- [x] Rechercher et tester l'API entreprise.data.gouv.fr pour la recherche SIRET
+- [x] Créer le module client siretLookup.ts avec appel API et parsing des résultats
+- [x] Intégrer l'auto-complétion SIRET dans le SmartForm (étape Nom/Entreprise)
+- [x] Tests vitest pour la recherche SIRET (22 tests)
+
+## Remplissage vocal du formulaire
+- [x] Créer le hook useSpeechToText.ts (Web Speech API native)
+- [x] Bouton micro sur chaque champ du SmartForm pour dicter au lieu de taper
+- [x] Feedback visuel pendant l'écoute (animation micro, texte en cours)
+- [x] Fallback gracieux si le navigateur ne supporte pas la reconnaissance vocale
+- [x] Tests vitest pour le remplissage vocal (intégré dans tests SIRET)
