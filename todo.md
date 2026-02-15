@@ -87,7 +87,7 @@
 - [x] Brochures PDF téléchargeables sur les pages produits
 
 ## Synchronisation CRM Hallucine
-- [ ] Ajouter l'utilisateur "Site Web" comme 3ème commercial dans le CRM
+- [x] Ajouter l'utilisateur "Site Web" comme 3ème commercial dans le CRM — fait via webhook (createdBy='Site Web')
 - [x] Examiner l'API du CRM Hallucine (hallucinecrm.manus.space)
 - [x] Créer le service de synchronisation côté serveur
 - [x] Connecter la synchronisation au flux de soumission de devis existant

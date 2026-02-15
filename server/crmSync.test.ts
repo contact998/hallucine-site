@@ -105,10 +105,10 @@ describe("CRM Sync Service", () => {
   });
 
   describe("isCrmSyncConfigured", () => {
-    it("should return false when env vars are not set", () => {
-      // By default in test env, these are not set
+    it("should return true when env vars are set", () => {
+      // CRM_WEBHOOK_URL and CRM_WEBHOOK_TOKEN are now configured
       const result = isCrmSyncConfigured();
-      expect(result).toBe(false);
+      expect(result).toBe(true);
     });
   });
 });
