@@ -250,3 +250,7 @@
 - [x] Identifier la source exacte des heures 21h-07h : bug dans formatInVisitorTz (routers.ts) et convertHourBetweenTimezones (availabilityService.ts) - new Date() sans 'Z' interprété en heure locale du serveur (America/New_York) au lieu d'UTC
 - [x] Corriger définitivement l'affichage : utiliser Date.UTC + soustraction de l'offset du fuseau source pour obtenir le vrai UTC
 - [x] Vérifier visuellement le rendu après correction : 00:00-10:00 en UTC, 01:00-11:00 à Paris, 08:00-18:00 à Shanghai
+
+## Suppression widget disponibilité flottant
+- [x] Supprimer le widget AvailabilityWidget (bulle fixe en bas à gauche) — trop gros et inutile
+- [x] Garder le badge header et la version étendue sur la page contact
