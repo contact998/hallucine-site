@@ -171,6 +171,11 @@ export default defineConfig({
     port: 3000,
     strictPort: false, // Will find next available port if 3000 is busy
     host: true,
+    hmr: {
+      // Fix WebSocket connection through proxy
+      clientPort: 443,
+      protocol: "wss",
+    },
     allowedHosts: [
       ".manuspre.computer",
       ".manus.computer",
