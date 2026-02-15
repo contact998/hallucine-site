@@ -3,8 +3,10 @@
  * Specs techniques complètes, tarifs, avantages, CTA
  * Données exactes du site de référence
  */
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import FilmCountdown from "@/components/FilmCountdown";
 import { Link } from "wouter";
 import { Wind, Clock, Shield, Feather, Users, ArrowRight } from "lucide-react";
 
@@ -28,8 +30,11 @@ const avantages = [
 ];
 
 export default function EcranGeant() {
+  const [showCountdown, setShowCountdown] = useState(true);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {showCountdown && <FilmCountdown onComplete={() => setShowCountdown(false)} />}
       <Navbar />
 
       {/* Hero */}

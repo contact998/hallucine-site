@@ -2,8 +2,10 @@
  * Page Écran Gonflable Étanche à l'Air
  * Specs techniques complètes, tarifs, avantages, CTA
  */
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import FilmCountdown from "@/components/FilmCountdown";
 import { Link } from "wouter";
 import { VolumeX, Droplets, Clock, Feather } from "lucide-react";
 
@@ -27,8 +29,11 @@ const avantages = [
 ];
 
 export default function EcranEtanche() {
+  const [showCountdown, setShowCountdown] = useState(true);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {showCountdown && <FilmCountdown onComplete={() => setShowCountdown(false)} />}
       <Navbar />
 
       {/* Hero */}

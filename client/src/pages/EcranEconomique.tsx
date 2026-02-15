@@ -2,8 +2,10 @@
  * Page Écran Gonflable Économique
  * Deux gammes : avec souffleur et sans souffleur
  */
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import FilmCountdown from "@/components/FilmCountdown";
 import { Link } from "wouter";
 
 const avecSouffleur = [
@@ -21,8 +23,11 @@ const sansSouffleur = [
 ];
 
 export default function EcranEconomique() {
+  const [showCountdown, setShowCountdown] = useState(true);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {showCountdown && <FilmCountdown onComplete={() => setShowCountdown(false)} />}
       <Navbar />
 
       {/* Hero */}

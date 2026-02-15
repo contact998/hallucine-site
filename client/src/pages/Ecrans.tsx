@@ -4,6 +4,7 @@
  */
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import FilmCountdown from "@/components/FilmCountdown";
 import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
@@ -59,9 +60,11 @@ const faqItems = [
 
 export default function Ecrans() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [showCountdown, setShowCountdown] = useState(true);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {showCountdown && <FilmCountdown onComplete={() => setShowCountdown(false)} />}
       <Navbar />
 
       {/* Hero */}
