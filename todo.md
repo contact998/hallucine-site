@@ -92,3 +92,9 @@
 - [x] Créer le service de synchronisation côté serveur
 - [x] Connecter la synchronisation au flux de soumission de devis existant
 - [x] Tests vitest pour la synchronisation CRM
+
+## Notifications email admin
+- [x] Examiner les outils d'envoi d'email disponibles (Gmail MCP, notification Manus)
+- [x] Implémenter le service d'envoi d'email côté serveur
+- [x] Connecter les notifications au flux de soumission de devis
+- [x] Tests vitest pour les notifications email

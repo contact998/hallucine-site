@@ -18,6 +18,15 @@ import { notifyOwner } from "./_core/notification";
 import { chatWithAssistant } from "./chatbot";
 import { generateBrochure } from "./brochure";
 import { syncSubmissionToCrm, isCrmSyncConfigured } from "./crmSync";
+import { prepareAdminEmailNotification } from "./emailNotification";
+
+// File d'attente des notifications email en attente d'envoi via Gmail
+const pendingEmailNotifications: Array<{
+  to: string[];
+  subject: string;
+  content: string;
+  aiAnalysis: string;
+}> = [];
 
 export const appRouter = router({
   system: systemRouter,
@@ -63,6 +72,8 @@ export const appRouter = router({
         });
 
         const typeLabel = input.type === "contact" ? "Contact" : input.type === "devis" ? "Demande de devis" : "Demande distributeur";
+
+        // Notification Manus (canal principal instantané)
         await notifyOwner({
           title: `Nouveau ${typeLabel} de ${input.nom}`,
           content: [
@@ -77,6 +88,15 @@ export const appRouter = router({
             input.message ? `**Message:** ${input.message}` : null,
           ].filter(Boolean).join("\n"),
         });
+
+        // Notification email enrichie par IA (envoi asynchrone, ne bloque pas la réponse)
+        prepareAdminEmailNotification(input)
+          .then(emailData => {
+            // Stocker pour envoi via le endpoint dédié
+            pendingEmailNotifications.push(emailData);
+            console.log(`[Email] Notification email préparée pour ${input.nom} — Analyse IA incluse`);
+          })
+          .catch(err => console.warn("[Email] Erreur préparation email:", err));
 
         // Synchronisation automatique avec le CRM Hallucine
         let crmSync: { success: boolean; error?: string } = { success: false, error: "not configured" };
@@ -210,6 +230,26 @@ export const appRouter = router({
 
         return result;
       }),
+
+    /** Récupérer les notifications email en attente */
+    pendingEmails: adminProcedure.query(async () => {
+      return {
+        count: pendingEmailNotifications.length,
+        emails: pendingEmailNotifications.map(e => ({
+          to: e.to,
+          subject: e.subject,
+          content: e.content,
+          aiAnalysis: e.aiAnalysis,
+        })),
+      };
+    }),
+
+    /** Marquer les emails comme envoyés (vider la file) */
+    clearPendingEmails: adminProcedure.mutation(async () => {
+      const count = pendingEmailNotifications.length;
+      pendingEmailNotifications.length = 0;
+      return { cleared: count };
+    }),
 
     /** Supprimer une soumission */
     deleteSubmission: adminProcedure
