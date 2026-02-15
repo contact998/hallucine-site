@@ -17,6 +17,11 @@ import {
 import {
   getSubmissionStats,
   getAllSubmissions,
+  insertAuditHistory,
+  getAuditHistoryList,
+  getAuditHistoryById,
+  getLastTwoAudits,
+  updateAuditEmailStatus,
 } from "./db";
 
 // ─── Types ─────────────────────────────────────────────────────────
@@ -362,6 +367,7 @@ export async function executeWeeklyAudit(): Promise<{
   success: boolean;
   report?: AuditReport;
   email?: { subject: string; body: string };
+  auditId?: number;
   error?: string;
 }> {
   try {
@@ -379,13 +385,111 @@ export async function executeWeeklyAudit(): Promise<{
     const email = formatAuditEmail(report);
     console.log("[WeeklyAudit] Email formaté");
 
-    return { success: true, report, email };
+    // 4. Sauvegarder en base de données
+    let auditId: number | undefined;
+    try {
+      const insertResult = await insertAuditHistory({
+        period: report.period,
+        timezone: report.timezone,
+        performanceSummary: report.sections.performanceSummary,
+        workflowAnalysis: report.sections.workflowAnalysis,
+        conversionAnalysis: report.sections.conversionAnalysis,
+        codeRecommendations: report.sections.codeRecommendations,
+        prioritizedActions: report.sections.prioritizedActions,
+        rawMetrics: JSON.stringify(report.rawMetrics),
+        totalPageViews: report.rawMetrics.analytics?.totalPageViews ?? 0,
+        uniqueVisitors: report.rawMetrics.analytics?.uniqueVisitors ?? 0,
+        totalEvents: report.rawMetrics.analytics?.totalEvents ?? 0,
+        avgDuration: report.rawMetrics.analytics?.avgDuration ?? 0,
+        totalSubmissions: report.rawMetrics.submissions?.total ?? 0,
+        weeklySubmissions: report.rawMetrics.recentSubmissions,
+        emailSubject: email.subject,
+        emailBody: email.body,
+        emailSent: "pending",
+      });
+      auditId = Number(insertResult[0].insertId);
+      console.log(`[WeeklyAudit] Rapport sauvegardé en DB (id: ${auditId})`);
+    } catch (dbErr) {
+      console.error("[WeeklyAudit] Erreur sauvegarde DB:", dbErr);
+      // On continue même si la DB échoue
+    }
+
+    return { success: true, report, email, auditId };
   } catch (err) {
     const errorMsg = err instanceof Error ? err.message : String(err);
     console.error("[WeeklyAudit] Erreur:", errorMsg);
     return { success: false, error: errorMsg };
   }
 }
+
+// ─── Comparaison semaine / semaine ─────────────────────────────────
+
+export interface WeekComparison {
+  current: {
+    id: number;
+    period: string;
+    totalPageViews: number;
+    uniqueVisitors: number;
+    totalEvents: number;
+    avgDuration: number;
+    totalSubmissions: number;
+    weeklySubmissions: number;
+    createdAt: Date;
+  };
+  previous: {
+    id: number;
+    period: string;
+    totalPageViews: number;
+    uniqueVisitors: number;
+    totalEvents: number;
+    avgDuration: number;
+    totalSubmissions: number;
+    weeklySubmissions: number;
+    createdAt: Date;
+  } | null;
+  variations: {
+    pageViews: number | null;
+    visitors: number | null;
+    events: number | null;
+    duration: number | null;
+    submissions: number | null;
+  };
+}
+
+/**
+ * Calcule la variation en pourcentage entre deux valeurs.
+ * Retourne null si la valeur précédente est 0 (pas de référence).
+ */
+export function calcVariation(current: number, previous: number): number | null {
+  if (previous === 0) return current > 0 ? 100 : null;
+  return Math.round(((current - previous) / previous) * 100);
+}
+
+/**
+ * Récupère les 2 derniers audits et calcule les variations.
+ */
+export async function getWeekOverWeekComparison(): Promise<WeekComparison | null> {
+  const audits = await getLastTwoAudits();
+  if (audits.length === 0) return null;
+
+  const current = audits[0];
+  const previous = audits.length > 1 ? audits[1] : null;
+
+  return {
+    current,
+    previous,
+    variations: {
+      pageViews: previous ? calcVariation(current.totalPageViews, previous.totalPageViews) : null,
+      visitors: previous ? calcVariation(current.uniqueVisitors, previous.uniqueVisitors) : null,
+      events: previous ? calcVariation(current.totalEvents, previous.totalEvents) : null,
+      duration: previous ? calcVariation(current.avgDuration, previous.avgDuration) : null,
+      submissions: previous ? calcVariation(current.weeklySubmissions, previous.weeklySubmissions) : null,
+    },
+  };
+}
+
+// Ré-exporter les helpers DB pour l'accès depuis les routes
+export { getAuditHistoryList, getAuditHistoryById, getLastTwoAudits, updateAuditEmailStatus };
 
 /**
  * Calcule la prochaine heure d'envoi (lundi 6h00 dans le fuseau CRM).

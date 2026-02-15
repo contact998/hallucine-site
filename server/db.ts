@@ -1,6 +1,6 @@
 import { eq, desc, sql, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, contactSubmissions, InsertContactSubmission } from "../drizzle/schema";
+import { InsertUser, users, contactSubmissions, InsertContactSubmission, auditHistory, InsertAuditHistoryEntry } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -210,6 +210,76 @@ export async function getSubmissionStats() {
     stats[row.type] = row.count;
   }
   return stats;
+}
+
+// ─── Audit History Helpers ─────────────────────────────────────────
+
+/** Sauvegarder un rapport d'audit en base de données */
+export async function insertAuditHistory(data: InsertAuditHistoryEntry) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(auditHistory).values(data);
+  return result;
+}
+
+/** Récupérer tous les audits (triés du plus récent au plus ancien) */
+export async function getAuditHistoryList(limit = 52) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select({
+    id: auditHistory.id,
+    period: auditHistory.period,
+    timezone: auditHistory.timezone,
+    totalPageViews: auditHistory.totalPageViews,
+    uniqueVisitors: auditHistory.uniqueVisitors,
+    totalEvents: auditHistory.totalEvents,
+    avgDuration: auditHistory.avgDuration,
+    totalSubmissions: auditHistory.totalSubmissions,
+    weeklySubmissions: auditHistory.weeklySubmissions,
+    emailSent: auditHistory.emailSent,
+    createdAt: auditHistory.createdAt,
+  }).from(auditHistory)
+    .orderBy(desc(auditHistory.createdAt))
+    .limit(limit);
+}
+
+/** Récupérer un audit complet par ID */
+export async function getAuditHistoryById(auditId: number) {
+  const db = await getDb();
+  if (!db) return null;
+  const [result] = await db.select().from(auditHistory)
+    .where(eq(auditHistory.id, auditId))
+    .limit(1);
+  return result ?? null;
+}
+
+/** Récupérer les 2 derniers audits pour comparaison */
+export async function getLastTwoAudits() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select({
+    id: auditHistory.id,
+    period: auditHistory.period,
+    totalPageViews: auditHistory.totalPageViews,
+    uniqueVisitors: auditHistory.uniqueVisitors,
+    totalEvents: auditHistory.totalEvents,
+    avgDuration: auditHistory.avgDuration,
+    totalSubmissions: auditHistory.totalSubmissions,
+    weeklySubmissions: auditHistory.weeklySubmissions,
+    createdAt: auditHistory.createdAt,
+  }).from(auditHistory)
+    .orderBy(desc(auditHistory.createdAt))
+    .limit(2);
+}
+
+/** Mettre à jour le statut d'envoi email d'un audit */
+export async function updateAuditEmailStatus(auditId: number, status: "pending" | "sent" | "failed") {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(auditHistory)
+    .set({ emailSent: status })
+    .where(eq(auditHistory.id, auditId));
+  return true;
 }
 
 /** Annuler une soumission (seul le propriétaire ou un admin peut le faire) */

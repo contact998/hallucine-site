@@ -210,3 +210,11 @@
 - [x] Envoyer le rapport par email via Gmail MCP chaque lundi à 6h (fuseau CRM)
 - [x] Programmer la tâche planifiée (cron)
 - [x] Tests vitest pour le service d'audit IA (25 tests)
+
+## Historique des audits IA
+- [x] Table DB audit_history pour stocker chaque rapport
+- [x] Modifier weeklyAudit.ts pour sauvegarder automatiquement en DB
+- [x] Routes admin : liste des audits, détail d'un audit, comparaison semaine/semaine
+- [x] Interface admin : page historique avec tableau triable, détail, graphiques d'évolution
+- [x] Comparaison semaine N vs N-1 : variation des métriques clés (visites, conversion, soumissions)
+- [x] Tests vitest pour l'historique des audits (188 tests au total)

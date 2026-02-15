@@ -1,0 +1,22 @@
+CREATE TABLE `audit_history` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`period` varchar(100) NOT NULL,
+	`timezone` varchar(100) NOT NULL,
+	`performanceSummary` text NOT NULL,
+	`workflowAnalysis` text NOT NULL,
+	`conversionAnalysis` text NOT NULL,
+	`codeRecommendations` text NOT NULL,
+	`prioritizedActions` text NOT NULL,
+	`rawMetrics` text NOT NULL,
+	`totalPageViews` int NOT NULL DEFAULT 0,
+	`uniqueVisitors` int NOT NULL DEFAULT 0,
+	`totalEvents` int NOT NULL DEFAULT 0,
+	`avgDuration` int NOT NULL DEFAULT 0,
+	`totalSubmissions` int NOT NULL DEFAULT 0,
+	`weeklySubmissions` int NOT NULL DEFAULT 0,
+	`emailSubject` varchar(500),
+	`emailBody` text,
+	`emailSent` enum('pending','sent','failed') NOT NULL DEFAULT 'pending',
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	CONSTRAINT `audit_history_id` PRIMARY KEY(`id`)
+);

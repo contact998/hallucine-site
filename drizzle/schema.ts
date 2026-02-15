@@ -114,3 +114,40 @@ export const siteSettings = mysqlTable("site_settings", {
 
 export type SiteSetting = typeof siteSettings.$inferSelect;
 export type InsertSiteSetting = typeof siteSettings.$inferInsert;
+
+// Table pour l'historique des audits IA hebdomadaires
+export const auditHistory = mysqlTable("audit_history", {
+  id: int("id").autoincrement().primaryKey(),
+  /** Période couverte par l'audit (ex: "08/02/2026 — 15/02/2026") */
+  period: varchar("period", { length: 100 }).notNull(),
+  /** Fuseau horaire utilisé */
+  timezone: varchar("timezone", { length: 100 }).notNull(),
+  /** Résumé des performances */
+  performanceSummary: text("performanceSummary").notNull(),
+  /** Analyse du workflow */
+  workflowAnalysis: text("workflowAnalysis").notNull(),
+  /** Analyse de conversion */
+  conversionAnalysis: text("conversionAnalysis").notNull(),
+  /** Recommandations techniques */
+  codeRecommendations: text("codeRecommendations").notNull(),
+  /** Actions prioritaires */
+  prioritizedActions: text("prioritizedActions").notNull(),
+  /** Métriques brutes en JSON */
+  rawMetrics: text("rawMetrics").notNull(),
+  /** KPIs clés pour comparaison rapide */
+  totalPageViews: int("totalPageViews").default(0).notNull(),
+  uniqueVisitors: int("uniqueVisitors").default(0).notNull(),
+  totalEvents: int("totalEvents").default(0).notNull(),
+  avgDuration: int("avgDuration").default(0).notNull(),
+  totalSubmissions: int("totalSubmissions").default(0).notNull(),
+  weeklySubmissions: int("weeklySubmissions").default(0).notNull(),
+  /** Sujet et body de l'email envoyé */
+  emailSubject: varchar("emailSubject", { length: 500 }),
+  emailBody: text("emailBody"),
+  /** Statut de l'envoi email */
+  emailSent: mysqlEnum("emailSent", ["pending", "sent", "failed"]).default("pending").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type AuditHistoryEntry = typeof auditHistory.$inferSelect;
+export type InsertAuditHistoryEntry = typeof auditHistory.$inferInsert;

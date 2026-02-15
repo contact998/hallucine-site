@@ -37,7 +37,13 @@ import {
   COMMON_TIMEZONES,
 } from "./businessHours";
 import { invokeLLM } from "./_core/llm";
-import { executeWeeklyAudit, formatAuditEmail } from "./weeklyAudit";
+import {
+  executeWeeklyAudit,
+  formatAuditEmail,
+  getAuditHistoryList,
+  getAuditHistoryById,
+  getWeekOverWeekComparison,
+} from "./weeklyAudit";
 
 /** Helper pour obtenir l'offset UTC d'un fuseau horaire en minutes */
 function getTimezoneOffset(tz: string, date: Date): number {
@@ -591,21 +597,32 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
         success: true,
         report: result.report,
         email: result.email,
+        auditId: result.auditId,
       };
     }),
 
-    /** Récupérer le dernier rapport d'audit (si disponible en mémoire) */
-    getLastReport: adminProcedure.query(async () => {
-      // On déclenche un audit frais pour afficher les données
-      const result = await executeWeeklyAudit();
-      if (!result.success) {
-        return { success: false, error: result.error };
-      }
-      return {
-        success: true,
-        report: result.report,
-        email: result.email,
-      };
+    /** Récupérer l'historique des audits (admin only) */
+    history: adminProcedure
+      .input(z.object({ limit: z.number().min(1).max(100).default(52) }).optional())
+      .query(async ({ input }) => {
+        const limit = input?.limit ?? 52;
+        return getAuditHistoryList(limit);
+      }),
+
+    /** Récupérer un audit complet par ID (admin only) */
+    getById: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        const audit = await getAuditHistoryById(input.id);
+        if (!audit) {
+          throw new Error("Audit introuvable");
+        }
+        return audit;
+      }),
+
+    /** Comparaison semaine N vs N-1 (admin only) */
+    comparison: adminProcedure.query(async () => {
+      return getWeekOverWeekComparison();
     }),
   }),
 });
