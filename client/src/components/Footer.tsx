@@ -46,8 +46,11 @@ export default function Footer() {
                 { label: "Mode d'emploi", href: "/mode-emploi" },
                 { label: "Galerie vidéo", href: "/galerie-video" },
                 { label: "Blog", href: "/blog" },
+                { label: "Trouvez un distributeur", href: "/trouver-distributeur" },
+                { label: "Devenez distributeur", href: "/devenir-distributeur" },
                 { label: "Politique de confidentialité", href: "/politique-confidentialite" },
                 { label: "Mentions Légales", href: "/mentions-legales" },
+                { label: "Politique de Cookies", href: "/politique-cookies" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-white/50 hover:text-warm transition-colors">
@@ -137,6 +140,7 @@ export default function Footer() {
           <div className="flex gap-6">
             <Link href="/mentions-legales" className="text-white/30 text-xs hover:text-warm transition-colors">Mentions légales</Link>
             <Link href="/politique-confidentialite" className="text-white/30 text-xs hover:text-warm transition-colors">Politique de confidentialité</Link>
+            <Link href="/politique-cookies" className="text-white/30 text-xs hover:text-warm transition-colors">Cookies</Link>
           </div>
         </div>
       </div>

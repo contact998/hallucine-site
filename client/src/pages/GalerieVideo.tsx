@@ -1,4 +1,6 @@
 import { Link } from "wouter";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export default function GalerieVideo() {
   const videos = [
@@ -41,6 +43,8 @@ export default function GalerieVideo() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <Navbar />
+
       {/* Hero */}
       <section className="relative bg-[#1a1a2e] text-white py-20 md:py-28">
         <div className="container max-w-5xl text-center">
@@ -114,6 +118,8 @@ export default function GalerieVideo() {
           </Link>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 }

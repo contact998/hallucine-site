@@ -1,16 +1,17 @@
 /*
- * Page À propos
- * Histoire, valeurs, équipe, chiffres clés
+ * Page À propos — Histoire de Daniel et Hallucine
+ * Contenu fidèle au site d'origine hallucinecran.com
+ * Design: cinéma vintage — fond sombre, accents dorés
  */
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
 
 const chiffres = [
-  { value: "30+", label: "Années d'expérience" },
+  { value: "25+", label: "Années d'expérience" },
   { value: "1000+", label: "Écrans vendus" },
-  { value: "60+", label: "Pays livrés" },
-  { value: "10 ans", label: "Garantie" },
+  { value: "30+", label: "Pays visités" },
+  { value: "1992", label: "Année de création" },
 ];
 
 export default function APropos() {
@@ -23,12 +24,13 @@ export default function APropos() {
         <div className="container">
           <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">Notre histoire</p>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight mb-6">
-            À propos<br />
-            <span className="text-warm">d'Hallucine</span>
+            L'histoire<br />
+            <span className="text-warm">de Hallucine</span>
           </h1>
           <p className="text-white/70 text-lg max-w-3xl leading-relaxed">
-            Depuis 1995, Hallucine conçoit et fabrique des écrans de cinéma gonflables, des tentes événementielles 
-            et du mobilier gonflable. Nous sommes le fabricant des écrans gonflables les plus légers au monde.
+            Depuis plus de 25 ans, Hallucine conçoit et fabrique des écrans de cinéma gonflables, 
+            des tentes événementielles et du mobilier gonflable. Une aventure familiale née de la passion 
+            pour le cinéma et la projection en plein air.
           </p>
         </div>
       </section>
@@ -47,32 +49,90 @@ export default function APropos() {
         </div>
       </section>
 
-      {/* Histoire */}
+      {/* L'histoire de Daniel */}
       <section className="py-20 bg-charcoal-light">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-8">Notre histoire</h2>
-          <div className="max-w-3xl space-y-6">
-            <p className="text-white/70 leading-relaxed">
-              Fondée en 1995, Hallucine est née de la passion pour le cinéma en plein air et de l'innovation 
-              dans les structures gonflables. Notre fondateur a eu la vision de créer des écrans de projection 
-              qui soient à la fois légers, faciles à transporter et résistants aux conditions extérieures.
-            </p>
-            <p className="text-white/70 leading-relaxed">
-              Au fil des années, nous avons développé une technologie unique utilisant du tissu airbag automobile, 
-              ce qui nous permet de proposer des écrans jusqu'à 3 fois plus légers que ceux de nos concurrents. 
-              Cette innovation a fait notre réputation dans le monde entier.
-            </p>
-            <p className="text-white/70 leading-relaxed">
-              Aujourd'hui, Hallucine est présent dans plus de 60 pays et a vendu plus de 1000 écrans à travers 
-              le monde. Notre gamme s'est élargie pour inclure des tentes événementielles, des arches gonflables 
-              et du mobilier gonflable, toujours avec la même exigence de qualité et d'innovation.
-            </p>
+          <h2 className="text-3xl font-bold text-ivory mb-8">L'histoire de Hallucine</h2>
+          <div className="max-w-4xl space-y-8">
+            <div className="p-8 bg-card border border-border rounded-lg">
+              <p className="text-warm font-semibold text-lg mb-4 italic">
+                "Salut ! Je m'appelle Daniel."
+              </p>
+              <p className="text-white/70 leading-relaxed">
+                Il y a plus de 25 ans, j'ai fondé Hallucine. Voici mon histoire...
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-warm font-semibold text-xl mb-4">Chapitre un : Les débuts</h3>
+              <p className="text-white/70 leading-relaxed">
+                Un jour, en lisant un journal, j'ai découvert une petite entreprise qui faisait des projections 16mm. 
+                Ça m'a intrigué. Peu après, quelqu'un m'a demandé un projecteur pour un film 35mm. Je lui en ai vendu un.
+              </p>
+              <p className="text-white/70 leading-relaxed mt-4">
+                C'était en <strong className="text-ivory">1992</strong>. À partir de ce moment, je me suis lancé dans l'industrie de la projection 
+                et du cinéma. Et pour accompagner les projecteurs, j'avais besoin d'écrans. C'est ainsi qu'est née 
+                <strong className="text-ivory"> Hallucine</strong>. J'avais 36 ans.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-warm font-semibold text-xl mb-4">Chapitre deux : Une vie d'entreprise</h3>
+              <p className="text-white/70 leading-relaxed">
+                Pendant plus de 25 ans, j'ai voyagé dans plus de 30 pays pour vendre nos écrans : 
+                <strong className="text-ivory"> Afrique, Amériques, Pacifique, Europe</strong>... partout. J'emmenais même mes enfants avec moi, 
+                de village en village.
+              </p>
+              <p className="text-white/70 leading-relaxed mt-4">
+                Ces années ont été marquées par des moments précieux passés ensemble, comme une famille. 
+                Nous avons rencontré des amis, créé des liens, partagé des joies et des fous rires.
+              </p>
+              <p className="text-white/70 leading-relaxed mt-4">
+                Hallucine n'est pas qu'une entreprise traditionnelle. Ce sont ces moments d'amitié et de complicité 
+                qui l'ont façonnée. Et c'est cette ambiance unique qui m'a poussé à rester fidèle à Hallucine 
+                depuis plus de 25 ans.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Cinéma en plein air */}
+      <section className="py-20 bg-background">
+        <div className="container">
+          <h2 className="text-3xl font-bold text-ivory mb-8">Hallucine — Cinéma en plein air</h2>
+          <div className="grid md:grid-cols-2 gap-12">
+            <div>
+              <h3 className="text-warm font-semibold text-xl mb-4">Des moments inoubliables pour toute la famille</h3>
+              <p className="text-white/70 leading-relaxed">
+                Hallucine, c'est bien plus qu'un simple écran gonflable. C'est un catalyseur de souvenirs partagés 
+                entre amis et en famille. Nos écrans transforment chaque projection ou événement sportif en un moment 
+                chaleureux et mémorable, où rires, complicité et joie se mêlent.
+              </p>
+              <p className="text-white/70 leading-relaxed mt-4">
+                Découvrez le bonheur de se retrouver pour partager des blagues, tisser des liens avec de nouveaux amis 
+                ou renouer avec des proches autour d'une expérience immersive. Avec Hallucine, chaque événement 
+                devient un moment de vie exceptionnel.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-warm font-semibold text-xl mb-4">Famille et Entreprise : Une Histoire Partagée</h3>
+              <p className="text-white/70 leading-relaxed">
+                Hallucine est bien plus qu'une simple entreprise : c'est un livre de souvenirs qui s'écrit au fil du temps. 
+                Chaque écran installé témoigne de moments où famille et amis, anciens ou nouveaux, se rassemblent.
+              </p>
+              <p className="text-white/70 leading-relaxed mt-4">
+                C'est aussi une fenêtre sur l'évolution des générations, observant les enfants grandir et les adultes 
+                s'épanouir. Hallucine incarne les valeurs familiales, où travail, rires et souvenirs s'unissent 
+                pour créer des expériences uniques et authentiques.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Valeurs */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-charcoal-light">
         <div className="container">
           <h2 className="text-3xl font-bold text-ivory mb-8">Nos valeurs</h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -80,58 +140,21 @@ export default function APropos() {
               <h3 className="text-warm font-bold text-xl mb-4">Fiabilité</h3>
               <p className="text-white/60 leading-relaxed">
                 Nous utilisons des matériaux de haute qualité testés dans les conditions les plus exigeantes. 
-                Chaque produit est contrôlé individuellement avant expédition. Notre garantie de 10 ans sur 
-                les écrans témoigne de notre confiance dans nos produits.
+                Chaque produit est contrôlé individuellement avant expédition.
               </p>
             </div>
             <div className="p-8 bg-card border border-border rounded-lg">
               <h3 className="text-warm font-bold text-xl mb-4">Expertise</h3>
               <p className="text-white/60 leading-relaxed">
-                Plus de 30 ans d'expérience dans la conception de structures gonflables. Notre équipe d'ingénieurs 
-                et de techniciens vous accompagne de la conception à l'installation. Nous connaissons les défis 
-                de chaque type d'événement.
+                Plus de 25 ans d'expérience dans la conception de structures gonflables. Notre équipe vous accompagne 
+                de la conception à l'installation.
               </p>
             </div>
             <div className="p-8 bg-card border border-border rounded-lg">
               <h3 className="text-warm font-bold text-xl mb-4">Qualité</h3>
               <p className="text-white/60 leading-relaxed">
-                Contrôles de qualité rigoureux à chaque étape de la fabrication. Nos matériaux sont sélectionnés 
-                pour leur durabilité et leur résistance. Nous ne faisons aucun compromis sur la qualité, même 
-                pour notre gamme économique.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Innovation */}
-      <section className="py-20 bg-charcoal-light">
-        <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-8">Innovation continue</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-warm font-semibold text-lg mb-3">Technologie tissu airbag</h3>
-              <p className="text-white/70 leading-relaxed mb-6">
-                Notre innovation majeure : l'utilisation de tissu airbag automobile pour nos écrans gonflables. 
-                Ce matériau offre un rapport résistance/poids imbattable, ce qui rend nos écrans jusqu'à 3 fois 
-                plus légers que la concurrence.
-              </p>
-              <h3 className="text-warm font-semibold text-lg mb-3">Écrans étanches</h3>
-              <p className="text-white/70 leading-relaxed">
-                Notre technologie d'écran étanche à l'air permet un fonctionnement silencieux sans souffleur 
-                permanent. Un seul gonflage suffit pour toute la durée de l'événement.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-warm font-semibold text-lg mb-3">Personnalisation avancée</h3>
-              <p className="text-white/70 leading-relaxed mb-6">
-                Impression numérique haute définition sur tous nos produits. Nous pouvons personnaliser 
-                dimensions, couleurs, logos et visuels pour répondre exactement à vos besoins.
-              </p>
-              <h3 className="text-warm font-semibold text-lg mb-3">Engagement environnemental</h3>
-              <p className="text-white/70 leading-relaxed">
-                Nos produits sont conçus pour durer. La légèreté de nos écrans réduit l'empreinte carbone 
-                du transport. Nous travaillons continuellement à réduire notre impact environnemental.
+                Contrôles de qualité rigoureux à chaque étape de la fabrication. Nous ne faisons aucun compromis 
+                sur la qualité, même pour notre gamme économique.
               </p>
             </div>
           </div>

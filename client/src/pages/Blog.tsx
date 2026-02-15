@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "wouter";
 import { MessageSquare, ThumbsUp, User } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 interface Commentaire {
   auteur: string;
@@ -206,6 +208,8 @@ export default function Blog() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <Navbar />
+
       {/* Hero */}
       <section className="relative bg-[#1a1a2e] text-white py-20 md:py-28">
         <div className="container max-w-5xl text-center">
@@ -406,6 +410,8 @@ export default function Blog() {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 }

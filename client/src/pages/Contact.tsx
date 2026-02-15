@@ -99,15 +99,25 @@ export default function Contact() {
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">Informations pratiques</h2>
             <div className="grid md:grid-cols-2 gap-8">
               <div className="space-y-4 text-white/60 text-sm leading-relaxed">
-                <h3 className="text-white font-semibold text-base mb-2">Siège et bureau commercial</h3>
+                <h3 className="text-white font-semibold text-base mb-2">Coordonnées</h3>
                 <p>
-                  Hallucine est une entreprise française dont le fondateur est basé à Shenzhen (Chine) depuis 2020. Le bureau commercial gère les devis, le conseil technique et le suivi client.
+                  <strong className="text-white/80">Téléphone :</strong> +33 4 58 21 20 10
                 </p>
                 <p>
-                  <strong className="text-white/80">Fuseau horaire :</strong> UTC+8 (heure de Pékin). Nous sommes disponibles de 9h à 18h heure locale, soit de 2h à 11h heure de Paris. Pour les clients européens, les échanges se font principalement par email.
+                  <strong className="text-white/80">Mobile :</strong> +33 6 80 14 76 94
                 </p>
                 <p>
-                  <strong className="text-white/80">Langues :</strong> Français, Anglais. Nous pouvons également communiquer en Chinois pour les clients asiatiques.
+                  <strong className="text-white/80">WhatsApp :</strong> +33 6 80 14 76 94
+                </p>
+                <p>
+                  <strong className="text-white/80">WeChat :</strong> (+86) 13172020714
+                </p>
+                <p>
+                  <strong className="text-white/80">Email :</strong>{" "}
+                  <a href="mailto:contact@hallucine.fr" className="text-gold hover:underline">contact@hallucine.fr</a>
+                </p>
+                <p>
+                  <strong className="text-white/80">Langues :</strong> Français, Anglais, Chinois
                 </p>
               </div>
               <div className="space-y-4 text-white/60 text-sm leading-relaxed">

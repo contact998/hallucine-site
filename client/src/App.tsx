@@ -26,6 +26,9 @@ import DemandePrix from "./pages/DemandePrix";
 import Histoire from "./pages/Histoire";
 import MentionsLegales from "./pages/MentionsLegales";
 import Confidentialite from "./pages/Confidentialite";
+import PolitiqueCookies from "./pages/PolitiqueCookies";
+import DevenirDistributeur from "./pages/DevenirDistributeur";
+import TrouverDistributeur from "./pages/TrouverDistributeur";
 import ModeEmploi from "./pages/ModeEmploi";
 import GalerieVideo from "./pages/GalerieVideo";
 import Blog from "./pages/Blog";
@@ -67,9 +70,13 @@ function Router() {
       <Route path={"/galerie-video"} component={GalerieVideo} />
       {/* Blog */}
       <Route path={"/blog"} component={Blog} />
+      {/* Distributeurs */}
+      <Route path={"/devenir-distributeur"} component={DevenirDistributeur} />
+      <Route path={"/trouver-distributeur"} component={TrouverDistributeur} />
       {/* Légal */}
       <Route path={"/mentions-legales"} component={MentionsLegales} />
       <Route path={"/politique-confidentialite"} component={Confidentialite} />
+      <Route path={"/politique-cookies"} component={PolitiqueCookies} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>

@@ -1,5 +1,6 @@
 /*
  * Page Mentions Légales — Contenu texte structuré
+ * Informations officielles du site d'origine hallucinecran.com
  */
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -21,56 +22,102 @@ export default function MentionsLegales() {
 
           <div className="space-y-10 text-white/60 text-sm leading-relaxed">
             <div>
-              <h2 className="text-xl font-bold text-white mb-4">Éditeur du site</h2>
+              <h2 className="text-xl font-bold text-white mb-4">1. Informations légales</h2>
               <p>
-                Le site hallucine.fr est édité par Hallucine, entreprise spécialisée dans la conception et la fabrication d'écrans de cinéma gonflables, de tentes gonflables et de mobilier gonflable.
+                <strong className="text-white/80">Raison sociale :</strong> Hallucine EURL
               </p>
-              <p className="mt-3">
-                <strong className="text-white/80">Responsable de la publication :</strong> Le fondateur d'Hallucine<br />
-                <strong className="text-white/80">Email :</strong> contact@hallucine.fr<br />
-                <strong className="text-white/80">Téléphone :</strong> +33 (0)6 XX XX XX XX
+              <p className="mt-2">
+                <strong className="text-white/80">Adresse :</strong> 350 Chemin du Pré Neuf, La Mure d'Isère 38350, France
+              </p>
+              <p className="mt-2">
+                <strong className="text-white/80">Numéro SIREN :</strong> 387770084
+              </p>
+              <p className="mt-2">
+                <strong className="text-white/80">Capital social :</strong> 7 622,45 € (fixe)
+              </p>
+              <p className="mt-2">
+                <strong className="text-white/80">Numéro de TVA intracommunautaire :</strong> FR31387770084
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white mb-4">Hébergement</h2>
+              <h2 className="text-xl font-bold text-white mb-4">2. Directeur de la publication</h2>
               <p>
-                Ce site est hébergé par Manus.<br />
-                Les données sont stockées sur des serveurs sécurisés.
+                Le directeur de la publication du site internet est <strong className="text-white/80">Daniel Chesneau</strong>, en qualité de Dirigeant.
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white mb-4">Propriété intellectuelle</h2>
+              <h2 className="text-xl font-bold text-white mb-4">3. Hébergement du site</h2>
               <p>
-                L'ensemble du contenu de ce site (textes, images, vidéos, logos, marques) est protégé par le droit de la propriété intellectuelle. Toute reproduction, représentation, modification, publication ou adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite sans l'autorisation écrite préalable d'Hallucine.
-              </p>
-              <p className="mt-3">
-                Les photographies de produits présentes sur ce site sont la propriété d'Hallucine. Elles ne peuvent être utilisées à des fins commerciales sans autorisation.
+                <strong className="text-white/80">Hébergeur :</strong> Manus
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white mb-4">Limitation de responsabilité</h2>
+              <h2 className="text-xl font-bold text-white mb-4">4. Propriété intellectuelle</h2>
               <p>
-                Les informations contenues sur ce site sont aussi précises que possible et le site est périodiquement mis à jour. Toutefois, des erreurs ou omissions peuvent survenir. Hallucine ne saurait être tenu responsable des erreurs, d'une absence de disponibilité des informations ou de la présence de virus sur ce site.
-              </p>
-              <p className="mt-3">
-                Les prix, caractéristiques techniques et disponibilités des produits présentés sur ce site sont donnés à titre indicatif et peuvent être modifiés sans préavis. Seul le devis personnalisé envoyé par email fait foi.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-xl font-bold text-white mb-4">Liens hypertextes</h2>
-              <p>
-                Ce site peut contenir des liens vers d'autres sites internet. Hallucine ne dispose d'aucun moyen de contrôle sur le contenu de ces sites tiers et n'assume aucune responsabilité quant à leur contenu.
+                Le contenu du site, incluant les textes, images, logos, graphismes, vidéos, ainsi que le design du site, 
+                est la propriété exclusive de Hallucine EURL. Toute reproduction, distribution, ou utilisation sans 
+                autorisation est strictement interdite.
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white mb-4">Droit applicable</h2>
+              <h2 className="text-xl font-bold text-white mb-4">5. Données personnelles</h2>
               <p>
-                Les présentes mentions légales sont soumises au droit français. En cas de litige, les tribunaux français seront seuls compétents.
+                Nous respectons la confidentialité de vos données personnelles. Les informations collectées via notre site 
+                sont traitées dans le respect de la législation en vigueur, y compris le RGPD (Règlement Général sur la 
+                Protection des Données). Pour plus d'informations, consultez notre page{" "}
+                <Link href="/politique-confidentialite" className="text-gold hover:underline">
+                  Politique de Confidentialité
+                </Link>.
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-xl font-bold text-white mb-4">6. Conditions d'utilisation</h2>
+              <p>
+                L'accès au site est soumis aux présentes conditions d'utilisation. En naviguant sur notre site, 
+                vous acceptez sans réserve ces conditions. Nous nous réservons le droit de modifier ces conditions à tout moment.
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-xl font-bold text-white mb-4">7. Responsabilité</h2>
+              <p>
+                Hallucine EURL met tout en œuvre pour offrir des informations fiables et à jour sur son site internet. 
+                Cependant, nous ne saurions être tenus responsables des erreurs, omissions, ou inexactitudes présentes 
+                sur le site, ni des éventuels problèmes techniques liés à l'utilisation de celui-ci.
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-xl font-bold text-white mb-4">8. Cookies</h2>
+              <p>
+                Le site utilise des cookies pour améliorer l'expérience utilisateur et analyser la fréquentation. 
+                Vous pouvez gérer vos préférences en matière de cookies dans les paramètres de votre navigateur. 
+                Pour plus d'informations, consultez notre{" "}
+                <Link href="/politique-cookies" className="text-gold hover:underline">
+                  Politique de Cookies
+                </Link>.
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-xl font-bold text-white mb-4">9. Contact</h2>
+              <p>
+                Pour toute question relative aux mentions légales, vous pouvez nous contacter :
+              </p>
+              <p className="mt-2">
+                <strong className="text-white/80">Email :</strong>{" "}
+                <a href="mailto:contact@hallucine.fr" className="text-gold hover:underline">contact@hallucine.fr</a>
+              </p>
+              <p className="mt-2">
+                <strong className="text-white/80">Téléphone :</strong> +33 4 58 21 20 10
+              </p>
+              <p className="mt-2">
+                <strong className="text-white/80">Mobile :</strong> +33 6 80 14 76 94
               </p>
             </div>
           </div>

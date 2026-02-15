@@ -88,7 +88,16 @@ export default function Confidentialite() {
                 </li>
               </ul>
               <p className="mt-3">
-                Pour exercer ces droits, contactez-nous par email à <strong className="text-white/80">contact@hallucine.fr</strong>. Nous nous engageons à répondre dans un délai de 30 jours.
+                Pour toute demande relative à vos données personnelles, vous pouvez nous contacter à l'adresse suivante :
+              </p>
+              <p className="mt-3">
+                <strong className="text-white/80">Hallucine EURL</strong><br />
+                350 Chemin du Pré Neuf<br />
+                La Mure d'Isère 38350, France<br />
+                Email : <a href="mailto:contact@hallucine.fr" className="text-gold hover:underline">contact@hallucine.fr</a>
+              </p>
+              <p className="mt-3">
+                Nous nous engageons à répondre dans un délai de 30 jours.
               </p>
             </div>
 
