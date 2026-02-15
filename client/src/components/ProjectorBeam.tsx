@@ -1,6 +1,6 @@
 /*
  * ProjectorBeam — Faisceau de projecteur de cinéma animé
- * Halo blanc qui balaye de gauche à droite + cône de lumière statique coin supérieur droit
+ * Halo blanc intense qui balaye de gauche à droite + cône de lumière statique coin supérieur droit
  */
 import { useEffect, useRef } from "react";
 
@@ -33,19 +33,20 @@ export default function ProjectorBeam() {
 
       // === Faisceau balayant de gauche à droite ===
       const sweepX = (Math.sin(time) * 0.5 + 0.5) * canvas.width;
-      const beamWidth = canvas.width * 0.25;
+      const beamWidth = canvas.width * 0.3;
 
-      // Gradient vertical pour le faisceau — BLANC
+      // Gradient vertical pour le faisceau — BLANC INTENSE
       const beamGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      beamGrad.addColorStop(0, "rgba(255, 255, 255, 0.10)");
-      beamGrad.addColorStop(0.3, "rgba(255, 255, 255, 0.05)");
-      beamGrad.addColorStop(0.7, "rgba(255, 255, 255, 0.02)");
+      beamGrad.addColorStop(0, "rgba(255, 255, 255, 0.30)");
+      beamGrad.addColorStop(0.2, "rgba(255, 255, 255, 0.18)");
+      beamGrad.addColorStop(0.5, "rgba(255, 255, 255, 0.08)");
+      beamGrad.addColorStop(0.8, "rgba(255, 255, 255, 0.03)");
       beamGrad.addColorStop(1, "rgba(255, 255, 255, 0)");
 
       ctx.save();
       ctx.beginPath();
       // Forme trapézoïdale du faisceau (étroit en haut, large en bas)
-      const topWidth = beamWidth * 0.15;
+      const topWidth = beamWidth * 0.1;
       ctx.moveTo(sweepX - topWidth, 0);
       ctx.lineTo(sweepX + topWidth, 0);
       ctx.lineTo(sweepX + beamWidth, canvas.height);
@@ -54,31 +55,32 @@ export default function ProjectorBeam() {
       ctx.fillStyle = beamGrad;
       ctx.fill();
 
-      // Halo central du faisceau — BLANC
+      // Halo central du faisceau — BLANC INTENSE
       const haloGrad = ctx.createRadialGradient(
-        sweepX, canvas.height * 0.15, 0,
-        sweepX, canvas.height * 0.15, beamWidth * 0.6
+        sweepX, canvas.height * 0.1, 0,
+        sweepX, canvas.height * 0.1, beamWidth * 0.8
       );
-      haloGrad.addColorStop(0, "rgba(255, 255, 255, 0.12)");
-      haloGrad.addColorStop(0.5, "rgba(255, 255, 255, 0.04)");
+      haloGrad.addColorStop(0, "rgba(255, 255, 255, 0.35)");
+      haloGrad.addColorStop(0.3, "rgba(255, 255, 255, 0.15)");
+      haloGrad.addColorStop(0.6, "rgba(255, 255, 255, 0.05)");
       haloGrad.addColorStop(1, "rgba(255, 255, 255, 0)");
       ctx.fillStyle = haloGrad;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.restore();
 
-      // === Cône de lumière statique depuis le coin supérieur droit — BLANC ===
+      // === Cône de lumière statique depuis le coin supérieur droit — BLANC INTENSE ===
       ctx.save();
       const coneX = canvas.width * 0.92;
       const coneY = 0;
-      const coneSpread = canvas.width * 0.4;
+      const coneSpread = canvas.width * 0.45;
 
       const coneGrad = ctx.createRadialGradient(
         coneX, coneY, 0,
         coneX, coneY, coneSpread
       );
-      coneGrad.addColorStop(0, "rgba(255, 255, 255, 0.08)");
-      coneGrad.addColorStop(0.3, "rgba(255, 255, 255, 0.04)");
-      coneGrad.addColorStop(0.7, "rgba(255, 255, 255, 0.015)");
+      coneGrad.addColorStop(0, "rgba(255, 255, 255, 0.22)");
+      coneGrad.addColorStop(0.2, "rgba(255, 255, 255, 0.12)");
+      coneGrad.addColorStop(0.5, "rgba(255, 255, 255, 0.05)");
       coneGrad.addColorStop(1, "rgba(255, 255, 255, 0)");
 
       ctx.beginPath();
@@ -89,13 +91,14 @@ export default function ProjectorBeam() {
       ctx.fillStyle = coneGrad;
       ctx.fill();
 
-      // Point lumineux source (projecteur) — BLANC
-      const dotGrad = ctx.createRadialGradient(coneX, coneY + 5, 0, coneX, coneY + 5, 30);
-      dotGrad.addColorStop(0, "rgba(255, 255, 255, 0.30)");
-      dotGrad.addColorStop(0.5, "rgba(255, 255, 255, 0.08)");
+      // Point lumineux source (projecteur) — BLANC VIF
+      const dotGrad = ctx.createRadialGradient(coneX, coneY + 5, 0, coneX, coneY + 5, 45);
+      dotGrad.addColorStop(0, "rgba(255, 255, 255, 0.60)");
+      dotGrad.addColorStop(0.3, "rgba(255, 255, 255, 0.25)");
+      dotGrad.addColorStop(0.6, "rgba(255, 255, 255, 0.08)");
       dotGrad.addColorStop(1, "rgba(255, 255, 255, 0)");
       ctx.fillStyle = dotGrad;
-      ctx.fillRect(coneX - 40, coneY - 10, 80, 50);
+      ctx.fillRect(coneX - 50, coneY - 10, 100, 60);
       ctx.restore();
 
       animationId = requestAnimationFrame(draw);
