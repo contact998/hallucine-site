@@ -7,7 +7,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useState } from "react";
 import { Link } from "wouter";
-import { Check, ChevronDown } from "lucide-react";
+import { Check, ChevronDown, Loader2 } from "lucide-react";
+import { trpc } from "@/lib/trpc";
 
 const produits = [
   { id: "ecrans", label: "Écran gonflable" },
@@ -235,6 +236,18 @@ export default function DemandePrix() {
   const [submitted, setSubmitted] = useState(false);
   const [selectedProduits, setSelectedProduits] = useState<string[]>([]);
   const [formData, setFormData] = useState({ nom: "", prenom: "", email: "", telephone: "", organisation: "" });
+  const [submitError, setSubmitError] = useState("");
+
+  const contactMutation = trpc.contact.submit.useMutation({
+    onSuccess: () => {
+      setSubmitted(true);
+      setSubmitError("");
+    },
+    onError: (err) => {
+      setSubmitError("Erreur lors de l'envoi. Veuillez réessayer.");
+      console.error(err);
+    },
+  });
 
   const toggleProduit = (id: string) => {
     setSelectedProduits((prev) =>
@@ -244,7 +257,17 @@ export default function DemandePrix() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    const produitsLabels = selectedProduits.map(id => produits.find(p => p.id === id)?.label).filter(Boolean).join(", ");
+    contactMutation.mutate({
+      type: "devis",
+      nom: `${formData.nom} ${formData.prenom}`.trim(),
+      email: formData.email,
+      telephone: formData.telephone || undefined,
+      entreprise: formData.organisation || undefined,
+      sujet: `Demande de prix — Produits: ${produitsLabels || "Non spécifié"}`,
+      message: `Demande de prix via le formulaire.\nProduits sélectionnés: ${produitsLabels || "Aucun"}\nOrganisation: ${formData.organisation || "Non renseigné"}`,
+      produit: produitsLabels || undefined,
+    });
   };
 
   /* ═══════════ FORMULAIRE (avant soumission) ═══════════ */
@@ -311,8 +334,16 @@ export default function DemandePrix() {
                 </div>
               </div>
 
-              <button type="submit" className="w-full py-4 bg-warm text-charcoal font-bold text-lg rounded hover:bg-warm-light transition-colors">
-                Accéder aux tarifs
+              {submitError && (
+                <p className="text-red-400 text-sm text-center">{submitError}</p>
+              )}
+
+              <button type="submit" disabled={contactMutation.isPending} className="w-full py-4 bg-warm text-charcoal font-bold text-lg rounded hover:bg-warm-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                {contactMutation.isPending ? (
+                  <><Loader2 className="w-5 h-5 animate-spin" /> Envoi en cours...</>
+                ) : (
+                  "Accéder aux tarifs"
+                )}
               </button>
             </form>
 

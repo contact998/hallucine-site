@@ -53,3 +53,4 @@
 
 ## En attente (côté client)
 - [ ] Rendre publique la vidéo YouTube _lLdMYZhz7s depuis YouTube Studio
+- [x] Connecter le formulaire Demande de devis au backend tRPC
