@@ -35,6 +35,60 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
+
+  // Route sendBeacon pour la detection d'abandon (ne passe pas par tRPC)
+  app.post("/api/abandon-partial", async (req, res) => {
+    try {
+      const data = req.body;
+      if (!data?.email || !data.email.includes("@")) {
+        res.status(400).json({ error: "Email requis" });
+        return;
+      }
+
+      const fullName = [data.prenom, data.nom].filter(Boolean).join(" ") || "Inconnu";
+      const progress = data.totalSteps ? Math.round((data.lastStep / data.totalSteps) * 100) : 0;
+
+      console.log(`[Abandon/Beacon] Formulaire abandonne par ${data.email} a l'etape ${data.lastStep}/${data.totalSteps}`);
+
+      // Import dynamique pour eviter les imports circulaires
+      const { notifyOwner } = await import("./notification");
+      const { syncSubmissionToCrm } = await import("../crmSync");
+
+      // Notification asynchrone
+      notifyOwner({
+        title: `Abandon formulaire - ${data.email}`,
+        content: [
+          `**Abandon detecte** a l'etape ${data.lastStep || "?"}/${data.totalSteps || "?"} (${progress}% complete)`,
+          `**Email:** ${data.email}`,
+          data.prenom || data.nom ? `**Nom:** ${fullName}` : null,
+          data.entreprise ? `**Entreprise:** ${data.entreprise}` : null,
+          data.telephone ? `**Telephone:** ${data.telephone}` : null,
+          data.product ? `**Produit:** ${data.product}` : null,
+          "",
+          "Ce prospect a commence le formulaire mais ne l'a pas termine.",
+          "Action recommandee : envoyer un email de relance personnalise.",
+        ].filter(Boolean).join("\n"),
+      }).catch((err: unknown) => console.warn("[Abandon/Beacon] Erreur notification:", err));
+
+      // Sync CRM asynchrone
+      syncSubmissionToCrm({
+        type: "devis",
+        nom: fullName,
+        email: data.email,
+        telephone: data.telephone || null,
+        entreprise: data.entreprise || null,
+        produit: data.product || null,
+        message: `[ABANDON etape ${data.lastStep || "?"}/${data.totalSteps || "?"}] ${data.productDetail || ""}`,
+        objectif: null,
+        sujet: data.product ? `${data.product} (abandon ${progress}%)` : `Abandon formulaire (${progress}%)`,
+      }).catch((err: unknown) => console.warn("[Abandon/Beacon] Erreur CRM:", err));
+
+      res.status(200).json({ success: true });
+    } catch (err) {
+      console.error("[Abandon/Beacon] Erreur:", err);
+      res.status(500).json({ error: "Erreur interne" });
+    }
+  });
   // tRPC API
   app.use(
     "/api/trpc",

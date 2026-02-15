@@ -69,6 +69,66 @@ export const appRouter = router({
   }),
 
   contact: router({
+    abandonPartial: publicProcedure
+      .input(
+        z.object({
+          email: z.string().email("Email invalide"),
+          prenom: z.string().optional(),
+          nom: z.string().optional(),
+          entreprise: z.string().optional(),
+          telephone: z.string().optional(),
+          product: z.string().optional(),
+          productDetail: z.string().optional(),
+          country: z.string().optional(),
+          city: z.string().optional(),
+          lastStep: z.number(),
+          totalSteps: z.number(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        const fullName = [input.prenom, input.nom].filter(Boolean).join(" ") || "Inconnu";
+        const progress = Math.round((input.lastStep / input.totalSteps) * 100);
+
+        console.log(`[Abandon] Formulaire abandonne par ${input.email} a l'etape ${input.lastStep}/${input.totalSteps} (${progress}%)`);
+
+        // Notification Manus (canal principal)
+        await notifyOwner({
+          title: `Abandon formulaire - ${input.email}`,
+          content: [
+            `**Abandon detecte** a l'etape ${input.lastStep}/${input.totalSteps} (${progress}% complete)`,
+            `**Email:** ${input.email}`,
+            input.prenom || input.nom ? `**Nom:** ${fullName}` : null,
+            input.entreprise ? `**Entreprise:** ${input.entreprise}` : null,
+            input.telephone ? `**Telephone:** ${input.telephone}` : null,
+            input.product ? `**Produit:** ${input.product}` : null,
+            input.productDetail ? `**Detail:** ${input.productDetail}` : null,
+            input.country || input.city ? `**Lieu:** ${[input.city, input.country].filter(Boolean).join(", ")}` : null,
+            "",
+            "Ce prospect a commence le formulaire mais ne l'a pas termine.",
+            "Action recommandee : envoyer un email de relance personnalise.",
+          ].filter(Boolean).join("\n"),
+        });
+
+        // Synchroniser avec le CRM comme prospect partiel
+        try {
+          await syncSubmissionToCrm({
+            type: "devis",
+            nom: fullName,
+            email: input.email,
+            telephone: input.telephone || null,
+            entreprise: input.entreprise || null,
+            produit: input.product || null,
+            message: `[ABANDON etape ${input.lastStep}/${input.totalSteps}] ${input.productDetail || ""}`,
+            objectif: null,
+            sujet: input.product ? `${input.product} (abandon ${progress}%)` : `Abandon formulaire (${progress}%)`,
+          });
+        } catch (err) {
+          console.warn("[Abandon] Erreur sync CRM:", err);
+        }
+
+        return { success: true };
+      }),
+
     submit: publicProcedure
       .input(
         z.object({

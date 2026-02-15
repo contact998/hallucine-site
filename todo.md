@@ -145,3 +145,46 @@
 - [x] Connecter SmartForm au CRM + notifications email (via la route contact.submit existante)
 - [x] Chatbot IA pré-remplit le SmartForm après conversation
 - [x] Tests vitest pour le SmartForm
+
+## Sauvegarde de progression du formulaire SmartForm
+- [x] Sauvegarde automatique dans localStorage à chaque changement d'étape
+- [x] Détection de session précédente au chargement du formulaire
+- [x] Bandeau/notification de reprise "Reprendre où vous en étiez ?"
+- [x] Bouton pour effacer la progression sauvegardée
+- [x] Expiration automatique après 7 jours
+- [x] Tests vitest pour la sauvegarde de progression
+
+## Préférence de rappel téléphonique
+- [ ] Ajouter un sélecteur de préférence de rappel quand le téléphone est renseigné (jour + matin/après-midi)
+- [ ] Envoyer la préférence au CRM et dans l'email admin
+
+## Systeme de reponse email semi-automatique (1h apres demande)
+- [ ] Schema DB : table pending_emails (prospectId, emailSubject, emailBody, status, generatedAt, validatedBy, sentAt)
+- [ ] Service IA : generer un email de reponse personnalise basee sur le type de demande (ecran/tente/mobilier/arche)
+- [ ] Timer 1h : declencher la generation d'email 1h apres la soumission du formulaire
+- [ ] Notification aux admins (DC/JB) quand un email est pret a valider
+- [ ] Interface admin : liste des emails en attente de validation avec preview
+- [ ] Interface admin : boutons Valider / Modifier / Rejeter pour chaque email
+- [ ] Envoi de l'email au prospect apres validation par DC ou JB
+- [ ] Tests vitest pour le systeme de reponse email
+
+## Email recapitulatif automatique (1h apres soumission - cote site web)
+- [ ] Service d'email recapitulatif : generer un email HTML professionnel recapitulant la demande du prospect
+- [ ] Timer 1h : programmer l'envoi automatique 1h apres la soumission du formulaire
+- [ ] Envoyer l'email au prospect via Gmail MCP (sans validation necessaire)
+- [ ] Tests vitest pour l'email recapitulatif
+
+## Email recapitulatif IA automatique (1h apres soumission - cote site web)
+- [ ] Service IA : generer un email recapitulatif personnalise et chaleureux (pas un template froid)
+- [ ] L'IA adapte le ton et contenu selon le produit, la taille, le contexte du prospect
+- [ ] Timer 1h : programmer l'envoi automatique 1h apres la soumission
+- [ ] Envoyer l'email au prospect via Gmail MCP (sans validation)
+- [ ] Tests vitest pour l'email recapitulatif IA
+
+## Reorganisation formulaire + detection abandon
+- [x] Etape 1 : Email en premier (capture immediate du contact)
+- [x] Reorganiser les etapes : Email > Produit > Besoin > Tel/Rappel > Nom/Entreprise > Localisation > Message
+- [x] Detection d'abandon : si le visiteur quitte apres avoir saisi l'email, envoyer les donnees partielles au CRM
+- [x] Notification admin des abandons avec les infos deja saisies
+- [x] IA extraction nom/prenom depuis email (jean.dupont@... -> Jean Dupont) + entreprise depuis domaine
+- [x] Tests vitest pour l'extraction email (42 tests) et la route d'abandon (3 tests)

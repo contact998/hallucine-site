@@ -1,8 +1,13 @@
-/*
+/**
  * SmartForm — "Le Devis en Douceur"
- * Formulaire unifié intelligent en 6 étapes progressives
- * Chaque étape se dévoile après la précédente, comme une conversation
- * IA : auto-complétion entreprise depuis domaine email, API gouv.fr pour code postal
+ * Formulaire unifié intelligent en 7 étapes progressives
+ * ÉTAPE 1 = EMAIL (capture immédiate du contact)
+ * L'IA extrait nom/prénom/entreprise depuis l'email pour pré-remplir les champs
+ *
+ * Ordre : Email → Produit → Besoin → Tél/Rappel → Nom/Entreprise → Localisation → Message
+ *
+ * Détection d'abandon : si le visiteur quitte après avoir saisi son email,
+ * les données partielles sont envoyées au backend (CRM + notification admin)
  *
  * Props :
  *  - preselectedProduct : pré-sélectionne le produit (sur les pages produits)
@@ -18,6 +23,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
+import { extractFromEmail, isGenericDomain, type EmailExtraction } from "@/lib/emailIntelligence";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 type ProductType = "ecran" | "tente" | "mobilier" | "arche" | null;
@@ -31,29 +37,29 @@ interface SmartFormProps {
 
 // ─── Données statiques ─────────────────────────────────────────────────────────
 const products = [
-  { type: "ecran" as const, icon: Monitor, label: "Écran de cinéma", desc: "De 5m à 24m, étanche ou soufflerie", color: "text-gold" },
-  { type: "tente" as const, icon: Tent, label: "Tente gonflable", desc: "Événementielle, publicitaire, médicale", color: "text-blue-400" },
-  { type: "mobilier" as const, icon: Armchair, label: "Mobilier gonflable", desc: "Canapés, fauteuils, tables design", color: "text-emerald-400" },
-  { type: "arche" as const, icon: Trophy, label: "Arche gonflable", desc: "Course, sport, événement, publicité", color: "text-purple-400" },
+  { type: "ecran" as const, icon: Monitor, label: "Ecran de cinema", desc: "De 5m a 24m, etanche ou soufflerie", color: "text-gold" },
+  { type: "tente" as const, icon: Tent, label: "Tente gonflable", desc: "Evenementielle, publicitaire, medicale", color: "text-blue-400" },
+  { type: "mobilier" as const, icon: Armchair, label: "Mobilier gonflable", desc: "Canapes, fauteuils, tables design", color: "text-emerald-400" },
+  { type: "arche" as const, icon: Trophy, label: "Arche gonflable", desc: "Course, sport, evenement, publicite", color: "text-purple-400" },
 ];
 
 const screenCategories = [
-  { value: "5-8m", label: "5 à 8m", audience: "100 à 400 spectateurs", tech: "Étanche", icon: "🎬" },
-  { value: "9-10m", label: "9 à 10m", audience: "~800 spectateurs", tech: "Soufflerie", icon: "🎥" },
-  { value: "11-12m", label: "11 à 12m", audience: "~1 500 spectateurs", tech: "Soufflerie", icon: "🎪" },
-  { value: "13-14m", label: "13 à 14m", audience: "~2 000 spectateurs", tech: "Soufflerie", icon: "🏟️" },
-  { value: "15-24m", label: "15 à 24m", audience: "3 000 à 5 000+ spectateurs", tech: "Soufflerie", icon: "🌍" },
+  { value: "5-8m", label: "5 a 8m", audience: "100 a 400 spectateurs", tech: "Etanche", icon: "screen_5" },
+  { value: "9-10m", label: "9 a 10m", audience: "~800 spectateurs", tech: "Soufflerie", icon: "screen_9" },
+  { value: "11-12m", label: "11 a 12m", audience: "~1 500 spectateurs", tech: "Soufflerie", icon: "screen_11" },
+  { value: "13-14m", label: "13 a 14m", audience: "~2 000 spectateurs", tech: "Soufflerie", icon: "screen_13" },
+  { value: "15-24m", label: "15 a 24m", audience: "3 000 a 5 000+ spectateurs", tech: "Soufflerie", icon: "screen_15" },
 ];
 
 const tentTypes = [
-  { value: "evenementielle", label: "Événementielle" },
+  { value: "evenementielle", label: "Evenementielle" },
   { value: "publicitaire", label: "Publicitaire" },
-  { value: "medicale", label: "Médicale / Urgence" },
+  { value: "medicale", label: "Medicale / Urgence" },
   { value: "autre_tente", label: "Autre" },
 ];
 
 const mobilierTypes = [
-  { value: "canape", label: "Canapé" },
+  { value: "canape", label: "Canape" },
   { value: "fauteuil", label: "Fauteuil" },
   { value: "table", label: "Table" },
   { value: "autre_mobilier", label: "Autre" },
@@ -61,66 +67,53 @@ const mobilierTypes = [
 
 const archeUsages = [
   { value: "course_sport", label: "Course / Sport" },
-  { value: "evenement", label: "Événement" },
+  { value: "evenement", label: "Evenement" },
   { value: "publicitaire", label: "Publicitaire" },
   { value: "autre_arche", label: "Autre" },
 ];
 
 const popularCountries = [
-  "France", "Belgique", "Suisse", "Canada", "Maroc", "Tunisie", "Algérie",
-  "Sénégal", "Côte d'Ivoire", "Cameroun", "Madagascar", "Allemagne",
-  "Espagne", "Italie", "Royaume-Uni", "États-Unis", "Chine", "Japon",
-  "Émirats arabes unis", "Arabie saoudite", "Brésil", "Mexique", "Australie",
+  "France", "Belgique", "Suisse", "Canada", "Maroc", "Tunisie", "Algerie",
+  "Senegal", "Cote d'Ivoire", "Cameroun", "Madagascar", "Allemagne",
+  "Espagne", "Italie", "Royaume-Uni", "Etats-Unis", "Chine", "Japon",
+  "Emirats arabes unis", "Arabie saoudite", "Bresil", "Mexique", "Australie",
 ];
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 
-/** Détecte le pays du visiteur via la timezone du navigateur */
 function detectCountryFromTimezone(): string {
   const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const tzCountryMap: Record<string, string> = {
     "Europe/Paris": "France", "Europe/Brussels": "Belgique", "Europe/Zurich": "Suisse",
     "America/Toronto": "Canada", "America/Montreal": "Canada", "Africa/Casablanca": "Maroc",
-    "Africa/Tunis": "Tunisie", "Africa/Algiers": "Algérie", "Africa/Dakar": "Sénégal",
-    "Africa/Abidjan": "Côte d'Ivoire", "Africa/Douala": "Cameroun",
+    "Africa/Tunis": "Tunisie", "Africa/Algiers": "Algerie", "Africa/Dakar": "Senegal",
+    "Africa/Abidjan": "Cote d'Ivoire", "Africa/Douala": "Cameroun",
     "Europe/Berlin": "Allemagne", "Europe/Madrid": "Espagne", "Europe/Rome": "Italie",
-    "Europe/London": "Royaume-Uni", "America/New_York": "États-Unis",
-    "America/Chicago": "États-Unis", "America/Los_Angeles": "États-Unis",
-    "Asia/Shanghai": "Chine", "Asia/Tokyo": "Japon", "Asia/Dubai": "Émirats arabes unis",
-    "America/Sao_Paulo": "Brésil", "America/Mexico_City": "Mexique",
+    "Europe/London": "Royaume-Uni", "America/New_York": "Etats-Unis",
+    "America/Chicago": "Etats-Unis", "America/Los_Angeles": "Etats-Unis",
+    "Asia/Shanghai": "Chine", "Asia/Tokyo": "Japon", "Asia/Dubai": "Emirats arabes unis",
+    "America/Sao_Paulo": "Bresil", "America/Mexico_City": "Mexique",
     "Australia/Sydney": "Australie", "Indian/Antananarivo": "Madagascar",
   };
   return tzCountryMap[tz] || "";
 }
 
-/** Détecte l'indicatif téléphonique depuis le pays */
 function getPhonePrefix(country: string): string {
   const prefixes: Record<string, string> = {
     "France": "+33", "Belgique": "+32", "Suisse": "+41", "Canada": "+1",
-    "Maroc": "+212", "Tunisie": "+216", "Algérie": "+213", "Sénégal": "+221",
-    "Côte d'Ivoire": "+225", "Cameroun": "+237", "Madagascar": "+261",
+    "Maroc": "+212", "Tunisie": "+216", "Algerie": "+213", "Senegal": "+221",
+    "Cote d'Ivoire": "+225", "Cameroun": "+237", "Madagascar": "+261",
     "Allemagne": "+49", "Espagne": "+34", "Italie": "+39", "Royaume-Uni": "+44",
-    "États-Unis": "+1", "Chine": "+86", "Japon": "+81",
-    "Émirats arabes unis": "+971", "Arabie saoudite": "+966",
-    "Brésil": "+55", "Mexique": "+52", "Australie": "+61",
+    "Etats-Unis": "+1", "Chine": "+86", "Japon": "+81",
+    "Emirats arabes unis": "+971", "Arabie saoudite": "+966",
+    "Bresil": "+55", "Mexique": "+52", "Australie": "+61",
   };
   return prefixes[country] || "";
 }
 
-/** Extrait le domaine d'un email */
-function getDomainFromEmail(email: string): string {
-  const parts = email.split("@");
-  if (parts.length !== 2) return "";
-  const domain = parts[1].toLowerCase();
-  // Ignorer les domaines génériques
-  const genericDomains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "live.com", "icloud.com", "aol.com", "protonmail.com", "mail.com", "orange.fr", "free.fr", "sfr.fr", "laposte.net", "wanadoo.fr"];
-  if (genericDomains.includes(domain)) return "";
-  return domain;
-}
-
 // ─── Composant SmartForm ───────────────────────────────────────────────────────
 export default function SmartForm({ preselectedProduct, preselectedSize, mode = "full", onSubmitSuccess }: SmartFormProps) {
-  // Lire les query params (pré-remplissage depuis le chatbot IA)
+  // Lire les query params (pre-remplissage depuis le chatbot IA)
   const urlParams = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
   const qProduct = (urlParams?.get("product") as ProductType) || preselectedProduct || null;
   const qSize = urlParams?.get("size") || preselectedSize || "";
@@ -131,26 +124,25 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   const qCity = urlParams?.get("city") || "";
   const qCountry = urlParams?.get("country") || "";
 
-  // Calculer l'étape initiale en fonction des données pré-remplies
+  // Calculer l'etape initiale en fonction des donnees pre-remplies
   const getInitialStep = () => {
-    if (qEmail) return 4; // Si on a l'email, aller directement à nom/entreprise
-    if (qProduct) return 2; // Si on a le produit, aller au besoin
+    if (qEmail) return 2; // Si on a deja l'email, aller au produit
     return 1;
   };
 
-  // Étapes : 1=produit, 2=besoin, 3=email+tel, 4=nom+entreprise, 5=localisation, 6=message
+  // Etapes : 1=email, 2=produit, 3=besoin, 4=tel+rappel, 5=nom+entreprise, 6=localisation, 7=message
   const [currentStep, setCurrentStep] = useState(getInitialStep);
-  const totalSteps = 6;
+  const totalSteps = 7;
 
-  // Séparer prénom/nom depuis qName
+  // Separer prenom/nom depuis qName
   const nameParts = qName.split(" ");
   const initialPrenom = nameParts[0] || "";
   const initialNom = nameParts.slice(1).join(" ") || "";
 
-  // Données formulaire
+  // Donnees formulaire
+  const [email, setEmail] = useState(qEmail);
   const [product, setProduct] = useState<ProductType>(qProduct);
   const [productDetail, setProductDetail] = useState(qSize);
-  const [email, setEmail] = useState(qEmail);
   const [phone, setPhone] = useState(qPhone);
   const [prenom, setPrenom] = useState(initialPrenom);
   const [nom, setNom] = useState(initialNom);
@@ -159,20 +151,93 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   const [city, setCity] = useState(qCity);
   const [postalCode, setPostalCode] = useState("");
   const [message, setMessage] = useState("");
+  const [callbackDay, setCallbackDay] = useState<string>("");
+  const [callbackTime, setCallbackTime] = useState<string>("");
   const [submitted, setSubmitted] = useState(false);
+  const [hasSavedProgress, setHasSavedProgress] = useState(false);
+  const [showResumeBanner, setShowResumeBanner] = useState(false);
 
-  // IA states
-  const [aiSuggestingCompany, setAiSuggestingCompany] = useState(false);
-  const [aiCompanySuggestion, setAiCompanySuggestion] = useState("");
+  // IA extraction states
+  const [emailExtraction, setEmailExtraction] = useState<EmailExtraction | null>(null);
+  const [aiAcceptedPrenom, setAiAcceptedPrenom] = useState(false);
+  const [aiAcceptedNom, setAiAcceptedNom] = useState(false);
+  const [aiAcceptedEntreprise, setAiAcceptedEntreprise] = useState(false);
+
+  // Autres IA states
   const [citySuggestions, setCitySuggestions] = useState<string[]>([]);
   const [loadingCities, setLoadingCities] = useState(false);
   const [countryFiltered, setCountryFiltered] = useState<string[]>([]);
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
 
+  // Abandon tracking
+  const [abandonSent, setAbandonSent] = useState(false);
+  const emailCapturedRef = useRef(false);
+
   const formRef = useRef<HTMLDivElement>(null);
   const postalCodeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Auto-detect country on mount
+  const STORAGE_KEY = "hallucine_smartform_progress";
+  const EXPIRY_DAYS = 7;
+
+  // ─── Restaurer la progression sauvegardee au montage ──────────────────
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (!saved) return;
+      const data = JSON.parse(saved);
+      if (Date.now() - data.timestamp > EXPIRY_DAYS * 86400000) {
+        localStorage.removeItem(STORAGE_KEY);
+        return;
+      }
+      if (data.currentStep > 1 || data.email) {
+        setHasSavedProgress(true);
+        setShowResumeBanner(true);
+      }
+    } catch { /* ignore */ }
+  }, []);
+
+  const restoreProgress = () => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (!saved) return;
+      const d = JSON.parse(saved);
+      if (d.email) setEmail(d.email);
+      if (d.product) setProduct(d.product);
+      if (d.productDetail) setProductDetail(d.productDetail);
+      if (d.phone) setPhone(d.phone);
+      if (d.prenom) setPrenom(d.prenom);
+      if (d.nom) setNom(d.nom);
+      if (d.entreprise) setEntreprise(d.entreprise);
+      if (d.country) setCountry(d.country);
+      if (d.city) setCity(d.city);
+      if (d.postalCode) setPostalCode(d.postalCode);
+      if (d.message) setMessage(d.message);
+      if (d.callbackDay) setCallbackDay(d.callbackDay);
+      if (d.callbackTime) setCallbackTime(d.callbackTime);
+      if (d.currentStep) setCurrentStep(d.currentStep);
+      setShowResumeBanner(false);
+    } catch { /* ignore */ }
+  };
+
+  const dismissProgress = () => {
+    localStorage.removeItem(STORAGE_KEY);
+    setShowResumeBanner(false);
+    setHasSavedProgress(false);
+  };
+
+  // ─── Sauvegarder automatiquement a chaque changement ──────────────────
+  useEffect(() => {
+    if (currentStep <= 1 && !email || submitted) return;
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        currentStep, email, product, productDetail, phone, prenom, nom,
+        entreprise, country, city, postalCode, message, callbackDay, callbackTime,
+        timestamp: Date.now()
+      }));
+    } catch { /* ignore */ }
+  }, [currentStep, email, product, productDetail, phone, prenom, nom, entreprise, country, city, postalCode, message, callbackDay, callbackTime, submitted]);
+
+  // ─── Auto-detect country on mount ─────────────────────────────────────
   useEffect(() => {
     const detected = detectCountryFromTimezone();
     if (detected) {
@@ -181,25 +246,102 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     }
   }, []);
 
-  // Auto-suggest company from email domain
+  // ─── Extraction IA depuis l'email ─────────────────────────────────────
   useEffect(() => {
-    if (email.length < 5 || !email.includes("@")) return;
-    const domain = getDomainFromEmail(email);
-    if (!domain) return;
+    if (!email || !email.includes("@") || !email.includes(".")) {
+      setEmailExtraction(null);
+      return;
+    }
 
-    setAiSuggestingCompany(true);
-    // Simple heuristic: capitalize domain name without TLD
-    const companyGuess = domain.split(".")[0]
-      .replace(/-/g, " ")
-      .replace(/\b\w/g, c => c.toUpperCase());
-    
-    setTimeout(() => {
-      setAiCompanySuggestion(companyGuess);
-      setAiSuggestingCompany(false);
-    }, 500);
+    // Debounce de 300ms
+    const timer = setTimeout(() => {
+      const extraction = extractFromEmail(email);
+      setEmailExtraction(extraction);
+
+      // Marquer que l'email a ete capture (pour la detection d'abandon)
+      if (email.includes("@") && email.includes(".")) {
+        emailCapturedRef.current = true;
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
   }, [email]);
 
-  // API gouv.fr : auto-complétion ville depuis code postal (France uniquement)
+  // ─── Detection d'abandon ──────────────────────────────────────────────
+  const abandonMutation = trpc.contact.abandonPartial.useMutation();
+
+  const sendAbandonData = useCallback(() => {
+    if (abandonSent || submitted || !emailCapturedRef.current || !email) return;
+    if (!email.includes("@") || !email.includes(".")) return;
+
+    const productLabels: Record<string, string> = {
+      ecran: "Ecran de cinema", tente: "Tente gonflable",
+      mobilier: "Mobilier gonflable", arche: "Arche gonflable",
+    };
+
+    setAbandonSent(true);
+    abandonMutation.mutate({
+      email,
+      prenom: prenom || emailExtraction?.prenom || undefined,
+      nom: nom || emailExtraction?.nom || undefined,
+      entreprise: entreprise || emailExtraction?.entreprise || undefined,
+      telephone: phone?.trim() || undefined,
+      product: product ? productLabels[product] : undefined,
+      productDetail: productDetail || undefined,
+      country: country || undefined,
+      city: city || undefined,
+      lastStep: currentStep,
+      totalSteps,
+    });
+  }, [abandonSent, submitted, email, prenom, nom, entreprise, phone, product, productDetail, country, city, currentStep, emailExtraction, abandonMutation, totalSteps]);
+
+  // Envoyer les donnees partielles quand le visiteur quitte la page
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (!submitted && emailCapturedRef.current && email && !abandonSent) {
+        // Utiliser sendBeacon pour garantir l'envoi meme si la page se ferme
+        const productLabels: Record<string, string> = {
+          ecran: "Ecran de cinema", tente: "Tente gonflable",
+          mobilier: "Mobilier gonflable", arche: "Arche gonflable",
+        };
+        const data = {
+          email,
+          prenom: prenom || emailExtraction?.prenom || "",
+          nom: nom || emailExtraction?.nom || "",
+          entreprise: entreprise || emailExtraction?.entreprise || "",
+          telephone: phone?.trim() || "",
+          product: product ? productLabels[product] : "",
+          productDetail: productDetail || "",
+          country: country || "",
+          city: city || "",
+          lastStep: currentStep,
+          totalSteps,
+        };
+        try {
+          navigator.sendBeacon("/api/abandon-partial", JSON.stringify(data));
+        } catch {
+          // Fallback silencieux
+        }
+      }
+    };
+
+    // Aussi detecter la perte de visibilite (changement d'onglet, minimisation)
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden" && !submitted && emailCapturedRef.current && currentStep < totalSteps) {
+        // Ne pas envoyer immediatement au changement d'onglet, juste au unload
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [submitted, email, prenom, nom, entreprise, phone, product, productDetail, country, city, currentStep, emailExtraction, abandonSent, totalSteps]);
+
+  // ─── API gouv.fr : auto-completion ville depuis code postal ───────────
   useEffect(() => {
     if (country !== "France" || postalCode.length < 5) {
       setCitySuggestions([]);
@@ -211,7 +353,6 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     postalCodeTimeoutRef.current = setTimeout(async () => {
       setLoadingCities(true);
       try {
-        // Nouvelle API Géoplateforme (remplace api-adresse.data.gouv.fr)
         const res = await fetch(`https://data.geopf.fr/geocodage/search/?q=${postalCode}&type=municipality&postcode=${postalCode}&limit=5`);
         if (res.ok) {
           const data = await res.json();
@@ -233,7 +374,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     };
   }, [postalCode, country]);
 
-  // Country filter
+  // ─── Country filter ───────────────────────────────────────────────────
   const handleCountryInput = useCallback((val: string) => {
     setCountry(val);
     if (val.length > 0) {
@@ -248,22 +389,47 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   const selectCountry = useCallback((c: string) => {
     setCountry(c);
     setShowCountryDropdown(false);
-    // Update phone prefix
     const prefix = getPhonePrefix(c);
     if (prefix && !phone.startsWith(prefix)) {
       setPhone(prefix + " ");
     }
   }, [phone]);
 
-  // Mutation tRPC
+  // ─── Accepter les suggestions IA ──────────────────────────────────────
+  const acceptAiPrenom = () => {
+    if (emailExtraction?.prenom) {
+      setPrenom(emailExtraction.prenom);
+      setAiAcceptedPrenom(true);
+    }
+  };
+  const acceptAiNom = () => {
+    if (emailExtraction?.nom) {
+      setNom(emailExtraction.nom);
+      setAiAcceptedNom(true);
+    }
+  };
+  const acceptAiEntreprise = () => {
+    if (emailExtraction?.entreprise) {
+      setEntreprise(emailExtraction.entreprise);
+      setAiAcceptedEntreprise(true);
+    }
+  };
+  const acceptAllAi = () => {
+    if (emailExtraction?.prenom && !prenom) { setPrenom(emailExtraction.prenom); setAiAcceptedPrenom(true); }
+    if (emailExtraction?.nom && !nom) { setNom(emailExtraction.nom); setAiAcceptedNom(true); }
+    if (emailExtraction?.entreprise && !entreprise) { setEntreprise(emailExtraction.entreprise); setAiAcceptedEntreprise(true); }
+  };
+
+  // ─── Mutation tRPC ────────────────────────────────────────────────────
   const submitMutation = trpc.contact.submit.useMutation({
     onSuccess: () => {
       setSubmitted(true);
-      toast.success("Votre demande a bien été envoyée !");
+      setAbandonSent(true); // Empecher l'envoi d'abandon apres soumission
+      toast.success("Votre demande a bien ete envoyee !");
       onSubmitSuccess?.();
     },
     onError: (err) => {
-      toast.error(err.message || "Erreur lors de l'envoi. Veuillez réessayer.");
+      toast.error(err.message || "Erreur lors de l'envoi. Veuillez reessayer.");
     },
   });
 
@@ -274,14 +440,18 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     }
 
     const productLabels: Record<string, string> = {
-      ecran: "Écran de cinéma",
+      ecran: "Ecran de cinema",
       tente: "Tente gonflable",
       mobilier: "Mobilier gonflable",
       arche: "Arche gonflable",
     };
-    const productLabel = product ? `${productLabels[product]} — ${productDetail}` : "Non précisé";
-    const fullName = [prenom, nom].filter(Boolean).join(" ") || "Non renseigné";
+    const productLabel = product ? `${productLabels[product]} -- ${productDetail}` : "Non precise";
+    const fullName = [prenom, nom].filter(Boolean).join(" ") || "Non renseigne";
     const location = [city, postalCode, country].filter(Boolean).join(", ");
+
+    const callbackInfo = callbackDay || callbackTime
+      ? `\nPreference rappel : ${callbackDay || "Pas de preference"} ${callbackTime || ""}`
+      : "";
 
     submitMutation.mutate({
       type: "devis",
@@ -289,18 +459,20 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
       email,
       telephone: phone?.trim() || undefined,
       entreprise: entreprise || undefined,
-      sujet: `${productLabel} — ${location}`,
-      message: message || undefined,
+      sujet: `${productLabel} -- ${location}`,
+      message: (message || "") + callbackInfo,
       produit: productLabel,
       objectif: productDetail || undefined,
     });
+
+    // Nettoyer la progression sauvegardee apres soumission
+    try { localStorage.removeItem(STORAGE_KEY); } catch { /* ignore */ }
   };
 
-  // Navigation
+  // ─── Navigation ───────────────────────────────────────────────────────
   const goNext = () => {
     if (currentStep < totalSteps) {
       setCurrentStep(prev => prev + 1);
-      // Scroll to form top on mobile
       setTimeout(() => formRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }), 100);
     }
   };
@@ -311,17 +483,18 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
   const canProceed = (): boolean => {
     switch (currentStep) {
-      case 1: return product !== null;
-      case 2: return productDetail !== "";
-      case 3: return email.includes("@") && email.includes(".");
-      case 4: return true; // Optionnel
-      case 5: return true; // Optionnel
-      case 6: return true;
+      case 1: return email.includes("@") && email.includes(".");
+      case 2: return product !== null;
+      case 3: return productDetail !== "";
+      case 4: return true; // Tel optionnel
+      case 5: return true; // Nom optionnel
+      case 6: return true; // Localisation optionnel
+      case 7: return true;
       default: return false;
     }
   };
 
-  // ─── Animations ──────────────────────────────────────────────────────────────
+  // ─── Animations ───────────────────────────────────────────────────────
   const slideVariants = {
     enter: { opacity: 0, x: 30 },
     center: { opacity: 1, x: 0 },
@@ -331,7 +504,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   const inputClass = "w-full p-3 bg-white/[0.05] border border-white/10 rounded-sm text-white text-sm placeholder:text-white/30 focus:border-gold focus:outline-none transition-colors";
   const labelClass = "text-white/60 text-sm mb-1.5 block";
 
-  // ─── Rendu ───────────────────────────────────────────────────────────────────
+  // ─── Rendu ────────────────────────────────────────────────────────────
   if (submitted) {
     return (
       <div ref={formRef} className="text-center py-12">
@@ -342,10 +515,10 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
           Merci{prenom ? ` ${prenom}` : ""} !
         </h3>
         <p className="text-white/60">
-          Nous avons bien reçu votre demande. Notre équipe vous répondra dans les 24 heures.
+          Nous avons bien recu votre demande. Notre equipe vous repondra dans les 24 heures.
         </p>
         <p className="text-white/40 text-sm mt-4">
-          Un email de confirmation a été envoyé à {email}
+          Un email de confirmation a ete envoye a {email}
         </p>
       </div>
     );
@@ -353,6 +526,27 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
   return (
     <div ref={formRef} className={mode === "compact" ? "" : ""}>
+      {/* Bandeau de reprise de progression */}
+      {showResumeBanner && (
+        <div className="mb-4 p-3 bg-gold/10 border border-gold/30 rounded-sm flex items-center justify-between gap-3">
+          <p className="text-white/80 text-sm">Vous avez une demande en cours. Reprendre ?</p>
+          <div className="flex gap-2 shrink-0">
+            <button
+              onClick={restoreProgress}
+              className="px-3 py-1.5 bg-gold text-navy-deep text-xs font-semibold rounded-sm hover:bg-gold-light transition-colors"
+            >
+              Reprendre
+            </button>
+            <button
+              onClick={dismissProgress}
+              className="px-3 py-1.5 border border-white/20 text-white/50 text-xs rounded-sm hover:border-white/40 transition-colors"
+            >
+              Non merci
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Progress bar */}
       <div className="flex items-center gap-1.5 mb-6">
         {Array.from({ length: totalSteps }, (_, i) => i + 1).map((s) => (
@@ -368,11 +562,80 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
       </div>
 
       <AnimatePresence mode="wait">
-        {/* ─── ÉTAPE 1 : Choix du produit ─────────────────────────────────── */}
+        {/* ─── ETAPE 1 : Email (capture immediate) ─────────────────────── */}
         {currentStep === 1 && (
           <motion.div key="step1" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">Quel produit vous intéresse ?</h3>
-            <p className="text-white/50 text-sm mb-5">Sélectionnez pour commencer votre demande de devis.</p>
+            <h3 className="text-xl font-bold text-white mb-1">Commencez votre devis gratuit</h3>
+            <p className="text-white/50 text-sm mb-5">Votre email suffit pour demarrer. Nous vous repondrons sous 24h.</p>
+
+            <div className="space-y-4">
+              <div>
+                <label className={labelClass}>
+                  <Mail className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Votre adresse email *
+                </label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="votre@email.com"
+                  className={inputClass}
+                  autoFocus
+                  onKeyDown={(e) => { if (e.key === "Enter" && canProceed()) goNext(); }}
+                />
+              </div>
+
+              {/* Apercu de l'extraction IA */}
+              {emailExtraction && (emailExtraction.prenom || emailExtraction.nom || emailExtraction.entreprise) && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-3 bg-gold/5 border border-gold/20 rounded-sm"
+                >
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <Sparkles className="w-3.5 h-3.5 text-gold" />
+                    <span className="text-gold text-xs font-medium">IA a detecte depuis votre email :</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2 text-xs">
+                    {emailExtraction.prenom && (
+                      <span className="px-2 py-1 bg-white/5 border border-white/10 rounded text-white/70">
+                        {emailExtraction.prenom}
+                      </span>
+                    )}
+                    {emailExtraction.nom && (
+                      <span className="px-2 py-1 bg-white/5 border border-white/10 rounded text-white/70">
+                        {emailExtraction.nom}
+                      </span>
+                    )}
+                    {emailExtraction.entreprise && (
+                      <span className="px-2 py-1 bg-white/5 border border-white/10 rounded text-white/70">
+                        {emailExtraction.entreprise}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-white/30 text-[10px] mt-2">Ces informations seront pre-remplies pour vous faire gagner du temps.</p>
+                </motion.div>
+              )}
+            </div>
+
+            <button
+              onClick={goNext}
+              disabled={!canProceed()}
+              className="w-full mt-6 flex items-center justify-center gap-2 px-6 py-3 bg-gold text-navy-deep font-semibold text-sm rounded-sm hover:bg-gold-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              Continuer <ArrowRight className="w-4 h-4" />
+            </button>
+
+            <p className="text-white/20 text-[10px] text-center mt-3">
+              Vos donnees sont protegees et ne seront jamais partagees.
+            </p>
+          </motion.div>
+        )}
+
+        {/* ─── ETAPE 2 : Choix du produit ──────────────────────────────── */}
+        {currentStep === 2 && (
+          <motion.div key="step2" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
+            <h3 className="text-xl font-bold text-white mb-1">Quel produit vous interesse ?</h3>
+            <p className="text-white/50 text-sm mb-5">Selectionnez pour personnaliser votre devis.</p>
             <div className="grid grid-cols-2 gap-3">
               {products.map((p) => (
                 <button
@@ -390,16 +653,21 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                 </button>
               ))}
             </div>
+            <div className="flex gap-3 mt-6">
+              <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-sm hover:border-white/30 transition-colors">
+                <ArrowLeft className="w-4 h-4" /> Retour
+              </button>
+            </div>
           </motion.div>
         )}
 
-        {/* ─── ÉTAPE 2 : Besoin spécifique ────────────────────────────────── */}
-        {currentStep === 2 && (
-          <motion.div key="step2" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
+        {/* ─── ETAPE 3 : Besoin specifique ─────────────────────────────── */}
+        {currentStep === 3 && (
+          <motion.div key="step3" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
             {product === "ecran" && (
               <>
                 <h3 className="text-xl font-bold text-white mb-1">Pour combien de spectateurs ?</h3>
-                <p className="text-white/50 text-sm mb-5">La taille d'écran s'adapte à votre audience.</p>
+                <p className="text-white/50 text-sm mb-5">La taille d'ecran s'adapte a votre audience.</p>
                 <div className="space-y-2">
                   {screenCategories.map((cat) => (
                     <button
@@ -409,13 +677,15 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                         productDetail === cat.value ? "border-gold bg-gold/10" : "border-white/10 hover:border-gold/30 bg-white/[0.02]"
                       }`}
                     >
-                      <span className="text-2xl">{cat.icon}</span>
+                      <div className="w-8 h-8 rounded bg-white/5 flex items-center justify-center text-gold text-sm font-bold">
+                        {cat.label.split(" ")[0]}
+                      </div>
                       <div className="flex-1">
                         <div className="text-white font-semibold text-sm">{cat.label}</div>
                         <div className="text-white/40 text-xs">{cat.audience}</div>
                       </div>
                       <span className={`text-xs px-2 py-0.5 rounded-full ${
-                        cat.tech === "Étanche" ? "bg-gold/10 text-gold" : "bg-blue-400/10 text-blue-400"
+                        cat.tech === "Etanche" ? "bg-gold/10 text-gold" : "bg-blue-400/10 text-blue-400"
                       }`}>
                         {cat.tech}
                       </span>
@@ -428,7 +698,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             {product === "tente" && (
               <>
                 <h3 className="text-xl font-bold text-white mb-1">Quel type de tente ?</h3>
-                <p className="text-white/50 text-sm mb-5">Sélectionnez l'usage principal.</p>
+                <p className="text-white/50 text-sm mb-5">Selectionnez l'usage principal.</p>
                 <div className="grid grid-cols-2 gap-2">
                   {tentTypes.map((t) => (
                     <button
@@ -448,7 +718,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             {product === "mobilier" && (
               <>
                 <h3 className="text-xl font-bold text-white mb-1">Quel type de mobilier ?</h3>
-                <p className="text-white/50 text-sm mb-5">Sélectionnez le type de mobilier souhaité.</p>
+                <p className="text-white/50 text-sm mb-5">Selectionnez le type de mobilier souhaite.</p>
                 <div className="grid grid-cols-2 gap-2">
                   {mobilierTypes.map((m) => (
                     <button
@@ -468,7 +738,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             {product === "arche" && (
               <>
                 <h3 className="text-xl font-bold text-white mb-1">Quel usage pour l'arche ?</h3>
-                <p className="text-white/50 text-sm mb-5">Sélectionnez l'usage principal.</p>
+                <p className="text-white/50 text-sm mb-5">Selectionnez l'usage principal.</p>
                 <div className="grid grid-cols-2 gap-2">
                   {archeUsages.map((a) => (
                     <button
@@ -500,30 +770,17 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
           </motion.div>
         )}
 
-        {/* ─── ÉTAPE 3 : Email + Téléphone ────────────────────────────────── */}
-        {currentStep === 3 && (
-          <motion.div key="step3" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">Comment vous joindre ?</h3>
-            <p className="text-white/50 text-sm mb-5">Nous vous répondrons sous 24h.</p>
+        {/* ─── ETAPE 4 : Telephone + Preference de rappel ─────────────── */}
+        {currentStep === 4 && (
+          <motion.div key="step4" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
+            <h3 className="text-xl font-bold text-white mb-1">Souhaitez-vous etre rappele ?</h3>
+            <p className="text-white/50 text-sm mb-5">Optionnel mais recommande pour un devis plus rapide.</p>
 
             <div className="space-y-4">
               <div>
                 <label className={labelClass}>
-                  <Mail className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Email *
-                </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="votre@email.com"
-                  className={inputClass}
-                  autoFocus
-                />
-              </div>
-              <div>
-                <label className={labelClass}>
-                  <Phone className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Téléphone
-                  <span className="text-white/30 ml-1">(recommandé)</span>
+                  <Phone className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Telephone
+                  <span className="text-white/30 ml-1">(recommande)</span>
                 </label>
                 <input
                   type="tel"
@@ -531,8 +788,52 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+33 6 12 34 56 78"
                   className={inputClass}
+                  autoFocus
                 />
               </div>
+
+              {/* Preference de rappel - visible uniquement si telephone renseigne */}
+              {phone.trim().length > 4 && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  className="bg-white/5 border border-white/10 rounded-sm p-4 space-y-3"
+                >
+                  <p className="text-white/70 text-sm font-medium">Quand souhaitez-vous etre rappele ?</p>
+                  <div className="flex flex-wrap gap-2">
+                    {["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"].map((day) => (
+                      <button
+                        key={day}
+                        type="button"
+                        onClick={() => setCallbackDay(callbackDay === day ? "" : day)}
+                        className={`px-3 py-1.5 text-xs rounded-sm border transition-colors ${
+                          callbackDay === day
+                            ? "bg-gold/20 border-gold text-gold"
+                            : "border-white/10 text-white/50 hover:border-white/30"
+                        }`}
+                      >
+                        {day}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="flex gap-2">
+                    {[{label: "Matin (9h-12h)", value: "matin"}, {label: "Apres-midi (14h-18h)", value: "apres-midi"}].map((slot) => (
+                      <button
+                        key={slot.value}
+                        type="button"
+                        onClick={() => setCallbackTime(callbackTime === slot.value ? "" : slot.value)}
+                        className={`flex-1 px-3 py-1.5 text-xs rounded-sm border transition-colors ${
+                          callbackTime === slot.value
+                            ? "bg-gold/20 border-gold text-gold"
+                            : "border-white/10 text-white/50 hover:border-white/30"
+                        }`}
+                      >
+                        {slot.label}
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
             </div>
 
             <div className="flex gap-3 mt-6">
@@ -541,8 +842,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
               </button>
               <button
                 onClick={goNext}
-                disabled={!canProceed()}
-                className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-gold text-navy-deep font-semibold text-sm rounded-sm hover:bg-gold-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-gold text-navy-deep font-semibold text-sm rounded-sm hover:bg-gold-light transition-colors"
               >
                 Continuer <ArrowRight className="w-4 h-4" />
               </button>
@@ -550,26 +850,60 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
           </motion.div>
         )}
 
-        {/* ─── ÉTAPE 4 : Nom + Entreprise ─────────────────────────────────── */}
-        {currentStep === 4 && (
-          <motion.div key="step4" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">Et vous êtes ?</h3>
-            <p className="text-white/50 text-sm mb-5">Ces informations nous aident à personnaliser votre devis.</p>
+        {/* ─── ETAPE 5 : Nom + Entreprise (pre-rempli par IA) ─────────── */}
+        {currentStep === 5 && (
+          <motion.div key="step5" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
+            <h3 className="text-xl font-bold text-white mb-1">Et vous etes ?</h3>
+            <p className="text-white/50 text-sm mb-5">Ces informations nous aident a personnaliser votre devis.</p>
+
+            {/* Bouton "Tout accepter" si l'IA a des suggestions */}
+            {emailExtraction && (emailExtraction.prenom || emailExtraction.nom || emailExtraction.entreprise) && !prenom && !nom && !entreprise && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-4 p-3 bg-gold/10 border border-gold/30 rounded-sm"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-gold" />
+                    <span className="text-white/80 text-sm">
+                      IA a detecte : <strong className="text-white">{[emailExtraction.prenom, emailExtraction.nom].filter(Boolean).join(" ")}</strong>
+                      {emailExtraction.entreprise && <> chez <strong className="text-white">{emailExtraction.entreprise}</strong></>}
+                    </span>
+                  </div>
+                  <button
+                    onClick={acceptAllAi}
+                    className="px-3 py-1.5 bg-gold text-navy-deep text-xs font-semibold rounded-sm hover:bg-gold-light transition-colors whitespace-nowrap"
+                  >
+                    Accepter tout
+                  </button>
+                </div>
+              </motion.div>
+            )}
 
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className={labelClass}>
-                    <User className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Prénom
+                    <User className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Prenom
                   </label>
                   <input
                     type="text"
                     value={prenom}
                     onChange={(e) => setPrenom(e.target.value)}
-                    placeholder="Jean"
+                    placeholder={emailExtraction?.prenom || "Jean"}
                     className={inputClass}
                     autoFocus
                   />
+                  {emailExtraction?.prenom && !prenom && !aiAcceptedPrenom && (
+                    <button
+                      onClick={acceptAiPrenom}
+                      className="mt-1 flex items-center gap-1 text-xs text-gold/70 hover:text-gold transition-colors"
+                    >
+                      <Sparkles className="w-3 h-3" />
+                      {emailExtraction.prenom} ?
+                    </button>
+                  )}
                 </div>
                 <div>
                   <label className={labelClass}>Nom</label>
@@ -577,38 +911,40 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                     type="text"
                     value={nom}
                     onChange={(e) => setNom(e.target.value)}
-                    placeholder="Dupont"
+                    placeholder={emailExtraction?.nom || "Dupont"}
                     className={inputClass}
                   />
+                  {emailExtraction?.nom && !nom && !aiAcceptedNom && (
+                    <button
+                      onClick={acceptAiNom}
+                      className="mt-1 flex items-center gap-1 text-xs text-gold/70 hover:text-gold transition-colors"
+                    >
+                      <Sparkles className="w-3 h-3" />
+                      {emailExtraction.nom} ?
+                    </button>
+                  )}
                 </div>
               </div>
               <div>
                 <label className={labelClass}>
                   <Building2 className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Entreprise / Organisation
                 </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    value={entreprise}
-                    onChange={(e) => setEntreprise(e.target.value)}
-                    placeholder="Nom de votre structure"
-                    className={inputClass}
-                  />
-                  {aiSuggestingCompany && (
-                    <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                      <Sparkles className="w-4 h-4 text-gold animate-pulse" />
-                    </div>
-                  )}
-                  {aiCompanySuggestion && !entreprise && (
-                    <button
-                      onClick={() => { setEntreprise(aiCompanySuggestion); setAiCompanySuggestion(""); }}
-                      className="mt-1.5 flex items-center gap-1.5 text-xs text-gold/70 hover:text-gold transition-colors"
-                    >
-                      <Sparkles className="w-3 h-3" />
-                      Suggestion IA : {aiCompanySuggestion} — cliquez pour accepter
-                    </button>
-                  )}
-                </div>
+                <input
+                  type="text"
+                  value={entreprise}
+                  onChange={(e) => setEntreprise(e.target.value)}
+                  placeholder={emailExtraction?.entreprise || "Nom de votre structure"}
+                  className={inputClass}
+                />
+                {emailExtraction?.entreprise && !entreprise && !aiAcceptedEntreprise && (
+                  <button
+                    onClick={acceptAiEntreprise}
+                    className="mt-1.5 flex items-center gap-1.5 text-xs text-gold/70 hover:text-gold transition-colors"
+                  >
+                    <Sparkles className="w-3 h-3" />
+                    Suggestion IA : {emailExtraction.entreprise} -- cliquez pour accepter
+                  </button>
+                )}
               </div>
             </div>
 
@@ -626,11 +962,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
           </motion.div>
         )}
 
-        {/* ─── ÉTAPE 5 : Localisation ─────────────────────────────────────── */}
-        {currentStep === 5 && (
-          <motion.div key="step5" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">Où êtes-vous basé ?</h3>
-            <p className="text-white/50 text-sm mb-5">Pour adapter notre offre à votre région.</p>
+        {/* ─── ETAPE 6 : Localisation ────────────────────────────────────── */}
+        {currentStep === 6 && (
+          <motion.div key="step6" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
+            <h3 className="text-xl font-bold text-white mb-1">Ou etes-vous base ?</h3>
+            <p className="text-white/50 text-sm mb-5">Pour adapter notre offre a votre region.</p>
 
             <div className="space-y-4">
               <div className="relative">
@@ -643,7 +979,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   onChange={(e) => handleCountryInput(e.target.value)}
                   onFocus={() => { if (country) handleCountryInput(country); }}
                   onBlur={() => setTimeout(() => setShowCountryDropdown(false), 200)}
-                  placeholder="Commencez à taper..."
+                  placeholder="Commencez a taper..."
                   className={inputClass}
                   autoFocus
                 />
@@ -692,7 +1028,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                         onChange={(e) => setCity(e.target.value)}
                         className={inputClass}
                       >
-                        <option value="">Sélectionnez</option>
+                        <option value="">Selectionnez</option>
                         {citySuggestions.map((c) => (
                           <option key={c} value={c}>{c}</option>
                         ))}
@@ -740,11 +1076,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
           </motion.div>
         )}
 
-        {/* ─── ÉTAPE 6 : Message libre + Envoi ────────────────────────────── */}
-        {currentStep === 6 && (
-          <motion.div key="step6" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">Un détail à ajouter ?</h3>
-            <p className="text-white/50 text-sm mb-5">Optionnel — date d'événement, budget, contraintes...</p>
+        {/* ─── ETAPE 7 : Message libre + Envoi ───────────────────────────── */}
+        {currentStep === 7 && (
+          <motion.div key="step7" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
+            <h3 className="text-xl font-bold text-white mb-1">Un detail a ajouter ?</h3>
+            <p className="text-white/50 text-sm mb-5">Optionnel -- date d'evenement, budget, contraintes...</p>
 
             <div>
               <label className={labelClass}>
@@ -756,28 +1092,29 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                 onChange={(e) => setMessage(e.target.value)}
                 rows={4}
                 placeholder={
-                  product === "ecran" ? "Date de l'événement, lieu, nombre de spectateurs, budget estimé..."
-                  : product === "tente" ? "Dimensions souhaitées, personnalisation, date d'utilisation..."
-                  : product === "mobilier" ? "Quantité, couleurs, événement prévu..."
-                  : product === "arche" ? "Dimensions, personnalisation, type d'événement..."
-                  : "Décrivez votre projet..."
+                  product === "ecran" ? "Date de l'evenement, lieu, nombre de spectateurs, budget estime..."
+                  : product === "tente" ? "Dimensions souhaitees, personnalisation, date d'utilisation..."
+                  : product === "mobilier" ? "Quantite, couleurs, evenement prevu..."
+                  : product === "arche" ? "Dimensions, personnalisation, type d'evenement..."
+                  : "Decrivez votre projet..."
                 }
                 className={`${inputClass} resize-none`}
                 autoFocus
               />
             </div>
 
-            {/* Récapitulatif compact */}
+            {/* Recapitulatif compact */}
             <div className="mt-4 p-3 bg-white/[0.03] border border-white/5 rounded-sm">
-              <div className="text-white/40 text-xs uppercase tracking-wider mb-2">Récapitulatif</div>
+              <div className="text-white/40 text-xs uppercase tracking-wider mb-2">Recapitulatif</div>
               <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
-                {product && <div className="text-white/60">Produit : <span className="text-white">{products.find(p => p.type === product)?.label}</span></div>}
-                {productDetail && <div className="text-white/60">Détail : <span className="text-white">{productDetail}</span></div>}
                 {email && <div className="text-white/60">Email : <span className="text-white">{email}</span></div>}
-                {phone?.trim() && <div className="text-white/60">Tél : <span className="text-white">{phone}</span></div>}
+                {product && <div className="text-white/60">Produit : <span className="text-white">{products.find(p => p.type === product)?.label}</span></div>}
+                {productDetail && <div className="text-white/60">Detail : <span className="text-white">{productDetail}</span></div>}
+                {phone?.trim() && <div className="text-white/60">Tel : <span className="text-white">{phone}</span></div>}
                 {(prenom || nom) && <div className="text-white/60">Nom : <span className="text-white">{[prenom, nom].filter(Boolean).join(" ")}</span></div>}
                 {entreprise && <div className="text-white/60">Entreprise : <span className="text-white">{entreprise}</span></div>}
                 {country && <div className="text-white/60">Lieu : <span className="text-white">{[city, country].filter(Boolean).join(", ")}</span></div>}
+                {(callbackDay || callbackTime) && <div className="text-white/60">Rappel : <span className="text-white">{[callbackDay, callbackTime === "matin" ? "Matin (9h-12h)" : callbackTime === "apres-midi" ? "Apres-midi (14h-18h)" : ""].filter(Boolean).join(" - ")}</span></div>}
               </div>
             </div>
 
