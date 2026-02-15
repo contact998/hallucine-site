@@ -95,7 +95,7 @@ export default function Navbar() {
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const [location] = useLocation();
   const dropdownTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -204,6 +204,14 @@ export default function Navbar() {
             >
               Demande de prix
             </Link>
+            {isAuthenticated && user?.role === "admin" && (
+              <Link
+                href="/admin"
+                className="flex items-center gap-1.5 px-3 py-2 bg-warm/10 border border-warm/30 text-warm text-sm rounded hover:bg-warm/20 transition-colors"
+              >
+                Admin
+              </Link>
+            )}
             {isAuthenticated ? (
               <Link
                 href="/profil"
@@ -295,6 +303,15 @@ export default function Navbar() {
                 >
                   Demande de prix
                 </Link>
+                {isAuthenticated && user?.role === "admin" && (
+                  <Link
+                    href="/admin"
+                    onClick={() => setMobileOpen(false)}
+                    className="mt-2 flex items-center justify-center gap-2 px-6 py-3 bg-warm/10 border border-warm/30 text-warm font-semibold rounded hover:bg-warm/20"
+                  >
+                    Panneau Admin
+                  </Link>
+                )}
                 {isAuthenticated ? (
                   <Link
                     href="/profil"

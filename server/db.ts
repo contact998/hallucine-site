@@ -1,4 +1,4 @@
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, sql, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, users, contactSubmissions, InsertContactSubmission } from "../drizzle/schema";
 import { ENV } from './_core/env';
@@ -128,6 +128,88 @@ export async function getSubmissionsByEmail(email: string) {
     .where(eq(contactSubmissions.email, email))
     .orderBy(desc(contactSubmissions.createdAt))
     .limit(50);
+}
+
+/** Récupérer toutes les soumissions (admin) avec pagination */
+export async function getAllSubmissions(limit = 200) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select({
+    id: contactSubmissions.id,
+    type: contactSubmissions.type,
+    nom: contactSubmissions.nom,
+    email: contactSubmissions.email,
+    telephone: contactSubmissions.telephone,
+    entreprise: contactSubmissions.entreprise,
+    sujet: contactSubmissions.sujet,
+    message: contactSubmissions.message,
+    produit: contactSubmissions.produit,
+    objectif: contactSubmissions.objectif,
+    userId: contactSubmissions.userId,
+    status: contactSubmissions.status,
+    adminNote: contactSubmissions.adminNote,
+    createdAt: contactSubmissions.createdAt,
+    updatedAt: contactSubmissions.updatedAt,
+  }).from(contactSubmissions)
+    .orderBy(desc(contactSubmissions.createdAt))
+    .limit(limit);
+}
+
+/** Mettre à jour le statut d'une soumission (admin) */
+export async function updateSubmissionStatus(submissionId: number, status: "en_attente" | "en_cours" | "traite" | "annule") {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(contactSubmissions)
+    .set({ status })
+    .where(eq(contactSubmissions.id, submissionId));
+  return true;
+}
+
+/** Mettre à jour la note admin d'une soumission */
+export async function updateAdminNote(submissionId: number, note: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(contactSubmissions)
+    .set({ adminNote: note })
+    .where(eq(contactSubmissions.id, submissionId));
+  return true;
+}
+
+/** Supprimer une soumission (admin) */
+export async function deleteSubmission(submissionId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.delete(contactSubmissions)
+    .where(eq(contactSubmissions.id, submissionId));
+  return true;
+}
+
+/** Obtenir les statistiques des soumissions (admin) */
+export async function getSubmissionStats() {
+  const db = await getDb();
+  if (!db) return { total: 0, en_attente: 0, en_cours: 0, traite: 0, annule: 0, contact: 0, devis: 0, distributeur: 0 };
+  
+  const [totalResult] = await db.select({ count: sql<number>`count(*)` }).from(contactSubmissions);
+  const total = totalResult?.count ?? 0;
+  
+  const statusCounts = await db.select({
+    status: contactSubmissions.status,
+    count: sql<number>`count(*)`,
+  }).from(contactSubmissions).groupBy(contactSubmissions.status);
+  
+  const typeCounts = await db.select({
+    type: contactSubmissions.type,
+    count: sql<number>`count(*)`,
+  }).from(contactSubmissions).groupBy(contactSubmissions.type);
+  
+  const stats: Record<string, number> = { total, en_attente: 0, en_cours: 0, traite: 0, annule: 0, contact: 0, devis: 0, distributeur: 0 };
+  for (const row of statusCounts) {
+    stats[row.status] = row.count;
+  }
+  for (const row of typeCounts) {
+    stats[row.type] = row.count;
+  }
+  return stats;
 }
 
 /** Annuler une soumission (seul le propriétaire ou un admin peut le faire) */

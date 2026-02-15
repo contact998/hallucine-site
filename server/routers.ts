@@ -1,9 +1,19 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
+import { publicProcedure, protectedProcedure, adminProcedure, router } from "./_core/trpc";
 import { z } from "zod";
-import { insertContactSubmission, getSubmissionsByUserId, getSubmissionsByEmail, cancelSubmission } from "./db";
+import {
+  insertContactSubmission,
+  getSubmissionsByUserId,
+  getSubmissionsByEmail,
+  cancelSubmission,
+  getAllSubmissions,
+  updateSubmissionStatus,
+  updateAdminNote,
+  deleteSubmission,
+  getSubmissionStats,
+} from "./db";
 import { notifyOwner } from "./_core/notification";
 
 export const appRouter = router({
@@ -35,7 +45,6 @@ export const appRouter = router({
         })
       )
       .mutation(async ({ input, ctx }) => {
-        // Sauvegarder en base de données avec userId si connecté
         await insertContactSubmission({
           type: input.type,
           nom: input.nom,
@@ -50,7 +59,6 @@ export const appRouter = router({
           status: "en_attente",
         });
 
-        // Notifier le propriétaire
         const typeLabel = input.type === "contact" ? "Contact" : input.type === "devis" ? "Demande de devis" : "Demande distributeur";
         await notifyOwner({
           title: `Nouveau ${typeLabel} de ${input.nom}`,
@@ -72,28 +80,63 @@ export const appRouter = router({
   }),
 
   profile: router({
-    /** Récupérer les devis de l'utilisateur connecté */
     mySubmissions: protectedProcedure.query(async ({ ctx }) => {
-      // Chercher par userId d'abord, puis par email pour les soumissions faites avant connexion
       const byUserId = await getSubmissionsByUserId(ctx.user.id);
-      
       if (byUserId.length > 0) {
         return byUserId;
       }
-      
-      // Fallback: chercher par email pour les soumissions anonymes
       if (ctx.user.email) {
         return getSubmissionsByEmail(ctx.user.email);
       }
-      
       return [];
     }),
 
-    /** Annuler une demande */
     cancelSubmission: protectedProcedure
       .input(z.object({ submissionId: z.number() }))
       .mutation(async ({ input, ctx }) => {
         await cancelSubmission(input.submissionId, ctx.user.id);
+        return { success: true };
+      }),
+  }),
+
+  admin: router({
+    /** Récupérer toutes les soumissions (admin uniquement) */
+    allSubmissions: adminProcedure.query(async () => {
+      return getAllSubmissions(500);
+    }),
+
+    /** Obtenir les statistiques des soumissions */
+    stats: adminProcedure.query(async () => {
+      return getSubmissionStats();
+    }),
+
+    /** Mettre à jour le statut d'une soumission */
+    updateStatus: adminProcedure
+      .input(z.object({
+        submissionId: z.number(),
+        status: z.enum(["en_attente", "en_cours", "traite", "annule"]),
+      }))
+      .mutation(async ({ input }) => {
+        await updateSubmissionStatus(input.submissionId, input.status);
+        return { success: true };
+      }),
+
+    /** Mettre à jour la note admin */
+    updateNote: adminProcedure
+      .input(z.object({
+        submissionId: z.number(),
+        note: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        await updateAdminNote(input.submissionId, input.note);
+        return { success: true };
+      }),
+
+    /** Supprimer une soumission */
+    deleteSubmission: adminProcedure
+      .input(z.object({ submissionId: z.number() }))
+      .mutation(async ({ input }) => {
+        await deleteSubmission(input.submissionId);
         return { success: true };
       }),
   }),

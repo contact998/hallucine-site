@@ -61,3 +61,11 @@
 - [x] Créer la page de profil avec la liste des devis (tri par colonnes, compteurs par statut)
 - [x] Ajouter le lien profil/connexion dans la navbar (desktop + mobile)
 - [x] Tests vitest pour les routes profil (11 tests passent)
+
+## Panneau d'Administration
+- [x] Créer les routes backend admin (liste toutes soumissions, mise à jour statut, notes admin, stats)
+- [x] Créer la page Admin avec tableau triable, filtres par statut/type, compteurs
+- [x] Ajouter les actions admin : changer statut, ajouter note, supprimer
+- [x] Ajouter l'export CSV des demandes
+- [x] Ajouter le lien Admin dans la navbar (visible uniquement pour admin)
+- [x] Tests vitest pour les routes admin (20 tests passent)
