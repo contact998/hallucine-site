@@ -246,6 +246,10 @@ async function tryGetFromCrm(visitorTimezone: string): Promise<AvailabilityResul
 /**
  * Convertit une heure d'un fuseau horaire à un autre.
  * Retourne l'heure formatée "HH:MM" dans le fuseau cible.
+ * 
+ * Méthode : on construit un timestamp UTC représentant hour:minute dans fromTimezone,
+ * puis on formate ce timestamp dans toTimezone.
+ * Indépendant du fuseau horaire du serveur.
  */
 function convertHourBetweenTimezones(
   hour: number,
@@ -257,46 +261,25 @@ function convertHourBetweenTimezones(
   const ref = referenceDate || new Date();
 
   // Obtenir la date actuelle dans le fuseau source
-  const dateFmt = new Intl.DateTimeFormat("en-US", {
-    timeZone: fromTimezone,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
-  const dateParts = dateFmt.formatToParts(ref);
-  const year = parseInt(dateParts.find(p => p.type === "year")?.value ?? "2026");
-  const month = parseInt(dateParts.find(p => p.type === "month")?.value ?? "1");
-  const day = parseInt(dateParts.find(p => p.type === "day")?.value ?? "1");
+  const dateStr = ref.toLocaleDateString("en-CA", { timeZone: fromTimezone });
 
-  // Construire un timestamp UTC qui représente "hour:minute" dans fromTimezone
-  // En utilisant un calcul d'offset
-  const tempDate = new Date(Date.UTC(year, month - 1, day, hour, minute, 0));
+  // Calculer l'offset du fuseau source par rapport à UTC (en ms)
+  const utcStr = ref.toLocaleString("en-US", { timeZone: "UTC" });
+  const fromStr = ref.toLocaleString("en-US", { timeZone: fromTimezone });
+  const fromOffsetMs = (new Date(fromStr).getTime() - new Date(utcStr).getTime());
 
-  // Obtenir l'offset du fuseau source par rapport à UTC
-  const sourceFormatter = new Intl.DateTimeFormat("en-US", {
-    timeZone: fromTimezone,
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  });
-  const sourceTime = sourceFormatter.format(tempDate);
-  const [sourceH, sourceM] = sourceTime.split(":").map(Number);
-  const sourceMinutes = sourceH * 60 + sourceM;
-  const targetMinutes = hour * 60 + minute;
-  const offsetMinutes = sourceMinutes - targetMinutes;
-
-  // Ajuster pour obtenir le vrai UTC
-  const utcDate = new Date(tempDate.getTime() - offsetMinutes * 60000);
+  // Construire un timestamp UTC : on prend hour:minute comme si c'était UTC,
+  // puis on soustrait l'offset du fuseau source pour obtenir le vrai UTC
+  const asUtc = new Date(`${dateStr}T${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}:00.000Z`);
+  const realUtc = new Date(asUtc.getTime() - fromOffsetMs);
 
   // Formater dans le fuseau cible
-  const targetFormatter = new Intl.DateTimeFormat("fr-FR", {
+  return new Intl.DateTimeFormat("fr-FR", {
     timeZone: toTimezone,
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,
-  });
-
-  return targetFormatter.format(utcDate);
+  }).format(realUtc);
 }
 
 // ─── Génération du message IA ─────────────────────────────────────

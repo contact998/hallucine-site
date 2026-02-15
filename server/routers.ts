@@ -334,15 +334,17 @@ export const appRouter = router({
 
         // Formater les heures dans le fuseau du visiteur
         const formatInVisitorTz = (hour: number, minute: number) => {
-          // Créer une date dans le fuseau business
+          // Obtenir la date actuelle dans le fuseau business
           const dateStr = now.toLocaleDateString("en-CA", { timeZone: config.timezone });
-          const bizDate = new Date(`${dateStr}T${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}:00`);
-          // Ajuster pour le décalage entre les fuseaux
-          const bizOffset = getTimezoneOffset(config.timezone, now);
-          const visitorOffset = getTimezoneOffset(visitorTz, now);
-          const diffMs = (visitorOffset - bizOffset) * 60000;
-          const visitorDate = new Date(bizDate.getTime() + diffMs);
-          return visitorDate.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit", timeZone: visitorTz });
+          // Construire un timestamp UTC qui représente "hour:minute" dans le fuseau business
+          // En soustrayant l'offset du fuseau business pour obtenir l'heure UTC correcte
+          const bizOffsetMs = getTimezoneOffset(config.timezone, now) * 60000;
+          const utcDate = new Date(`${dateStr}T${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}:00.000Z`);
+          // utcDate est en UTC, mais on veut que hour:minute soit dans le fuseau business
+          // Donc on soustrait l'offset business pour obtenir le vrai UTC
+          const realUtcDate = new Date(utcDate.getTime() - bizOffsetMs);
+          // Formater dans le fuseau du visiteur
+          return realUtcDate.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit", timeZone: visitorTz });
         };
 
         let visitorStart: string;
