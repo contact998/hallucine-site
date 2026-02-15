@@ -9,6 +9,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Monitor, Tent, Armchair, ArrowRight, ArrowLeft, Send, CheckCircle, MapPin, Mail, Phone } from "lucide-react";
 import { toast } from "sonner";
+import GoldenParticles from "./GoldenParticles";
 
 type ProductType = "ecran" | "tente" | "mobilier" | null;
 
@@ -58,7 +59,9 @@ export default function ContactSection() {
   const selectedSize = screenSizes.find((s) => s.value === screenSize);
 
   return (
-    <section id="contact" className="py-24 md:py-32 relative">
+    <section id="contact" className="py-24 md:py-32 relative overflow-hidden">
+      {/* ✨ Particules dorées flottantes — 20 sur la section CTA */}
+      <GoldenParticles count={20} id="cta-particles" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[oklch(0.10_0.04_260_/_0.5)] to-[oklch(0.14_0.03_260)]" />
 
       <div className="container relative">
@@ -74,7 +77,7 @@ export default function ContactSection() {
               <span className="text-gold text-sm font-semibold tracking-widest uppercase">Contact</span>
               <h2 className="text-3xl md:text-4xl font-bold text-white mt-3 leading-tight">
                 Parlons de votre<br />
-                <span className="text-gradient-gold">projet</span>
+                <span className="text-gradient-gold text-glow-gold-intense">projet</span>
               </h2>
               <p className="text-white/60 mt-4 leading-relaxed">
                 Chaque projet est unique. Dites-nous ce que vous cherchez, et nous vous proposerons la solution la plus adaptée à vos besoins.

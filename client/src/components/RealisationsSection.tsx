@@ -102,7 +102,7 @@ export default function RealisationsSection() {
           </div>
           <h2 className="text-4xl lg:text-6xl font-bold text-white leading-tight max-w-3xl">
             Ils nous font confiance<br />
-            <span className="text-gradient-gold">dans le monde entier</span>
+            <span className="text-gradient-gold text-glow-gold-intense">dans le monde entier</span>
           </h2>
           <p className="text-white/45 text-lg mt-6 max-w-xl leading-relaxed">
             Des festivals aux événements corporate, des plages aux stades, nos écrans transforment chaque lieu en expérience unique.

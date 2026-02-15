@@ -1,12 +1,15 @@
 /*
  * Hero Section — Design cinématographique premium
- * Grande image de fond, titre puissant, citation, CTA doré
- * Le client changera les photos à la fin
+ * + Faisceau de projecteur animé (ProjectorBeam)
+ * + Particules dorées flottantes (GoldenParticles via tsParticles)
+ * + Text glow renforcé sur les titres
  */
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown, ArrowRight, Play } from "lucide-react";
 import { Link } from "wouter";
 import { useRef } from "react";
+import ProjectorBeam from "./ProjectorBeam";
+import GoldenParticles from "./GoldenParticles";
 
 const HERO_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/KzXxmgVsjMoEdlML.jpg";
 
@@ -43,8 +46,14 @@ export default function HeroSection() {
         backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
       }} />
 
+      {/* 🔦 Faisceau de projecteur animé */}
+      <ProjectorBeam />
+
+      {/* ✨ Particules dorées flottantes — 35 particules montant depuis le bas */}
+      <GoldenParticles count={35} id="hero-particles" />
+
       {/* Content */}
-      <motion.div style={{ opacity }} className="relative container pb-32 pt-48">
+      <motion.div style={{ opacity, zIndex: 5 }} className="relative container pb-32 pt-48">
         <div className="max-w-3xl">
           {/* Badge */}
           <motion.div
@@ -57,16 +66,16 @@ export default function HeroSection() {
             <span className="text-gold text-xs font-semibold tracking-[0.3em] uppercase">Fabricant français depuis 1995</span>
           </motion.div>
 
-          {/* Title */}
+          {/* 💫 Title avec text glow renforcé */}
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
             className="text-5xl sm:text-6xl lg:text-8xl font-bold leading-[0.95] tracking-tight mb-8"
           >
-            <span className="text-white block">L'écran de cinéma</span>
-            <span className="text-gradient-gold block mt-2">le plus léger</span>
-            <span className="text-white block mt-2">au monde</span>
+            <span className="text-white block text-glow-gold">L'écran de cinéma</span>
+            <span className="text-gradient-gold block mt-2 text-glow-gold-intense">le plus léger</span>
+            <span className="text-white block mt-2 text-glow-gold">au monde</span>
           </motion.h1>
 
           {/* Quote */}

@@ -39,7 +39,7 @@ export default function TechnologySection() {
           </div>
           <h2 className="text-4xl lg:text-6xl font-bold text-white leading-tight max-w-3xl">
             3× plus léger.<br />
-            <span className="text-gradient-gold">Ce n'est pas un slogan.</span>
+            <span className="text-gradient-gold text-glow-gold-intense">Ce n'est pas un slogan.</span>
           </h2>
         </motion.div>
 

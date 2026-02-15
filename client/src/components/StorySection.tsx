@@ -75,7 +75,7 @@ export default function StorySection() {
           </div>
           <h2 className="text-4xl lg:text-6xl font-bold text-white leading-tight max-w-3xl">
             D'une plage de Hong Kong<br />
-            <span className="text-gradient-gold">au monde entier</span>
+            <span className="text-gradient-gold text-glow-gold-intense">au monde entier</span>
           </h2>
           <p className="text-white/45 text-lg mt-6 max-w-xl leading-relaxed font-serif italic">
             «&nbsp;Il faut avouer que je suis un peu feignant.&nbsp;» Mais cette paresse apparente cache 30 ans d'une persévérance acharnée.

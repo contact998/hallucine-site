@@ -184,6 +184,53 @@
     background-clip: text;
   }
 
+  /* === Gold / Cinéma utilities === */
+  .bg-gold {
+    background-color: #D4AF37;
+  }
+  .bg-gold-light {
+    background-color: #E8C84A;
+  }
+  .text-gold {
+    color: #D4AF37;
+  }
+  .text-gold-light {
+    color: #E8C84A;
+  }
+  .text-navy-deep {
+    color: #0A0E1A;
+  }
+  .border-gold {
+    border-color: #D4AF37;
+  }
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #FFD700, #D4AF37, #B8860B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .glow-gold {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), 0 0 40px rgba(212, 175, 55, 0.1);
+  }
+  .glow-gold:hover {
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.45), 0 0 60px rgba(212, 175, 55, 0.15);
+  }
+  /* 💫 Text glow renforcé pour titres principaux */
+  .text-glow-gold {
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.25), 0 0 60px rgba(212, 175, 55, 0.12), 0 0 90px rgba(212, 175, 55, 0.06);
+  }
+  .text-glow-gold-intense {
+    text-shadow: 0 0 40px rgba(255, 215, 0, 0.4), 0 0 80px rgba(212, 175, 55, 0.2), 0 0 120px rgba(212, 175, 55, 0.1);
+  }
+  /* 🌟 Golden shadow for cards */
+  .shadow-gold {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.08), 0 0 40px rgba(212, 175, 55, 0.03);
+    transition: box-shadow 0.5s ease;
+  }
+  .shadow-gold:hover {
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.2), 0 0 60px rgba(212, 175, 55, 0.1), 0 0 90px rgba(212, 175, 55, 0.05);
+  }
+
   /* Section divider line */
   .section-line {
     width: 48px;

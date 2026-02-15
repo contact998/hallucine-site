@@ -39,7 +39,7 @@ export default function ProductsSection() {
           </div>
           <h2 className="text-4xl lg:text-6xl font-bold text-white leading-tight max-w-3xl">
             Des écrans conçus par ceux<br />
-            <span className="text-gradient-gold">qui les utilisent</span>
+            <span className="text-gradient-gold text-glow-gold-intense">qui les utilisent</span>
           </h2>
           <p className="text-white/45 text-lg mt-6 max-w-xl leading-relaxed">
             Deux technologies, une même obsession : la légèreté et la fiabilité. 30 ans d'expérience terrain dans chaque couture.
@@ -54,7 +54,7 @@ export default function ProductsSection() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <Link href="/ecran-gonflable" className="group block relative overflow-hidden border border-white/[0.06] bg-white/[0.02] hover:border-gold/20 transition-all duration-700 h-full">
+            <Link href="/ecran-gonflable" className="group block relative overflow-hidden border border-white/[0.06] bg-white/[0.02] hover:border-gold/30 transition-all duration-700 h-full" style={{ boxShadow: '0 0 20px rgba(212, 175, 55, 0.08), 0 0 40px rgba(212, 175, 55, 0.03)' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 0 30px rgba(212, 175, 55, 0.2), 0 0 60px rgba(212, 175, 55, 0.1), 0 0 90px rgba(212, 175, 55, 0.05)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 0 20px rgba(212, 175, 55, 0.08), 0 0 40px rgba(212, 175, 55, 0.03)'}>
               <div className="relative h-72 overflow-hidden">
                 <img
                   src={ECRAN_ETANCHE}
@@ -99,7 +99,7 @@ export default function ProductsSection() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.35 }}
           >
-            <Link href="/ecran-gonflable" className="group block relative overflow-hidden border border-white/[0.06] bg-white/[0.02] hover:border-gold/20 transition-all duration-700 h-full">
+            <Link href="/ecran-gonflable" className="group block relative overflow-hidden border border-white/[0.06] bg-white/[0.02] hover:border-gold/30 transition-all duration-700 h-full" style={{ boxShadow: '0 0 20px rgba(212, 175, 55, 0.08), 0 0 40px rgba(212, 175, 55, 0.03)' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 0 30px rgba(212, 175, 55, 0.2), 0 0 60px rgba(212, 175, 55, 0.1), 0 0 90px rgba(212, 175, 55, 0.05)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 0 20px rgba(212, 175, 55, 0.08), 0 0 40px rgba(212, 175, 55, 0.03)'}>
               <div className="relative h-72 overflow-hidden">
                 <img
                   src={ECRAN_SOUFFLERIE}
@@ -146,7 +146,7 @@ export default function ProductsSection() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
-            <Link href="/tente-gonflable" className="group flex gap-6 p-6 border border-white/[0.06] bg-white/[0.02] hover:border-gold/20 transition-all duration-700 h-full">
+            <Link href="/tente-gonflable" className="group flex gap-6 p-6 border border-white/[0.06] bg-white/[0.02] hover:border-gold/30 transition-all duration-700 h-full" style={{ boxShadow: '0 0 15px rgba(212, 175, 55, 0.06), 0 0 30px rgba(212, 175, 55, 0.02)' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 0 25px rgba(212, 175, 55, 0.18), 0 0 50px rgba(212, 175, 55, 0.08), 0 0 80px rgba(212, 175, 55, 0.04)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 0 15px rgba(212, 175, 55, 0.06), 0 0 30px rgba(212, 175, 55, 0.02)'}>
               <div className="w-28 h-28 shrink-0 overflow-hidden">
                 <img src={TENTE_IMG} alt="Tente gonflable Hallucine" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               </div>
@@ -170,7 +170,7 @@ export default function ProductsSection() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            <Link href="/mobilier-gonflable" className="group flex gap-6 p-6 border border-white/[0.06] bg-white/[0.02] hover:border-gold/20 transition-all duration-700 h-full">
+            <Link href="/mobilier-gonflable" className="group flex gap-6 p-6 border border-white/[0.06] bg-white/[0.02] hover:border-gold/30 transition-all duration-700 h-full" style={{ boxShadow: '0 0 15px rgba(212, 175, 55, 0.06), 0 0 30px rgba(212, 175, 55, 0.02)' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 0 25px rgba(212, 175, 55, 0.18), 0 0 50px rgba(212, 175, 55, 0.08), 0 0 80px rgba(212, 175, 55, 0.04)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 0 15px rgba(212, 175, 55, 0.06), 0 0 30px rgba(212, 175, 55, 0.02)'}>
               <div className="w-28 h-28 shrink-0 overflow-hidden">
                 <img src={MOBILIER_IMG} alt="Mobilier gonflable Hallucine" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               </div>
