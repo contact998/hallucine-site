@@ -13,10 +13,12 @@ import RealisationsSection from "@/components/RealisationsSection";
 import FaqSection from "@/components/FaqSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import CinemaRideau from "@/components/CinemaRideau";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <CinemaRideau />
       <Navbar />
       <HeroSection />
       <ProductsSection />
