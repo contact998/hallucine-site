@@ -1,19 +1,44 @@
 /*
  * CinemaRideau — Effet de rideau de cinéma rouge qui s'ouvre au chargement
  * Deux pans de rideau rouge avec plis réalistes qui s'écartent vers les côtés,
- * puis le composant disparaît complètement du DOM.
+ * accompagnés d'un son d'ouverture de rideau de théâtre.
+ * Le composant disparaît complètement du DOM après l'animation.
  */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+
+const CURTAIN_SOUND_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/iwEWTRdKZwhOWzcW.mp3";
 
 export default function CinemaRideau() {
   const [phase, setPhase] = useState<"closed" | "opening" | "done">("closed");
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
+    // Précharger le son
+    const audio = new Audio(CURTAIN_SOUND_URL);
+    audio.volume = 0.5;
+    audio.preload = "auto";
+    audioRef.current = audio;
+
     // Petit délai pour que le rideau fermé soit visible avant de s'ouvrir
-    const t1 = setTimeout(() => setPhase("opening"), 400);
+    const t1 = setTimeout(() => {
+      setPhase("opening");
+      // Jouer le son au moment de l'ouverture
+      audio.play().catch(() => {
+        // Autoplay bloqué par le navigateur — on ignore silencieusement
+      });
+    }, 400);
+
     // Retirer le rideau du DOM après l'animation
     const t2 = setTimeout(() => setPhase("done"), 2200);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
   }, []);
 
   if (phase === "done") return null;
