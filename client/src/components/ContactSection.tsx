@@ -6,6 +6,7 @@
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin } from "lucide-react";
 import SmartForm from "./SmartForm";
+import { AvailabilityExtended } from "./AvailabilityIndicator";
 
 export default function ContactSection() {
   return (
@@ -59,6 +60,11 @@ export default function ContactSection() {
                     <div className="text-white/50 text-sm">Shenzhen, Chine — Fabrication : Dongguan, Chine</div>
                   </div>
                 </div>
+              </div>
+
+              {/* Indicateur de disponibilité IA */}
+              <div className="mt-8">
+                <AvailabilityExtended />
               </div>
             </motion.div>
           </div>

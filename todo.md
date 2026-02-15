@@ -218,3 +218,14 @@
 - [x] Interface admin : page historique avec tableau triable, détail, graphiques d'évolution
 - [x] Comparaison semaine N vs N-1 : variation des métriques clés (visites, conversion, soumissions)
 - [x] Tests vitest pour l'historique des audits (188 tests au total)
+
+## Indicateur de disponibilité IA (croisement 3 fuseaux horaires)
+- [x] Route backend proxy pour appeler le CRM /api/webhook/availability (ou implémentation locale)
+- [x] Logique de croisement des fuseaux horaires DC + JB + visiteur
+- [x] Appel LLM pour générer un message personnalisé selon la disponibilité
+- [x] Composant AvailabilityIndicator : widget fixe en bas à droite (vert/orange, pulse, avatars DC/JB)
+- [x] Badge de disponibilité dans le header (à côté du numéro de téléphone)
+- [x] Version étendue sur la page contact avec heures d'ouverture détaillées
+- [x] Rafraîchissement automatique toutes les 5 minutes
+- [x] Bouton d'action contextuel (contacter maintenant / laisser email)
+- [x] Tests vitest pour la logique de disponibilité (28 tests, 217 au total)

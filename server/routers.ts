@@ -44,6 +44,7 @@ import {
   getAuditHistoryById,
   getWeekOverWeekComparison,
 } from "./weeklyAudit";
+import { getAvailability } from "./availabilityService";
 
 /** Helper pour obtenir l'offset UTC d'un fuseau horaire en minutes */
 function getTimezoneOffset(tz: string, date: Date): number {
@@ -623,6 +624,48 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
     /** Comparaison semaine N vs N-1 (admin only) */
     comparison: adminProcedure.query(async () => {
       return getWeekOverWeekComparison();
+    }),
+  }),
+
+  // ===== Disponibilité des commerciaux =====
+  availability: router({
+    /** Récupère la disponibilité des commerciaux avec message IA */
+    check: publicProcedure
+      .input(z.object({
+        visitorTimezone: z.string().default("Europe/Paris"),
+      }))
+      .query(async ({ input }) => {
+        return getAvailability(input.visitorTimezone);
+      }),
+
+    /** Met à jour le fuseau horaire d'un commercial (admin) */
+    updateCommercialTimezone: adminProcedure
+      .input(z.object({
+        commercial: z.enum(["dc", "jb"]),
+        timezone: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        const { updateBusinessHoursSetting } = await import("./businessHours");
+        const key = `commercial_${input.commercial}_timezone`;
+        const success = await updateBusinessHoursSetting(key, JSON.stringify(input.timezone));
+        return { success, commercial: input.commercial.toUpperCase(), timezone: input.timezone };
+      }),
+
+    /** Récupère les fuseaux horaires configurés des commerciaux (admin) */
+    getCommercialTimezones: adminProcedure.query(async () => {
+      const { getDb } = await import("./db");
+      const { siteSettings } = await import("../drizzle/schema");
+      const { eq } = await import("drizzle-orm");
+      const db = await getDb();
+      if (!db) return { dc: "Europe/Paris", jb: "Europe/Paris" };
+
+      const dcRow = await db.select().from(siteSettings).where(eq(siteSettings.settingKey, "commercial_dc_timezone")).limit(1);
+      const jbRow = await db.select().from(siteSettings).where(eq(siteSettings.settingKey, "commercial_jb_timezone")).limit(1);
+
+      return {
+        dc: dcRow.length > 0 ? JSON.parse(dcRow[0].settingValue) : "Europe/Paris",
+        jb: jbRow.length > 0 ? JSON.parse(jbRow[0].settingValue) : "Europe/Paris",
+      };
     }),
   }),
 });
