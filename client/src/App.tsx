@@ -9,6 +9,8 @@ import Ecrans from "./pages/Ecrans";
 import EcranGeant from "./pages/EcranGeant";
 import EcranEtanche from "./pages/EcranEtanche";
 import EcranEconomique from "./pages/EcranEconomique";
+import Comparaison from "./pages/Comparaison";
+import EcransLED from "./pages/EcransLED";
 import Tentes from "./pages/Tentes";
 import TentesX from "./pages/TentesX";
 import TentesN from "./pages/TentesN";
@@ -37,6 +39,8 @@ function Router() {
       <Route path={"/ecran-gonflable-geant-soufflerie"} component={EcranGeant} />
       <Route path={"/ecran-gonflable-etanche-air"} component={EcranEtanche} />
       <Route path={"/ecran-gonflable-economique"} component={EcranEconomique} />
+      <Route path={"/comparaison-ecran-gonflable"} component={Comparaison} />
+      <Route path={"/ecrans-led"} component={EcransLED} />
       {/* Tentes */}
       <Route path={"/tente-gonflable"} component={Tentes} />
       <Route path={"/tente-gonflable-x"} component={TentesX} />
@@ -57,6 +61,7 @@ function Router() {
       <Route path={"/a-propos-hallucine"} component={APropos} />
       <Route path={"/histoire-hallucine"} component={Histoire} />
       <Route path={"/tarifs-ecran-gonflable"} component={DemandePrix} />
+      <Route path={"/demande-de-prix"} component={DemandePrix} />
       {/* Mode d'emploi & Vidéos */}
       <Route path={"/mode-emploi"} component={ModeEmploi} />
       <Route path={"/galerie-video"} component={GalerieVideo} />

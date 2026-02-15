@@ -29,6 +29,18 @@ const gammes = [
     href: "/ecran-gonflable-economique",
     highlight: "Solution accessible — Qualité professionnelle",
   },
+  {
+    title: "Comparaison Hallucine vs Concurrent",
+    desc: "Tableau comparatif détaillé : légèreté, installation, garantie, empreinte carbone. Découvrez pourquoi Hallucine surpasse la concurrence sur tous les critères.",
+    href: "/comparaison-ecran-gonflable",
+    highlight: "3× plus léger — 10 ans de garantie — 500 kg CO₂",
+  },
+  {
+    title: "Écrans LED (Nouveau)",
+    desc: "Notre nouvelle gamme d'écrans LED pour des projections visibles même en plein jour. Haute luminosité, installation rapide, qualité d'image exceptionnelle.",
+    href: "/ecrans-led",
+    highlight: "Projections de jour et de nuit",
+  },
 ];
 
 const faqItems = [

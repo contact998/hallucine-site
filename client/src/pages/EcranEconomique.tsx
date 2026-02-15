@@ -1,5 +1,7 @@
 /*
  * Page Écran Gonflable Économique
+ * Design: cinéma vintage — fond sombre, accents dorés
+ * Contenu complet du site d'origine hallucinecran.com
  * Deux gammes : avec souffleur et sans souffleur
  */
 import { useState } from "react";
@@ -7,23 +9,57 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FilmCountdown from "@/components/FilmCountdown";
 import { Link } from "wouter";
+import { ChevronDown } from "lucide-react";
 
 const avecSouffleur = [
-  { taille: "4,50 × 4,00 × 2,00 m", poids: "15 kg" },
-  { taille: "5,40 × 4,20 × 2,80 m", poids: "17 kg" },
-  { taille: "7,00 × 5,20 × 3,50 m", poids: "20 kg" },
+  { taille: "4.50 × 4.00 × 2.00 m", toile: "400 × 250 cm", poids: "15 kg", hauteur: "50 cm", personnes: "1" },
+  { taille: "5.40 × 4.20 × 2.80 m", toile: "480 × 270 cm", poids: "17 kg", hauteur: "70 cm", personnes: "1" },
+  { taille: "7.00 × 5.20 × 3.50 m", toile: "600 × 350 cm", poids: "20 kg", hauteur: "100 cm", personnes: "1" },
 ];
 
 const sansSouffleur = [
-  { taille: "2,5 × 1,8 m", poids: "7 kg" },
-  { taille: "4 × 3,5 m", poids: "17 kg" },
-  { taille: "5 × 4 m", poids: "35 kg" },
-  { taille: "6 × 4 m", poids: "55 kg" },
-  { taille: "7,5 × 5,5 m", poids: "85 kg" },
+  { taille: "2.5 × 1.8 m", toile: "218 × 122 cm", poids: "7 kg", hauteur: "50 cm", personnes: "1" },
+  { taille: "4 × 3.5 m", toile: "300 × 170 cm", poids: "17 kg", hauteur: "50 cm", personnes: "1" },
+  { taille: "5 × 4 m", toile: "400 × 222 cm", poids: "35 kg", hauteur: "70 cm", personnes: "1" },
+  { taille: "6 × 4 m", toile: "500 × 280 cm", poids: "55 kg", hauteur: "100 cm", personnes: "2" },
+  { taille: "7.5 × 5.5 m", toile: "600 × 340 cm", poids: "85 kg", hauteur: "100 cm", personnes: "2" },
+];
+
+const galleryImages = [
+  { src: "https://www.hallucinecran.com/Gallery/42.webp", alt: "Écran économique en situation" },
+  { src: "https://www.hallucinecran.com/Gallery/43.webp", alt: "Écran économique — projection extérieure" },
+  { src: "https://www.hallucinecran.com/Gallery/44.webp", alt: "Écran économique — installation rapide" },
+  { src: "https://www.hallucinecran.com/Gallery/45.webp", alt: "Écran économique — vue de face" },
+  { src: "https://www.hallucinecran.com/Gallery/46.webp", alt: "Écran économique — événement en plein air" },
+  { src: "https://www.hallucinecran.com/Gallery/47.webp", alt: "Écran économique — soirée cinéma" },
+];
+
+const faqItems = [
+  {
+    q: "Quelle est la différence entre les modèles avec et sans souffleur ?",
+    a: "Les modèles avec souffleur utilisent un ventilateur permanent qui maintient l'écran gonflé en continu — ils sont autoportants et très stables. Les modèles sans souffleur sont gonflés une fois et restent en forme grâce à leur structure étanche — ils ne nécessitent pas d'électricité permanente."
+  },
+  {
+    q: "Les écrans économiques sont-ils adaptés à un usage professionnel ?",
+    a: "Oui, nos écrans économiques offrent une qualité de projection professionnelle à un prix accessible. Ils sont utilisés par des associations, des collectivités, des campings et des organisateurs d'événements dans le monde entier."
+  },
+  {
+    q: "Quelle est la garantie sur les écrans économiques ?",
+    a: "Tous nos écrans économiques sont couverts par une garantie de 1 an. Cette garantie couvre les défauts de fabrication sur la structure gonflable et la toile de projection."
+  },
+  {
+    q: "Combien de temps faut-il pour installer un écran économique ?",
+    a: "L'installation est très rapide : quelques minutes suffisent pour les modèles avec souffleur (branchez et c'est prêt). Pour les modèles sans souffleur, comptez 5 à 10 minutes de gonflage avec une pompe."
+  },
+  {
+    q: "Peut-on utiliser les écrans économiques en intérieur ?",
+    a: "Absolument ! Nos écrans économiques sont conçus pour une utilisation en intérieur comme en extérieur. Ils sont parfaits pour les salles de classe, les gymnases, les halls d'exposition et les espaces événementiels."
+  },
 ];
 
 export default function EcranEconomique() {
   const [showCountdown, setShowCountdown] = useState(true);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -38,10 +74,24 @@ export default function EcranEconomique() {
             Écrans Gonflables<br />
             <span className="text-warm">Économiques</span>
           </h1>
-          <p className="text-white/70 text-lg max-w-3xl leading-relaxed">
-            Des écrans gonflables abordables pour vos événements extérieurs et intérieurs. 
-            Solution idéale pour des événements à petit budget, disponibles avec ou sans souffleur permanent.
+          <p className="text-white/70 text-lg max-w-3xl leading-relaxed mb-6">
+            Nos écrans gonflables économiques sont les <strong className="text-ivory">moins chers au monde</strong> alliant 
+            robustesse et qualité de projection. Disponibles <strong className="text-ivory">avec ou sans souffleur</strong>, 
+            ils offrent une solution accessible pour tous les budgets.
           </p>
+          <p className="text-white/70 text-lg max-w-3xl leading-relaxed mb-8">
+            Que ce soit pour un événement en plein air, une projection de film, ou un événement sportif, 
+            nos écrans gonflables économiques sont conçus pour être simples à utiliser, solides, et abordables. 
+            Profitez de vos événements en toute simplicité avec un écran de qualité professionnelle.
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <Link href="/demande-de-prix" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+              Demander un Devis
+            </Link>
+            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+              Nous Contacter
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -50,14 +100,7 @@ export default function EcranEconomique() {
         <div className="container">
           <h2 className="text-3xl font-bold text-ivory mb-8">Nos écrans économiques en images</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {[
-              { src: "https://www.hallucinecran.com/1/20160902_183937.jpg", alt: "Écran économique dans la cour d'un bâtiment" },
-              { src: "https://www.hallucinecran.com/Gallery/48.webp", alt: "Écran économique pour un petit public" },
-              { src: "https://www.hallucinecran.com/Giant%20Inf/2.PNG", alt: "Écran économique installé dans un parc" },
-              { src: "https://www.hallucinecran.com/ecran%20etanches.jpg", alt: "Écran économique sur la plage" },
-              { src: "https://www.hallucinecran.com/Le%20cin%C3%A9ma%20%C3%A0%20la%20maison%20037.jpg", alt: "Écran économique — comparaison taille humaine" },
-              { src: "https://www.hallucinecran.com/ECRAN%207-5.jpg", alt: "Écran économique vue arrière" },
-            ].map((img, i) => (
+            {galleryImages.map((img, i) => (
               <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden group">
                 <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-end">
@@ -73,37 +116,44 @@ export default function EcranEconomique() {
       <section className="py-20 bg-charcoal-light">
         <div className="container">
           <h2 className="text-3xl font-bold text-ivory mb-4">Écrans économiques avec souffleur</h2>
-          <p className="text-white/70 mb-8 max-w-3xl">
+          <p className="text-white/70 mb-6 max-w-3xl leading-relaxed">
             Nos écrans économiques avec souffleur offrent une solution pratique et stable pour vos projections. 
-            Autoportants de 4m à 6m, ils conviennent aussi bien en intérieur qu'en extérieur.
+            Autoportants de <strong className="text-ivory">4m à 6m</strong>, ils conviennent aussi bien en intérieur qu'en extérieur. 
+            Garantie 1 an.
           </p>
           <div className="grid md:grid-cols-3 gap-6 mb-10">
             <div className="p-5 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-2">Installation rapide</h3>
-              <p className="text-white/60 text-sm">Branchez le souffleur et l'écran se gonfle en quelques minutes. Pas d'assemblage complexe.</p>
+              <h3 className="text-warm font-semibold mb-2">Installation rapide et facile</h3>
+              <p className="text-white/60 text-sm leading-relaxed">Grâce au souffleur, l'écran est prêt en quelques minutes. Branchez et c'est parti.</p>
             </div>
             <div className="p-5 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-2">Stabilité</h3>
-              <p className="text-white/60 text-sm">Le souffleur permanent maintient l'écran parfaitement tendu pour une image de qualité.</p>
+              <h3 className="text-warm font-semibold mb-2">Stabilité assurée</h3>
+              <p className="text-white/60 text-sm leading-relaxed">Même dans des conditions extérieures variables, nos écrans restent solides grâce au souffleur permanent.</p>
             </div>
             <div className="p-5 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-2">Intérieur / Extérieur</h3>
-              <p className="text-white/60 text-sm">Utilisable dans tous les environnements. Idéal pour les événements ponctuels.</p>
+              <h3 className="text-warm font-semibold mb-2">Intérieur et extérieur</h3>
+              <p className="text-white/60 text-sm leading-relaxed">Idéal pour tous types d'événements, qu'ils soient en plein air ou en intérieur.</p>
             </div>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full text-sm max-w-xl">
+            <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-warm/30">
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Taille globale</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">Taille globale (m)</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">Toile 4:3 (cm)</th>
                   <th className="text-left py-4 px-3 text-warm font-semibold">Poids</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">Hauteur base</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">Nb. personnes</th>
                 </tr>
               </thead>
               <tbody>
                 {avecSouffleur.map((row, i) => (
                   <tr key={i} className="border-b border-border hover:bg-white/5 transition-colors">
                     <td className="py-4 px-3 text-ivory font-medium">{row.taille}</td>
+                    <td className="py-4 px-3 text-white/70">{row.toile}</td>
                     <td className="py-4 px-3 text-white/70">{row.poids}</td>
+                    <td className="py-4 px-3 text-white/70">{row.hauteur}</td>
+                    <td className="py-4 px-3 text-white/70">{row.personnes}</td>
                   </tr>
                 ))}
               </tbody>
@@ -113,40 +163,47 @@ export default function EcranEconomique() {
       </section>
 
       {/* Sans souffleur */}
-      <section className="py-20 bg-charcoal-light">
+      <section className="py-20 bg-background">
         <div className="container">
           <h2 className="text-3xl font-bold text-ivory mb-4">Écrans économiques sans souffleur</h2>
-          <p className="text-white/70 mb-8 max-w-3xl">
-            Pour encore plus d'économie et de mobilité, nos écrans sans souffleur sont autoportants de 2m à 6m. 
-            Pas besoin d'électricité — parfaits pour les lieux sans accès au courant.
+          <p className="text-white/70 mb-6 max-w-3xl leading-relaxed">
+            Pour encore plus d'économie et de mobilité, nos écrans sans souffleur sont disponibles de 
+            <strong className="text-ivory"> 2m à 6m</strong>. Pas besoin d'électricité — parfaits pour les lieux sans accès au courant. 
+            Garantie 1 an.
           </p>
           <div className="grid md:grid-cols-3 gap-6 mb-10">
             <div className="p-5 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-2">Économique</h3>
-              <p className="text-white/60 text-sm">Le prix le plus accessible de notre gamme. Idéal pour débuter dans le cinéma en plein air.</p>
+              <h3 className="text-warm font-semibold mb-2">Solution économique</h3>
+              <p className="text-white/60 text-sm leading-relaxed">Idéal pour ceux qui recherchent une option abordable sans équipement supplémentaire.</p>
             </div>
             <div className="p-5 bg-card border border-border rounded-lg">
               <h3 className="text-warm font-semibold mb-2">Mobilité</h3>
-              <p className="text-white/60 text-sm">Pas de souffleur à transporter. L'écran se gonfle une fois et reste en place.</p>
+              <p className="text-white/60 text-sm leading-relaxed">Ces écrans sont faciles à transporter et à stocker, parfaits pour des événements temporaires ou des locations.</p>
             </div>
             <div className="p-5 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-2">Flexibilité</h3>
-              <p className="text-white/60 text-sm">Utilisable partout, même sans accès à l'électricité. Gonflez à la main ou avec une pompe.</p>
+              <h3 className="text-warm font-semibold mb-2">Utilisation flexible</h3>
+              <p className="text-white/60 text-sm leading-relaxed">Avec des tailles de toiles allant de 2m à 6m, il y a un écran adapté à chaque événement.</p>
             </div>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full text-sm max-w-xl">
+            <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-warm/30">
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Taille</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">Taille globale (m)</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">Toile 4:3 (cm)</th>
                   <th className="text-left py-4 px-3 text-warm font-semibold">Poids</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">Hauteur base</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">Nb. personnes</th>
                 </tr>
               </thead>
               <tbody>
                 {sansSouffleur.map((row, i) => (
                   <tr key={i} className="border-b border-border hover:bg-white/5 transition-colors">
                     <td className="py-4 px-3 text-ivory font-medium">{row.taille}</td>
+                    <td className="py-4 px-3 text-white/70">{row.toile}</td>
                     <td className="py-4 px-3 text-white/70">{row.poids}</td>
+                    <td className="py-4 px-3 text-white/70">{row.hauteur}</td>
+                    <td className="py-4 px-3 text-white/70">{row.personnes}</td>
                   </tr>
                 ))}
               </tbody>
@@ -155,33 +212,52 @@ export default function EcranEconomique() {
         </div>
       </section>
 
-      {/* Résumé */}
-      <section className="py-20 bg-background">
+      {/* Pourquoi choisir */}
+      <section className="py-20 bg-charcoal-light">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-8">Idéal pour tous vos événements</h2>
-          <p className="text-white/70 text-lg mb-8 max-w-3xl">
-            Nos écrans économiques sont la solution parfaite pour les organisateurs qui souhaitent offrir 
-            une expérience de projection de qualité sans se ruiner. Que ce soit pour une soirée entre amis, 
-            un événement communautaire ou une projection scolaire, nos écrans s'adaptent à tous les budgets.
-          </p>
-          <h3 className="text-2xl font-bold text-ivory mb-6">Pourquoi choisir nos écrans économiques ?</h3>
+          <h2 className="text-3xl font-bold text-ivory mb-8">Pourquoi choisir nos écrans économiques ?</h2>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="p-5 bg-card border border-border rounded-lg">
-              <h4 className="text-warm font-semibold mb-2">Prix accessible</h4>
-              <p className="text-white/60 text-sm">L'entrée de gamme la plus compétitive du marché pour des écrans de projection gonflables.</p>
+              <h4 className="text-warm font-semibold mb-2">Économiques mais performants</h4>
+              <p className="text-white/60 text-sm leading-relaxed">Offrant une qualité de projection exceptionnelle à un prix compétitif. Les écrans les moins chers au monde alliant robustesse.</p>
             </div>
             <div className="p-5 bg-card border border-border rounded-lg">
-              <h4 className="text-warm font-semibold mb-2">Qualité Hallucine</h4>
-              <p className="text-white/60 text-sm">Même si le prix est réduit, la qualité de fabrication reste celle d'Hallucine : matériaux durables et finitions soignées.</p>
-            </div>
-            <div className="p-5 bg-card border border-border rounded-lg">
-              <h4 className="text-warm font-semibold mb-2">Facilité d'utilisation</h4>
-              <p className="text-white/60 text-sm">Aucune compétence technique requise. Déballez, gonflez, projetez.</p>
+              <h4 className="text-warm font-semibold mb-2">Garantie de 1 an</h4>
+              <p className="text-white/60 text-sm leading-relaxed">Tous nos écrans gonflables sont couverts par une garantie de 1 an pour votre tranquillité d'esprit.</p>
             </div>
             <div className="p-5 bg-card border border-border rounded-lg">
               <h4 className="text-warm font-semibold mb-2">Polyvalence</h4>
-              <p className="text-white/60 text-sm">Intérieur, extérieur, jardin, terrasse, parking — nos écrans s'adaptent à tous les environnements.</p>
+              <p className="text-white/60 text-sm leading-relaxed">Que vous organisiez un événement en intérieur ou en extérieur, nos écrans sont adaptés à tous les types de configurations.</p>
             </div>
+            <div className="p-5 bg-card border border-border rounded-lg">
+              <h4 className="text-warm font-semibold mb-2">Facilité d'installation</h4>
+              <p className="text-white/60 text-sm leading-relaxed">Aucun besoin d'expertise, une personne suffit pour installer les modèles les plus petits, et deux pour les modèles plus grands.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-20 bg-background">
+        <div className="container">
+          <h2 className="text-3xl font-bold text-ivory mb-8">Questions fréquentes</h2>
+          <div className="max-w-3xl space-y-3">
+            {faqItems.map((item, i) => (
+              <div key={i} className="border border-border rounded-lg overflow-hidden">
+                <button
+                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  className="w-full flex items-center justify-between p-5 text-left hover:bg-white/5 transition-colors"
+                >
+                  <span className="text-ivory font-medium pr-4">{item.q}</span>
+                  <ChevronDown className={`w-5 h-5 text-warm shrink-0 transition-transform ${openFaq === i ? "rotate-180" : ""}`} />
+                </button>
+                {openFaq === i && (
+                  <div className="px-5 pb-5">
+                    <p className="text-white/60 leading-relaxed">{item.a}</p>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -191,13 +267,17 @@ export default function EcranEconomique() {
         <div className="container text-center">
           <h2 className="text-3xl font-bold text-ivory mb-4">Vous organisez un événement ?</h2>
           <p className="text-white/60 mb-8 max-w-xl mx-auto">
-            Obtenez des solutions gonflables sur mesure pour votre événement.
+            Obtenez un devis personnalisé pour votre écran gonflable économique. 
+            Notre équipe vous accompagne dans le choix du modèle idéal.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Nous Contacter
             </Link>
-            <Link href="/tarifs-ecran-gonflable" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href="/demande-de-prix" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+              Demander un Devis
+            </Link>
+            <Link href="/tarifs-ecran-gonflable" className="px-8 py-3 border border-white/20 text-white/70 font-semibold rounded hover:bg-white/5 transition-colors">
               Voir Nos Tarifs
             </Link>
           </div>

@@ -27,8 +27,11 @@ const navItems: NavItem[] = [
     label: "Ecran gonflable",
     dropdown: [
       { label: "Écran gonflable géant (soufflerie)", href: "/ecran-gonflable-geant-soufflerie" },
+      { label: "Comparaison", href: "/comparaison-ecran-gonflable" },
       { label: "Écran gonflable étanche à l'air", href: "/ecran-gonflable-etanche-air" },
       { label: "Écran économique", href: "/ecran-gonflable-economique" },
+      { label: "Mode d'emploi", href: "/mode-emploi" },
+      { label: "Écrans LED", href: "/ecrans-led" },
     ],
   },
   {
