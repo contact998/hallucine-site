@@ -6,7 +6,7 @@
  */
 import { useState, useRef, useEffect, useCallback } from "react";
 import { trpc } from "@/lib/trpc";
-import { MessageCircle, X, Send, Loader2, Sparkles, User, ChevronDown, FileText } from "lucide-react";
+import { MessageCircle, X, Send, Loader2, Sparkles, User, ChevronDown, FileText, Monitor, Mail } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Streamdown } from "streamdown";
 import { useLocation } from "wouter";
@@ -25,6 +25,12 @@ interface LeadData {
   company: string;
   city: string;
   country: string;
+  eventType: string;
+  audience: string;
+  date: string;
+  budget: string;
+  need: "achat" | "location" | "info" | null;
+  message: string;
   ready: boolean;
 }
 
@@ -84,6 +90,12 @@ export default function HallucineChatbot() {
           company: extracted.company || prev?.company || "",
           city: extracted.city || prev?.city || "",
           country: extracted.country || prev?.country || "",
+          eventType: extracted.eventType || prev?.eventType || "",
+          audience: extracted.audience || prev?.audience || "",
+          date: extracted.date || prev?.date || "",
+          budget: extracted.budget || prev?.budget || "",
+          need: extracted.need || prev?.need || null,
+          message: extracted.message || prev?.message || "",
           ready: extracted.ready || prev?.ready || false,
         }));
         if (extracted.ready) {
@@ -154,6 +166,22 @@ export default function HallucineChatbot() {
     }
   };
 
+  /** Compter les infos collectées pour afficher le résumé */
+  const collectedInfoCount = (() => {
+    if (!leadData) return 0;
+    let count = 0;
+    if (leadData.product) count++;
+    if (leadData.size) count++;
+    if (leadData.name) count++;
+    if (leadData.email) count++;
+    if (leadData.phone) count++;
+    if (leadData.company) count++;
+    if (leadData.city || leadData.country) count++;
+    if (leadData.eventType) count++;
+    if (leadData.message) count++;
+    return count;
+  })();
+
   /** Naviguer vers le formulaire avec les données pré-remplies */
   const goToDevis = useCallback(() => {
     const params = new URLSearchParams();
@@ -165,6 +193,12 @@ export default function HallucineChatbot() {
     if (leadData?.company) params.set("company", leadData.company);
     if (leadData?.city) params.set("city", leadData.city);
     if (leadData?.country) params.set("country", leadData.country);
+    if (leadData?.message) params.set("message", leadData.message);
+    if (leadData?.eventType) params.set("eventType", leadData.eventType);
+    if (leadData?.audience) params.set("audience", leadData.audience);
+    if (leadData?.date) params.set("date", leadData.date);
+    if (leadData?.budget) params.set("budget", leadData.budget);
+    if (leadData?.need) params.set("need", leadData.need);
     
     const queryString = params.toString();
     navigate(`/contactez-nous${queryString ? `?${queryString}` : ""}`);
@@ -278,17 +312,61 @@ export default function HallucineChatbot() {
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="mt-3"
+                  className="mt-3 space-y-2"
                 >
+                  {/* Résumé des infos collectées */}
+                  {collectedInfoCount > 0 && (
+                    <div className="bg-warm/5 border border-warm/15 rounded-xl px-3 py-2.5">
+                      <p className="text-warm/70 text-[10px] font-medium uppercase tracking-wider mb-1.5">Infos collectées de notre conversation</p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {leadData?.product && (
+                          <span className="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full bg-warm/10 text-warm/80">
+                            <Monitor className="w-3 h-3" />
+                            {leadData.product === "ecran" ? "Écran" : leadData.product === "tente" ? "Tente" : leadData.product === "mobilier" ? "Mobilier" : "Arche"}
+                            {leadData.size ? ` ${leadData.size}` : ""}
+                          </span>
+                        )}
+                        {leadData?.name && (
+                          <span className="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full bg-white/8 text-white/60">
+                            <User className="w-3 h-3" />{leadData.name}
+                          </span>
+                        )}
+                        {leadData?.company && (
+                          <span className="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full bg-white/8 text-white/60">
+                            {leadData.company}
+                          </span>
+                        )}
+                        {leadData?.email && (
+                          <span className="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full bg-white/8 text-white/60">
+                            <Mail className="w-3 h-3" />{leadData.email}
+                          </span>
+                        )}
+                        {(leadData?.city || leadData?.country) && (
+                          <span className="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full bg-white/8 text-white/60">
+                            {[leadData.city, leadData.country].filter(Boolean).join(", ")}
+                          </span>
+                        )}
+                        {leadData?.eventType && (
+                          <span className="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full bg-blue-400/10 text-blue-400/70">
+                            {leadData.eventType}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  )}
                   <button
                     onClick={goToDevis}
                     className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-warm to-[oklch(0.72_0.14_55)] text-charcoal font-semibold text-sm rounded-xl hover:shadow-lg hover:shadow-warm/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
                   >
                     <FileText className="w-4 h-4" />
-                    Demander un devis gratuit →
+                    {collectedInfoCount > 0
+                      ? `Formulaire pré-rempli (${collectedInfoCount} infos) →`
+                      : "Demander un devis gratuit →"}
                   </button>
-                  <p className="text-center text-white/30 text-[10px] mt-1.5">
-                    Formulaire pré-rempli avec les infos de notre conversation
+                  <p className="text-center text-white/30 text-[10px]">
+                    {collectedInfoCount > 0
+                      ? "Cliquez pour ouvrir le formulaire avec ces informations déjà remplies"
+                      : "Formulaire pré-rempli avec les infos de notre conversation"}
                   </p>
                 </motion.div>
               )}

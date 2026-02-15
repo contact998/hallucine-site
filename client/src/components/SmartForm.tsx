@@ -125,6 +125,13 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   const qCompany = urlParams?.get("company") || "";
   const qCity = urlParams?.get("city") || "";
   const qCountry = urlParams?.get("country") || "";
+  const qMessage = urlParams?.get("message") || "";
+  const qEventType = urlParams?.get("eventType") || "";
+  const qAudience = urlParams?.get("audience") || "";
+  const qDate = urlParams?.get("date") || "";
+  const qBudget = urlParams?.get("budget") || "";
+  const qNeed = urlParams?.get("need") || "";
+  const isFromChatbot = !!(qEmail || qProduct || qMessage || qName);
 
   // Calculer l'etape initiale en fonction des donnees pre-remplies
   const getInitialStep = () => {
@@ -152,7 +159,22 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   const [country, setCountry] = useState(qCountry);
   const [city, setCity] = useState(qCity);
   const [postalCode, setPostalCode] = useState("");
-  const [message, setMessage] = useState("");
+  // Construire le message initial depuis les infos chatbot
+  const buildChatbotMessage = () => {
+    if (!isFromChatbot) return "";
+    const parts: string[] = [];
+    if (qMessage) parts.push(qMessage);
+    if (qEventType && !qMessage?.toLowerCase().includes(qEventType.toLowerCase())) parts.push(`Type d'événement : ${qEventType}`);
+    if (qAudience && !qMessage?.toLowerCase().includes(qAudience.toLowerCase())) parts.push(`Public : ${qAudience} spectateurs`);
+    if (qDate && !qMessage?.toLowerCase().includes(qDate.toLowerCase())) parts.push(`Date souhaitée : ${qDate}`);
+    if (qBudget && !qMessage?.toLowerCase().includes(qBudget.toLowerCase())) parts.push(`Budget : ${qBudget}`);
+    if (qNeed && !qMessage?.toLowerCase().includes(qNeed.toLowerCase())) {
+      const needLabel = qNeed === "achat" ? "Achat" : qNeed === "location" ? "Location" : "Information";
+      parts.push(`Besoin : ${needLabel}`);
+    }
+    return parts.join("\n");
+  };
+  const [message, setMessage] = useState(buildChatbotMessage);
   const [callbackDay, setCallbackDay] = useState<string>("");
   const [callbackTime, setCallbackTime] = useState<string>("");
   const [submitted, setSubmitted] = useState(false);
@@ -545,6 +567,17 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             >
               Non merci
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Bandeau chatbot pré-remplissage */}
+      {isFromChatbot && currentStep <= 2 && (
+        <div className="mb-4 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-sm flex items-center gap-3">
+          <Sparkles className="w-5 h-5 text-emerald-400 shrink-0" />
+          <div>
+            <p className="text-emerald-300 text-sm font-medium">Formulaire pré-rempli par le chatbot IA</p>
+            <p className="text-white/50 text-xs mt-0.5">Les informations de votre conversation ont été reportées. Vérifiez et complétez si nécessaire.</p>
           </div>
         </div>
       )}

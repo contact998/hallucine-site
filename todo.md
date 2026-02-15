@@ -229,3 +229,12 @@
 - [x] Rafraîchissement automatique toutes les 5 minutes
 - [x] Bouton d'action contextuel (contacter maintenant / laisser email)
 - [x] Tests vitest pour la logique de disponibilité (28 tests, 217 au total)
+
+## Chatbot pré-remplissage du SmartForm
+- [x] Analyser le chatbot existant et le SmartForm pour les points d'intégration
+- [x] Service d'extraction d'infos depuis la conversation (nom, email, produit, besoin, entreprise, tel)
+- [x] Détection d'intention contact/devis dans la conversation chatbot
+- [x] Bouton "Pré-remplir le formulaire" dans le chatbot avec résumé visuel des infos collectées
+- [x] SmartForm accepte les données pré-remplies depuis le chatbot (URL params enrichis : message, eventType, audience, date, budget, need)
+- [x] Transition fluide chatbot → formulaire pré-rempli avec bandeau "Pré-rempli par le chatbot IA"
+- [x] Tests vitest pour le pré-remplissage chatbot (18 tests, 236 au total)
