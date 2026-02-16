@@ -79,6 +79,24 @@ const photos = [
     caption: "Écran étanche — Vue technique",
     span: "col-span-2 row-span-1",
   },
+  {
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qaWexEDLrhQudeax.png",
+    alt: "Arche gonflable arrivée de course",
+    caption: "Arche — Arrivée de course",
+    span: "col-span-2 row-span-1",
+  },
+  {
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CZcgjOTtIqUOapyp.jpg",
+    alt: "Arche gonflable entrée projection",
+    caption: "Arche — Entrée projection",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/msjlSvvcXPPgZNDW.png",
+    alt: "Arche Cinéma sous les étoiles",
+    caption: "Arche — Cinéma sous les étoiles",
+    span: "col-span-1 row-span-1",
+  },
 ];
 
 export default function RealisationsSection() {

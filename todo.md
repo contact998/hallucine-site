@@ -292,3 +292,8 @@
 - [x] Supprimer le compte à rebours 3-2-1 du rideau (réservé uniquement à la sélection d'écran gonflable)
 - [x] Au clic sur le rideau → ouverture directe avec son du rideau (pas de countdown)
 - [x] Remplacer le logo fond blanc par le logo avec fond transparent sur le rideau
+
+## Photos d'arches manquantes
+- [x] Ajouter des photos d'arches gonflables dans la galerie (6 photos réelles)
+- [x] Ajouter des photos d'arches gonflables dans le sous-menu arches (6 photos réelles)
+- [x] Ajouter des photos d'arches dans la section Réalisations de la page d'accueil (3 photos)

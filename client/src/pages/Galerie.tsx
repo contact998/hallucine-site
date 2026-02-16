@@ -36,12 +36,12 @@ const photos = [
   { src: "https://www.hallucinecran.com/Tentes/Tents%20spider/Sider%20tentes%20bleues.jpg", alt: "Tentes araignées bleues", cat: "Tentes" },
   { src: "https://www.hallucinecran.com/photoset/Tents%20spider/Sider%20tentes%20noir%20jaunes.jpg", alt: "Tentes araignées noir et jaune", cat: "Tentes" },
   // Arches
-  { src: "https://www.hallucinecran.com/Tentes/Arches/arche%20bleue.jpg", alt: "Arche gonflable bleue", cat: "Arches" },
-  { src: "https://www.hallucinecran.com/Tentes/Arches/arche%20orange.jpg", alt: "Arche gonflable orange", cat: "Arches" },
-  { src: "https://www.hallucinecran.com/Tentes/Arches/arche%20rouge.jpg", alt: "Arche gonflable rouge", cat: "Arches" },
-  { src: "https://www.hallucinecran.com/Tentes/Arches/arche%20verte.jpg", alt: "Arche gonflable verte", cat: "Arches" },
-  { src: "https://www.hallucinecran.com/Tentes/Arches/arche%20blanche.jpg", alt: "Arche gonflable blanche", cat: "Arches" },
-  { src: "https://www.hallucinecran.com/Tentes/Arches/arche%20noire.jpg", alt: "Arche gonflable noire", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/msjlSvvcXPPgZNDW.png", alt: "Arche Cinéma sous les étoiles", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qaWexEDLrhQudeax.png", alt: "Arche arrivée de course", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CZcgjOTtIqUOapyp.jpg", alt: "Arche entrée projection", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/dRuvKidcdjNXhYOn.jpg", alt: "Arche Bienvenue - Rentrée 2025", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/zbkdmCgoFZLzrsJh.jpg", alt: "Arche personnalisée blanche", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PccZsJjRQKmTphXx.jpg", alt: "Arche gonflable bleue", cat: "Arches" },
   // Mobilier
   { src: "https://www.hallucinecran.com/Tentes/meubles/canape%20fauteuil%20noir%20rouge.jpg", alt: "Canapé et fauteuil gonflable noir et rouge", cat: "Mobilier" },
   { src: "https://www.hallucinecran.com/Tentes/meubles/fauteuil.jpg", alt: "Fauteuil gonflable", cat: "Mobilier" },
