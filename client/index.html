@@ -50,7 +50,35 @@
       defer
       src="%VITE_ANALYTICS_ENDPOINT%/umami"
       data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
-    <script src="https://hallucine.manus.space/api/nav-widget" defer></script>
+    <script>
+      // Widget navigation Hallucine : visible uniquement pour les admins connectés
+      (function() {
+        function loadNavWidget() {
+          try {
+            var cookies = document.cookie.split(';');
+            var hasSession = cookies.some(function(c) { return c.trim().indexOf('session=') === 0; });
+            if (!hasSession) return;
+            // Vérifier le rôle admin via l'API
+            fetch('/api/trpc/auth.me', { credentials: 'include' })
+              .then(function(r) { return r.json(); })
+              .then(function(data) {
+                var user = data && data.result && data.result.data;
+                if (user && user.role === 'admin') {
+                  var s = document.createElement('script');
+                  s.src = 'https://hallucine.manus.space/api/nav-widget';
+                  document.body.appendChild(s);
+                }
+              })
+              .catch(function() {});
+          } catch(e) {}
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', loadNavWidget);
+        } else {
+          loadNavWidget();
+        }
+      })();
+    </script>
   </body>
 
 </html>

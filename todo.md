@@ -328,3 +328,10 @@
 
 ## Rideau de cinéma — suppression éléments décoratifs
 - [x] Supprimer les deux carrés jaunes en haut du rideau (embrasses/attaches dorées)
+
+## Bug persistant S3 — erreur stockage en production
+- [ ] Diagnostiquer la vraie cause de l'erreur S3 en production (pas juste retry)
+- [ ] Corriger le bug racine
+
+## Widget navigation Hallucine — masquer pour visiteurs
+- [x] Masquer le bandeau nav (Accueil/Site Web/CRM/Devis/Carte) pour les visiteurs non connectés — visible uniquement pour les admins
