@@ -278,3 +278,8 @@
 ## Fichiers audio intégrés au bundle (pas de CDN)
 - [x] Ajouter des preload links dans index.html pour que le navigateur télécharge les MP3 en priorité dès le chargement de la page
 - [x] Combiner avec le préchargement canplaythrough dans les composants pour synchronisation parfaite
+
+## Bug: son du rideau disparu
+- [x] Le son du rideau de cinéma ne joue plus après les modifications de préchargement
+- [x] Pictogramme micro barré : le navigateur bloque l'autoplay audio
+- [x] Solution : fusionner CinemaRideau + FilmCountdown en un seul composant avec clic "Entrer" pour déclencher son + animation
