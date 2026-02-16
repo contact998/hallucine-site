@@ -7,7 +7,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
 const CURTAIN_SOUND_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/iwEWTRdKZwhOWzcW.mp3";
-const LOGO_TRANSPARENT_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/raxqsLFLvOYHKhLo.png";
+const LOGO_TRANSPARENT_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tWSEvNLkFkmjxAXj.png";
 
 // Timings (en ms)
 const OPEN_DURATION = 3000;       // Durée de l'animation d'ouverture (lente)
@@ -159,7 +159,7 @@ export default function CinemaRideau() {
           <img
             src={LOGO_TRANSPARENT_URL}
             alt="Hallucine"
-            className="w-96 md:w-[36rem] h-auto mx-auto drop-shadow-[0_4px_30px_rgba(232,184,74,0.4)]"
+            className="w-[28rem] md:w-[42rem] h-auto mx-auto drop-shadow-[0_4px_30px_rgba(232,184,74,0.4)]"
           />
           <p className="text-white/60 text-sm tracking-[0.3em] mt-4 uppercase">Écrans de cinéma gonflables</p>
           <p className="text-amber-400/80 text-xs tracking-[0.2em] mt-6 uppercase animate-pulse">

@@ -6,7 +6,7 @@ import { Mail, Phone, MessageCircle } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
 
-const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/raxqsLFLvOYHKhLo.png";
+const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tWSEvNLkFkmjxAXj.png";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -25,7 +25,7 @@ export default function Footer() {
           {/* Brand + description */}
           <div>
             <Link href="/">
-              <img src={LOGO_URL} alt="Hallucine" className="h-24 w-auto mb-4" />
+              <img src={LOGO_URL} alt="Hallucine" className="h-20 md:h-24 w-auto mb-4" />
             </Link>
             <p className="text-white/40 text-sm leading-relaxed">
               Fabricant d'écrans de cinéma gonflables depuis 1995. Les écrans les plus légers au monde, 
