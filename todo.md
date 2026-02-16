@@ -257,3 +257,6 @@
 
 ## Simplification tooltip WhatsApp
 - [x] Supprimer le gros tooltip blanc avec heures au-dessus du bouton WhatsApp — trop encombrant
+
+## Widget navigation flottante Hallucine
+- [x] Ajouter le script externe nav-widget dans client/index.html avant </body>
