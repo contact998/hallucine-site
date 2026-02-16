@@ -1,7 +1,7 @@
 /*
  * CinemaRideau — Effet de rideau de cinéma rouge qui s'ouvre au chargement
  * Ouverture lente et majestueuse (~3s) avec son synchronisé.
- * Le son joue UNIQUEMENT pendant l'ouverture, puis fade-out à la fin.
+ * Le son est PRÉCHARGÉ avant de lancer l'animation pour éviter tout décalage.
  */
 import { useState, useEffect, useRef } from "react";
 
@@ -12,24 +12,53 @@ const PAUSE_BEFORE_OPEN = 600;   // Temps rideau fermé visible avec logo
 const OPEN_DURATION = 3000;       // Durée de l'animation d'ouverture (lente)
 const FADE_OUT_START = 2600;      // Début du fade-out du son (avant la fin de l'ouverture)
 const REMOVE_DELAY = 3800;        // Retrait du DOM (après ouverture + fondu noir)
+const MAX_PRELOAD_WAIT = 2000;    // Timeout max pour le préchargement (2s)
 
 export default function CinemaRideau() {
-  const [phase, setPhase] = useState<"closed" | "opening" | "done">("closed");
+  const [phase, setPhase] = useState<"loading" | "closed" | "opening" | "done">("loading");
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const fadeRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  // Étape 1 : précharger le son, puis passer en phase "closed"
   useEffect(() => {
-    // Précharger le son
-    const audio = new Audio(CURTAIN_SOUND_URL);
-    audio.volume = 0.6;
+    const audio = new Audio();
     audio.preload = "auto";
+    audio.volume = 0.6;
     audioRef.current = audio;
+
+    let resolved = false;
+    const markReady = () => {
+      if (resolved) return;
+      resolved = true;
+      setPhase("closed");
+    };
+
+    audio.addEventListener("canplaythrough", markReady, { once: true });
+
+    // Timeout de sécurité : ne pas bloquer indéfiniment si le son met trop longtemps
+    const safetyTimer = setTimeout(markReady, MAX_PRELOAD_WAIT);
+
+    // Lancer le chargement
+    audio.src = CURTAIN_SOUND_URL;
+    audio.load();
+
+    return () => {
+      clearTimeout(safetyTimer);
+      audio.removeEventListener("canplaythrough", markReady);
+    };
+  }, []);
+
+  // Étape 2 : une fois en phase "closed", lancer la séquence d'ouverture
+  useEffect(() => {
+    if (phase !== "closed") return;
 
     // Phase 1 : ouvrir le rideau + jouer le son
     const t1 = setTimeout(() => {
       setPhase("opening");
-      audio.currentTime = 0;
-      audio.play().catch(() => {});
+      if (audioRef.current) {
+        audioRef.current.currentTime = 0;
+        audioRef.current.play().catch(() => {});
+      }
     }, PAUSE_BEFORE_OPEN);
 
     // Phase 2 : fade-out du son vers la fin de l'ouverture
@@ -62,10 +91,11 @@ export default function CinemaRideau() {
         audioRef.current = null;
       }
     };
-  }, []);
+  }, [phase]);
 
   if (phase === "done") return null;
 
+  const isOpening = phase === "opening";
   const openTransition = `transform ${OPEN_DURATION}ms cubic-bezier(0.25, 0.1, 0.25, 1)`;
 
   return (
@@ -77,9 +107,9 @@ export default function CinemaRideau() {
       <div
         className="absolute inset-0 bg-black"
         style={{
-          opacity: phase === "opening" ? 0 : 1,
+          opacity: isOpening ? 0 : 1,
           transition: "opacity 1s ease",
-          transitionDelay: phase === "opening" ? `${OPEN_DURATION * 0.7}ms` : "0ms",
+          transitionDelay: isOpening ? `${OPEN_DURATION * 0.7}ms` : "0ms",
         }}
       />
 
@@ -87,7 +117,7 @@ export default function CinemaRideau() {
       <div
         className="absolute top-0 left-0 h-full w-1/2 overflow-hidden"
         style={{
-          transform: phase === "opening" ? "translateX(-105%)" : "translateX(0)",
+          transform: isOpening ? "translateX(-105%)" : "translateX(0)",
           transition: openTransition,
         }}
       >
@@ -116,7 +146,7 @@ export default function CinemaRideau() {
       <div
         className="absolute top-0 right-0 h-full w-1/2 overflow-hidden"
         style={{
-          transform: phase === "opening" ? "translateX(105%)" : "translateX(0)",
+          transform: isOpening ? "translateX(105%)" : "translateX(0)",
           transition: openTransition,
         }}
       >
@@ -146,9 +176,9 @@ export default function CinemaRideau() {
         className="absolute top-0 left-0 right-0 h-16 z-10"
         style={{
           background: "linear-gradient(180deg, #6b0f0f 0%, #8b1a1a 40%, #5a0a0a 100%)",
-          opacity: phase === "opening" ? 0 : 1,
+          opacity: isOpening ? 0 : 1,
           transition: "opacity 0.8s ease",
-          transitionDelay: phase === "opening" ? `${OPEN_DURATION * 0.6}ms` : "0ms",
+          transitionDelay: isOpening ? `${OPEN_DURATION * 0.6}ms` : "0ms",
         }}
       >
         <div className="absolute bottom-0 left-0 right-0 h-6">
@@ -165,7 +195,7 @@ export default function CinemaRideau() {
       <div
         className="absolute inset-0 flex items-center justify-center z-20"
         style={{
-          opacity: phase === "closed" ? 1 : 0,
+          opacity: phase === "closed" || phase === "loading" ? 1 : 0,
           transition: "opacity 0.5s ease",
         }}
       >

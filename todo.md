@@ -270,3 +270,7 @@
 
 ## Remplacement musique compte à rebours 4-3-2-1
 - [x] Remplacer la musique du compte à rebours par un son authentique de projecteur 35mm qui tourne (Mixkit "Vintage film projector working")
+
+## Synchronisation audio/animation
+- [x] Précharger le son du compte à rebours (FilmCountdown) pour qu'il démarre en même temps que l'animation
+- [x] Précharger le son du rideau de cinéma (CinemaRideau) pour qu'il démarre en même temps que l'animation
