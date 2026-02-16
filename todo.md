@@ -374,3 +374,14 @@
 - [x] Implémenter le calculateur Tente V (4x4 à 6x6, toit, pieds, impressions)
 - [x] Implémenter le calculateur Tente N (3x3 à 5x5, murs A/B/C/D+C, impressions, accessoires)
 - [x] Implémenter le calculateur Tente Araignée (4x4 à 10x10, murs, auvents, impressions)
+
+## Page Tente X — illisible, refonte
+- [ ] Comparer avec le HTML de référence et refaire la page /tente-gonflable-x pour qu'elle soit lisible
+
+## Calculateurs — refonte style Excel
+- [x] Refaire le calculateur X en style Excel simple : fond blanc, tableaux clairs, 2 onglets
+- [x] Réécrire CalculateurTenteAraignee en style clair (fond blanc, tableaux bordures)
+- [ ] Vérifier CalculateurTenteV et CalculateurTenteN en style clair
+- [ ] Ajouter export PDF au calculateur X
+- [ ] Ajouter verrouillage/déverrouillage des prix avec code d'accès (6312)
+- [ ] Rendre les prix éditables dans l'onglet Prix

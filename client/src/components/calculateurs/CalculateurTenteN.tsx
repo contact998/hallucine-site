@@ -1,7 +1,6 @@
 /**
  * Calculateur de prix HT des Tentes en N
- * Converti depuis le fichier HTML original
- * Logique : 4 côtés configurables (A, B, C, D+C), couleurs, impressions, accessoires
+ * Style Excel : fond blanc, tableaux avec bordures
  */
 import { useState, useCallback } from "react";
 
@@ -14,30 +13,24 @@ interface BreakdownItem { name: string; price: number; }
 const SIDE_LABELS: Record<string, string> = { side1: "Côté 1", side2: "Côté 2", side3: "Côté 3", side4: "Côté 4" };
 const SIDES = ["side1", "side2", "side3", "side4"] as const;
 
-// Prix USD par taille (index 0=3x3, 1=4x4, 2=5x5)
 const PRICES: Record<string, Record<Size, number>> = {
-  // Structure de base
   "canopy": { "3x3": 255, "4x4": 345, "5x5": 465 },
   "legframe": { "3x3": 1173, "4x4": 1590, "5x5": 2148 },
-  // Murs tissu
   "sidewallA-curve": { "3x3": 120, "4x4": 159, "5x5": 213 },
   "sidewallA-straight": { "3x3": 120, "4x4": 159, "5x5": 213 },
   "sidewallB-straight": { "3x3": 120, "4x4": 159, "5x5": 213 },
   "sidewallC-curve": { "3x3": 63, "4x4": 81, "5x5": 108 },
   "sidewallDC-curve": { "3x3": 183, "4x4": 240, "5x5": 321 },
   "sidewallDC-straight": { "3x3": 183, "4x4": 240, "5x5": 321 },
-  // Impression structure
   "print-canopy": { "3x3": 195, "4x4": 261, "5x5": 363 },
   "print-legframe": { "3x3": 333, "4x4": 444, "5x5": 618 },
   "print-zipcover": { "3x3": 72, "4x4": 96, "5x5": 132 },
-  // Impression murs
   "print-sidewallA": { "3x3": 111, "4x4": 183, "5x5": 222 },
   "print-sidewallB": { "3x3": 150, "4x4": 252, "5x5": 327 },
   "print-sidewallC": { "3x3": 78, "4x4": 87, "5x5": 120 },
   "print-sidewallD": { "3x3": 132, "4x4": 180, "5x5": 213 },
   "print-Cwallzippercover": { "3x3": 18, "4x4": 21, "5x5": 24 },
   "print-connectpart": { "3x3": 51, "4x4": 60, "5x5": 69 },
-  // Accessoires
   "acc-bag": { "3x3": 180, "4x4": 180, "5x5": 180 },
   "acc-sandbag-unit": { "3x3": 30, "4x4": 30, "5x5": 30 },
   "acc-waterbag-unit": { "3x3": 60, "4x4": 60, "5x5": 60 },
@@ -46,20 +39,40 @@ const PRICES: Record<string, Record<Size, number>> = {
   "acc-pump-hand": { "3x3": 45, "4x4": 45, "5x5": 45 },
   "acc-valves": { "3x3": 0, "4x4": 0, "5x5": 0 },
   "connectpart": { "3x3": 99, "4x4": 132, "5x5": 177 },
-  // Transport
   "transport": { "3x3": 300, "4x4": 400, "5x5": 500 },
 };
 
 const CURRENCY_SYMBOLS: Record<Currency, string> = { USD: "$", EUR: "€", GBP: "£", CHF: "CHF" };
+const cell = "border border-gray-300 px-3 py-2 text-sm";
+const hdr = "border border-gray-300 px-3 py-2 text-sm font-semibold bg-gray-100 text-gray-800";
+const sel = "border border-gray-300 rounded px-2 py-1 text-sm bg-white text-gray-900 w-full";
+const chk = "flex items-center gap-2 text-sm text-gray-700";
+const section = "text-base font-bold text-gray-800 mb-2 bg-blue-50 border border-blue-200 px-3 py-2";
+
+// Labels lisibles pour le tableau des prix
+const priceLabels: Record<string, string> = {
+  canopy: "Toile de toit", legframe: "Structure pieds",
+  "sidewallA-curve": "Mur A courbe", "sidewallA-straight": "Mur A droit",
+  "sidewallB-straight": "Mur B droit", "sidewallC-curve": "Mur C courbe",
+  "sidewallDC-curve": "Mur D+C courbe", "sidewallDC-straight": "Mur D+C droit",
+  "print-canopy": "Impression toit", "print-legframe": "Impression pieds",
+  "print-zipcover": "Impression couvertures ZIP",
+  "print-sidewallA": "Impression mur A", "print-sidewallB": "Impression mur B",
+  "print-sidewallC": "Impression mur C", "print-sidewallD": "Impression mur D",
+  "print-Cwallzippercover": "Impression zip mur C", "print-connectpart": "Impression connecteur",
+  "acc-bag": "Sac de transport", "acc-sandbag-unit": "Sac de sable (unité)",
+  "acc-waterbag-unit": "Sac d'eau (unité)", "acc-led": "Lumière LED",
+  "acc-pump-elec": "Pompe électrique", "acc-pump-hand": "Pompe manuelle",
+  "acc-valves": "Valve", connectpart: "Connecteur tentes", transport: "Transport",
+};
 
 export default function CalculateurTenteN() {
+  const [activeSubTab, setActiveSubTab] = useState<"calc" | "prices">("calc");
   const [size, setSize] = useState<Size>("4x4");
   const [currency, setCurrency] = useState<Currency>("EUR");
   const [rates, setRates] = useState<Record<Currency, number>>({ USD: 1, EUR: 0.9298, GBP: 0.7823, CHF: 0.8767 });
   const [ratesLoading, setRatesLoading] = useState(false);
-  const [ratesDate, setRatesDate] = useState<string | null>(null);
 
-  // Walls
   const [walls, setWalls] = useState<Record<string, WallType>>({ side1: "none", side2: "none", side3: "none", side4: "none" });
   const [wallPrint, setWallPrint] = useState<Record<string, { single: boolean; dPart: boolean; cPart: boolean }>>({
     side1: { single: false, dPart: false, cPart: false },
@@ -68,12 +81,10 @@ export default function CalculateurTenteN() {
     side4: { single: false, dPart: false, cPart: false },
   });
 
-  // General prints
   const [printCanopy, setPrintCanopy] = useState(false);
   const [printLegframe, setPrintLegframe] = useState(false);
   const [printZipcover, setPrintZipcover] = useState(false);
 
-  // Accessories
   const [bag, setBag] = useState(false);
   const [pumpElec, setPumpElec] = useState(false);
   const [pumpHand, setPumpHand] = useState(false);
@@ -93,225 +104,209 @@ export default function CalculateurTenteN() {
       const data = await res.json();
       if (data?.rates) {
         setRates({ USD: 1, EUR: data.rates.EUR || 0.9298, GBP: data.rates.GBP || 0.7823, CHF: data.rates.CHF || 0.8767 });
-        setRatesDate(new Date().toLocaleString("fr-FR"));
       }
     } catch { /* fallback */ }
     setRatesLoading(false);
   }, []);
 
-  const getPrice = (key: string): number => {
-    const p = PRICES[key];
-    return p ? (p[size] || 0) : 0;
-  };
-
-  const calculate = useCallback(() => {
-    const rate = rates[currency] || 1;
-    const breakdown: BreakdownItem[] = [];
-    let totalUSD = 0;
-
-    const addCost = (name: string, usd: number) => {
-      if (usd > 0) {
-        totalUSD += usd;
-        breakdown.push({ name, price: usd * rate });
-      }
-    };
-
-    // Base
-    addCost("Toile de toit", getPrice("canopy"));
-    addCost("Structure des pieds", getPrice("legframe"));
-
-    // Walls
-    SIDES.forEach(side => {
-      const wallType = walls[side];
-      const sideName = SIDE_LABELS[side];
-      if (wallType === "none") return;
-
-      // Fabric cost
-      if (wallType.startsWith("D+C")) {
-        const suffix = wallType.includes("curve") ? "curve" : "straight";
-        addCost(`Mur D+C ${suffix} (${sideName})`, getPrice(`sidewallDC-${suffix}`));
-      } else if (wallType === "C-curve") {
-        addCost(`Mur C courbe (${sideName})`, getPrice("sidewallC-curve"));
-      } else if (wallType.startsWith("A-")) {
-        const suffix = wallType.includes("curve") ? "curve" : "straight";
-        addCost(`Mur A ${suffix} (${sideName})`, getPrice(`sidewallA-${suffix}`));
-      } else if (wallType.startsWith("B-")) {
-        addCost(`Mur B droit (${sideName})`, getPrice("sidewallB-straight"));
-      }
-
-      // Wall prints
-      const wp = wallPrint[side];
-      if (wallType.startsWith("D+C")) {
-        if (wp.dPart) addCost(`Impression Mur D (${sideName})`, getPrice("print-sidewallD"));
-        if (wp.cPart) {
-          addCost(`Impression Mur C (${sideName})`, getPrice("print-sidewallC"));
-          addCost(`Impression Zip Mur C (${sideName})`, getPrice("print-Cwallzippercover"));
-        }
-      } else if (wallType === "C-curve") {
-        if (wp.single) addCost(`Impression Mur C (${sideName})`, getPrice("print-sidewallC"));
-      } else if (wallType.startsWith("A-")) {
-        if (wp.single) addCost(`Impression Mur A (${sideName})`, getPrice("print-sidewallA"));
-      } else if (wallType.startsWith("B-")) {
-        if (wp.single) addCost(`Impression Mur B (${sideName})`, getPrice("print-sidewallB"));
-      }
-    });
-
-    // General prints
-    if (printCanopy) addCost("Impression toile toit", getPrice("print-canopy"));
-    if (printLegframe) addCost("Impression structure pieds", getPrice("print-legframe"));
-    if (printZipcover) addCost("Impression couvertures ZIP", getPrice("print-zipcover"));
-
-    // Accessories
-    if (bag) addCost("Sac de transport", getPrice("acc-bag"));
-    if (pumpElec) addCost("Pompe électrique", getPrice("acc-pump-elec"));
-    if (pumpHand) addCost("Pompe manuelle", getPrice("acc-pump-hand"));
-    if (sandbags > 0) addCost(`Sacs de sable (${sandbags}x)`, getPrice("acc-sandbag-unit") * sandbags);
-    if (waterbags > 0) addCost(`Sacs d'eau (${waterbags}x)`, getPrice("acc-waterbag-unit") * waterbags);
-    if (led) addCost("Lumière LED", getPrice("acc-led"));
-    if (connect) {
-      addCost("Connecteur tentes (tissu)", getPrice("connectpart"));
-      if (printConnect) addCost("Impression connecteur", getPrice("print-connectpart"));
-    }
-    if (transport) addCost("Transport", getPrice("transport"));
-
-    setResult({ total: totalUSD * rate, breakdown });
-  }, [size, currency, rates, walls, wallPrint, printCanopy, printLegframe, printZipcover, bag, pumpElec, pumpHand, sandbags, waterbags, led, connect, printConnect, transport]);
+  const getPrice = (key: string): number => PRICES[key]?.[size] || 0;
 
   const handleWallChange = (side: string, value: WallType) => {
     setWalls(prev => ({ ...prev, [side]: value }));
     setWallPrint(prev => ({ ...prev, [side]: { single: false, dPart: false, cPart: false } }));
   };
 
+  const calculate = useCallback(() => {
+    const rate = rates[currency] || 1;
+    const breakdown: BreakdownItem[] = [];
+    let totalUSD = 0;
+    const add = (name: string, usd: number) => { if (usd > 0) { totalUSD += usd; breakdown.push({ name, price: usd * rate }); } };
+
+    add("Toile de toit", getPrice("canopy"));
+    add("Structure des pieds", getPrice("legframe"));
+
+    SIDES.forEach(side => {
+      const wt = walls[side];
+      const sn = SIDE_LABELS[side];
+      if (wt === "none") return;
+      if (wt.startsWith("D+C")) {
+        const s = wt.includes("curve") ? "curve" : "straight";
+        add(`Mur D+C ${s} (${sn})`, getPrice(`sidewallDC-${s}`));
+      } else if (wt === "C-curve") add(`Mur C courbe (${sn})`, getPrice("sidewallC-curve"));
+      else if (wt.startsWith("A-")) add(`Mur A ${wt.includes("curve") ? "courbe" : "droit"} (${sn})`, getPrice(`sidewallA-${wt.includes("curve") ? "curve" : "straight"}`));
+      else if (wt.startsWith("B-")) add(`Mur B droit (${sn})`, getPrice("sidewallB-straight"));
+
+      const wp = wallPrint[side];
+      if (wt.startsWith("D+C")) {
+        if (wp.dPart) add(`Impression Mur D (${sn})`, getPrice("print-sidewallD"));
+        if (wp.cPart) { add(`Impression Mur C (${sn})`, getPrice("print-sidewallC")); add(`Impression Zip C (${sn})`, getPrice("print-Cwallzippercover")); }
+      } else if (wt === "C-curve" && wp.single) add(`Impression Mur C (${sn})`, getPrice("print-sidewallC"));
+      else if (wt.startsWith("A-") && wp.single) add(`Impression Mur A (${sn})`, getPrice("print-sidewallA"));
+      else if (wt.startsWith("B-") && wp.single) add(`Impression Mur B (${sn})`, getPrice("print-sidewallB"));
+    });
+
+    if (printCanopy) add("Impression toile toit", getPrice("print-canopy"));
+    if (printLegframe) add("Impression structure pieds", getPrice("print-legframe"));
+    if (printZipcover) add("Impression couvertures ZIP", getPrice("print-zipcover"));
+    if (bag) add("Sac de transport", getPrice("acc-bag"));
+    if (pumpElec) add("Pompe électrique", getPrice("acc-pump-elec"));
+    if (pumpHand) add("Pompe manuelle", getPrice("acc-pump-hand"));
+    if (sandbags > 0) add(`Sacs de sable (${sandbags}x)`, getPrice("acc-sandbag-unit") * sandbags);
+    if (waterbags > 0) add(`Sacs d'eau (${waterbags}x)`, getPrice("acc-waterbag-unit") * waterbags);
+    if (led) add("Lumière LED", getPrice("acc-led"));
+    if (connect) { add("Connecteur tentes", getPrice("connectpart")); if (printConnect) add("Impression connecteur", getPrice("print-connectpart")); }
+    if (transport) add("Transport", getPrice("transport"));
+
+    setResult({ total: totalUSD * rate, breakdown });
+  }, [size, currency, rates, walls, wallPrint, printCanopy, printLegframe, printZipcover, bag, pumpElec, pumpHand, sandbags, waterbags, led, connect, printConnect, transport]);
+
   return (
-    <div className="space-y-6">
-      {/* Devise & Taux */}
-      <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-        <div className="flex flex-wrap gap-4 items-end">
-          <div>
-            <label className="block text-sm font-medium mb-1">Devise</label>
-            <select value={currency} onChange={e => setCurrency(e.target.value as Currency)} className="bg-background border border-border rounded px-3 py-2 text-sm">
-              <option value="USD">$ - USD</option>
-              <option value="EUR">€ - EUR</option>
-              <option value="GBP">£ - GBP</option>
-              <option value="CHF">CHF</option>
-            </select>
-          </div>
-          <button onClick={updateRates} disabled={ratesLoading} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm disabled:opacity-50">
-            {ratesLoading ? "Chargement..." : "Actualiser les taux"}
-          </button>
-          {ratesDate && <span className="text-xs text-muted-foreground">Dernière MAJ : {ratesDate}</span>}
+    <div>
+      {/* Sous-onglets */}
+      <div className="flex gap-1 mb-4">
+        <button onClick={() => setActiveSubTab("calc")} className={`px-4 py-1.5 text-sm font-medium border rounded-t ${activeSubTab === "calc" ? "bg-white border-gray-300 border-b-white text-gray-900" : "bg-gray-50 border-gray-200 text-gray-500 hover:bg-gray-100"}`}>Calculateur</button>
+        <button onClick={() => setActiveSubTab("prices")} className={`px-4 py-1.5 text-sm font-medium border rounded-t ${activeSubTab === "prices" ? "bg-white border-gray-300 border-b-white text-gray-900" : "bg-gray-50 border-gray-200 text-gray-500 hover:bg-gray-100"}`}>Prix de base (USD)</button>
+      </div>
+
+      {activeSubTab === "prices" ? (
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse">
+            <thead><tr><th className={hdr}>Élément</th>{(["3x3", "4x4", "5x5"] as Size[]).map(s => <th key={s} className={hdr + " text-center"}>{s.replace("x", "m × ")}m</th>)}</tr></thead>
+            <tbody>
+              {Object.keys(PRICES).map(key => (
+                <tr key={key} className="hover:bg-blue-50">
+                  <td className={cell + " font-medium bg-gray-50"}>{priceLabels[key] || key}</td>
+                  {(["3x3", "4x4", "5x5"] as Size[]).map(s => <td key={s} className={cell + " text-right font-mono"}>{PRICES[key][s]} $</td>)}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p className="text-xs text-gray-500 mt-2">Prix en USD.</p>
         </div>
-      </div>
-
-      {/* Taille */}
-      <div className="bg-card border border-border rounded-lg p-4">
-        <label className="block text-sm font-medium mb-2">Taille de la tente</label>
-        <select value={size} onChange={e => setSize(e.target.value as Size)} className="bg-background border border-border rounded px-3 py-2 text-sm w-full max-w-xs">
-          <option value="3x3">3m × 3m</option>
-          <option value="4x4">4m × 4m</option>
-          <option value="5x5">5m × 5m</option>
-        </select>
-      </div>
-
-      {/* Configuration des murs */}
-      <div className="bg-card border border-border rounded-lg p-4">
-        <h3 className="font-semibold mb-3">Configuration des 4 côtés</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {SIDES.map(side => {
-            const wallType = walls[side];
-            const isDC = wallType.startsWith("D+C");
-            const isSimple = wallType !== "none" && !isDC;
-            return (
-              <div key={side} className="border border-border rounded-lg p-3">
-                <div className="font-medium text-sm mb-2">{SIDE_LABELS[side]}</div>
-                <select value={wallType} onChange={e => handleWallChange(side, e.target.value as WallType)} className="bg-background border border-border rounded px-3 py-2 text-sm w-full">
-                  <option value="none">Aucun mur</option>
-                  <option value="A-curve">Type A - Courbe</option>
-                  <option value="A-straight">Type A - Droit</option>
-                  <option value="B-straight">Type B - Droit</option>
-                  <option value="C-curve">Type C - Courbe (seul)</option>
-                  <option value="D+C-curve">Type D+C - Courbe</option>
-                  <option value="D+C-straight">Type D+C - Droit</option>
+      ) : (
+        <div className="space-y-4">
+          {/* Taille et devise */}
+          <table className="w-full border-collapse">
+            <tbody>
+              <tr><td className={hdr + " w-40"}>Taille</td><td className={cell}>
+                <select value={size} onChange={e => setSize(e.target.value as Size)} className={sel + " max-w-xs"}>
+                  <option value="3x3">3m × 3m</option><option value="4x4">4m × 4m</option><option value="5x5">5m × 5m</option>
                 </select>
-                {isSimple && (
-                  <label className="flex items-center gap-2 mt-2 text-sm">
-                    <input type="checkbox" checked={wallPrint[side].single} onChange={e => setWallPrint(prev => ({ ...prev, [side]: { ...prev[side], single: e.target.checked } }))} className="rounded" />
-                    Impression sur ce mur
-                  </label>
-                )}
-                {isDC && (
-                  <div className="mt-2 space-y-1">
-                    <label className="flex items-center gap-2 text-sm">
-                      <input type="checkbox" checked={wallPrint[side].dPart} onChange={e => setWallPrint(prev => ({ ...prev, [side]: { ...prev[side], dPart: e.target.checked } }))} className="rounded" />
-                      Impression partie D
-                    </label>
-                    <label className="flex items-center gap-2 text-sm">
-                      <input type="checkbox" checked={wallPrint[side].cPart} onChange={e => setWallPrint(prev => ({ ...prev, [side]: { ...prev[side], cPart: e.target.checked } }))} className="rounded" />
-                      Impression partie C (+ zip)
-                    </label>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
+              </td></tr>
+              <tr><td className={hdr}>Devise</td><td className={cell}>
+                <div className="flex items-center gap-3">
+                  <select value={currency} onChange={e => setCurrency(e.target.value as Currency)} className={sel + " max-w-[150px]"}>
+                    <option value="USD">$ USD</option><option value="EUR">€ EUR</option><option value="GBP">£ GBP</option><option value="CHF">CHF</option>
+                  </select>
+                  <button onClick={updateRates} disabled={ratesLoading} className="bg-blue-600 text-white px-3 py-1 rounded text-xs hover:bg-blue-700 disabled:opacity-50">{ratesLoading ? "..." : "Actualiser taux"}</button>
+                  <span className="text-xs text-gray-500">1 USD = {rates[currency].toFixed(4)} {currency}</span>
+                </div>
+              </td></tr>
+            </tbody>
+          </table>
 
-      {/* Impressions générales */}
-      <div className="bg-card border border-border rounded-lg p-4">
-        <h3 className="font-semibold mb-3">Impressions générales</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={printCanopy} onChange={e => setPrintCanopy(e.target.checked)} className="rounded" /> Impression toile de toit</label>
-          <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={printLegframe} onChange={e => setPrintLegframe(e.target.checked)} className="rounded" /> Impression structure pieds</label>
-          <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={printZipcover} onChange={e => setPrintZipcover(e.target.checked)} className="rounded" /> Impression couvertures ZIP</label>
-        </div>
-      </div>
+          {/* Configuration des murs */}
+          <div className={section}>Configuration des 4 côtés</div>
+          <table className="w-full border-collapse">
+            <thead><tr><th className={hdr}>Côté</th><th className={hdr}>Type de mur</th><th className={hdr}>Impression</th></tr></thead>
+            <tbody>
+              {SIDES.map(side => {
+                const wt = walls[side];
+                const isDC = wt.startsWith("D+C");
+                const isSimple = wt !== "none" && !isDC;
+                return (
+                  <tr key={side} className="hover:bg-blue-50">
+                    <td className={cell + " font-medium bg-gray-50 w-24"}>{SIDE_LABELS[side]}</td>
+                    <td className={cell}>
+                      <select value={wt} onChange={e => handleWallChange(side, e.target.value as WallType)} className={sel}>
+                        <option value="none">— Aucun —</option>
+                        <option value="A-curve">Type A - Courbe</option>
+                        <option value="A-straight">Type A - Droit</option>
+                        <option value="B-straight">Type B - Droit</option>
+                        <option value="C-curve">Type C - Courbe</option>
+                        <option value="D+C-curve">Type D+C - Courbe</option>
+                        <option value="D+C-straight">Type D+C - Droit</option>
+                      </select>
+                    </td>
+                    <td className={cell + " w-44"}>
+                      {isSimple && <label className={chk}><input type="checkbox" checked={wallPrint[side].single} onChange={e => setWallPrint(prev => ({ ...prev, [side]: { ...prev[side], single: e.target.checked } }))} /> Impression</label>}
+                      {isDC && (
+                        <div className="space-y-1">
+                          <label className={chk}><input type="checkbox" checked={wallPrint[side].dPart} onChange={e => setWallPrint(prev => ({ ...prev, [side]: { ...prev[side], dPart: e.target.checked } }))} /> Partie D</label>
+                          <label className={chk}><input type="checkbox" checked={wallPrint[side].cPart} onChange={e => setWallPrint(prev => ({ ...prev, [side]: { ...prev[side], cPart: e.target.checked } }))} /> Partie C</label>
+                        </div>
+                      )}
+                      {wt === "none" && <span className="text-gray-300">—</span>}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
 
-      {/* Accessoires */}
-      <div className="bg-card border border-border rounded-lg p-4">
-        <h3 className="font-semibold mb-3">Accessoires</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={bag} onChange={e => setBag(e.target.checked)} className="rounded" /> Sac de transport</label>
-          <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={pumpElec} onChange={e => setPumpElec(e.target.checked)} className="rounded" /> Pompe électrique</label>
-          <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={pumpHand} onChange={e => setPumpHand(e.target.checked)} className="rounded" /> Pompe manuelle</label>
-          <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={led} onChange={e => setLed(e.target.checked)} className="rounded" /> Lumière LED</label>
-          <div className="flex items-center gap-2 text-sm">
-            <label>Sacs de sable :</label>
-            <input type="number" min="0" max="99" value={sandbags} onChange={e => setSandbags(parseInt(e.target.value) || 0)} className="bg-background border border-border rounded px-2 py-1 w-16 text-sm" />
-          </div>
-          <div className="flex items-center gap-2 text-sm">
-            <label>Sacs d'eau :</label>
-            <input type="number" min="0" max="99" value={waterbags} onChange={e => setWaterbags(parseInt(e.target.value) || 0)} className="bg-background border border-border rounded px-2 py-1 w-16 text-sm" />
-          </div>
-          <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={connect} onChange={e => setConnect(e.target.checked)} className="rounded" /> Connecteur tentes</label>
-          {connect && <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={printConnect} onChange={e => setPrintConnect(e.target.checked)} className="rounded" /> Impression connecteur</label>}
-          <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={transport} onChange={e => setTransport(e.target.checked)} className="rounded" /> Transport</label>
-        </div>
-      </div>
+          {/* Impressions générales */}
+          <div className={section}>Impressions générales</div>
+          <table className="w-full border-collapse">
+            <tbody>
+              <tr className="hover:bg-blue-50">
+                <td className={cell}><label className={chk}><input type="checkbox" checked={printCanopy} onChange={e => setPrintCanopy(e.target.checked)} /> Impression toile toit</label></td>
+                <td className={cell}><label className={chk}><input type="checkbox" checked={printLegframe} onChange={e => setPrintLegframe(e.target.checked)} /> Impression structure pieds</label></td>
+              </tr>
+              <tr className="hover:bg-blue-50">
+                <td className={cell} colSpan={2}><label className={chk}><input type="checkbox" checked={printZipcover} onChange={e => setPrintZipcover(e.target.checked)} /> Impression couvertures ZIP</label></td>
+              </tr>
+            </tbody>
+          </table>
 
-      {/* Bouton calcul */}
-      <button onClick={calculate} className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold text-base w-full">
-        Calculer le prix
-      </button>
+          {/* Accessoires */}
+          <div className={section}>Accessoires</div>
+          <table className="w-full border-collapse">
+            <tbody>
+              <tr className="hover:bg-blue-50">
+                <td className={cell}><label className={chk}><input type="checkbox" checked={bag} onChange={e => setBag(e.target.checked)} /> Sac de transport</label></td>
+                <td className={cell}><label className={chk}><input type="checkbox" checked={led} onChange={e => setLed(e.target.checked)} /> Lumière LED</label></td>
+              </tr>
+              <tr className="hover:bg-blue-50">
+                <td className={cell}><label className={chk}><input type="checkbox" checked={pumpElec} onChange={e => setPumpElec(e.target.checked)} /> Pompe électrique</label></td>
+                <td className={cell}><label className={chk}><input type="checkbox" checked={pumpHand} onChange={e => setPumpHand(e.target.checked)} /> Pompe manuelle</label></td>
+              </tr>
+              <tr className="hover:bg-blue-50">
+                <td className={cell}><div className="flex items-center gap-2 text-sm text-gray-700">Sacs de sable : <input type="number" min="0" max="99" value={sandbags} onChange={e => setSandbags(parseInt(e.target.value) || 0)} className="border border-gray-300 rounded px-2 py-1 w-16 text-sm bg-white" /></div></td>
+                <td className={cell}><div className="flex items-center gap-2 text-sm text-gray-700">Sacs d'eau : <input type="number" min="0" max="99" value={waterbags} onChange={e => setWaterbags(parseInt(e.target.value) || 0)} className="border border-gray-300 rounded px-2 py-1 w-16 text-sm bg-white" /></div></td>
+              </tr>
+              <tr className="hover:bg-blue-50">
+                <td className={cell}><label className={chk}><input type="checkbox" checked={connect} onChange={e => setConnect(e.target.checked)} /> Connecteur tentes</label></td>
+                <td className={cell}>{connect && <label className={chk}><input type="checkbox" checked={printConnect} onChange={e => setPrintConnect(e.target.checked)} /> Impression connecteur</label>}</td>
+              </tr>
+              <tr className="hover:bg-blue-50">
+                <td className={cell} colSpan={2}><label className={chk}><input type="checkbox" checked={transport} onChange={e => setTransport(e.target.checked)} /> Transport</label></td>
+              </tr>
+            </tbody>
+          </table>
 
-      {/* Résultat */}
-      {result && (
-        <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-6">
-          <div className="text-3xl font-bold text-green-400 mb-4">
-            Prix total HT : {result.total.toFixed(2)} {CURRENCY_SYMBOLS[currency]}
-          </div>
-          <h4 className="font-medium mb-2">Détail :</h4>
-          <div className="space-y-1">
-            {result.breakdown.map((item, i) => (
-              <div key={i} className="flex justify-between text-sm">
-                <span>{item.name}</span>
-                <span className="font-mono">{item.price.toFixed(2)} {CURRENCY_SYMBOLS[currency]}</span>
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 text-xs text-muted-foreground">
-            Taux utilisé : 1 USD = {rates[currency].toFixed(4)} {currency} | Calculé le {new Date().toLocaleString("fr-FR")}
-          </div>
+          <button onClick={calculate} className="bg-green-600 text-white px-6 py-2.5 rounded font-semibold text-sm hover:bg-green-700 w-full">Calculer le prix</button>
+
+          {result && (
+            <div className="border-2 border-green-600 bg-green-50">
+              <div className="bg-green-600 text-white px-4 py-2 text-lg font-bold">Prix total HT : {result.total.toFixed(2)} {CURRENCY_SYMBOLS[currency]}</div>
+              <table className="w-full border-collapse">
+                <thead><tr><th className="border border-gray-300 px-3 py-1.5 text-sm font-semibold bg-green-100 text-left">Élément</th><th className="border border-gray-300 px-3 py-1.5 text-sm font-semibold bg-green-100 text-right w-32">Prix</th></tr></thead>
+                <tbody>
+                  {result.breakdown.map((item, i) => (
+                    <tr key={i} className="hover:bg-green-50">
+                      <td className="border border-gray-300 px-3 py-1 text-sm">{item.name}</td>
+                      <td className="border border-gray-300 px-3 py-1 text-sm text-right font-mono">{item.price.toFixed(2)} {CURRENCY_SYMBOLS[currency]}</td>
+                    </tr>
+                  ))}
+                  <tr className="bg-green-100 font-bold">
+                    <td className="border border-gray-300 px-3 py-2 text-sm">TOTAL HT</td>
+                    <td className="border border-gray-300 px-3 py-2 text-sm text-right font-mono">{result.total.toFixed(2)} {CURRENCY_SYMBOLS[currency]}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p className="text-xs text-gray-500 px-3 py-1">Taux : 1 USD = {rates[currency].toFixed(4)} {currency}</p>
+            </div>
+          )}
         </div>
       )}
     </div>

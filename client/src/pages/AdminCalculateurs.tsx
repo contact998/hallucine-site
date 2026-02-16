@@ -1,6 +1,6 @@
 /**
  * Page admin des calculateurs de prix des tentes gonflables
- * Accessible uniquement aux administrateurs
+ * Style Excel : fond blanc, tableaux avec bordures, simple et lisible
  */
 import { useState } from "react";
 import CalculateurTenteX from "@/components/calculateurs/CalculateurTenteX";
@@ -10,50 +10,48 @@ import CalculateurTenteAraignee from "@/components/calculateurs/CalculateurTente
 
 type TabId = "x" | "v" | "n" | "araignee";
 
-const TABS: { id: TabId; label: string; description: string }[] = [
-  { id: "x", label: "Tente X", description: "3x3 à 8x8 — 4 côtés configurables, auvents, connexions" },
-  { id: "v", label: "Tente V", description: "4x4 à 6x6 — Toit, pieds, impressions" },
-  { id: "n", label: "Tente N", description: "3x3 à 5x5 — Murs A/B/C/D+C, couleurs" },
-  { id: "araignee", label: "Tente Araignée", description: "4x4 à 10x10 — Murs, auvents" },
+const TABS: { id: TabId; label: string }[] = [
+  { id: "x", label: "Tente X" },
+  { id: "v", label: "Tente V" },
+  { id: "n", label: "Tente N" },
+  { id: "araignee", label: "Tente Araignée" },
 ];
 
 export default function AdminCalculateurs() {
   const [activeTab, setActiveTab] = useState<TabId>("x");
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Calculateurs de prix</h1>
-        <p className="text-muted-foreground">Calculez le prix d'achat HT des tentes gonflables avec conversion de devises en temps réel.</p>
-      </div>
+    <div className="min-h-screen bg-white text-gray-900">
+      <div className="max-w-5xl mx-auto px-4 py-6">
+        <h1 className="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-gray-300 pb-2">
+          Calculateurs de prix — Tentes gonflables
+        </h1>
 
-      {/* Onglets */}
-      <div className="flex flex-wrap gap-2 mb-6">
-        {TABS.map(tab => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-              activeTab === tab.id
-                ? "bg-primary text-primary-foreground"
-                : "bg-card border border-border hover:bg-accent hover:text-accent-foreground"
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+        {/* Onglets style Excel */}
+        <div className="flex border-b border-gray-300">
+          {TABS.map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-5 py-2 text-sm font-medium border border-b-0 rounded-t transition-colors ${
+                activeTab === tab.id
+                  ? "bg-white text-gray-900 border-gray-300 -mb-px"
+                  : "bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-50"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
 
-      {/* Description de l'onglet actif */}
-      <div className="text-sm text-muted-foreground mb-6">
-        {TABS.find(t => t.id === activeTab)?.description}
+        {/* Contenu */}
+        <div className="border border-t-0 border-gray-300 bg-white p-6">
+          {activeTab === "x" && <CalculateurTenteX />}
+          {activeTab === "v" && <CalculateurTenteV />}
+          {activeTab === "n" && <CalculateurTenteN />}
+          {activeTab === "araignee" && <CalculateurTenteAraignee />}
+        </div>
       </div>
-
-      {/* Contenu */}
-      {activeTab === "x" && <CalculateurTenteX />}
-      {activeTab === "v" && <CalculateurTenteV />}
-      {activeTab === "n" && <CalculateurTenteN />}
-      {activeTab === "araignee" && <CalculateurTenteAraignee />}
     </div>
   );
 }
