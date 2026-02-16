@@ -20,11 +20,6 @@ export default function GalerieVideo() {
       category: "Tutoriel"
     },
     {
-      id: "_lLdMYZhz7s",
-      title: "Installation écran gonflable",
-      category: "Démonstration"
-    },
-    {
       id: "lnZ_fbEXH44",
       title: "Écran gonflable en action",
       category: "Événement"

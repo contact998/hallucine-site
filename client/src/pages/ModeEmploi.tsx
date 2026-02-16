@@ -30,7 +30,6 @@ export default function ModeEmploi() {
     { id: "bAxDUrxFUXw", title: "Montage écran soufflerie 10m", description: "Tutoriel complet pour le montage d'un écran gonflable à soufflerie de 10 mètres." },
     { id: "v1Hb0GYLf8w", title: "Comment mettre les cordes aux piquets", description: "Démonstration de la technique de fixation des cordes aux piquets d'ancrage." },
     { id: "sHeVec7oZfQ", title: "Démontage écran soufflerie", description: "Comment démonter et ranger votre écran gonflable à soufflerie en toute simplicité." },
-    { id: "_lLdMYZhz7s", title: "Installation écran gonflable", description: "Démonstration d'installation rapide d'un écran gonflable Hallucine." },
     { id: "lnZ_fbEXH44", title: "Écran gonflable en action", description: "Découvrez nos écrans gonflables lors d'événements en plein air." },
     { id: "UQmA8fZRDYg", title: "Tutoriel montage complet", description: "Guide vidéo pas à pas pour installer votre écran gonflable." },
     { id: "hmSlBIWP_jI", title: "Présentation produit", description: "Présentation détaillée de nos écrans gonflables et de leurs caractéristiques." },

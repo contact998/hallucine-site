@@ -362,3 +362,6 @@
 - [x] Chaque schéma en face de son étape correspondante (2 colonnes par étape)
 - [x] Réduire la taille des schémas (max-h-64)
 - [x] Espacer les étapes de la timeline (space-y-12)
+
+## Vidéo non disponible
+- [x] Retirer la vidéo "Installation écran gonflable" (_lLdMYZhz7s) du mode d'emploi et de la galerie vidéo
