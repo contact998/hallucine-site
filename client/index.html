@@ -62,8 +62,8 @@
             fetch('/api/trpc/auth.me', { credentials: 'include' })
               .then(function(r) { return r.json(); })
               .then(function(data) {
-                var user = data && data.result && data.result.data;
-                if (user && user.role === 'admin') {
+                var json = data && data.result && data.result.data && data.result.data.json;
+                if (json && json.role === 'admin') {
                   var s = document.createElement('script');
                   s.src = 'https://hallucine.manus.space/api/nav-widget';
                   document.body.appendChild(s);
