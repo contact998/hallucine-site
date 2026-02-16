@@ -409,3 +409,7 @@
 - [x] Appliquer le fuseau horaire configuré aux dates dans Profil.tsx
 - [x] Ne pas détecter automatiquement le fuseau du navigateur, uniquement sélection manuelle
 - [x] Tests vitest pour le fuseau horaire (248 tests passent)
+
+## Bouton WhatsApp — ouverture directe sans boîte de dialogue
+- [x] Utiliser le protocole whatsapp:// au lieu de https://wa.me/ pour ouvrir directement l'app
+- [x] Fallback vers https://wa.me/ si l'app n'est pas installée (timeout 1.5s)

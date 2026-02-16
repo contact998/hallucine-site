@@ -30,13 +30,29 @@ export default function WhatsAppButton() {
     ? "Bonjour, je suis intéressé(e) par vos produits Hallucine. Pouvez-vous me renseigner ?"
     : "Bonjour, je vous contacte depuis votre site web. Merci de me rappeler quand vous serez disponible.";
 
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
+  // Protocole whatsapp:// pour ouvrir directement l'app installée (Mac/Windows/mobile)
+  // Fallback vers wa.me si l'app n'est pas détectée
+  const whatsappDeepLink = `whatsapp://send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(whatsappMessage)}`;
+  const whatsappWebFallback = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    // Tenter d'ouvrir l'app native via le deep link
+    const start = Date.now();
+    window.location.href = whatsappDeepLink;
+    // Si après 1.5s le navigateur n'a pas changé de page (app non installée), fallback vers wa.me
+    setTimeout(() => {
+      if (Date.now() - start < 2000) {
+        window.open(whatsappWebFallback, "_blank", "noopener,noreferrer");
+      }
+    }, 1500);
+  };
 
   return (
     <div className="fixed bottom-6 left-6 z-[60]">
       <a
-        href={whatsappUrl}
-        target="_blank"
+        href={whatsappDeepLink}
+        onClick={handleClick}
         rel="noopener noreferrer"
         className="group relative flex items-center justify-center w-14 h-14 bg-[#25D366] rounded-full shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-[#25D366]/30 hover:scale-110 transition-all duration-300"
         aria-label="Contacter via WhatsApp"
