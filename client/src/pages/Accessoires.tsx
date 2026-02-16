@@ -12,19 +12,19 @@ const accessoires = [
   {
     icon: Headphones,
     title: "Casques",
-    img: "https://www.hallucinecran.com/Accessories/1-removebg-preview.png",
+    img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/UlnOxjTGncpBOJwv.webp",
     desc: "Casque pour tous les événements Hallucine, cinéma en plein air. Obtenez une expérience sonore étonnante pour votre corps et votre âme. Idéal pour les projections silencieuses et les événements en zone résidentielle.",
   },
   {
     icon: Armchair,
     title: "Transats",
-    img: "https://www.hallucinecran.com/Accessories/2-removebg-preview.png",
+    img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/nZmqdOLFPHAaEGsn.webp",
     desc: "Détendez-vous, soyez à l'aise tout en regardant des films, des jeux de sport avec vos amis et votre famille. Nos transats sont conçus pour le confort lors de longues projections en extérieur.",
   },
   {
     icon: Radio,
     title: "Transmetteur FM",
-    img: "https://www.hallucinecran.com/Accessories/3-removebg-preview.png",
+    img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wmQDsCcnIydTkdEj.webp",
     desc: "Atteignez les gens dans les véhicules à proximité. Délivrez des sons exceptionnels en temps réel pour une expérience de cinéma drive-in. Parfait pour les ciné-parcs et les événements en voiture.",
   },
   {
@@ -75,7 +75,7 @@ export default function Accessoires() {
             {accessoires.map((a) => (
               <div key={a.title} className="bg-card border border-border rounded-lg overflow-hidden card-hover">
                 <div className="aspect-[4/3] bg-charcoal-light">
-                  <img src={a.img} alt={a.title} className="w-full h-full object-contain p-4" loading="lazy" />
+                  <img src={a.img} alt={`Accessoire Hallucine — ${a.title} pour événements cinéma en plein air`} className="w-full h-full object-contain p-4" loading="lazy" />
                 </div>
                 <div className="p-6">
                   <div className="flex items-center gap-3 mb-3">

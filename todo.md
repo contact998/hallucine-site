@@ -350,3 +350,6 @@
 ## Lightbox vidéo
 - [x] Créer un composant VideoLightbox (modale plein écran avec autoplay, fermeture Escape/clic extérieur)
 - [x] Intégrer la lightbox sur GalerieVideo, EcranGeant, ModeEmploi, TentesV
+
+## Images accessoires cassées
+- [x] Corriger les 3 images cassées des accessoires (Casques, Transats, Transmetteur FM) — uploadées sur CDN
