@@ -322,3 +322,6 @@
 - [x] Diagnostiquer : erreur temporaire Cloudflare R2/S3 (503 ServiceUnavailable) lors de l'upload de brochure PDF
 - [x] Ajouter un retry avec backoff exponentiel dans storage.ts (5 tentatives, délai 500ms→ 8s)
 - [x] Ajouter une gestion d'erreur gracieuse côté frontend (message adapté selon le type d'erreur)
+
+## Correction logo rideau — taille d'origine
+- [x] Logo rideau responsive : w-40 (mobile) → sm:w-52 → md:w-64 → lg:w-80 → xl:w-96 (grand écran)

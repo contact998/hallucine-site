@@ -159,7 +159,7 @@ export default function CinemaRideau() {
           <img
             src={LOGO_TRANSPARENT_URL}
             alt="Hallucine"
-            className="w-[28rem] md:w-[42rem] h-auto mx-auto drop-shadow-[0_4px_30px_rgba(232,184,74,0.4)]"
+            className="w-40 sm:w-52 md:w-64 lg:w-80 xl:w-96 h-auto mx-auto drop-shadow-[0_4px_30px_rgba(232,184,74,0.4)]"
           />
           <p className="text-white/60 text-sm tracking-[0.3em] mt-4 uppercase">Écrans de cinéma gonflables</p>
           <p className="text-amber-400/80 text-xs tracking-[0.2em] mt-6 uppercase animate-pulse">
