@@ -260,3 +260,13 @@
 
 ## Widget navigation flottante Hallucine
 - [x] Ajouter le script externe nav-widget dans client/index.html avant </body>
+
+## Bug: tRPC mutation retourne HTML au lieu de JSON
+- [ ] Identifier quelle mutation tRPC cause l'erreur "Unexpected token '<'" au chargement de la page d'accueil
+- [ ] Corriger le problème
+
+## Remplacement musique rideau cinéma
+- [ ] Remplacer la musique actuelle par un son authentique de projecteur 35mm (cliquetis mécanique pellicule)
+
+## Remplacement musique compte à rebours 4-3-2-1
+- [x] Remplacer la musique du compte à rebours par un son authentique de projecteur 35mm qui tourne (Mixkit "Vintage film projector working")
