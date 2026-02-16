@@ -282,6 +282,24 @@ export async function updateAuditEmailStatus(auditId: number, status: "pending" 
   return true;
 }
 
+/** Mettre à jour le fuseau horaire d'un utilisateur */
+export async function updateUserTimezone(userId: number, timezone: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(users)
+    .set({ timezone })
+    .where(eq(users.id, userId));
+  return true;
+}
+
+/** Récupérer le fuseau horaire d'un utilisateur */
+export async function getUserTimezone(userId: number): Promise<string | null> {
+  const db = await getDb();
+  if (!db) return null;
+  const [result] = await db.select({ timezone: users.timezone }).from(users).where(eq(users.id, userId)).limit(1);
+  return result?.timezone ?? null;
+}
+
 /** Annuler une soumission (seul le propriétaire ou un admin peut le faire) */
 export async function cancelSubmission(submissionId: number, userId: number) {
   const db = await getDb();

@@ -13,8 +13,9 @@ import {
   ArrowUpDown, ArrowUp, ArrowDown, Download, Trash2, MessageSquare,
   Search, Filter, RefreshCw, Clock, CheckCircle, XCircle, Loader2,
   AlertTriangle, ChevronDown, X, FileText, Mail, Phone, Building2, User,
-  Send, ExternalLink, Wifi, WifiOff
+  Send, ExternalLink, Wifi, WifiOff, Globe
 } from "lucide-react";
+import { useTimezone } from "@/hooks/useTimezone";
 
 type SortField = "id" | "createdAt" | "type" | "nom" | "email" | "status" | "produit";
 type SortDir = "asc" | "desc";
@@ -43,6 +44,7 @@ export default function Admin() {
   const [editingNote, setEditingNote] = useState<number | null>(null);
   const [noteText, setNoteText] = useState("");
   const [confirmDelete, setConfirmDelete] = useState<number | null>(null);
+  const { formatDate, formatDateOnly, timezoneAbbr } = useTimezone();
 
   const utils = trpc.useUtils();
   const { data: submissions, isLoading } = trpc.admin.allSubmissions.useQuery(undefined, {
@@ -137,7 +139,7 @@ export default function Admin() {
     const headers = ["ID", "Date", "Type", "Statut", "Nom", "Email", "Téléphone", "Entreprise", "Produit", "Objectif", "Sujet", "Message", "Note Admin"];
     const rows = filteredAndSorted.map(s => [
       s.id,
-      s.createdAt ? new Date(s.createdAt).toLocaleDateString("fr-FR") : "",
+      s.createdAt ? formatDateOnly(s.createdAt, "short") : "",
       s.type,
       s.status,
       s.nom,
@@ -413,6 +415,7 @@ export default function Admin() {
                       onSyncToCrm={() => syncToCrm.mutate({ submissionId: sub.id })}
                       isSyncingCrm={syncToCrm.isPending}
                       crmConfigured={crmStatus?.configured}
+                      formatDate={formatDate}
                     />
                   ))}
                 </tbody>
@@ -468,13 +471,14 @@ interface SubmissionRowProps {
   onSyncToCrm?: () => void;
   isSyncingCrm?: boolean;
   crmConfigured?: boolean;
+  formatDate: (date: Date | string | number, options?: any) => string;
 }
 
 function SubmissionRow({
   sub, isExpanded, onToggleExpand, onUpdateStatus,
   isEditingNote, noteText, onStartEditNote, onCancelEditNote, onSaveNote, onNoteChange,
   isConfirmingDelete, onStartDelete, onCancelDelete, onConfirmDelete, isSavingNote,
-  onSyncToCrm, isSyncingCrm, crmConfigured,
+  onSyncToCrm, isSyncingCrm, crmConfigured, formatDate,
 }: SubmissionRowProps) {
   const statusInfo = STATUS_LABELS[sub.status] ?? STATUS_LABELS.en_attente;
   const typeInfo = TYPE_LABELS[sub.type] ?? TYPE_LABELS.contact;
@@ -487,7 +491,7 @@ function SubmissionRow({
       >
         <td className="px-4 py-3 text-white/40 font-mono text-xs">{sub.id}</td>
         <td className="px-4 py-3 text-white/70 whitespace-nowrap">
-          {sub.createdAt ? new Date(sub.createdAt).toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "numeric" }) : "—"}
+          {sub.createdAt ? formatDate(sub.createdAt) : "—"}
         </td>
         <td className="px-4 py-3">
           <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${typeInfo.color}`}>

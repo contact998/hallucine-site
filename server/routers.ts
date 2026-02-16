@@ -13,6 +13,8 @@ import {
   updateAdminNote,
   deleteSubmission,
   getSubmissionStats,
+  updateUserTimezone,
+  getUserTimezone,
 } from "./db";
 import { notifyOwner } from "./_core/notification";
 import { chatWithAssistant } from "./chatbot";
@@ -227,6 +229,20 @@ export const appRouter = router({
       .mutation(async ({ input, ctx }) => {
         await cancelSubmission(input.submissionId, ctx.user.id);
         return { success: true };
+      }),
+
+    /** Récupérer le fuseau horaire de l'utilisateur connecté */
+    getTimezone: protectedProcedure.query(async ({ ctx }) => {
+      const tz = await getUserTimezone(ctx.user.id);
+      return { timezone: tz, timezones: COMMON_TIMEZONES };
+    }),
+
+    /** Mettre à jour le fuseau horaire de l'utilisateur connecté */
+    updateTimezone: protectedProcedure
+      .input(z.object({ timezone: z.string().min(1) }))
+      .mutation(async ({ input, ctx }) => {
+        await updateUserTimezone(ctx.user.id, input.timezone);
+        return { success: true, timezone: input.timezone };
       }),
   }),
 

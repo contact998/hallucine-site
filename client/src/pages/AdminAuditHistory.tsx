@@ -17,6 +17,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { Link } from "wouter";
+import { useTimezone } from "@/hooks/useTimezone";
 
 type SortField = "createdAt" | "totalPageViews" | "uniqueVisitors" | "totalEvents" | "avgDuration" | "weeklySubmissions";
 type SortDir = "asc" | "desc";
@@ -66,6 +67,7 @@ export default function AdminAuditHistory() {
   const [sortField, setSortField] = useState<SortField>("createdAt");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
   const [selectedAuditId, setSelectedAuditId] = useState<number | null>(null);
+  const { formatDate, formatDateOnly } = useTimezone();
 
   const utils = trpc.useUtils();
 
@@ -191,7 +193,7 @@ export default function AdminAuditHistory() {
                   <div>
                     <h1 className="text-2xl font-bold">Audit IA — {selectedAudit.period}</h1>
                     <p className="text-white/50 mt-1">
-                      Généré le {new Date(selectedAudit.createdAt).toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
+                      Généré le {formatDate(selectedAudit.createdAt, { showTime: false, dateStyle: "long" })}
                       {" "}• Fuseau : {selectedAudit.timezone}
                     </p>
                   </div>
@@ -406,7 +408,7 @@ export default function AdminAuditHistory() {
                           <td className="px-4 py-3 text-white/70 whitespace-nowrap">
                             <div className="flex items-center gap-2">
                               <Calendar className="w-3.5 h-3.5 text-white/30" />
-                              {new Date(audit.createdAt).toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "numeric" })}
+                              {formatDateOnly(audit.createdAt)}
                             </div>
                           </td>
                           <td className="px-4 py-3 text-white/50 text-xs">{audit.period}</td>

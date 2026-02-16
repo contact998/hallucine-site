@@ -398,3 +398,14 @@
 - [x] Section personnalisation avec visuels
 - [x] CTA final avec boutons contact et demande de prix
 - [x] Tests et checkpoint (236 tests passent)
+
+## Fuseau horaire admin/CRM
+- [x] Champ timezone déjà présent dans la table users (schéma DB)
+- [x] Créer un sélecteur de fuseau horaire dans la page Profil (dropdown avec 16 fuseaux)
+- [x] Exposer le timezone via tRPC (profile.getTimezone + profile.updateTimezone)
+- [x] Hook useTimezone : formatDate, formatDateOnly, formatTime selon le fuseau configuré
+- [x] Appliquer le fuseau horaire configuré aux dates dans Admin.tsx (CRM)
+- [x] Appliquer le fuseau horaire configuré aux dates dans AdminAuditHistory.tsx
+- [x] Appliquer le fuseau horaire configuré aux dates dans Profil.tsx
+- [x] Ne pas détecter automatiquement le fuseau du navigateur, uniquement sélection manuelle
+- [x] Tests vitest pour le fuseau horaire (248 tests passent)
