@@ -297,3 +297,7 @@
 - [x] Ajouter des photos d'arches gonflables dans la galerie (6 photos réelles)
 - [x] Ajouter des photos d'arches gonflables dans le sous-menu arches (6 photos réelles)
 - [x] Ajouter des photos d'arches dans la section Réalisations de la page d'accueil (3 photos)
+
+## Remplacement logo rideau
+- [x] Utiliser le logo fourni tel quel (fond noir intégré au design)
+- [x] Remplacer le logo actuel du rideau par le nouveau logo
