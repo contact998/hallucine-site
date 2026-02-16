@@ -283,3 +283,12 @@
 - [x] Le son du rideau de cinéma ne joue plus après les modifications de préchargement
 - [x] Pictogramme micro barré : le navigateur bloque l'autoplay audio
 - [x] Solution : fusionner CinemaRideau + FilmCountdown en un seul composant avec clic "Entrer" pour déclencher son + animation
+
+## Bug: impossible de se connecter
+- [ ] Diagnostiquer l'erreur de connexion
+- [ ] Corriger le problème
+
+## Simplification rideau + logo transparent
+- [x] Supprimer le compte à rebours 3-2-1 du rideau (réservé uniquement à la sélection d'écran gonflable)
+- [x] Au clic sur le rideau → ouverture directe avec son du rideau (pas de countdown)
+- [x] Remplacer le logo fond blanc par le logo avec fond transparent sur le rideau
