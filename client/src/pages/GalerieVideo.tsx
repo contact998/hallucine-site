@@ -1,8 +1,13 @@
+import { useState } from "react";
 import { Link } from "wouter";
+import { Play } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import VideoLightbox from "@/components/VideoLightbox";
 
 export default function GalerieVideo() {
+  const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
+
   const videos = [
     {
       id: "bAxDUrxFUXw",
@@ -58,20 +63,32 @@ export default function GalerieVideo() {
         </div>
       </section>
 
-      {/* Grille vidéos */}
+      {/* Grille vidéos — miniatures cliquables */}
       <section className="py-16 md:py-24">
         <div className="container max-w-6xl">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {videos.map((video) => (
-              <div key={video.id} className="bg-card rounded-lg overflow-hidden border border-border shadow-sm hover:shadow-md transition-shadow">
+              <div
+                key={video.id}
+                className="bg-card rounded-lg overflow-hidden border border-border shadow-sm hover:shadow-lg transition-all cursor-pointer group"
+                onClick={() => setActiveVideo({ id: video.id, title: video.title })}
+              >
+                {/* Miniature YouTube avec bouton play */}
                 <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                  <iframe
-                    className="absolute inset-0 w-full h-full"
-                    src={`https://www.youtube.com/embed/${video.id}`}
-                    title={video.title}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
+                  <img
+                    src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
+                    alt={video.title}
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
                   />
+                  {/* Overlay sombre au hover */}
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
+                  {/* Bouton play central */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <Play className="w-7 h-7 text-white ml-1" fill="white" />
+                    </div>
+                  </div>
                 </div>
                 <div className="p-4">
                   <span className="inline-block text-xs font-medium bg-[#DAA520]/10 text-[#DAA520] px-2 py-1 rounded mb-2">
@@ -120,6 +137,16 @@ export default function GalerieVideo() {
       </section>
 
       <Footer />
+
+      {/* Lightbox vidéo */}
+      {activeVideo && (
+        <VideoLightbox
+          videoId={activeVideo.id}
+          title={activeVideo.title}
+          isOpen={true}
+          onClose={() => setActiveVideo(null)}
+        />
+      )}
     </div>
   );
 }

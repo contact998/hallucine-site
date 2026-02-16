@@ -346,3 +346,7 @@
 
 ## Renommage alt text de toutes les photos du site
 - [x] Renommer les alt text de toutes les photos avec des descriptions claires et SEO-friendly (toutes les pages)
+
+## Lightbox vidéo
+- [x] Créer un composant VideoLightbox (modale plein écran avec autoplay, fermeture Escape/clic extérieur)
+- [x] Intégrer la lightbox sur GalerieVideo, EcranGeant, ModeEmploi, TentesV

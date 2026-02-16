@@ -7,7 +7,9 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FilmCountdown from "@/components/FilmCountdown";
+import VideoLightbox from "@/components/VideoLightbox";
 import { Link } from "wouter";
+import { Play } from "lucide-react";
 import { Wind, Clock, Shield, Feather, Users, ArrowRight, Film, Trophy, Music, Presentation, CheckCircle, Phone, Mail } from "lucide-react";
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 
@@ -46,6 +48,7 @@ const galleryImages = [
 
 export default function EcranGeant() {
   const [showCountdown, setShowCountdown] = useState(true);
+  const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -147,16 +150,16 @@ export default function EcranGeant() {
               </div>
             </div>
 
-            {/* Vidéo montage 10m */}
-            <div className="bg-card border border-border rounded-lg overflow-hidden">
+            {/* Vidéo montage 10m — miniature cliquable */}
+            <div className="bg-card border border-border rounded-lg overflow-hidden cursor-pointer group" onClick={() => setActiveVideo({ id: 'bAxDUrxFUXw', title: 'Montage écran soufflerie 10m' })}>
               <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                <iframe
-                  className="absolute inset-0 w-full h-full"
-                  src="https://www.youtube.com/embed/bAxDUrxFUXw"
-                  title="Montage écran soufflerie 10m"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
+                <img src="https://img.youtube.com/vi/bAxDUrxFUXw/hqdefault.jpg" alt="Tutoriel montage écran soufflerie 10m Hallucine" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <Play className="w-7 h-7 text-white ml-1" fill="white" />
+                  </div>
+                </div>
               </div>
               <div className="p-4">
                 <h3 className="text-ivory font-semibold">Tutoriel vidéo : Montage écran soufflerie 10m</h3>
@@ -252,16 +255,16 @@ export default function EcranGeant() {
       <section className="py-20 bg-charcoal-light">
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
-            {/* Vidéo démontage */}
-            <div className="bg-card border border-border rounded-lg overflow-hidden">
+            {/* Vidéo démontage — miniature cliquable */}
+            <div className="bg-card border border-border rounded-lg overflow-hidden cursor-pointer group" onClick={() => setActiveVideo({ id: 'sHeVec7oZfQ', title: 'Démontage écran soufflerie' })}>
               <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                <iframe
-                  className="absolute inset-0 w-full h-full"
-                  src="https://www.youtube.com/embed/sHeVec7oZfQ"
-                  title="Démontage écran soufflerie"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
+                <img src="https://img.youtube.com/vi/sHeVec7oZfQ/hqdefault.jpg" alt="Tutoriel démontage écran soufflerie Hallucine" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <Play className="w-7 h-7 text-white ml-1" fill="white" />
+                  </div>
+                </div>
               </div>
               <div className="p-4">
                 <h3 className="text-ivory font-semibold">Démontage écran soufflerie</h3>
@@ -356,6 +359,16 @@ export default function EcranGeant() {
       </section>
 
       <Footer />
+
+      {/* Lightbox vidéo */}
+      {activeVideo && (
+        <VideoLightbox
+          videoId={activeVideo.id}
+          title={activeVideo.title}
+          isOpen={true}
+          onClose={() => setActiveVideo(null)}
+        />
+      )}
     </div>
   );
 }

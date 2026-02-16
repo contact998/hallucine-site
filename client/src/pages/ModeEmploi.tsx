@@ -1,9 +1,13 @@
 import { Link } from "wouter";
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GearsEffect from "@/components/GearsEffect";
+import VideoLightbox from "@/components/VideoLightbox";
+import { Play } from "lucide-react";
 
 export default function ModeEmploi() {
+  const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
   const videos = [
     { id: "bAxDUrxFUXw", title: "Montage écran soufflerie 10m", description: "Tutoriel complet pour le montage d'un écran gonflable à soufflerie de 10 mètres." },
     { id: "sHeVec7oZfQ", title: "Démontage écran soufflerie", description: "Comment démonter et ranger votre écran gonflable à soufflerie en toute simplicité." },
@@ -97,15 +101,15 @@ export default function ModeEmploi() {
           </p>
           <div className="grid md:grid-cols-2 gap-8">
             {videos.map((video) => (
-              <div key={video.id} className="bg-card border border-border rounded-lg overflow-hidden">
+              <div key={video.id} className="bg-card border border-border rounded-lg overflow-hidden cursor-pointer group" onClick={() => setActiveVideo({ id: video.id, title: video.title })}>
                 <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                  <iframe
-                    className="absolute inset-0 w-full h-full"
-                    src={`https://www.youtube.com/embed/${video.id}`}
-                    title={video.title}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
+                  <img src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`} alt={video.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <Play className="w-7 h-7 text-white ml-1" fill="white" />
+                    </div>
+                  </div>
                 </div>
                 <div className="p-4">
                   <h3 className="text-ivory font-semibold">{video.title}</h3>
@@ -223,6 +227,16 @@ export default function ModeEmploi() {
       </section>
 
       <Footer />
+
+      {/* Lightbox vidéo */}
+      {activeVideo && (
+        <VideoLightbox
+          videoId={activeVideo.id}
+          title={activeVideo.title}
+          isOpen={true}
+          onClose={() => setActiveVideo(null)}
+        />
+      )}
     </div>
   );
 }

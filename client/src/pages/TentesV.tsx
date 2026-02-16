@@ -3,9 +3,12 @@
  * Contenu complet du site d'origine hallucinecran.com
  * Design: cinéma vintage — fond sombre, accents dorés
  */
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import VideoLightbox from "@/components/VideoLightbox";
 import { Link } from "wouter";
+import { Play } from "lucide-react";
 import WeatherEffect from "@/components/WeatherEffect";
 
 const tailles = [
@@ -49,6 +52,8 @@ const images = [
 ];
 
 export default function TentesV() {
+  const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
@@ -240,15 +245,15 @@ export default function TentesV() {
           <h2 className="text-3xl font-bold text-ivory mb-4">La tente V en vidéo</h2>
           <p className="text-white/60 mb-8 max-w-2xl">Découvrez le montage et l'utilisation de notre tente gonflable en V.</p>
           <div className="max-w-2xl">
-            <div className="bg-card border border-border rounded-lg overflow-hidden">
+            <div className="bg-card border border-border rounded-lg overflow-hidden cursor-pointer group" onClick={() => setActiveVideo({ id: '-cga1EVZQtg', title: 'Tente gonflable V — Montage' })}>
               <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                <iframe
-                  className="absolute inset-0 w-full h-full"
-                  src="https://www.youtube.com/embed/-cga1EVZQtg"
-                  title="Tente gonflable V — Montage"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
+                <img src="https://img.youtube.com/vi/-cga1EVZQtg/hqdefault.jpg" alt="Tutoriel montage tente gonflable en V Hallucine" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <Play className="w-7 h-7 text-white ml-1" fill="white" />
+                  </div>
+                </div>
               </div>
               <div className="p-4">
                 <h3 className="text-ivory font-semibold">Tente gonflable V — Montage</h3>
@@ -276,6 +281,16 @@ export default function TentesV() {
       </section>
 
       <Footer />
+
+      {/* Lightbox vidéo */}
+      {activeVideo && (
+        <VideoLightbox
+          videoId={activeVideo.id}
+          title={activeVideo.title}
+          isOpen={true}
+          onClose={() => setActiveVideo(null)}
+        />
+      )}
     </div>
   );
 }
