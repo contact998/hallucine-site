@@ -385,3 +385,16 @@
 - [ ] Ajouter export PDF au calculateur X
 - [ ] Ajouter verrouillage/déverrouillage des prix avec code d'accès (6312)
 - [ ] Rendre les prix éditables dans l'onglet Prix
+
+## Refonte page Tente X (contenu public)
+- [x] Réécrire la page /tente-gonflable-x avec un layout clair, lisible et professionnel
+- [x] Ajouter une section héro avec image de fond et titre impactant
+- [x] Structurer le contenu en sections bien distinctes avec alternance de couleurs
+- [x] Améliorer la galerie photos avec lightbox
+- [x] Ajouter les sections Fiabilité, Expertise, Qualité avec texte complet du site original
+- [x] Tableau des caractéristiques techniques clair et lisible
+- [x] Grille des tailles disponibles avec icônes visuelles
+- [x] Section accessoires avec icônes et descriptions
+- [x] Section personnalisation avec visuels
+- [x] CTA final avec boutons contact et demande de prix
+- [x] Tests et checkpoint (236 tests passent)
