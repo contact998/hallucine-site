@@ -107,7 +107,7 @@ export default function CinemaRideau() {
           <div className="absolute top-0 right-0 w-16 h-full" style={{ background: "linear-gradient(90deg, transparent, rgba(0,0,0,0.5))" }} />
           <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 30% 30%, rgba(255,200,200,0.08) 0%, transparent 60%)" }} />
           <div className="absolute bottom-0 left-0 right-0 h-3" style={{ background: "linear-gradient(180deg, #c5942a, #e8b84a, #c5942a)" }} />
-          <div className="absolute top-[15%] right-4 w-6 h-20" style={{ background: "linear-gradient(180deg, #c5942a, #e8b84a 50%, #c5942a)", borderRadius: "3px", boxShadow: "2px 2px 8px rgba(0,0,0,0.4)" }} />
+
         </div>
       </div>
 
@@ -124,7 +124,7 @@ export default function CinemaRideau() {
           <div className="absolute top-0 left-0 w-16 h-full" style={{ background: "linear-gradient(270deg, transparent, rgba(0,0,0,0.5))" }} />
           <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 70% 30%, rgba(255,200,200,0.08) 0%, transparent 60%)" }} />
           <div className="absolute bottom-0 left-0 right-0 h-3" style={{ background: "linear-gradient(180deg, #c5942a, #e8b84a, #c5942a)" }} />
-          <div className="absolute top-[15%] left-4 w-6 h-20" style={{ background: "linear-gradient(180deg, #c5942a, #e8b84a 50%, #c5942a)", borderRadius: "3px", boxShadow: "-2px 2px 8px rgba(0,0,0,0.4)" }} />
+
         </div>
       </div>
 

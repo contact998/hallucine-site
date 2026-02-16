@@ -325,3 +325,6 @@
 
 ## Correction logo rideau — taille d'origine
 - [x] Logo rideau responsive : w-40 (mobile) → sm:w-52 → md:w-64 → lg:w-80 → xl:w-96 (grand écran)
+
+## Rideau de cinéma — suppression éléments décoratifs
+- [x] Supprimer les deux carrés jaunes en haut du rideau (embrasses/attaches dorées)
