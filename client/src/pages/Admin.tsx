@@ -258,6 +258,12 @@ export default function Admin() {
                 <ExternalLink className="w-4 h-4" /> Analytics
               </a>
               <a
+                href="/admin/calculateurs"
+                className="flex items-center gap-2 px-4 py-2 border border-amber-500/30 text-amber-400 rounded hover:bg-amber-500/10 text-sm transition-colors"
+              >
+                <FileText className="w-4 h-4" /> Calculateurs
+              </a>
+              <a
                 href="https://hallucinecrm.manus.space"
                 target="_blank"
                 rel="noopener noreferrer"

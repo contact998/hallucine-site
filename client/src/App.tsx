@@ -39,6 +39,7 @@ import Profil from "./pages/Profil";
 import Admin from "./pages/Admin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminAuditHistory from "./pages/AdminAuditHistory";
+import AdminCalculateurs from "./pages/AdminCalculateurs";
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
@@ -86,6 +87,7 @@ function Router() {
       <Route path={"/admin"} component={Admin} />
       <Route path={"/admin/analytics"} component={AdminDashboard} />
       <Route path={"/admin/audits"} component={AdminAuditHistory} />
+      <Route path={"/admin/calculateurs"} component={AdminCalculateurs} />
       {/* Légal */}
       <Route path={"/mentions-legales"} component={MentionsLegales} />
       <Route path={"/politique-confidentialite"} component={Confidentialite} />

@@ -365,3 +365,12 @@
 
 ## Vidéo non disponible
 - [x] Retirer la vidéo "Installation écran gonflable" (_lLdMYZhz7s) du mode d'emploi et de la galerie vidéo
+
+## Calculateurs de prix tentes gonflables
+- [x] Extraire les calculateurs de prix du zip ZohoWorkDrive
+- [x] Intégrer les 4 calculateurs (X, V, N, Araignée) dans la partie admin du site
+- [x] Créer la page admin Calculateurs avec onglets + lien depuis le panneau admin
+- [x] Implémenter le calculateur Tente X (3x3 à 8x8, 4 côtés, auvents, connexions, impressions, accessoires)
+- [x] Implémenter le calculateur Tente V (4x4 à 6x6, toit, pieds, impressions)
+- [x] Implémenter le calculateur Tente N (3x3 à 5x5, murs A/B/C/D+C, impressions, accessoires)
+- [x] Implémenter le calculateur Tente Araignée (4x4 à 10x10, murs, auvents, impressions)
