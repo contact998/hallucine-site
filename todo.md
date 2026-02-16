@@ -353,3 +353,7 @@
 
 ## Images accessoires cassées
 - [x] Corriger les 3 images cassées des accessoires (Casques, Transats, Transmetteur FM) — uploadées sur CDN
+
+## Mode d'emploi — refonte complète avec images/vidéos/schémas
+- [x] Analyser le HTML de référence pour extraire tout le contenu (images, vidéos, schémas)
+- [x] Mettre à jour la page Mode d'emploi avec 12 images, 7 vidéos, 7 schémas d'étapes, lightbox images
