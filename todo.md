@@ -335,3 +335,7 @@
 
 ## Widget navigation Hallucine — masquer pour visiteurs
 - [x] Masquer le bandeau nav (Accueil/Site Web/CRM/Devis/Carte) pour les visiteurs non connectés — visible uniquement pour les admins
+
+## Rideau — scroll en haut de page + logo réduit
+- [x] Forcer le scroll en haut de page quand le rideau s'ouvre (scroll to top au montage + au clic)
+- [x] Réduire la taille du logo rideau (w-32 sm:w-40 md:w-48 lg:w-56 xl:w-64)

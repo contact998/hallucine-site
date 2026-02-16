@@ -22,6 +22,11 @@ export default function CinemaRideau() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const fadeRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  // Forcer le scroll en haut de page dès l'affichage du rideau
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Précharger le son dès le montage (sans le jouer)
   useEffect(() => {
     const audio = new Audio();
@@ -41,6 +46,9 @@ export default function CinemaRideau() {
   const handleClick = useCallback(() => {
     if (phase !== "waiting") return;
     setPhase("opening");
+
+    // Forcer le scroll en haut de page à l'ouverture
+    window.scrollTo({ top: 0, behavior: "instant" });
 
     // Jouer le son du rideau (le clic autorise l'autoplay)
     if (audioRef.current) {
@@ -159,7 +167,7 @@ export default function CinemaRideau() {
           <img
             src={LOGO_TRANSPARENT_URL}
             alt="Hallucine"
-            className="w-40 sm:w-52 md:w-64 lg:w-80 xl:w-96 h-auto mx-auto drop-shadow-[0_4px_30px_rgba(232,184,74,0.4)]"
+            className="w-32 sm:w-40 md:w-48 lg:w-56 xl:w-64 h-auto mx-auto drop-shadow-[0_4px_30px_rgba(232,184,74,0.4)]"
           />
           <p className="text-white/60 text-sm tracking-[0.3em] mt-4 uppercase">Écrans de cinéma gonflables</p>
           <p className="text-amber-400/80 text-xs tracking-[0.2em] mt-6 uppercase animate-pulse">
