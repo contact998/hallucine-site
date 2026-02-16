@@ -192,113 +192,105 @@ export default function ModeEmploi() {
             Suivez ces instructions étape par étape pour installer votre écran gonflable en toute sécurité.
           </p>
 
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Colonne gauche : texte */}
-            <div>
-              {/* Contenu de la livraison */}
-              <div className="bg-card border border-border rounded-lg p-6 md:p-8 mb-8">
-                <h3 className="text-xl font-bold text-ivory mb-6 flex items-center gap-3">
-                  <Package className="w-6 h-6 text-warm" />
-                  Contenu de la Livraison
-                </h3>
-                <div className="space-y-4">
-                  {contenuLivraison.map((item) => (
-                    <div key={item.nom} className="flex items-start gap-4 bg-background rounded-lg p-4">
-                      {item.img && (
-                        <img
-                          src={item.img}
-                          alt={`Matériel Hallucine — ${item.nom}`}
-                          className="w-16 h-16 object-contain rounded cursor-pointer hover:scale-110 transition-transform"
-                          loading="lazy"
-                          onClick={() => setLightboxImg({ src: item.img!, alt: item.nom })}
-                        />
-                      )}
-                      <div>
-                        <h4 className="text-ivory font-semibold text-sm">{item.nom}</h4>
-                        <p className="text-white/60 text-sm">{item.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Matériel non inclus */}
-              <div className="bg-card border border-border rounded-lg p-6 md:p-8 mb-8">
-                <h3 className="text-xl font-bold text-ivory mb-6 flex items-center gap-3">
-                  <AlertTriangle className="w-6 h-6 text-warm" />
-                  Matériel Nécessaire Mais Non Inclus
-                </h3>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  {materielNonInclus.map((item) => (
-                    <div key={item.nom} className="flex items-center gap-4 bg-background rounded-lg p-4">
+          {/* Contenu de la livraison + Matériel */}
+          <div className="grid md:grid-cols-2 gap-8 mb-16">
+            <div className="bg-card border border-border rounded-lg p-6 md:p-8">
+              <h3 className="text-xl font-bold text-ivory mb-6 flex items-center gap-3">
+                <Package className="w-6 h-6 text-warm" />
+                Contenu de la Livraison
+              </h3>
+              <div className="space-y-4">
+                {contenuLivraison.map((item) => (
+                  <div key={item.nom} className="flex items-start gap-4 bg-background rounded-lg p-4">
+                    {item.img && (
                       <img
                         src={item.img}
-                        alt={`Matériel nécessaire — ${item.nom}`}
-                        className="w-14 h-14 object-contain rounded cursor-pointer hover:scale-110 transition-transform"
+                        alt={`Matériel Hallucine — ${item.nom}`}
+                        className="w-16 h-16 object-contain rounded cursor-pointer hover:scale-110 transition-transform"
                         loading="lazy"
-                        onClick={() => setLightboxImg({ src: item.img, alt: item.nom })}
+                        onClick={() => setLightboxImg({ src: item.img!, alt: item.nom })}
                       />
-                      <span className="text-white/70 text-sm font-medium">{item.nom}</span>
+                    )}
+                    <div>
+                      <h4 className="text-ivory font-semibold text-sm">{item.nom}</h4>
+                      <p className="text-white/60 text-sm">{item.description}</p>
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Étapes d'installation — texte */}
-              <div className="bg-card border border-border rounded-lg p-6 md:p-8">
-                <h3 className="text-xl font-bold text-ivory mb-8 flex items-center gap-3">
-                  <Wrench className="w-6 h-6 text-warm" />
-                  Étapes d'Installation
-                </h3>
-                <div className="space-y-8">
-                  {etapes.map((etape) => (
-                    <div key={etape.numero} className="relative pl-14">
-                      <div className="absolute left-0 top-0 w-10 h-10 rounded-full bg-warm text-charcoal flex items-center justify-center text-lg font-bold">
-                        {etape.numero}
-                      </div>
-                      {etape.numero < etapes.length && (
-                        <div className="absolute left-[19px] top-12 w-0.5 h-[calc(100%-1.5rem)] bg-warm/20" />
-                      )}
-                      <h4 className="text-lg font-bold text-ivory mb-3 pt-1">{etape.titre}</h4>
-                      <ul className="space-y-2">
-                        {etape.instructions.map((instruction, i) => (
-                          <li key={i} className="flex items-start gap-2 text-white/60">
-                            <span className="w-1.5 h-1.5 rounded-full bg-warm mt-2 shrink-0" />
-                            <span className="text-sm">{instruction}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-8 p-4 bg-warm/10 rounded-lg border border-warm/20">
-                  <p className="text-warm font-medium text-center text-sm">
-                    En suivant ces étapes, votre écran de projection sera correctement installé et prêt à l'emploi.
-                  </p>
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* Colonne droite : schémas et images */}
-            <div className="space-y-6">
-              <h3 className="text-xl font-bold text-ivory mb-4 text-center">Schémas d'Installation</h3>
-              {etapes.map((etape) => (
-                <div key={etape.numero} className="bg-card border border-border rounded-lg overflow-hidden">
+            <div className="bg-card border border-border rounded-lg p-6 md:p-8">
+              <h3 className="text-xl font-bold text-ivory mb-6 flex items-center gap-3">
+                <AlertTriangle className="w-6 h-6 text-warm" />
+                Matériel Nécessaire Mais Non Inclus
+              </h3>
+              <div className="grid grid-cols-2 gap-4">
+                {materielNonInclus.map((item) => (
+                  <div key={item.nom} className="flex flex-col items-center gap-3 bg-background rounded-lg p-4">
+                    <img
+                      src={item.img}
+                      alt={`Matériel nécessaire — ${item.nom}`}
+                      className="w-16 h-16 object-contain rounded cursor-pointer hover:scale-110 transition-transform"
+                      loading="lazy"
+                      onClick={() => setLightboxImg({ src: item.img, alt: item.nom })}
+                    />
+                    <span className="text-white/70 text-sm font-medium text-center">{item.nom}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Étapes d'installation — chaque étape avec schéma en face */}
+          <h3 className="text-2xl font-bold text-ivory mb-10 flex items-center justify-center gap-3">
+            <Wrench className="w-7 h-7 text-warm" />
+            Étapes d'Installation
+          </h3>
+
+          <div className="space-y-12">
+            {etapes.map((etape) => (
+              <div key={etape.numero} className="grid md:grid-cols-2 gap-8 items-center">
+                {/* Colonne gauche : texte de l'étape avec timeline */}
+                <div className="relative pl-14">
+                  <div className="absolute left-0 top-0 w-10 h-10 rounded-full bg-warm text-charcoal flex items-center justify-center text-lg font-bold shadow-lg">
+                    {etape.numero}
+                  </div>
+                  {etape.numero < etapes.length && (
+                    <div className="absolute left-[19px] top-12 w-0.5 h-[calc(100%+2rem)] bg-warm/20" />
+                  )}
+                  <h4 className="text-lg font-bold text-ivory mb-4 pt-1">{etape.titre}</h4>
+                  <ul className="space-y-3">
+                    {etape.instructions.map((instruction, i) => (
+                      <li key={i} className="flex items-start gap-2 text-white/60">
+                        <span className="w-1.5 h-1.5 rounded-full bg-warm mt-2 shrink-0" />
+                        <span className="text-sm leading-relaxed">{instruction}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Colonne droite : schéma en face */}
+                <div className="bg-card border border-border rounded-lg overflow-hidden">
                   <img
                     src={etape.schema}
                     alt={`Schéma étape ${etape.numero} — ${etape.schemaCaption}`}
-                    className="w-full object-contain cursor-pointer hover:scale-[1.02] transition-transform"
+                    className="w-full max-h-64 object-contain p-2 cursor-pointer hover:scale-[1.02] transition-transform"
                     loading="lazy"
                     onClick={() => setLightboxImg({ src: etape.schema, alt: etape.schemaCaption })}
                   />
-                  <div className="p-3 text-center">
-                    <p className="text-white/60 text-sm">
-                      <span className="text-warm font-semibold">Étape {etape.numero}</span> — {etape.schemaCaption}
-                    </p>
+                  <div className="p-2 text-center border-t border-border">
+                    <p className="text-white/50 text-xs">{etape.schemaCaption}</p>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12 p-4 bg-warm/10 rounded-lg border border-warm/20">
+            <p className="text-warm font-medium text-center text-sm">
+              En suivant ces étapes, votre écran de projection sera correctement installé et prêt à l'emploi.
+            </p>
           </div>
         </div>
       </section>

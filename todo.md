@@ -357,3 +357,8 @@
 ## Mode d'emploi — refonte complète avec images/vidéos/schémas
 - [x] Analyser le HTML de référence pour extraire tout le contenu (images, vidéos, schémas)
 - [x] Mettre à jour la page Mode d'emploi avec 12 images, 7 vidéos, 7 schémas d'étapes, lightbox images
+
+## Mode d'emploi — alignement schémas/étapes
+- [x] Chaque schéma en face de son étape correspondante (2 colonnes par étape)
+- [x] Réduire la taille des schémas (max-h-64)
+- [x] Espacer les étapes de la timeline (space-y-12)
