@@ -27,12 +27,12 @@ const sansSouffleur = [
 ];
 
 const galleryImages = [
-  { src: "https://www.hallucinecran.com/Gallery/42.webp", alt: "Écran économique en situation" },
-  { src: "https://www.hallucinecran.com/Gallery/43.webp", alt: "Écran économique — projection extérieure" },
-  { src: "https://www.hallucinecran.com/Gallery/44.webp", alt: "Écran économique — installation rapide" },
-  { src: "https://www.hallucinecran.com/Gallery/45.webp", alt: "Écran économique — vue de face" },
-  { src: "https://www.hallucinecran.com/Gallery/46.webp", alt: "Écran économique — événement en plein air" },
-  { src: "https://www.hallucinecran.com/Gallery/47.webp", alt: "Écran économique — soirée cinéma" },
+  { src: "https://www.hallucinecran.com/Gallery/42.webp", alt: "Écran de cinéma gonflable économique installé en extérieur pour une projection de film" },
+  { src: "https://www.hallucinecran.com/Gallery/43.webp", alt: "Projection d'un film en plein air sur un grand écran gonflable économique, spectateurs visibles" },
+  { src: "https://www.hallucinecran.com/Gallery/44.webp", alt: "Démonstration de l'installation rapide d'un écran gonflable économique sur l'herbe" },
+  { src: "https://www.hallucinecran.com/Gallery/45.webp", alt: "Vue de face d'un écran de projection gonflable économique, montrant la toile blanche et le cadre noir" },
+  { src: "https://www.hallucinecran.com/Gallery/46.webp", alt: "Ambiance d'un événement en plein air avec un écran gonflable économique en arrière-plan" },
+  { src: "https://www.hallucinecran.com/Gallery/47.webp", alt: "Soirée cinéma en plein air avec un écran gonflable économique illuminé par le projecteur" },
 ];
 
 const faqItems = [

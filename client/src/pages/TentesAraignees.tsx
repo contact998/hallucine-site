@@ -61,11 +61,11 @@ const faqItems = [
 ];
 
 const images = [
-  { src: "https://www.hallucinecran.com/photoset/Tents%20spider/.Sider%20tentes%20bleues.jpg_m.jpg", alt: "Tentes araignées bleues" },
-  { src: "https://www.hallucinecran.com/photoset/Tents%20spider/.Sider%20tentes%20rideau%20jaunes.jpg_m.jpg", alt: "Tentes araignées avec rideaux jaunes" },
-  { src: "https://www.hallucinecran.com/photoset/Tents%20spider/.Sider%20tentes%20vertes.png_m.jpg", alt: "Tentes araignées vertes" },
-  { src: "https://www.hallucinecran.com/photoset/Tents%20spider/.Sider%20tentes%20noir%20jaunes.jpg_m.jpg", alt: "Tentes araignées noir et jaune" },
-  { src: "https://www.hallucinecran.com/Tentes/Tents%20spider/Sider%20tentes%20noires%20mouchetees.jpg", alt: "Tentes araignées noires mouchetées — Ealing Eagles" },
+  { src: "https://www.hallucinecran.com/photoset/Tents%20spider/.Sider%20tentes%20bleues.jpg_m.jpg", alt: "Tente araignée gonflable bleue installée sur l'herbe pour un événement en plein air" },
+  { src: "https://www.hallucinecran.com/photoset/Tents%20spider/.Sider%20tentes%20rideau%20jaunes.jpg_m.jpg", alt: "Tente araignée gonflable avec des parois latérales jaunes, créant un espace abrité" },
+  { src: "https://www.hallucinecran.com/photoset/Tents%20spider/.Sider%20tentes%20vertes.png_m.jpg", alt: "Tente araignée gonflable de couleur verte, se fondant dans un décor naturel" },
+  { src: "https://www.hallucinecran.com/photoset/Tents%20spider/.Sider%20tentes%20noir%20jaunes.jpg_m.jpg", alt: "Tente araignée gonflable noire et jaune, aux couleurs vives pour attirer l'attention" },
+  { src: "https://www.hallucinecran.com/Tentes/Tents%20spider/Sider%20tentes%20noires%20mouchetees.jpg", alt: "Tente araignée gonflable noire personnalisée avec le logo 'Ealing Eagles', utilisée pour un événement sportif" },
 ];
 
 export default function TentesAraignees() {

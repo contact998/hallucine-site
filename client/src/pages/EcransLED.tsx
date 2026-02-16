@@ -9,9 +9,9 @@ import { Link } from "wouter";
 import { Construction } from "lucide-react";
 
 const ledImages = [
-  { src: "https://www.hallucinecran.com/Accessories/Ecran-LED-5m-1920w.webp", alt: "Écran LED 5m — projection de jour et nuit" },
-  { src: "https://www.hallucinecran.com/Accessories/Ecran-LED-4m-1920w.webp", alt: "Écran LED 4m — haute luminosité" },
-  { src: "https://www.hallucinecran.com/Accessories/Montage-LED-1920w.webp", alt: "Montage d'un écran LED Hallucine" },
+  { src: "https://www.hallucinecran.com/Accessories/Ecran-LED-5m-1920w.webp", alt: "Écran LED gonflable Hallucine de 5m pour projection de jour comme de nuit" },
+  { src: "https://www.hallucinecran.com/Accessories/Ecran-LED-4m-1920w.webp", alt: "Écran LED gonflable Hallucine de 4m avec haute luminosité pour événements" },
+  { src: "https://www.hallucinecran.com/Accessories/Montage-LED-1920w.webp", alt: "Démonstration du montage rapide d'un écran LED gonflable Hallucine en extérieur" },
 ];
 
 export default function EcransLED() {

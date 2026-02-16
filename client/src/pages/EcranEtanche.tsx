@@ -57,12 +57,12 @@ const faqItems = [
 ];
 
 const galleryImages = [
-  { src: "https://www.hallucinecran.com/ecran%20etanches.jpg", alt: "Écran gonflable étanche à l'air — vue d'ensemble" },
-  { src: "https://www.hallucinecran.com/Le%20cin%C3%A9ma%20%C3%A0%20la%20maison%20037.jpg", alt: "Écran étanche — comparaison taille humaine" },
-  { src: "https://www.hallucinecran.com/ECRAN%207-5.jpg", alt: "Écran étanche 7.5m vue arrière" },
-  { src: "https://www.hallucinecran.com/Gallery/25.webp", alt: "Écran étanche en situation extérieure" },
-  { src: "https://www.hallucinecran.com/Gallery/47.webp", alt: "Cinéma en plein air avec écran étanche" },
-  { src: "https://www.hallucinecran.com/Gallery/49.webp", alt: "Écran étanche — projection nocturne" },
+  { src: "https://www.hallucinecran.com/ecran%20etanches.jpg", alt: "Grand écran de cinéma gonflable étanche à l'air installé en extérieur" },
+  { src: "https://www.hallucinecran.com/Le%20cin%C3%A9ma%20%C3%A0%20la%20maison%20037.jpg", alt: "Comparaison de la taille d'un écran gonflable étanche avec une personne" },
+  { src: "https://www.hallucinecran.com/ECRAN%207-5.jpg", alt: "Vue arrière d'un écran gonflable étanche de 7.5m montrant sa structure" },
+  { src: "https://www.hallucinecran.com/Gallery/25.webp", alt: "Écran de cinéma gonflable étanche installé dans un jardin pour un événement" },
+  { src: "https://www.hallucinecran.com/Gallery/47.webp", alt: "Projection de film en plein air sur un grand écran gonflable étanche la nuit" },
+  { src: "https://www.hallucinecran.com/Gallery/49.webp", alt: "Image de haute qualité projetée sur un écran gonflable étanche lors d'un cinéma en plein air nocturne" },
 ];
 
 export default function EcranEtanche() {

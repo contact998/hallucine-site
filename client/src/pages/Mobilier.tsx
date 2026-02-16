@@ -137,7 +137,7 @@ export default function Mobilier() {
       <section className="relative min-h-[60vh] flex items-center overflow-hidden">
         <BokehEffect />
         <div className="absolute inset-0">
-          <img src={MOBILIER_FAUTEUIL} alt="Mobilier gonflable Hallucine" className="w-full h-full object-cover" />
+          <img src={MOBILIER_FAUTEUIL} alt="Fauteuil gonflable design Hallucine pour événements et espaces lounge" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.10_0.03_260_/_0.92)] via-[oklch(0.12_0.03_260_/_0.75)] to-[oklch(0.10_0.03_260_/_0.4)]" />
           <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260)] via-transparent to-transparent" />
         </div>
@@ -163,7 +163,7 @@ export default function Mobilier() {
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={0} className="order-2 lg:order-1">
-              <img src={MOBILIER_SUPPORT} alt="Mobilier gonflable Hallucine — structure étanche" className="w-full rounded-sm border border-white/10" />
+              <img src={MOBILIER_SUPPORT} alt="Structure étanche du mobilier gonflable Hallucine avec chambre à air scellée" className="w-full rounded-sm border border-white/10" />
               <p className="text-white/40 text-xs mt-3 text-center italic">Structure étanche — chambre à air scellée, même technologie que nos écrans</p>
             </motion.div>
 

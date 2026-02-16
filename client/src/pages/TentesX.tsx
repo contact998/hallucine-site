@@ -38,10 +38,10 @@ const accessoires = [
 ];
 
 const images = [
-  { src: "https://www.hallucinecran.com/Tentes/Tentes%20X/tente-x.jpg", alt: "Tente gonflable X — vue de côté" },
-  { src: "https://www.hallucinecran.com/Tentes/Tentes%20X/671bade5ef4fb27a93d3034de910dc4.jpg", alt: "Tente gonflable X — vue de face" },
-  { src: "https://www.hallucinecran.com/Tentes/Tentes%20X/1078c8cca1c101dbe2d41d70cadf4a0.jpg", alt: "Tentes gonflables X personnalisables" },
-  { src: "https://www.hallucinecran.com/Tentes/xtent-1.jpg", alt: "Tente gonflable X Hallucine" },
+  { src: "https://www.hallucinecran.com/Tentes/Tentes%20X/tente-x.jpg", alt: "Tente événementielle gonflable en forme de X, vue de profil, installée en extérieur" },
+  { src: "https://www.hallucinecran.com/Tentes/Tentes%20X/671bade5ef4fb27a93d3034de910dc4.jpg", alt: "Vue de face d'une tente gonflable en forme de X pour événements, avec logo personnalisable" },
+  { src: "https://www.hallucinecran.com/Tentes/Tentes%20X/1078c8cca1c101dbe2d41d70cadf4a0.jpg", alt: "Plusieurs tentes gonflables en forme de X avec différentes options de personnalisation de couleur et de logo" },
+  { src: "https://www.hallucinecran.com/Tentes/xtent-1.jpg", alt: "Tente gonflable Hallucine en forme de X, de couleur noire avec le logo Hallucine en blanc" },
 ];
 
 export default function TentesX() {
@@ -86,7 +86,7 @@ export default function TentesX() {
           {/* Schéma éclaté technique */}
           <div className="bg-card border border-border rounded-lg p-6">
             <h3 className="text-xl font-bold text-ivory mb-4">Schéma technique éclaté</h3>
-            <img src="https://www.hallucinecran.com/Tentes/x%20tent%20Eclate%20french-1.jpg" alt="Schéma éclaté technique tente gonflable X" className="w-full max-w-3xl mx-auto rounded" loading="lazy" />
+            <img src="https://www.hallucinecran.com/Tentes/x%20tent%20Eclate%20french-1.jpg" alt="Schéma technique détaillé d'une tente gonflable en forme de X, montrant les différents composants et matériaux" className="w-full max-w-3xl mx-auto rounded" loading="lazy" />
           </div>
         </div>
       </section>

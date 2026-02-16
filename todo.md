@@ -339,3 +339,10 @@
 ## Rideau — scroll en haut de page + logo réduit
 - [x] Forcer le scroll en haut de page quand le rideau s'ouvre (scroll to top au montage + au clic)
 - [x] Réduire la taille du logo rideau (w-32 sm:w-40 md:w-48 lg:w-56 xl:w-64)
+
+## Photos arches gonflables manquantes
+- [x] Ajouter les 2 photos d'arches manquantes sur /arche-gonflable (8 photos maintenant)
+- [x] Ajouter les 2 photos d'arches manquantes dans la galerie (8 photos maintenant)
+
+## Renommage alt text de toutes les photos du site
+- [x] Renommer les alt text de toutes les photos avec des descriptions claires et SEO-friendly (toutes les pages)

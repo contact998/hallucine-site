@@ -43,11 +43,11 @@ const features = [
 ];
 
 const images = [
-  { src: "https://www.hallucinecran.com/Tentes/Tentes%20N/ntent.jpg", alt: "Tente N Hallucine — vue de côté" },
-  { src: "https://www.hallucinecran.com/Tentes/Tentes%20N/761c537e749de68e706a65456057742.jpg", alt: "Tente N Volvo" },
-  { src: "https://www.hallucinecran.com/Tentes/Tentes%20N/Weixin%20Image_20240530160054.jpg", alt: "Tente N Hallucine — vue de face" },
-  { src: "https://www.hallucinecran.com/Tentes/Tentes%20N/Weixin%20Image_20240530160133.jpg", alt: "Tente N Hallucine — vue latérale" },
-  { src: "https://www.hallucinecran.com/Tentes/Tentes%20N/tentes-gonflables-n-croix-rouge.jpg", alt: "Tente N premiers secours Croix-Rouge" },
+  { src: "https://www.hallucinecran.com/Tentes/Tentes%20N/ntent.jpg", alt: "Tente gonflable Hallucine modèle N vue de côté, de couleur blanche et bleue" },
+  { src: "https://www.hallucinecran.com/Tentes/Tentes%20N/761c537e749de68e706a65456057742.jpg", alt: "Tente gonflable Hallucine N personnalisée pour Volvo, installée en extérieur" },
+  { src: "https://www.hallucinecran.com/Tentes/Tentes%20N/Weixin%20Image_20240530160054.jpg", alt: "Vue de face d'une tente gonflable Hallucine modèle N, avec son entrée visible" },
+  { src: "https://www.hallucinecran.com/Tentes/Tentes%20N/Weixin%20Image_20240530160133.jpg", alt: "Vue latérale d'une tente gonflable Hallucine N, montrant sa forme distinctive en N" },
+  { src: "https://www.hallucinecran.com/Tentes/Tentes%20N/tentes-gonflables-n-croix-rouge.jpg", alt: "Tente gonflable Hallucine N utilisée comme poste de premiers secours par la Croix-Rouge" },
 ];
 
 export default function TentesN() {
@@ -88,7 +88,7 @@ export default function TentesN() {
           </div>
           <div className="bg-card border border-border rounded-lg p-6">
             <h3 className="text-xl font-bold text-ivory mb-4">Schéma technique éclaté</h3>
-            <img src="https://www.hallucinecran.com/Tentes/Tentes%20N/ntent%20eclate%20french.jpg" alt="Schéma éclaté technique tente gonflable N" className="w-full max-w-3xl mx-auto rounded" loading="lazy" />
+            <img src="https://www.hallucinecran.com/Tentes/Tentes%20N/ntent%20eclate%20french.jpg" alt="Schéma technique détaillé de la structure d'une tente gonflable Hallucine modèle N" className="w-full max-w-3xl mx-auto rounded" loading="lazy" />
           </div>
         </div>
       </section>

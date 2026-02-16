@@ -30,18 +30,18 @@ const avantages = [
 ];
 
 const galleryImages = [
-  { src: "https://www.hallucinecran.com/Giant%20Inf/1.webp", alt: "Écran géant gonflable centre-ville de Paris" },
-  { src: "https://www.hallucinecran.com/Products/21.PNG", alt: "Écran géant 17m × 12m au Château de Vincennes" },
-  { src: "https://www.hallucinecran.com/Products/ecran-geant-gonflable-24x15-metres.PNG", alt: "Écran géant 24m × 15m au Stade Vélodrome de Marseille" },
-  { src: "https://www.hallucinecran.com/Products/23.PNG", alt: "Écran géant gonflable Air Tahiti Nui" },
-  { src: "https://www.hallucinecran.com/Products/24.PNG", alt: "Écran géant gonflable Orange Vélodrome Marseille" },
-  { src: "https://www.hallucinecran.com/Gallery/46.webp", alt: "Écran géant pour concert de musique classique" },
-  { src: "https://www.hallucinecran.com/Giant%20Inf/4.webp", alt: "Écran géant gonflable sur bateau de croisière" },
-  { src: "https://www.hallucinecran.com/Giant%20Inf/6.webp", alt: "Trois écrans géants gonflables avec feu d'artifice" },
-  { src: "https://www.hallucinecran.com/Giant%20Inf/8.webp", alt: "Trois écrans géants au coucher du soleil" },
-  { src: "https://www.hallucinecran.com/Giant%20Inf/9.webp", alt: "Montage écran géant — 3 personnes suffisent" },
-  { src: "https://www.hallucinecran.com/Giant%20Inf/10.webp", alt: "Écran géant au stade Vélodrome Orange Marseille" },
-  { src: "https://www.hallucinecran.com/Gallery/37.webp", alt: "Écran géant gonflable événement Canal+" },
+  { src: "https://www.hallucinecran.com/Giant%20Inf/1.webp", alt: "Écran de cinéma géant gonflable installé en plein centre-ville de Paris" },
+  { src: "https://www.hallucinecran.com/Products/21.PNG", alt: "Écran de cinéma géant gonflable de 17m sur 12m installé au Château de Vincennes" },
+  { src: "https://www.hallucinecran.com/Products/ecran-geant-gonflable-24x15-metres.PNG", alt: "Écran de cinéma géant gonflable de 24m sur 15m au Stade Vélodrome de Marseille" },
+  { src: "https://www.hallucinecran.com/Products/23.PNG", alt: "Écran géant gonflable publicitaire pour la compagnie aérienne Air Tahiti Nui" },
+  { src: "https://www.hallucinecran.com/Products/24.PNG", alt: "Écran de cinéma géant gonflable sur la pelouse du stade Orange Vélodrome à Marseille" },
+  { src: "https://www.hallucinecran.com/Gallery/46.webp", alt: "Écran géant gonflable utilisé lors d'un concert de musique classique en plein air" },
+  { src: "https://www.hallucinecran.com/Giant%20Inf/4.webp", alt: "Projection de film sur un écran géant gonflable installé sur le pont d'un bateau de croisière" },
+  { src: "https://www.hallucinecran.com/Giant%20Inf/6.webp", alt: "Spectacle nocturne avec trois écrans géants gonflables et feu d'artifice en arrière-plan" },
+  { src: "https://www.hallucinecran.com/Giant%20Inf/8.webp", alt: "Trois écrans de cinéma géants gonflables installés en plein air au coucher du soleil" },
+  { src: "https://www.hallucinecran.com/Giant%20Inf/9.webp", alt: "Démonstration du montage facile d'un écran géant gonflable par une équipe de trois personnes" },
+  { src: "https://www.hallucinecran.com/Giant%20Inf/10.webp", alt: "Vue depuis les gradins de l'écran géant gonflable au stade Vélodrome Orange de Marseille" },
+  { src: "https://www.hallucinecran.com/Gallery/37.webp", alt: "Écran géant gonflable lors d'un événement en plein air organisé par Canal+" },
 ];
 
 export default function EcranGeant() {
@@ -172,15 +172,15 @@ export default function EcranGeant() {
         <div className="container">
           <div className="grid grid-cols-3 gap-8 max-w-3xl mx-auto text-center">
             <div>
-              <img src="https://www.hallucinecran.com/Accessories/4-removebg-preview%20-1-.png" alt="Les plus légers du monde" className="w-20 h-20 object-contain mx-auto mb-3" />
+              <img src="https://www.hallucinecran.com/Accessories/4-removebg-preview%20-1-.png" alt="Icône écran gonflable le plus léger du monde par Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" />
               <p className="text-ivory font-semibold">Les plus légers du monde</p>
             </div>
             <div>
-              <img src="https://www.hallucinecran.com/Accessories/5-removebg-preview.png" alt="Avec 10 ans de garantie" className="w-20 h-20 object-contain mx-auto mb-3" />
+              <img src="https://www.hallucinecran.com/Accessories/5-removebg-preview.png" alt="Icône garantie 10 ans sur les écrans gonflables Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" />
               <p className="text-ivory font-semibold">Avec 10 ans de garantie</p>
             </div>
             <div>
-              <img src="https://www.hallucinecran.com/Accessories/6-removebg-preview.png" alt="Avec souffleur permanent" className="w-20 h-20 object-contain mx-auto mb-3" />
+              <img src="https://www.hallucinecran.com/Accessories/6-removebg-preview.png" alt="Icône souffleur permanent pour écrans gonflables Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" />
               <p className="text-ivory font-semibold">(avec souffleur permanent)</p>
             </div>
           </div>
