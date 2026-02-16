@@ -304,3 +304,7 @@
 
 ## Bug: lettres HALLUCINÉ devenues rouges/transparentes
 - [x] Corriger : l'image fournie était déjà transparente (PNG avec alpha), utiliser l'original tel quel sans traitement
+
+## Amélioration ouverture rideau
+- [x] Supprimer le fond noir derrière le rideau — le rideau s'ouvre directement sur la page d'accueil
+- [x] Le logo Hallucine s'efface progressivement (fade-out 1.5s) pendant l'ouverture du rideau

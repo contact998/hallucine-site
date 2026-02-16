@@ -1,6 +1,7 @@
 /*
  * CinemaRideau — Effet de rideau de cinéma rouge qui s'ouvre au clic
- * Pas de compte à rebours : clic → son du rideau + ouverture directe.
+ * Pas de fond noir : le rideau s'ouvre directement sur la page d'accueil.
+ * Le logo s'efface progressivement (fade-out) pendant l'ouverture.
  * Le clic initial contourne la politique autoplay des navigateurs.
  */
 import { useState, useEffect, useRef, useCallback } from "react";
@@ -10,6 +11,7 @@ const LOGO_TRANSPARENT_URL = "https://files.manuscdn.com/user_upload_by_module/s
 
 // Timings (en ms)
 const OPEN_DURATION = 3000;       // Durée de l'animation d'ouverture (lente)
+const LOGO_FADE_DURATION = 1500;  // Durée du fade-out du logo
 const FADE_OUT_START = 2600;      // Début du fade-out du son
 const REMOVE_DELAY = 3800;        // Retrait du DOM
 
@@ -85,20 +87,12 @@ export default function CinemaRideau() {
 
   return (
     <div
-      className="fixed inset-0 z-[9999]"
+      className="fixed inset-0 z-[9999] pointer-events-auto"
       style={{ cursor: phase === "waiting" ? "pointer" : "default" }}
       onClick={handleClick}
       aria-hidden="true"
     >
-      {/* Fond noir */}
-      <div
-        className="absolute inset-0 bg-black"
-        style={{
-          opacity: isOpening ? 0 : 1,
-          transition: "opacity 1s ease",
-          transitionDelay: isOpening ? `${OPEN_DURATION * 0.7}ms` : "0ms",
-        }}
-      />
+      {/* PAS de fond noir — la page d'accueil est visible derrière les rideaux */}
 
       {/* Rideau gauche */}
       <div
@@ -140,7 +134,7 @@ export default function CinemaRideau() {
         style={{
           background: "linear-gradient(180deg, #6b0f0f 0%, #8b1a1a 40%, #5a0a0a 100%)",
           opacity: isOpening ? 0 : 1,
-          transition: "opacity 0.8s ease",
+          transition: `opacity 0.8s ease`,
           transitionDelay: isOpening ? `${OPEN_DURATION * 0.6}ms` : "0ms",
         }}
       >
@@ -152,12 +146,13 @@ export default function CinemaRideau() {
         <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: "linear-gradient(90deg, #c5942a, #e8b84a, #c5942a, #e8b84a, #c5942a)" }} />
       </div>
 
-      {/* Logo + invitation à cliquer (visible uniquement en phase "waiting") */}
+      {/* Logo + invitation à cliquer — s'efface progressivement pendant l'ouverture */}
       <div
         className="absolute inset-0 flex items-center justify-center z-20"
         style={{
-          opacity: phase === "waiting" ? 1 : 0,
-          transition: "opacity 0.3s ease",
+          opacity: isOpening ? 0 : 1,
+          transition: `opacity ${LOGO_FADE_DURATION}ms ease-out`,
+          pointerEvents: isOpening ? "none" : "auto",
         }}
       >
         <div className="text-center">
