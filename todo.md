@@ -308,3 +308,11 @@
 ## Amélioration ouverture rideau
 - [x] Supprimer le fond noir derrière le rideau — le rideau s'ouvre directement sur la page d'accueil
 - [x] Le logo Hallucine s'efface progressivement (fade-out 1.5s) pendant l'ouverture du rideau
+
+## Bug: accent sur HALLUCINE
+- [ ] Corriger toutes les occurrences de HALLUCINÉ (avec accent) en HALLUCINE (sans accent) dans tout le site
+
+## Remplacement global des logos
+- [x] Uploader le logo transparent fourni sur S3
+- [x] Remplacer TOUS les logos du site par ce logo transparent (Navbar, Footer, CinemaRideau, brochure.ts)
+- [x] Doubler la taille de tous les logos (Navbar h-10→h-20, Footer h-12→h-24, CinemaRideau w-96→w-[36rem])

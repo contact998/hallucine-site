@@ -11,7 +11,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { AvailabilityBadge } from "@/components/AvailabilityIndicator";
 
-const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fCazlcDpANMEbcFp.png";
+const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/raxqsLFLvOYHKhLo.png";
 
 interface DropdownItem {
   label: string;
@@ -161,7 +161,7 @@ export default function Navbar() {
         <div className="container flex items-center justify-between py-3">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 shrink-0">
-            <img src={LOGO_URL} alt="Hallucine" className="h-10 w-auto rounded" />
+            <img src={LOGO_URL} alt="Hallucine" className="h-20 w-auto" />
           </Link>
 
           {/* Desktop Nav */}
