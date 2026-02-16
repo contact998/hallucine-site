@@ -301,3 +301,6 @@
 ## Remplacement logo rideau
 - [x] Utiliser le logo fourni tel quel (fond noir intégré au design)
 - [x] Remplacer le logo actuel du rideau par le nouveau logo
+
+## Bug: lettres HALLUCINÉ devenues rouges/transparentes
+- [x] Corriger : l'image fournie était déjà transparente (PNG avec alpha), utiliser l'original tel quel sans traitement
