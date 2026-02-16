@@ -274,3 +274,7 @@
 ## Synchronisation audio/animation
 - [x] Précharger le son du compte à rebours (FilmCountdown) pour qu'il démarre en même temps que l'animation
 - [x] Précharger le son du rideau de cinéma (CinemaRideau) pour qu'il démarre en même temps que l'animation
+
+## Fichiers audio intégrés au bundle (pas de CDN)
+- [x] Ajouter des preload links dans index.html pour que le navigateur télécharge les MP3 en priorité dès le chargement de la page
+- [x] Combiner avec le préchargement canplaythrough dans les composants pour synchronisation parfaite
