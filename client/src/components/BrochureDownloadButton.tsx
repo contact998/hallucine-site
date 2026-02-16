@@ -35,9 +35,13 @@ export default function BrochureDownloadButton({
       URL.revokeObjectURL(url);
       setLoading(false);
     },
-    onError: () => {
+    onError: (error) => {
       setLoading(false);
-      alert("Erreur lors de la génération de la brochure. Veuillez réessayer.");
+      const isServiceError = error.message?.includes('503') || error.message?.includes('ServiceUnavailable') || error.message?.includes('Storage');
+      const msg = isServiceError
+        ? "Le service de stockage est temporairement indisponible. Veuillez r\u00e9essayer dans quelques instants."
+        : "Erreur lors de la g\u00e9n\u00e9ration de la brochure. Veuillez r\u00e9essayer.";
+      alert(msg);
     },
   });
 

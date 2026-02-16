@@ -317,3 +317,8 @@
 - [x] Recadrer le logo (suppression 48% de marges transparentes) pour un rendu plus grand et lisible
 - [x] Remplacer TOUS les logos du site par la version recadrée (Navbar, Footer, CinemaRideau, brochure.ts)
 - [x] Tailles ajustées : Navbar h-12/h-14, Footer h-20/h-24, CinemaRideau w-[28rem]/w-[42rem]
+
+## Bug: erreur S3 (PutObject 503 ServiceUnavailable)
+- [x] Diagnostiquer : erreur temporaire Cloudflare R2/S3 (503 ServiceUnavailable) lors de l'upload de brochure PDF
+- [x] Ajouter un retry avec backoff exponentiel dans storage.ts (5 tentatives, délai 500ms→ 8s)
+- [x] Ajouter une gestion d'erreur gracieuse côté frontend (message adapté selon le type d'erreur)
