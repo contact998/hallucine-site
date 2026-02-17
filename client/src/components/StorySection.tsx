@@ -13,6 +13,7 @@ const KYTEA_HK = "https://files.manuscdn.com/user_upload_by_module/session_file/
 const ECRAN_TUBULAIRE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/SjzpUEcrCvCGjoLs.png";
 const VOILERIE_BRETAGNE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fHcHrfyvMNXFzNjT.jpg";
 const TROIS_ECRANS = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tQAkrXEyWBMoFQNd.JPG";
+const REPAS_CHINOIS = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/DEtuWIJQmWZSZNPx.jpg";
 
 const chapters: { year: string; title: string; text: string; image: string | null; smallImage?: boolean; extraSmall?: boolean }[] = [
   {
@@ -52,7 +53,7 @@ const chapters: { year: string; title: string; text: string; image: string | nul
     year: "2020",
     title: "Bloqué en Chine — Le COVID",
     text: "Février 2020, Shenzhen. Le COVID frappe. Impossible de rentrer. Plutôt que de ne rien faire, inscription à l'université pour apprendre le chinois. La Chine devient une seconde maison.",
-    image: ECRAN_24M,
+    image: REPAS_CHINOIS,
   },
   {
     year: "Aujourd'hui",
