@@ -1,0 +1,450 @@
+{
+  "query": "SELECT id, nom, email, type, status, createdAt FROM contact_submissions WHERE nom LIKE '%Dupont%' OR nom LIKE '%dupont%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user khoDaLNR7QanKY6.24e870245d7c --database e2MtNjHsQcTUTnWGsGBMg7 --execute SELECT id, nom, email, type, status, createdAt FROM contact_submissions WHERE nom LIKE '%Dupont%' OR nom LIKE '%dupont%';",
+  "rows": [
+    {
+      "id": "1",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 04:41:09"
+    },
+    {
+      "id": "2",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 04:50:55"
+    },
+    {
+      "id": "30001",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 05:29:40"
+    },
+    {
+      "id": "30002",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 05:48:34"
+    },
+    {
+      "id": "30003",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 05:49:30"
+    },
+    {
+      "id": "30004",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 05:51:42"
+    },
+    {
+      "id": "30005",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 05:55:31"
+    },
+    {
+      "id": "30006",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 06:02:39"
+    },
+    {
+      "id": "60001",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 06:58:53"
+    },
+    {
+      "id": "60002",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 06:59:18"
+    },
+    {
+      "id": "60003",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 07:06:23"
+    },
+    {
+      "id": "60004",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 07:30:32"
+    },
+    {
+      "id": "60005",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 07:31:28"
+    },
+    {
+      "id": "60006",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 08:14:29"
+    },
+    {
+      "id": "60008",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 08:33:25"
+    },
+    {
+      "id": "90001",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 15:55:39"
+    },
+    {
+      "id": "90002",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 15:56:28"
+    },
+    {
+      "id": "90003",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 15:57:57"
+    },
+    {
+      "id": "90004",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 16:07:51"
+    },
+    {
+      "id": "90005",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 16:34:24"
+    },
+    {
+      "id": "90006",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 16:54:38"
+    },
+    {
+      "id": "90007",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 17:13:07"
+    },
+    {
+      "id": "90008",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 17:24:57"
+    },
+    {
+      "id": "90009",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 17:28:54"
+    },
+    {
+      "id": "90010",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-15 17:32:02"
+    },
+    {
+      "id": "150001",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 08:11:49"
+    },
+    {
+      "id": "150002",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 08:22:12"
+    },
+    {
+      "id": "150003",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 08:24:22"
+    },
+    {
+      "id": "150004",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 08:25:09"
+    },
+    {
+      "id": "150005",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 08:30:47"
+    },
+    {
+      "id": "150006",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 08:46:31"
+    },
+    {
+      "id": "150007",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 09:05:46"
+    },
+    {
+      "id": "180001",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 09:22:09"
+    },
+    {
+      "id": "180002",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 09:39:50"
+    },
+    {
+      "id": "180003",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 09:43:45"
+    },
+    {
+      "id": "180004",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 09:46:51"
+    },
+    {
+      "id": "180005",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 09:56:43"
+    },
+    {
+      "id": "180006",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "annule",
+      "createdAt": "2026-02-16 10:03:14"
+    },
+    {
+      "id": "180007",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "annule",
+      "createdAt": "2026-02-16 10:14:08"
+    },
+    {
+      "id": "180008",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 10:34:28"
+    },
+    {
+      "id": "180009",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 10:42:41"
+    },
+    {
+      "id": "180010",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 10:52:43"
+    },
+    {
+      "id": "180011",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 10:55:24"
+    },
+    {
+      "id": "180012",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 11:11:39"
+    },
+    {
+      "id": "180013",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 11:13:45"
+    },
+    {
+      "id": "180014",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 12:04:17"
+    },
+    {
+      "id": "180015",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 12:30:34"
+    },
+    {
+      "id": "180016",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 12:46:05"
+    },
+    {
+      "id": "180017",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 12:57:24"
+    },
+    {
+      "id": "180018",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 13:09:45"
+    },
+    {
+      "id": "180019",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 13:34:23"
+    },
+    {
+      "id": "180020",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 13:57:55"
+    },
+    {
+      "id": "180021",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 14:08:01"
+    },
+    {
+      "id": "180022",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 14:38:09"
+    },
+    {
+      "id": "180023",
+      "nom": "Jean Dupont",
+      "email": "jean@example.com",
+      "type": "devis",
+      "status": "en_attente",
+      "createdAt": "2026-02-16 15:23:35"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tnom\temail\ttype\tstatus\tcreatedAt\n1\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 04:41:09\n2\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 04:50:55\n30001\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 05:29:40\n30002\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 05:48:34\n30003\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 05:49:30\n30004\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 05:51:42\n30005\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 05:55:31\n30006\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 06:02:39\n60001\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 06:58:53\n60002\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 06:59:18\n60003\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 07:06:23\n60004\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 07:30:32\n60005\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 07:31:28\n60006\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 08:14:29\n60008\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 08:33:25\n90001\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 15:55:39\n90002\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 15:56:28\n90003\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 15:57:57\n90004\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 16:07:51\n90005\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 16:34:24\n90006\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 16:54:38\n90007\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 17:13:07\n90008\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 17:24:57\n90009\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 17:28:54\n90010\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-15 17:32:02\n150001\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 08:11:49\n150002\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 08:22:12\n150003\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 08:24:22\n150004\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 08:25:09\n150005\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 08:30:47\n150006\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 08:46:31\n150007\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 09:05:46\n180001\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 09:22:09\n180002\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 09:39:50\n180003\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 09:43:45\n180004\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 09:46:51\n180005\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 09:56:43\n180006\tJean Dupont\tjean@example.com\tdevis\tannule\t2026-02-16 10:03:14\n180007\tJean Dupont\tjean@example.com\tdevis\tannule\t2026-02-16 10:14:08\n180008\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 10:34:28\n180009\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 10:42:41\n180010\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 10:52:43\n180011\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 10:55:24\n180012\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 11:11:39\n180013\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 11:13:45\n180014\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 12:04:17\n180015\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 12:30:34\n180016\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 12:46:05\n180017\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 12:57:24\n180018\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 13:09:45\n180019\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 13:34:23\n180020\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 13:57:55\n180021\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 14:08:01\n180022\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 14:38:09\n180023\tJean Dupont\tjean@example.com\tdevis\ten_attente\t2026-02-16 15:23:35\n",
+  "stderr": "",
+  "execution_time_ms": 1634
+}

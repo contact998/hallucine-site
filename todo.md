@@ -413,3 +413,7 @@
 ## Bouton WhatsApp — ouverture directe sans boîte de dialogue
 - [x] Utiliser le protocole whatsapp:// au lieu de https://wa.me/ pour ouvrir directement l'app
 - [x] Fallback vers https://wa.me/ si l'app n'est pas installée (timeout 1.5s)
+
+## Remplacement photo héro page d'accueil
+- [x] Uploader annonce2hd.jpg sur S3
+- [x] Remplacer la photo héro de la page d'accueil par la nouvelle image

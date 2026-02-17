@@ -11,7 +11,7 @@ import { useRef } from "react";
 import ProjectorBeam from "./ProjectorBeam";
 
 
-const HERO_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/KzXxmgVsjMoEdlML.jpg";
+const HERO_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg";
 
 const stats = [
   { value: "30", suffix: " ans", label: "d'expertise" },

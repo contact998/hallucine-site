@@ -1,0 +1,9 @@
+{
+  "query": "DELETE FROM contact_submissions WHERE nom LIKE '%Dupont%' OR nom LIKE '%dupont%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user khoDaLNR7QanKY6.24e870245d7c --database e2MtNjHsQcTUTnWGsGBMg7 --execute DELETE FROM contact_submissions WHERE nom LIKE '%Dupont%' OR nom LIKE '%dupont%';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1498
+}
