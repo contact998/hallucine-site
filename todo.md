@@ -434,3 +434,6 @@
 ## Remplacement photo Gamme Étanche (section Nos produits)
 - [x] Uploader imgi_6_3ECRANS1CANAPE-1-.jpg sur S3
 - [x] Remplacer la photo Gamme Étanche dans ProductsSection par la nouvelle image (3 écrans + canapé rouge)
+
+## Remplacement photo héro page Mobilier Gonflable
+- [x] Remplacer l'image d'arrière-plan héro de la page Mobilier Gonflable par Meublesenpleinair.jpg
