@@ -12,6 +12,7 @@ const ECRAN_ETANCHE_6M = "https://files.manuscdn.com/user_upload_by_module/sessi
 const KYTEA_HK = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BVYuEZrNIrepQRzs.png";
 const ECRAN_TUBULAIRE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/SjzpUEcrCvCGjoLs.png";
 const VOILERIE_BRETAGNE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fHcHrfyvMNXFzNjT.jpg";
+const TROIS_ECRANS = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tQAkrXEyWBMoFQNd.JPG";
 
 const chapters: { year: string; title: string; text: string; image: string | null; smallImage?: boolean; extraSmall?: boolean }[] = [
   {
@@ -57,7 +58,7 @@ const chapters: { year: string; title: string; text: string; image: string | nul
     year: "Aujourd'hui",
     title: "30 ans d'innovation",
     text: "Depuis la Chine, avec une usine partenaire dans le Dongguan, Hallucine continue sa mission : faire connaître ses écrans au plus large public. De la Bretagne à Shenzhen, l'aventure continue.",
-    image: null, // Emplacement pour votre photo
+    image: TROIS_ECRANS,
   },
 ];
 
