@@ -20,12 +20,6 @@ const photos = [
     span: "col-span-1 row-span-1",
   },
   {
-    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YqpLPgGtuwNJbHEB.png",
-    alt: "Tente gonflable blanche design et moderne par Hallucine, pour stand d'exposition ou événementiel",
-    caption: "Tente gonflable",
-    span: "col-span-1 row-span-1",
-  },
-  {
     src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bWqLOjfHSsVoXNHz.jpg",
     alt: "Impressionnant écran de cinéma gonflable de 13m par Hallucine, installé en extérieur devant des arènes historiques",
     caption: "Écran 13m — Arènes",
@@ -62,28 +56,10 @@ const photos = [
     span: "col-span-1 row-span-1",
   },
   {
-    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ozhVXCxOcuYoBREY.png",
-    alt: "Grande tente gonflable événementielle par Hallucine, parfaite pour abriter des stands ou des invités",
-    caption: "Tente événementielle",
-    span: "col-span-1 row-span-1",
-  },
-  {
     src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CAeHAHuCCqWzSkLI.jpg",
     alt: "Écran de cinéma gonflable noir de 17m par Hallucine, pour un contraste d'image optimal en projection",
     caption: "Écran 17m — Grand format",
     span: "col-span-1 row-span-1",
-  },
-  {
-    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HGkkpfyaxsgmapYw.jpg",
-    alt: "Vue technique éclatée d'un écran de cinéma étanche Hallucine, montrant sa structure et ses composants",
-    caption: "Écran étanche — Vue technique",
-    span: "col-span-2 row-span-1",
-  },
-  {
-    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qaWexEDLrhQudeax.png",
-    alt: "Arche gonflable personnalisée par Hallucine pour marquer la ligne d'arrivée d'une course ou d'un marathon",
-    caption: "Arche — Arrivée de course",
-    span: "col-span-2 row-span-1",
   },
   {
     src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CZcgjOTtIqUOapyp.jpg",
