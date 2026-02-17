@@ -417,3 +417,6 @@
 ## Remplacement photo héro page d'accueil
 - [x] Uploader annonce2hd.jpg sur S3
 - [x] Remplacer la photo héro de la page d'accueil par la nouvelle image
+
+## Suppression effet faisceau projecteur animé
+- [x] Supprimer le composant ProjectorBeam de la page d'accueil (HeroSection)
