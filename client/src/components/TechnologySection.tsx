@@ -33,6 +33,36 @@ export default function TechnologySection() {
           </h2>
         </motion.div>
 
+        {/* 3 photos Vélodrome côte à côte */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="grid grid-cols-3 gap-4 mb-20"
+        >
+          <div className="overflow-hidden rounded-lg">
+            <img
+              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ygOqSANxPCGqihoq.jpg"
+              alt="Écran 24m gonflé au Stade Vélodrome"
+              className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+          <div className="overflow-hidden rounded-lg">
+            <img
+              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PMQSUHNnXmKFYbHW.jpg"
+              alt="Écran 24m à plat au Stade Vélodrome"
+              className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+          <div className="overflow-hidden rounded-lg">
+            <img
+              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ODQsEVAASBhVGLWu.jpg"
+              alt="Équipe portant l'écran 24m à dos d'homme"
+              className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+        </motion.div>
+
         <div className="max-w-3xl">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
