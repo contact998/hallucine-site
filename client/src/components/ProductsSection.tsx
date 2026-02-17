@@ -9,7 +9,7 @@ import { Link } from "wouter";
 import { useRef } from "react";
 
 const ECRAN_ETANCHE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZsTqIixSSjzZXDrl.jpg";
-const ECRAN_SOUFFLERIE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/xEbWQMioMZQLtuDK.jpg";
+const ECRAN_SOUFFLERIE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fnEgAdUzmaXRilZh.jpg";
 const TENTE_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YqpLPgGtuwNJbHEB.png";
 const MOBILIER_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bejqCXUcdKFhPUrA.jpg";
 
@@ -103,7 +103,7 @@ export default function ProductsSection() {
               <div className="relative h-72 overflow-hidden">
                 <img
                   src={ECRAN_SOUFFLERIE}
-                  alt="Écran gonflable soufflerie Hallucine 15m"
+                  alt="Écran gonflable soufflerie Hallucine 9m en extérieur avec équipe technique"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260)] via-[oklch(0.14_0.03_260_/_0.2)] to-transparent" />
