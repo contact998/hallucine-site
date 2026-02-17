@@ -61,7 +61,7 @@ export default function ProductsSection() {
                   alt="Trois écrans gonflables Hallucine avec canapé gonflable rouge"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260)] via-[oklch(0.14_0.03_260_/_0.2)] to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260)] via-[oklch(0.14_0.03_260_/_0.2)] to-transparent" style={{opacity: '0.19999999999999996'}} />
                 <div className="absolute top-4 left-4 px-3 py-1 bg-gold text-navy-deep text-xs font-bold tracking-[0.2em] uppercase">
                   Best-seller
                 </div>
