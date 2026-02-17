@@ -11,6 +11,7 @@ const ECRAN_24M = "https://files.manuscdn.com/user_upload_by_module/session_file
 const ECRAN_ETANCHE_6M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/lnVfJDBlokHJPkwN.jpg";
 const KYTEA_HK = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BVYuEZrNIrepQRzs.png";
 const ECRAN_TUBULAIRE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/SjzpUEcrCvCGjoLs.png";
+const VOILERIE_BRETAGNE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fHcHrfyvMNXFzNjT.jpg";
 
 const chapters: { year: string; title: string; text: string; image: string | null; smallImage?: boolean; extraSmall?: boolean }[] = [
   {
@@ -24,7 +25,7 @@ const chapters: { year: string; title: string; text: string; image: string | nul
     year: "1998",
     title: "La voilerie bretonne",
     text: "À La Trinité-sur-Mer, en Bretagne, une voilerie devient le berceau des premiers écrans. Jean-Christophe, maître voilier, maîtrise les techniques de couture. Ensemble, ils mettent au point un écran révolutionnaire qui tombe dans un sac à voile après chaque projection.",
-    image: ECRAN_SOUFFLERIE_15,
+    image: VOILERIE_BRETAGNE,
   },
   {
     year: "2004",
@@ -44,7 +45,7 @@ const chapters: { year: string; title: string; text: string; image: string | nul
     year: "2010",
     title: "La gamme étanche est née",
     text: "Inspirés du kitesurf, les premiers écrans étanches voient le jour. Chambre à air scellée, pas de soufflerie, ultra-légers. De 2m à 8m, ils révolutionnent le marché.",
-    image: ECRAN_ETANCHE_3M,
+    image: null,
   },
   {
     year: "2020",
