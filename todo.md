@@ -441,3 +441,6 @@
 
 ## Remplacement photo Tentes gonflables page accueil
 - [x] Remplacer la photo Tentes gonflables dans la section Nos produits par tentedeprojection.jpg
+
+## Refonte tableau comparatif page Comparaison
+- [x] Refaire le tableau comparatif en style cartes côte à côte VS (Hallucine vs Concurrent) pour meilleure lisibilité

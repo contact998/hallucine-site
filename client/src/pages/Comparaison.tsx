@@ -1,6 +1,6 @@
 /*
  * Page Comparaison Écrans Gonflables — Hallucine vs Concurrent
- * Design: cinéma vintage — fond sombre, accents dorés
+ * Design: cartes côte à côte "VS" — Hallucine doré vs Concurrent gris
  * Contenu complet du site d'origine hallucinecran.com
  */
 import Navbar from "@/components/Navbar";
@@ -8,24 +8,25 @@ import Footer from "@/components/Footer";
 import FilmCountdown from "@/components/FilmCountdown";
 import { Link } from "wouter";
 import { useState } from "react";
+import { Check, X, Trophy, Feather, Clock, Shield, Wind, Truck, Wrench, Leaf, Users, Mountain, Package, Ruler, Star } from "lucide-react";
 
 const comparisonData = [
-  { carac: "Légèreté", hallucine: "3 fois plus léger (ex : 13m = 80 kg)", concurrent: "Jusqu'à 260 kg" },
-  { carac: "Matériau Structure", hallucine: "Polyamide noir haute ténacité (DuPont de Nemours)", concurrent: "Matériaux traditionnels plus lourds (bâche PVC)" },
-  { carac: "Logistique", hallucine: "Voiture break — 80 kg emballé dans un sac de 1,4 m", concurrent: "Camion avec hayon — Flycase 260 kg + 50 kg = 310 kg" },
-  { carac: "Toile de Projection", hallucine: "Pas besoin de la retirer, lavable en machine (8 kg)", concurrent: "Doit être retirée après chaque séance, entretien complexe" },
-  { carac: "Stockage", hallucine: "Sac de transport compact, rétractation ultra-rapide", concurrent: "Stockage volumineux et encombrant (flycase)" },
-  { carac: "Résistance au Vent", hallucine: "Flexible, résiste à des vents jusqu'à 38 km/h (6 Beaufort)", concurrent: "Plus vulnérable aux rafales, structure rigide" },
-  { carac: "Temps d'Installation", hallucine: "1 personne / 45 min — structure légère et toile pré-positionnée", concurrent: "4 personnes / 60 min — poids et montage complexe" },
-  { carac: "Démontage", hallucine: "30 min — 1 personne — pas besoin de retirer la toile", concurrent: "120 min — 4 personnes — retrait de la toile avec 200 élastiques" },
-  { carac: "Polyvalence", hallucine: "Installable sur toits, bateaux, zones inaccessibles — sans engins de levage", concurrent: "Nécessite transpalette, chariot élévateur, grue, etc." },
-  { carac: "Garantie", hallucine: "10 ans sans frais supplémentaires", concurrent: "Limitée à 2 ans, extensions coûteuses" },
-  { carac: "Expérience", hallucine: "30 ans d'expertise, événements mondiaux", concurrent: "Expérience variable selon l'entreprise" },
-  { carac: "Sécurité du Personnel", hallucine: "Réduit les risques de blessures et d'arrêts (TMS)", concurrent: "Effort physique important et risques accrus" },
-  { carac: "Flexibilité Structurelle", hallucine: "Conception flexible, plie sous le vent", concurrent: "Conception rigide, moins adaptée aux conditions venteuses" },
-  { carac: "Impact sur les sites", hallucine: "Impact minimal : monuments historiques, pelouses de stades...", concurrent: "Impact maximal sur les sites de projection" },
-  { carac: "Empreinte Carbone", hallucine: "500 kg CO₂", concurrent: "1 200 kg CO₂" },
-  { carac: "Confort de Manipulation", hallucine: "Toile souple de 210 g", concurrent: "Toile rigide de 600 g" },
+  { carac: "Légèreté", hallucine: "3 fois plus léger (ex : 13m = 80 kg)", concurrent: "Jusqu'à 260 kg", icon: Feather },
+  { carac: "Matériau Structure", hallucine: "Polyamide noir haute ténacité (DuPont de Nemours)", concurrent: "Matériaux traditionnels plus lourds (bâche PVC)", icon: Shield },
+  { carac: "Logistique", hallucine: "Voiture break — 80 kg emballé dans un sac de 1,4 m", concurrent: "Camion avec hayon — Flycase 260 kg + 50 kg = 310 kg", icon: Truck },
+  { carac: "Toile de Projection", hallucine: "Pas besoin de la retirer, lavable en machine (8 kg)", concurrent: "Doit être retirée après chaque séance, entretien complexe", icon: Wrench },
+  { carac: "Stockage", hallucine: "Sac de transport compact, rétractation ultra-rapide", concurrent: "Stockage volumineux et encombrant (flycase)", icon: Package },
+  { carac: "Résistance au Vent", hallucine: "Flexible, résiste à des vents jusqu'à 38 km/h (6 Beaufort)", concurrent: "Plus vulnérable aux rafales, structure rigide", icon: Wind },
+  { carac: "Temps d'Installation", hallucine: "1 personne / 45 min — structure légère et toile pré-positionnée", concurrent: "4 personnes / 60 min — poids et montage complexe", icon: Clock },
+  { carac: "Démontage", hallucine: "30 min — 1 personne — pas besoin de retirer la toile", concurrent: "120 min — 4 personnes — retrait de la toile avec 200 élastiques", icon: Clock },
+  { carac: "Polyvalence", hallucine: "Installable sur toits, bateaux, zones inaccessibles — sans engins de levage", concurrent: "Nécessite transpalette, chariot élévateur, grue, etc.", icon: Mountain },
+  { carac: "Garantie", hallucine: "10 ans sans frais supplémentaires", concurrent: "Limitée à 2 ans, extensions coûteuses", icon: Star },
+  { carac: "Expérience", hallucine: "30 ans d'expertise, événements mondiaux", concurrent: "Expérience variable selon l'entreprise", icon: Trophy },
+  { carac: "Sécurité du Personnel", hallucine: "Réduit les risques de blessures et d'arrêts (TMS)", concurrent: "Effort physique important et risques accrus", icon: Users },
+  { carac: "Flexibilité Structurelle", hallucine: "Conception flexible, plie sous le vent", concurrent: "Conception rigide, moins adaptée aux conditions venteuses", icon: Wind },
+  { carac: "Impact sur les sites", hallucine: "Impact minimal : monuments historiques, pelouses de stades...", concurrent: "Impact maximal sur les sites de projection", icon: Mountain },
+  { carac: "Empreinte Carbone", hallucine: "500 kg CO₂", concurrent: "1 200 kg CO₂", icon: Leaf },
+  { carac: "Confort de Manipulation", hallucine: "Toile souple de 210 g", concurrent: "Toile rigide de 600 g", icon: Ruler },
 ];
 
 const arguments7 = [
@@ -86,37 +87,103 @@ export default function Comparaison() {
             Découvrez pourquoi les écrans Hallucine surpassent la concurrence sur tous les critères : 
             légèreté, installation, garantie, empreinte carbone et bien plus encore.
           </p>
-          <p className="text-white/50 text-sm mt-4 italic">
-            Faites glisser avec le doigt ou la souris pour voir le tableau entièrement.
-          </p>
         </div>
       </section>
 
-      {/* Tableau comparatif */}
-      <section className="py-20 bg-background">
+      {/* Titre section VS */}
+      <section className="py-16 bg-background">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-8">Hallucine 13m (80 kg) vs Concurrent 13m (≈260 kg)</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm min-w-[700px]">
-              <thead>
-                <tr className="border-b-2 border-warm/40">
-                  <th className="text-left py-4 px-4 text-warm font-semibold w-1/5">Caractéristiques</th>
-                  <th className="text-left py-4 px-4 text-warm font-semibold w-2/5">
-                    <span className="inline-block px-3 py-1 bg-warm/20 rounded text-warm">Écran Hallucine 13m — 80 kg</span>
-                  </th>
-                  <th className="text-left py-4 px-4 text-white/40 font-semibold w-2/5">Écran Concurrent 13m — ≈260 kg</th>
-                </tr>
-              </thead>
-              <tbody>
-                {comparisonData.map((row, i) => (
-                  <tr key={i} className="border-b border-border hover:bg-white/5 transition-colors">
-                    <td className="py-4 px-4 text-ivory font-medium">{row.carac}</td>
-                    <td className="py-4 px-4 text-green-400/80 leading-relaxed">{row.hallucine}</td>
-                    <td className="py-4 px-4 text-white/40 leading-relaxed">{row.concurrent}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-ivory mb-3">
+              Hallucine 13m <span className="text-warm">(80 kg)</span> vs Concurrent 13m <span className="text-white/40">(≈260 kg)</span>
+            </h2>
+            <p className="text-white/50 text-sm">16 critères comparés — jugez par vous-même</p>
+          </div>
+
+          {/* Cartes VS */}
+          <div className="space-y-4">
+            {/* En-têtes des colonnes */}
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 mb-2">
+              <div className="flex items-center justify-center gap-3 py-4 px-6 rounded-xl bg-gradient-to-r from-amber-900/30 to-amber-800/20 border border-amber-500/30">
+                <Trophy className="w-6 h-6 text-amber-400" />
+                <span className="text-xl font-bold text-amber-300">Hallucine</span>
+                <span className="text-amber-400/60 text-sm font-medium ml-1">80 kg</span>
+              </div>
+              <div className="hidden md:flex items-center justify-center">
+                <span className="text-2xl font-black text-white/20">VS</span>
+              </div>
+              <div className="flex items-center justify-center gap-3 py-4 px-6 rounded-xl bg-white/5 border border-white/10">
+                <span className="text-xl font-bold text-white/50">Concurrent</span>
+                <span className="text-white/30 text-sm font-medium ml-1">≈260 kg</span>
+              </div>
+            </div>
+
+            {/* Lignes de comparaison */}
+            {comparisonData.map((row, i) => {
+              const Icon = row.icon;
+              return (
+                <div key={i} className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-3 md:gap-4 group">
+                  {/* Carte Hallucine */}
+                  <div className="relative p-5 rounded-xl bg-gradient-to-br from-amber-950/40 via-amber-900/20 to-transparent border border-amber-500/20 hover:border-amber-500/40 transition-all duration-300">
+                    <div className="flex items-start gap-3">
+                      <div className="shrink-0 w-9 h-9 rounded-lg bg-amber-500/15 flex items-center justify-center mt-0.5">
+                        <Check className="w-5 h-5 text-emerald-400" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-amber-200 font-semibold text-base leading-snug mb-1.5">{row.carac}</p>
+                        <p className="text-white/90 text-sm leading-relaxed">{row.hallucine}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Séparateur VS avec icône */}
+                  <div className="hidden md:flex flex-col items-center justify-center gap-1">
+                    <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+                      <Icon className="w-4 h-4 text-white/30" />
+                    </div>
+                  </div>
+
+                  {/* Libellé critère mobile */}
+                  <div className="md:hidden flex items-center gap-2 px-2 -mt-1 -mb-1">
+                    <Icon className="w-4 h-4 text-white/25" />
+                    <span className="text-white/30 text-xs font-medium uppercase tracking-wider">vs</span>
+                  </div>
+
+                  {/* Carte Concurrent */}
+                  <div className="relative p-5 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-white/10 transition-all duration-300">
+                    <div className="flex items-start gap-3">
+                      <div className="shrink-0 w-9 h-9 rounded-lg bg-red-500/10 flex items-center justify-center mt-0.5">
+                        <X className="w-5 h-5 text-red-400/70" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-white/50 font-semibold text-base leading-snug mb-1.5">{row.carac}</p>
+                        <p className="text-white/40 text-sm leading-relaxed">{row.concurrent}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Résumé visuel */}
+          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="p-5 rounded-xl bg-gradient-to-br from-amber-950/40 to-transparent border border-amber-500/20 text-center">
+              <p className="text-3xl font-bold text-amber-300">80 kg</p>
+              <p className="text-white/60 text-sm mt-1">Poids Hallucine</p>
+            </div>
+            <div className="p-5 rounded-xl bg-gradient-to-br from-amber-950/40 to-transparent border border-amber-500/20 text-center">
+              <p className="text-3xl font-bold text-amber-300">45 min</p>
+              <p className="text-white/60 text-sm mt-1">Installation</p>
+            </div>
+            <div className="p-5 rounded-xl bg-gradient-to-br from-amber-950/40 to-transparent border border-amber-500/20 text-center">
+              <p className="text-3xl font-bold text-amber-300">10 ans</p>
+              <p className="text-white/60 text-sm mt-1">Garantie</p>
+            </div>
+            <div className="p-5 rounded-xl bg-gradient-to-br from-amber-950/40 to-transparent border border-amber-500/20 text-center">
+              <p className="text-3xl font-bold text-amber-300">500 kg</p>
+              <p className="text-white/60 text-sm mt-1">CO₂ émis</p>
+            </div>
           </div>
         </div>
       </section>
@@ -137,7 +204,7 @@ export default function Comparaison() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-ivory mb-3">{arg.title}</h3>
-                  <p className="text-white/60 leading-relaxed">{arg.text}</p>
+                  <p className="text-white/65 leading-relaxed">{arg.text}</p>
                 </div>
               </div>
             ))}
@@ -152,21 +219,21 @@ export default function Comparaison() {
           <div className="grid md:grid-cols-3 gap-6">
             <div className="p-6 bg-card border border-border rounded-lg">
               <h3 className="text-warm font-semibold mb-3">Ambiance unique</h3>
-              <p className="text-white/60 text-sm leading-relaxed">
+              <p className="text-white/65 text-sm leading-relaxed">
                 Créez une ambiance unique pour vos projections ou présentations. 
                 L'écran gonflable géant transforme n'importe quel lieu en salle de cinéma.
               </p>
             </div>
             <div className="p-6 bg-card border border-border rounded-lg">
               <h3 className="text-warm font-semibold mb-3">Intérieur et extérieur</h3>
-              <p className="text-white/60 text-sm leading-relaxed">
+              <p className="text-white/65 text-sm leading-relaxed">
                 Convient aux événements en plein air comme en intérieur. 
                 Festivals, drive-in, mariages, conférences, lancements de produits.
               </p>
             </div>
             <div className="p-6 bg-card border border-border rounded-lg">
               <h3 className="text-warm font-semibold mb-3">Image professionnelle</h3>
-              <p className="text-white/60 text-sm leading-relaxed">
+              <p className="text-white/65 text-sm leading-relaxed">
                 Impressionnez vos invités avec un matériel professionnel et esthétique. 
                 30 ans d'expertise au service de vos événements.
               </p>
@@ -179,7 +246,7 @@ export default function Comparaison() {
       <section className="py-20 bg-charcoal-light">
         <div className="container text-center">
           <h2 className="text-3xl font-bold text-ivory mb-4">Convaincu ?</h2>
-          <p className="text-white/60 mb-8 max-w-xl mx-auto">
+          <p className="text-white/65 mb-8 max-w-xl mx-auto">
             Découvrez notre gamme complète d'écrans ou demandez un devis personnalisé.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
