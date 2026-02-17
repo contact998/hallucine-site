@@ -14,6 +14,7 @@ const ECRAN_TUBULAIRE = "https://files.manuscdn.com/user_upload_by_module/sessio
 const VOILERIE_BRETAGNE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fHcHrfyvMNXFzNjT.jpg";
 const TROIS_ECRANS = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tQAkrXEyWBMoFQNd.JPG";
 const REPAS_CHINOIS = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/DEtuWIJQmWZSZNPx.jpg";
+const ECLATE_ETANCHE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VZNKRkBWmClVeysS.jpg";
 
 const chapters: { year: string; title: string; text: string; image: string | null; smallImage?: boolean; extraSmall?: boolean }[] = [
   {
@@ -41,7 +42,7 @@ const chapters: { year: string; title: string; text: string; image: string | nul
     year: "2005",
     title: "Le secret des airbags",
     text: "À Lyon, ancienne capitale du tissu, une enquête mène au secret le mieux gardé de l'automobile : le tissu des airbags. Un polyamide haute ténacité de DuPont de Nemours. Léger, indestructible, parfait.",
-    image: ECRAN_ETANCHE_6M,
+    image: ECLATE_ETANCHE,
   },
   {
     year: "2010",
