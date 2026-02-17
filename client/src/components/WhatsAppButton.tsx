@@ -1,13 +1,18 @@
 /*
  * Bouton WhatsApp flottant — affiché en bas à gauche de chaque page
  * Simple et discret : juste le bouton avec un indicateur en ligne/hors ligne
+ * Au survol (admin seulement) : tooltip avec heures locales de DC et JB
  */
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
+import { useAuth } from "@/_core/hooks/useAuth";
 
 const WHATSAPP_NUMBER = "33680147694";
 
 export default function WhatsAppButton() {
+  const { user, isAuthenticated } = useAuth();
+  const isAdmin = isAuthenticated && user?.role === "admin";
+
   // Détecter le fuseau horaire du visiteur
   const visitorTimezone = useMemo(() => {
     try {
@@ -23,7 +28,43 @@ export default function WhatsAppButton() {
     { staleTime: 60_000, refetchInterval: 60_000 }
   );
 
+  // Récupérer les fuseaux des commerciaux (admin seulement)
+  const { data: commercialTz } = trpc.availability.getCommercialTimezones.useQuery(undefined, {
+    enabled: isAdmin,
+    staleTime: 60_000,
+  });
+
   const isAvailable = businessStatus?.isAvailable ?? false;
+  const [hovered, setHovered] = useState(false);
+  const [dcTime, setDcTime] = useState("");
+  const [jbTime, setJbTime] = useState("");
+
+  // Mettre à jour les heures en temps réel quand survolé (admin)
+  useEffect(() => {
+    if (!isAdmin || !hovered || !commercialTz) return;
+
+    const update = () => {
+      try {
+        const now = new Date();
+        setDcTime(now.toLocaleTimeString("fr-FR", {
+          timeZone: commercialTz.dc || "Europe/Paris",
+          hour: "2-digit",
+          minute: "2-digit",
+        }));
+        setJbTime(now.toLocaleTimeString("fr-FR", {
+          timeZone: commercialTz.jb || "Asia/Shanghai",
+          hour: "2-digit",
+          minute: "2-digit",
+        }));
+      } catch {
+        setDcTime("--:--");
+        setJbTime("--:--");
+      }
+    };
+    update();
+    const interval = setInterval(update, 10_000);
+    return () => clearInterval(interval);
+  }, [isAdmin, hovered, commercialTz]);
 
   // Message WhatsApp adapté selon la disponibilité
   const whatsappMessage = isAvailable
@@ -53,6 +94,8 @@ export default function WhatsAppButton() {
       <a
         href={whatsappDeepLink}
         onClick={handleClick}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
         rel="noopener noreferrer"
         className="group relative flex items-center justify-center w-14 h-14 bg-[#25D366] rounded-full shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-[#25D366]/30 hover:scale-110 transition-all duration-300"
         aria-label="Contacter via WhatsApp"
@@ -67,6 +110,23 @@ export default function WhatsAppButton() {
         }`}>
           {isAvailable && <span className="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-40" />}
         </span>
+
+        {/* Tooltip admin : heures DC + JB (visible uniquement au survol pour admin) */}
+        {isAdmin && hovered && (
+          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 pointer-events-none">
+            <div className="bg-gray-900 text-white text-xs rounded-lg px-3 py-2 shadow-xl border border-gray-700 whitespace-nowrap">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="font-semibold text-blue-400">DC</span>
+                <span>{dcTime}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="font-semibold text-amber-400">JB</span>
+                <span>{jbTime}</span>
+              </div>
+            </div>
+            <div className="absolute left-1/2 -translate-x-1/2 -bottom-1 w-2 h-2 bg-gray-900 border-r border-b border-gray-700 rotate-45" />
+          </div>
+        )}
       </a>
     </div>
   );

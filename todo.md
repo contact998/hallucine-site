@@ -468,3 +468,7 @@
 - [x] Ajouter un panneau "Gestion des commerciaux" dans /admin (fuseau + statut DC et JB)
 - [ ] Créer un endpoint API webhook pour que le CRM lise les fuseaux depuis le site web
 - [ ] Mettre à jour les tests
+
+## Tooltip heure sur boutons WhatsApp et orange
+- [x] Bouton WhatsApp : tooltip au survol avec heures DC + JB (visible uniquement admin connecté)
+- [x] Bouton orange disponibilité : tooltip heure de Paris si non connecté, heure du contact si connecté

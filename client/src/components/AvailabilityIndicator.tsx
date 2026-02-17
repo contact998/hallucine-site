@@ -245,13 +245,54 @@ export function AvailabilityWidget() {
 
 export function AvailabilityBadge() {
   const { data, isLoading } = useAvailability();
+  const { user, isAuthenticated } = useAuth();
+  const [hovered, setHovered] = useState(false);
+  const [displayTime, setDisplayTime] = useState("");
+
+  // Calculer l'heure à afficher au survol
+  useEffect(() => {
+    if (!hovered) return;
+    const update = () => {
+      try {
+        const now = new Date();
+        if (isAuthenticated && user?.timezone) {
+          // Utilisateur connecté : afficher son heure locale
+          setDisplayTime(now.toLocaleTimeString("fr-FR", {
+            timeZone: user.timezone,
+            hour: "2-digit",
+            minute: "2-digit",
+          }));
+        } else {
+          // Visiteur non connecté : afficher l'heure de Paris
+          setDisplayTime(now.toLocaleTimeString("fr-FR", {
+            timeZone: "Europe/Paris",
+            hour: "2-digit",
+            minute: "2-digit",
+          }));
+        }
+      } catch {
+        setDisplayTime("--:--");
+      }
+    };
+    update();
+    const interval = setInterval(update, 10_000);
+    return () => clearInterval(interval);
+  }, [hovered, isAuthenticated, user?.timezone]);
 
   if (isLoading || !data) return null;
 
   const availableCount = data.commercials.filter(c => c.available).length;
+  const timeLabel = isAuthenticated && user?.timezone
+    ? `Votre heure : ${displayTime}`
+    : `Paris : ${displayTime}`;
 
   return (
-    <div className="flex items-center gap-1.5" title={data.aiMessage}>
+    <div
+      className="relative flex items-center gap-1.5 cursor-default"
+      title={data.aiMessage}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
       <div className="relative">
         <div
           className={`w-2.5 h-2.5 rounded-full ${
@@ -271,6 +312,19 @@ export function AvailabilityBadge() {
           ? `${availableCount}/${data.commercials.length} en ligne`
           : "Absent"}
       </span>
+
+      {/* Tooltip avec l'heure au survol */}
+      {hovered && displayTime && (
+        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 pointer-events-none z-50">
+          <div className="bg-gray-900 text-white text-xs rounded-lg px-3 py-1.5 shadow-xl border border-gray-700 whitespace-nowrap">
+            <div className="flex items-center gap-1.5">
+              <Clock className="w-3 h-3 text-gray-400" />
+              <span>{timeLabel}</span>
+            </div>
+          </div>
+          <div className="absolute left-1/2 -translate-x-1/2 -top-1 w-2 h-2 bg-gray-900 border-l border-t border-gray-700 rotate-45" />
+        </div>
+      )}
     </div>
   );
 }
