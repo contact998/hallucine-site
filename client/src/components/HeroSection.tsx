@@ -32,7 +32,7 @@ export default function HeroSection() {
         <img
           src={HERO_IMG}
           alt="Écran de cinéma gonflable géant Hallucine en projection nocturne"
-          className="w-full h-full object-cover scale-110"
+          className="w-full h-full object-cover object-left-top"
         />
       </motion.div>
 

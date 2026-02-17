@@ -430,3 +430,7 @@
 - [x] Composants corrigés : HeroSection, ProductsSection, TechnologySection, UseCasesSection, StorySection, RealisationsSection, TestimonialsSection, FaqSection, ContactSection, Footer, SmartForm, Navbar, AvailabilityIndicator
 - [x] Labels de section (text-xs→text-sm) : Nos produits, Technologie, Cas d'usage, Notre histoire, Réalisations, Témoignages
 - [x] 248 tests passent
+
+## Recadrage image héro page d'accueil
+- [x] Recentrer l'image avec object-left-top pour que le projecteur à gauche soit visible
+- [x] Supprimer le scale-110 pour montrer plus de l'image (projecteur + écran)
