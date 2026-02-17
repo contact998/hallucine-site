@@ -70,7 +70,7 @@ export default function TechnologySection() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-center text-3xl lg:text-5xl font-bold italic text-white mb-20 leading-tight"
         >
-          « Même pas besoin de grue pour me déplacer, mes jambes me suffisent »
+          « Même pas besoin de grue pour me déplacer, mes <span className="text-gold">jambes</span> me suffisent »
         </motion.p>
 
         <div className="max-w-3xl">
