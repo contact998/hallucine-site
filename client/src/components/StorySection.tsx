@@ -12,7 +12,7 @@ const ECRAN_ETANCHE_6M = "https://files.manuscdn.com/user_upload_by_module/sessi
 const KYTEA_HK = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BVYuEZrNIrepQRzs.png";
 const ECRAN_TUBULAIRE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/SjzpUEcrCvCGjoLs.png";
 
-const chapters: { year: string; title: string; text: string; image: string | null; smallImage?: boolean }[] = [
+const chapters: { year: string; title: string; text: string; image: string | null; smallImage?: boolean; extraSmall?: boolean }[] = [
   {
     year: "1996",
     title: "L'école des forains",
@@ -32,6 +32,7 @@ const chapters: { year: string; title: string; text: string; image: string | nul
     text: "Sur une plage de Hong Kong, un kitesurf attire l'attention. Ses boudins gonflables, légers et résistants, font naître une idée folle : et si on pouvait projeter des films en plein air avec un écran aussi léger qu'une voile ?",
     image: KYTEA_HK,
     smallImage: true,
+    extraSmall: true,
   },
   {
     year: "2005",
@@ -106,7 +107,7 @@ export default function StorySection() {
                       <img
                         src={item.image}
                         alt={item.title}
-                        className="w-[85%] h-auto max-h-[260px] object-contain hover:scale-105 transition-transform duration-700 rounded"
+                        className={`${item.extraSmall ? "w-[65%] max-h-[200px]" : "w-[85%] max-h-[260px]"} h-auto object-contain hover:scale-105 transition-transform duration-700 rounded`}
                       />
                     ) : (
                       <img
