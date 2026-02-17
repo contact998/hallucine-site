@@ -63,6 +63,16 @@ export default function TechnologySection() {
           </div>
         </motion.div>
 
+        {/* Citation sous les photos */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-center text-2xl lg:text-3xl font-bold mb-20"
+        >
+          <span className="text-gradient-gold text-glow-gold-intense">« Même pas besoin de grue pour me déplacer, mes jambes me suffisent »</span>
+        </motion.p>
+
         <div className="max-w-3xl">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
