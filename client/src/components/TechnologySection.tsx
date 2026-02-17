@@ -73,6 +73,15 @@ export default function TechnologySection() {
           « Même pas besoin de grue pour me déplacer, mes <span className="text-gold">jambes</span> me suffisent »
         </motion.p>
 
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="text-center text-2xl lg:text-4xl font-bold italic text-white mb-20 leading-tight"
+        >
+          Je suis arrivé tout seul dans un utilitaire de 12 m³ et je repars tout seul pour un repos bien mérité jusqu'à ma prochaine séance
+        </motion.p>
+
         <div className="max-w-3xl">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
