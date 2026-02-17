@@ -73,6 +73,30 @@ const photos = [
     caption: "Arche — Cinéma sous les étoiles",
     span: "col-span-1 row-span-1",
   },
+  {
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/MVZvBrLDWdkcTSBF.jpg",
+    alt: "Écran de cinéma gonflable Hallucine au Festival International du Film de Constantine, Algérie",
+    caption: "Festival du Film — Constantine",
+    span: "col-span-2 row-span-1",
+  },
+  {
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/OnZgEKpgaTstKHyQ.jpg",
+    alt: "Écran de cinéma gonflable Hallucine installé sur la plage en Nouvelle-Calédonie",
+    caption: "Écran plage — Nouvelle-Calédonie",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TigVbyzODCBMQuyj.jpg",
+    alt: "Livraison d'un écran Hallucine au Tchad, aventure logistique avec des chameaux",
+    caption: "Aventure logistique — Tchad",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eJkfHkUPHYJbXHwS.jpg",
+    alt: "Projection nocturne Hyundai sur écran gonflable Hallucine à Ostende, Belgique",
+    caption: "Événement Hyundai — Ostende, Belgique",
+    span: "col-span-2 row-span-1",
+  },
 ];
 
 export default function RealisationsSection() {
