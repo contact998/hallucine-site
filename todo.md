@@ -454,3 +454,17 @@
 - [ ] Supprimer uniquement les deux images Étanche/Soufflerie de TechnologySection (garder le comparatif de poids)
 - [x] Remettre TechnologySection dans Home.tsx (sans les images Étanche/Soufflerie)
 - [x] Supprimer le tableau VS de la page Comparaison
+
+## Centralisation gestion fuseaux horaires dans le portail d'accueil
+- [ ] Créer la section "Gestion des commerciaux" dans le portail d'accueil (Dashboard)
+- [ ] Interface manuelle : sélecteur fuseau horaire + statut (en ligne/hors ligne) pour DC et JB
+- [ ] Supprimer la gestion fuseau du profil site web (/profil)
+- [ ] Supprimer la gestion fuseau du profil CRM
+- [ ] Source unique de vérité : site web et CRM lisent depuis la même table DB
+- [ ] Tests vitest pour la gestion centralisée
+
+## Centralisation gestion fuseaux horaires dans /admin
+- [x] Supprimer le sélecteur fuseau horaire de la page /profil
+- [x] Ajouter un panneau "Gestion des commerciaux" dans /admin (fuseau + statut DC et JB)
+- [ ] Créer un endpoint API webhook pour que le CRM lise les fuseaux depuis le site web
+- [ ] Mettre à jour les tests

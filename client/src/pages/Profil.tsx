@@ -25,7 +25,6 @@ import {
   Mail,
   Calendar,
   Globe,
-  Check,
 } from "lucide-react";
 import { useTimezone } from "@/hooks/useTimezone";
 
@@ -83,8 +82,7 @@ export default function Profil() {
   const [sortField, setSortField] = useState<SortField>("createdAt");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
   const [cancellingId, setCancellingId] = useState<number | null>(null);
-  const [tzDropdownOpen, setTzDropdownOpen] = useState(false);
-  const { timezone, timezones, timezoneLabel, timezoneAbbr, formatDate, formatDateOnly, updateTimezone, isUpdating } = useTimezone();
+  const { timezoneAbbr, formatDate, formatDateOnly } = useTimezone();
 
   const { data: submissions, isLoading, refetch } = trpc.profile.mySubmissions.useQuery(
     undefined,
@@ -251,57 +249,7 @@ export default function Profil() {
               </div>
             </div>
 
-            {/* Sélecteur de fuseau horaire */}
-            <div className="mt-6 pt-6 border-t border-border">
-              <h3 className="text-sm font-semibold text-ivory mb-3 flex items-center gap-2">
-                <Globe className="w-4 h-4 text-warm" />
-                Fuseau horaire
-                <span className="text-xs text-white/40 font-normal">— Toutes les dates du CRM et de l'admin seront affichées dans ce fuseau</span>
-              </h3>
-              <div className="relative">
-                <button
-                  onClick={() => setTzDropdownOpen(!tzDropdownOpen)}
-                  className="w-full md:w-96 flex items-center justify-between gap-2 px-4 py-3 bg-background border border-border rounded-lg text-ivory hover:border-warm/50 transition-colors text-left"
-                >
-                  <div className="flex items-center gap-3">
-                    <Globe className="w-4 h-4 text-warm" />
-                    <div>
-                      <p className="text-sm font-medium">{timezoneLabel}</p>
-                      <p className="text-xs text-white/40">{timezoneAbbr}</p>
-                    </div>
-                  </div>
-                  {isUpdating ? (
-                    <Loader2 className="w-4 h-4 text-warm animate-spin" />
-                  ) : (
-                    <svg className={`w-4 h-4 text-white/40 transition-transform ${tzDropdownOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                  )}
-                </button>
-                {tzDropdownOpen && (
-                  <div className="absolute z-50 mt-1 w-full md:w-96 bg-card border border-border rounded-lg shadow-xl max-h-80 overflow-y-auto">
-                    {timezones.map((tz: { value: string; label: string; city: string }) => (
-                      <button
-                        key={tz.value}
-                        onClick={() => {
-                          updateTimezone({ timezone: tz.value });
-                          setTzDropdownOpen(false);
-                        }}
-                        className={`w-full flex items-center justify-between px-4 py-3 text-left hover:bg-white/5 transition-colors ${
-                          timezone === tz.value ? 'bg-warm/10 border-l-2 border-warm' : ''
-                        }`}
-                      >
-                        <div>
-                          <p className="text-sm text-ivory font-medium">{tz.city}</p>
-                          <p className="text-xs text-white/40">{tz.label}</p>
-                        </div>
-                        {timezone === tz.value && (
-                          <Check className="w-4 h-4 text-warm" />
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
+
           </div>
         </div>
       </section>
