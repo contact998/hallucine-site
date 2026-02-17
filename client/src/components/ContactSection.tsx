@@ -28,7 +28,7 @@ export default function ContactSection() {
                 Parlons de votre<br />
                 <span className="text-gradient-gold text-glow-gold-intense">projet</span>
               </h2>
-              <p className="text-white/60 mt-4 leading-relaxed">
+              <p className="text-white/75 text-base mt-4 leading-relaxed">
                 Chaque projet est unique. Dites-nous ce que vous cherchez, et nous vous proposerons la solution la plus adaptée à vos besoins.
               </p>
 
@@ -38,8 +38,8 @@ export default function ContactSection() {
                     <Mail className="w-5 h-5 text-gold" />
                   </div>
                   <div>
-                    <div className="text-white font-medium text-sm">Email</div>
-                    <div className="text-white/50 text-sm">contact@hallucine.fr</div>
+                    <div className="text-white font-medium text-base">Email</div>
+                    <div className="text-white/70 text-base">contact@hallucine.fr</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -47,8 +47,8 @@ export default function ContactSection() {
                     <Phone className="w-5 h-5 text-gold" />
                   </div>
                   <div>
-                    <div className="text-white font-medium text-sm">Téléphone</div>
-                    <div className="text-white/50 text-sm">+33 6 80 14 76 94</div>
+                    <div className="text-white font-medium text-base">Téléphone</div>
+                    <div className="text-white/70 text-base">+33 6 80 14 76 94</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -56,8 +56,8 @@ export default function ContactSection() {
                     <MapPin className="w-5 h-5 text-gold" />
                   </div>
                   <div>
-                    <div className="text-white font-medium text-sm">Siège</div>
-                    <div className="text-white/50 text-sm">Shenzhen, Chine — Fabrication : Dongguan, Chine</div>
+                    <div className="text-white font-medium text-base">Siège</div>
+                    <div className="text-white/70 text-base">Shenzhen, Chine — Fabrication : Dongguan, Chine</div>
                   </div>
                 </div>
               </div>

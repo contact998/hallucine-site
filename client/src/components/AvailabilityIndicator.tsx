@@ -131,7 +131,7 @@ export function AvailabilityWidget() {
                 >
                   {c.initials}
                 </div>
-                <span className="text-[10px] text-gray-400">
+                <span className="text-xs text-gray-400">
                   {isAuthenticated ? c.localTime : (c.available ? "En ligne" : "Hors ligne")}
                 </span>
               </div>
@@ -182,7 +182,7 @@ export function AvailabilityWidget() {
           {/* Bouton de fermeture définitive */}
           <button
             onClick={() => setIsDismissed(true)}
-            className="mt-2 w-full text-center text-[10px] text-gray-500 hover:text-gray-300 transition-colors"
+            className="mt-2 w-full text-center text-xs text-gray-400 hover:text-gray-300 transition-colors"
           >
             Masquer pour cette session
           </button>

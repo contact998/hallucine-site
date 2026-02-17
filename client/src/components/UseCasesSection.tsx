@@ -68,12 +68,12 @@ export default function UseCasesSection() {
         >
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-[1px] bg-gold" />
-            <span className="text-gold text-xs font-semibold tracking-[0.3em] uppercase">Cas d'usage</span>
+            <span className="text-gold text-sm font-semibold tracking-[0.3em] uppercase">Cas d'usage</span>
           </div>
           <h2 className="text-4xl lg:text-5xl font-bold text-white leading-tight max-w-3xl">
             Un écran pour chaque occasion
           </h2>
-          <p className="text-white/45 text-lg mt-6 max-w-xl leading-relaxed">
+          <p className="text-white/70 text-lg mt-6 max-w-xl leading-relaxed">
             Nos écrans s'adaptent à tous les contextes : du jardin privé au stade de 50 000 places. Voici les usages les plus courants.
           </p>
         </motion.div>
@@ -90,15 +90,15 @@ export default function UseCasesSection() {
             >
               <uc.icon className="w-8 h-8 text-gold mb-4 group-hover:scale-110 transition-transform duration-300" />
               <h3 className="text-lg font-bold text-white mb-3">{uc.title}</h3>
-              <p className="text-white/50 text-sm leading-relaxed mb-4">{uc.desc}</p>
+              <p className="text-white/75 text-base leading-relaxed mb-4">{uc.desc}</p>
               <div className="space-y-2 pt-4 border-t border-white/5">
                 <div className="flex items-start gap-2">
-                  <span className="text-gold text-xs font-semibold shrink-0 mt-0.5">Tailles :</span>
-                  <span className="text-white/40 text-xs">{uc.sizes}</span>
+                  <span className="text-gold text-sm font-semibold shrink-0 mt-0.5">Tailles :</span>
+                  <span className="text-white/70 text-sm">{uc.sizes}</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <span className="text-gold text-xs font-semibold shrink-0 mt-0.5">Exemples :</span>
-                  <span className="text-white/40 text-xs">{uc.examples}</span>
+                  <span className="text-gold text-sm font-semibold shrink-0 mt-0.5">Exemples :</span>
+                  <span className="text-white/70 text-sm">{uc.examples}</span>
                 </div>
               </div>
             </motion.div>
@@ -112,7 +112,7 @@ export default function UseCasesSection() {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="text-center mt-16"
         >
-          <p className="text-white/50 text-sm mb-4">Vous avez un projet différent ? Nous nous adaptons.</p>
+          <p className="text-white/75 text-base mb-4">Vous avez un projet différent ? Nous nous adaptons.</p>
           <Link href="/contactez-nous" className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all glow-gold">
             Parlez-nous de votre projet <ChevronRight className="w-5 h-5" />
           </Link>

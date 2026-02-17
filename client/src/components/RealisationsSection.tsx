@@ -116,13 +116,13 @@ export default function RealisationsSection() {
         >
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-[1px] bg-gold" />
-            <span className="text-gold text-xs font-semibold tracking-[0.3em] uppercase">Réalisations</span>
+            <span className="text-gold text-sm font-semibold tracking-[0.3em] uppercase">Réalisations</span>
           </div>
           <h2 className="text-4xl lg:text-6xl font-bold text-white leading-tight max-w-3xl">
             Ils nous font confiance<br />
             <span className="text-gradient-gold text-glow-gold-intense">dans le monde entier</span>
           </h2>
-          <p className="text-white/45 text-lg mt-6 max-w-xl leading-relaxed">
+          <p className="text-white/75 text-lg mt-6 max-w-xl leading-relaxed">
             Des festivals aux événements corporate, des plages aux stades, nos écrans transforment chaque lieu en expérience unique.
           </p>
         </motion.div>

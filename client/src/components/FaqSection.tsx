@@ -53,7 +53,7 @@ export default function FaqSection() {
           <h2 className="text-3xl lg:text-4xl font-bold text-white">
             Questions fréquentes
           </h2>
-          <p className="text-white/45 text-lg mt-4 leading-relaxed">
+          <p className="text-white/75 text-lg mt-4 leading-relaxed">
             Les réponses aux questions que l'on nous pose le plus souvent.
           </p>
         </motion.div>
@@ -72,12 +72,12 @@ export default function FaqSection() {
                 onClick={() => setOpenFaq(openFaq === i ? null : i)}
                 className="w-full flex items-center justify-between p-5 text-left hover:bg-white/[0.02] transition-colors"
               >
-                <span className="text-white font-medium text-sm pr-4">{item.q}</span>
+                <span className="text-white font-medium text-base pr-4">{item.q}</span>
                 <ChevronDown className={`w-5 h-5 text-gold shrink-0 transition-transform duration-300 ${openFaq === i ? "rotate-180" : ""}`} />
               </button>
               {openFaq === i && (
                 <div className="px-5 pb-5">
-                  <p className="text-white/60 text-sm leading-relaxed">{item.a}</p>
+                  <p className="text-white/80 text-base leading-relaxed">{item.a}</p>
                 </div>
               )}
             </motion.div>
@@ -86,7 +86,7 @@ export default function FaqSection() {
 
         {/* CTA */}
         <div className="text-center mt-12">
-          <p className="text-white/40 text-sm mb-4">Vous avez d'autres questions ?</p>
+          <p className="text-white/70 text-base mb-4">Vous avez d'autres questions ?</p>
           <Link href="/contactez-nous" className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all glow-gold">
             Contactez-nous <ChevronRight className="w-5 h-5" />
           </Link>

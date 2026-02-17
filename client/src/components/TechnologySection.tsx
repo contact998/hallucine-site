@@ -35,7 +35,7 @@ export default function TechnologySection() {
         >
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-[1px] bg-gold" />
-            <span className="text-gold text-xs font-semibold tracking-[0.3em] uppercase">Technologie</span>
+            <span className="text-gold text-sm font-semibold tracking-[0.3em] uppercase">Technologie</span>
           </div>
           <h2 className="text-4xl lg:text-6xl font-bold text-white leading-tight max-w-3xl">
             3× plus léger.<br />
@@ -57,26 +57,26 @@ export default function TechnologySection() {
                 <img src={ECRAN_ECLATE} alt="Structure écran étanche Hallucine" className="w-full aspect-[3/4] object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.12_0.04_260)] via-transparent to-transparent" />
                 <div className="absolute bottom-3 left-3">
-                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-gold bg-navy-deep/80 px-2 py-1">Étanche</span>
+                  <span className="text-xs font-bold tracking-[0.2em] uppercase text-gold bg-navy-deep/80 px-2 py-1">Étanche</span>
                 </div>
               </div>
               <div className="relative overflow-hidden">
                 <img src={ECRAN_SOUFFLERIE_12} alt="Écran soufflerie 12m Hallucine" className="w-full aspect-[3/4] object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.12_0.04_260)] via-transparent to-transparent" />
                 <div className="absolute bottom-3 left-3">
-                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-white bg-navy-deep/80 px-2 py-1">Soufflerie</span>
+                  <span className="text-xs font-bold tracking-[0.2em] uppercase text-white bg-navy-deep/80 px-2 py-1">Soufflerie</span>
                 </div>
               </div>
             </div>
 
             <h3 className="text-2xl font-bold text-white mb-6">Du secret défense à l'écran de cinéma</h3>
 
-            <div className="space-y-5 text-white/50 text-[15px] leading-relaxed">
+            <div className="space-y-5 text-white/75 text-base leading-relaxed">
               <p>
-                Tout commence à Lyon, capitale historique du textile. En cherchant un tissu à la fois léger et indestructible, nous avons découvert que les <strong className="text-white/70">airbags automobiles</strong> utilisaient exactement ce que nous cherchions.
+                Tout commence à Lyon, capitale historique du textile. En cherchant un tissu à la fois léger et indestructible, nous avons découvert que les <strong className="text-white/90">airbags automobiles</strong> utilisaient exactement ce que nous cherchions.
               </p>
               <p>
-                Les constructeurs nous ont dit que c'était «&nbsp;secret défense&nbsp;». Nous ne nous sommes pas découragés. Après des mois d'enquête, nous avons identifié le tissu : un <strong className="text-white/70">polyamide haute ténacité de Dupont de Nemours</strong>.
+                Les constructeurs nous ont dit que c'était «&nbsp;secret défense&nbsp;». Nous ne nous sommes pas découragés. Après des mois d'enquête, nous avons identifié le tissu : un <strong className="text-white/90">polyamide haute ténacité de Dupont de Nemours</strong>.
               </p>
               <p>
                 Pour la gamme étanche, l'inspiration est venue d'ailleurs : sur une plage de Hong Kong, en observant des kitesurfs. Leurs boudins gonflables étaient légers, résistants, et parfaitement étanches. La technologie était là, sous nos yeux.
@@ -95,7 +95,7 @@ export default function TechnologySection() {
                   <item.icon className="w-5 h-5 text-gold shrink-0 mt-0.5" />
                   <div>
                     <div className="text-white text-sm font-semibold">{item.label}</div>
-                    <div className="text-white/35 text-xs mt-0.5">{item.desc}</div>
+                    <div className="text-white/65 text-sm mt-0.5">{item.desc}</div>
                   </div>
                 </div>
               ))}
@@ -110,7 +110,7 @@ export default function TechnologySection() {
           >
             <div className="sticky top-32">
               <h3 className="text-2xl font-bold text-white mb-3">Comparatif de poids</h3>
-              <p className="text-white/40 text-sm mb-8">
+              <p className="text-white/70 text-base mb-8">
                 Écrans à soufflerie — Hallucine vs. concurrence (bâche camion)
               </p>
 
@@ -136,8 +136,8 @@ export default function TechnologySection() {
                         className="absolute inset-y-0 left-0 bg-gradient-to-r from-gold/80 to-gold/40"
                       />
                       <div className="relative h-full flex items-center px-3 justify-between">
-                        <span className="text-[11px] font-semibold text-navy-deep">Hallucine</span>
-                        <span className="text-[11px] font-bold text-navy-deep">{item.hallucine} kg</span>
+                        <span className="text-xs font-semibold text-navy-deep">Hallucine</span>
+                        <span className="text-xs font-bold text-navy-deep">{item.hallucine} kg</span>
                       </div>
                     </div>
                     {/* Competitor bar */}
@@ -149,8 +149,8 @@ export default function TechnologySection() {
                         className="absolute inset-y-0 left-0 bg-white/[0.08]"
                       />
                       <div className="relative h-full flex items-center px-3 justify-between">
-                        <span className="text-[11px] font-medium text-white/40">Concurrence</span>
-                        <span className="text-[11px] font-medium text-white/40">~{item.competitor} kg</span>
+                        <span className="text-xs font-medium text-white/70">Concurrence</span>
+                        <span className="text-xs font-medium text-white/70">~{item.competitor} kg</span>
                       </div>
                     </div>
                   </motion.div>
@@ -159,10 +159,10 @@ export default function TechnologySection() {
 
               {/* Quote */}
               <div className="border-l-2 border-gold/40 pl-6 py-2">
-                <p className="text-white/60 text-sm font-serif italic leading-relaxed">
+                <p className="text-white/80 text-base font-serif italic leading-relaxed">
                   «&nbsp;Nos concurrents n'ont jamais eu, à 3h du matin, à devoir replier un écran pour aller se coucher.&nbsp;»
                 </p>
-                <p className="text-gold/50 text-xs mt-2 font-medium">— Fondateur d'Hallucine</p>
+                <p className="text-gold/80 text-sm mt-2 font-medium">— Fondateur d'Hallucine</p>
               </div>
             </div>
           </motion.div>

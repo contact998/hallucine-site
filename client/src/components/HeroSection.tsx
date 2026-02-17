@@ -57,7 +57,7 @@ export default function HeroSection() {
             className="flex items-center gap-3 mb-10"
           >
             <div className="w-12 h-[1px] bg-gold" />
-            <span className="text-gold text-xs font-semibold tracking-[0.3em] uppercase">Fabricant français depuis 1995</span>
+            <span className="text-gold text-sm font-semibold tracking-[0.3em] uppercase">Fabricant français depuis 1995</span>
           </motion.div>
 
           {/* 💫 Citation principale — slogan accrocheur */}
@@ -119,7 +119,7 @@ export default function HeroSection() {
                 {stat.value}
                 <span className="text-gold">{stat.suffix}</span>
               </div>
-              <div className="text-[11px] text-white/60 mt-2 tracking-[0.2em] uppercase font-medium">{stat.label}</div>
+              <div className="text-xs text-white/70 mt-2 tracking-[0.2em] uppercase font-medium">{stat.label}</div>
             </div>
           ))}
         </motion.div>
@@ -131,8 +131,8 @@ export default function HeroSection() {
         transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
         className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <span className="text-[10px] text-white/25 tracking-[0.3em] uppercase">Scroll</span>
-        <ChevronDown className="w-5 h-5 text-white/25" />
+        <span className="text-xs text-white/40 tracking-[0.3em] uppercase">Scroll</span>
+        <ChevronDown className="w-5 h-5 text-white/40" />
       </motion.div>
     </section>
   );

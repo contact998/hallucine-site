@@ -425,6 +425,8 @@
 - [x] Ajouter un fond semi-transparent, backdrop-blur, bordure et labels plus visibles (white/60)
 
 ## Audit lisibilité page d'accueil
-- [ ] Examiner visuellement chaque section de la page d'accueil
-- [ ] Corriger tous les textes peu lisibles (contraste, opacité, taille)
-- [ ] Améliorer les séparateurs et bordures invisibles
+- [x] Examiner visuellement chaque section de la page d'accueil
+- [x] Corriger tous les textes peu lisibles : opacités (white/30→white/65, white/50→white/70), tailles (text-[10px]→text-xs, text-xs→text-sm)
+- [x] Composants corrigés : HeroSection, ProductsSection, TechnologySection, UseCasesSection, StorySection, RealisationsSection, TestimonialsSection, FaqSection, ContactSection, Footer, SmartForm, Navbar, AvailabilityIndicator
+- [x] Labels de section (text-xs→text-sm) : Nos produits, Technologie, Cas d'usage, Notre histoire, Réalisations, Témoignages
+- [x] 248 tests passent

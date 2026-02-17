@@ -525,8 +525,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     exit: { opacity: 0, x: -30 },
   };
 
-  const inputClass = "w-full p-3 bg-white/[0.05] border border-white/10 rounded-sm text-white text-sm placeholder:text-white/30 focus:border-gold focus:outline-none transition-colors";
-  const labelClass = "text-white/60 text-sm mb-1.5 block";
+  const inputClass = "w-full p-3 bg-white/[0.05] border border-white/10 rounded-sm text-white text-base placeholder:text-white/40 focus:border-gold focus:outline-none transition-colors";
+  const labelClass = "text-white/75 text-sm mb-1.5 block";
 
   // ─── Rendu ────────────────────────────────────────────────────────────
   if (submitted) {
@@ -538,10 +538,10 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         <h3 className="text-2xl font-bold text-white mb-3">
           Merci{prenom ? ` ${prenom}` : ""} !
         </h3>
-        <p className="text-white/60">
+        <p className="text-white/75">
           Nous avons bien recu votre demande. Notre equipe vous repondra dans les 24 heures.
         </p>
-        <p className="text-white/40 text-sm mt-4">
+        <p className="text-white/65 text-sm mt-4">
           Un email de confirmation a ete envoye a {email}
         </p>
       </div>
@@ -563,7 +563,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             </button>
             <button
               onClick={dismissProgress}
-              className="px-3 py-1.5 border border-white/20 text-white/50 text-xs rounded-sm hover:border-white/40 transition-colors"
+              className="px-3 py-1.5 border border-white/20 text-white/65 text-xs rounded-sm hover:border-white/50 transition-colors"
             >
               Non merci
             </button>
@@ -577,7 +577,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
           <Sparkles className="w-5 h-5 text-emerald-400 shrink-0" />
           <div>
             <p className="text-emerald-300 text-sm font-medium">Formulaire pré-rempli par le chatbot IA</p>
-            <p className="text-white/50 text-xs mt-0.5">Les informations de votre conversation ont été reportées. Vérifiez et complétez si nécessaire.</p>
+            <p className="text-white/65 text-xs mt-0.5">Les informations de votre conversation ont été reportées. Vérifiez et complétez si nécessaire.</p>
           </div>
         </div>
       )}
@@ -593,7 +593,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             />
           </div>
         ))}
-        <span className="text-white/40 text-xs ml-2 whitespace-nowrap">{currentStep}/{totalSteps}</span>
+        <span className="text-white/60 text-xs ml-2 whitespace-nowrap">{currentStep}/{totalSteps}</span>
       </div>
 
       <AnimatePresence mode="wait">
@@ -601,7 +601,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         {currentStep === 1 && (
           <motion.div key="step1" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
             <h3 className="text-xl font-bold text-white mb-1">Commencez votre devis gratuit</h3>
-            <p className="text-white/50 text-sm mb-5">Votre email suffit pour demarrer. Nous vous repondrons sous 24h.</p>
+            <p className="text-white/70 text-sm mb-5">Votre email suffit pour demarrer. Nous vous repondrons sous 24h.</p>
 
             <div className="space-y-4">
               <div>
@@ -664,7 +664,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                       </span>
                     )}
                   </div>
-                  <p className="text-white/30 text-[10px] mt-2">Ces informations seront pre-remplies pour vous faire gagner du temps.</p>
+                  <p className="text-white/50 text-xs mt-2">Ces informations seront pre-remplies pour vous faire gagner du temps.</p>
                 </motion.div>
               )}
             </div>
@@ -687,7 +687,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         {currentStep === 2 && (
           <motion.div key="step2" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
             <h3 className="text-xl font-bold text-white mb-1">Quel produit vous interesse ?</h3>
-            <p className="text-white/50 text-sm mb-5">Selectionnez pour personnaliser votre devis.</p>
+            <p className="text-white/70 text-sm mb-5">Selectionnez pour personnaliser votre devis.</p>
             <div className="grid grid-cols-2 gap-3">
               {products.map((p) => (
                 <button
@@ -701,7 +701,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                     <p.icon className="w-5 h-5" />
                   </div>
                   <div className="text-white font-semibold text-sm">{p.label}</div>
-                  <div className="text-white/40 text-xs leading-tight">{p.desc}</div>
+                  <div className="text-white/65 text-xs leading-tight">{p.desc}</div>
                 </button>
               ))}
             </div>
@@ -719,7 +719,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             {product === "ecran" && (
               <>
                 <h3 className="text-xl font-bold text-white mb-1">Pour combien de spectateurs ?</h3>
-                <p className="text-white/50 text-sm mb-5">La taille d'ecran s'adapte a votre audience.</p>
+                <p className="text-white/70 text-sm mb-5">La taille d'ecran s'adapte a votre audience.</p>
                 <div className="space-y-2">
                   {screenCategories.map((cat) => (
                     <button
@@ -734,7 +734,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                       </div>
                       <div className="flex-1">
                         <div className="text-white font-semibold text-sm">{cat.label}</div>
-                        <div className="text-white/40 text-xs">{cat.audience}</div>
+                        <div className="text-white/65 text-xs">{cat.audience}</div>
                       </div>
                       <span className={`text-xs px-2 py-0.5 rounded-full ${
                         cat.tech === "Etanche" ? "bg-gold/10 text-gold" : "bg-blue-400/10 text-blue-400"
@@ -750,7 +750,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             {product === "tente" && (
               <>
                 <h3 className="text-xl font-bold text-white mb-1">Quel type de tente ?</h3>
-                <p className="text-white/50 text-sm mb-5">Selectionnez l'usage principal.</p>
+                <p className="text-white/70 text-sm mb-5">Selectionnez l'usage principal.</p>
                 <div className="grid grid-cols-2 gap-2">
                   {tentTypes.map((t) => (
                     <button
@@ -770,7 +770,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             {product === "mobilier" && (
               <>
                 <h3 className="text-xl font-bold text-white mb-1">Quel type de mobilier ?</h3>
-                <p className="text-white/50 text-sm mb-5">Selectionnez le type de mobilier souhaite.</p>
+                <p className="text-white/70 text-sm mb-5">Selectionnez le type de mobilier souhaite.</p>
                 <div className="grid grid-cols-2 gap-2">
                   {mobilierTypes.map((m) => (
                     <button
@@ -790,7 +790,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             {product === "arche" && (
               <>
                 <h3 className="text-xl font-bold text-white mb-1">Quel usage pour l'arche ?</h3>
-                <p className="text-white/50 text-sm mb-5">Selectionnez l'usage principal.</p>
+                <p className="text-white/70 text-sm mb-5">Selectionnez l'usage principal.</p>
                 <div className="grid grid-cols-2 gap-2">
                   {archeUsages.map((a) => (
                     <button
@@ -826,13 +826,13 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         {currentStep === 4 && (
           <motion.div key="step4" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
             <h3 className="text-xl font-bold text-white mb-1">Souhaitez-vous etre rappele ?</h3>
-            <p className="text-white/50 text-sm mb-5">Optionnel mais recommande pour un devis plus rapide.</p>
+            <p className="text-white/70 text-sm mb-5">Optionnel mais recommande pour un devis plus rapide.</p>
 
             <div className="space-y-4">
               <div>
                 <label className={labelClass}>
                   <Phone className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Telephone
-                  <span className="text-white/30 ml-1">(recommande)</span>
+                  <span className="text-white/50 ml-1">(recommande)</span>
                 </label>
                 <div className="flex items-center gap-2">
                   <input
@@ -936,7 +936,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         {currentStep === 5 && (
           <motion.div key="step5" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
             <h3 className="text-xl font-bold text-white mb-1">Et vous etes ?</h3>
-            <p className="text-white/50 text-sm mb-5">Ces informations nous aident a personnaliser votre devis.</p>
+            <p className="text-white/70 text-sm mb-5">Ces informations nous aident a personnaliser votre devis.</p>
 
             {/* Bouton "Tout accepter" si l'IA a des suggestions */}
             {emailExtraction && (emailExtraction.prenom || emailExtraction.nom || emailExtraction.entreprise) && !prenom && !nom && !entreprise && (
@@ -1079,7 +1079,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         {currentStep === 6 && (
           <motion.div key="step6" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
             <h3 className="text-xl font-bold text-white mb-1">Ou etes-vous base ?</h3>
-            <p className="text-white/50 text-sm mb-5">Pour adapter notre offre a votre region.</p>
+            <p className="text-white/70 text-sm mb-5">Pour adapter notre offre a votre region.</p>
 
             <div className="space-y-4">
               <div className="relative">
@@ -1199,13 +1199,13 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         {currentStep === 7 && (
           <motion.div key="step7" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
             <h3 className="text-xl font-bold text-white mb-1">Un detail a ajouter ?</h3>
-            <p className="text-white/50 text-sm mb-5">Optionnel -- date d'evenement, budget, contraintes...</p>
+            <p className="text-white/70 text-sm mb-5">Optionnel -- date d'evenement, budget, contraintes...</p>
 
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="text-white/60 text-sm">
                   <MessageSquare className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Message
-                  <span className="text-white/30 ml-1">(optionnel)</span>
+                  <span className="text-white/50 ml-1">(optionnel)</span>
                 </label>
                 <VoiceMicButton
                   onResult={(text) => setMessage(prev => prev ? `${prev} ${text}` : text)}
@@ -1231,7 +1231,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
             {/* Recapitulatif compact */}
             <div className="mt-4 p-3 bg-white/[0.03] border border-white/5 rounded-sm">
-              <div className="text-white/40 text-xs uppercase tracking-wider mb-2">Recapitulatif</div>
+              <div className="text-white/65 text-xs uppercase tracking-wider mb-2">Recapitulatif</div>
               <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
                 {email && <div className="text-white/60">Email : <span className="text-white">{email}</span></div>}
                 {product && <div className="text-white/60">Produit : <span className="text-white">{products.find(p => p.type === product)?.label}</span></div>}

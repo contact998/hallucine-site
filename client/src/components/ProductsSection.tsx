@@ -35,13 +35,13 @@ export default function ProductsSection() {
         >
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-[1px] bg-gold" />
-            <span className="text-gold text-xs font-semibold tracking-[0.3em] uppercase">Nos produits</span>
+            <span className="text-gold text-sm font-semibold tracking-[0.3em] uppercase">Nos produits</span>
           </div>
           <h2 className="text-4xl lg:text-6xl font-bold text-white leading-tight max-w-3xl">
             Des écrans conçus par ceux<br />
             <span className="text-gradient-gold text-glow-gold-intense">qui les utilisent</span>
           </h2>
-          <p className="text-white/45 text-lg mt-6 max-w-xl leading-relaxed">
+          <p className="text-white/70 text-lg mt-6 max-w-xl leading-relaxed">
             Deux technologies, une même obsession : la légèreté et la fiabilité. 30 ans d'expérience terrain dans chaque couture.
           </p>
         </motion.div>
@@ -62,7 +62,7 @@ export default function ProductsSection() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260)] via-[oklch(0.14_0.03_260_/_0.2)] to-transparent" />
-                <div className="absolute top-4 left-4 px-3 py-1 bg-gold text-navy-deep text-[10px] font-bold tracking-[0.2em] uppercase">
+                <div className="absolute top-4 left-4 px-3 py-1 bg-gold text-navy-deep text-xs font-bold tracking-[0.2em] uppercase">
                   Best-seller
                 </div>
               </div>
@@ -72,16 +72,16 @@ export default function ProductsSection() {
                     <h3 className="text-2xl font-bold text-white group-hover:text-gold transition-colors duration-500">
                       Gamme Étanche
                     </h3>
-                    <p className="text-gold/60 text-sm mt-1 font-medium">De 2 à 8 mètres</p>
+                    <p className="text-gold/80 text-sm mt-1 font-medium">De 2 à 8 mètres</p>
                   </div>
                   <Shield className="w-8 h-8 text-white/[0.06] group-hover:text-gold/20 transition-colors" />
                 </div>
-                <p className="text-white/45 text-sm leading-relaxed mb-6 font-serif italic">
+                <p className="text-white/75 text-base leading-relaxed mb-6 font-serif italic">
                   Inspirée du kitesurf. Chambre à air scellée, gonflage unique en 3 minutes, aucune soufflerie nécessaire. Ultra-légers et transportables par une seule personne.
                 </p>
                 <div className="grid grid-cols-2 gap-3 mb-6">
                   {["Gonflage unique", "Sans soufflerie", "1 personne suffit", "3× plus léger"].map((f) => (
-                    <span key={f} className="px-3 py-1.5 bg-white/[0.03] border border-white/[0.05] text-white/50 text-xs text-center">
+                    <span key={f} className="px-3 py-1.5 bg-white/[0.03] border border-white/[0.08] text-white/75 text-sm text-center">
                       {f}
                     </span>
                   ))}
@@ -107,7 +107,7 @@ export default function ProductsSection() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260)] via-[oklch(0.14_0.03_260_/_0.2)] to-transparent" />
-                <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 text-navy-deep text-[10px] font-bold tracking-[0.2em] uppercase">
+                <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 text-navy-deep text-xs font-bold tracking-[0.2em] uppercase">
                   Spectaculaire
                 </div>
               </div>
@@ -117,16 +117,16 @@ export default function ProductsSection() {
                     <h3 className="text-2xl font-bold text-white group-hover:text-gold transition-colors duration-500">
                       Gamme Soufflerie
                     </h3>
-                    <p className="text-gold/60 text-sm mt-1 font-medium">De 5 à 24 mètres</p>
+                    <p className="text-gold/80 text-sm mt-1 font-medium">De 5 à 24 mètres</p>
                   </div>
                   <Wind className="w-8 h-8 text-white/[0.06] group-hover:text-gold/20 transition-colors" />
                 </div>
-                <p className="text-white/45 text-sm leading-relaxed mb-6 font-serif italic">
+                <p className="text-white/75 text-base leading-relaxed mb-6 font-serif italic">
                   Tissu d'airbag automobile Dupont de Nemours. Soufflerie permanente pour les très grands formats. Se range dans un sac à voile sans pliage. Garantie 10 ans.
                 </p>
                 <div className="grid grid-cols-2 gap-3 mb-6">
                   {["Tissu d'airbag", "Sac à voile", "Garantie 10 ans", "200 kg max"].map((f) => (
-                    <span key={f} className="px-3 py-1.5 bg-white/[0.03] border border-white/[0.05] text-white/50 text-xs text-center">
+                    <span key={f} className="px-3 py-1.5 bg-white/[0.03] border border-white/[0.08] text-white/75 text-sm text-center">
                       {f}
                     </span>
                   ))}
@@ -154,11 +154,11 @@ export default function ProductsSection() {
                 <h3 className="text-lg font-bold text-white group-hover:text-gold transition-colors duration-500">
                   Tentes gonflables
                 </h3>
-                <p className="text-gold/50 text-xs mt-1 font-medium">Technologie étanche</p>
-                <p className="text-white/40 text-sm mt-3 leading-relaxed line-clamp-2">
+                <p className="text-gold/80 text-sm mt-1 font-medium">Technologie étanche</p>
+                <p className="text-white/75 text-base mt-3 leading-relaxed line-clamp-2">
                   Même technologie que nos écrans. Montage rapide, sans outils, sans soufflerie.
                 </p>
-                <div className="flex items-center gap-2 text-gold text-xs font-medium mt-4 group-hover:gap-3 transition-all">
+                <div className="flex items-center gap-2 text-gold text-sm font-medium mt-4 group-hover:gap-3 transition-all">
                   Découvrir <ChevronRight className="w-3 h-3" />
                 </div>
               </div>
@@ -178,11 +178,11 @@ export default function ProductsSection() {
                 <h3 className="text-lg font-bold text-white group-hover:text-gold transition-colors duration-500">
                   Mobilier gonflable
                 </h3>
-                <p className="text-gold/50 text-xs mt-1 font-medium">Technologie étanche</p>
-                <p className="text-white/40 text-sm mt-3 leading-relaxed line-clamp-2">
+                <p className="text-gold/80 text-sm mt-1 font-medium">Technologie étanche</p>
+                <p className="text-white/75 text-base mt-3 leading-relaxed line-clamp-2">
                   Canapés, fauteuils, comptoirs. Léger, transportable, élégant.
                 </p>
-                <div className="flex items-center gap-2 text-gold text-xs font-medium mt-4 group-hover:gap-3 transition-all">
+                <div className="flex items-center gap-2 text-gold text-sm font-medium mt-4 group-hover:gap-3 transition-all">
                   Découvrir <ChevronRight className="w-3 h-3" />
                 </div>
               </div>

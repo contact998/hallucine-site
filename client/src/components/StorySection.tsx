@@ -71,13 +71,13 @@ export default function StorySection() {
         >
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-[1px] bg-gold" />
-            <span className="text-gold text-xs font-semibold tracking-[0.3em] uppercase">Notre histoire</span>
+            <span className="text-gold text-sm font-semibold tracking-[0.3em] uppercase">Notre histoire</span>
           </div>
           <h2 className="text-4xl lg:text-6xl font-bold text-white leading-tight max-w-3xl">
             D'une plage de Hong Kong<br />
             <span className="text-gradient-gold text-glow-gold-intense">au monde entier</span>
           </h2>
-          <p className="text-white/45 text-lg mt-6 max-w-xl leading-relaxed font-serif italic">
+          <p className="text-white/75 text-xl mt-6 max-w-xl leading-relaxed font-serif italic">
             «&nbsp;Il faut avouer que je suis un peu feignant.&nbsp;» Mais cette paresse apparente cache 30 ans d'une persévérance acharnée.
           </p>
         </motion.div>
@@ -114,7 +114,7 @@ export default function StorySection() {
                       <div className="clear-both" />
 
                       <h3 className="text-xl lg:text-2xl font-bold text-white mb-3">{item.title}</h3>
-                      <p className="text-white/50 text-[15px] leading-relaxed mb-6">{item.text}</p>
+                      <p className="text-white/75 text-base leading-relaxed mb-6">{item.text}</p>
 
                       {/* Image */}
                       {item.image && (

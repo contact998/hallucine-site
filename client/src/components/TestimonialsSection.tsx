@@ -117,13 +117,13 @@ export default function TestimonialsSection() {
         >
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-12 h-[1px] bg-gold" />
-            <span className="text-gold text-xs font-semibold tracking-[0.3em] uppercase">Témoignages</span>
+            <span className="text-gold text-sm font-semibold tracking-[0.3em] uppercase">Témoignages</span>
             <div className="w-12 h-[1px] bg-gold" />
           </div>
           <h2 className="text-4xl lg:text-5xl font-bold text-white leading-tight">
             Ce que disent <span className="text-gradient-gold text-glow-gold-intense">nos clients</span>
           </h2>
-          <p className="text-white/45 text-lg mt-4 max-w-2xl mx-auto">
+          <p className="text-white/75 text-lg mt-4 max-w-2xl mx-auto">
             Des professionnels de l'événementiel, de l'hôtellerie et des collectivités nous font confiance depuis plus de 25 ans.
           </p>
         </motion.div>
@@ -171,7 +171,7 @@ export default function TestimonialsSection() {
                     <StarRating rating={t.rating} />
 
                     {/* Text */}
-                    <p className="text-white/70 text-sm leading-relaxed mt-4 mb-6 italic">
+                    <p className="text-white/80 text-base leading-relaxed mt-4 mb-6 italic">
                       "{t.text}"
                     </p>
 
@@ -184,12 +184,12 @@ export default function TestimonialsSection() {
                         </div>
                         <div>
                           <p className="text-white font-semibold text-sm">{t.name}</p>
-                          <p className="text-white/40 text-xs">{t.role}</p>
+                          <p className="text-white/65 text-sm">{t.role}</p>
                         </div>
                       </div>
                       <div className="flex items-center justify-between mt-3">
-                        <span className="text-white/30 text-xs">{t.location}</span>
-                        <span className="text-warm/50 text-xs font-medium">{t.product}</span>
+                        <span className="text-white/65 text-sm">{t.location}</span>
+                        <span className="text-warm/70 text-sm font-medium">{t.product}</span>
                       </div>
                     </div>
                   </div>
@@ -227,7 +227,7 @@ export default function TestimonialsSection() {
           ].map((stat, i) => (
             <div key={i} className="text-center p-4 rounded-lg bg-white/3 border border-white/5">
               <p className="text-2xl lg:text-3xl font-bold text-warm">{stat.value}</p>
-              <p className="text-white/40 text-sm mt-1">{stat.label}</p>
+              <p className="text-white/70 text-base mt-1">{stat.label}</p>
             </div>
           ))}
         </motion.div>
