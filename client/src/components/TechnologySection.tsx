@@ -68,9 +68,9 @@ export default function TechnologySection() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-center text-2xl lg:text-3xl font-bold mb-20"
+          className="text-center text-3xl lg:text-5xl font-bold italic text-white mb-20 leading-tight"
         >
-          <span className="text-gradient-gold text-glow-gold-intense">« Même pas besoin de grue pour me déplacer, mes jambes me suffisent »</span>
+          « Même pas besoin de grue pour me déplacer, mes jambes me suffisent »
         </motion.p>
 
         <div className="max-w-3xl">
