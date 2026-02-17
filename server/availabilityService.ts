@@ -1,7 +1,7 @@
 /**
  * Service Indicateur de Disponibilité IA
  * 
- * Croise les fuseaux horaires de DC (commercial 1), JB (commercial 2) et du visiteur.
+ * Croise les fuseaux horaires de DC (Daniel), JB (Jonathan) et du visiteur.
  * Les commerciaux sont disponibles de 8h à 16h dans leur fuseau respectif.
  * L'IA génère un message personnalisé et contextuel.
  */
@@ -54,7 +54,7 @@ const COMMERCIALS: CommercialConfig[] = [
   },
   {
     initials: "JB",
-    name: "Jean-Baptiste",
+    name: "Jonathan",
     settingKey: "commercial_jb_timezone",
     defaultTimezone: "Asia/Shanghai",
   },

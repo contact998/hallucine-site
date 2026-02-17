@@ -146,7 +146,7 @@ describe("calculateNextAvailability", () => {
   it("retourne null si au moins un commercial est disponible", () => {
     const commercials = [
       { initials: "DC", name: "Daniel", timezone: "Europe/Paris", localTime: "10:00", hour: 10, minute: 0, available: true, dayOfWeek: 1 },
-      { initials: "JB", name: "Jean-Baptiste", timezone: "Europe/Paris", localTime: "10:00", hour: 10, minute: 0, available: false, dayOfWeek: 1 },
+      { initials: "JB", name: "Jonathan", timezone: "Europe/Paris", localTime: "10:00", hour: 10, minute: 0, available: false, dayOfWeek: 1 },
     ];
     expect(calculateNextAvailability(commercials)).toBeNull();
   });
@@ -155,7 +155,7 @@ describe("calculateNextAvailability", () => {
     const now = new Date("2026-02-10T18:00:00Z"); // 19h CET, mardi
     const commercials = [
       { initials: "DC", name: "Daniel", timezone: "Europe/Paris", localTime: "19:00", hour: 19, minute: 0, available: false, dayOfWeek: 2 },
-      { initials: "JB", name: "Jean-Baptiste", timezone: "Europe/Paris", localTime: "19:00", hour: 19, minute: 0, available: false, dayOfWeek: 2 },
+      { initials: "JB", name: "Jonathan", timezone: "Europe/Paris", localTime: "19:00", hour: 19, minute: 0, available: false, dayOfWeek: 2 },
     ];
     const result = calculateNextAvailability(commercials, now);
     expect(result).not.toBeNull();
@@ -167,7 +167,7 @@ describe("calculateNextAvailability", () => {
     const now = new Date("2026-02-14T10:00:00Z"); // Samedi 14h CET
     const commercials = [
       { initials: "DC", name: "Daniel", timezone: "Europe/Paris", localTime: "11:00", hour: 11, minute: 0, available: false, dayOfWeek: 6 },
-      { initials: "JB", name: "Jean-Baptiste", timezone: "Europe/Paris", localTime: "11:00", hour: 11, minute: 0, available: false, dayOfWeek: 6 },
+      { initials: "JB", name: "Jonathan", timezone: "Europe/Paris", localTime: "11:00", hour: 11, minute: 0, available: false, dayOfWeek: 6 },
     ];
     const result = calculateNextAvailability(commercials, now);
     expect(result).not.toBeNull();
@@ -180,7 +180,7 @@ describe("calculateNextAvailability", () => {
     const now = new Date("2026-02-10T05:00:00Z"); // 6h CET, mardi
     const commercials = [
       { initials: "DC", name: "Daniel", timezone: "Europe/Paris", localTime: "06:00", hour: 6, minute: 0, available: false, dayOfWeek: 2 },
-      { initials: "JB", name: "Jean-Baptiste", timezone: "Europe/Paris", localTime: "06:00", hour: 6, minute: 0, available: false, dayOfWeek: 2 },
+      { initials: "JB", name: "Jonathan", timezone: "Europe/Paris", localTime: "06:00", hour: 6, minute: 0, available: false, dayOfWeek: 2 },
     ];
     const result = calculateNextAvailability(commercials, now);
     expect(result).not.toBeNull();
@@ -197,7 +197,7 @@ describe("calculateNextAvailability", () => {
       { initials: "DC", name: "Daniel", timezone: "Europe/Paris", localTime: "19:00", hour: 19, minute: 0, available: false, dayOfWeek: 2 },
       // JB à New York : 13h, encore ouvert... mais marqué indisponible pour le test
       // Simulons JB à Tokyo : 3h du matin mercredi, prochain 8h = 5h d'attente
-      { initials: "JB", name: "Jean-Baptiste", timezone: "Asia/Tokyo", localTime: "03:00", hour: 3, minute: 0, available: false, dayOfWeek: 3 },
+      { initials: "JB", name: "Jonathan", timezone: "Asia/Tokyo", localTime: "03:00", hour: 3, minute: 0, available: false, dayOfWeek: 3 },
     ];
     const result = calculateNextAvailability(commercials, now);
     expect(result).not.toBeNull();
@@ -211,7 +211,7 @@ describe("calculateNextAvailability", () => {
     const now = new Date("2026-02-13T17:00:00Z"); // Vendredi 18h CET
     const commercials = [
       { initials: "DC", name: "Daniel", timezone: "Europe/Paris", localTime: "18:00", hour: 18, minute: 0, available: false, dayOfWeek: 5 },
-      { initials: "JB", name: "Jean-Baptiste", timezone: "Europe/Paris", localTime: "18:00", hour: 18, minute: 0, available: false, dayOfWeek: 5 },
+      { initials: "JB", name: "Jonathan", timezone: "Europe/Paris", localTime: "18:00", hour: 18, minute: 0, available: false, dayOfWeek: 5 },
     ];
     const result = calculateNextAvailability(commercials, now);
     expect(result).not.toBeNull();

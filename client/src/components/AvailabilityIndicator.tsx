@@ -1,7 +1,7 @@
 /**
  * Indicateur de Disponibilité IA
  * 
- * Croise les fuseaux horaires de DC, JB et du visiteur.
+ * Croise les fuseaux horaires de DC (Daniel), JB (Jonathan) et du visiteur.
  * Affiche un widget fixe en bas à droite, un badge dans le header,
  * et une version étendue sur la page contact.
  * 
