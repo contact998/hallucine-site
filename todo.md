@@ -444,3 +444,7 @@
 
 ## Refonte tableau comparatif page Comparaison
 - [x] Refaire le tableau comparatif en style cartes côte à côte VS (Hallucine vs Concurrent) pour meilleure lisibilité
+- [x] Refaire les cartes VS avec fonds clairs, icônes colorées bien visibles et contraste fort
+- [x] Centrer les titres des critères dans chaque colonne du tableau VS
+- [x] Centrer les titres des critères dans chaque colonne du tableau VS
+- [x] Mettre le titre principal du tableau sur fond clair (pas fond sombre)

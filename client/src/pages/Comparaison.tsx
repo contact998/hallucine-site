@@ -1,7 +1,6 @@
 /*
  * Page Comparaison Écrans Gonflables — Hallucine vs Concurrent
- * Design: cartes côte à côte "VS" — Hallucine doré vs Concurrent gris
- * Contenu complet du site d'origine hallucinecran.com
+ * Design: cartes côte à côte "VS" — fonds CLAIRS, icônes colorées, contraste fort
  */
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -91,30 +90,37 @@ export default function Comparaison() {
       </section>
 
       {/* Titre section VS */}
-      <section className="py-16 bg-background">
+      <section className="py-16 bg-[#f5f0e8]">
         <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-ivory mb-3">
-              Hallucine 13m <span className="text-warm">(80 kg)</span> vs Concurrent 13m <span className="text-white/40">(≈260 kg)</span>
+          {/* Titre en 3 colonnes : Hallucine | VS | Concurrent */}
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_60px_1fr] gap-4 mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center">
+              Hallucine 13m <span className="text-amber-600">(80 kg)</span>
             </h2>
-            <p className="text-white/50 text-sm">16 critères comparés — jugez par vous-même</p>
+            <div className="hidden md:flex items-center justify-center">
+              <span className="text-3xl font-black text-amber-500">VS</span>
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-400 text-center">
+              Concurrent 13m <span className="text-gray-300">(≈260 kg)</span>
+            </h2>
           </div>
+          <p className="text-gray-500 text-sm text-center mb-10">16 critères comparés — jugez par vous-même</p>
 
           {/* Cartes VS */}
-          <div className="space-y-4">
+          <div className="space-y-5">
             {/* En-têtes des colonnes */}
-            <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 mb-2">
-              <div className="flex items-center justify-center gap-3 py-4 px-6 rounded-xl bg-gradient-to-r from-amber-900/30 to-amber-800/20 border border-amber-500/30">
-                <Trophy className="w-6 h-6 text-amber-400" />
-                <span className="text-xl font-bold text-amber-300">Hallucine</span>
-                <span className="text-amber-400/60 text-sm font-medium ml-1">80 kg</span>
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_60px_1fr] gap-4 mb-4">
+              <div className="flex items-center justify-center gap-3 py-5 px-6 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 shadow-lg shadow-amber-500/25">
+                <Trophy className="w-7 h-7 text-white" />
+                <span className="text-2xl font-bold text-white">Hallucine</span>
+                <span className="bg-white/25 text-white text-sm font-bold px-3 py-1 rounded-full ml-1">80 kg</span>
               </div>
               <div className="hidden md:flex items-center justify-center">
-                <span className="text-2xl font-black text-white/20">VS</span>
+                <span className="text-2xl font-black text-gray-300">VS</span>
               </div>
-              <div className="flex items-center justify-center gap-3 py-4 px-6 rounded-xl bg-white/5 border border-white/10">
-                <span className="text-xl font-bold text-white/50">Concurrent</span>
-                <span className="text-white/30 text-sm font-medium ml-1">≈260 kg</span>
+              <div className="flex items-center justify-center gap-3 py-5 px-6 rounded-2xl bg-gray-200 border border-gray-300">
+                <span className="text-2xl font-bold text-gray-500">Concurrent</span>
+                <span className="bg-gray-300 text-gray-600 text-sm font-bold px-3 py-1 rounded-full ml-1">≈260 kg</span>
               </div>
             </div>
 
@@ -122,42 +128,44 @@ export default function Comparaison() {
             {comparisonData.map((row, i) => {
               const Icon = row.icon;
               return (
-                <div key={i} className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-3 md:gap-4 group">
-                  {/* Carte Hallucine */}
-                  <div className="relative p-5 rounded-xl bg-gradient-to-br from-amber-950/40 via-amber-900/20 to-transparent border border-amber-500/20 hover:border-amber-500/40 transition-all duration-300">
-                    <div className="flex items-start gap-3">
-                      <div className="shrink-0 w-9 h-9 rounded-lg bg-amber-500/15 flex items-center justify-center mt-0.5">
-                        <Check className="w-5 h-5 text-emerald-400" />
+                <div key={i} className="grid grid-cols-1 md:grid-cols-[1fr_60px_1fr] gap-3 md:gap-4">
+                  {/* Carte Hallucine — fond blanc crème, bordure dorée */}
+                  <div className="p-5 rounded-2xl bg-white border-2 border-amber-400/50 shadow-md hover:shadow-lg hover:border-amber-500 transition-all duration-300">
+                    <div className="flex items-start gap-4">
+                      <div className="shrink-0 w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center shadow-sm">
+                        <Check className="w-6 h-6 text-white" strokeWidth={3} />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-amber-200 font-semibold text-base leading-snug mb-1.5">{row.carac}</p>
-                        <p className="text-white/90 text-sm leading-relaxed">{row.hallucine}</p>
+                        <p className="text-amber-700 font-bold text-base leading-snug mb-1 text-center">{row.carac}</p>
+                        <p className="text-gray-700 text-sm leading-relaxed text-center">{row.hallucine}</p>
                       </div>
                     </div>
                   </div>
 
-                  {/* Séparateur VS avec icône */}
-                  <div className="hidden md:flex flex-col items-center justify-center gap-1">
-                    <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
-                      <Icon className="w-4 h-4 text-white/30" />
+                  {/* Séparateur avec icône colorée */}
+                  <div className="hidden md:flex flex-col items-center justify-center">
+                    <div className="w-12 h-12 rounded-full bg-amber-100 border-2 border-amber-300 flex items-center justify-center shadow-sm">
+                      <Icon className="w-5 h-5 text-amber-600" />
                     </div>
                   </div>
 
                   {/* Libellé critère mobile */}
                   <div className="md:hidden flex items-center gap-2 px-2 -mt-1 -mb-1">
-                    <Icon className="w-4 h-4 text-white/25" />
-                    <span className="text-white/30 text-xs font-medium uppercase tracking-wider">vs</span>
+                    <div className="w-7 h-7 rounded-full bg-amber-100 border border-amber-300 flex items-center justify-center">
+                      <Icon className="w-3.5 h-3.5 text-amber-600" />
+                    </div>
+                    <span className="text-gray-400 text-xs font-bold uppercase tracking-wider">vs</span>
                   </div>
 
-                  {/* Carte Concurrent */}
-                  <div className="relative p-5 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-white/10 transition-all duration-300">
-                    <div className="flex items-start gap-3">
-                      <div className="shrink-0 w-9 h-9 rounded-lg bg-red-500/10 flex items-center justify-center mt-0.5">
-                        <X className="w-5 h-5 text-red-400/70" />
+                  {/* Carte Concurrent — fond gris clair */}
+                  <div className="p-5 rounded-2xl bg-gray-100 border border-gray-200 hover:border-gray-300 transition-all duration-300">
+                    <div className="flex items-start gap-4">
+                      <div className="shrink-0 w-10 h-10 rounded-xl bg-red-500 flex items-center justify-center shadow-sm">
+                        <X className="w-6 h-6 text-white" strokeWidth={3} />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-white/50 font-semibold text-base leading-snug mb-1.5">{row.carac}</p>
-                        <p className="text-white/40 text-sm leading-relaxed">{row.concurrent}</p>
+                        <p className="text-gray-500 font-bold text-base leading-snug mb-1 text-center">{row.carac}</p>
+                        <p className="text-gray-400 text-sm leading-relaxed text-center">{row.concurrent}</p>
                       </div>
                     </div>
                   </div>
@@ -167,22 +175,22 @@ export default function Comparaison() {
           </div>
 
           {/* Résumé visuel */}
-          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="p-5 rounded-xl bg-gradient-to-br from-amber-950/40 to-transparent border border-amber-500/20 text-center">
-              <p className="text-3xl font-bold text-amber-300">80 kg</p>
-              <p className="text-white/60 text-sm mt-1">Poids Hallucine</p>
+          <div className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-5">
+            <div className="p-6 rounded-2xl bg-white border-2 border-amber-400/50 shadow-md text-center">
+              <p className="text-4xl font-black text-amber-600">80 kg</p>
+              <p className="text-gray-500 text-sm font-medium mt-2">Poids Hallucine</p>
             </div>
-            <div className="p-5 rounded-xl bg-gradient-to-br from-amber-950/40 to-transparent border border-amber-500/20 text-center">
-              <p className="text-3xl font-bold text-amber-300">45 min</p>
-              <p className="text-white/60 text-sm mt-1">Installation</p>
+            <div className="p-6 rounded-2xl bg-white border-2 border-amber-400/50 shadow-md text-center">
+              <p className="text-4xl font-black text-amber-600">45 min</p>
+              <p className="text-gray-500 text-sm font-medium mt-2">Installation</p>
             </div>
-            <div className="p-5 rounded-xl bg-gradient-to-br from-amber-950/40 to-transparent border border-amber-500/20 text-center">
-              <p className="text-3xl font-bold text-amber-300">10 ans</p>
-              <p className="text-white/60 text-sm mt-1">Garantie</p>
+            <div className="p-6 rounded-2xl bg-white border-2 border-amber-400/50 shadow-md text-center">
+              <p className="text-4xl font-black text-amber-600">10 ans</p>
+              <p className="text-gray-500 text-sm font-medium mt-2">Garantie</p>
             </div>
-            <div className="p-5 rounded-xl bg-gradient-to-br from-amber-950/40 to-transparent border border-amber-500/20 text-center">
-              <p className="text-3xl font-bold text-amber-300">500 kg</p>
-              <p className="text-white/60 text-sm mt-1">CO₂ émis</p>
+            <div className="p-6 rounded-2xl bg-white border-2 border-amber-400/50 shadow-md text-center">
+              <p className="text-4xl font-black text-amber-600">500 kg</p>
+              <p className="text-gray-500 text-sm font-medium mt-2">CO₂ émis</p>
             </div>
           </div>
         </div>
