@@ -420,3 +420,11 @@
 
 ## Suppression effet faisceau projecteur animé
 - [x] Supprimer le composant ProjectorBeam de la page d'accueil (HeroSection)
+
+## Barre de stats héro — contraste insuffisant
+- [x] Ajouter un fond semi-transparent, backdrop-blur, bordure et labels plus visibles (white/60)
+
+## Audit lisibilité page d'accueil
+- [ ] Examiner visuellement chaque section de la page d'accueil
+- [ ] Corriger tous les textes peu lisibles (contraste, opacité, taille)
+- [ ] Améliorer les séparateurs et bordures invisibles

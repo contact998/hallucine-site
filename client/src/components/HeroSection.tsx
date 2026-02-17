@@ -111,7 +111,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 1 }}
-          className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-0 divide-x divide-white/[0.06]"
+          className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-0 divide-x divide-white/20 bg-black/40 backdrop-blur-sm rounded-lg border border-white/10"
         >
           {stats.map((stat, i) => (
             <div key={i} className="text-center py-6 px-4">
@@ -119,7 +119,7 @@ export default function HeroSection() {
                 {stat.value}
                 <span className="text-gold">{stat.suffix}</span>
               </div>
-              <div className="text-[11px] text-white/35 mt-2 tracking-[0.2em] uppercase font-medium">{stat.label}</div>
+              <div className="text-[11px] text-white/60 mt-2 tracking-[0.2em] uppercase font-medium">{stat.label}</div>
             </div>
           ))}
         </motion.div>
