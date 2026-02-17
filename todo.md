@@ -430,3 +430,7 @@
 - [x] Composants corrigés : HeroSection, ProductsSection, TechnologySection, UseCasesSection, StorySection, RealisationsSection, TestimonialsSection, FaqSection, ContactSection, Footer, SmartForm, Navbar, AvailabilityIndicator
 - [x] Labels de section (text-xs→text-sm) : Nos produits, Technologie, Cas d'usage, Notre histoire, Réalisations, Témoignages
 - [x] 248 tests passent
+
+## Remplacement photo Gamme Étanche (section Nos produits)
+- [x] Uploader imgi_6_3ECRANS1CANAPE-1-.jpg sur S3
+- [x] Remplacer la photo Gamme Étanche dans ProductsSection par la nouvelle image (3 écrans + canapé rouge)
