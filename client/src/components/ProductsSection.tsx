@@ -11,7 +11,7 @@ import { useRef } from "react";
 const ECRAN_ETANCHE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZsTqIixSSjzZXDrl.jpg";
 const ECRAN_SOUFFLERIE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fnEgAdUzmaXRilZh.jpg";
 const TENTE_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YqpLPgGtuwNJbHEB.png";
-const MOBILIER_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bejqCXUcdKFhPUrA.jpg";
+const MOBILIER_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bOYuMUYeZUYWWoSN.jpg";
 
 export default function ProductsSection() {
   const ref = useRef<HTMLDivElement>(null);
