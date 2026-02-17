@@ -437,3 +437,4 @@
 
 ## Remplacement photo héro page Mobilier Gonflable
 - [x] Remplacer l'image d'arrière-plan héro de la page Mobilier Gonflable par Meublesenpleinair.jpg
+- [x] Supprimer/réduire le dégradé sombre sur le héro de la page Mobilier Gonflable
