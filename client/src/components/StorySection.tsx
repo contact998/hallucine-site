@@ -12,12 +12,13 @@ const ECRAN_ETANCHE_6M = "https://files.manuscdn.com/user_upload_by_module/sessi
 const KYTEA_HK = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BVYuEZrNIrepQRzs.png";
 const ECRAN_TUBULAIRE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/SjzpUEcrCvCGjoLs.png";
 
-const chapters = [
+const chapters: { year: string; title: string; text: string; image: string | null; smallImage?: boolean }[] = [
   {
     year: "1996",
     title: "L'école des forains",
     text: "Pour apprendre à monter des structures, direction le village. Les forains, souvent rejetés, acceptent de partager leur savoir. Deux jours d'apprentissage intensif. À la fin : « Maintenant, t'es un vrai forain, tu peux partir en tournée. »",
     image: ECRAN_TUBULAIRE,
+    smallImage: true,
   },
   {
     year: "1998",
@@ -30,6 +31,7 @@ const chapters = [
     title: "L'étincelle — Hong Kong",
     text: "Sur une plage de Hong Kong, un kitesurf attire l'attention. Ses boudins gonflables, légers et résistants, font naître une idée folle : et si on pouvait projeter des films en plein air avec un écran aussi léger qu'une voile ?",
     image: KYTEA_HK,
+    smallImage: true,
   },
   {
     year: "2005",
@@ -98,13 +100,21 @@ export default function StorySection() {
                 className="grid grid-cols-1 lg:grid-cols-2"
               >
                 {/* Image (ou placeholder) */}
-                <div className={`${imageLeft ? "order-1" : "order-1 lg:order-2"} relative min-h-[300px] lg:min-h-[400px] overflow-hidden`}>
+                <div className={`${imageLeft ? "order-1" : "order-1 lg:order-2"} relative ${item.smallImage ? "min-h-[200px] lg:min-h-[280px]" : "min-h-[300px] lg:min-h-[400px]"} overflow-hidden flex items-center justify-center bg-black/20`}>
                   {item.image ? (
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                    />
+                    item.smallImage ? (
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-[85%] h-auto max-h-[260px] object-contain hover:scale-105 transition-transform duration-700 rounded"
+                      />
+                    ) : (
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                      />
+                    )
                   ) : (
                     <div className="absolute inset-0 bg-white/[0.03] border border-white/[0.06] flex items-center justify-center">
                       <span className="text-white/20 text-lg italic">Photo à venir</span>
