@@ -15,6 +15,7 @@ const VOILERIE_BRETAGNE = "https://files.manuscdn.com/user_upload_by_module/sess
 const TROIS_ECRANS = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tQAkrXEyWBMoFQNd.JPG";
 const REPAS_CHINOIS = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/DEtuWIJQmWZSZNPx.jpg";
 const ECLATE_ETANCHE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VZNKRkBWmClVeysS.jpg";
+const ECRANS_ETANCHE_5_6 = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QMYiHoaNwMjBIpVS.jpg";
 
 const chapters: { year: string; title: string; text: string; image: string | null; smallImage?: boolean; extraSmall?: boolean }[] = [
   {
@@ -43,12 +44,13 @@ const chapters: { year: string; title: string; text: string; image: string | nul
     title: "Le secret des airbags",
     text: "À Lyon, ancienne capitale du tissu, une enquête mène au secret le mieux gardé de l'automobile : le tissu des airbags. Un polyamide haute ténacité de DuPont de Nemours. Léger, indestructible, parfait.",
     image: ECLATE_ETANCHE,
+    smallImage: true,
   },
   {
     year: "2010",
     title: "La gamme étanche est née",
     text: "Inspirés du kitesurf, les premiers écrans étanches voient le jour. Chambre à air scellée, pas de soufflerie, ultra-légers. De 2m à 8m, ils révolutionnent le marché.",
-    image: null,
+    image: ECRANS_ETANCHE_5_6,
   },
   {
     year: "2020",
