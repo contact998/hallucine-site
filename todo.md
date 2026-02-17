@@ -448,3 +448,4 @@
 - [x] Centrer les titres des critères dans chaque colonne du tableau VS
 - [x] Centrer les titres des critères dans chaque colonne du tableau VS
 - [x] Mettre le titre principal du tableau sur fond clair (pas fond sombre)
+- [x] Refaire tableau VS : centrage correct, bords arrondis, espace noir autour
