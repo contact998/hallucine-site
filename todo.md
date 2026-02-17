@@ -434,3 +434,4 @@
 ## Recadrage image héro page d'accueil
 - [x] Recentrer l'image avec object-left-top pour que le projecteur à gauche soit visible
 - [x] Supprimer le scale-110 pour montrer plus de l'image (projecteur + écran)
+- [x] Image recadrée (1050x440 sans logo/URL) en pleine largeur, positionnée en bas du conteneur héro

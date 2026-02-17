@@ -10,7 +10,7 @@ import { Link } from "wouter";
 import { useRef } from "react";
 
 
-const HERO_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg";
+const HERO_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VsQPfvGBaRXLfAfP.jpg";
 
 const stats = [
   { value: "30", suffix: " ans", label: "d'expertise" },
@@ -26,13 +26,16 @@ export default function HeroSection() {
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <section ref={ref} id="hero" className="relative min-h-screen flex items-end overflow-hidden">
-      {/* Parallax Background */}
-      <motion.div style={{ y: imgY }} className="absolute inset-0 -top-[10%] -bottom-[10%]">
+    <section ref={ref} id="hero" className="relative min-h-[60vh] lg:min-h-[70vh] flex items-end overflow-hidden bg-[oklch(0.08_0.02_260)]">
+      {/* Parallax Background — image affichée en pleine largeur, positionnée en bas */}
+      <motion.div 
+        style={{ y: imgY }} 
+        className="absolute inset-x-0 bottom-0"
+      >
         <img
           src={HERO_IMG}
           alt="Écran de cinéma gonflable géant Hallucine en projection nocturne"
-          className="w-full h-full object-cover object-left-top"
+          className="w-full h-auto block"
         />
       </motion.div>
 
