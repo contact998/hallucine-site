@@ -9,13 +9,15 @@ const ECRAN_ETANCHE_3M = "https://files.manuscdn.com/user_upload_by_module/sessi
 const ECRAN_SOUFFLERIE_15 = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/sXHwwugjLCgZdqTA.jpg";
 const ECRAN_24M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/FdcsGRVCOGXGHcKi.jpg";
 const ECRAN_ETANCHE_6M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/lnVfJDBlokHJPkwN.jpg";
+const KYTEA_HK = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BVYuEZrNIrepQRzs.png";
+const ECRAN_TUBULAIRE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/SjzpUEcrCvCGjoLs.png";
 
 const chapters = [
   {
     year: "1996",
     title: "L'école des forains",
     text: "Pour apprendre à monter des structures, direction le village. Les forains, souvent rejetés, acceptent de partager leur savoir. Deux jours d'apprentissage intensif. À la fin : « Maintenant, t'es un vrai forain, tu peux partir en tournée. »",
-    image: null, // Emplacement pour votre photo
+    image: ECRAN_TUBULAIRE,
   },
   {
     year: "1998",
@@ -27,7 +29,7 @@ const chapters = [
     year: "2004",
     title: "L'étincelle — Hong Kong",
     text: "Sur une plage de Hong Kong, un kitesurf attire l'attention. Ses boudins gonflables, légers et résistants, font naître une idée folle : et si on pouvait projeter des films en plein air avec un écran aussi léger qu'une voile ?",
-    image: null, // Emplacement pour votre photo
+    image: KYTEA_HK,
   },
   {
     year: "2005",
