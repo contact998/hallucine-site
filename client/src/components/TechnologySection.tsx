@@ -7,9 +7,6 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Feather, Shield, Zap, Award } from "lucide-react";
 
-const ECRAN_ECLATE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HGkkpfyaxsgmapYw.jpg";
-const ECRAN_SOUFFLERIE_12 = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/AFizhJVCNHvXVtJS.jpg";
-
 const weightData = [
   { size: "10m", hallucine: 45, competitor: 150 },
   { size: "15m", hallucine: 80, competitor: 300 },
@@ -51,24 +48,6 @@ export default function TechnologySection() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            {/* Two tech images side by side */}
-            <div className="grid grid-cols-2 gap-4 mb-10">
-              <div className="relative overflow-hidden">
-                <img src={ECRAN_ECLATE} alt="Structure écran étanche Hallucine" className="w-full aspect-[3/4] object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.12_0.04_260)] via-transparent to-transparent" />
-                <div className="absolute bottom-3 left-3">
-                  <span className="text-xs font-bold tracking-[0.2em] uppercase text-gold bg-navy-deep/80 px-2 py-1">Étanche</span>
-                </div>
-              </div>
-              <div className="relative overflow-hidden">
-                <img src={ECRAN_SOUFFLERIE_12} alt="Écran soufflerie 12m Hallucine" className="w-full aspect-[3/4] object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.12_0.04_260)] via-transparent to-transparent" />
-                <div className="absolute bottom-3 left-3">
-                  <span className="text-xs font-bold tracking-[0.2em] uppercase text-white bg-navy-deep/80 px-2 py-1">Soufflerie</span>
-                </div>
-              </div>
-            </div>
-
             <h3 className="text-2xl font-bold text-white mb-6">Du secret défense à l'écran de cinéma</h3>
 
             <div className="space-y-5 text-white/75 text-base leading-relaxed">

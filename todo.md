@@ -450,3 +450,7 @@
 - [x] Mettre le titre principal du tableau sur fond clair (pas fond sombre)
 - [x] Refaire tableau VS : centrage correct, bords arrondis, espace noir autour
 - [x] Supprimer la section Technologie (images Étanche/Soufflerie + comparatif de poids) de la page d'accueil
+- [ ] Remettre TechnologySection dans Home.tsx
+- [ ] Supprimer uniquement les deux images Étanche/Soufflerie de TechnologySection (garder le comparatif de poids)
+- [x] Remettre TechnologySection dans Home.tsx (sans les images Étanche/Soufflerie)
+- [x] Supprimer le tableau VS de la page Comparaison
