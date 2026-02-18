@@ -21,6 +21,8 @@ import { chatWithAssistant } from "./chatbot";
 import { generateBrochure } from "./brochure";
 import { insertProspectIntoCrm, isCrmDirectConfigured } from "./crmDirect";
 import { prepareAdminEmailNotification } from "./emailNotification";
+import { buildConfirmationEmail } from "./emailTemplates";
+import { sendConfirmationEmail, enqueueConfirmationEmail } from "./emailSender";
 import {
   trackPageView,
   trackEvent,
@@ -298,6 +300,35 @@ export const appRouter = router({
           }
         }
 
+
+        // ─── Email de confirmation au prospect (envoi immédiat via Resend) ───
+        try {
+          const confirmEmail = buildConfirmationEmail({
+            prenom: prospectPrenom || input.nom,
+            nom: prospectNom,
+            email: input.email,
+            produit: input.produit,
+            entreprise: input.entreprise,
+            besoin: input.objectif,
+          });
+          // Envoi asynchrone via Resend (ne bloque pas la réponse)
+          sendConfirmationEmail(confirmEmail)
+            .then(result => {
+              if (result.success) {
+                console.log(`[Email] Confirmation envoyée à ${input.email} (id: ${result.id})`);
+              } else {
+                console.warn(`[Email] Échec envoi confirmation à ${input.email}: ${result.error}`);
+                // Fallback : stocker en file d'attente
+                enqueueConfirmationEmail(confirmEmail);
+              }
+            })
+            .catch(err => {
+              console.warn(`[Email] Exception envoi confirmation à ${input.email}:`, err);
+              enqueueConfirmationEmail(confirmEmail);
+            });
+        } catch (err) {
+          console.warn(`[Email] Erreur préparation confirmation pour ${input.email}:`, err);
+        }
 
         return { success: true, crmSynced: crmSync.success };
       }),

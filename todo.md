@@ -591,3 +591,11 @@
 - [x] Nettoyer les imports webhook dans routers.ts et index.ts
 - [x] Migrer crmStatus et syncToCrm admin vers insertion directe
 - [x] Tests vitest dédoublonnage (296 tests passent)
+
+## Email de confirmation automatique au prospect
+- [x] Créer server/emailTemplates.ts avec template de confirmation (remerciement + prise en compte + recontact)
+- [x] Installer Resend + créer emailSender.ts avec envoi via Resend
+- [x] Ajouter secret RESEND_API_KEY
+- [x] Intégrer l'envoi immédiat dans contact.submit
+- [x] Tests vitest (307 tests passent, envoi Resend confirmé)
+- [ ] Test réel avec formulaire (en attente publication)
