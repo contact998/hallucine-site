@@ -117,9 +117,9 @@ function parseApiResult(item: Record<string, unknown>): SiretResult {
  */
 export async function searchEntreprise(
   query: string,
-  options: { perPage?: number; activeOnly?: boolean } = {}
+  options: { perPage?: number; activeOnly?: boolean; codePostal?: string } = {}
 ): Promise<SiretSearchResponse> {
-  const { perPage = 5, activeOnly = true } = options;
+  const { perPage = 5, activeOnly = true, codePostal } = options;
 
   if (!query || query.trim().length < 2) {
     return { results: [], totalResults: 0 };
@@ -135,6 +135,11 @@ export async function searchEntreprise(
   // Si on cherche uniquement les entreprises actives
   if (activeOnly) {
     params.set("etat_administratif", "A");
+  }
+
+  // Filtrer par code postal si fourni
+  if (codePostal) {
+    params.set("code_postal", codePostal);
   }
 
   try {
