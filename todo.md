@@ -539,3 +539,8 @@
 ## Bugs select villes + filtre entreprise par code postal
 - [x] Corriger le style du select villes : fond sombre, texte clair, options lisibles
 - [x] Passer le code postal au SiretLookupField pour filtrer la recherche entreprise
+
+## Réorganisation étapes 5-6-7
+- [x] Étape 5 = Code postal + Ville/Pays (inchangé)
+- [x] Étape 6 = Entreprise (auto-complétion API)
+- [x] Étape 7 = Prénom + Nom + Message + Envoi

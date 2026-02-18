@@ -515,8 +515,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
       case 3: return true; // Besoin specifique optionnel
       case 4: return true; // Tel optionnel
       case 5: return postalCode.trim().length >= 3; // Code postal obligatoire
-      case 6: return prenom.trim().length > 0; // Prenom obligatoire
-      case 7: return true;
+      case 6: return true; // Entreprise optionnelle
+      case 7: return prenom.trim().length > 0; // Prenom obligatoire
       default: return false;
     }
   };
@@ -982,11 +982,49 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
           </motion.div>
         )}
 
-        {/* ─── ETAPE 6 : Prénom + Nom + Entreprise ────────────────── */}
+        {/* ─── ETAPE 6 : Entreprise ────────────────── */}
         {currentStep === 6 && (
           <motion.div key="step6" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">Et vous etes ?</h3>
-            <p className="text-white/70 text-sm mb-5">Ces informations nous aident a personnaliser votre devis.</p>
+            <h3 className="text-xl font-bold text-white mb-1">Votre entreprise</h3>
+            <p className="text-white/70 text-sm mb-5">Optionnel — pour personnaliser votre devis.</p>
+
+            <div className="space-y-4">
+              {/* Champ entreprise avec auto-complétion API */}
+              <SiretLookupField
+                initialValue={entreprise}
+                codePostal={postalCode}
+                onTextChange={(value) => setEntreprise(value)}
+                onSelect={(result) => {
+                  setEntreprise(result.entreprise);
+                  if (result.ville && !city) setCity(result.ville);
+                  if (result.codePostal && !postalCode) setPostalCode(result.codePostal);
+                  if (result.ville || result.codePostal) {
+                    if (!country) setCountry("France");
+                  }
+                }}
+              />
+            </div>
+
+            <div className="flex gap-3 mt-6">
+              <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-sm hover:border-white/30 transition-colors">
+                <ArrowLeft className="w-4 h-4" /> Retour
+              </button>
+              <button
+                onClick={goNext}
+                disabled={!canProceed()}
+                className={`flex-1 flex items-center justify-center gap-2 px-6 py-2.5 font-semibold text-sm rounded-sm transition-colors ${canProceed() ? 'bg-gold text-navy-deep hover:bg-gold-light' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}
+              >
+                Continuer <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </motion.div>
+        )}
+
+        {/* ─── ETAPE 7 : Prénom + Nom + Message + Envoi ─────────────── */}
+        {currentStep === 7 && (
+          <motion.div key="step7" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
+            <h3 className="text-xl font-bold text-white mb-1">Derniere etape !</h3>
+            <p className="text-white/70 text-sm mb-5">Votre prenom et un message optionnel.</p>
 
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
@@ -1026,44 +1064,9 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   </div>
                 </div>
               </div>
-              {/* Champ entreprise avec auto-complétion API */}
-              <SiretLookupField
-                initialValue={entreprise}
-                codePostal={postalCode}
-                onTextChange={(value) => setEntreprise(value)}
-                onSelect={(result) => {
-                  setEntreprise(result.entreprise);
-                  if (result.ville && !city) setCity(result.ville);
-                  if (result.codePostal && !postalCode) setPostalCode(result.codePostal);
-                  if (result.ville || result.codePostal) {
-                    if (!country) setCountry("France");
-                  }
-                }}
-              />
             </div>
 
-            <div className="flex gap-3 mt-6">
-              <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-sm hover:border-white/30 transition-colors">
-                <ArrowLeft className="w-4 h-4" /> Retour
-              </button>
-              <button
-                onClick={goNext}
-                disabled={!canProceed()}
-                className={`flex-1 flex items-center justify-center gap-2 px-6 py-2.5 font-semibold text-sm rounded-sm transition-colors ${canProceed() ? 'bg-gold text-navy-deep hover:bg-gold-light' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}
-              >
-                Continuer <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-          </motion.div>
-        )}
-
-        {/* ─── ETAPE 7 : Message libre + Envoi ───────────────────────────── */}
-        {currentStep === 7 && (
-          <motion.div key="step7" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">Un detail a ajouter ?</h3>
-            <p className="text-white/70 text-sm mb-5">Optionnel -- date d'evenement, budget, contraintes...</p>
-
-            <div>
+            <div className="mt-4">
               <div className="flex items-center justify-between mb-1.5">
                 <label className="text-white/60 text-sm">
                   <MessageSquare className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Message
