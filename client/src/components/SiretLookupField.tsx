@@ -130,7 +130,7 @@ export default function SiretLookupField({ onSelect, className = "" }: SiretLook
     <div ref={containerRef} className={`relative ${className}`}>
       <label className="text-white/60 text-sm mb-1.5 block">
         <Search className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />
-        SIRET, SIREN ou nom d'entreprise
+        Nom d'entreprise
       </label>
 
       <div className="relative">
