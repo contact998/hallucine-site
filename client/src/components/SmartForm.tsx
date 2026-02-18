@@ -19,7 +19,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Monitor, Tent, Armchair, Trophy, ArrowRight, ArrowLeft, Send, CheckCircle,
-  Mail, Phone, MapPin, Building2, User, Globe, MessageSquare, Loader2, Sparkles
+  Mail, Phone, MapPin, User, Globe, MessageSquare, Loader2, Sparkles
 } from "lucide-react";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
@@ -1019,42 +1019,15 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   )}
                 </div>
               </div>
-              <div>
-                <label className={labelClass}>
-                  <Building2 className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Entreprise / Organisation
-                </label>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="text"
-                    value={entreprise}
-                    onChange={(e) => setEntreprise(e.target.value)}
-                    placeholder={emailExtraction?.entreprise || "Nom de votre structure"}
-                    className={`${inputClass} flex-1`}
-                  />
-                  <VoiceMicButton
-                    onResult={(text) => setEntreprise(text.trim())}
-                    tooltip="Dicter le nom de l'entreprise"
-                  />
-                </div>
-                {emailExtraction?.entreprise && !entreprise && !aiAcceptedEntreprise && (
-                  <button
-                    onClick={acceptAiEntreprise}
-                    className="mt-1.5 flex items-center gap-1.5 text-xs text-gold/70 hover:text-gold transition-colors"
-                  >
-                    <Sparkles className="w-3 h-3" />
-                    Suggestion IA : {emailExtraction.entreprise} -- cliquez pour accepter
-                  </button>
-                )}
-              </div>
-
-              {/* Recherche SIRET / SIREN */}
+              {/* Champ entreprise unique avec auto-complétion API */}
               <SiretLookupField
+                initialValue={entreprise || emailExtraction?.entreprise || ""}
+                onTextChange={(value) => setEntreprise(value)}
                 onSelect={(result) => {
-                  if (result.entreprise && !entreprise) setEntreprise(result.entreprise);
+                  setEntreprise(result.entreprise);
                   if (result.ville && !city) setCity(result.ville);
                   if (result.codePostal && !postalCode) setPostalCode(result.codePostal);
                   if (result.ville || result.codePostal) {
-                    // Pre-remplir le pays comme France si SIRET
                     if (!country) setCountry("France");
                   }
                 }}

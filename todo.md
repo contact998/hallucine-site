@@ -500,3 +500,9 @@
 
 ## Retry automatique tRPC (erreur HTML au lieu de JSON)
 - [x] Ajouter un retry link dans le client tRPC pour relancer automatiquement les requêtes échouées (502/503/HTML)
+
+## Simplification champ entreprise (un seul champ)
+- [x] Supprimer le champ Ville et le lien "Rechercher sans ville" du SiretLookupField
+- [x] Transformer SiretLookupField en champ texte unique avec auto-complétion API (saisie libre si pas de résultat)
+- [x] Supprimer le champ texte libre "Entreprise / Organisation" séparé de l'étape 5
+- [x] Pré-remplir le champ unique avec la suggestion IA (depuis l'email) si disponible
