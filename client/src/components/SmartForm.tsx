@@ -46,11 +46,11 @@ const products = [
 ];
 
 const screenCategories = [
-  { value: "5-8m", label: "5 a 8m", audience: "100 a 400 spectateurs", tech: "Etanche", icon: "screen_5" },
-  { value: "9-10m", label: "9 a 10m", audience: "~800 spectateurs", tech: "Soufflerie", icon: "screen_9" },
-  { value: "11-12m", label: "11 a 12m", audience: "~1 500 spectateurs", tech: "Soufflerie", icon: "screen_11" },
-  { value: "13-14m", label: "13 a 14m", audience: "~2 000 spectateurs", tech: "Soufflerie", icon: "screen_13" },
-  { value: "15-24m", label: "15 a 24m", audience: "3 000 a 5 000+ spectateurs", tech: "Soufflerie", icon: "screen_15" },
+  { value: "5-8m", label: "5 a 8m", audience: "30 a 200 spectateurs", tech: "Etanche", icon: "screen_5" },
+  { value: "9-10m", label: "9 a 10m", audience: "50 a 300 spectateurs", tech: "Soufflerie", icon: "screen_9" },
+  { value: "11-12m", label: "11 a 12m", audience: "100 a 600 spectateurs", tech: "Soufflerie", icon: "screen_11" },
+  { value: "13-14m", label: "13 a 14m", audience: "150 a 1 000 spectateurs", tech: "Soufflerie", icon: "screen_13" },
+  { value: "15-24m", label: "15 a 24m", audience: "200 a 5 000 spectateurs", tech: "Soufflerie", icon: "screen_15" },
 ];
 
 const tentTypes = [

@@ -494,3 +494,6 @@
 ## Bugs badge disponibilité (signalés par l'utilisateur)
 - [ ] Bouton vert : le badge ne s'affiche qu'après avoir ouvert WhatsApp une fois — devrait être visible dès le chargement
 - [ ] Bouton orange : le tooltip ne s'affiche pas au survol (le bouton bouge mais rien d'autre)
+
+## Modification options spectateurs formulaire contact
+- [x] Changer les nombres : 5m=20, 9m=300, 11m=600, 13m=1000, 15m=5000
