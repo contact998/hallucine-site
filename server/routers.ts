@@ -20,6 +20,7 @@ import { notifyOwner } from "./_core/notification";
 import { chatWithAssistant } from "./chatbot";
 import { generateBrochure } from "./brochure";
 import { syncSubmissionToCrm, isCrmSyncConfigured } from "./crmSync";
+import { insertProspectIntoCrm, isCrmDirectConfigured } from "./crmDirect";
 import { prepareAdminEmailNotification } from "./emailNotification";
 import {
   trackPageView,
@@ -233,17 +234,66 @@ export const appRouter = router({
           })
           .catch(err => console.warn("[Email] Erreur préparation email:", err));
 
-        // Synchronisation automatique avec le CRM Hallucine
+        // ─── Insertion directe dans la base du CRM (méthode principale) ───
         let crmSync: { success: boolean; error?: string } = { success: false, error: "not configured" };
-        try {
-          crmSync = await syncSubmissionToCrm(input);
-          if (crmSync.success) {
-            console.log(`[CRM] Prospect syncé pour ${input.nom}`);
-          } else {
-            console.warn(`[CRM] Sync échouée pour ${input.nom}: ${crmSync.error}`);
+
+        // Extraire prénom/nom depuis input.nom ("Prénom Nom")
+        const nameParts = input.nom.split(" ");
+        const prospectPrenom = nameParts[0] || null;
+        const prospectNom = nameParts.slice(1).join(" ") || null;
+
+        // Extraire ville/codePostal/pays depuis input.sujet ("Produit -- Ville, CodePostal, Pays")
+        let prospectVille: string | null = null;
+        let prospectCodePostal: string | null = null;
+        let prospectPays: string | null = null;
+        if (input.sujet) {
+          const locationPart = input.sujet.split(" -- ")[1];
+          if (locationPart) {
+            const parts = locationPart.split(", ").map(s => s.trim());
+            prospectVille = parts[0] || null;
+            prospectCodePostal = parts[1] || null;
+            prospectPays = parts[2] || null;
           }
-        } catch (err) {
-          console.error(`[CRM] Erreur sync pour ${input.nom}:`, err);
+        }
+
+        if (isCrmDirectConfigured()) {
+          try {
+            const result = await insertProspectIntoCrm({
+              entreprise: input.entreprise || `Particulier - ${input.nom}`,
+              personne: prospectNom,
+              prenom: prospectPrenom,
+              email: input.email,
+              telephone: input.telephone || null,
+              ville: prospectVille,
+              codePostal: prospectCodePostal,
+              pays: prospectPays,
+              produit: input.produit || null,
+              notes: [
+                "Source : formulaire site web hallucine.fr",
+                input.message ? `Message : ${input.message}` : null,
+                input.objectif ? `Objectif : ${input.objectif}` : null,
+              ].filter(Boolean).join("\n"),
+            });
+            crmSync = result;
+            if (result.success) {
+              console.log(`[CRM Direct] Prospect créé (id: ${result.prospectId}) pour ${input.nom}`);
+            } else {
+              console.warn(`[CRM Direct] Échec pour ${input.nom}: ${result.error}`);
+            }
+          } catch (err) {
+            console.error(`[CRM Direct] Erreur pour ${input.nom}:`, err);
+            crmSync = { success: false, error: String(err) };
+          }
+        }
+
+        // Fallback : webhook si l'insertion directe a échoué
+        if (!crmSync.success && isCrmSyncConfigured()) {
+          try {
+            console.log(`[CRM Webhook] Fallback webhook pour ${input.nom}`);
+            crmSync = await syncSubmissionToCrm(input);
+          } catch (err) {
+            console.warn(`[CRM Webhook] Fallback échoué pour ${input.nom}:`, err);
+          }
         }
 
         return { success: true, crmSynced: crmSync.success };

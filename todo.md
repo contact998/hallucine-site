@@ -571,3 +571,10 @@
 ## Fix debounce + reset entreprise
 - [x] Debounce Zippopotam.us : 400ms → 500ms
 - [x] Reset entreprise quand le code postal change
+
+## Connexion directe site → base CRM
+- [x] Ajouter secret CRM_DATABASE_URL
+- [x] Créer module server/crmDirect.ts (insertion directe dans table prospects)
+- [x] Modifier contact.submit pour utiliser l'insertion directe
+- [x] Garder webhook en fallback
+- [x] Tests vitest
