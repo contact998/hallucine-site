@@ -23,14 +23,16 @@ interface SiretLookupFieldProps {
     siret: string;
     siren: string;
   }) => void;
-  /** Valeur initiale du champ (pré-rempli par l'IA ou autre) */
+  /** Valeur initiale du champ (pré-rempli ou autre) */
   initialValue?: string;
+  /** Code postal pour filtrer la recherche par zone */
+  codePostal?: string;
   /** Callback quand le texte change (saisie libre) */
   onTextChange?: (value: string) => void;
   className?: string;
 }
 
-export default function SiretLookupField({ onSelect, initialValue = "", onTextChange, className = "" }: SiretLookupFieldProps) {
+export default function SiretLookupField({ onSelect, initialValue = "", codePostal: filterCodePostal, onTextChange, className = "" }: SiretLookupFieldProps) {
   const [query, setQuery] = useState(initialValue);
   const [results, setResults] = useState<SiretResult[]>([]);
   const [loading, setLoading] = useState(false);
@@ -76,7 +78,7 @@ export default function SiretLookupField({ onSelect, initialValue = "", onTextCh
     setLoading(true);
     setError(null);
     try {
-      const response = await searchEntreprise(q, { perPage: 5, activeOnly: true });
+      const response = await searchEntreprise(q, { perPage: 5, activeOnly: true, codePostal: filterCodePostal || undefined });
       if (response.error) setError(response.error);
       setResults(response.results);
       setShowDropdown(response.results.length > 0);
@@ -85,7 +87,7 @@ export default function SiretLookupField({ onSelect, initialValue = "", onTextCh
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [filterCodePostal]);
 
   const handleChange = useCallback((value: string) => {
     setQuery(value);

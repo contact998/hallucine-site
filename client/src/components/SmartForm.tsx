@@ -942,11 +942,12 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                     <select
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
-                      className={`${inputClass} bg-white/[0.05] cursor-pointer`}
+                      className={`${inputClass} cursor-pointer`}
+                      style={{ backgroundColor: "#1a1a2e", color: "#fff" }}
                     >
-                      <option value="">Choisir une ville</option>
+                      <option value="" style={{ backgroundColor: "#1a1a2e", color: "#fff" }}>Choisir une ville</option>
                       {citySuggestions.map((c) => (
-                        <option key={c} value={c}>{c}</option>
+                        <option key={c} value={c} style={{ backgroundColor: "#1a1a2e", color: "#fff" }}>{c}</option>
                       ))}
                     </select>
                   ) : (
@@ -1028,6 +1029,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
               {/* Champ entreprise avec auto-complétion API */}
               <SiretLookupField
                 initialValue={entreprise}
+                codePostal={postalCode}
                 onTextChange={(value) => setEntreprise(value)}
                 onSelect={(result) => {
                   setEntreprise(result.entreprise);

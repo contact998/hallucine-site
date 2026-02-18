@@ -535,3 +535,7 @@
 ## Correction Zippopotam.us
 - [x] France testée en premier, puis autres pays seulement si France ne trouve rien
 - [x] Si plusieurs villes pour un même code postal → liste déroulante pour choisir
+
+## Bugs select villes + filtre entreprise par code postal
+- [x] Corriger le style du select villes : fond sombre, texte clair, options lisibles
+- [x] Passer le code postal au SiretLookupField pour filtrer la recherche entreprise
