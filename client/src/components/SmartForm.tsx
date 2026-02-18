@@ -366,6 +366,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   useEffect(() => {
     if (postalCode.length < 3) {
       setCitySuggestions([]);
+      setCity("");
+      setCountry("");
       return;
     }
 
@@ -374,9 +376,23 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     postalCodeTimeoutRef.current = setTimeout(async () => {
       setLoadingCities(true);
       try {
-        // Essayer France d'abord, puis les autres pays
-        const tryCountries = ["fr", ...Object.values(countryToIso).filter(c => c !== "fr")];
-        for (const iso of tryCountries) {
+        // 1) Essayer France d'abord
+        const resFr = await fetch(`https://api.zippopotam.us/fr/${postalCode}`);
+        if (resFr.ok) {
+          const data = await resFr.json();
+          const cities = data.places?.map((p: { "place name": string }) => p["place name"]).filter(Boolean) || [];
+          if (cities.length > 0) {
+            setCitySuggestions(cities);
+            if (cities.length === 1) setCity(cities[0]);
+            else setCity(""); // Plusieurs villes → l'utilisateur choisit
+            setCountry("France");
+            setLoadingCities(false);
+            return;
+          }
+        }
+        // 2) France n'a rien trouvé → essayer les autres pays
+        const otherCountries = Object.values(countryToIso).filter(c => c !== "fr");
+        for (const iso of otherCountries) {
           const res = await fetch(`https://api.zippopotam.us/${iso}/${postalCode}`);
           if (res.ok) {
             const data = await res.json();
@@ -384,15 +400,18 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             if (cities.length > 0) {
               setCitySuggestions(cities);
               if (cities.length === 1) setCity(cities[0]);
-              // Détecter le pays automatiquement
+              else setCity("");
               const detectedCountry = isoToCountry[iso];
               if (detectedCountry) setCountry(detectedCountry);
+              setLoadingCities(false);
               return;
             }
           }
         }
         // Aucun résultat trouvé
         setCitySuggestions([]);
+        setCity("");
+        setCountry("");
       } catch {
         // Fallback silencieux
       } finally {
@@ -915,13 +934,26 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                 </div>
               </div>
 
-              {/* Ville et Pays toujours affichés en lecture seule */}
+              {/* Ville et Pays */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className={labelClass}>Ville</label>
-                  <div className={`${inputClass} bg-white/[0.02] text-white/60`}>
-                    {city || "--"}
-                  </div>
+                  {citySuggestions.length > 1 ? (
+                    <select
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                      className={`${inputClass} bg-white/[0.05] cursor-pointer`}
+                    >
+                      <option value="">Choisir une ville</option>
+                      {citySuggestions.map((c) => (
+                        <option key={c} value={c}>{c}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <div className={`${inputClass} bg-white/[0.02] text-white/60`}>
+                      {city || "--"}
+                    </div>
+                  )}
                 </div>
                 <div>
                   <label className={labelClass}>

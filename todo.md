@@ -531,3 +531,7 @@
 - [x] Supprimer le champ Pays séparé (détecté auto depuis code postal)
 - [x] Corriger Zippopotam.us : essayer France par défaut, puis autres pays
 - [x] Ajouter une étoile rouge (*) sur les champs obligatoires (Email, Produit, Code postal, Prénom)
+
+## Correction Zippopotam.us
+- [x] France testée en premier, puis autres pays seulement si France ne trouve rien
+- [x] Si plusieurs villes pour un même code postal → liste déroulante pour choisir
