@@ -511,3 +511,7 @@
 - [x] Remplacer l'appel geo.api.gouv.fr par Zippopotam.us dans l'étape 6 (Localisation) du SmartForm
 - [x] Supprimer la condition "si France" : le code postal fonctionne pour tous les pays
 - [x] Remettre le champ Ville auto-complété dans SiretLookupField (étape 5) — non nécessaire, le code postal est à l'étape 6
+
+## Champs obligatoires du formulaire
+- [x] Définir les champs obligatoires : Email, Produit, Code postal, Prénom
+- [x] Tout le reste optionnel (nom, téléphone, entreprise, pays, ville, message)

@@ -522,10 +522,10 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     switch (currentStep) {
       case 1: return email.includes("@") && email.includes(".");
       case 2: return product !== null;
-      case 3: return productDetail !== "";
+      case 3: return true; // Besoin specifique optionnel
       case 4: return true; // Tel optionnel
-      case 5: return true; // Nom optionnel
-      case 6: return true; // Localisation optionnel
+      case 5: return prenom.trim().length > 0; // Prenom obligatoire
+      case 6: return postalCode.trim().length >= 3; // Code postal obligatoire
       case 7: return true;
       default: return false;
     }
@@ -1053,7 +1053,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
               </button>
               <button
                 onClick={goNext}
-                className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-gold text-navy-deep font-semibold text-sm rounded-sm hover:bg-gold-light transition-colors"
+                disabled={!canProceed()}
+                className={`flex-1 flex items-center justify-center gap-2 px-6 py-2.5 font-semibold text-sm rounded-sm transition-colors ${canProceed() ? 'bg-gold text-navy-deep hover:bg-gold-light' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}
               >
                 Continuer <ArrowRight className="w-4 h-4" />
               </button>
@@ -1156,7 +1157,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
               </button>
               <button
                 onClick={goNext}
-                className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-gold text-navy-deep font-semibold text-sm rounded-sm hover:bg-gold-light transition-colors"
+                disabled={!canProceed()}
+                className={`flex-1 flex items-center justify-center gap-2 px-6 py-2.5 font-semibold text-sm rounded-sm transition-colors ${canProceed() ? 'bg-gold text-navy-deep hover:bg-gold-light' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}
               >
                 Continuer <ArrowRight className="w-4 h-4" />
               </button>
