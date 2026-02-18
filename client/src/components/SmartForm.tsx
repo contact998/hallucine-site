@@ -393,6 +393,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     setCitySuggestions([]);
     setCity("");
     setCountry("");
+    setEntreprise("");
     setPostalCodeNotFound(false);
     setPostalCodeManualMode(false);
 
@@ -448,7 +449,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
       } finally {
         setLoadingCities(false);
       }
-    }, 400);
+    }, 500);
 
     return () => {
       if (postalCodeTimeoutRef.current) clearTimeout(postalCodeTimeoutRef.current);

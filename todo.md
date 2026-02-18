@@ -567,3 +567,7 @@
 - [x] 1. Honeypot : champ caché frontend + rejet silencieux backend
 - [x] 2. Rate limiting : max 5 soumissions/heure par IP
 - [x] 3. Délai minimum : rejet si soumission < 5 secondes après ouverture
+
+## Fix debounce + reset entreprise
+- [x] Debounce Zippopotam.us : 400ms → 500ms
+- [x] Reset entreprise quand le code postal change
