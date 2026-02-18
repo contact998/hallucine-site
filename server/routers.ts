@@ -311,7 +311,7 @@ export const appRouter = router({
             entreprise: input.entreprise,
             besoin: input.objectif,
           });
-          // Envoi asynchrone via Resend (ne bloque pas la réponse)
+          // Envoi asynchrone via Resend depuis contact@hallucine.fr (ne bloque pas la réponse)
           sendConfirmationEmail(confirmEmail)
             .then(result => {
               if (result.success) {
