@@ -490,3 +490,7 @@
 
 ## Bug tooltip bouton orange (signalé par l'utilisateur)
 - [x] Le tooltip du bouton orange corrigé — affiche "Paris HH:MM" quand non connecté, heure locale quand connecté, détails par commercial au survol
+
+## Bugs badge disponibilité (signalés par l'utilisateur)
+- [ ] Bouton vert : le badge ne s'affiche qu'après avoir ouvert WhatsApp une fois — devrait être visible dès le chargement
+- [ ] Bouton orange : le tooltip ne s'affiche pas au survol (le bouton bouge mais rien d'autre)
