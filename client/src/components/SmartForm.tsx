@@ -365,9 +365,20 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     };
   }, [submitted, email, prenom, nom, entreprise, phone, product, productDetail, country, city, currentStep, emailExtraction, abandonSent, totalSteps]);
 
-  // ─── API gouv.fr : auto-completion ville depuis code postal ───────────
+  // ─── Zippopotam.us : auto-completion ville depuis code postal (tous pays) ──
+  const countryToIso: Record<string, string> = {
+    "France": "fr", "Belgique": "be", "Suisse": "ch", "Canada": "ca",
+    "Maroc": "ma", "Tunisie": "tn", "Algerie": "dz", "Senegal": "sn",
+    "Allemagne": "de", "Espagne": "es", "Italie": "it", "Royaume-Uni": "gb",
+    "Etats-Unis": "us", "Chine": "cn", "Japon": "jp", "Bresil": "br",
+    "Mexique": "mx", "Australie": "au", "Emirats arabes unis": "ae",
+    "Arabie saoudite": "sa", "Madagascar": "mg", "Cameroun": "cm",
+    "Cote d'Ivoire": "ci",
+  };
+
   useEffect(() => {
-    if (country !== "France" || postalCode.length < 5) {
+    const isoCode = countryToIso[country];
+    if (!isoCode || postalCode.length < 3) {
       setCitySuggestions([]);
       return;
     }
@@ -377,14 +388,16 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     postalCodeTimeoutRef.current = setTimeout(async () => {
       setLoadingCities(true);
       try {
-        const res = await fetch(`https://data.geopf.fr/geocodage/search/?q=${postalCode}&type=municipality&postcode=${postalCode}&limit=5`);
+        const res = await fetch(`https://api.zippopotam.us/${isoCode}/${postalCode}`);
         if (res.ok) {
           const data = await res.json();
-          const cities = data.features?.map((f: { properties: { city?: string; name?: string } }) => f.properties.city || f.properties.name).filter(Boolean) || [];
+          const cities = data.places?.map((p: { "place name": string }) => p["place name"]).filter(Boolean) || [];
           setCitySuggestions(cities);
           if (cities.length === 1) {
             setCity(cities[0]);
           }
+        } else {
+          setCitySuggestions([]);
         }
       } catch {
         // Fallback silencieux
@@ -1084,74 +1097,57 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                 )}
               </div>
 
-              {country === "France" && (
-                <div className="grid grid-cols-5 gap-3">
-                  <div className="col-span-2">
-                    <label className={labelClass}>
-                      <MapPin className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Code postal
-                    </label>
-                    <div className="relative">
-                      <input
-                        type="text"
-                        value={postalCode}
-                        onChange={(e) => setPostalCode(e.target.value.replace(/\D/g, "").slice(0, 5))}
-                        placeholder="75001"
-                        maxLength={5}
-                        className={inputClass}
-                      />
-                      {loadingCities && (
-                        <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                          <Loader2 className="w-4 h-4 text-gold animate-spin" />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="col-span-3">
-                    <label className={labelClass}>Ville</label>
-                    {citySuggestions.length > 1 ? (
-                      <select
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
-                        className={inputClass}
-                      >
-                        <option value="">Selectionnez</option>
-                        {citySuggestions.map((c) => (
-                          <option key={c} value={c}>{c}</option>
-                        ))}
-                      </select>
-                    ) : (
-                      <input
-                        type="text"
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
-                        placeholder={citySuggestions.length === 1 ? citySuggestions[0] : "Ville"}
-                        className={inputClass}
-                      />
+              <div className="grid grid-cols-5 gap-3">
+                <div className="col-span-2">
+                  <label className={labelClass}>
+                    <MapPin className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Code postal
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={postalCode}
+                      onChange={(e) => setPostalCode(e.target.value.replace(/\D/g, "").slice(0, 10))}
+                      placeholder="75001"
+                      maxLength={10}
+                      className={inputClass}
+                    />
+                    {loadingCities && (
+                      <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                        <Loader2 className="w-4 h-4 text-gold animate-spin" />
+                      </div>
                     )}
                   </div>
                 </div>
-              )}
-
-              {country !== "France" && (
-                <div>
-                  <label className={labelClass}>
-                    <MapPin className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Ville
-                  </label>
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="text"
+                <div className="col-span-3">
+                  <label className={labelClass}>Ville</label>
+                  {citySuggestions.length > 1 ? (
+                    <select
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
-                      placeholder="Votre ville"
-                      className={`${inputClass} flex-1`}
-                    />
-                    <VoiceMicButton
-                      onResult={(text) => setCity(text.trim())}
-                      tooltip="Dicter votre ville"
-                    />
-                  </div>
+                      className={inputClass}
+                    >
+                      <option value="">Selectionnez</option>
+                      {citySuggestions.map((c) => (
+                        <option key={c} value={c}>{c}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        placeholder={citySuggestions.length === 1 ? citySuggestions[0] : "Votre ville"}
+                        className={`${inputClass} flex-1`}
+                      />
+                      <VoiceMicButton
+                        onResult={(text) => setCity(text.trim())}
+                        tooltip="Dicter votre ville"
+                      />
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
 
             <div className="flex gap-3 mt-6">

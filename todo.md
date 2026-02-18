@@ -506,3 +506,8 @@
 - [x] Transformer SiretLookupField en champ texte unique avec auto-complétion API (saisie libre si pas de résultat)
 - [x] Supprimer le champ texte libre "Entreprise / Organisation" séparé de l'étape 5
 - [x] Pré-remplir le champ unique avec la suggestion IA (depuis l'email) si disponible
+
+## Remplacement geo.api.gouv.fr par Zippopotam.us (code postal → ville, tous pays)
+- [x] Remplacer l'appel geo.api.gouv.fr par Zippopotam.us dans l'étape 6 (Localisation) du SmartForm
+- [x] Supprimer la condition "si France" : le code postal fonctionne pour tous les pays
+- [x] Remettre le champ Ville auto-complété dans SiretLookupField (étape 5) — non nécessaire, le code postal est à l'étape 6
