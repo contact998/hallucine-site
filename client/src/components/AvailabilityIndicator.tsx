@@ -247,7 +247,6 @@ export function AvailabilityBadge() {
   const { data, isLoading } = useAvailability();
   const { user, isAuthenticated } = useAuth();
   const [hovered, setHovered] = useState(false);
-  const [displayTime, setDisplayTime] = useState("");
   const [timeLabel, setTimeLabel] = useState("");
 
   // Calculer l'heure dès le montage et la mettre à jour régulièrement
@@ -261,19 +260,16 @@ export function AvailabilityBadge() {
             hour: "2-digit",
             minute: "2-digit",
           });
-          setDisplayTime(t);
-          setTimeLabel(`Votre heure : ${t}`);
+          setTimeLabel(t);
         } else {
           const t = now.toLocaleTimeString("fr-FR", {
             timeZone: "Europe/Paris",
             hour: "2-digit",
             minute: "2-digit",
           });
-          setDisplayTime(t);
-          setTimeLabel(`Paris : ${t}`);
+          setTimeLabel(`Paris ${t}`);
         }
       } catch {
-        setDisplayTime("--:--");
         setTimeLabel("--:--");
       }
     };
@@ -292,6 +288,7 @@ export function AvailabilityBadge() {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
+      {/* Pastille colorée */}
       <div className="relative">
         <div
           className={`w-2.5 h-2.5 rounded-full ${
@@ -302,6 +299,8 @@ export function AvailabilityBadge() {
           <div className="absolute inset-0 w-2.5 h-2.5 rounded-full bg-green-500 animate-ping opacity-75" />
         )}
       </div>
+
+      {/* Statut + heure affichés directement (pas de tooltip) */}
       <span
         className={`text-xs font-medium hidden sm:inline ${
           data.available ? "text-green-400" : "text-orange-400"
@@ -312,15 +311,25 @@ export function AvailabilityBadge() {
           : "Absent"}
       </span>
 
-      {/* Tooltip avec l'heure au survol */}
-      {hovered && displayTime && (
+      {/* Heure toujours visible à côté */}
+      {timeLabel && (
+        <span className="text-xs text-white/50 hidden sm:inline">
+          · {timeLabel}
+        </span>
+      )}
+
+      {/* Tooltip au survol : détails par commercial */}
+      {hovered && data.commercials.length > 0 && (
         <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 pointer-events-none" style={{ zIndex: 99999 }}>
           <div className="absolute left-1/2 -translate-x-1/2 -top-1 w-2 h-2 bg-gray-900 border-l border-t border-gray-600 rotate-45" />
           <div className="bg-gray-900 text-white text-xs rounded-lg px-3 py-2 shadow-2xl border border-gray-600 whitespace-nowrap">
-            <div className="flex items-center gap-1.5">
-              <Clock className="w-3 h-3 text-amber-400" />
-              <span className="font-medium">{timeLabel}</span>
-            </div>
+            {data.commercials.map((c) => (
+              <div key={c.initials} className="flex items-center gap-1.5 py-0.5">
+                <div className={`w-1.5 h-1.5 rounded-full ${c.available ? "bg-green-500" : "bg-orange-500"}`} />
+                <span className="font-medium">{c.name}</span>
+                <span className="text-white/50">{c.localTime}</span>
+              </div>
+            ))}
           </div>
         </div>
       )}

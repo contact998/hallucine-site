@@ -487,3 +487,6 @@
 - [x] Modifier le site web pour lire les fuseaux depuis cette route (plus de siteSettings)
 - [x] Mettre à jour le fallback : Asia/Shanghai pour DC et JB (tous deux en Chine)
 - [x] Tester l'intégration complète CRM → site web (248 tests passent, fuseaux chargés)
+
+## Bug tooltip bouton orange (signalé par l'utilisateur)
+- [x] Le tooltip du bouton orange corrigé — affiche "Paris HH:MM" quand non connecté, heure locale quand connecté, détails par commercial au survol
