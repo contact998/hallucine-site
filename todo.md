@@ -497,3 +497,6 @@
 
 ## Modification options spectateurs formulaire contact
 - [x] Changer les nombres : 5m=20, 9m=300, 11m=600, 13m=1000, 15m=5000
+
+## Retry automatique tRPC (erreur HTML au lieu de JSON)
+- [x] Ajouter un retry link dans le client tRPC pour relancer automatiquement les requêtes échouées (502/503/HTML)
