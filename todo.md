@@ -552,3 +552,13 @@
 
 ## Fix pays/ville persistant après correction code postal
 - [x] Réinitialiser pays et ville à chaque nouvelle saisie de code postal
+
+## Formulaire robuste — 8 améliorations
+- [x] 1. Validation email stricte (regex standard + message erreur rouge)
+- [x] 2. Validation téléphone (min 8 chiffres, avertissement doux)
+- [x] 3. Message si code postal non reconnu + champs ville/pays éditables en fallback
+- [x] 4. Trim espaces sur tous les champs avant soumission
+- [x] 5. Protection anti double-soumission (guard dans handleSubmit)
+- [x] 6. Validation prénom minimale (min 2 caractères)
+- [x] 7. Messages d'erreur visuels sous les champs obligatoires invalides
+- [x] 8. Accessibilité clavier — Enter pour avancer sur toutes les étapes

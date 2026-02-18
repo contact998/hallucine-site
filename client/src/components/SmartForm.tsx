@@ -83,6 +83,21 @@ const popularCountries = [
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 
+/** Validation email stricte — regex standard RFC-like */
+function isValidEmail(email: string): boolean {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  return re.test(email.trim());
+}
+
+/** Validation téléphone — au moins 8 chiffres (hors préfixe +) */
+function isPhoneWarning(phone: string): string | null {
+  const digits = phone.replace(/[^0-9]/g, "");
+  if (phone.trim().length > 0 && digits.length < 8) {
+    return "Le numéro semble trop court (minimum 8 chiffres)";
+  }
+  return null;
+}
+
 function detectCountryFromTimezone(): string {
   const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const tzCountryMap: Record<string, string> = {
@@ -182,6 +197,12 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   const [showResumeBanner, setShowResumeBanner] = useState(false);
 
 
+
+  // États d'erreur pour validation visuelle
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  // Code postal non reconnu → mode manuel
+  const [postalCodeNotFound, setPostalCodeNotFound] = useState(false);
+  const [postalCodeManualMode, setPostalCodeManualMode] = useState(false);
 
   // Autres IA states
   const [citySuggestions, setCitySuggestions] = useState<string[]>([]);
@@ -368,6 +389,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     setCitySuggestions([]);
     setCity("");
     setCountry("");
+    setPostalCodeNotFound(false);
+    setPostalCodeManualMode(false);
 
     if (postalCode.length < 3) {
       return;
@@ -410,10 +433,12 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             }
           }
         }
-        // Aucun résultat trouvé
+        // Aucun résultat trouvé → mode manuel
         setCitySuggestions([]);
         setCity("");
         setCountry("");
+        setPostalCodeNotFound(true);
+        setPostalCodeManualMode(true);
       } catch {
         // Fallback silencieux
       } finally {
@@ -463,8 +488,23 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   });
 
   const handleSubmit = () => {
-    if (!email) {
-      toast.error("Veuillez renseigner votre email.");
+    // Guard anti double-soumission
+    if (submitted || submitMutation.isPending) return;
+
+    // Trim tous les champs avant soumission
+    const trimmedEmail = email.trim();
+    const trimmedPrenom = prenom.trim();
+    const trimmedNom = nom.trim();
+    const trimmedEntreprise = entreprise.trim();
+    const trimmedPhone = phone.trim();
+    const trimmedMessage = message.trim();
+
+    if (!trimmedEmail || !isValidEmail(trimmedEmail)) {
+      toast.error("Veuillez renseigner un email valide.");
+      return;
+    }
+    if (trimmedPrenom.length < 2) {
+      toast.error("Veuillez renseigner votre pr\u00e9nom (min. 2 caract\u00e8res).");
       return;
     }
 
@@ -475,7 +515,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
       arche: "Arche gonflable",
     };
     const productLabel = product ? `${productLabels[product]} -- ${productDetail}` : "Non precise";
-    const fullName = [prenom, nom].filter(Boolean).join(" ") || "Non renseigne";
+    const fullName = [trimmedPrenom, trimmedNom].filter(Boolean).join(" ") || "Non renseigne";
     const location = [city, postalCode, country].filter(Boolean).join(", ");
 
     const callbackInfo = callbackDay || callbackTime
@@ -485,11 +525,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     submitMutation.mutate({
       type: "devis",
       nom: fullName,
-      email,
-      telephone: phone?.trim() || undefined,
-      entreprise: entreprise || undefined,
+      email: trimmedEmail,
+      telephone: trimmedPhone || undefined,
+      entreprise: trimmedEntreprise || undefined,
       sujet: `${productLabel} -- ${location}`,
-      message: (message || "") + callbackInfo,
+      message: (trimmedMessage || "") + callbackInfo,
       produit: productLabel,
       objectif: productDetail || undefined,
     });
@@ -501,6 +541,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   // ─── Navigation ───────────────────────────────────────────────────────
   const goNext = () => {
     if (currentStep < totalSteps) {
+      setFieldErrors({});
       setCurrentStep(prev => prev + 1);
       setTimeout(() => formRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }), 100);
     }
@@ -512,14 +553,49 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
   const canProceed = (): boolean => {
     switch (currentStep) {
-      case 1: return email.includes("@") && email.includes(".");
+      case 1: return isValidEmail(email);
       case 2: return product !== null;
       case 3: return true; // Besoin specifique optionnel
       case 4: return true; // Tel optionnel
       case 5: return postalCode.trim().length >= 3; // Code postal obligatoire
       case 6: return true; // Entreprise optionnelle
-      case 7: return prenom.trim().length > 0; // Prenom obligatoire
+      case 7: return prenom.trim().length >= 2; // Prenom obligatoire, min 2 caracteres
       default: return false;
+    }
+  };
+
+  /** Valider l'étape courante et afficher les erreurs si nécessaire */
+  const validateAndProceed = (): boolean => {
+    const errors: Record<string, string> = {};
+    switch (currentStep) {
+      case 1:
+        if (!email.trim()) errors.email = "L'email est obligatoire";
+        else if (!isValidEmail(email)) errors.email = "Format d'email invalide (ex: nom@domaine.fr)";
+        break;
+      case 5:
+        if (postalCode.trim().length < 3) errors.postalCode = "Le code postal est obligatoire (min. 3 chiffres)";
+        break;
+      case 7:
+        if (prenom.trim().length < 2) errors.prenom = "Le pr\u00e9nom est obligatoire (min. 2 caract\u00e8res)";
+        break;
+    }
+    setFieldErrors(errors);
+    if (Object.keys(errors).length > 0) return false;
+    return canProceed();
+  };
+
+  /** Naviguer en avant avec validation */
+  const goNextValidated = () => {
+    if (validateAndProceed()) {
+      goNext();
+    }
+  };
+
+  /** Handler Enter global pour toutes les étapes */
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && canProceed()) {
+      e.preventDefault();
+      goNextValidated();
     }
   };
 
@@ -617,11 +693,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   <input
                     type="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => { setEmail(e.target.value); setFieldErrors(prev => ({ ...prev, email: "" })); }}
                     placeholder="votre@email.com"
-                    className={`${inputClass} flex-1`}
+                    className={`${inputClass} flex-1 ${fieldErrors.email ? "border-red-500" : ""}`}
                     autoFocus
-                    onKeyDown={(e) => { if (e.key === "Enter" && canProceed()) goNext(); }}
+                    onKeyDown={handleKeyDown}
                   />
                   <VoiceMicButton
                     onResult={(text) => {
@@ -640,12 +716,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   />
                 </div>
               </div>
-
-
+                {fieldErrors.email && <p className="text-red-400 text-xs mt-1">{fieldErrors.email}</p>}
             </div>
 
             <button
-              onClick={goNext}
+              onClick={goNextValidated}
               disabled={!canProceed()}
               className="w-full mt-6 flex items-center justify-center gap-2 px-6 py-3 bg-gold text-navy-deep font-semibold text-sm rounded-sm hover:bg-gold-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
@@ -787,7 +862,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                 <ArrowLeft className="w-4 h-4" /> Retour
               </button>
               <button
-                onClick={goNext}
+                onClick={goNextValidated}
                 disabled={!canProceed()}
                 className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-gold text-navy-deep font-semibold text-sm rounded-sm hover:bg-gold-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
@@ -817,6 +892,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                     placeholder="+33 6 12 34 56 78"
                     className={`${inputClass} flex-1`}
                     autoFocus
+                    onKeyDown={handleKeyDown}
                   />
                   <VoiceMicButton
                     onResult={(text) => {
@@ -848,6 +924,9 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   />
                 </div>
               </div>
+              {isPhoneWarning(phone) && (
+                <p className="text-amber-400 text-xs mt-1">{isPhoneWarning(phone)}</p>
+              )}
 
               {/* Preference de rappel - visible uniquement si telephone renseigne */}
               {phone.trim().length > 4 && (
@@ -898,7 +977,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                 <ArrowLeft className="w-4 h-4" /> Retour
               </button>
               <button
-                onClick={goNext}
+                onClick={goNextValidated}
                 className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-gold text-navy-deep font-semibold text-sm rounded-sm hover:bg-gold-light transition-colors"
               >
                 Continuer <ArrowRight className="w-4 h-4" />
@@ -922,11 +1001,12 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   <input
                     type="text"
                     value={postalCode}
-                    onChange={(e) => setPostalCode(e.target.value.replace(/\D/g, "").slice(0, 10))}
+                    onChange={(e) => { setPostalCode(e.target.value.replace(/\D/g, "").slice(0, 10)); setFieldErrors(prev => ({ ...prev, postalCode: "" })); }}
                     placeholder="75001"
                     maxLength={10}
-                    className={inputClass}
+                    className={`${inputClass} ${fieldErrors.postalCode ? "border-red-500" : ""}`}
                     autoFocus
+                    onKeyDown={handleKeyDown}
                   />
                   {loadingCities && (
                     <div className="absolute right-3 top-1/2 -translate-y-1/2">
@@ -935,6 +1015,12 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   )}
                 </div>
               </div>
+              {fieldErrors.postalCode && <p className="text-red-400 text-xs mt-1">{fieldErrors.postalCode}</p>}
+
+              {/* Message code postal non reconnu */}
+              {postalCodeNotFound && postalCode.length >= 3 && !loadingCities && (
+                <p className="text-amber-400 text-xs mt-1">Code postal non reconnu — vous pouvez saisir ville et pays manuellement ci-dessous.</p>
+              )}
 
               {/* Ville et Pays */}
               <div className="grid grid-cols-2 gap-3">
@@ -952,6 +1038,14 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                         <option key={c} value={c} style={{ backgroundColor: "#1a1a2e", color: "#fff" }}>{c}</option>
                       ))}
                     </select>
+                  ) : postalCodeManualMode ? (
+                    <input
+                      type="text"
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                      placeholder="Votre ville"
+                      className={inputClass}
+                    />
                   ) : (
                     <div className={`${inputClass} bg-white/[0.02] text-white/60`}>
                       {city || "--"}
@@ -962,9 +1056,19 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   <label className={labelClass}>
                     <Globe className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Pays
                   </label>
-                  <div className={`${inputClass} bg-white/[0.02] text-white/60`}>
-                    {country || "--"}
-                  </div>
+                  {postalCodeManualMode ? (
+                    <input
+                      type="text"
+                      value={country}
+                      onChange={(e) => setCountry(e.target.value)}
+                      placeholder="Votre pays"
+                      className={inputClass}
+                    />
+                  ) : (
+                    <div className={`${inputClass} bg-white/[0.02] text-white/60`}>
+                      {country || "--"}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -974,7 +1078,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                 <ArrowLeft className="w-4 h-4" /> Retour
               </button>
               <button
-                onClick={goNext}
+                onClick={goNextValidated}
                 disabled={!canProceed()}
                 className={`flex-1 flex items-center justify-center gap-2 px-6 py-2.5 font-semibold text-sm rounded-sm transition-colors ${canProceed() ? 'bg-gold text-navy-deep hover:bg-gold-light' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}
               >
@@ -1012,7 +1116,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                 <ArrowLeft className="w-4 h-4" /> Retour
               </button>
               <button
-                onClick={goNext}
+                onClick={goNextValidated}
                 disabled={!canProceed()}
                 className={`flex-1 flex items-center justify-center gap-2 px-6 py-2.5 font-semibold text-sm rounded-sm transition-colors ${canProceed() ? 'bg-gold text-navy-deep hover:bg-gold-light' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}
               >
@@ -1038,9 +1142,9 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                     <input
                       type="text"
                       value={prenom}
-                      onChange={(e) => setPrenom(e.target.value)}
+                      onChange={(e) => { setPrenom(e.target.value); setFieldErrors(prev => ({ ...prev, prenom: "" })); }}
                       placeholder="Jean"
-                      className={`${inputClass} flex-1`}
+                      className={`${inputClass} flex-1 ${fieldErrors.prenom ? "border-red-500" : ""}`}
                       autoFocus
                     />
                     <VoiceMicButton
@@ -1067,6 +1171,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                 </div>
               </div>
             </div>
+            {fieldErrors.prenom && <p className="text-red-400 text-xs mt-1">{fieldErrors.prenom}</p>}
 
             <div className="mt-4">
               <div className="flex items-center justify-between mb-1.5">
