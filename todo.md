@@ -544,3 +544,8 @@
 - [x] Étape 5 = Code postal + Ville/Pays (inchangé)
 - [x] Étape 6 = Entreprise (auto-complétion API)
 - [x] Étape 7 = Prénom + Nom + Message + Envoi
+
+## Fix auto-complétion entreprise
+- [x] Recherche automatique à la frappe (sans Entrée) via useEffect
+- [x] Debounce réduit à 300ms
+- [x] Fallback : si rien trouvé avec code postal, relancer sans filtre

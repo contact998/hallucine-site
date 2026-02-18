@@ -1,10 +1,10 @@
 /**
  * SiretLookupField — Champ entreprise unique avec auto-complétion API
  * L'utilisateur tape le nom de son entreprise, l'API recherche-entreprises.gouv.fr
- * propose des résultats. S'il sélectionne une entreprise, le SIRET/adresse/ville
- * sont récupérés. S'il ne trouve rien, son texte libre est conservé.
+ * propose des résultats automatiquement (sans Entrée). S'il sélectionne une entreprise,
+ * le SIRET/adresse/ville sont récupérés. S'il ne trouve rien, son texte libre est conservé.
  */
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Building2, MapPin, Loader2, CheckCircle } from "lucide-react";
 import {
@@ -40,10 +40,11 @@ export default function SiretLookupField({ onSelect, initialValue = "", codePost
   const [selected, setSelected] = useState<SiretResult | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  // Track si l'utilisateur est en train de taper (pas de recherche sur initialValue)
+  const userTypingRef = useRef(false);
 
-  // Mettre à jour si initialValue change (pré-remplissage IA)
+  // Mettre à jour si initialValue change (pré-remplissage)
   useEffect(() => {
     if (initialValue && !query && !selected) {
       setQuery(initialValue);
@@ -61,45 +62,57 @@ export default function SiretLookupField({ onSelect, initialValue = "", codePost
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
-  // Cleanup
+  // Auto-recherche à la frappe via useEffect + debounce 300ms
   useEffect(() => {
-    return () => {
-      if (debounceRef.current) clearTimeout(debounceRef.current);
-    };
-  }, []);
-
-  // Recherche entreprise via API
-  const doSearch = useCallback(async (q: string) => {
-    if (q.trim().length < 2) {
+    // Ne pas chercher si l'utilisateur n'a pas tapé ou si une sélection est faite
+    if (!userTypingRef.current || selected) return;
+    if (query.trim().length < 2) {
       setResults([]);
       setShowDropdown(false);
       return;
     }
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await searchEntreprise(q, { perPage: 5, activeOnly: true, codePostal: filterCodePostal || undefined });
-      if (response.error) setError(response.error);
-      setResults(response.results);
-      setShowDropdown(response.results.length > 0);
-    } catch {
-      setError("Erreur de recherche");
-    } finally {
-      setLoading(false);
-    }
-  }, [filterCodePostal]);
 
-  const handleChange = useCallback((value: string) => {
+    const timer = setTimeout(async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        // D'abord essayer avec le filtre code postal
+        let response = await searchEntreprise(query, {
+          perPage: 5,
+          activeOnly: true,
+          codePostal: filterCodePostal || undefined,
+        });
+
+        // Fallback : si rien trouvé avec le code postal, relancer sans filtre
+        if (response.results.length === 0 && filterCodePostal) {
+          response = await searchEntreprise(query, {
+            perPage: 5,
+            activeOnly: true,
+          });
+        }
+
+        if (response.error) setError(response.error);
+        setResults(response.results);
+        setShowDropdown(response.results.length > 0);
+      } catch {
+        setError("Erreur de recherche");
+      } finally {
+        setLoading(false);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [query, filterCodePostal, selected]);
+
+  const handleChange = (value: string) => {
+    userTypingRef.current = true;
     setQuery(value);
     setSelected(null);
     onTextChange?.(value);
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => {
-      doSearch(value);
-    }, 500);
-  }, [doSearch, onTextChange]);
+  };
 
-  const handleSelect = useCallback((result: SiretResult) => {
+  const handleSelect = (result: SiretResult) => {
+    userTypingRef.current = false;
     setSelected(result);
     setQuery(result.nomComplet);
     setShowDropdown(false);
@@ -112,7 +125,7 @@ export default function SiretLookupField({ onSelect, initialValue = "", codePost
       siret: result.siret,
       siren: result.siren,
     });
-  }, [onSelect, onTextChange]);
+  };
 
   const inputClass = "w-full p-3 pl-10 bg-white/[0.05] border border-white/10 rounded-sm text-white text-sm placeholder:text-white/30 focus:border-gold focus:outline-none transition-colors";
 
