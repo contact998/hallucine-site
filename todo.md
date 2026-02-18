@@ -515,3 +515,12 @@
 ## Champs obligatoires du formulaire
 - [x] Définir les champs obligatoires : Email, Produit, Code postal, Prénom
 - [x] Tout le reste optionnel (nom, téléphone, entreprise, pays, ville, message)
+
+## Bug : code postal et ville disparus de l'étape 6
+- [x] Corriger l'étape 6 : le code postal et la ville ne s'affichent plus (cause : bouton étape 5 bloqué par l'IA)
+
+## Suppression IA du formulaire + fix étape 6
+- [x] Supprimer l'appel IA (extractFromEmail) et les suggestions IA du SmartForm
+- [x] Supprimer le bandeau "IA a détecté" et le bouton "Accepter tout"
+- [x] Champs Prénom/Nom/Entreprise deviennent des champs texte simples
+- [x] Corriger l'étape 6 (Pays + Code postal + Ville) qui ne s'affiche pas — le problème était le bouton bloqué à l'étape 5 (IA)

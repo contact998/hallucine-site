@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
-import { extractFromEmail, isGenericDomain, type EmailExtraction } from "@/lib/emailIntelligence";
+// IA supprimée du formulaire
 import VoiceMicButton from "@/components/VoiceMicButton";
 import SiretLookupField from "@/components/SiretLookupField";
 
@@ -181,11 +181,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   const [hasSavedProgress, setHasSavedProgress] = useState(false);
   const [showResumeBanner, setShowResumeBanner] = useState(false);
 
-  // IA extraction states
-  const [emailExtraction, setEmailExtraction] = useState<EmailExtraction | null>(null);
-  const [aiAcceptedPrenom, setAiAcceptedPrenom] = useState(false);
-  const [aiAcceptedNom, setAiAcceptedNom] = useState(false);
-  const [aiAcceptedEntreprise, setAiAcceptedEntreprise] = useState(false);
+
 
   // Autres IA states
   const [citySuggestions, setCitySuggestions] = useState<string[]>([]);
@@ -270,25 +266,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     }
   }, []);
 
-  // ─── Extraction IA depuis l'email ─────────────────────────────────────
+  // ─── Capture email pour détection d'abandon ─────────────────────────────
   useEffect(() => {
-    if (!email || !email.includes("@") || !email.includes(".")) {
-      setEmailExtraction(null);
-      return;
+    if (email && email.includes("@") && email.includes(".")) {
+      emailCapturedRef.current = true;
     }
-
-    // Debounce de 300ms
-    const timer = setTimeout(() => {
-      const extraction = extractFromEmail(email);
-      setEmailExtraction(extraction);
-
-      // Marquer que l'email a ete capture (pour la detection d'abandon)
-      if (email.includes("@") && email.includes(".")) {
-        emailCapturedRef.current = true;
-      }
-    }, 300);
-
-    return () => clearTimeout(timer);
   }, [email]);
 
   // ─── Detection d'abandon ──────────────────────────────────────────────
@@ -306,9 +288,9 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     setAbandonSent(true);
     abandonMutation.mutate({
       email,
-      prenom: prenom || emailExtraction?.prenom || undefined,
-      nom: nom || emailExtraction?.nom || undefined,
-      entreprise: entreprise || emailExtraction?.entreprise || undefined,
+      prenom: prenom || undefined,
+      nom: nom || undefined,
+      entreprise: entreprise || undefined,
       telephone: phone?.trim() || undefined,
       product: product ? productLabels[product] : undefined,
       productDetail: productDetail || undefined,
@@ -317,7 +299,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
       lastStep: currentStep,
       totalSteps,
     });
-  }, [abandonSent, submitted, email, prenom, nom, entreprise, phone, product, productDetail, country, city, currentStep, emailExtraction, abandonMutation, totalSteps]);
+  }, [abandonSent, submitted, email, prenom, nom, entreprise, phone, product, productDetail, country, city, currentStep, abandonMutation, totalSteps]);
 
   // Envoyer les donnees partielles quand le visiteur quitte la page
   useEffect(() => {
@@ -330,9 +312,9 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         };
         const data = {
           email,
-          prenom: prenom || emailExtraction?.prenom || "",
-          nom: nom || emailExtraction?.nom || "",
-          entreprise: entreprise || emailExtraction?.entreprise || "",
+          prenom: prenom || "",
+          nom: nom || "",
+          entreprise: entreprise || "",
           telephone: phone?.trim() || "",
           product: product ? productLabels[product] : "",
           productDetail: productDetail || "",
@@ -363,7 +345,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
       window.removeEventListener("beforeunload", handleBeforeUnload);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [submitted, email, prenom, nom, entreprise, phone, product, productDetail, country, city, currentStep, emailExtraction, abandonSent, totalSteps]);
+  }, [submitted, email, prenom, nom, entreprise, phone, product, productDetail, country, city, currentStep, abandonSent, totalSteps]);
 
   // ─── Zippopotam.us : auto-completion ville depuis code postal (tous pays) ──
   const countryToIso: Record<string, string> = {
@@ -432,30 +414,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     }
   }, [phone]);
 
-  // ─── Accepter les suggestions IA ──────────────────────────────────────
-  const acceptAiPrenom = () => {
-    if (emailExtraction?.prenom) {
-      setPrenom(emailExtraction.prenom);
-      setAiAcceptedPrenom(true);
-    }
-  };
-  const acceptAiNom = () => {
-    if (emailExtraction?.nom) {
-      setNom(emailExtraction.nom);
-      setAiAcceptedNom(true);
-    }
-  };
-  const acceptAiEntreprise = () => {
-    if (emailExtraction?.entreprise) {
-      setEntreprise(emailExtraction.entreprise);
-      setAiAcceptedEntreprise(true);
-    }
-  };
-  const acceptAllAi = () => {
-    if (emailExtraction?.prenom && !prenom) { setPrenom(emailExtraction.prenom); setAiAcceptedPrenom(true); }
-    if (emailExtraction?.nom && !nom) { setNom(emailExtraction.nom); setAiAcceptedNom(true); }
-    if (emailExtraction?.entreprise && !entreprise) { setEntreprise(emailExtraction.entreprise); setAiAcceptedEntreprise(true); }
-  };
+
 
   // ─── Mutation tRPC ────────────────────────────────────────────────────
   const submitMutation = trpc.contact.submit.useMutation({
@@ -649,37 +608,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                 </div>
               </div>
 
-              {/* Apercu de l'extraction IA */}
-              {emailExtraction && (emailExtraction.prenom || emailExtraction.nom || emailExtraction.entreprise) && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-3 bg-gold/5 border border-gold/20 rounded-sm"
-                >
-                  <div className="flex items-center gap-1.5 mb-2">
-                    <Sparkles className="w-3.5 h-3.5 text-gold" />
-                    <span className="text-gold text-xs font-medium">IA a detecte depuis votre email :</span>
-                  </div>
-                  <div className="flex flex-wrap gap-2 text-xs">
-                    {emailExtraction.prenom && (
-                      <span className="px-2 py-1 bg-white/5 border border-white/10 rounded text-white/70">
-                        {emailExtraction.prenom}
-                      </span>
-                    )}
-                    {emailExtraction.nom && (
-                      <span className="px-2 py-1 bg-white/5 border border-white/10 rounded text-white/70">
-                        {emailExtraction.nom}
-                      </span>
-                    )}
-                    {emailExtraction.entreprise && (
-                      <span className="px-2 py-1 bg-white/5 border border-white/10 rounded text-white/70">
-                        {emailExtraction.entreprise}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-white/50 text-xs mt-2">Ces informations seront pre-remplies pour vous faire gagner du temps.</p>
-                </motion.div>
-              )}
+
             </div>
 
             <button
@@ -945,36 +874,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
           </motion.div>
         )}
 
-        {/* ─── ETAPE 5 : Nom + Entreprise (pre-rempli par IA) ─────────── */}
+        {/* ─── ETAPE 5 : Nom + Entreprise ────────────────────────────── */}
         {currentStep === 5 && (
           <motion.div key="step5" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
             <h3 className="text-xl font-bold text-white mb-1">Et vous etes ?</h3>
             <p className="text-white/70 text-sm mb-5">Ces informations nous aident a personnaliser votre devis.</p>
-
-            {/* Bouton "Tout accepter" si l'IA a des suggestions */}
-            {emailExtraction && (emailExtraction.prenom || emailExtraction.nom || emailExtraction.entreprise) && !prenom && !nom && !entreprise && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mb-4 p-3 bg-gold/10 border border-gold/30 rounded-sm"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-gold" />
-                    <span className="text-white/80 text-sm">
-                      IA a detecte : <strong className="text-white">{[emailExtraction.prenom, emailExtraction.nom].filter(Boolean).join(" ")}</strong>
-                      {emailExtraction.entreprise && <> chez <strong className="text-white">{emailExtraction.entreprise}</strong></>}
-                    </span>
-                  </div>
-                  <button
-                    onClick={acceptAllAi}
-                    className="px-3 py-1.5 bg-gold text-navy-deep text-xs font-semibold rounded-sm hover:bg-gold-light transition-colors whitespace-nowrap"
-                  >
-                    Accepter tout
-                  </button>
-                </div>
-              </motion.div>
-            )}
 
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
@@ -987,7 +891,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                       type="text"
                       value={prenom}
                       onChange={(e) => setPrenom(e.target.value)}
-                      placeholder={emailExtraction?.prenom || "Jean"}
+                      placeholder="Jean"
                       className={`${inputClass} flex-1`}
                       autoFocus
                     />
@@ -996,15 +900,6 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                       tooltip="Dicter votre prenom"
                     />
                   </div>
-                  {emailExtraction?.prenom && !prenom && !aiAcceptedPrenom && (
-                    <button
-                      onClick={acceptAiPrenom}
-                      className="mt-1 flex items-center gap-1 text-xs text-gold/70 hover:text-gold transition-colors"
-                    >
-                      <Sparkles className="w-3 h-3" />
-                      {emailExtraction.prenom} ?
-                    </button>
-                  )}
                 </div>
                 <div>
                   <label className={labelClass}>Nom</label>
@@ -1013,7 +908,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                       type="text"
                       value={nom}
                       onChange={(e) => setNom(e.target.value)}
-                      placeholder={emailExtraction?.nom || "Dupont"}
+                      placeholder="Dupont"
                       className={`${inputClass} flex-1`}
                     />
                     <VoiceMicButton
@@ -1021,20 +916,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                       tooltip="Dicter votre nom"
                     />
                   </div>
-                  {emailExtraction?.nom && !nom && !aiAcceptedNom && (
-                    <button
-                      onClick={acceptAiNom}
-                      className="mt-1 flex items-center gap-1 text-xs text-gold/70 hover:text-gold transition-colors"
-                    >
-                      <Sparkles className="w-3 h-3" />
-                      {emailExtraction.nom} ?
-                    </button>
-                  )}
                 </div>
               </div>
-              {/* Champ entreprise unique avec auto-complétion API */}
+              {/* Champ entreprise avec auto-complétion API */}
               <SiretLookupField
-                initialValue={entreprise || emailExtraction?.entreprise || ""}
+                initialValue={entreprise}
                 onTextChange={(value) => setEntreprise(value)}
                 onSelect={(result) => {
                   setEntreprise(result.entreprise);
