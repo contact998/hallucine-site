@@ -578,3 +578,7 @@
 - [x] Modifier contact.submit pour utiliser l'insertion directe
 - [x] Garder webhook en fallback
 - [x] Tests vitest
+
+## Migration webhook → insertion directe (abandon + beacon)
+- [x] Migrer trackAbandon vers insertion directe CRM
+- [x] Migrer beacon vers insertion directe CRM

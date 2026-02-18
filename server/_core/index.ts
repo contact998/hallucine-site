@@ -52,7 +52,8 @@ async function startServer() {
 
       // Import dynamique pour eviter les imports circulaires
       const { notifyOwner } = await import("./notification");
-      const { syncSubmissionToCrm } = await import("../crmSync");
+      const { insertProspectIntoCrm, isCrmDirectConfigured } = await import("../crmDirect");
+      const { syncSubmissionToCrm, isCrmSyncConfigured } = await import("../crmSync");
 
       // Notification asynchrone
       notifyOwner({
@@ -70,18 +71,48 @@ async function startServer() {
         ].filter(Boolean).join("\n"),
       }).catch((err: unknown) => console.warn("[Abandon/Beacon] Erreur notification:", err));
 
-      // Sync CRM asynchrone
-      syncSubmissionToCrm({
-        type: "devis",
-        nom: fullName,
-        email: data.email,
-        telephone: data.telephone || null,
-        entreprise: data.entreprise || null,
-        produit: data.product || null,
-        message: `[ABANDON etape ${data.lastStep || "?"}/${data.totalSteps || "?"}] ${data.productDetail || ""}`,
-        objectif: null,
-        sujet: data.product ? `${data.product} (abandon ${progress}%)` : `Abandon formulaire (${progress}%)`,
-      }).catch((err: unknown) => console.warn("[Abandon/Beacon] Erreur CRM:", err));
+      // Insertion directe CRM (méthode principale)
+      let crmOk = false;
+      if (isCrmDirectConfigured()) {
+        try {
+          const result = await insertProspectIntoCrm({
+            entreprise: data.entreprise || `Particulier - ${fullName}`,
+            personne: data.nom || null,
+            prenom: data.prenom || null,
+            email: data.email,
+            telephone: data.telephone || null,
+            ville: data.city || null,
+            pays: data.country || null,
+            produit: data.product || null,
+            notes: [
+              "Source : formulaire site web hallucine.fr",
+              `[ABANDON étape ${data.lastStep || "?"}/${data.totalSteps || "?"} - ${progress}%]`,
+              data.productDetail ? `Détail : ${data.productDetail}` : null,
+            ].filter(Boolean).join("\n"),
+          });
+          crmOk = result.success;
+          if (result.success) {
+            console.log(`[Abandon/Beacon] Prospect partiel créé dans CRM (id: ${result.prospectId}) pour ${data.email}`);
+          }
+        } catch (err) {
+          console.warn("[Abandon/Beacon] Erreur insertion directe CRM:", err);
+        }
+      }
+
+      // Fallback webhook si insertion directe échouée
+      if (!crmOk && isCrmSyncConfigured()) {
+        syncSubmissionToCrm({
+          type: "devis",
+          nom: fullName,
+          email: data.email,
+          telephone: data.telephone || null,
+          entreprise: data.entreprise || null,
+          produit: data.product || null,
+          message: `[ABANDON etape ${data.lastStep || "?"}/${data.totalSteps || "?"} ] ${data.productDetail || ""}`,
+          objectif: null,
+          sujet: data.product ? `${data.product} (abandon ${progress}%)` : `Abandon formulaire (${progress}%)`,
+        }).catch((err: unknown) => console.warn("[Abandon/Beacon] Fallback webhook échoué:", err));
+      }
 
       res.status(200).json({ success: true });
     } catch (err) {

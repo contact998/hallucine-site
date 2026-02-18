@@ -123,21 +123,51 @@ export const appRouter = router({
           ].filter(Boolean).join("\n"),
         });
 
-        // Synchroniser avec le CRM comme prospect partiel
-        try {
-          await syncSubmissionToCrm({
-            type: "devis",
-            nom: fullName,
-            email: input.email,
-            telephone: input.telephone || null,
-            entreprise: input.entreprise || null,
-            produit: input.product || null,
-            message: `[ABANDON etape ${input.lastStep}/${input.totalSteps}] ${input.productDetail || ""}`,
-            objectif: null,
-            sujet: input.product ? `${input.product} (abandon ${progress}%)` : `Abandon formulaire (${progress}%)`,
-          });
-        } catch (err) {
-          console.warn("[Abandon] Erreur sync CRM:", err);
+        // Insertion directe dans la base CRM (prospect partiel)
+        let crmOk = false;
+        if (isCrmDirectConfigured()) {
+          try {
+            const result = await insertProspectIntoCrm({
+              entreprise: input.entreprise || `Particulier - ${fullName}`,
+              personne: input.nom || null,
+              prenom: input.prenom || null,
+              email: input.email,
+              telephone: input.telephone || null,
+              ville: input.city || null,
+              pays: input.country || null,
+              produit: input.product || null,
+              notes: [
+                "Source : formulaire site web hallucine.fr",
+                `[ABANDON étape ${input.lastStep}/${input.totalSteps} - ${progress}%]`,
+                input.productDetail ? `Détail : ${input.productDetail}` : null,
+              ].filter(Boolean).join("\n"),
+            });
+            crmOk = result.success;
+            if (result.success) {
+              console.log(`[Abandon] Prospect partiel créé dans CRM (id: ${result.prospectId}) pour ${input.email}`);
+            }
+          } catch (err) {
+            console.warn("[Abandon] Erreur insertion directe CRM:", err);
+          }
+        }
+
+        // Fallback webhook si insertion directe échouée
+        if (!crmOk && isCrmSyncConfigured()) {
+          try {
+            await syncSubmissionToCrm({
+              type: "devis",
+              nom: fullName,
+              email: input.email,
+              telephone: input.telephone || null,
+              entreprise: input.entreprise || null,
+              produit: input.product || null,
+              message: `[ABANDON etape ${input.lastStep}/${input.totalSteps}] ${input.productDetail || ""}`,
+              objectif: null,
+              sujet: input.product ? `${input.product} (abandon ${progress}%)` : `Abandon formulaire (${progress}%)`,
+            });
+          } catch (err) {
+            console.warn("[Abandon] Fallback webhook échoué:", err);
+          }
         }
 
         return { success: true };
