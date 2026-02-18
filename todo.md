@@ -549,3 +549,6 @@
 - [x] Recherche automatique à la frappe (sans Entrée) via useEffect
 - [x] Debounce réduit à 300ms
 - [x] Fallback : si rien trouvé avec code postal, relancer sans filtre
+
+## Fix pays/ville persistant après correction code postal
+- [x] Réinitialiser pays et ville à chaque nouvelle saisie de code postal

@@ -364,10 +364,12 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   );
 
   useEffect(() => {
+    // Réinitialiser à chaque changement de code postal
+    setCitySuggestions([]);
+    setCity("");
+    setCountry("");
+
     if (postalCode.length < 3) {
-      setCitySuggestions([]);
-      setCity("");
-      setCountry("");
       return;
     }
 
