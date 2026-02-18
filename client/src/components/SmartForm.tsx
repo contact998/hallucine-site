@@ -2,9 +2,9 @@
  * SmartForm — "Le Devis en Douceur"
  * Formulaire unifié intelligent en 7 étapes progressives
  * ÉTAPE 1 = EMAIL (capture immédiate du contact)
- * L'IA extrait nom/prénom/entreprise depuis l'email pour pré-remplir les champs
+ * Champs obligatoires : Email, Produit, Code postal, Prénom
  *
- * Ordre : Email → Produit → Besoin → Tél/Rappel → Nom/Entreprise → Localisation → Message
+ * Ordre : Email → Produit → Besoin → Tél/Rappel → Code postal → Prénom/Nom/Entreprise → Message
  *
  * Détection d'abandon : si le visiteur quitte après avoir saisi son email,
  * les données partielles sont envoyées au backend (CRM + notification admin)
@@ -358,9 +358,13 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     "Cote d'Ivoire": "ci",
   };
 
+  // Mapping inverse ISO → nom pays
+  const isoToCountry: Record<string, string> = Object.fromEntries(
+    Object.entries(countryToIso).map(([name, iso]) => [iso, name])
+  );
+
   useEffect(() => {
-    const isoCode = countryToIso[country];
-    if (!isoCode || postalCode.length < 3) {
+    if (postalCode.length < 3) {
       setCitySuggestions([]);
       return;
     }
@@ -370,17 +374,25 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     postalCodeTimeoutRef.current = setTimeout(async () => {
       setLoadingCities(true);
       try {
-        const res = await fetch(`https://api.zippopotam.us/${isoCode}/${postalCode}`);
-        if (res.ok) {
-          const data = await res.json();
-          const cities = data.places?.map((p: { "place name": string }) => p["place name"]).filter(Boolean) || [];
-          setCitySuggestions(cities);
-          if (cities.length === 1) {
-            setCity(cities[0]);
+        // Essayer France d'abord, puis les autres pays
+        const tryCountries = ["fr", ...Object.values(countryToIso).filter(c => c !== "fr")];
+        for (const iso of tryCountries) {
+          const res = await fetch(`https://api.zippopotam.us/${iso}/${postalCode}`);
+          if (res.ok) {
+            const data = await res.json();
+            const cities = data.places?.map((p: { "place name": string }) => p["place name"]).filter(Boolean) || [];
+            if (cities.length > 0) {
+              setCitySuggestions(cities);
+              if (cities.length === 1) setCity(cities[0]);
+              // Détecter le pays automatiquement
+              const detectedCountry = isoToCountry[iso];
+              if (detectedCountry) setCountry(detectedCountry);
+              return;
+            }
           }
-        } else {
-          setCitySuggestions([]);
         }
+        // Aucun résultat trouvé
+        setCitySuggestions([]);
       } catch {
         // Fallback silencieux
       } finally {
@@ -391,7 +403,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     return () => {
       if (postalCodeTimeoutRef.current) clearTimeout(postalCodeTimeoutRef.current);
     };
-  }, [postalCode, country]);
+  }, [postalCode]);
 
   // ─── Country filter ───────────────────────────────────────────────────
   const handleCountryInput = useCallback((val: string) => {
@@ -483,8 +495,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
       case 2: return product !== null;
       case 3: return true; // Besoin specifique optionnel
       case 4: return true; // Tel optionnel
-      case 5: return prenom.trim().length > 0; // Prenom obligatoire
-      case 6: return postalCode.trim().length >= 3; // Code postal obligatoire
+      case 5: return postalCode.trim().length >= 3; // Code postal obligatoire
+      case 6: return prenom.trim().length > 0; // Prenom obligatoire
       case 7: return true;
       default: return false;
     }
@@ -578,7 +590,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             <div className="space-y-4">
               <div>
                 <label className={labelClass}>
-                  <Mail className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Votre adresse email *
+              <Mail className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Email <span className="text-red-500">*</span>
                 </label>
                 <div className="flex items-center gap-2">
                   <input
@@ -628,7 +640,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         {/* ─── ETAPE 2 : Choix du produit ──────────────────────────────── */}
         {currentStep === 2 && (
           <motion.div key="step2" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">Quel produit vous interesse ?</h3>
+            <h3 className="text-xl font-bold text-white mb-1">Quel produit vous interesse ? <span className="text-red-500">*</span></h3>
             <p className="text-white/70 text-sm mb-5">Selectionnez pour personnaliser votre devis.</p>
             <div className="grid grid-cols-2 gap-3">
               {products.map((p) => (
@@ -874,9 +886,72 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
           </motion.div>
         )}
 
-        {/* ─── ETAPE 5 : Nom + Entreprise ────────────────────────────── */}
+        {/* ─── ETAPE 5 : Code postal + Ville/Pays (lecture seule) ─────── */}
         {currentStep === 5 && (
           <motion.div key="step5" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
+            <h3 className="text-xl font-bold text-white mb-1">Ou etes-vous base ?</h3>
+            <p className="text-white/70 text-sm mb-5">Pour adapter notre offre a votre region.</p>
+
+            <div className="space-y-4">
+              <div>
+                <label className={labelClass}>
+                  <MapPin className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Code postal <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={postalCode}
+                    onChange={(e) => setPostalCode(e.target.value.replace(/\D/g, "").slice(0, 10))}
+                    placeholder="75001"
+                    maxLength={10}
+                    className={inputClass}
+                    autoFocus
+                  />
+                  {loadingCities && (
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                      <Loader2 className="w-4 h-4 text-gold animate-spin" />
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Ville et Pays toujours affichés en lecture seule */}
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className={labelClass}>Ville</label>
+                  <div className={`${inputClass} bg-white/[0.02] text-white/60`}>
+                    {city || "--"}
+                  </div>
+                </div>
+                <div>
+                  <label className={labelClass}>
+                    <Globe className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Pays
+                  </label>
+                  <div className={`${inputClass} bg-white/[0.02] text-white/60`}>
+                    {country || "--"}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex gap-3 mt-6">
+              <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-sm hover:border-white/30 transition-colors">
+                <ArrowLeft className="w-4 h-4" /> Retour
+              </button>
+              <button
+                onClick={goNext}
+                disabled={!canProceed()}
+                className={`flex-1 flex items-center justify-center gap-2 px-6 py-2.5 font-semibold text-sm rounded-sm transition-colors ${canProceed() ? 'bg-gold text-navy-deep hover:bg-gold-light' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}
+              >
+                Continuer <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </motion.div>
+        )}
+
+        {/* ─── ETAPE 6 : Prénom + Nom + Entreprise ────────────────── */}
+        {currentStep === 6 && (
+          <motion.div key="step6" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
             <h3 className="text-xl font-bold text-white mb-1">Et vous etes ?</h3>
             <p className="text-white/70 text-sm mb-5">Ces informations nous aident a personnaliser votre devis.</p>
 
@@ -884,7 +959,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className={labelClass}>
-                    <User className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Prenom
+                    <User className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Prenom <span className="text-red-500">*</span>
                   </label>
                   <div className="flex items-center gap-2">
                     <input
@@ -931,110 +1006,6 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   }
                 }}
               />
-            </div>
-
-            <div className="flex gap-3 mt-6">
-              <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-sm hover:border-white/30 transition-colors">
-                <ArrowLeft className="w-4 h-4" /> Retour
-              </button>
-              <button
-                onClick={goNext}
-                disabled={!canProceed()}
-                className={`flex-1 flex items-center justify-center gap-2 px-6 py-2.5 font-semibold text-sm rounded-sm transition-colors ${canProceed() ? 'bg-gold text-navy-deep hover:bg-gold-light' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}
-              >
-                Continuer <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-          </motion.div>
-        )}
-
-        {/* ─── ETAPE 6 : Localisation ────────────────────────────────────── */}
-        {currentStep === 6 && (
-          <motion.div key="step6" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">Ou etes-vous base ?</h3>
-            <p className="text-white/70 text-sm mb-5">Pour adapter notre offre a votre region.</p>
-
-            <div className="space-y-4">
-              <div className="relative">
-                <label className={labelClass}>
-                  <Globe className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Pays
-                </label>
-                <input
-                  type="text"
-                  value={country}
-                  onChange={(e) => handleCountryInput(e.target.value)}
-                  onFocus={() => { if (country) handleCountryInput(country); }}
-                  onBlur={() => setTimeout(() => setShowCountryDropdown(false), 200)}
-                  placeholder="Commencez a taper..."
-                  className={inputClass}
-                  autoFocus
-                />
-                {showCountryDropdown && (
-                  <div className="absolute z-20 w-full mt-1 bg-[oklch(0.16_0.012_260)] border border-white/10 rounded-sm shadow-lg max-h-40 overflow-y-auto">
-                    {countryFiltered.map((c) => (
-                      <button
-                        key={c}
-                        onMouseDown={() => selectCountry(c)}
-                        className="w-full text-left px-3 py-2 text-sm text-white hover:bg-gold/10 transition-colors"
-                      >
-                        {c}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <div className="grid grid-cols-5 gap-3">
-                <div className="col-span-2">
-                  <label className={labelClass}>
-                    <MapPin className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Code postal
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={postalCode}
-                      onChange={(e) => setPostalCode(e.target.value.replace(/\D/g, "").slice(0, 10))}
-                      placeholder="75001"
-                      maxLength={10}
-                      className={inputClass}
-                    />
-                    {loadingCities && (
-                      <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                        <Loader2 className="w-4 h-4 text-gold animate-spin" />
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="col-span-3">
-                  <label className={labelClass}>Ville</label>
-                  {citySuggestions.length > 1 ? (
-                    <select
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
-                      className={inputClass}
-                    >
-                      <option value="">Selectionnez</option>
-                      {citySuggestions.map((c) => (
-                        <option key={c} value={c}>{c}</option>
-                      ))}
-                    </select>
-                  ) : (
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="text"
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
-                        placeholder={citySuggestions.length === 1 ? citySuggestions[0] : "Votre ville"}
-                        className={`${inputClass} flex-1`}
-                      />
-                      <VoiceMicButton
-                        onResult={(text) => setCity(text.trim())}
-                        tooltip="Dicter votre ville"
-                      />
-                    </div>
-                  )}
-                </div>
-              </div>
             </div>
 
             <div className="flex gap-3 mt-6">

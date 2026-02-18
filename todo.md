@@ -524,3 +524,10 @@
 - [x] Supprimer le bandeau "IA a détecté" et le bouton "Accepter tout"
 - [x] Champs Prénom/Nom/Entreprise deviennent des champs texte simples
 - [x] Corriger l'étape 6 (Pays + Code postal + Ville) qui ne s'affiche pas — le problème était le bouton bloqué à l'étape 5 (IA)
+
+## Réorganisation étapes formulaire
+- [x] Étape 5 = Code postal + Ville (Zippopotam.us, France par défaut, détection pays auto)
+- [x] Étape 6 = Prénom + Nom + Entreprise (auto-complétion API filtrée par code postal si France)
+- [x] Supprimer le champ Pays séparé (détecté auto depuis code postal)
+- [x] Corriger Zippopotam.us : essayer France par défaut, puis autres pays
+- [x] Ajouter une étoile rouge (*) sur les champs obligatoires (Email, Produit, Code postal, Prénom)
