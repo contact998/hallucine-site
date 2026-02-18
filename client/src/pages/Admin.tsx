@@ -13,7 +13,7 @@ import {
   ArrowUpDown, ArrowUp, ArrowDown, Download, Trash2, MessageSquare,
   Search, Filter, RefreshCw, Clock, CheckCircle, XCircle, Loader2,
   AlertTriangle, ChevronDown, X, FileText, Mail, Phone, Building2, User,
-  Send, ExternalLink, Wifi, WifiOff, Globe, Users, MapPin, Power
+  Send, ExternalLink, Wifi, WifiOff
 } from "lucide-react";
 import { useTimezone } from "@/hooks/useTimezone";
 
@@ -76,19 +76,7 @@ export default function Admin() {
     },
   });
 
-  const { data: commercialTz, isLoading: tzLoading } = trpc.availability.getCommercialTimezones.useQuery(undefined, {
-    enabled: isAuthenticated && user?.role === "admin",
-  });
-  const { data: businessConfig } = trpc.businessHours.getConfig.useQuery(undefined, {
-    enabled: isAuthenticated && user?.role === "admin",
-  });
-  const updateCommercialTz = trpc.availability.updateCommercialTimezone.useMutation({
-    onSuccess: () => {
-      utils.availability.getCommercialTimezones.invalidate();
-    },
-  });
-  const [dcTzOpen, setDcTzOpen] = useState(false);
-  const [jbTzOpen, setJbTzOpen] = useState(false);
+
 
   const { data: crmStatus } = trpc.admin.crmStatus.useQuery(undefined, {
     enabled: isAuthenticated && user?.role === "admin",
@@ -320,44 +308,7 @@ export default function Admin() {
             </div>
           )}
 
-          {/* Gestion des commerciaux */}
-          <div className="bg-white/5 border border-white/10 rounded-lg p-5 mb-6">
-            <h2 className="text-sm font-semibold text-ivory mb-4 flex items-center gap-2">
-              <Users className="w-4 h-4 text-warm" />
-              Gestion des commerciaux — Fuseaux horaires
-              <span className="text-xs text-white/40 font-normal ml-2">Source unique pour le site web et le CRM</span>
-            </h2>
-            {tzLoading ? (
-              <div className="flex items-center gap-2 text-white/40 text-sm">
-                <Loader2 className="w-4 h-4 animate-spin" /> Chargement...
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* DC - Daniel */}
-                <CommercialTzCard
-                  initials="DC"
-                  name="Daniel"
-                  currentTz={commercialTz?.dc || "Europe/Paris"}
-                  timezones={businessConfig?.timezones || []}
-                  isOpen={dcTzOpen}
-                  onToggle={() => { setDcTzOpen(!dcTzOpen); setJbTzOpen(false); }}
-                  onSelect={(tz) => { updateCommercialTz.mutate({ commercial: "dc", timezone: tz }); setDcTzOpen(false); }}
-                  isUpdating={updateCommercialTz.isPending}
-                />
-                {/* JB - Jonathan */}
-                <CommercialTzCard
-                  initials="JB"
-                  name="Jonathan"
-                  currentTz={commercialTz?.jb || "Europe/Paris"}
-                  timezones={businessConfig?.timezones || []}
-                  isOpen={jbTzOpen}
-                  onToggle={() => { setJbTzOpen(!jbTzOpen); setDcTzOpen(false); }}
-                  onSelect={(tz) => { updateCommercialTz.mutate({ commercial: "jb", timezone: tz }); setJbTzOpen(false); }}
-                  isUpdating={updateCommercialTz.isPending}
-                />
-              </div>
-            )}
-          </div>
+
 
           {/* Stats Cards */}
           {stats && (
@@ -720,106 +671,4 @@ function DetailItem({ label, value }: { label: string; value: string }) {
   );
 }
 
-interface CommercialTzCardProps {
-  initials: string;
-  name: string;
-  currentTz: string;
-  timezones: { value: string; label: string; city: string }[];
-  isOpen: boolean;
-  onToggle: () => void;
-  onSelect: (tz: string) => void;
-  isUpdating: boolean;
-}
 
-function CommercialTzCard({ initials, name, currentTz, timezones, isOpen, onToggle, onSelect, isUpdating }: CommercialTzCardProps) {
-  // Calculer l'heure locale en temps réel
-  const [localTime, setLocalTime] = useState("");
-  const [isAvailable, setIsAvailable] = useState(false);
-
-  useEffect(() => {
-    const update = () => {
-      try {
-        const now = new Date();
-        const timeStr = now.toLocaleTimeString("fr-FR", {
-          timeZone: currentTz,
-          hour: "2-digit",
-          minute: "2-digit",
-        });
-        setLocalTime(timeStr);
-        const hour = parseInt(now.toLocaleString("en-US", { timeZone: currentTz, hour: "numeric", hour12: false }));
-        // Disponible lun-ven 8h-16h
-        const dayNum = new Date(now.toLocaleString("en-US", { timeZone: currentTz })).getDay();
-        setIsAvailable(dayNum >= 1 && dayNum <= 5 && hour >= 8 && hour < 16);
-      } catch {
-        setLocalTime("--:--");
-      }
-    };
-    update();
-    const interval = setInterval(update, 30000);
-    return () => clearInterval(interval);
-  }, [currentTz]);
-
-  const currentTzInfo = timezones.find(tz => tz.value === currentTz);
-
-  return (
-    <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-3">
-          <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${
-            isAvailable ? "bg-green-500/20 text-green-400 border border-green-500/30" : "bg-red-500/20 text-red-400 border border-red-500/30"
-          }`}>
-            {initials}
-          </div>
-          <div>
-            <p className="text-sm font-semibold text-ivory">{name}</p>
-            <p className="text-xs text-white/40">{isAvailable ? "En ligne" : "Hors ligne"}</p>
-          </div>
-        </div>
-        <div className="text-right">
-          <p className="text-lg font-mono font-bold text-ivory">{localTime}</p>
-          <p className="text-xs text-white/40">{currentTzInfo?.city || currentTz}</p>
-        </div>
-      </div>
-
-      {/* Sélecteur de fuseau */}
-      <div className="relative">
-        <button
-          onClick={onToggle}
-          className="w-full flex items-center justify-between gap-2 px-3 py-2 bg-background border border-border rounded text-sm text-ivory hover:border-warm/50 transition-colors text-left"
-        >
-          <div className="flex items-center gap-2">
-            <MapPin className="w-3.5 h-3.5 text-warm" />
-            <span>{currentTzInfo?.city || currentTz}</span>
-            <span className="text-white/40 text-xs">({currentTzInfo?.label || currentTz})</span>
-          </div>
-          {isUpdating ? (
-            <Loader2 className="w-3.5 h-3.5 text-warm animate-spin" />
-          ) : (
-            <ChevronDown className={`w-3.5 h-3.5 text-white/40 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
-          )}
-        </button>
-        {isOpen && (
-          <div className="absolute z-50 mt-1 w-full bg-card border border-border rounded-lg shadow-xl max-h-60 overflow-y-auto">
-            {timezones.map((tz) => (
-              <button
-                key={tz.value}
-                onClick={() => onSelect(tz.value)}
-                className={`w-full flex items-center justify-between px-3 py-2.5 text-left hover:bg-white/5 transition-colors text-sm ${
-                  currentTz === tz.value ? 'bg-warm/10 border-l-2 border-warm' : ''
-                }`}
-              >
-                <div>
-                  <p className="text-ivory font-medium">{tz.city}</p>
-                  <p className="text-xs text-white/40">{tz.label}</p>
-                </div>
-                {currentTz === tz.value && (
-                  <CheckCircle className="w-4 h-4 text-warm" />
-                )}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}

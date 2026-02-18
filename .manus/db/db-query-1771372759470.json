@@ -1,0 +1,30 @@
+{
+  "query": "SELECT id, settingKey, LEFT(settingValue, 100) as val FROM site_settings;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user khoDaLNR7QanKY6.24e870245d7c --database e2MtNjHsQcTUTnWGsGBMg7 --execute SELECT id, settingKey, LEFT(settingValue, 100) as val FROM site_settings;",
+  "rows": [
+    {
+      "id": "1",
+      "settingKey": "business_timezone",
+      "val": "\"Asia/Shanghai\""
+    },
+    {
+      "id": "2",
+      "settingKey": "business_hours_start",
+      "val": "\"08:00\""
+    },
+    {
+      "id": "3",
+      "settingKey": "business_hours_end",
+      "val": "\"18:00\""
+    },
+    {
+      "id": "4",
+      "settingKey": "business_days",
+      "val": "[1,2,3,4,5]"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tsettingKey\tval\n1\tbusiness_timezone\t\"Asia/Shanghai\"\n2\tbusiness_hours_start\t\"08:00\"\n3\tbusiness_hours_end\t\"18:00\"\n4\tbusiness_days\t[1,2,3,4,5]\n",
+  "stderr": "",
+  "execution_time_ms": 1509
+}

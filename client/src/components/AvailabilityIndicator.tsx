@@ -248,48 +248,47 @@ export function AvailabilityBadge() {
   const { user, isAuthenticated } = useAuth();
   const [hovered, setHovered] = useState(false);
   const [displayTime, setDisplayTime] = useState("");
+  const [timeLabel, setTimeLabel] = useState("");
 
-  // Calculer l'heure à afficher au survol
+  // Calculer l'heure dès le montage et la mettre à jour régulièrement
   useEffect(() => {
-    if (!hovered) return;
     const update = () => {
       try {
         const now = new Date();
         if (isAuthenticated && user?.timezone) {
-          // Utilisateur connecté : afficher son heure locale
-          setDisplayTime(now.toLocaleTimeString("fr-FR", {
+          const t = now.toLocaleTimeString("fr-FR", {
             timeZone: user.timezone,
             hour: "2-digit",
             minute: "2-digit",
-          }));
+          });
+          setDisplayTime(t);
+          setTimeLabel(`Votre heure : ${t}`);
         } else {
-          // Visiteur non connecté : afficher l'heure de Paris
-          setDisplayTime(now.toLocaleTimeString("fr-FR", {
+          const t = now.toLocaleTimeString("fr-FR", {
             timeZone: "Europe/Paris",
             hour: "2-digit",
             minute: "2-digit",
-          }));
+          });
+          setDisplayTime(t);
+          setTimeLabel(`Paris : ${t}`);
         }
       } catch {
         setDisplayTime("--:--");
+        setTimeLabel("--:--");
       }
     };
     update();
     const interval = setInterval(update, 10_000);
     return () => clearInterval(interval);
-  }, [hovered, isAuthenticated, user?.timezone]);
+  }, [isAuthenticated, user?.timezone]);
 
   if (isLoading || !data) return null;
 
   const availableCount = data.commercials.filter(c => c.available).length;
-  const timeLabel = isAuthenticated && user?.timezone
-    ? `Votre heure : ${displayTime}`
-    : `Paris : ${displayTime}`;
 
   return (
     <div
       className="relative flex items-center gap-1.5 cursor-default"
-      title={data.aiMessage}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -315,14 +314,14 @@ export function AvailabilityBadge() {
 
       {/* Tooltip avec l'heure au survol */}
       {hovered && displayTime && (
-        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 pointer-events-none z-50">
-          <div className="bg-gray-900 text-white text-xs rounded-lg px-3 py-1.5 shadow-xl border border-gray-700 whitespace-nowrap">
+        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 pointer-events-none" style={{ zIndex: 99999 }}>
+          <div className="absolute left-1/2 -translate-x-1/2 -top-1 w-2 h-2 bg-gray-900 border-l border-t border-gray-600 rotate-45" />
+          <div className="bg-gray-900 text-white text-xs rounded-lg px-3 py-2 shadow-2xl border border-gray-600 whitespace-nowrap">
             <div className="flex items-center gap-1.5">
-              <Clock className="w-3 h-3 text-gray-400" />
-              <span>{timeLabel}</span>
+              <Clock className="w-3 h-3 text-amber-400" />
+              <span className="font-medium">{timeLabel}</span>
             </div>
           </div>
-          <div className="absolute left-1/2 -translate-x-1/2 -top-1 w-2 h-2 bg-gray-900 border-l border-t border-gray-700 rotate-45" />
         </div>
       )}
     </div>

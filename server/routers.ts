@@ -669,20 +669,19 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
         return { success, commercial: input.commercial.toUpperCase(), timezone: input.timezone };
       }),
 
-    /** Récupère les fuseaux horaires configurés des commerciaux (admin) */
-    getCommercialTimezones: adminProcedure.query(async () => {
-      const { getDb } = await import("./db");
-      const { siteSettings } = await import("../drizzle/schema");
-      const { eq } = await import("drizzle-orm");
-      const db = await getDb();
-      if (!db) return { dc: "Europe/Paris", jb: "Europe/Paris" };
-
-      const dcRow = await db.select().from(siteSettings).where(eq(siteSettings.settingKey, "commercial_dc_timezone")).limit(1);
-      const jbRow = await db.select().from(siteSettings).where(eq(siteSettings.settingKey, "commercial_jb_timezone")).limit(1);
-
+    /** Récupère les fuseaux horaires configurés des commerciaux (accessible aux admins connectés) */
+    getCommercialTimezones: protectedProcedure.query(async () => {
+      const { getAvailability } = await import("./availabilityService");
+      const result = await getAvailability("Europe/Paris");
+      const dcCommercial = result.commercials.find((c: any) => c.initials === "DC");
+      const jbCommercial = result.commercials.find((c: any) => c.initials === "JB");
       return {
-        dc: dcRow.length > 0 ? JSON.parse(dcRow[0].settingValue) : "Europe/Paris",
-        jb: jbRow.length > 0 ? JSON.parse(jbRow[0].settingValue) : "Europe/Paris",
+        dc: dcCommercial?.timezone || "Europe/Paris",
+        jb: jbCommercial?.timezone || "Asia/Shanghai",
+        dcTime: dcCommercial?.localTime || "",
+        jbTime: jbCommercial?.localTime || "",
+        dcAvailable: dcCommercial?.available ?? false,
+        jbAvailable: jbCommercial?.available ?? false,
       };
     }),
   }),

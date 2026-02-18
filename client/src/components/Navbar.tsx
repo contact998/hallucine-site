@@ -122,7 +122,7 @@ export default function Navbar() {
   return (
     <>
       {/* Top Bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-[oklch(0.10_0.015_260)] border-b border-white/5 text-xs text-white/70">
+      <div className="fixed top-0 left-0 right-0 z-50 bg-[oklch(0.10_0.015_260)] border-b border-white/5 text-xs text-white/70 overflow-visible">
         <div className="container flex items-center justify-between py-1.5">
           <div className="flex items-center gap-4">
             <a href="mailto:contact@hallucine.fr" className="flex items-center gap-1.5 hover:text-warm transition-colors">

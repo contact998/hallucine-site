@@ -472,3 +472,18 @@
 ## Tooltip heure sur boutons WhatsApp et orange
 - [x] Bouton WhatsApp : tooltip au survol avec heures DC + JB (visible uniquement admin connecté)
 - [x] Bouton orange disponibilité : tooltip heure de Paris si non connecté, heure du contact si connecté
+
+## Bug tooltips heure
+- [ ] Bouton WhatsApp : les heures DC/JB ne tiennent pas compte du fuseau paramétré dans le CRM
+- [x] Bouton orange : rien n'apparaît au survol (tooltip repositionné en dessous avec z-index élevé)
+
+## Suppression gestion fuseaux du site web (centralisation CRM uniquement)
+- [x] Supprimer le panneau gestion commerciaux de /admin (le CRM est la seule source)
+- [x] Le site web lit les fuseaux uniquement depuis le CRM via route tRPC publique
+
+## Intégration CRM - Route publique commercials.timezones (sans token)
+- [x] Créer la route tRPC publique commercials.timezones dans le CRM
+- [x] Déployer le CRM avec la nouvelle route
+- [x] Modifier le site web pour lire les fuseaux depuis cette route (plus de siteSettings)
+- [x] Mettre à jour le fallback : Asia/Shanghai pour DC et JB (tous deux en Chine)
+- [x] Tester l'intégration complète CRM → site web (248 tests passent, fuseaux chargés)

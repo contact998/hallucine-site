@@ -22,66 +22,37 @@ export default function WhatsAppButton() {
     }
   }, []);
 
-  // Récupérer le statut de disponibilité
+  // Récupérer le statut de disponibilité (utilisé par tous)
   const { data: businessStatus } = trpc.businessHours.getSmartMessage.useQuery(
     { visitorTimezone },
     { staleTime: 60_000, refetchInterval: 60_000 }
   );
 
-  // Récupérer les fuseaux des commerciaux (admin seulement)
-  const { data: commercialTz } = trpc.availability.getCommercialTimezones.useQuery(undefined, {
-    enabled: isAdmin,
-    staleTime: 60_000,
-  });
+  // Récupérer les données des commerciaux via availability.check (public)
+  const { data: availData } = trpc.availability.check.useQuery(
+    { visitorTimezone },
+    { staleTime: 60_000, refetchInterval: 60_000 }
+  );
 
   const isAvailable = businessStatus?.isAvailable ?? false;
   const [hovered, setHovered] = useState(false);
-  const [dcTime, setDcTime] = useState("");
-  const [jbTime, setJbTime] = useState("");
 
-  // Mettre à jour les heures en temps réel quand survolé (admin)
-  useEffect(() => {
-    if (!isAdmin || !hovered || !commercialTz) return;
-
-    const update = () => {
-      try {
-        const now = new Date();
-        setDcTime(now.toLocaleTimeString("fr-FR", {
-          timeZone: commercialTz.dc || "Europe/Paris",
-          hour: "2-digit",
-          minute: "2-digit",
-        }));
-        setJbTime(now.toLocaleTimeString("fr-FR", {
-          timeZone: commercialTz.jb || "Asia/Shanghai",
-          hour: "2-digit",
-          minute: "2-digit",
-        }));
-      } catch {
-        setDcTime("--:--");
-        setJbTime("--:--");
-      }
-    };
-    update();
-    const interval = setInterval(update, 10_000);
-    return () => clearInterval(interval);
-  }, [isAdmin, hovered, commercialTz]);
+  // Extraire les heures des commerciaux depuis les données de disponibilité
+  const dcCommercial = availData?.commercials?.find((c: any) => c.initials === "DC");
+  const jbCommercial = availData?.commercials?.find((c: any) => c.initials === "JB");
 
   // Message WhatsApp adapté selon la disponibilité
   const whatsappMessage = isAvailable
     ? "Bonjour, je suis intéressé(e) par vos produits Hallucine. Pouvez-vous me renseigner ?"
     : "Bonjour, je vous contacte depuis votre site web. Merci de me rappeler quand vous serez disponible.";
 
-  // Protocole whatsapp:// pour ouvrir directement l'app installée (Mac/Windows/mobile)
-  // Fallback vers wa.me si l'app n'est pas détectée
   const whatsappDeepLink = `whatsapp://send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(whatsappMessage)}`;
   const whatsappWebFallback = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    // Tenter d'ouvrir l'app native via le deep link
     const start = Date.now();
     window.location.href = whatsappDeepLink;
-    // Si après 1.5s le navigateur n'a pas changé de page (app non installée), fallback vers wa.me
     setTimeout(() => {
       if (Date.now() - start < 2000) {
         window.open(whatsappWebFallback, "_blank", "noopener,noreferrer");
@@ -112,17 +83,25 @@ export default function WhatsAppButton() {
         </span>
 
         {/* Tooltip admin : heures DC + JB (visible uniquement au survol pour admin) */}
-        {isAdmin && hovered && (
+        {isAdmin && hovered && availData && (
           <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 pointer-events-none">
             <div className="bg-gray-900 text-white text-xs rounded-lg px-3 py-2 shadow-xl border border-gray-700 whitespace-nowrap">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="font-semibold text-blue-400">DC</span>
-                <span>{dcTime}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="font-semibold text-amber-400">JB</span>
-                <span>{jbTime}</span>
-              </div>
+              {dcCommercial && (
+                <div className="flex items-center gap-2 mb-1">
+                  <span className={`w-2 h-2 rounded-full ${dcCommercial.available ? "bg-green-500" : "bg-orange-400"}`} />
+                  <span className="font-semibold text-blue-400">DC</span>
+                  <span>{dcCommercial.localTime}</span>
+                  <span className="text-gray-500 text-[10px]">({dcCommercial.timezone.split("/").pop()?.replace("_", " ")})</span>
+                </div>
+              )}
+              {jbCommercial && (
+                <div className="flex items-center gap-2">
+                  <span className={`w-2 h-2 rounded-full ${jbCommercial.available ? "bg-green-500" : "bg-orange-400"}`} />
+                  <span className="font-semibold text-amber-400">JB</span>
+                  <span>{jbCommercial.localTime}</span>
+                  <span className="text-gray-500 text-[10px]">({jbCommercial.timezone.split("/").pop()?.replace("_", " ")})</span>
+                </div>
+              )}
             </div>
             <div className="absolute left-1/2 -translate-x-1/2 -bottom-1 w-2 h-2 bg-gray-900 border-r border-b border-gray-700 rotate-45" />
           </div>
