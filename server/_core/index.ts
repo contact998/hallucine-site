@@ -53,7 +53,6 @@ async function startServer() {
       // Import dynamique pour eviter les imports circulaires
       const { notifyOwner } = await import("./notification");
       const { insertProspectIntoCrm, isCrmDirectConfigured } = await import("../crmDirect");
-      const { syncSubmissionToCrm, isCrmSyncConfigured } = await import("../crmSync");
 
       // Notification asynchrone
       notifyOwner({
@@ -89,6 +88,7 @@ async function startServer() {
               `[ABANDON étape ${data.lastStep || "?"}/${data.totalSteps || "?"} - ${progress}%]`,
               data.productDetail ? `Détail : ${data.productDetail}` : null,
             ].filter(Boolean).join("\n"),
+            isAbandon: true,
           });
           crmOk = result.success;
           if (result.success) {
@@ -99,20 +99,6 @@ async function startServer() {
         }
       }
 
-      // Fallback webhook si insertion directe échouée
-      if (!crmOk && isCrmSyncConfigured()) {
-        syncSubmissionToCrm({
-          type: "devis",
-          nom: fullName,
-          email: data.email,
-          telephone: data.telephone || null,
-          entreprise: data.entreprise || null,
-          produit: data.product || null,
-          message: `[ABANDON etape ${data.lastStep || "?"}/${data.totalSteps || "?"} ] ${data.productDetail || ""}`,
-          objectif: null,
-          sujet: data.product ? `${data.product} (abandon ${progress}%)` : `Abandon formulaire (${progress}%)`,
-        }).catch((err: unknown) => console.warn("[Abandon/Beacon] Fallback webhook échoué:", err));
-      }
 
       res.status(200).json({ success: true });
     } catch (err) {

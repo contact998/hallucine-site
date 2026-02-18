@@ -11,9 +11,9 @@ vi.mock("./_core/notification", () => ({
   notifyOwner: vi.fn().mockResolvedValue(true),
 }));
 
-vi.mock("./crmSync", () => ({
-  syncSubmissionToCrm: vi.fn().mockResolvedValue({ success: false, error: "not configured" }),
-  isCrmSyncConfigured: vi.fn().mockReturnValue(false),
+vi.mock("./crmDirect", () => ({
+  insertProspectIntoCrm: vi.fn().mockResolvedValue({ success: true, prospectId: 1, updated: false }),
+  isCrmDirectConfigured: vi.fn().mockReturnValue(true),
 }));
 
 function createPublicContext(): TrpcContext {

@@ -19,7 +19,6 @@ import {
 import { notifyOwner } from "./_core/notification";
 import { chatWithAssistant } from "./chatbot";
 import { generateBrochure } from "./brochure";
-import { syncSubmissionToCrm, isCrmSyncConfigured } from "./crmSync";
 import { insertProspectIntoCrm, isCrmDirectConfigured } from "./crmDirect";
 import { prepareAdminEmailNotification } from "./emailNotification";
 import {
@@ -141,6 +140,7 @@ export const appRouter = router({
                 `[ABANDON étape ${input.lastStep}/${input.totalSteps} - ${progress}%]`,
                 input.productDetail ? `Détail : ${input.productDetail}` : null,
               ].filter(Boolean).join("\n"),
+              isAbandon: true,
             });
             crmOk = result.success;
             if (result.success) {
@@ -151,24 +151,6 @@ export const appRouter = router({
           }
         }
 
-        // Fallback webhook si insertion directe échouée
-        if (!crmOk && isCrmSyncConfigured()) {
-          try {
-            await syncSubmissionToCrm({
-              type: "devis",
-              nom: fullName,
-              email: input.email,
-              telephone: input.telephone || null,
-              entreprise: input.entreprise || null,
-              produit: input.product || null,
-              message: `[ABANDON etape ${input.lastStep}/${input.totalSteps}] ${input.productDetail || ""}`,
-              objectif: null,
-              sujet: input.product ? `${input.product} (abandon ${progress}%)` : `Abandon formulaire (${progress}%)`,
-            });
-          } catch (err) {
-            console.warn("[Abandon] Fallback webhook échoué:", err);
-          }
-        }
 
         return { success: true };
       }),
@@ -316,15 +298,6 @@ export const appRouter = router({
           }
         }
 
-        // Fallback : webhook si l'insertion directe a échoué
-        if (!crmSync.success && isCrmSyncConfigured()) {
-          try {
-            console.log(`[CRM Webhook] Fallback webhook pour ${input.nom}`);
-            crmSync = await syncSubmissionToCrm(input);
-          } catch (err) {
-            console.warn(`[CRM Webhook] Fallback échoué pour ${input.nom}:`, err);
-          }
-        }
 
         return { success: true, crmSynced: crmSync.success };
       }),
@@ -571,9 +544,9 @@ export const appRouter = router({
     /** Vérifier le statut de la synchronisation CRM */
     crmStatus: adminProcedure.query(async () => {
       return {
-        configured: isCrmSyncConfigured(),
-        webhookUrl: process.env.CRM_WEBHOOK_URL ? "Configuré" : "Non configuré",
-        webhookToken: process.env.CRM_WEBHOOK_TOKEN ? "Configuré" : "Non configuré",
+        configured: isCrmDirectConfigured(),
+        method: "insertion directe en base",
+        databaseUrl: process.env.CRM_DATABASE_URL ? "Configuré" : "Non configuré",
       };
     }),
 
@@ -585,16 +558,22 @@ export const appRouter = router({
         const submission = allSubs.find(s => s.id === input.submissionId);
         if (!submission) throw new Error("Soumission introuvable");
 
-        const result = await syncSubmissionToCrm({
-          type: submission.type,
-          nom: submission.nom,
+        const nameParts = (submission.nom || "").trim().split(/\s+/);
+        const prenom = nameParts.length > 1 ? nameParts[0] : null;
+        const nom = nameParts.length > 1 ? nameParts.slice(1).join(" ") : nameParts[0] || null;
+
+        const result = await insertProspectIntoCrm({
+          entreprise: submission.entreprise || `Particulier - ${submission.nom}`,
+          personne: nom,
+          prenom: prenom,
           email: submission.email,
-          telephone: submission.telephone,
-          entreprise: submission.entreprise,
-          produit: submission.produit,
-          message: submission.message,
-          objectif: submission.objectif,
-          sujet: submission.sujet,
+          telephone: submission.telephone || null,
+          produit: submission.produit || null,
+          notes: [
+            "Source : sync manuelle depuis admin",
+            submission.message ? `Message : ${submission.message}` : null,
+            submission.sujet ? `Sujet : ${submission.sujet}` : null,
+          ].filter(Boolean).join("\n"),
         });
 
         return result;

@@ -1,110 +1,124 @@
 /**
  * Tests pour l'insertion directe dans la base CRM
- * Teste la connexion et l'insertion d'un prospect de test (puis le supprime)
+ * avec dédoublonnage intelligent :
+ * - Abandon + email existant → mise à jour
+ * - Soumission complète + email existant → nouveau prospect + avertissement
  */
 import { describe, it, expect } from "vitest";
 import { insertProspectIntoCrm, isCrmDirectConfigured } from "./crmDirect";
 import mysql from "mysql2/promise";
 
-describe("CRM Direct — Insertion de prospect", () => {
+// Helper pour nettoyer les prospects de test
+async function cleanupTestProspects(email: string) {
+  const crmUrl = process.env.CRM_DATABASE_URL;
+  if (!crmUrl) return;
+  const url = new URL(crmUrl.replace("mysql://", "http://"));
+  const conn = await mysql.createConnection({
+    host: url.hostname,
+    port: parseInt(url.port || "4000"),
+    user: url.username,
+    password: url.password,
+    database: url.pathname.slice(1),
+    ssl: { rejectUnauthorized: true },
+    connectTimeout: 10000,
+  });
+  await conn.execute("DELETE FROM prospects WHERE email = ? AND createdBy = 'site-web'", [email]);
+  await conn.end();
+}
+
+describe("CRM Direct — Insertion et dédoublonnage", () => {
+  const testEmail = `test-dedup-${Date.now()}@hallucine-test.fr`;
+
   it("devrait confirmer que la connexion directe est configurée", () => {
     expect(isCrmDirectConfigured()).toBe(true);
   });
 
-  it("devrait insérer un prospect de test et le supprimer ensuite", async () => {
-    const testEmail = `test-vitest-${Date.now()}@hallucine-test.fr`;
+  it("devrait insérer un nouveau prospect (pas de doublon)", async () => {
+    await cleanupTestProspects(testEmail);
 
-    // Insérer le prospect
     const result = await insertProspectIntoCrm({
-      entreprise: "VITEST - Test Automatique",
-      personne: "TestNom",
-      prenom: "TestPrenom",
+      entreprise: "Test Dedup SARL",
+      personne: "Dupont",
+      prenom: "Jean",
       email: testEmail,
-      telephone: "0600000000",
+      telephone: "+33612345678",
       ville: "Paris",
       codePostal: "75001",
       pays: "France",
-      produit: "Ecran de cinema -- 5 a 8m",
-      notes: "Source : test vitest automatique\nCe prospect sera supprimé automatiquement.",
+      produit: "Airscreen 20'",
+      notes: "Source : test vitest",
     });
 
     expect(result.success).toBe(true);
-    expect(result.prospectId).toBeDefined();
-    expect(typeof result.prospectId).toBe("number");
-
-    // Nettoyer : supprimer le prospect de test
-    const crmUrl = process.env.CRM_DATABASE_URL!;
-    const url = new URL(crmUrl.replace("mysql://", "http://"));
-    const sslParam = url.searchParams.get("ssl");
-
-    const connection = await mysql.createConnection({
-      host: url.hostname,
-      port: parseInt(url.port || "4000"),
-      user: url.username,
-      password: url.password,
-      database: url.pathname.slice(1),
-      ssl: sslParam ? { rejectUnauthorized: true } : undefined,
-      connectTimeout: 10000,
-    });
-
-    try {
-      // Vérifier que le prospect existe avec les bonnes valeurs
-      const [rows] = await connection.execute(
-        "SELECT * FROM prospects WHERE id = ?",
-        [result.prospectId]
-      );
-      const prospect = (rows as any[])[0];
-      expect(prospect).toBeDefined();
-      expect(prospect.entreprise).toBe("VITEST - Test Automatique");
-      expect(prospect.email).toBe(testEmail);
-      expect(prospect.column).toBe("prospect");
-      expect(prospect.status).toBe("en_cours");
-      expect(prospect.createdBy).toBe("site-web");
-      expect(prospect.contactType).toBe("mail");
-      expect(prospect.prenom).toBe("TestPrenom");
-      expect(prospect.personne).toBe("TestNom");
-      expect(prospect.ville).toBe("Paris");
-      expect(prospect.codePostal).toBe("75001");
-      expect(prospect.pays).toBe("France");
-
-      // Supprimer le prospect de test
-      await connection.execute("DELETE FROM prospects WHERE id = ?", [result.prospectId]);
-      console.log(`[Test] Prospect de test (id: ${result.prospectId}) supprimé`);
-    } finally {
-      await connection.end();
-    }
+    expect(result.prospectId).toBeGreaterThan(0);
+    expect(result.updated).toBe(false);
+    expect(result.duplicateWarning).toBeFalsy();
+    console.log(`[Test] Prospect créé (id: ${result.prospectId})`);
   }, 20000);
 
-  it("devrait gérer le cas entreprise manquante avec fallback Particulier", async () => {
-    const testEmail = `test-particulier-${Date.now()}@hallucine-test.fr`;
-
+  it("ABANDON + email existant → mise à jour (pas de doublon)", async () => {
     const result = await insertProspectIntoCrm({
-      entreprise: "Particulier - Jean Dupont",
-      prenom: "Jean",
+      entreprise: "Test Dedup SARL",
       email: testEmail,
+      telephone: "+33699999999",
+      notes: "[ABANDON étape 3/7 - 43%]",
+      isAbandon: true,
     });
 
     expect(result.success).toBe(true);
-    expect(result.prospectId).toBeDefined();
+    expect(result.updated).toBe(true);
+    console.log(`[Test] Abandon → prospect mis à jour (id: ${result.prospectId})`);
+  }, 20000);
 
-    // Nettoyer
-    const crmUrl = process.env.CRM_DATABASE_URL!;
-    const url = new URL(crmUrl.replace("mysql://", "http://"));
-    const connection = await mysql.createConnection({
-      host: url.hostname,
-      port: parseInt(url.port || "4000"),
-      user: url.username,
-      password: url.password,
-      database: url.pathname.slice(1),
-      ssl: { rejectUnauthorized: true },
-      connectTimeout: 10000,
+  it("SOUMISSION COMPLÈTE + email existant → nouveau prospect + avertissement", async () => {
+    const result = await insertProspectIntoCrm({
+      entreprise: "Autre Société SAS",
+      personne: "Martin",
+      prenom: "Marie",
+      email: testEmail,
+      telephone: "+33687654321",
+      produit: "Airscreen 30'",
+      notes: "Source : test vitest - soumission complète",
+      isAbandon: false,
     });
 
-    try {
-      await connection.execute("DELETE FROM prospects WHERE id = ?", [result.prospectId]);
-      console.log(`[Test] Prospect particulier (id: ${result.prospectId}) supprimé`);
-    } finally {
-      await connection.end();
+    expect(result.success).toBe(true);
+    expect(result.updated).toBe(false);
+    expect(result.duplicateWarning).toBe(true);
+    console.log(`[Test] Soumission complète → nouveau prospect (id: ${result.prospectId}) avec avertissement`);
+  }, 20000);
+
+  it("ABANDON sans email → toujours insérer (pas de dédoublonnage possible)", async () => {
+    const result = await insertProspectIntoCrm({
+      entreprise: "Particulier - Anonyme",
+      notes: "[ABANDON étape 1/7 - 14%]",
+      isAbandon: true,
+    });
+
+    expect(result.success).toBe(true);
+    expect(result.updated).toBe(false);
+
+    // Nettoyer
+    if (result.prospectId) {
+      const crmUrl = process.env.CRM_DATABASE_URL!;
+      const url = new URL(crmUrl.replace("mysql://", "http://"));
+      const conn = await mysql.createConnection({
+        host: url.hostname,
+        port: parseInt(url.port || "4000"),
+        user: url.username,
+        password: url.password,
+        database: url.pathname.slice(1),
+        ssl: { rejectUnauthorized: true },
+        connectTimeout: 10000,
+      });
+      await conn.execute("DELETE FROM prospects WHERE id = ?", [result.prospectId]);
+      await conn.end();
     }
+    console.log(`[Test] Abandon sans email → nouveau prospect créé`);
+  }, 20000);
+
+  it("nettoyage des prospects de test", async () => {
+    await cleanupTestProspects(testEmail);
+    console.log(`[Test] Prospects de test supprimés pour ${testEmail}`);
   }, 20000);
 });

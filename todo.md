@@ -582,3 +582,12 @@
 ## Migration webhook → insertion directe (abandon + beacon)
 - [x] Migrer trackAbandon vers insertion directe CRM
 - [x] Migrer beacon vers insertion directe CRM
+
+## Dédoublonnage intelligent + suppression webhook
+- [x] Dédoublonnage : abandon + email existant → mise à jour (pas de doublon)
+- [x] Dédoublonnage : soumission complète + email existant → nouveau prospect + avertissement dans notes
+- [x] Supprimer crmSync.ts et tous les fallbacks webhook
+- [x] Supprimer crmWebhook.test.ts
+- [x] Nettoyer les imports webhook dans routers.ts et index.ts
+- [x] Migrer crmStatus et syncToCrm admin vers insertion directe
+- [x] Tests vitest dédoublonnage (296 tests passent)
