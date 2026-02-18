@@ -562,3 +562,8 @@
 - [x] 6. Validation prénom minimale (min 2 caractères)
 - [x] 7. Messages d'erreur visuels sous les champs obligatoires invalides
 - [x] 8. Accessibilité clavier — Enter pour avancer sur toutes les étapes
+
+## Anti-spam invisible — 3 protections
+- [x] 1. Honeypot : champ caché frontend + rejet silencieux backend
+- [x] 2. Rate limiting : max 5 soumissions/heure par IP
+- [x] 3. Délai minimum : rejet si soumission < 5 secondes après ouverture

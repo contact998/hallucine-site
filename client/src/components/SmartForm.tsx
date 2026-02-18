@@ -198,6 +198,10 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
 
 
+  // Anti-spam : honeypot (champ invisible) + timestamp d'ouverture
+  const [honeypot, setHoneypot] = useState("");
+  const [formOpenedAt] = useState(() => Date.now());
+
   // États d'erreur pour validation visuelle
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   // Code postal non reconnu → mode manuel
@@ -532,6 +536,9 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
       message: (trimmedMessage || "") + callbackInfo,
       produit: productLabel,
       objectif: productDetail || undefined,
+      // Anti-spam
+      _hp: honeypot,
+      _ts: formOpenedAt,
     });
 
     // Nettoyer la progression sauvegardee apres soumission
@@ -662,6 +669,20 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
           </div>
         </div>
       )}
+
+      {/* Anti-spam : Honeypot invisible */}
+      <div style={{ position: "absolute", left: "-9999px", opacity: 0, height: 0, overflow: "hidden" }} aria-hidden="true">
+        <label htmlFor="website_url">Ne pas remplir</label>
+        <input
+          type="text"
+          id="website_url"
+          name="website_url"
+          value={honeypot}
+          onChange={(e) => setHoneypot(e.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
 
       {/* Progress bar */}
       <div className="flex items-center gap-1.5 mb-6">

@@ -48,6 +48,9 @@ import {
 } from "./weeklyAudit";
 import { getAvailability } from "./availabilityService";
 
+// ─── Anti-spam : Rate limiting en mémoire ───
+const rateLimitMap = new Map<string, number[]>();
+
 /** Helper pour obtenir l'offset UTC d'un fuseau horaire en minutes */
 function getTimezoneOffset(tz: string, date: Date): number {
   const utcStr = date.toLocaleString("en-US", { timeZone: "UTC" });
@@ -151,9 +154,44 @@ export const appRouter = router({
           message: z.string().optional(),
           produit: z.string().optional(),
           objectif: z.string().optional(),
+          // Anti-spam
+          _hp: z.string().optional(),  // Honeypot
+          _ts: z.number().optional(),  // Timestamp d'ouverture du formulaire
         })
       )
       .mutation(async ({ input, ctx }) => {
+        // ─── Anti-spam : Honeypot ───
+        if (input._hp) {
+          console.log(`[Anti-spam] Honeypot rempli, rejet silencieux pour ${input.email}`);
+          return { success: true, crmSynced: false };
+        }
+
+        // ─── Anti-spam : Délai minimum (5 secondes) ───
+        if (input._ts) {
+          const elapsed = Date.now() - input._ts;
+          if (elapsed < 5000) {
+            console.log(`[Anti-spam] Soumission trop rapide (${elapsed}ms) pour ${input.email}`);
+            return { success: true, crmSynced: false };
+          }
+        }
+
+        // ─── Anti-spam : Rate limiting par IP (5/heure) ───
+        const clientIp = ctx.req.ip || ctx.req.headers["x-forwarded-for"] as string || "unknown";
+        const now = Date.now();
+        const hourAgo = now - 3600000;
+        // Nettoyer les anciennes entrées
+        Array.from(rateLimitMap.entries()).forEach(([ip, timestamps]) => {
+          const recent = timestamps.filter((t: number) => t > hourAgo);
+          if (recent.length === 0) rateLimitMap.delete(ip);
+          else rateLimitMap.set(ip, recent);
+        });
+        const ipTimestamps = rateLimitMap.get(clientIp) || [];
+        if (ipTimestamps.length >= 5) {
+          console.log(`[Anti-spam] Rate limit atteint pour IP ${clientIp} (${ipTimestamps.length} soumissions/heure)`);
+          throw new Error("Trop de demandes. Veuillez r\u00e9essayer dans quelques minutes.");
+        }
+        rateLimitMap.set(clientIp, [...ipTimestamps, now]);
+
         await insertContactSubmission({
           type: input.type,
           nom: input.nom,
