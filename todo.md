@@ -600,8 +600,3 @@
 - [x] Tests vitest (307 tests passent, envoi Resend confirmé)
 - [x] Email de confirmation retiré du site (géré par le CRM)
 - [ ] Test réel avec formulaire (en attente publication)
-
-## Barre de navigation admin (utilisateurs connectés uniquement)
-- [x] Widget nav chargé depuis hallucine.manus.space/api/nav-widget
-- [x] Visible uniquement si admin connecté
-- [x] Fix: barre admin cachée par le contenu de la page — Navbar décalée de 36px quand widget nav admin présent
