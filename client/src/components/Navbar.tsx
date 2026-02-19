@@ -94,9 +94,25 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
+  const [hasNavWidget, setHasNavWidget] = useState(false);
   const [location] = useLocation();
   const dropdownTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { isAuthenticated, user } = useAuth();
+
+  // Détecter la présence du widget nav admin (#hallucine-topnav, hauteur 36px)
+  useEffect(() => {
+    const check = () => setHasNavWidget(!!document.getElementById('hallucine-topnav'));
+    check();
+    // Re-vérifier périodiquement car le widget est chargé de façon asynchrone
+    const interval = setInterval(check, 1000);
+    // Observer les mutations DOM pour détecter l'ajout/retrait du widget
+    const observer = new MutationObserver(check);
+    observer.observe(document.body, { childList: true, subtree: true });
+    return () => { clearInterval(interval); observer.disconnect(); };
+  }, []);
+
+  // Offset vertical quand le widget nav admin est présent (36px)
+  const navOffset = hasNavWidget ? 36 : 0;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -122,7 +138,7 @@ export default function Navbar() {
   return (
     <>
       {/* Top Bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-[oklch(0.10_0.015_260)] border-b border-white/5 text-xs text-white/70 overflow-visible">
+      <div className="fixed left-0 right-0 z-50 bg-[oklch(0.10_0.015_260)] border-b border-white/5 text-xs text-white/70 overflow-visible" style={{ top: `${navOffset}px` }}>
         <div className="container flex items-center justify-between py-1.5">
           <div className="flex items-center gap-4">
             <a href="mailto:contact@hallucine.fr" className="flex items-center gap-1.5 hover:text-warm transition-colors">
@@ -152,11 +168,12 @@ export default function Navbar() {
 
       {/* Main Nav */}
       <nav
-        className={`fixed top-[30px] left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
             ? "bg-[oklch(0.14_0.03_260_/_0.95)] backdrop-blur-md shadow-lg shadow-black/20"
             : "bg-[oklch(0.12_0.015_260_/_0.85)] backdrop-blur-sm"
         }`}
+        style={{ top: `${navOffset + 30}px` }}
       >
         <div className="container flex items-center justify-between py-3">
           {/* Logo */}
