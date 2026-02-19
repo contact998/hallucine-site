@@ -600,3 +600,6 @@
 - [x] Tests vitest (307 tests passent, envoi Resend confirmé)
 - [x] Email de confirmation retiré du site (géré par le CRM)
 - [ ] Test réel avec formulaire (en attente publication)
+
+## Bug: API code postal relance la recherche au déplacement du curseur
+- [x] Fix: l'API Zippopotam.us ne relance plus la recherche quand le curseur bouge (garde lastSearchedPostalRef)

@@ -220,6 +220,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
   const formRef = useRef<HTMLDivElement>(null);
   const postalCodeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastSearchedPostalRef = useRef<string>("");
 
   const STORAGE_KEY = "hallucine_smartform_progress";
   const EXPIRY_DAYS = 7;
@@ -389,6 +390,9 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   );
 
   useEffect(() => {
+    // Ne pas relancer si le code postal n'a pas changé (évite les recherches en boucle)
+    if (postalCode === lastSearchedPostalRef.current) return;
+
     // Réinitialiser à chaque changement de code postal
     setCitySuggestions([]);
     setCity("");
@@ -398,12 +402,14 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     setPostalCodeManualMode(false);
 
     if (postalCode.length < 3) {
+      lastSearchedPostalRef.current = "";
       return;
     }
 
     if (postalCodeTimeoutRef.current) clearTimeout(postalCodeTimeoutRef.current);
 
     postalCodeTimeoutRef.current = setTimeout(async () => {
+      lastSearchedPostalRef.current = postalCode;
       setLoadingCities(true);
       try {
         // 1) Essayer France d'abord
