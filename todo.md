@@ -603,3 +603,6 @@
 
 ## Bug: API code postal relance la recherche au déplacement du curseur
 - [x] Fix: l'API Zippopotam.us ne relance plus la recherche quand le curseur bouge (garde lastSearchedPostalRef)
+
+## Modification adresse siège
+- [x] Remplacer "Shenzhen, Chine — Fabrication : Dongguan, Chine" par "La Mure d'Isère, France"

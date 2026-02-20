@@ -57,7 +57,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <div className="text-white font-medium text-base">Siège</div>
-                    <div className="text-white/70 text-base">Shenzhen, Chine — Fabrication : Dongguan, Chine</div>
+                    <div className="text-white/70 text-base">La Mure d'Isère, France</div>
                   </div>
                 </div>
               </div>
