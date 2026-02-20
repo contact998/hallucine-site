@@ -127,7 +127,7 @@ export default function SiretLookupField({ onSelect, initialValue = "", codePost
     });
   };
 
-  const inputClass = "w-full p-3 pl-10 bg-white/[0.05] border border-white/10 rounded-sm text-white text-sm placeholder:text-white/30 focus:border-gold focus:outline-none transition-colors";
+  const inputClass = "w-full p-3 pl-10 bg-white/[0.05] border border-white/10 rounded-lg text-white text-sm placeholder:text-white/30 focus:border-gold focus:outline-none transition-colors";
 
   return (
     <div ref={containerRef} className={`relative ${className}`}>
@@ -168,7 +168,7 @@ export default function SiretLookupField({ onSelect, initialValue = "", codePost
             initial={{ opacity: 0, y: -5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -5 }}
-            className="absolute z-30 w-full mt-1 bg-[oklch(0.16_0.012_260)] border border-white/10 rounded-sm shadow-xl max-h-64 overflow-y-auto"
+            className="absolute z-30 w-full mt-1 bg-[oklch(0.16_0.012_260)] border border-white/10 rounded-lg shadow-xl max-h-64 overflow-y-auto"
           >
             {results.map((r, i) => (
               <button
@@ -209,7 +209,7 @@ export default function SiretLookupField({ onSelect, initialValue = "", codePost
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="mt-2 p-2.5 bg-emerald-400/5 border border-emerald-400/20 rounded-sm"
+            className="mt-2 p-2.5 bg-emerald-400/5 border border-emerald-400/20 rounded-lg"
           >
             <div className="flex items-center gap-1.5 mb-1.5">
               <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />

@@ -113,7 +113,7 @@ export default function UseCasesSection() {
           className="text-center mt-16"
         >
           <p className="text-white/75 text-base mb-4">Vous avez un projet différent ? Nous nous adaptons.</p>
-          <Link href="/contactez-nous" className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all glow-gold">
+          <Link href="/contactez-nous" className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-lg hover:bg-gold-light transition-all glow-gold">
             Parlez-nous de votre projet <ChevronRight className="w-5 h-5" />
           </Link>
         </motion.div>

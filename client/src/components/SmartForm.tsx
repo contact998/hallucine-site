@@ -620,8 +620,10 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     exit: { opacity: 0, x: -30 },
   };
 
-  const inputClass = "w-full p-3 bg-white/[0.05] border border-white/10 rounded-sm text-white text-base placeholder:text-white/40 focus:border-gold focus:outline-none transition-colors";
-  const labelClass = "text-white/75 text-sm mb-1.5 block";
+  const inputRequiredClass = "w-full p-3 bg-white/[0.15] border border-[#D4AF37]/60 rounded-lg text-white text-base placeholder:text-white/50 focus:border-gold focus:outline-none transition-colors";
+  const inputOptionalClass = "w-full p-3 bg-white/[0.10] border border-white/15 rounded-lg text-white text-base placeholder:text-white/40 focus:border-gold focus:outline-none transition-colors";
+  const inputClass = inputOptionalClass;
+  const labelClass = "text-white text-sm font-medium mb-1.5 block";
 
   // ─── Rendu ────────────────────────────────────────────────────────────
   if (submitted) {
@@ -647,18 +649,18 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     <div ref={formRef} className={mode === "compact" ? "" : ""}>
       {/* Bandeau de reprise de progression */}
       {showResumeBanner && (
-        <div className="mb-4 p-3 bg-gold/10 border border-gold/30 rounded-sm flex items-center justify-between gap-3">
+        <div className="mb-4 p-3 bg-gold/10 border border-gold/30 rounded-lg flex items-center justify-between gap-3">
           <p className="text-white/80 text-sm">Vous avez une demande en cours. Reprendre ?</p>
           <div className="flex gap-2 shrink-0">
             <button
               onClick={restoreProgress}
-              className="px-3 py-1.5 bg-gold text-navy-deep text-xs font-semibold rounded-sm hover:bg-gold-light transition-colors"
+              className="px-3 py-1.5 bg-gold text-navy-deep text-xs font-semibold rounded-lg hover:bg-gold-light transition-colors"
             >
               Reprendre
             </button>
             <button
               onClick={dismissProgress}
-              className="px-3 py-1.5 border border-white/20 text-white/65 text-xs rounded-sm hover:border-white/50 transition-colors"
+              className="px-3 py-1.5 border border-white/20 text-white/65 text-xs rounded-lg hover:border-white/50 transition-colors"
             >
               Non merci
             </button>
@@ -668,7 +670,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
       {/* Bandeau chatbot pré-remplissage */}
       {isFromChatbot && currentStep <= 2 && (
-        <div className="mb-4 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-sm flex items-center gap-3">
+        <div className="mb-4 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg flex items-center gap-3">
           <Sparkles className="w-5 h-5 text-emerald-400 shrink-0" />
           <div>
             <p className="text-emerald-300 text-sm font-medium">Formulaire pré-rempli par le chatbot IA</p>
@@ -723,7 +725,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                     value={email}
                     onChange={(e) => { setEmail(e.target.value); setFieldErrors(prev => ({ ...prev, email: "" })); }}
                     placeholder="votre@email.com"
-                    className={`${inputClass} flex-1 ${fieldErrors.email ? "border-red-500" : ""}`}
+                    className={`${inputRequiredClass} flex-1 ${fieldErrors.email ? "border-red-500" : ""}`}
                     autoFocus
                     onKeyDown={handleKeyDown}
                   />
@@ -750,7 +752,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             <button
               onClick={goNextValidated}
               disabled={!canProceed()}
-              className="w-full mt-6 flex items-center justify-center gap-2 px-6 py-3 bg-gold text-navy-deep font-semibold text-sm rounded-sm hover:bg-gold-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              className="w-full mt-6 flex items-center justify-center gap-2 px-6 py-3 bg-gold text-navy-deep font-semibold text-sm rounded-lg hover:bg-gold-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
               Continuer <ArrowRight className="w-4 h-4" />
             </button>
@@ -771,11 +773,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                 <button
                   key={p.type}
                   onClick={() => { setProduct(p.type); goNext(); }}
-                  className={`flex flex-col items-center gap-2 p-4 border rounded-sm transition-all duration-300 text-center hover:scale-[1.02] ${
+                  className={`flex flex-col items-center gap-2 p-4 border rounded-lg transition-all duration-300 text-center hover:scale-[1.02] ${
                     product === p.type ? "border-gold bg-gold/10" : "border-white/10 hover:border-gold/30 bg-white/[0.02]"
                   }`}
                 >
-                  <div className={`w-10 h-10 rounded-sm bg-white/5 flex items-center justify-center ${p.color}`}>
+                  <div className={`w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center ${p.color}`}>
                     <p.icon className="w-5 h-5" />
                   </div>
                   <div className="text-white font-semibold text-sm">{p.label}</div>
@@ -784,7 +786,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
               ))}
             </div>
             <div className="flex gap-3 mt-6">
-              <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-sm hover:border-white/30 transition-colors">
+              <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-lg hover:border-white/30 transition-colors">
                 <ArrowLeft className="w-4 h-4" /> Retour
               </button>
             </div>
@@ -803,7 +805,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                     <button
                       key={cat.value}
                       onClick={() => { setProductDetail(cat.value); }}
-                      className={`w-full flex items-center gap-4 p-3.5 border rounded-sm transition-all duration-300 text-left ${
+                      className={`w-full flex items-center gap-4 p-3.5 border rounded-lg transition-all duration-300 text-left ${
                         productDetail === cat.value ? "border-gold bg-gold/10" : "border-white/10 hover:border-gold/30 bg-white/[0.02]"
                       }`}
                     >
@@ -834,7 +836,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                     <button
                       key={t.value}
                       onClick={() => setProductDetail(t.value)}
-                      className={`p-3.5 border rounded-sm text-center transition-all duration-300 ${
+                      className={`p-3.5 border rounded-lg text-center transition-all duration-300 ${
                         productDetail === t.value ? "border-gold bg-gold/10" : "border-white/10 hover:border-gold/30 bg-white/[0.02]"
                       }`}
                     >
@@ -854,7 +856,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                     <button
                       key={m.value}
                       onClick={() => setProductDetail(m.value)}
-                      className={`p-3.5 border rounded-sm text-center transition-all duration-300 ${
+                      className={`p-3.5 border rounded-lg text-center transition-all duration-300 ${
                         productDetail === m.value ? "border-gold bg-gold/10" : "border-white/10 hover:border-gold/30 bg-white/[0.02]"
                       }`}
                     >
@@ -874,7 +876,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                     <button
                       key={a.value}
                       onClick={() => setProductDetail(a.value)}
-                      className={`p-3.5 border rounded-sm text-center transition-all duration-300 ${
+                      className={`p-3.5 border rounded-lg text-center transition-all duration-300 ${
                         productDetail === a.value ? "border-gold bg-gold/10" : "border-white/10 hover:border-gold/30 bg-white/[0.02]"
                       }`}
                     >
@@ -886,13 +888,13 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             )}
 
             <div className="flex gap-3 mt-6">
-              <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-sm hover:border-white/30 transition-colors">
+              <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-lg hover:border-white/30 transition-colors">
                 <ArrowLeft className="w-4 h-4" /> Retour
               </button>
               <button
                 onClick={goNextValidated}
                 disabled={!canProceed()}
-                className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-gold text-navy-deep font-semibold text-sm rounded-sm hover:bg-gold-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-gold text-navy-deep font-semibold text-sm rounded-lg hover:bg-gold-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 Continuer <ArrowRight className="w-4 h-4" />
               </button>
@@ -961,7 +963,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: "auto" }}
-                  className="bg-white/5 border border-white/10 rounded-sm p-4 space-y-3"
+                  className="bg-white/5 border border-white/10 rounded-lg p-4 space-y-3"
                 >
                   <p className="text-white/70 text-sm font-medium">Quand souhaitez-vous etre rappele ?</p>
                   <div className="flex flex-wrap gap-2">
@@ -970,7 +972,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                         key={day}
                         type="button"
                         onClick={() => setCallbackDay(callbackDay === day ? "" : day)}
-                        className={`px-3 py-1.5 text-xs rounded-sm border transition-colors ${
+                        className={`px-3 py-1.5 text-xs rounded-lg border transition-colors ${
                           callbackDay === day
                             ? "bg-gold/20 border-gold text-gold"
                             : "border-white/10 text-white/50 hover:border-white/30"
@@ -986,7 +988,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                         key={slot.value}
                         type="button"
                         onClick={() => setCallbackTime(callbackTime === slot.value ? "" : slot.value)}
-                        className={`flex-1 px-3 py-1.5 text-xs rounded-sm border transition-colors ${
+                        className={`flex-1 px-3 py-1.5 text-xs rounded-lg border transition-colors ${
                           callbackTime === slot.value
                             ? "bg-gold/20 border-gold text-gold"
                             : "border-white/10 text-white/50 hover:border-white/30"
@@ -1001,12 +1003,12 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             </div>
 
             <div className="flex gap-3 mt-6">
-              <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-sm hover:border-white/30 transition-colors">
+              <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-lg hover:border-white/30 transition-colors">
                 <ArrowLeft className="w-4 h-4" /> Retour
               </button>
               <button
                 onClick={goNextValidated}
-                className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-gold text-navy-deep font-semibold text-sm rounded-sm hover:bg-gold-light transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-gold text-navy-deep font-semibold text-sm rounded-lg hover:bg-gold-light transition-colors"
               >
                 Continuer <ArrowRight className="w-4 h-4" />
               </button>
@@ -1032,7 +1034,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                     onChange={(e) => { setPostalCode(e.target.value.replace(/\D/g, "").slice(0, 10)); setFieldErrors(prev => ({ ...prev, postalCode: "" })); }}
                     placeholder="75001"
                     maxLength={10}
-                    className={`${inputClass} ${fieldErrors.postalCode ? "border-red-500" : ""}`}
+                    className={`${inputRequiredClass} ${fieldErrors.postalCode ? "border-red-500" : ""}`}
                     autoFocus
                     onKeyDown={handleKeyDown}
                   />
@@ -1102,13 +1104,13 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             </div>
 
             <div className="flex gap-3 mt-6">
-              <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-sm hover:border-white/30 transition-colors">
+              <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-lg hover:border-white/30 transition-colors">
                 <ArrowLeft className="w-4 h-4" /> Retour
               </button>
               <button
                 onClick={goNextValidated}
                 disabled={!canProceed()}
-                className={`flex-1 flex items-center justify-center gap-2 px-6 py-2.5 font-semibold text-sm rounded-sm transition-colors ${canProceed() ? 'bg-gold text-navy-deep hover:bg-gold-light' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}
+                className={`flex-1 flex items-center justify-center gap-2 px-6 py-2.5 font-semibold text-sm rounded-lg transition-colors ${canProceed() ? 'bg-gold text-navy-deep hover:bg-gold-light' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}
               >
                 Continuer <ArrowRight className="w-4 h-4" />
               </button>
@@ -1140,13 +1142,13 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             </div>
 
             <div className="flex gap-3 mt-6">
-              <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-sm hover:border-white/30 transition-colors">
+              <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-lg hover:border-white/30 transition-colors">
                 <ArrowLeft className="w-4 h-4" /> Retour
               </button>
               <button
                 onClick={goNextValidated}
                 disabled={!canProceed()}
-                className={`flex-1 flex items-center justify-center gap-2 px-6 py-2.5 font-semibold text-sm rounded-sm transition-colors ${canProceed() ? 'bg-gold text-navy-deep hover:bg-gold-light' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}
+                className={`flex-1 flex items-center justify-center gap-2 px-6 py-2.5 font-semibold text-sm rounded-lg transition-colors ${canProceed() ? 'bg-gold text-navy-deep hover:bg-gold-light' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}
               >
                 Continuer <ArrowRight className="w-4 h-4" />
               </button>
@@ -1172,7 +1174,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                       value={prenom}
                       onChange={(e) => { setPrenom(e.target.value); setFieldErrors(prev => ({ ...prev, prenom: "" })); }}
                       placeholder="Jean"
-                      className={`${inputClass} flex-1 ${fieldErrors.prenom ? "border-red-500" : ""}`}
+                      className={`${inputRequiredClass} flex-1 ${fieldErrors.prenom ? "border-red-500" : ""}`}
                       autoFocus
                     />
                     <VoiceMicButton
@@ -1230,7 +1232,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             </div>
 
             {/* Recapitulatif compact */}
-            <div className="mt-4 p-3 bg-white/[0.03] border border-white/5 rounded-sm">
+            <div className="mt-4 p-3 bg-white/[0.03] border border-white/5 rounded-lg">
               <div className="text-white/65 text-xs uppercase tracking-wider mb-2">Recapitulatif</div>
               <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
                 {email && <div className="text-white/60">Email : <span className="text-white">{email}</span></div>}
@@ -1245,13 +1247,13 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             </div>
 
             <div className="flex gap-3 mt-6">
-              <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-sm hover:border-white/30 transition-colors">
+              <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-lg hover:border-white/30 transition-colors">
                 <ArrowLeft className="w-4 h-4" /> Retour
               </button>
               <button
                 onClick={handleSubmit}
                 disabled={submitMutation.isPending}
-                className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gold text-navy-deep font-bold text-sm rounded-sm hover:bg-gold-light transition-colors glow-gold disabled:opacity-70"
+                className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gold text-navy-deep font-bold text-sm rounded-lg hover:bg-gold-light transition-colors glow-gold disabled:opacity-70"
               >
                 {submitMutation.isPending ? (
                   <><Loader2 className="w-4 h-4 animate-spin" /> Envoi en cours...</>

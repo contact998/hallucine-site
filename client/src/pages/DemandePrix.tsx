@@ -249,7 +249,7 @@ export default function DemandePrix() {
               Nous vous enverrons également un devis personnalisé si vous le souhaitez.
             </p>
 
-            <div className="bg-white/[0.04] border border-white/10 rounded-sm p-6 md:p-8">
+            <div className="bg-white/[0.04] border border-white/10 rounded-lg p-6 md:p-8">
               <SmartForm mode="gate" onSubmitSuccess={() => setSubmitted(true)} />
             </div>
 

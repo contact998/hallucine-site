@@ -66,7 +66,7 @@ export default function FaqSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.1 + i * 0.05 }}
-              className="border border-white/10 rounded-sm overflow-hidden"
+              className="border border-[#D4AF37]/30 rounded-xl overflow-hidden bg-white/[0.04]"
             >
               <button
                 onClick={() => setOpenFaq(openFaq === i ? null : i)}
@@ -87,7 +87,7 @@ export default function FaqSection() {
         {/* CTA */}
         <div className="text-center mt-12">
           <p className="text-white/70 text-base mb-4">Vous avez d'autres questions ?</p>
-          <Link href="/contactez-nous" className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all glow-gold">
+          <Link href="/contactez-nous" className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-lg hover:bg-gold-light transition-all glow-gold">
             Contactez-nous <ChevronRight className="w-5 h-5" />
           </Link>
         </div>

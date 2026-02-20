@@ -606,3 +606,9 @@
 
 ## Modification adresse siège
 - [x] Remplacer "Shenzhen, Chine — Fabrication : Dongguan, Chine" par "La Mure d'Isère, France"
+
+## Charte graphique Option A — Cinéma Élégant (re-application après reset)
+- [x] SmartForm : coins arrondis, champs obligatoires bg-white/15 + bordure dorée, optionnels bg-white/10
+- [x] Tableaux de prix : chaque ligne entourée, coins arrondis, en-tête doré (8 pages)
+- [x] FAQ : coins arrondis, bordure dorée
+- [x] Remplacer tous les rounded-sm par rounded-lg (composants + pages)

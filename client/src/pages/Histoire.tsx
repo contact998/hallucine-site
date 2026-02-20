@@ -174,7 +174,7 @@ export default function Histoire() {
               </div>
 
               <div className="flex-1 lg:max-w-[45%]">
-                <div className="inline-block px-3 py-1 bg-gold/10 border border-gold/20 rounded-sm mb-4">
+                <div className="inline-block px-3 py-1 bg-gold/10 border border-gold/20 rounded-lg mb-4">
                   <span className="text-gold text-sm font-bold">{chapter.year}</span>
                 </div>
                 <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 leading-tight">{chapter.title}</h3>
@@ -188,7 +188,7 @@ export default function Histoire() {
 
               {chapter.image && (
                 <div className="flex-1 lg:max-w-[45%] w-full">
-                  <div className="overflow-hidden rounded-sm border border-white/10">
+                  <div className="overflow-hidden rounded-lg border border-white/10">
                     <img
                       src={chapter.image}
                       alt={chapter.title}
@@ -226,7 +226,7 @@ export default function Histoire() {
                   </p>
                 </div>
               </div>
-              <div className="p-6 border border-gold/20 rounded-sm bg-gold/5">
+              <div className="p-6 border border-gold/20 rounded-lg bg-gold/5">
                 <h3 className="text-lg font-bold text-gold mb-4">En bref</h3>
                 <div className="space-y-3 text-sm">
                   <div className="flex items-start gap-2">
@@ -278,7 +278,7 @@ export default function Histoire() {
                   stat: "30 ans d'innovation continue",
                 },
               ].map((v, i) => (
-                <div key={i} className="p-6 border border-white/10 rounded-sm">
+                <div key={i} className="p-6 border border-white/10 rounded-lg">
                   <h3 className="text-xl font-bold text-gold mb-4">{v.title}</h3>
                   <p className="text-white/60 text-sm leading-relaxed mb-4">{v.desc}</p>
                   <div className="pt-4 border-t border-white/5">
@@ -297,7 +297,7 @@ export default function Histoire() {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Envie d'écrire la suite avec nous ?</h2>
             <p className="text-white/50 mb-8 max-w-xl mx-auto">Que vous soyez organisateur d'événements, loueur de matériel ou simplement curieux, nous serions ravis de discuter avec vous.</p>
-            <Link href="/contactez-nous" className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all glow-gold">
+            <Link href="/contactez-nous" className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-lg hover:bg-gold-light transition-all glow-gold">
               Contactez-nous <ChevronRight className="w-5 h-5" />
             </Link>
           </motion.div>

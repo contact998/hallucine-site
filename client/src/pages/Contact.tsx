@@ -81,7 +81,7 @@ export default function Contact() {
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={fadeIn}
-                className="p-5 border border-white/[0.06] rounded-sm"
+                className="p-5 border border-white/[0.06] rounded-lg"
               >
                 <item.icon className="w-6 h-6 text-gold mb-3" />
                 <h3 className="text-white font-semibold text-sm mb-2">{item.title}</h3>
@@ -153,7 +153,7 @@ export default function Contact() {
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={fadeIn}
-                className="border border-white/10 rounded-sm overflow-hidden"
+                className="border border-white/10 rounded-lg overflow-hidden"
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}

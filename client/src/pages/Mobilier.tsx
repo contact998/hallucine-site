@@ -163,7 +163,7 @@ export default function Mobilier() {
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={0} className="order-2 lg:order-1">
-              <img src={MOBILIER_SUPPORT} alt="Structure étanche du mobilier gonflable Hallucine avec chambre à air scellée" className="w-full rounded-sm border border-white/10" />
+              <img src={MOBILIER_SUPPORT} alt="Structure étanche du mobilier gonflable Hallucine avec chambre à air scellée" className="w-full rounded-lg border border-white/10" />
               <p className="text-white/40 text-xs mt-3 text-center italic">Structure étanche — chambre à air scellée, même technologie que nos écrans</p>
             </motion.div>
 
@@ -189,7 +189,7 @@ export default function Mobilier() {
                   { icon: Shield, label: "Résistant", desc: "UV, pluie, usage intensif" },
                   { icon: Palette, label: "Personnalisable", desc: "Couleurs et impression" },
                 ].map((f, i) => (
-                  <div key={i} className="p-4 border border-white/10 rounded-sm bg-white/[0.02]">
+                  <div key={i} className="p-4 border border-white/10 rounded-lg bg-white/[0.02]">
                     <f.icon className="w-6 h-6 text-gold mb-2" />
                     <div className="text-white font-semibold text-sm">{f.label}</div>
                     <div className="text-white/40 text-xs">{f.desc}</div>
@@ -222,10 +222,10 @@ export default function Mobilier() {
                 viewport={{ once: true }}
                 variants={fadeIn}
                 custom={i}
-                className="grid lg:grid-cols-5 gap-6 p-6 border border-white/[0.06] rounded-sm"
+                className="grid lg:grid-cols-5 gap-6 p-6 border border-white/[0.06] rounded-lg"
               >
                 <div className="lg:col-span-2">
-                  <img src={product.img} alt={product.title} className="w-full h-48 lg:h-full object-cover rounded-sm border border-white/10" loading="lazy" />
+                  <img src={product.img} alt={product.title} className="w-full h-48 lg:h-full object-cover rounded-lg border border-white/10" loading="lazy" />
                 </div>
                 <div className="lg:col-span-3">
                   <h3 className="text-xl font-bold text-white mb-3">{product.title}</h3>
@@ -238,7 +238,7 @@ export default function Mobilier() {
                       </div>
                     ))}
                   </div>
-                  <Link href="/contactez-nous" className="mt-5 inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all text-sm">
+                  <Link href="/contactez-nous" className="mt-5 inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-navy-deep font-semibold rounded-lg hover:bg-gold-light transition-all text-sm">
                     Demander un devis <ChevronRight className="w-4 h-4" />
                   </Link>
                 </div>
@@ -269,7 +269,7 @@ export default function Mobilier() {
                 viewport={{ once: true }}
                 variants={fadeIn}
                 custom={i}
-                className="border border-white/[0.06] rounded-sm overflow-hidden"
+                className="border border-white/[0.06] rounded-lg overflow-hidden"
               >
                 <img src={product.img} alt={product.title} className="w-full h-56 object-cover" loading="lazy" />
                 <div className="p-6">
@@ -283,7 +283,7 @@ export default function Mobilier() {
                       </div>
                     ))}
                   </div>
-                  <Link href="/contactez-nous" className="mt-5 inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all text-sm">
+                  <Link href="/contactez-nous" className="mt-5 inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-navy-deep font-semibold rounded-lg hover:bg-gold-light transition-all text-sm">
                     Demander un devis <ChevronRight className="w-4 h-4" />
                   </Link>
                 </div>
@@ -307,7 +307,7 @@ export default function Mobilier() {
               { title: "Mariages & réceptions", desc: "Espaces détente élégants pour vos invités. Le canapé et les fauteuils créent des coins de conversation en extérieur. Disponibles en blanc pour s'intégrer à la décoration." },
               { title: "Événements sportifs", desc: "Zones d'accueil partenaires, espaces de repos pour les athlètes, bars pour les spectateurs. Le mobilier résiste aux intempéries et à l'usage intensif d'une journée de compétition." },
             ].map((item, i) => (
-              <motion.div key={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={i} className="p-6 border border-white/10 rounded-sm">
+              <motion.div key={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={i} className="p-6 border border-white/10 rounded-lg">
                 <h3 className="text-lg font-bold text-gold mb-3">{item.title}</h3>
                 <p className="text-white/60 text-sm leading-relaxed">{item.desc}</p>
               </motion.div>
@@ -333,7 +333,7 @@ export default function Mobilier() {
                 viewport={{ once: true }}
                 variants={fadeIn}
                 custom={i}
-                className="border border-white/10 rounded-sm overflow-hidden"
+                className="border border-white/10 rounded-lg overflow-hidden"
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
@@ -352,7 +352,7 @@ export default function Mobilier() {
           </div>
 
           <div className="text-center mt-12">
-            <Link href="/contactez-nous" className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-sm hover:bg-gold-light transition-all glow-gold">
+            <Link href="/contactez-nous" className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-lg hover:bg-gold-light transition-all glow-gold">
               Demander un devis mobilier <ChevronRight className="w-5 h-5" />
             </Link>
           </div>
