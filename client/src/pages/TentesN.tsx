@@ -16,7 +16,6 @@ const heroImages = [
   { src: "https://www.hallucinecran.com/photoset/Tentes%20N/.761c537e749de68e706a65456057742.jpg_m.jpg", alt: "Tente gonflable N Volvo personnalisée" },
   { src: "https://www.hallucinecran.com/photoset/Tentes%20N/.Weixin%20Image_20240530160133.jpg_m.jpg", alt: "Tente gonflable N blanche grande vue latérale" },
   { src: "https://www.hallucinecran.com/photoset/Tentes%20N/.ntent%20croix%20rouge.jpg_m.jpg", alt: "Tente gonflable N Croix-Rouge verte" },
-  { src: "https://www.hallucinecran.com/photoset/Tentes%20N/.Weixin%20Image_20240530160054.jpg_m.jpg", alt: "Tente gonflable N blanche vue de face avec arche" },
 ];
 
 /* ─── Image contenu ─── */
@@ -35,7 +34,7 @@ export default function TentesN() {
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
 
-      {/* ═══ HERO — titre + grille 5 photos ═══ */}
+      {/* ═══ HERO — titre + grille 4 photos ═══ */}
       <section className="pt-32 pb-16 bg-charcoal-light">
         <div className="container">
           <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">Tentes gonflables</p>
@@ -43,18 +42,13 @@ export default function TentesN() {
             Tentes en forme de N
           </h1>
 
-          {/* Grille photos : 4 en haut + 1 en bas à gauche */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-            {heroImages.slice(0, 4).map((img, i) => (
+          {/* Grille photos : 4 côte à côte */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {heroImages.map((img, i) => (
               <div key={i} className="cursor-pointer rounded-lg overflow-hidden aspect-[4/3]" onClick={() => openLightbox(img.src, img.alt)}>
                 <img src={img.src} alt={img.alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
               </div>
             ))}
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <div className="cursor-pointer rounded-lg overflow-hidden aspect-[4/3]" onClick={() => openLightbox(heroImages[4].src, heroImages[4].alt)}>
-              <img src={heroImages[4].src} alt={heroImages[4].alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
-            </div>
           </div>
         </div>
       </section>
