@@ -703,3 +703,4 @@
 ## Refonte page Tente Gonflable X
 - [x] Refaire /tente-gonflable-x à l'identique de l'ancien site (mêmes images, même contenu, même structure)
 - [x] Corriger page Tente X : hero avec 4 photos en grille + sections en damier (alternance image/texte)
+- [x] Remplacer photo 1 et 4 du hero Tente X par nouvelles images (Meguiar's + Ealing Eagles)

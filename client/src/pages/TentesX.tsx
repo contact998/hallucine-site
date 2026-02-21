@@ -19,10 +19,10 @@ import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 /* ─── Images (identiques à l'ancien site) ─── */
 
 const heroImages = [
-  { src: "https://www.hallucinecran.com/photoset/Tentes%20X/.180cdb372adc84618007b2ac31e4093.jpg_m.jpg", alt: "Tente gonflable X Hallucine blanche vue de profil" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/dNeaCqaVkukLmROr.jpg", alt: "Tentes gonflables X Meguiar's noires et jaunes de nuit" },
   { src: "https://www.hallucinecran.com/photoset/Tentes%20X/.xtent.jpg_m.jpg", alt: "Tente gonflable X Hallucine noire avec logo" },
   { src: "https://www.hallucinecran.com/photoset/Tentes%20X/.1078c8cca1c101dbe2d41d70cadf4a0.jpg_m.jpg", alt: "Tentes gonflables X personnalisées multiples" },
-  { src: "https://www.hallucinecran.com/photoset/Tentes%20X/.671bade5ef4fb27a93d3034de910dc4.jpg_m.jpg", alt: "Tente gonflable X vue de face" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eHeFyOrReLiuoZGN.jpg", alt: "Tente gonflable X Ealing Eagles personnalisée" },
 ];
 
 const contentImages = {
