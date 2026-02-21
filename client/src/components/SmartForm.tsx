@@ -2,9 +2,9 @@
  * SmartForm — "Le Devis en Douceur"
  * Formulaire unifié intelligent en 7 étapes progressives
  * ÉTAPE 1 = EMAIL (capture immédiate du contact)
- * Champs obligatoires : Email, Produit, Code postal, Prénom
+ * Champs obligatoires : Email, Produit, Objectif, Code postal, Prénom
  *
- * Ordre : Email → Produit → Besoin → Tél/Rappel → Code postal → Prénom/Nom/Entreprise → Message
+ * Ordre : Email → Produit → Besoin → Objectif → Tél/Rappel → Localisation → Contact/Entreprise/Message
  *
  * Détection d'abandon : si le visiteur quitte après avoir saisi son email,
  * les données partielles sont envoyées au backend (CRM + notification admin)
@@ -19,11 +19,11 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Monitor, Tent, Armchair, Trophy, ArrowRight, ArrowLeft, Send, CheckCircle,
-  Mail, Phone, MapPin, User, Globe, MessageSquare, Loader2, Sparkles
+  Mail, Phone, MapPin, User, Globe, MessageSquare, Loader2, Sparkles,
+  Clock, ShieldCheck, Check, Building2
 } from "lucide-react";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
-// IA supprimée du formulaire
 import VoiceMicButton from "@/components/VoiceMicButton";
 import SiretLookupField from "@/components/SiretLookupField";
 
@@ -81,6 +81,27 @@ const popularCountries = [
   "Emirats arabes unis", "Arabie saoudite", "Bresil", "Mexique", "Australie",
 ];
 
+// Labels des étapes pour la barre de progression
+const stepLabels = [
+  "Email",
+  "Produit",
+  "Options",
+  "Objectif",
+  "Telephone",
+  "Localisation",
+  "Envoi",
+];
+
+// Messages d'encouragement par étape
+const encouragements: Record<number, string> = {
+  2: "C'est parti !",
+  3: "Excellent choix !",
+  4: "On avance bien !",
+  5: "Plus que 2 etapes !",
+  6: "Presque termine !",
+  7: "Derniere ligne droite !",
+};
+
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 
 /** Validation email stricte — regex standard RFC-like */
@@ -93,7 +114,7 @@ function isValidEmail(email: string): boolean {
 function isPhoneWarning(phone: string): string | null {
   const digits = phone.replace(/[^0-9]/g, "");
   if (phone.trim().length > 0 && digits.length < 8) {
-    return "Le numéro semble trop court (minimum 8 chiffres)";
+    return "Le numero semble trop court (minimum 8 chiffres)";
   }
   return null;
 }
@@ -128,6 +149,14 @@ function getPhonePrefix(country: string): string {
   return prefixes[country] || "";
 }
 
+/** Label objectif lisible */
+function objectifLabel(val: string): string {
+  if (val === "achat") return "Achat";
+  if (val === "location") return "Location";
+  if (val === "information") return "Information";
+  return val;
+}
+
 // ─── Composant SmartForm ───────────────────────────────────────────────────────
 export default function SmartForm({ preselectedProduct, preselectedSize, mode = "full", onSubmitSuccess }: SmartFormProps) {
   // Lire les query params (pre-remplissage depuis le chatbot IA)
@@ -154,9 +183,9 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     return 1;
   };
 
-  // Etapes : 1=email, 2=produit, 3=besoin, 4=objectif, 5=tel+rappel, 6=localisation, 7=entreprise, 8=prenom+message
+  // Etapes : 1=email, 2=produit, 3=besoin, 4=objectif, 5=tel+rappel, 6=localisation, 7=contact+entreprise+message
   const [currentStep, setCurrentStep] = useState(getInitialStep);
-  const totalSteps = 8;
+  const totalSteps = 7;
 
   // Separer prenom/nom depuis qName
   const nameParts = qName.split(" ");
@@ -194,10 +223,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   const [callbackDay, setCallbackDay] = useState<string>("");
   const [callbackTime, setCallbackTime] = useState<string>("");
   const [submitted, setSubmitted] = useState(false);
-  const [hasSavedProgress, setHasSavedProgress] = useState(false);
   const [showResumeBanner, setShowResumeBanner] = useState(false);
-
-
 
   // Anti-spam : honeypot (champ invisible) + timestamp d'ouverture
   const [honeypot, setHoneypot] = useState("");
@@ -209,11 +235,9 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   const [postalCodeNotFound, setPostalCodeNotFound] = useState(false);
   const [postalCodeManualMode, setPostalCodeManualMode] = useState(false);
 
-  // Autres IA states
+  // Ville suggestions
   const [citySuggestions, setCitySuggestions] = useState<string[]>([]);
   const [loadingCities, setLoadingCities] = useState(false);
-  const [countryFiltered, setCountryFiltered] = useState<string[]>([]);
-  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
 
   // Abandon tracking
   const [abandonSent, setAbandonSent] = useState(false);
@@ -237,7 +261,6 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         return;
       }
       if (data.currentStep > 1 || data.email) {
-        setHasSavedProgress(true);
         setShowResumeBanner(true);
       }
     } catch { /* ignore */ }
@@ -262,7 +285,9 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
       if (d.message) setMessage(d.message);
       if (d.callbackDay) setCallbackDay(d.callbackDay);
       if (d.callbackTime) setCallbackTime(d.callbackTime);
-      if (d.currentStep) setCurrentStep(d.currentStep);
+      // Adapter l'étape si l'ancien format avait 8 étapes
+      const savedStep = d.currentStep || 1;
+      setCurrentStep(savedStep > totalSteps ? totalSteps : savedStep);
       setShowResumeBanner(false);
     } catch { /* ignore */ }
   };
@@ -270,7 +295,6 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   const dismissProgress = () => {
     localStorage.removeItem(STORAGE_KEY);
     setShowResumeBanner(false);
-    setHasSavedProgress(false);
   };
 
   // ─── Sauvegarder automatiquement a chaque changement ──────────────────
@@ -333,7 +357,6 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   useEffect(() => {
     const handleBeforeUnload = () => {
       if (!submitted && emailCapturedRef.current && email && !abandonSent) {
-        // Utiliser sendBeacon pour garantir l'envoi meme si la page se ferme
         const productLabels: Record<string, string> = {
           ecran: "Ecran de cinema", tente: "Tente gonflable",
           mobilier: "Mobilier gonflable", arche: "Arche gonflable",
@@ -359,19 +382,9 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
       }
     };
 
-    // Aussi detecter la perte de visibilite (changement d'onglet, minimisation)
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "hidden" && !submitted && emailCapturedRef.current && currentStep < totalSteps) {
-        // Ne pas envoyer immediatement au changement d'onglet, juste au unload
-      }
-    };
-
     window.addEventListener("beforeunload", handleBeforeUnload);
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, [submitted, email, prenom, nom, entreprise, phone, product, productDetail, country, city, currentStep, abandonSent, totalSteps]);
 
@@ -386,16 +399,13 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     "Cote d'Ivoire": "ci",
   };
 
-  // Mapping inverse ISO → nom pays
   const isoToCountry: Record<string, string> = Object.fromEntries(
     Object.entries(countryToIso).map(([name, iso]) => [iso, name])
   );
 
   useEffect(() => {
-    // Ne pas relancer si le code postal n'a pas changé (évite les recherches en boucle)
     if (postalCode === lastSearchedPostalRef.current) return;
 
-    // Réinitialiser à chaque changement de code postal
     setCitySuggestions([]);
     setCity("");
     setCountry("");
@@ -422,7 +432,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
           if (cities.length > 0) {
             setCitySuggestions(cities);
             if (cities.length === 1) setCity(cities[0]);
-            else setCity(""); // Plusieurs villes → l'utilisateur choisit
+            else setCity("");
             setCountry("France");
             setLoadingCities(false);
             return;
@@ -464,34 +474,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     };
   }, [postalCode]);
 
-  // ─── Country filter ───────────────────────────────────────────────────
-  const handleCountryInput = useCallback((val: string) => {
-    setCountry(val);
-    if (val.length > 0) {
-      const filtered = popularCountries.filter(c => c.toLowerCase().includes(val.toLowerCase()));
-      setCountryFiltered(filtered);
-      setShowCountryDropdown(filtered.length > 0);
-    } else {
-      setShowCountryDropdown(false);
-    }
-  }, []);
-
-  const selectCountry = useCallback((c: string) => {
-    setCountry(c);
-    setShowCountryDropdown(false);
-    const prefix = getPhonePrefix(c);
-    if (prefix && !phone.startsWith(prefix)) {
-      setPhone(prefix + " ");
-    }
-  }, [phone]);
-
-
-
   // ─── Mutation tRPC ────────────────────────────────────────────────────
   const submitMutation = trpc.contact.submit.useMutation({
     onSuccess: () => {
       setSubmitted(true);
-      setAbandonSent(true); // Empecher l'envoi d'abandon apres soumission
+      setAbandonSent(true);
       toast.success("Votre demande a bien ete envoyee !");
       onSubmitSuccess?.();
     },
@@ -501,10 +488,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   });
 
   const handleSubmit = () => {
-    // Guard anti double-soumission
     if (submitted || submitMutation.isPending) return;
 
-    // Trim tous les champs avant soumission
     const trimmedEmail = email.trim();
     const trimmedPrenom = prenom.trim();
     const trimmedNom = nom.trim();
@@ -517,7 +502,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
       return;
     }
     if (trimmedPrenom.length < 2) {
-      toast.error("Veuillez renseigner votre pr\u00e9nom (min. 2 caract\u00e8res).");
+      toast.error("Veuillez renseigner votre prénom (min. 2 caractères).");
       return;
     }
 
@@ -544,13 +529,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
       sujet: `${productLabel} -- ${location}`,
       message: (trimmedMessage || "") + callbackInfo,
       produit: productLabel,
-      objectif: objectif || productDetail || undefined,
-      // Anti-spam
+      objectif: objectif || undefined,
       _hp: honeypot,
       _ts: formOpenedAt,
     });
 
-    // Nettoyer la progression sauvegardee apres soumission
     try { localStorage.removeItem(STORAGE_KEY); } catch { /* ignore */ }
   };
 
@@ -575,13 +558,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
       case 4: return objectif !== ""; // Objectif obligatoire
       case 5: return true; // Tel optionnel
       case 6: return postalCode.trim().length >= 3; // Code postal obligatoire
-      case 7: return true; // Entreprise optionnelle
-      case 8: return prenom.trim().length >= 2; // Prenom obligatoire, min 2 caracteres
+      case 7: return prenom.trim().length >= 2; // Prenom obligatoire
       default: return false;
     }
   };
 
-  /** Valider l'étape courante et afficher les erreurs si nécessaire */
   const validateAndProceed = (): boolean => {
     const errors: Record<string, string> = {};
     switch (currentStep) {
@@ -590,13 +571,13 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         else if (!isValidEmail(email)) errors.email = "Format d'email invalide (ex: nom@domaine.fr)";
         break;
       case 4:
-        if (!objectif) errors.objectif = "Veuillez s\u00e9lectionner votre objectif";
+        if (!objectif) errors.objectif = "Veuillez sélectionner votre objectif";
         break;
       case 6:
         if (postalCode.trim().length < 3) errors.postalCode = "Le code postal est obligatoire (min. 3 chiffres)";
         break;
-      case 8:
-        if (prenom.trim().length < 2) errors.prenom = "Le pr\u00e9nom est obligatoire (min. 2 caract\u00e8res)";
+      case 7:
+        if (prenom.trim().length < 2) errors.prenom = "Le prénom est obligatoire (min. 2 caractères)";
         break;
     }
     setFieldErrors(errors);
@@ -604,18 +585,20 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     return canProceed();
   };
 
-  /** Naviguer en avant avec validation */
   const goNextValidated = () => {
     if (validateAndProceed()) {
       goNext();
     }
   };
 
-  /** Handler Enter global pour toutes les étapes */
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && canProceed()) {
       e.preventDefault();
-      goNextValidated();
+      if (currentStep === totalSteps) {
+        handleSubmit();
+      } else {
+        goNextValidated();
+      }
     }
   };
 
@@ -628,7 +611,6 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
   const inputRequiredClass = "w-full p-3 bg-white/[0.15] border border-[#D4AF37]/60 rounded-lg text-white text-base placeholder:text-white/50 focus:border-gold focus:outline-none transition-colors";
   const inputOptionalClass = "w-full p-3 bg-white/[0.10] border border-white/15 rounded-lg text-white text-base placeholder:text-white/40 focus:border-gold focus:outline-none transition-colors";
-  const inputClass = inputOptionalClass;
   const labelClass = "text-white text-sm font-medium mb-1.5 block";
 
   // ─── Rendu ────────────────────────────────────────────────────────────
@@ -644,9 +626,10 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         <p className="text-white/75">
           Nous avons bien recu votre demande. Notre equipe vous repondra dans les 24 heures.
         </p>
-        <p className="text-white/65 text-sm mt-4">
-          Un email de confirmation a ete envoye a {email}
-        </p>
+        <div className="mt-6 flex items-center justify-center gap-2 text-gold/80 text-sm">
+          <ShieldCheck className="w-4 h-4" />
+          <span>Vos donnees sont en securite et ne seront jamais partagees.</span>
+        </div>
       </div>
     );
   }
@@ -679,8 +662,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         <div className="mb-4 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg flex items-center gap-3">
           <Sparkles className="w-5 h-5 text-emerald-400 shrink-0" />
           <div>
-            <p className="text-emerald-300 text-sm font-medium">Formulaire pré-rempli par le chatbot IA</p>
-            <p className="text-white/65 text-xs mt-0.5">Les informations de votre conversation ont été reportées. Vérifiez et complétez si nécessaire.</p>
+            <p className="text-emerald-300 text-sm font-medium">Formulaire pre-rempli par le chatbot IA</p>
+            <p className="text-white/65 text-xs mt-0.5">Les informations de votre conversation ont ete reportees. Verifiez et completez si necessaire.</p>
           </div>
         </div>
       )}
@@ -699,19 +682,70 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         />
       </div>
 
-      {/* Progress bar */}
-      <div className="flex items-center gap-1.5 mb-6">
-        {Array.from({ length: totalSteps }, (_, i) => i + 1).map((s) => (
-          <div key={s} className="flex-1">
-            <div
-              className={`h-1 rounded-full transition-all duration-500 ${
-                s < currentStep ? "bg-gold" : s === currentStep ? "bg-gold/70" : "bg-white/10"
-              }`}
-            />
+      {/* Estimation de temps + indicateur de confiance */}
+      {currentStep === 1 && (
+        <div className="flex items-center justify-between mb-4 text-white/50 text-xs">
+          <div className="flex items-center gap-1.5">
+            <Clock className="w-3.5 h-3.5" />
+            <span>2 min pour obtenir votre devis</span>
           </div>
-        ))}
-        <span className="text-white/60 text-xs ml-2 whitespace-nowrap">{currentStep}/{totalSteps}</span>
+          <div className="flex items-center gap-1.5">
+            <ShieldCheck className="w-3.5 h-3.5 text-gold/60" />
+            <span>Reponse sous 24h</span>
+          </div>
+        </div>
+      )}
+
+      {/* Barre de progression améliorée avec labels et checkmarks */}
+      <div className="mb-6">
+        <div className="flex items-center gap-1 mb-2">
+          {Array.from({ length: totalSteps }, (_, i) => i + 1).map((s) => (
+            <div key={s} className="flex-1 relative">
+              <div
+                className={`h-1.5 rounded-full transition-all duration-500 ${
+                  s < currentStep ? "bg-gold" : s === currentStep ? "bg-gold/70" : "bg-white/10"
+                }`}
+              />
+              {/* Checkmark animé pour les étapes complétées */}
+              {s < currentStep && (
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="absolute -top-1 left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-gold rounded-full flex items-center justify-center"
+                >
+                  <Check className="w-2 h-2 text-navy-deep" strokeWidth={3} />
+                </motion.div>
+              )}
+            </div>
+          ))}
+        </div>
+        {/* Labels sous la barre */}
+        <div className="flex items-center gap-1">
+          {stepLabels.map((label, i) => (
+            <div key={label} className={`flex-1 text-center text-[9px] leading-tight ${
+              i + 1 < currentStep ? "text-gold/70" : i + 1 === currentStep ? "text-white/80 font-medium" : "text-white/25"
+            }`}>
+              {label}
+            </div>
+          ))}
+        </div>
       </div>
+
+      {/* Message d'encouragement */}
+      <AnimatePresence mode="wait">
+        {encouragements[currentStep] && (
+          <motion.div
+            key={`enc-${currentStep}`}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+            className="mb-3 text-center"
+          >
+            <span className="text-gold/80 text-xs font-medium">{encouragements[currentStep]}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence mode="wait">
         {/* ─── ETAPE 1 : Email (capture immediate) ─────────────────────── */}
@@ -723,7 +757,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             <div className="space-y-4">
               <div>
                 <label className={labelClass}>
-              <Mail className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Email <span className="text-red-500">*</span>
+                  <Mail className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Email <span className="text-red-500">*</span>
                 </label>
                 <div className="flex items-center gap-2">
                   <input
@@ -737,7 +771,6 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   />
                   <VoiceMicButton
                     onResult={(text) => {
-                      // Convertir la dictée vocale en email (remplacer espaces, "arobase", "point")
                       const cleaned = text
                         .toLowerCase()
                         .replace(/\s*arobase\s*/gi, "@")
@@ -752,7 +785,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   />
                 </div>
               </div>
-                {fieldErrors.email && <p className="text-red-400 text-xs mt-1">{fieldErrors.email}</p>}
+              {fieldErrors.email && <p className="text-red-400 text-xs mt-1">{fieldErrors.email}</p>}
             </div>
 
             <button
@@ -972,13 +1005,12 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+33 6 12 34 56 78"
-                    className={`${inputClass} flex-1`}
+                    className={`${inputOptionalClass} flex-1`}
                     autoFocus
                     onKeyDown={handleKeyDown}
                   />
                   <VoiceMicButton
                     onResult={(text) => {
-                      // Convertir la dictée vocale en numéro de téléphone
                       const cleaned = text
                         .replace(/z[eé]ro/gi, "0")
                         .replace(/un\b/gi, "1")
@@ -996,13 +1028,12 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                         .replace(/\s+/g, " ")
                         .trim();
                       setPhone(prev => {
-                        // Ajouter au numéro existant (préfixe pays)
                         const prefix = prev.trim();
                         if (prefix && !cleaned.startsWith("+")) return `${prefix}${cleaned}`;
                         return cleaned;
                       });
                     }}
-                    tooltip="Dicter votre num\u00e9ro"
+                    tooltip="Dicter votre numero"
                   />
                 </div>
               </div>
@@ -1112,10 +1143,9 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                     <select
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
-                      className={`${inputClass} cursor-pointer`}
+                      className={`${inputOptionalClass} cursor-pointer`}
                       style={{ backgroundColor: "#1a1a2e", color: "#fff" }}
                     >
-                      <option value="" style={{ backgroundColor: "#1a1a2e", color: "#fff" }}>Choisir une ville</option>
                       {citySuggestions.map((c) => (
                         <option key={c} value={c} style={{ backgroundColor: "#1a1a2e", color: "#fff" }}>{c}</option>
                       ))}
@@ -1126,10 +1156,10 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
                       placeholder="Votre ville"
-                      className={inputClass}
+                      className={inputOptionalClass}
                     />
                   ) : (
-                    <div className={`${inputClass} bg-white/[0.02] text-white/60`}>
+                    <div className={`${inputOptionalClass} bg-white/[0.02] text-white/60`}>
                       {city || "--"}
                     </div>
                   )}
@@ -1144,10 +1174,10 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                       value={country}
                       onChange={(e) => setCountry(e.target.value)}
                       placeholder="Votre pays"
-                      className={inputClass}
+                      className={inputOptionalClass}
                     />
                   ) : (
-                    <div className={`${inputClass} bg-white/[0.02] text-white/60`}>
+                    <div className={`${inputOptionalClass} bg-white/[0.02] text-white/60`}>
                       {country || "--"}
                     </div>
                   )}
@@ -1170,51 +1200,14 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
           </motion.div>
         )}
 
-        {/* ─── ETAPE 7 : Entreprise ────────────────── */}
+        {/* ─── ETAPE 7 : Contact + Entreprise + Message + Envoi ────────── */}
         {currentStep === 7 && (
           <motion.div key="step7" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">Votre entreprise</h3>
-            <p className="text-white/70 text-sm mb-5">Optionnel — pour personnaliser votre devis.</p>
-
-            <div className="space-y-4">
-              {/* Champ entreprise avec auto-complétion API */}
-              <SiretLookupField
-                initialValue={entreprise}
-                codePostal={postalCode}
-                onTextChange={(value) => setEntreprise(value)}
-                onSelect={(result) => {
-                  setEntreprise(result.entreprise);
-                  if (result.ville && !city) setCity(result.ville);
-                  if (result.codePostal && !postalCode) setPostalCode(result.codePostal);
-                  if (result.ville || result.codePostal) {
-                    if (!country) setCountry("France");
-                  }
-                }}
-              />
-            </div>
-
-            <div className="flex gap-3 mt-6">
-              <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-lg hover:border-white/30 transition-colors">
-                <ArrowLeft className="w-4 h-4" /> Retour
-              </button>
-              <button
-                onClick={goNextValidated}
-                disabled={!canProceed()}
-                className={`flex-1 flex items-center justify-center gap-2 px-6 py-2.5 font-semibold text-sm rounded-lg transition-colors ${canProceed() ? 'bg-gold text-navy-deep hover:bg-gold-light' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}
-              >
-                Continuer <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-          </motion.div>
-        )}
-
-        {/* ─── ETAPE 8 : Prénom + Nom + Message + Envoi ─────────────── */}
-        {currentStep === 8 && (
-          <motion.div key="step8" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
             <h3 className="text-xl font-bold text-white mb-1">Derniere etape !</h3>
-            <p className="text-white/70 text-sm mb-5">Votre prenom et un message optionnel.</p>
+            <p className="text-white/70 text-sm mb-5">Votre prenom et un message optionnel pour finaliser.</p>
 
             <div className="space-y-4">
+              {/* Prénom + Nom */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className={labelClass}>
@@ -1243,7 +1236,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                       value={nom}
                       onChange={(e) => setNom(e.target.value)}
                       placeholder="Dupont"
-                      className={`${inputClass} flex-1`}
+                      className={`${inputOptionalClass} flex-1`}
                     />
                     <VoiceMicButton
                       onResult={(text) => setNom(text.trim())}
@@ -1252,35 +1245,56 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   </div>
                 </div>
               </div>
-            </div>
-            {fieldErrors.prenom && <p className="text-red-400 text-xs mt-1">{fieldErrors.prenom}</p>}
+              {fieldErrors.prenom && <p className="text-red-400 text-xs mt-1">{fieldErrors.prenom}</p>}
 
-            <div className="mt-4">
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="text-white/60 text-sm">
-                  <MessageSquare className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Message
+              {/* Entreprise (optionnel, avec auto-complétion SIRET) */}
+              <div>
+                <label className={labelClass}>
+                  <Building2 className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Entreprise
                   <span className="text-white/50 ml-1">(optionnel)</span>
                 </label>
-                <VoiceMicButton
-                  onResult={(text) => setMessage(prev => prev ? `${prev} ${text}` : text)}
-                  tooltip="Dicter votre message"
-                  size="md"
+                <SiretLookupField
+                  initialValue={entreprise}
+                  codePostal={postalCode}
+                  onTextChange={(value) => setEntreprise(value)}
+                  onSelect={(result) => {
+                    setEntreprise(result.entreprise);
+                    if (result.ville && !city) setCity(result.ville);
+                    if (result.codePostal && !postalCode) setPostalCode(result.codePostal);
+                    if (result.ville || result.codePostal) {
+                      if (!country) setCountry("France");
+                    }
+                  }}
                 />
               </div>
-              <textarea
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                rows={4}
-                placeholder={
-                  product === "ecran" ? "Date de l'evenement, lieu, nombre de spectateurs, budget estime... (ou cliquez sur le micro pour dicter)"
-                  : product === "tente" ? "Dimensions souhaitees, personnalisation, date d'utilisation... (ou dictez)"
-                  : product === "mobilier" ? "Quantite, couleurs, evenement prevu... (ou dictez)"
-                  : product === "arche" ? "Dimensions, personnalisation, type d'evenement... (ou dictez)"
-                  : "Decrivez votre projet... (ou cliquez sur le micro pour dicter)"
-                }
-                className={`${inputClass} resize-none`}
-                autoFocus
-              />
+
+              {/* Message */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="text-white/60 text-sm">
+                    <MessageSquare className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Message
+                    <span className="text-white/50 ml-1">(optionnel)</span>
+                  </label>
+                  <VoiceMicButton
+                    onResult={(text) => setMessage(prev => prev ? `${prev} ${text}` : text)}
+                    tooltip="Dicter votre message"
+                    size="md"
+                  />
+                </div>
+                <textarea
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  rows={3}
+                  placeholder={
+                    product === "ecran" ? "Date de l'evenement, lieu, nombre de spectateurs, budget estime..."
+                    : product === "tente" ? "Dimensions souhaitees, personnalisation, date d'utilisation..."
+                    : product === "mobilier" ? "Quantite, couleurs, evenement prevu..."
+                    : product === "arche" ? "Dimensions, personnalisation, type d'evenement..."
+                    : "Decrivez votre projet..."
+                  }
+                  className={`${inputOptionalClass} resize-none`}
+                />
+              </div>
             </div>
 
             {/* Recapitulatif compact */}
@@ -1290,6 +1304,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                 {email && <div className="text-white/60">Email : <span className="text-white">{email}</span></div>}
                 {product && <div className="text-white/60">Produit : <span className="text-white">{products.find(p => p.type === product)?.label}</span></div>}
                 {productDetail && <div className="text-white/60">Detail : <span className="text-white">{productDetail}</span></div>}
+                {objectif && <div className="text-white/60">Objectif : <span className="text-white">{objectifLabel(objectif)}</span></div>}
                 {phone?.trim() && <div className="text-white/60">Tel : <span className="text-white">{phone}</span></div>}
                 {(prenom || nom) && <div className="text-white/60">Nom : <span className="text-white">{[prenom, nom].filter(Boolean).join(" ")}</span></div>}
                 {entreprise && <div className="text-white/60">Entreprise : <span className="text-white">{entreprise}</span></div>}
@@ -1304,7 +1319,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
               </button>
               <button
                 onClick={handleSubmit}
-                disabled={submitMutation.isPending}
+                disabled={submitMutation.isPending || prenom.trim().length < 2}
                 className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gold text-navy-deep font-bold text-sm rounded-lg hover:bg-gold-light transition-colors glow-gold disabled:opacity-70"
               >
                 {submitMutation.isPending ? (

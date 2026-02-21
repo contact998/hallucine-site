@@ -621,3 +621,26 @@
 ## Bug: étape Objectif (Achat/Location/Info) ne s'affiche pas
 - [x] Diagnostiquer pourquoi l'étape Objectif est absente du SmartForm (jamais créée comme étape visuelle)
 - [x] Nouvelle étape 4 Objectif (Achat/Location/Information) ajoutée après options produit, total 8 étapes
+
+## Nettoyage et audit SmartForm
+- [ ] Nettoyage code : cohérence 8 étapes, code mort, commentaires
+- [ ] Audit UX : propositions d'amélioration attractivité
+
+## Nettoyage code SmartForm
+- [x] Corriger commentaire d'en-tête (7→8 étapes, bon ordre)
+- [x] Supprimer code mort : countryFiltered, showCountryDropdown, handleCountryInput, selectCountry
+- [x] Supprimer code mort : hasSavedProgress (state jamais lu)
+- [x] Supprimer code mort : handleVisibilityChange (listener vide)
+- [x] Supprimer alias inputClass, utiliser inputOptionalClass directement
+- [x] Supprimer lignes vides doubles
+- [x] Corriger message confirmation mensonger → "Nous vous recontacterons sous 24h"
+- [x] Ajouter objectif (Achat/Location/Info) au récapitulatif étape finale
+- [x] Retirer fallback productDetail dans objectif du handleSubmit
+
+## Améliorations UX SmartForm
+- [x] Messages d'encouragement entre les étapes
+- [x] Estimation de temps en haut ("2 min pour obtenir votre devis")
+- [x] Indicateur de confiance ("Réponse sous 24h garantie")
+- [x] Animation checkmark dans la barre de progression
+- [x] Barre de progression améliorée avec labels
+- [x] Fusionner étapes 7 (Entreprise) + 8 (Prénom/Message) → 7 étapes total
