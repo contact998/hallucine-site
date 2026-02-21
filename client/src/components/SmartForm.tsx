@@ -154,9 +154,9 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     return 1;
   };
 
-  // Etapes : 1=email, 2=produit, 3=besoin, 4=tel+rappel, 5=nom+entreprise, 6=localisation, 7=message
+  // Etapes : 1=email, 2=produit, 3=besoin, 4=objectif, 5=tel+rappel, 6=localisation, 7=entreprise, 8=prenom+message
   const [currentStep, setCurrentStep] = useState(getInitialStep);
-  const totalSteps = 7;
+  const totalSteps = 8;
 
   // Separer prenom/nom depuis qName
   const nameParts = qName.split(" ");
@@ -189,6 +189,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     }
     return parts.join("\n");
   };
+  const [objectif, setObjectif] = useState<string>("");
   const [message, setMessage] = useState(buildChatbotMessage);
   const [callbackDay, setCallbackDay] = useState<string>("");
   const [callbackTime, setCallbackTime] = useState<string>("");
@@ -250,6 +251,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
       if (d.email) setEmail(d.email);
       if (d.product) setProduct(d.product);
       if (d.productDetail) setProductDetail(d.productDetail);
+      if (d.objectif) setObjectif(d.objectif);
       if (d.phone) setPhone(d.phone);
       if (d.prenom) setPrenom(d.prenom);
       if (d.nom) setNom(d.nom);
@@ -276,12 +278,12 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     if (currentStep <= 1 && !email || submitted) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
-        currentStep, email, product, productDetail, phone, prenom, nom,
+        currentStep, email, product, productDetail, objectif, phone, prenom, nom,
         entreprise, country, city, postalCode, message, callbackDay, callbackTime,
         timestamp: Date.now()
       }));
     } catch { /* ignore */ }
-  }, [currentStep, email, product, productDetail, phone, prenom, nom, entreprise, country, city, postalCode, message, callbackDay, callbackTime, submitted]);
+  }, [currentStep, email, product, productDetail, objectif, phone, prenom, nom, entreprise, country, city, postalCode, message, callbackDay, callbackTime, submitted]);
 
   // ─── Auto-detect country on mount ─────────────────────────────────────
   useEffect(() => {
@@ -542,7 +544,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
       sujet: `${productLabel} -- ${location}`,
       message: (trimmedMessage || "") + callbackInfo,
       produit: productLabel,
-      objectif: productDetail || undefined,
+      objectif: objectif || productDetail || undefined,
       // Anti-spam
       _hp: honeypot,
       _ts: formOpenedAt,
@@ -570,10 +572,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
       case 1: return isValidEmail(email);
       case 2: return product !== null;
       case 3: return true; // Besoin specifique optionnel
-      case 4: return true; // Tel optionnel
-      case 5: return postalCode.trim().length >= 3; // Code postal obligatoire
-      case 6: return true; // Entreprise optionnelle
-      case 7: return prenom.trim().length >= 2; // Prenom obligatoire, min 2 caracteres
+      case 4: return objectif !== ""; // Objectif obligatoire
+      case 5: return true; // Tel optionnel
+      case 6: return postalCode.trim().length >= 3; // Code postal obligatoire
+      case 7: return true; // Entreprise optionnelle
+      case 8: return prenom.trim().length >= 2; // Prenom obligatoire, min 2 caracteres
       default: return false;
     }
   };
@@ -586,10 +589,13 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         if (!email.trim()) errors.email = "L'email est obligatoire";
         else if (!isValidEmail(email)) errors.email = "Format d'email invalide (ex: nom@domaine.fr)";
         break;
-      case 5:
+      case 4:
+        if (!objectif) errors.objectif = "Veuillez s\u00e9lectionner votre objectif";
+        break;
+      case 6:
         if (postalCode.trim().length < 3) errors.postalCode = "Le code postal est obligatoire (min. 3 chiffres)";
         break;
-      case 7:
+      case 8:
         if (prenom.trim().length < 2) errors.prenom = "Le pr\u00e9nom est obligatoire (min. 2 caract\u00e8res)";
         break;
     }
@@ -902,9 +908,55 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
           </motion.div>
         )}
 
-        {/* ─── ETAPE 4 : Telephone + Preference de rappel ─────────────── */}
+        {/* ─── ETAPE 4 : Objectif (Achat / Location / Information) ────── */}
         {currentStep === 4 && (
           <motion.div key="step4" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
+            <h3 className="text-xl font-bold text-white mb-1">Quel est votre objectif ? <span className="text-red-500">*</span></h3>
+            <p className="text-white/70 text-sm mb-5">Cela nous aide a adapter notre proposition.</p>
+            <div className="space-y-2">
+              {[
+                { value: "achat", label: "Achat", desc: "Je souhaite acheter" },
+                { value: "location", label: "Location", desc: "Je souhaite louer" },
+                { value: "information", label: "Information", desc: "Je souhaite me renseigner" },
+              ].map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => setObjectif(opt.value)}
+                  className={`w-full flex items-center gap-4 p-3.5 border rounded-lg transition-all duration-300 text-left ${
+                    objectif === opt.value ? "border-gold bg-gold/10" : "border-white/10 hover:border-gold/30 bg-white/[0.02]"
+                  }`}
+                >
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                    objectif === opt.value ? "bg-gold text-navy-deep" : "bg-white/5 text-white/50"
+                  }`}>
+                    {opt.value === "achat" ? "A" : opt.value === "location" ? "L" : "I"}
+                  </div>
+                  <div className="flex-1">
+                    <div className="text-white font-semibold text-sm">{opt.label}</div>
+                    <div className="text-white/65 text-xs">{opt.desc}</div>
+                  </div>
+                </button>
+              ))}
+            </div>
+            {fieldErrors.objectif && <p className="text-red-400 text-xs mt-2">{fieldErrors.objectif}</p>}
+            <div className="flex gap-3 mt-6">
+              <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-lg hover:border-white/30 transition-colors">
+                <ArrowLeft className="w-4 h-4" /> Retour
+              </button>
+              <button
+                onClick={goNextValidated}
+                disabled={!canProceed()}
+                className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-gold text-navy-deep font-semibold text-sm rounded-lg hover:bg-gold-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                Continuer <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </motion.div>
+        )}
+
+        {/* ─── ETAPE 5 : Telephone + Preference de rappel ─────────────── */}
+        {currentStep === 5 && (
+          <motion.div key="step5" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
             <h3 className="text-xl font-bold text-white mb-1">Souhaitez-vous etre rappele ?</h3>
             <p className="text-white/70 text-sm mb-5">Optionnel mais recommande pour un devis plus rapide.</p>
 
@@ -1016,9 +1068,9 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
           </motion.div>
         )}
 
-        {/* ─── ETAPE 5 : Code postal + Ville/Pays (lecture seule) ─────── */}
-        {currentStep === 5 && (
-          <motion.div key="step5" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
+        {/* ─── ETAPE 6 : Code postal + Ville/Pays (lecture seule) ─────── */}
+        {currentStep === 6 && (
+          <motion.div key="step6" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
             <h3 className="text-xl font-bold text-white mb-1">Ou etes-vous base ?</h3>
             <p className="text-white/70 text-sm mb-5">Pour adapter notre offre a votre region.</p>
 
@@ -1118,9 +1170,9 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
           </motion.div>
         )}
 
-        {/* ─── ETAPE 6 : Entreprise ────────────────── */}
-        {currentStep === 6 && (
-          <motion.div key="step6" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
+        {/* ─── ETAPE 7 : Entreprise ────────────────── */}
+        {currentStep === 7 && (
+          <motion.div key="step7" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
             <h3 className="text-xl font-bold text-white mb-1">Votre entreprise</h3>
             <p className="text-white/70 text-sm mb-5">Optionnel — pour personnaliser votre devis.</p>
 
@@ -1156,9 +1208,9 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
           </motion.div>
         )}
 
-        {/* ─── ETAPE 7 : Prénom + Nom + Message + Envoi ─────────────── */}
-        {currentStep === 7 && (
-          <motion.div key="step7" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
+        {/* ─── ETAPE 8 : Prénom + Nom + Message + Envoi ─────────────── */}
+        {currentStep === 8 && (
+          <motion.div key="step8" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
             <h3 className="text-xl font-bold text-white mb-1">Derniere etape !</h3>
             <p className="text-white/70 text-sm mb-5">Votre prenom et un message optionnel.</p>
 

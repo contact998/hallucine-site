@@ -617,3 +617,7 @@
 - [x] CTA produits/hero → "Demander un devis gratuit"
 - [x] Section contact page accueil → "Contactez-nous" (déjà en place)
 - [x] Supprimer "Demande de prix" partout, nouvelle route /devis (anciennes routes gardées pour compatibilité)
+
+## Bug: étape Objectif (Achat/Location/Info) ne s'affiche pas
+- [x] Diagnostiquer pourquoi l'étape Objectif est absente du SmartForm (jamais créée comme étape visuelle)
+- [x] Nouvelle étape 4 Objectif (Achat/Location/Information) ajoutée après options produit, total 8 étapes
