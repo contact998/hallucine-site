@@ -88,20 +88,29 @@ export default function TentesX() {
       {showCountdown && <FilmCountdown onComplete={() => setShowCountdown(false)} />}
       <Navbar />
 
-      {/* ═══ HERO : Titre + 4 photos carousel ═══ */}
+      {/* ═══ HERO : Titre + 4 photos en grille ═══ */}
       <section className="pt-32 pb-12 bg-charcoal-light">
         <div className="container">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory text-center mb-10">
             Tentes événementielles <span className="text-warm">en forme de X</span>
           </h1>
-          <ImageCarousel images={heroImages} />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {heroImages.map((img, i) => (
+              <div key={i} className="cursor-pointer overflow-hidden rounded-lg" onClick={() => openLightbox(img.src, img.alt)}>
+                <img src={img.src} alt={img.alt} className="w-full aspect-[4/3] object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ═══ INTRO + image côté ═══ */}
+      {/* ═══ INTRO — damier : image gauche, texte droite ═══ */}
       <section className="py-16 bg-background">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-10 items-center">
+            <div className="cursor-pointer" onClick={() => openLightbox(contentImages.tenteCote, "Tente gonflable X Hallucine vue de côté")}>
+              <img src={contentImages.tenteCote} alt="Tente gonflable X Hallucine vue de côté" className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
+            </div>
             <div>
               <h2 className="text-3xl font-bold text-ivory mb-4">
                 Tente Gonflable Hallucine X :<br />
@@ -110,9 +119,6 @@ export default function TentesX() {
               <p className="text-white/70 leading-relaxed mb-4">
                 Vous cherchez une solution innovante et pratique pour vos événements ? Optez pour la <strong className="text-ivory">tente gonflable Hallucine X</strong>, la solution idéale pour garantir visibilité et confort tout en restant simple à installer et à transporter.
               </p>
-            </div>
-            <div className="cursor-pointer" onClick={() => openLightbox(contentImages.tenteCote, "Tente gonflable X Hallucine vue de côté")}>
-              <img src={contentImages.tenteCote} alt="Tente gonflable X Hallucine vue de côté" className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
             </div>
           </div>
         </div>
