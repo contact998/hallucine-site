@@ -664,3 +664,5 @@
 - [x] Réduire le délai de démarrage (glow immédiat, logo à 1.5s, texte à 3s)
 - [x] Centrer l'animation en plein écran (fixed overlay fullscreen)
 - [x] Rapprocher le texte du logo et ajuster les marges
+- [x] Texte animation plus lisible (plus gros, plus blanc, plus lumineux)
+- [x] Bouton "Retour à l'accueil" après l'animation + redirection auto après 12s

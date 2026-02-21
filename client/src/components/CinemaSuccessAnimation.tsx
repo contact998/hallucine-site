@@ -21,6 +21,7 @@ const LION_ROAR_URL = "https://files.manuscdn.com/user_upload_by_module/session_
 
 interface CinemaSuccessAnimationProps {
   prenom?: string;
+  onClose?: () => void;
 }
 
 // ─── Anneau concentrique doré ──────────────────────────────────────────
@@ -81,8 +82,9 @@ function GoldParticle({ x, y, delay }: { x: string; y: string; delay: number }) 
 }
 
 // ─── Composant principal ────────────────────────────────────────────────
-export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimationProps) {
-  const [phase, setPhase] = useState<"glow" | "rings" | "logo" | "text">("glow");
+export default function CinemaSuccessAnimation({ prenom, onClose }: CinemaSuccessAnimationProps) {
+  const [phase, setPhase] = useState<"glow" | "rings" | "logo" | "text" | "done">("glow");
+  const [showButton, setShowButton] = useState(false);
   const [muted, setMuted] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -108,7 +110,7 @@ export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimatio
     }
   }, []);
 
-  // Séquence d'animation rapide (~4s total)
+  // Séquence d'animation rapide (~4s total) + bouton retour à 6s + redirection auto à 12s
   useEffect(() => {
     const timers = [
       setTimeout(() => setPhase("rings"), 300),
@@ -117,9 +119,14 @@ export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimatio
         playLionRoar();
       }, 1500),
       setTimeout(() => setPhase("text"), 3000),
+      setTimeout(() => setShowButton(true), 6000),
+      setTimeout(() => {
+        if (onClose) onClose();
+        else window.location.href = "/";
+      }, 12000),
     ];
     return () => timers.forEach(clearTimeout);
-  }, [playLionRoar]);
+  }, [playLionRoar, onClose]);
 
   // Particules stables
   const particles = useMemo(() => [
@@ -272,23 +279,24 @@ export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimatio
         <h2
           style={{
             color: "rgba(201, 169, 110, 1)",
-            fontSize: 22,
-            fontWeight: 400,
+            fontSize: 28,
+            fontWeight: 500,
             letterSpacing: "0.25em",
             textTransform: "uppercase" as const,
-            marginBottom: 12,
+            marginBottom: 16,
             fontFamily: "'Cormorant Garamond', serif",
+            textShadow: "0 0 30px rgba(201, 169, 110, 0.3)",
           }}
         >
           {prenom ? `Merci ${prenom}` : "Nous avons bien reçu votre demande"}
         </h2>
         <p
           style={{
-            color: "rgba(255, 255, 255, 0.6)",
-            fontSize: 14,
-            fontWeight: 300,
-            letterSpacing: "0.12em",
-            lineHeight: 1.7,
+            color: "rgba(255, 255, 255, 0.85)",
+            fontSize: 17,
+            fontWeight: 400,
+            letterSpacing: "0.08em",
+            lineHeight: 1.8,
             fontFamily: "'Cormorant Garamond', serif",
           }}
         >
@@ -296,18 +304,51 @@ export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimatio
         </p>
         <p
           style={{
-            color: "rgba(255, 255, 255, 0.45)",
-            fontSize: 13,
+            color: "rgba(255, 255, 255, 0.6)",
+            fontSize: 15,
             fontWeight: 300,
-            letterSpacing: "0.1em",
-            lineHeight: 1.7,
-            marginTop: 6,
+            letterSpacing: "0.08em",
+            lineHeight: 1.8,
+            marginTop: 8,
             fontFamily: "'Cormorant Garamond', serif",
           }}
         >
           Vos données sont en sécurité et ne seront jamais partagées.
         </p>
       </motion.div>
+
+      {/* Bouton retour à l'accueil */}
+      {showButton && (
+        <motion.button
+          onClick={() => {
+            if (onClose) onClose();
+            else window.location.href = "/";
+          }}
+          className="z-50 mt-8 px-8 py-3 rounded-full border transition-all cursor-pointer"
+          style={{
+            borderColor: "rgba(201, 169, 110, 0.3)",
+            color: "rgba(201, 169, 110, 0.8)",
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: 15,
+            letterSpacing: "0.15em",
+            textTransform: "uppercase" as const,
+            background: "rgba(201, 169, 110, 0.05)",
+          }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.borderColor = "rgba(201, 169, 110, 0.6)";
+            e.currentTarget.style.background = "rgba(201, 169, 110, 0.1)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.borderColor = "rgba(201, 169, 110, 0.3)";
+            e.currentTarget.style.background = "rgba(201, 169, 110, 0.05)";
+          }}
+        >
+          Retour à l'accueil
+        </motion.button>
+      )}
 
       {/* Reflets métalliques sur les anneaux (shimmer) */}
       {phaseIndex >= 2 && rings.map((ring, i) => (
