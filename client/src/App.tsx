@@ -71,6 +71,7 @@ function Router() {
       {/* Plus */}
       <Route path={"/a-propos-hallucine"} component={APropos} />
       <Route path={"/histoire-hallucine"} component={Histoire} />
+      <Route path={"/devis"} component={DemandePrix} />
       <Route path={"/tarifs-ecran-gonflable"} component={DemandePrix} />
       <Route path={"/demande-de-prix"} component={DemandePrix} />
       {/* Mode d'emploi & Vidéos */}

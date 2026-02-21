@@ -612,3 +612,8 @@
 - [x] Tableaux de prix : chaque ligne entourée, coins arrondis, en-tête doré (8 pages)
 - [x] FAQ : coins arrondis, bordure dorée
 - [x] Remplacer tous les rounded-sm par rounded-lg (composants + pages)
+
+## Uniformisation noms formulaire
+- [x] CTA produits/hero → "Demander un devis gratuit"
+- [x] Section contact page accueil → "Contactez-nous" (déjà en place)
+- [x] Supprimer "Demande de prix" partout, nouvelle route /devis (anciennes routes gardées pour compatibilité)

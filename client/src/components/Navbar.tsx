@@ -55,7 +55,7 @@ const navItems: NavItem[] = [
     label: "Plus",
     dropdown: [
       { label: "À propos", href: "/a-propos-hallucine" },
-      { label: "Demande de prix", href: "/tarifs-ecran-gonflable" },
+      { label: "Devis gratuit", href: "/devis" },
       { label: "Mode d'emploi", href: "/mode-emploi" },
       { label: "Galerie vidéo", href: "/galerie-video" },
       { label: "Blog", href: "/blog" },
@@ -202,10 +202,10 @@ export default function Navbar() {
           {/* CTA Desktop + Profil */}
           <div className="hidden xl:flex items-center gap-2 shrink-0">
             <Link
-              href="/tarifs-ecran-gonflable"
+              href="/devis"
               className="flex items-center gap-2 px-5 py-2 bg-warm text-charcoal font-semibold text-sm rounded hover:bg-warm-light transition-all duration-300"
             >
-              Demande de prix
+              Devis gratuit
             </Link>
             {isAuthenticated && user?.role === "admin" && (
               <Link
@@ -300,11 +300,11 @@ export default function Navbar() {
                   </div>
                 ))}
                 <Link
-                  href="/tarifs-ecran-gonflable"
+                  href="/devis"
                   onClick={() => setMobileOpen(false)}
                   className="mt-3 flex items-center justify-center gap-2 px-6 py-3 bg-warm text-charcoal font-semibold rounded"
                 >
-                  Demande de prix
+                  Devis gratuit
                 </Link>
                 {isAuthenticated && user?.role === "admin" && (
                   <Link

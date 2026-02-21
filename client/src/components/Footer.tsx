@@ -39,7 +39,7 @@ export default function Footer() {
             <ul className="space-y-2.5 text-sm">
               {[
                 { label: "Contactez-nous", href: "/contactez-nous" },
-                { label: "Demande de prix", href: "/tarifs-ecran-gonflable" },
+                { label: "Devis gratuit", href: "/devis" },
                 { label: "À propos", href: "/a-propos-hallucine" },
                 { label: "Galerie", href: "/galerie-evenements" },
                 { label: "Accessoires", href: "/accessoire-cinema-plein-air" },
