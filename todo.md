@@ -690,3 +690,6 @@
 - [x] Supprimer prepareAdminEmailNotification() et pendingEmailNotifications du flux submit
 - [x] Nettoyer les imports inutiles (notifyOwner, emailNotification) + emailSender.ts et emailConfirmation renommés en .bak
 - [x] Vérifier les tests et le build (19 suites, 289 tests passent, 0 erreur TS)
+
+## Correction token webhook CRM
+- [x] Vérifier/synchroniser CRM_WEBHOOK_TOKEN entre le site et le CRM (erreur 403) — corrigé, prospect créé avec succès (id: 1080046)
