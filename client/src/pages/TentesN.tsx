@@ -13,14 +13,14 @@ import { X as XIcon } from "lucide-react";
 /* ─── Images hero (grille identique à l'ancien site) ─── */
 const heroImages = [
   { src: "https://www.hallucinecran.com/photoset/Tentes%20N/.ntent.jpg_m.jpg", alt: "Tente gonflable N Hallucine blanche dans la neige" },
-  { src: "https://www.hallucinecran.com/photoset/Tentes%20N/.761c537e749de68e706a65456057742.jpg_m.jpg", alt: "Tente gonflable N Volvo personnalisée" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vvfgDxjiqpyUexFX.jpg", alt: "Tente gonflable N Volvo Discover dans la neige" },
   { src: "https://www.hallucinecran.com/photoset/Tentes%20N/.Weixin%20Image_20240530160133.jpg_m.jpg", alt: "Tente gonflable N blanche grande vue latérale" },
   { src: "https://www.hallucinecran.com/photoset/Tentes%20N/.ntent%20croix%20rouge.jpg_m.jpg", alt: "Tente gonflable N Croix-Rouge verte" },
 ];
 
 /* ─── Image contenu ─── */
 const contentImages = {
-  tenteVolvo: "https://www.hallucinecran.com/Tentes/Tentes%20N/761c537e749de68e706a65456057742.jpg",
+  tenteVolvo: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vvfgDxjiqpyUexFX.jpg",
   schemaEclate: "https://www.hallucinecran.com/Tentes/Tentes%20N/ntent%20eclate%20french.jpg",
 };
 
