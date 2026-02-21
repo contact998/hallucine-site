@@ -18,13 +18,14 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Monitor, Tent, Armchair, Trophy, ArrowRight, ArrowLeft, Send, CheckCircle,
+  Monitor, Tent, Armchair, Trophy, ArrowRight, ArrowLeft, Send,
   Mail, Phone, MapPin, User, Globe, MessageSquare, Loader2, Sparkles,
   Clock, ShieldCheck, Check, Building2
 } from "lucide-react";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 import VoiceMicButton from "@/components/VoiceMicButton";
+import CinemaSuccessAnimation from "@/components/CinemaSuccessAnimation";
 import SiretLookupField from "@/components/SiretLookupField";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
@@ -616,20 +617,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   // ─── Rendu ────────────────────────────────────────────────────────────
   if (submitted) {
     return (
-      <div ref={formRef} className="text-center py-12">
-        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", duration: 0.5 }}>
-          <CheckCircle className="w-16 h-16 text-gold mx-auto mb-6" />
-        </motion.div>
-        <h3 className="text-2xl font-bold text-white mb-3">
-          Merci{prenom ? ` ${prenom}` : ""} !
-        </h3>
-        <p className="text-white/75">
-          Nous avons bien recu votre demande. Notre equipe vous repondra dans les 24 heures.
-        </p>
-        <div className="mt-6 flex items-center justify-center gap-2 text-gold/80 text-sm">
-          <ShieldCheck className="w-4 h-4" />
-          <span>Vos donnees sont en securite et ne seront jamais partagees.</span>
-        </div>
+      <div ref={formRef}>
+        <CinemaSuccessAnimation prenom={prenom || undefined} />
       </div>
     );
   }

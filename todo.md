@@ -644,3 +644,7 @@
 - [x] Animation checkmark dans la barre de progression
 - [x] Barre de progression améliorée avec labels
 - [x] Fusionner étapes 7 (Entreprise) + 8 (Prénom/Message) → 7 étapes total
+
+## Animation cinéma soumission SmartForm
+- [x] Créer composant CinemaSuccessAnimation (clap cinéma + étoiles Hollywood + projecteur)
+- [x] Intégrer l'animation dans le SmartForm à la place du simple checkmark
