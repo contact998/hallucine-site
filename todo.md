@@ -699,3 +699,6 @@
 
 ## Refonte page Écran Économique
 - [x] Refaire /ecran-gonflable-economique à l'identique de l'ancien site (2 colonnes, mêmes images, même contenu)
+
+## Refonte page Tente Gonflable X
+- [x] Refaire /tente-gonflable-x à l'identique de l'ancien site (mêmes images, même contenu, même structure)
