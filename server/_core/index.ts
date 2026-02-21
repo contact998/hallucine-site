@@ -50,25 +50,8 @@ async function startServer() {
 
       console.log(`[Abandon/Beacon] Formulaire abandonne par ${data.email} a l'etape ${data.lastStep}/${data.totalSteps}`);
 
-      // Import dynamique pour eviter les imports circulaires
-      const { notifyOwner } = await import("./notification");
+      // Le CRM gère les notifications — le site ne fait que transmettre
       const { sendProspectToCrm, isCrmWebhookConfigured } = await import("../crmWebhook");
-
-      // Notification asynchrone
-      notifyOwner({
-        title: `Abandon formulaire - ${data.email}`,
-        content: [
-          `**Abandon detecte** a l'etape ${data.lastStep || "?"}/${data.totalSteps || "?"} (${progress}% complete)`,
-          `**Email:** ${data.email}`,
-          data.prenom || data.nom ? `**Nom:** ${fullName}` : null,
-          data.entreprise ? `**Entreprise:** ${data.entreprise}` : null,
-          data.telephone ? `**Telephone:** ${data.telephone}` : null,
-          data.product ? `**Produit:** ${data.product}` : null,
-          "",
-          "Ce prospect a commence le formulaire mais ne l'a pas termine.",
-          "Action recommandee : envoyer un email de relance personnalise.",
-        ].filter(Boolean).join("\n"),
-      }).catch((err: unknown) => console.warn("[Abandon/Beacon] Erreur notification:", err));
 
       // Envoi au CRM via webhook (abandon)
       let crmOk = false;

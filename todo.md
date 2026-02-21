@@ -683,3 +683,10 @@
 - [x] Supprimer les imports mysql2 liés au CRM (remplacés par fetch webhook)
 - [x] Vérifier les secrets CRM_WEBHOOK_URL et CRM_WEBHOOK_TOKEN (déjà dans les secrets)
 - [x] Écrire un test vitest pour le service webhook (9 tests)
+- [x] BUG: Notifications Manus envoyées en boucle — identifier et corriger la source
+
+## Nettoyage notifications - Le site ne fait que transmettre au CRM
+- [x] Supprimer notifyOwner() des routes submit et abandonPartial
+- [x] Supprimer prepareAdminEmailNotification() et pendingEmailNotifications du flux submit
+- [x] Nettoyer les imports inutiles (notifyOwner, emailNotification) + emailSender.ts et emailConfirmation renommés en .bak
+- [x] Vérifier les tests et le build (19 suites, 289 tests passent, 0 erreur TS)

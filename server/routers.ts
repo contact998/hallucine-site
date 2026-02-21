@@ -16,12 +16,9 @@ import {
   updateUserTimezone,
   getUserTimezone,
 } from "./db";
-import { notifyOwner } from "./_core/notification";
 import { chatWithAssistant } from "./chatbot";
 import { generateBrochure } from "./brochure";
 import { sendProspectToCrm, isCrmWebhookConfigured } from "./crmWebhook";
-import { prepareAdminEmailNotification } from "./emailNotification";
-// Email de confirmation géré par le CRM — Resend reste disponible pour d'autres usages
 import {
   trackPageView,
   trackEvent,
@@ -61,13 +58,6 @@ function getTimezoneOffset(tz: string, date: Date): number {
   return (tzDate.getTime() - utcDate.getTime()) / 60000;
 }
 
-// File d'attente des notifications email en attente d'envoi via Gmail
-const pendingEmailNotifications: Array<{
-  to: string[];
-  subject: string;
-  content: string;
-  aiAnalysis: string;
-}> = [];
 
 export const appRouter = router({
   system: systemRouter,
@@ -104,24 +94,6 @@ export const appRouter = router({
         const progress = Math.round((input.lastStep / input.totalSteps) * 100);
 
         console.log(`[Abandon] Formulaire abandonne par ${input.email} a l'etape ${input.lastStep}/${input.totalSteps} (${progress}%)`);
-
-        // Notification Manus (canal principal)
-        await notifyOwner({
-          title: `Abandon formulaire - ${input.email}`,
-          content: [
-            `**Abandon detecte** a l'etape ${input.lastStep}/${input.totalSteps} (${progress}% complete)`,
-            `**Email:** ${input.email}`,
-            input.prenom || input.nom ? `**Nom:** ${fullName}` : null,
-            input.entreprise ? `**Entreprise:** ${input.entreprise}` : null,
-            input.telephone ? `**Telephone:** ${input.telephone}` : null,
-            input.product ? `**Produit:** ${input.product}` : null,
-            input.productDetail ? `**Detail:** ${input.productDetail}` : null,
-            input.country || input.city ? `**Lieu:** ${[input.city, input.country].filter(Boolean).join(", ")}` : null,
-            "",
-            "Ce prospect a commence le formulaire mais ne l'a pas termine.",
-            "Action recommandee : envoyer un email de relance personnalise.",
-          ].filter(Boolean).join("\n"),
-        });
 
         // Envoi au CRM via webhook (prospect partiel / abandon)
         let crmOk = false;
@@ -222,30 +194,8 @@ export const appRouter = router({
 
         const typeLabel = input.type === "contact" ? "Contact" : input.type === "devis" ? "Demande de devis" : "Demande distributeur";
 
-        // Notification Manus (canal principal instantané)
-        await notifyOwner({
-          title: `Nouveau ${typeLabel} de ${input.nom}`,
-          content: [
-            `**Type:** ${typeLabel}`,
-            `**Nom:** ${input.nom}`,
-            `**Email:** ${input.email}`,
-            input.telephone ? `**Téléphone:** ${input.telephone}` : null,
-            input.entreprise ? `**Entreprise:** ${input.entreprise}` : null,
-            input.produit ? `**Produit:** ${input.produit}` : null,
-            input.objectif ? `**Objectif:** ${input.objectif}` : null,
-            input.sujet ? `**Sujet:** ${input.sujet}` : null,
-            input.message ? `**Message:** ${input.message}` : null,
-          ].filter(Boolean).join("\n"),
-        });
-
-        // Notification email enrichie par IA (envoi asynchrone, ne bloque pas la réponse)
-        prepareAdminEmailNotification(input)
-          .then(emailData => {
-            // Stocker pour envoi via le endpoint dédié
-            pendingEmailNotifications.push(emailData);
-            console.log(`[Email] Notification email préparée pour ${input.nom} — Analyse IA incluse`);
-          })
-          .catch(err => console.warn("[Email] Erreur préparation email:", err));
+        // Le CRM gère les notifications, emails et relances
+        // Le site ne fait que transmettre les données via webhook
 
         // ─── Envoi au CRM via webhook ───
         let crmSync: { success: boolean; error?: string } = { success: false, error: "not configured" };
@@ -300,7 +250,6 @@ export const appRouter = router({
           }
         }
 
-        // Email de confirmation géré par le CRM (pas d'envoi Resend depuis le site)
 
         return { success: true, crmSynced: crmSync.success };
       }),
@@ -583,25 +532,6 @@ export const appRouter = router({
         return result;
       }),
 
-    /** Récupérer les notifications email en attente */
-    pendingEmails: adminProcedure.query(async () => {
-      return {
-        count: pendingEmailNotifications.length,
-        emails: pendingEmailNotifications.map(e => ({
-          to: e.to,
-          subject: e.subject,
-          content: e.content,
-          aiAnalysis: e.aiAnalysis,
-        })),
-      };
-    }),
-
-    /** Marquer les emails comme envoyés (vider la file) */
-    clearPendingEmails: adminProcedure.mutation(async () => {
-      const count = pendingEmailNotifications.length;
-      pendingEmailNotifications.length = 0;
-      return { cleared: count };
-    }),
 
     /** Dashboard analytics complet */
     analyticsOverview: adminProcedure
