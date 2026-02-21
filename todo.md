@@ -696,3 +696,6 @@
 
 ## Modification SmartForm - Types de tentes
 - [x] Changer les options "type de tente" : Tentes X, Tentes N, Tentes V, Tentes Araignées (au lieu de Événementielle, Publicitaire, etc.)
+
+## Refonte page Écran Économique
+- [x] Refaire /ecran-gonflable-economique à l'identique de l'ancien site (2 colonnes, mêmes images, même contenu)
