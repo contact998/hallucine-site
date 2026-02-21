@@ -12,7 +12,7 @@
  * Props :
  *  - preselectedProduct : pré-sélectionne le produit (sur les pages produits)
  *  - preselectedSize : pré-sélectionne la taille d'écran
- *  - mode : "full" (page d'accueil) | "gate" (page tarifs) | "compact" (sidebar/modal)
+ *  - mode : "full" (page d'accueil) | "compact" (sidebar/modal)
  *  - onSubmitSuccess : callback après soumission réussie
  */
 import { useState, useEffect, useCallback, useRef } from "react";
@@ -34,7 +34,7 @@ type ProductType = "ecran" | "tente" | "mobilier" | "arche" | null;
 interface SmartFormProps {
   preselectedProduct?: ProductType;
   preselectedSize?: string;
-  mode?: "full" | "gate" | "compact";
+  mode?: "full" | "compact";
   onSubmitSuccess?: () => void;
 }
 

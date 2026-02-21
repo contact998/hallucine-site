@@ -666,3 +666,10 @@
 - [x] Rapprocher le texte du logo et ajuster les marges
 - [x] Texte animation plus lisible (plus gros, plus blanc, plus lumineux)
 - [x] Bouton "Retour à l'accueil" après l'animation + redirection auto après 12s
+
+## Unification formulaires - suppression page demande-de-prix
+- [x] Supprimer la page DemandePrix.tsx (plus d'affichage de tarifs)
+- [x] Ajouter redirection /demande-de-prix, /tarifs-ecran-gonflable, /devis → /contactez-nous
+- [x] Mettre à jour tous les liens internes (13 fichiers) vers /contactez-nous
+- [x] Supprimer le mode "gate" du SmartForm (plus nécessaire)
+- [x] Nettoyer les imports et routes dans App.tsx

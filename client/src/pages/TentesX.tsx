@@ -597,7 +597,7 @@ export default function TentesX() {
                 <ChevronRight className="w-4 h-4" />
               </Link>
               <Link
-                href="/tarifs-ecran-gonflable"
+                href="/contactez-nous"
                 className="px-8 py-3.5 border border-warm text-warm font-semibold rounded-lg hover:bg-warm/10 transition-colors"
               >
                 Demande de prix

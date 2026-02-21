@@ -25,7 +25,7 @@ import Accessoires from "./pages/Accessoires";
 import Galerie from "./pages/Galerie";
 import Contact from "./pages/Contact";
 import APropos from "./pages/APropos";
-import DemandePrix from "./pages/DemandePrix";
+import { Redirect } from "wouter";
 import Histoire from "./pages/Histoire";
 import MentionsLegales from "./pages/MentionsLegales";
 import Confidentialite from "./pages/Confidentialite";
@@ -71,9 +71,9 @@ function Router() {
       {/* Plus */}
       <Route path={"/a-propos-hallucine"} component={APropos} />
       <Route path={"/histoire-hallucine"} component={Histoire} />
-      <Route path={"/devis"} component={DemandePrix} />
-      <Route path={"/tarifs-ecran-gonflable"} component={DemandePrix} />
-      <Route path={"/demande-de-prix"} component={DemandePrix} />
+      <Route path="/devis">{() => <Redirect to="/contactez-nous" />}</Route>
+      <Route path="/tarifs-ecran-gonflable">{() => <Redirect to="/contactez-nous" />}</Route>
+      <Route path="/demande-de-prix">{() => <Redirect to="/contactez-nous" />}</Route>
       {/* Mode d'emploi & Vidéos */}
       <Route path={"/mode-emploi"} component={ModeEmploi} />
       <Route path={"/galerie-video"} component={GalerieVideo} />

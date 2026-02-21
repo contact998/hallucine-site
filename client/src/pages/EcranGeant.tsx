@@ -75,7 +75,7 @@ export default function EcranGeant() {
             <strong className="text-warm"> légèreté</strong>, <strong className="text-warm">durabilité</strong> et <strong className="text-warm">facilité d'installation</strong>.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Link href="/tarifs-ecran-gonflable" className="inline-flex items-center gap-2 px-6 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-all">
+            <Link href="/contactez-nous" className="inline-flex items-center gap-2 px-6 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-all">
               Demander un devis <ArrowRight className="w-4 h-4" />
             </Link>
             <BrochureDownloadButton productSlug="ecran-soufflerie" productName="Écran Soufflerie" />
@@ -305,10 +305,10 @@ export default function EcranGeant() {
             <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Nous Contacter
             </Link>
-            <Link href="/tarifs-ecran-gonflable" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               Demander un Devis
             </Link>
-            <Link href="/tarifs-ecran-gonflable" className="px-8 py-3 border border-white/20 text-ivory font-semibold rounded hover:bg-white/5 transition-colors">
+            <Link href="/contactez-nous" className="px-8 py-3 border border-white/20 text-ivory font-semibold rounded hover:bg-white/5 transition-colors">
               Voir Nos Tarifs
             </Link>
           </div>

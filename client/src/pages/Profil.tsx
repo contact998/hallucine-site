@@ -294,7 +294,7 @@ export default function Profil() {
                 Vous n'avez pas encore fait de demande de devis ou de contact.
               </p>
               <Link
-                href="/tarifs-ecran-gonflable"
+                href="/contactez-nous"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors"
               >
                 Demander un devis
@@ -385,7 +385,7 @@ export default function Profil() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              href="/tarifs-ecran-gonflable"
+              href="/contactez-nous"
               className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors"
             >
               Demander un devis
