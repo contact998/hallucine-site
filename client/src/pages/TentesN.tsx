@@ -188,6 +188,9 @@ export default function TentesN() {
       <section className="py-16 bg-background">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-10 items-start">
+            <div className="cursor-pointer" onClick={() => openLightbox(contentImages.schemaEclate, "Schéma éclaté des éléments techniques de la tente N")}>
+              <img src={contentImages.schemaEclate} alt="Schéma éclaté des éléments techniques de la tente gonflable N" className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
+            </div>
             <div>
               <h2 className="text-3xl font-bold text-ivory mb-6">
                 Caractéristiques Techniques<br />
@@ -196,9 +199,6 @@ export default function TentesN() {
               <p className="text-white/70 leading-relaxed mb-6">
                 La fiabilité est au cœur de notre démarche. Nos structures sont fabriquées avec des <strong className="text-ivory">matériaux de haute qualité</strong>, tels que le <strong className="text-ivory">Dacron 420</strong> pour les cadres et le <strong className="text-ivory">tissu Dacron 220 résistant aux intempéries</strong> pour les auvents, garantissant ainsi une utilisation prolongée dans diverses conditions climatiques. Chaque élément, du <strong className="text-ivory">système de gonflage</strong> aux <strong className="text-ivory">sacs de sable</strong> assurant la stabilité, est conçu pour offrir une sécurité maximale à chaque installation.
               </p>
-            </div>
-            <div className="cursor-pointer" onClick={() => openLightbox(contentImages.schemaEclate, "Schéma éclaté des éléments techniques de la tente N")}>
-              <img src={contentImages.schemaEclate} alt="Schéma éclaté des éléments techniques de la tente gonflable N" className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
             </div>
           </div>
         </div>
