@@ -654,3 +654,8 @@
 - [x] Ajouter un jingle cinéma libre de droits à la soumission
 - [x] Bouton mute discret pour couper le son
 - [x] Centrer l'animation cinéma verticalement au milieu de l'écran
+
+## Animation luxury brand reveal (remplacement)
+- [x] Réécrire CinemaSuccessAnimation en style luxury brand reveal (fond velvet noir, anneaux dorés, logo, rugissement lion)
+- [x] Texte : "Nous avons bien reçu votre demande" + sous-textes
+- [x] Son : rugissement de lion au moment du logo reveal

@@ -1,342 +1,369 @@
 /**
- * CinemaSuccessAnimation — Animation cinéma pour la confirmation de soumission du SmartForm
- * 
- * Séquence ralentie (durée totale ~6s) :
- * 1. Le clap de cinéma s'affiche ouvert (0-0.8s)
- * 2. Le clap se ferme avec son de clap (0.8-2s)
- * 3. Écran noir avec texte "ACTION !" (2-3.5s)
- * 4. Effet projecteur + fanfare qui révèle le message (3.5-5s)
- * 5. Étoiles dorées Hollywood qui apparaissent (5-6s)
- * 
- * Sons : clap de cinéma + fanfare de succès (avec bouton mute)
+ * CinemaSuccessAnimation — Luxury Brand Reveal
+ *
+ * Animation ultra luxe minimaliste style pub parfum haut de gamme.
+ * Fond velvet noir, anneaux dorés concentriques, logo Halluciné,
+ * rugissement de lion au moment du reveal.
+ *
+ * Timeline (~7s) :
+ *  0:00 — Noir pur velvet
+ *  0:01 — Glow or champagne au centre
+ *  0:02 — Anneaux concentriques dorés émergent un par un
+ *  0:03 — Léger zoom cinématique (push-in)
+ *  0:04 — Logo Halluciné + rugissement de lion
+ *  0:05 — Stabilisation, particules dorées
+ *  0:06 — Texte de confirmation
  */
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShieldCheck, Star, Volume2, VolumeX } from "lucide-react";
+import { Volume2, VolumeX } from "lucide-react";
 
-// URLs CDN des sons (Pixabay, libre de droits)
-const SOUND_CLAP = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZWlmlCvluSCXAtEP.mp3";
-const SOUND_FANFARE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VgpAvzNCDfZWUQoZ.mp3";
+// CDN assets
+const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/KqTihVENIErkZLZP.png";
+const LION_ROAR_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yuhDGjetZRdDdWwT.mp3";
 
 interface CinemaSuccessAnimationProps {
   prenom?: string;
 }
 
-// ─── Clap de cinéma SVG ─────────────────────────────────────────────────
-function ClapperBoard({ phase }: { phase: "open" | "closing" | "closed" }) {
-  return (
-    <svg viewBox="0 0 200 160" className="w-56 h-auto mx-auto" xmlns="http://www.w3.org/2000/svg">
-      {/* Corps du clap */}
-      <rect x="20" y="60" width="160" height="90" rx="6" fill="#1a1a2e" stroke="#D4AF37" strokeWidth="2" />
-      {/* Lignes diagonales sur le corps */}
-      <line x1="20" y1="80" x2="180" y2="80" stroke="#D4AF37" strokeWidth="0.5" opacity="0.3" />
-      <line x1="20" y1="100" x2="180" y2="100" stroke="#D4AF37" strokeWidth="0.5" opacity="0.3" />
-      <line x1="20" y1="120" x2="180" y2="120" stroke="#D4AF37" strokeWidth="0.5" opacity="0.3" />
-      {/* Texte sur le clap */}
-      <text x="100" y="95" textAnchor="middle" fill="#D4AF37" fontSize="11" fontWeight="bold" fontFamily="sans-serif">HALLUCINE</text>
-      <text x="100" y="115" textAnchor="middle" fill="#D4AF37" fontSize="8" opacity="0.7" fontFamily="sans-serif">VOTRE DEVIS</text>
-      <text x="100" y="140" textAnchor="middle" fill="#D4AF37" fontSize="7" opacity="0.5" fontFamily="sans-serif">SCENE 1 — PRISE 1</text>
-      {/* Partie supérieure (barre du clap) — fixe */}
-      <rect x="20" y="45" width="160" height="20" rx="3" fill="#D4AF37" />
-      {/* Rayures diagonales sur la barre fixe */}
-      {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
-        <rect key={`stripe-bottom-${i}`} x={28 + i * 20} y="45" width="10" height="20" fill="#1a1a2e" opacity="0.8"
-          transform={`skewX(-15) translate(${i * 0}, 0)`}
-        />
-      ))}
-      {/* Partie mobile (barre qui claque) */}
-      <motion.g
-        style={{ originX: "20px", originY: "45px" }}
-        animate={
-          phase === "open" ? { rotate: -30 } :
-          phase === "closing" ? { rotate: 0 } :
-          { rotate: 0 }
-        }
-        transition={{ duration: 0.6, ease: "easeIn" }}
-      >
-        <rect x="20" y="25" width="160" height="20" rx="3" fill="#D4AF37" />
-        {/* Rayures diagonales sur la barre mobile */}
-        {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
-          <rect key={`stripe-top-${i}`} x={28 + i * 20} y="25" width="10" height="20" fill="#1a1a2e" opacity="0.8"
-            transform={`skewX(-15) translate(${i * 0}, 0)`}
-          />
-        ))}
-      </motion.g>
-      {/* Pivot du clap */}
-      <circle cx="30" cy="45" r="5" fill="#D4AF37" stroke="#1a1a2e" strokeWidth="2" />
-    </svg>
-  );
-}
-
-// ─── Étoile Hollywood ───────────────────────────────────────────────────
-function HollywoodStar({ delay, x, y, size }: { delay: number; x: string; y: string; size: number }) {
+// ─── Anneau concentrique doré ──────────────────────────────────────────
+function GoldRing({ size, delay, thickness = 1 }: { size: number; delay: number; thickness?: number }) {
   return (
     <motion.div
-      className="absolute"
-      style={{ left: x, top: y }}
-      initial={{ scale: 0, opacity: 0, rotate: -30 }}
-      animate={{ scale: 1, opacity: [0, 1, 0.8], rotate: 0 }}
-      transition={{ delay, duration: 0.8, ease: "backOut" }}
-    >
-      <Star className="text-gold fill-gold" style={{ width: size, height: size }} />
-    </motion.div>
-  );
-}
-
-// ─── Particule lumineuse (poussière de projecteur) ──────────────────────
-function LightParticle({ delay, startX, startY }: { delay: number; startX: number; startY: number }) {
-  const endX = startX + (Math.random() - 0.5) * 120;
-  const endY = startY + Math.random() * 60 + 20;
-  return (
-    <motion.div
-      className="absolute w-1 h-1 rounded-full bg-gold/60"
-      style={{ left: startX, top: startY }}
-      initial={{ opacity: 0, scale: 0 }}
-      animate={{
-        opacity: [0, 0.8, 0],
-        scale: [0, 1.5, 0],
-        x: endX - startX,
-        y: endY - startY,
+      className="absolute rounded-full"
+      style={{
+        width: size,
+        height: size,
+        top: "50%",
+        left: "50%",
+        marginTop: -size / 2,
+        marginLeft: -size / 2,
+        border: `${thickness}px solid rgba(201, 169, 110, 0)`,
       }}
-      transition={{ delay, duration: 2, ease: "easeOut" }}
+      initial={{
+        borderColor: "rgba(201, 169, 110, 0)",
+        scale: 0.8,
+      }}
+      animate={{
+        borderColor: ["rgba(201, 169, 110, 0)", "rgba(201, 169, 110, 0.5)", "rgba(201, 169, 110, 0.25)"],
+        scale: 1,
+      }}
+      transition={{
+        delay,
+        duration: 1.8,
+        ease: [0.25, 0.46, 0.45, 0.94],
+      }}
+    />
+  );
+}
+
+// ─── Particule dorée subtile ───────────────────────────────────────────
+function GoldParticle({ x, y, delay }: { x: string; y: string; delay: number }) {
+  return (
+    <motion.div
+      className="absolute w-[2px] h-[2px] rounded-full"
+      style={{
+        left: x,
+        top: y,
+        background: "rgba(201, 169, 110, 0.3)",
+      }}
+      initial={{ opacity: 0 }}
+      animate={{
+        opacity: [0, 0.6, 0.4, 0.2, 0],
+        y: [0, -20],
+        scale: [1, 1.5, 1],
+      }}
+      transition={{
+        delay,
+        duration: 4,
+        ease: "easeInOut",
+        repeat: Infinity,
+      }}
     />
   );
 }
 
 // ─── Composant principal ────────────────────────────────────────────────
 export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimationProps) {
-  const [phase, setPhase] = useState<"clap-open" | "clap-closing" | "blackout" | "spotlight" | "reveal">("clap-open");
+  const [phase, setPhase] = useState<"black" | "glow" | "rings" | "logo" | "text">("black");
   const [muted, setMuted] = useState(false);
-  const clapAudioRef = useRef<HTMLAudioElement | null>(null);
-  const fanfareAudioRef = useRef<HTMLAudioElement | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Pré-charger les sons
+  // Pré-charger le son
   useEffect(() => {
-    clapAudioRef.current = new Audio(SOUND_CLAP);
-    clapAudioRef.current.volume = 0.6;
-    clapAudioRef.current.preload = "auto";
-
-    fanfareAudioRef.current = new Audio(SOUND_FANFARE);
-    fanfareAudioRef.current.volume = 0.5;
-    fanfareAudioRef.current.preload = "auto";
-
+    audioRef.current = new Audio(LION_ROAR_URL);
+    audioRef.current.volume = 0.7;
+    audioRef.current.preload = "auto";
     return () => {
-      clapAudioRef.current?.pause();
-      fanfareAudioRef.current?.pause();
+      audioRef.current?.pause();
     };
   }, []);
 
   // Gérer le mute
   useEffect(() => {
-    if (clapAudioRef.current) clapAudioRef.current.muted = muted;
-    if (fanfareAudioRef.current) fanfareAudioRef.current.muted = muted;
+    if (audioRef.current) audioRef.current.muted = muted;
   }, [muted]);
 
-  const playClap = useCallback(() => {
-    if (clapAudioRef.current) {
-      clapAudioRef.current.currentTime = 0;
-      clapAudioRef.current.play().catch(() => {});
+  const playLionRoar = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(() => {});
     }
   }, []);
 
-  const playFanfare = useCallback(() => {
-    if (fanfareAudioRef.current) {
-      fanfareAudioRef.current.currentTime = 0;
-      fanfareAudioRef.current.play().catch(() => {});
-    }
-  }, []);
-
+  // Séquence d'animation
   useEffect(() => {
-    // Séquence d'animation ralentie (~6s total)
     const timers = [
-      // Phase 1 : clap ouvert visible pendant 0.8s
+      setTimeout(() => setPhase("glow"), 1000),
+      setTimeout(() => setPhase("rings"), 1800),
       setTimeout(() => {
-        setPhase("clap-closing");
-        playClap(); // Son du clap quand il se ferme
-      }, 800),
-      // Phase 2 : blackout après fermeture du clap (1.4s pour voir la fermeture)
-      setTimeout(() => setPhase("blackout"), 2000),
-      // Phase 3 : projecteur s'allume avec fanfare
-      setTimeout(() => {
-        setPhase("spotlight");
-        playFanfare();
+        setPhase("logo");
+        playLionRoar();
       }, 3500),
-      // Phase 4 : révélation complète avec étoiles
-      setTimeout(() => setPhase("reveal"), 5000),
+      setTimeout(() => setPhase("text"), 5500),
     ];
     return () => timers.forEach(clearTimeout);
-  }, [playClap, playFanfare]);
+  }, [playLionRoar]);
 
-  // Générer les particules de lumière (stable avec useMemo)
-  const particles = useMemo(() => Array.from({ length: 20 }, (_, i) => ({
-    id: i,
-    delay: 2.0 + Math.random() * 1.2,
-    startX: 120 + (Math.random() - 0.5) * 80,
-    startY: 20 + Math.random() * 30,
-  })), []);
+  // Particules stables
+  const particles = useMemo(() => [
+    { x: "45%", y: "35%", delay: 4.0 },
+    { x: "55%", y: "40%", delay: 4.3 },
+    { x: "42%", y: "55%", delay: 4.6 },
+    { x: "58%", y: "50%", delay: 4.9 },
+    { x: "48%", y: "45%", delay: 5.2 },
+    { x: "52%", y: "58%", delay: 5.5 },
+  ], []);
+
+  // Anneaux stables
+  const rings = useMemo(() => [
+    { size: 60, delay: 1.8, thickness: 1.5 },
+    { size: 100, delay: 2.0, thickness: 1 },
+    { size: 145, delay: 2.2, thickness: 1 },
+    { size: 190, delay: 2.4, thickness: 1.5 },
+    { size: 240, delay: 2.6, thickness: 1 },
+    { size: 290, delay: 2.8, thickness: 1 },
+    { size: 340, delay: 3.0, thickness: 1.5 },
+  ], []);
+
+  const phaseIndex = ["black", "glow", "rings", "logo", "text"].indexOf(phase);
 
   return (
-    <div className="relative overflow-hidden flex flex-col items-center justify-center min-h-[70vh]">
-      {/* Bouton mute discret en haut à droite */}
+    <div
+      className="relative overflow-hidden flex items-center justify-center"
+      style={{
+        minHeight: "70vh",
+        background: "radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%)",
+      }}
+    >
+      {/* Vignettage cinématique */}
+      <div
+        className="absolute inset-0 pointer-events-none z-20"
+        style={{
+          background: "radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.6) 100%)",
+        }}
+      />
+
+      {/* Barres cinémascope */}
+      <div className="absolute top-0 left-0 right-0 h-[12%] bg-black z-30" />
+      <div className="absolute bottom-0 left-0 right-0 h-[12%] bg-black z-30" />
+
+      {/* Bouton mute */}
       <button
         onClick={() => setMuted(!muted)}
-        className="absolute top-2 right-2 z-50 p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors text-white/40 hover:text-white/70"
+        className="absolute top-[14%] right-3 z-50 p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors"
         title={muted ? "Activer le son" : "Couper le son"}
       >
-        {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+        {muted ? (
+          <VolumeX className="w-4 h-4" style={{ color: "rgba(201, 169, 110, 0.3)" }} />
+        ) : (
+          <Volume2 className="w-4 h-4" style={{ color: "rgba(201, 169, 110, 0.5)" }} />
+        )}
       </button>
 
-      <AnimatePresence mode="wait">
-        {/* Phase 1 & 2 : Clap de cinéma */}
-        {(phase === "clap-open" || phase === "clap-closing") && (
-          <motion.div
-            key="clap"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.1 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col items-center pt-4"
-          >
-            <ClapperBoard phase={phase === "clap-open" ? "open" : "closing"} />
-            {/* Texte sous le clap */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.6 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="text-white/50 text-sm mt-4 tracking-wider uppercase"
-            >
-              Preparation de votre devis...
-            </motion.p>
-          </motion.div>
-        )}
+      {/* Glow or champagne central */}
+      <motion.div
+        className="absolute rounded-full"
+        style={{
+          width: 400,
+          height: 400,
+          background: "radial-gradient(circle, rgba(201,169,110,0.15) 0%, rgba(201,169,110,0.05) 40%, transparent 70%)",
+        }}
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={phaseIndex >= 1 ? { opacity: 1, scale: 1 } : {}}
+        transition={{ duration: 2, ease: "easeOut" }}
+      />
 
-        {/* Phase 3 : Écran noir "ACTION !" */}
-        {phase === "blackout" && (
-          <motion.div
-            key="blackout"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            className="flex flex-col items-center justify-center py-16"
-          >
-            <motion.span
-              initial={{ scale: 0.3, opacity: 0 }}
-              animate={{ scale: [0.3, 1.15, 1], opacity: 1 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="text-gold text-4xl font-black tracking-[0.3em] uppercase"
-              style={{ textShadow: "0 0 40px rgba(212, 175, 55, 0.6), 0 0 80px rgba(212, 175, 55, 0.2)" }}
-            >
-              ACTION !
-            </motion.span>
-            {/* Ligne dorée décorative */}
+      {/* Conteneur zoom cinématique */}
+      <motion.div
+        className="relative flex items-center justify-center"
+        initial={{ scale: 0.97 }}
+        animate={phaseIndex >= 2 ? { scale: 1.03 } : {}}
+        transition={{ duration: 6, ease: [0.25, 0.1, 0.25, 1] }}
+      >
+        {/* Anneaux concentriques dorés */}
+        <div className="absolute" style={{ width: 340, height: 340 }}>
+          {phaseIndex >= 2 && rings.map((ring, i) => (
+            <GoldRing key={i} size={ring.size} delay={ring.delay} thickness={ring.thickness} />
+          ))}
+          {/* Pulsation douce des anneaux après reveal */}
+          {phaseIndex >= 4 && (
             <motion.div
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
-              className="w-32 h-px bg-gradient-to-r from-transparent via-gold/60 to-transparent mt-4"
+              className="absolute inset-0"
+              animate={{ scale: [1, 1.015, 1] }}
+              transition={{ duration: 6, ease: "easeInOut", repeat: Infinity }}
             />
-          </motion.div>
-        )}
+          )}
+        </div>
 
-        {/* Phase 4 & 5 : Projecteur + Révélation */}
-        {(phase === "spotlight" || phase === "reveal") && (
+        {/* Logo Halluciné */}
+        <motion.div
+          className="relative z-10"
+          initial={{ opacity: 0, filter: "brightness(0.3)", scale: 0.95 }}
+          animate={
+            phaseIndex >= 3
+              ? { opacity: 1, filter: "brightness(1)", scale: 1 }
+              : {}
+          }
+          transition={{ duration: 2.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
+          {/* Rim light or */}
           <motion.div
-            key="reveal"
+            className="absolute -inset-2 rounded-lg"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            className="relative flex flex-col items-center pt-4"
-          >
-            {/* Effet projecteur (cône de lumière) */}
-            <motion.div
-              className="absolute -top-8 left-1/2 -translate-x-1/2 w-48 h-72 pointer-events-none"
-              initial={{ opacity: 0, scaleY: 0 }}
-              animate={{ opacity: 0.18, scaleY: 1 }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-              style={{
-                background: "linear-gradient(180deg, rgba(212,175,55,0.6) 0%, rgba(212,175,55,0) 100%)",
-                clipPath: "polygon(35% 0%, 65% 0%, 100% 100%, 0% 100%)",
-                transformOrigin: "top center",
-              }}
-            />
+            animate={phaseIndex >= 3 ? { opacity: 1 } : {}}
+            transition={{ delay: 0.7, duration: 2, ease: "easeOut" }}
+            style={{
+              boxShadow:
+                "0 0 30px rgba(201, 169, 110, 0.15), 0 0 60px rgba(201, 169, 110, 0.08), inset 0 0 30px rgba(201, 169, 110, 0.05)",
+            }}
+          />
+          {/* Inner glow bleu subtil */}
+          <motion.div
+            className="absolute inset-0 rounded"
+            initial={{ opacity: 0 }}
+            animate={phaseIndex >= 3 ? { opacity: 1 } : {}}
+            transition={{ delay: 1.0, duration: 2, ease: "easeOut" }}
+            style={{
+              boxShadow: "inset 0 0 40px rgba(42, 74, 127, 0.2)",
+            }}
+          />
+          <img
+            src={LOGO_URL}
+            alt="Halluciné"
+            className="block"
+            style={{ width: 280, height: "auto" }}
+          />
+        </motion.div>
+      </motion.div>
 
-            {/* Étoile Hollywood centrale */}
-            <motion.div
-              initial={{ scale: 0, rotate: -180 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ type: "spring", duration: 1.2, bounce: 0.35 }}
-              className="relative z-10 mb-6"
-            >
-              <div className="relative">
-                {/* Halo lumineux derrière l'étoile */}
-                <motion.div
-                  className="absolute inset-0 -m-5"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: [0.2, 0.5, 0.2] }}
-                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                  style={{
-                    background: "radial-gradient(circle, rgba(212,175,55,0.4) 0%, transparent 70%)",
-                    borderRadius: "50%",
-                    width: "90px",
-                    height: "90px",
-                  }}
-                />
-                <Star className="w-16 h-16 text-gold fill-gold drop-shadow-[0_0_20px_rgba(212,175,55,0.6)]" />
-              </div>
-            </motion.div>
+      {/* Particules dorées subtiles */}
+      {phaseIndex >= 3 && particles.map((p, i) => (
+        <GoldParticle key={i} x={p.x} y={p.y} delay={p.delay} />
+      ))}
 
-            {/* Texte de remerciement */}
-            <motion.h3
-              initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.7 }}
-              className="text-2xl font-bold text-white mb-3 relative z-10"
-            >
-              Merci{prenom ? ` ${prenom}` : ""} !
-            </motion.h3>
+      {/* Ligne dorée fine */}
+      <motion.div
+        className="absolute"
+        style={{
+          bottom: "22%",
+          left: "50%",
+          transform: "translateX(-50%)",
+          height: 1,
+          background: "linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.4), transparent)",
+        }}
+        initial={{ width: 0 }}
+        animate={phaseIndex >= 4 ? { width: 120 } : {}}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+      />
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.7 }}
-              className="text-white/75 relative z-10 text-center px-4"
-            >
-              Nous avons bien recu votre demande. Notre equipe vous repondra dans les 24 heures.
-            </motion.p>
+      {/* Texte de confirmation */}
+      <motion.div
+        className="absolute text-center z-10"
+        style={{
+          bottom: "24%",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "90%",
+          maxWidth: 600,
+        }}
+        initial={{ opacity: 0, y: 15 }}
+        animate={phaseIndex >= 4 ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 2, ease: [0.25, 0.46, 0.45, 0.94] }}
+      >
+        <h2
+          style={{
+            color: "rgba(201, 169, 110, 1)",
+            fontSize: 26,
+            fontWeight: 400,
+            letterSpacing: "0.3em",
+            textTransform: "uppercase" as const,
+            marginBottom: 18,
+            fontFamily: "'Cormorant Garamond', serif",
+          }}
+        >
+          {prenom ? `Merci ${prenom}` : "Nous avons bien reçu votre demande"}
+        </h2>
+        <p
+          style={{
+            color: "rgba(255, 255, 255, 0.65)",
+            fontSize: 15,
+            fontWeight: 300,
+            letterSpacing: "0.15em",
+            lineHeight: 1.8,
+            fontFamily: "'Cormorant Garamond', serif",
+          }}
+        >
+          Notre équipe vous répondra dans les 24 heures.
+        </p>
+        <p
+          style={{
+            color: "rgba(255, 255, 255, 0.65)",
+            fontSize: 15,
+            fontWeight: 300,
+            letterSpacing: "0.15em",
+            lineHeight: 1.8,
+            marginTop: 8,
+            fontFamily: "'Cormorant Garamond', serif",
+          }}
+        >
+          Vos données sont en sécurité et ne seront jamais partagées.
+        </p>
+      </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.2, duration: 0.6 }}
-              className="mt-6 flex items-center justify-center gap-2 text-gold/80 text-sm relative z-10"
-            >
-              <ShieldCheck className="w-4 h-4" />
-              <span>Vos donnees sont en securite et ne seront jamais partagees.</span>
-            </motion.div>
-
-            {/* Étoiles Hollywood décoratives autour */}
-            {phase === "reveal" && (
-              <>
-                <HollywoodStar delay={0} x="8%" y="10%" size={18} />
-                <HollywoodStar delay={0.2} x="88%" y="8%" size={14} />
-                <HollywoodStar delay={0.4} x="3%" y="65%" size={12} />
-                <HollywoodStar delay={0.5} x="92%" y="60%" size={16} />
-                <HollywoodStar delay={0.3} x="12%" y="38%" size={10} />
-                <HollywoodStar delay={0.45} x="82%" y="35%" size={11} />
-                <HollywoodStar delay={0.6} x="50%" y="2%" size={9} />
-                <HollywoodStar delay={0.55} x="28%" y="78%" size={13} />
-                <HollywoodStar delay={0.65} x="72%" y="78%" size={10} />
-              </>
-            )}
-
-            {/* Particules lumineuses (poussière de projecteur) */}
-            {particles.map((p) => (
-              <LightParticle key={p.id} delay={p.delay} startX={p.startX} startY={p.startY} />
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Reflets métalliques sur les anneaux (shimmer) */}
+      {phaseIndex >= 3 && rings.map((ring, i) => (
+        <motion.div
+          key={`shimmer-${i}`}
+          className="absolute rounded-full pointer-events-none"
+          style={{
+            width: ring.size - 2,
+            height: ring.size - 2,
+            top: "50%",
+            left: "50%",
+            marginTop: -(ring.size - 2) / 2,
+            marginLeft: -(ring.size - 2) / 2,
+            background: `conic-gradient(
+              from 0deg,
+              transparent 0%,
+              rgba(201, 169, 110, 0.1) 15%,
+              transparent 30%,
+              rgba(201, 169, 110, 0.08) 60%,
+              transparent 75%,
+              rgba(201, 169, 110, 0.06) 90%,
+              transparent 100%
+            )`,
+          }}
+          initial={{ opacity: 0, rotate: 0 }}
+          animate={{ opacity: [0, 1, 0], rotate: 180 }}
+          transition={{
+            delay: 3.5,
+            duration: 4,
+            ease: "easeInOut",
+            repeat: Infinity,
+          }}
+        />
+      ))}
     </div>
   );
 }
