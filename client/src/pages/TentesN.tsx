@@ -184,29 +184,6 @@ export default function TentesN() {
         </div>
       </section>
 
-      {/* ═══ RÉSUMÉ CARACTÉRISTIQUES ═══ */}
-      <section className="py-16 bg-charcoal-light">
-        <div className="container">
-          <div className="grid md:grid-cols-2 gap-10 items-start">
-            <div>
-              <ul className="space-y-3 text-white/60 text-sm leading-relaxed">
-                <li><strong className="text-warm">Chambre en polyuréthane</strong> : Autonomie de 60 jours, totalement étanche.</li>
-                <li><strong className="text-warm">Fermetures zippées double face</strong> : Installation rapide des murs et de l'auvent.</li>
-                <li><strong className="text-warm">Toit en polyester hydrofuge</strong> : Résistant aux intempéries et à l'humidité.</li>
-                <li><strong className="text-warm">Toile de parachute</strong> : Pour une étanchéité optimale et une résistance accrue.</li>
-                <li><strong className="text-warm">Double peau en polyuréthane Oxford</strong> : Ignifugée et résistante aux déchirures.</li>
-                <li><strong className="text-warm">Personnalisation totale</strong> : Toit, murs, entrée, et structure entièrement personnalisables.</li>
-                <li><strong className="text-warm">Pompe à main ou électrique</strong> : Pour un gonflage rapide et efficace.</li>
-                <li><strong className="text-warm">Sac de lestage en sable</strong> : Assure une stabilité maximale.</li>
-              </ul>
-            </div>
-            <div className="cursor-pointer" onClick={() => openLightbox(heroImages[3].src, heroImages[3].alt)}>
-              <img src={heroImages[3].src} alt={heroImages[3].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ═══ DAMIER 5 — Caractéristiques techniques + schéma éclaté ═══ */}
       <section className="py-16 bg-background">
         <div className="container">
