@@ -200,8 +200,8 @@ export default function TentesN() {
                 <li><strong className="text-warm">Sac de lestage en sable</strong> : Assure une stabilité maximale.</li>
               </ul>
             </div>
-            <div className="cursor-pointer" onClick={() => openLightbox(heroImages[4].src, heroImages[4].alt)}>
-              <img src={heroImages[4].src} alt={heroImages[4].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
+            <div className="cursor-pointer" onClick={() => openLightbox(heroImages[3].src, heroImages[3].alt)}>
+              <img src={heroImages[3].src} alt={heroImages[3].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
             </div>
           </div>
         </div>
