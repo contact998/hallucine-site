@@ -52,7 +52,7 @@ async function startServer() {
 
       // Import dynamique pour eviter les imports circulaires
       const { notifyOwner } = await import("./notification");
-      const { insertProspectIntoCrm, isCrmDirectConfigured } = await import("../crmDirect");
+      const { sendProspectToCrm, isCrmWebhookConfigured } = await import("../crmWebhook");
 
       // Notification asynchrone
       notifyOwner({
@@ -70,11 +70,11 @@ async function startServer() {
         ].filter(Boolean).join("\n"),
       }).catch((err: unknown) => console.warn("[Abandon/Beacon] Erreur notification:", err));
 
-      // Insertion directe CRM (méthode principale)
+      // Envoi au CRM via webhook (abandon)
       let crmOk = false;
-      if (isCrmDirectConfigured()) {
+      if (isCrmWebhookConfigured()) {
         try {
-          const result = await insertProspectIntoCrm({
+          const result = await sendProspectToCrm({
             entreprise: data.entreprise || `Particulier - ${fullName}`,
             personne: data.nom || null,
             prenom: data.prenom || null,
@@ -88,14 +88,14 @@ async function startServer() {
               `[ABANDON étape ${data.lastStep || "?"}/${data.totalSteps || "?"} - ${progress}%]`,
               data.productDetail ? `Détail : ${data.productDetail}` : null,
             ].filter(Boolean).join("\n"),
-            isAbandon: true,
+            abandonPartiel: true,
           });
           crmOk = result.success;
           if (result.success) {
-            console.log(`[Abandon/Beacon] Prospect partiel créé dans CRM (id: ${result.prospectId}) pour ${data.email}`);
+            console.log(`[Abandon/Beacon] Prospect partiel envoyé au CRM (id: ${result.prospectId}) pour ${data.email}`);
           }
         } catch (err) {
-          console.warn("[Abandon/Beacon] Erreur insertion directe CRM:", err);
+          console.warn("[Abandon/Beacon] Erreur webhook CRM:", err);
         }
       }
 

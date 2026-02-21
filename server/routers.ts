@@ -19,7 +19,7 @@ import {
 import { notifyOwner } from "./_core/notification";
 import { chatWithAssistant } from "./chatbot";
 import { generateBrochure } from "./brochure";
-import { insertProspectIntoCrm, isCrmDirectConfigured } from "./crmDirect";
+import { sendProspectToCrm, isCrmWebhookConfigured } from "./crmWebhook";
 import { prepareAdminEmailNotification } from "./emailNotification";
 // Email de confirmation géré par le CRM — Resend reste disponible pour d'autres usages
 import {
@@ -123,11 +123,11 @@ export const appRouter = router({
           ].filter(Boolean).join("\n"),
         });
 
-        // Insertion directe dans la base CRM (prospect partiel)
+        // Envoi au CRM via webhook (prospect partiel / abandon)
         let crmOk = false;
-        if (isCrmDirectConfigured()) {
+        if (isCrmWebhookConfigured()) {
           try {
-            const result = await insertProspectIntoCrm({
+            const result = await sendProspectToCrm({
               entreprise: input.entreprise || `Particulier - ${fullName}`,
               personne: input.nom || null,
               prenom: input.prenom || null,
@@ -141,14 +141,14 @@ export const appRouter = router({
                 `[ABANDON étape ${input.lastStep}/${input.totalSteps} - ${progress}%]`,
                 input.productDetail ? `Détail : ${input.productDetail}` : null,
               ].filter(Boolean).join("\n"),
-              isAbandon: true,
+              abandonPartiel: true,
             });
             crmOk = result.success;
             if (result.success) {
-              console.log(`[Abandon] Prospect partiel créé dans CRM (id: ${result.prospectId}) pour ${input.email}`);
+              console.log(`[Abandon] Prospect partiel envoyé au CRM (id: ${result.prospectId}) pour ${input.email}`);
             }
           } catch (err) {
-            console.warn("[Abandon] Erreur insertion directe CRM:", err);
+            console.warn("[Abandon] Erreur webhook CRM:", err);
           }
         }
 
@@ -247,7 +247,7 @@ export const appRouter = router({
           })
           .catch(err => console.warn("[Email] Erreur préparation email:", err));
 
-        // ─── Insertion directe dans la base du CRM (méthode principale) ───
+        // ─── Envoi au CRM via webhook ───
         let crmSync: { success: boolean; error?: string } = { success: false, error: "not configured" };
 
         // Extraire prénom/nom depuis input.nom ("Prénom Nom")
@@ -269,9 +269,9 @@ export const appRouter = router({
           }
         }
 
-        if (isCrmDirectConfigured()) {
+        if (isCrmWebhookConfigured()) {
           try {
-            const result = await insertProspectIntoCrm({
+            const result = await sendProspectToCrm({
               entreprise: input.entreprise || `Particulier - ${input.nom}`,
               personne: prospectNom,
               prenom: prospectPrenom,
@@ -281,6 +281,7 @@ export const appRouter = router({
               codePostal: prospectCodePostal,
               pays: prospectPays,
               produit: input.produit || null,
+              contactType: "mail",
               notes: [
                 "Source : formulaire site web hallucine.fr",
                 input.message ? `Message : ${input.message}` : null,
@@ -289,16 +290,15 @@ export const appRouter = router({
             });
             crmSync = result;
             if (result.success) {
-              console.log(`[CRM Direct] Prospect créé (id: ${result.prospectId}) pour ${input.nom}`);
+              console.log(`[CRM Webhook] Prospect créé (id: ${result.prospectId}) pour ${input.nom}`);
             } else {
-              console.warn(`[CRM Direct] Échec pour ${input.nom}: ${result.error}`);
+              console.warn(`[CRM Webhook] Échec pour ${input.nom}: ${result.error}`);
             }
           } catch (err) {
-            console.error(`[CRM Direct] Erreur pour ${input.nom}:`, err);
+            console.error(`[CRM Webhook] Erreur pour ${input.nom}:`, err);
             crmSync = { success: false, error: String(err) };
           }
         }
-
 
         // Email de confirmation géré par le CRM (pas d'envoi Resend depuis le site)
 
@@ -547,9 +547,9 @@ export const appRouter = router({
     /** Vérifier le statut de la synchronisation CRM */
     crmStatus: adminProcedure.query(async () => {
       return {
-        configured: isCrmDirectConfigured(),
-        method: "insertion directe en base",
-        databaseUrl: process.env.CRM_DATABASE_URL ? "Configuré" : "Non configuré",
+        configured: isCrmWebhookConfigured(),
+        method: "webhook",
+        webhookUrl: process.env.CRM_WEBHOOK_URL ? "Configuré" : "Non configuré",
       };
     }),
 
@@ -565,13 +565,14 @@ export const appRouter = router({
         const prenom = nameParts.length > 1 ? nameParts[0] : null;
         const nom = nameParts.length > 1 ? nameParts.slice(1).join(" ") : nameParts[0] || null;
 
-        const result = await insertProspectIntoCrm({
+        const result = await sendProspectToCrm({
           entreprise: submission.entreprise || `Particulier - ${submission.nom}`,
           personne: nom,
           prenom: prenom,
           email: submission.email,
           telephone: submission.telephone || null,
           produit: submission.produit || null,
+          contactType: "mail",
           notes: [
             "Source : sync manuelle depuis admin",
             submission.message ? `Message : ${submission.message}` : null,

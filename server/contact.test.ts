@@ -11,9 +11,9 @@ vi.mock("./_core/notification", () => ({
   notifyOwner: vi.fn().mockResolvedValue(true),
 }));
 
-vi.mock("./crmDirect", () => ({
-  insertProspectIntoCrm: vi.fn().mockResolvedValue({ success: true, prospectId: 1, updated: false }),
-  isCrmDirectConfigured: vi.fn().mockReturnValue(true),
+vi.mock("./crmWebhook", () => ({
+  sendProspectToCrm: vi.fn().mockResolvedValue({ success: true, prospectId: 1 }),
+  isCrmWebhookConfigured: vi.fn().mockReturnValue(true),
 }));
 
 function createPublicContext(): TrpcContext {

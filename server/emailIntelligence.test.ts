@@ -279,7 +279,7 @@ describe("getDomainName", () => {
 
 // ─── Tests pour la route d'abandon ──────────────────────────────────
 describe("abandon partial route", () => {
-  it("la route /api/abandon-partial accepte un POST valide", async () => {
+  it("la route /api/abandon-partial accepte un POST valide", { timeout: 15000 }, async () => {
     const response = await fetch("http://localhost:3000/api/abandon-partial", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

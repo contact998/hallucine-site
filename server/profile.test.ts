@@ -2,9 +2,9 @@ import { describe, expect, it, vi } from "vitest";
 import { appRouter } from "./routers";
 import type { TrpcContext } from "./_core/context";
 
-vi.mock("./crmDirect", () => ({
-  insertProspectIntoCrm: vi.fn().mockResolvedValue({ success: true, prospectId: 1, updated: false }),
-  isCrmDirectConfigured: vi.fn().mockReturnValue(true),
+vi.mock("./crmWebhook", () => ({
+  sendProspectToCrm: vi.fn().mockResolvedValue({ success: true, prospectId: 1 }),
+  isCrmWebhookConfigured: vi.fn().mockReturnValue(true),
 }));
 
 type AuthenticatedUser = NonNullable<TrpcContext["user"]>;

@@ -673,3 +673,13 @@
 - [x] Mettre à jour tous les liens internes (13 fichiers) vers /contactez-nous
 - [x] Supprimer le mode "gate" du SmartForm (plus nécessaire)
 - [x] Nettoyer les imports et routes dans App.tsx
+
+## Migration CRM : insertion directe → webhook
+- [x] Créer service crmWebhook.ts (appel POST /api/webhook/new-prospect)
+- [x] Adapter contact.submit pour utiliser le webhook au lieu de crmDirect
+- [x] Adapter contact.abandonPartial pour utiliser le webhook avec abandonPartiel: true
+- [x] Ajouter le champ SIRET dans les données transmises au webhook
+- [x] Supprimer crmDirect.ts (insertion directe en base → .bak)
+- [x] Supprimer les imports mysql2 liés au CRM (remplacés par fetch webhook)
+- [x] Vérifier les secrets CRM_WEBHOOK_URL et CRM_WEBHOOK_TOKEN (déjà dans les secrets)
+- [x] Écrire un test vitest pour le service webhook (9 tests)
