@@ -41,7 +41,7 @@ interface SmartFormProps {
 // ─── Données statiques ─────────────────────────────────────────────────────────
 const products = [
   { type: "ecran" as const, icon: Monitor, label: "Ecran de cinema", desc: "De 5m a 24m, etanche ou soufflerie", color: "text-gold" },
-  { type: "tente" as const, icon: Tent, label: "Tente gonflable", desc: "Evenementielle, publicitaire, medicale", color: "text-blue-400" },
+  { type: "tente" as const, icon: Tent, label: "Tente gonflable", desc: "Tentes X, N, V et Araignées", color: "text-blue-400" },
   { type: "mobilier" as const, icon: Armchair, label: "Mobilier gonflable", desc: "Canapes, fauteuils, tables design", color: "text-emerald-400" },
   { type: "arche" as const, icon: Trophy, label: "Arche gonflable", desc: "Course, sport, evenement, publicite", color: "text-purple-400" },
 ];
@@ -55,10 +55,10 @@ const screenCategories = [
 ];
 
 const tentTypes = [
-  { value: "evenementielle", label: "Evenementielle" },
-  { value: "publicitaire", label: "Publicitaire" },
-  { value: "medicale", label: "Medicale / Urgence" },
-  { value: "autre_tente", label: "Autre" },
+  { value: "tente_x", label: "Tentes X" },
+  { value: "tente_n", label: "Tentes N" },
+  { value: "tente_v", label: "Tentes V" },
+  { value: "tente_araignee", label: "Tentes Araignées" },
 ];
 
 const mobilierTypes = [
@@ -858,7 +858,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             {product === "tente" && (
               <>
                 <h3 className="text-xl font-bold text-white mb-1">Quel type de tente ?</h3>
-                <p className="text-white/70 text-sm mb-5">Selectionnez l'usage principal.</p>
+                <p className="text-white/70 text-sm mb-5">Sélectionnez le modèle souhaité.</p>
                 <div className="grid grid-cols-2 gap-2">
                   {tentTypes.map((t) => (
                     <button

@@ -693,3 +693,6 @@
 
 ## Correction token webhook CRM
 - [x] Vérifier/synchroniser CRM_WEBHOOK_TOKEN entre le site et le CRM (erreur 403) — corrigé, prospect créé avec succès (id: 1080046)
+
+## Modification SmartForm - Types de tentes
+- [x] Changer les options "type de tente" : Tentes X, Tentes N, Tentes V, Tentes Araignées (au lieu de Événementielle, Publicitaire, etc.)
