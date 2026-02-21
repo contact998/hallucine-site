@@ -1,15 +1,22 @@
 /**
  * CinemaSuccessAnimation — Animation cinéma pour la confirmation de soumission du SmartForm
  * 
- * Séquence :
- * 1. Le clap de cinéma se ferme (0-0.6s)
- * 2. Écran noir avec texte "ACTION !" (0.6-1.4s)
- * 3. Effet projecteur qui s'allume et révèle le message de remerciement (1.4-2.2s)
- * 4. Étoiles dorées Hollywood qui apparaissent autour (2.2-3s)
+ * Séquence ralentie (durée totale ~6s) :
+ * 1. Le clap de cinéma s'affiche ouvert (0-0.8s)
+ * 2. Le clap se ferme avec son de clap (0.8-2s)
+ * 3. Écran noir avec texte "ACTION !" (2-3.5s)
+ * 4. Effet projecteur + fanfare qui révèle le message (3.5-5s)
+ * 5. Étoiles dorées Hollywood qui apparaissent (5-6s)
+ * 
+ * Sons : clap de cinéma + fanfare de succès (avec bouton mute)
  */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShieldCheck, Star } from "lucide-react";
+import { ShieldCheck, Star, Volume2, VolumeX } from "lucide-react";
+
+// URLs CDN des sons (Pixabay, libre de droits)
+const SOUND_CLAP = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZWlmlCvluSCXAtEP.mp3";
+const SOUND_FANFARE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VgpAvzNCDfZWUQoZ.mp3";
 
 interface CinemaSuccessAnimationProps {
   prenom?: string;
@@ -18,7 +25,7 @@ interface CinemaSuccessAnimationProps {
 // ─── Clap de cinéma SVG ─────────────────────────────────────────────────
 function ClapperBoard({ phase }: { phase: "open" | "closing" | "closed" }) {
   return (
-    <svg viewBox="0 0 200 160" className="w-48 h-auto mx-auto" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 200 160" className="w-56 h-auto mx-auto" xmlns="http://www.w3.org/2000/svg">
       {/* Corps du clap */}
       <rect x="20" y="60" width="160" height="90" rx="6" fill="#1a1a2e" stroke="#D4AF37" strokeWidth="2" />
       {/* Lignes diagonales sur le corps */}
@@ -45,7 +52,7 @@ function ClapperBoard({ phase }: { phase: "open" | "closing" | "closed" }) {
           phase === "closing" ? { rotate: 0 } :
           { rotate: 0 }
         }
-        transition={{ duration: 0.4, ease: "easeIn" }}
+        transition={{ duration: 0.6, ease: "easeIn" }}
       >
         <rect x="20" y="25" width="160" height="20" rx="3" fill="#D4AF37" />
         {/* Rayures diagonales sur la barre mobile */}
@@ -69,7 +76,7 @@ function HollywoodStar({ delay, x, y, size }: { delay: number; x: string; y: str
       style={{ left: x, top: y }}
       initial={{ scale: 0, opacity: 0, rotate: -30 }}
       animate={{ scale: 1, opacity: [0, 1, 0.8], rotate: 0 }}
-      transition={{ delay, duration: 0.6, ease: "backOut" }}
+      transition={{ delay, duration: 0.8, ease: "backOut" }}
     >
       <Star className="text-gold fill-gold" style={{ width: size, height: size }} />
     </motion.div>
@@ -91,7 +98,7 @@ function LightParticle({ delay, startX, startY }: { delay: number; startX: numbe
         x: endX - startX,
         y: endY - startY,
       }}
-      transition={{ delay, duration: 1.5, ease: "easeOut" }}
+      transition={{ delay, duration: 2, ease: "easeOut" }}
     />
   );
 }
@@ -99,39 +106,107 @@ function LightParticle({ delay, startX, startY }: { delay: number; startX: numbe
 // ─── Composant principal ────────────────────────────────────────────────
 export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimationProps) {
   const [phase, setPhase] = useState<"clap-open" | "clap-closing" | "blackout" | "spotlight" | "reveal">("clap-open");
+  const [muted, setMuted] = useState(false);
+  const clapAudioRef = useRef<HTMLAudioElement | null>(null);
+  const fanfareAudioRef = useRef<HTMLAudioElement | null>(null);
 
+  // Pré-charger les sons
   useEffect(() => {
-    // Séquence d'animation
-    const timers = [
-      setTimeout(() => setPhase("clap-closing"), 300),
-      setTimeout(() => setPhase("blackout"), 700),
-      setTimeout(() => setPhase("spotlight"), 1500),
-      setTimeout(() => setPhase("reveal"), 2200),
-    ];
-    return () => timers.forEach(clearTimeout);
+    clapAudioRef.current = new Audio(SOUND_CLAP);
+    clapAudioRef.current.volume = 0.6;
+    clapAudioRef.current.preload = "auto";
+
+    fanfareAudioRef.current = new Audio(SOUND_FANFARE);
+    fanfareAudioRef.current.volume = 0.5;
+    fanfareAudioRef.current.preload = "auto";
+
+    return () => {
+      clapAudioRef.current?.pause();
+      fanfareAudioRef.current?.pause();
+    };
   }, []);
 
-  // Générer les particules de lumière
-  const particles = Array.from({ length: 16 }, (_, i) => ({
+  // Gérer le mute
+  useEffect(() => {
+    if (clapAudioRef.current) clapAudioRef.current.muted = muted;
+    if (fanfareAudioRef.current) fanfareAudioRef.current.muted = muted;
+  }, [muted]);
+
+  const playClap = useCallback(() => {
+    if (clapAudioRef.current) {
+      clapAudioRef.current.currentTime = 0;
+      clapAudioRef.current.play().catch(() => {});
+    }
+  }, []);
+
+  const playFanfare = useCallback(() => {
+    if (fanfareAudioRef.current) {
+      fanfareAudioRef.current.currentTime = 0;
+      fanfareAudioRef.current.play().catch(() => {});
+    }
+  }, []);
+
+  useEffect(() => {
+    // Séquence d'animation ralentie (~6s total)
+    const timers = [
+      // Phase 1 : clap ouvert visible pendant 0.8s
+      setTimeout(() => {
+        setPhase("clap-closing");
+        playClap(); // Son du clap quand il se ferme
+      }, 800),
+      // Phase 2 : blackout après fermeture du clap (1.4s pour voir la fermeture)
+      setTimeout(() => setPhase("blackout"), 2000),
+      // Phase 3 : projecteur s'allume avec fanfare
+      setTimeout(() => {
+        setPhase("spotlight");
+        playFanfare();
+      }, 3500),
+      // Phase 4 : révélation complète avec étoiles
+      setTimeout(() => setPhase("reveal"), 5000),
+    ];
+    return () => timers.forEach(clearTimeout);
+  }, [playClap, playFanfare]);
+
+  // Générer les particules de lumière (stable avec useMemo)
+  const particles = useMemo(() => Array.from({ length: 20 }, (_, i) => ({
     id: i,
-    delay: 1.6 + Math.random() * 0.8,
-    startX: 120 + (Math.random() - 0.5) * 60,
-    startY: 30 + Math.random() * 20,
-  }));
+    delay: 2.0 + Math.random() * 1.2,
+    startX: 120 + (Math.random() - 0.5) * 80,
+    startY: 20 + Math.random() * 30,
+  })), []);
 
   return (
-    <div className="relative py-8 overflow-hidden">
+    <div className="relative py-8 overflow-hidden min-h-[280px]">
+      {/* Bouton mute discret en haut à droite */}
+      <button
+        onClick={() => setMuted(!muted)}
+        className="absolute top-2 right-2 z-50 p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors text-white/40 hover:text-white/70"
+        title={muted ? "Activer le son" : "Couper le son"}
+      >
+        {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+      </button>
+
       <AnimatePresence mode="wait">
         {/* Phase 1 & 2 : Clap de cinéma */}
         {(phase === "clap-open" || phase === "clap-closing") && (
           <motion.div
             key="clap"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="flex flex-col items-center"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.1 }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-col items-center pt-4"
           >
             <ClapperBoard phase={phase === "clap-open" ? "open" : "closing"} />
+            {/* Texte sous le clap */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.6 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              className="text-white/50 text-sm mt-4 tracking-wider uppercase"
+            >
+              Preparation de votre devis...
+            </motion.p>
           </motion.div>
         )}
 
@@ -142,36 +217,43 @@ export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimatio
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="flex flex-col items-center justify-center py-8"
+            transition={{ duration: 0.4 }}
+            className="flex flex-col items-center justify-center py-16"
           >
             <motion.span
-              initial={{ scale: 0.5, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.1, duration: 0.3, type: "spring" }}
-              className="text-gold text-3xl font-black tracking-[0.3em] uppercase"
-              style={{ textShadow: "0 0 30px rgba(212, 175, 55, 0.5)" }}
+              initial={{ scale: 0.3, opacity: 0 }}
+              animate={{ scale: [0.3, 1.15, 1], opacity: 1 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="text-gold text-4xl font-black tracking-[0.3em] uppercase"
+              style={{ textShadow: "0 0 40px rgba(212, 175, 55, 0.6), 0 0 80px rgba(212, 175, 55, 0.2)" }}
             >
               ACTION !
             </motion.span>
+            {/* Ligne dorée décorative */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
+              className="w-32 h-px bg-gradient-to-r from-transparent via-gold/60 to-transparent mt-4"
+            />
           </motion.div>
         )}
 
-        {/* Phase 4 : Projecteur + Révélation */}
+        {/* Phase 4 & 5 : Projecteur + Révélation */}
         {(phase === "spotlight" || phase === "reveal") && (
           <motion.div
             key="reveal"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="relative flex flex-col items-center"
+            transition={{ duration: 0.8 }}
+            className="relative flex flex-col items-center pt-4"
           >
             {/* Effet projecteur (cône de lumière) */}
             <motion.div
-              className="absolute -top-8 left-1/2 -translate-x-1/2 w-40 h-64 pointer-events-none"
+              className="absolute -top-8 left-1/2 -translate-x-1/2 w-48 h-72 pointer-events-none"
               initial={{ opacity: 0, scaleY: 0 }}
-              animate={{ opacity: 0.15, scaleY: 1 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              animate={{ opacity: 0.18, scaleY: 1 }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
               style={{
                 background: "linear-gradient(180deg, rgba(212,175,55,0.6) 0%, rgba(212,175,55,0) 100%)",
                 clipPath: "polygon(35% 0%, 65% 0%, 100% 100%, 0% 100%)",
@@ -179,46 +261,46 @@ export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimatio
               }}
             />
 
-            {/* Étoile Hollywood centrale (remplace le checkmark) */}
+            {/* Étoile Hollywood centrale */}
             <motion.div
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
-              transition={{ type: "spring", duration: 0.8, bounce: 0.4 }}
-              className="relative z-10 mb-5"
+              transition={{ type: "spring", duration: 1.2, bounce: 0.35 }}
+              className="relative z-10 mb-6"
             >
               <div className="relative">
                 {/* Halo lumineux derrière l'étoile */}
                 <motion.div
-                  className="absolute inset-0 -m-4"
+                  className="absolute inset-0 -m-5"
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: [0.3, 0.6, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  animate={{ opacity: [0.2, 0.5, 0.2] }}
+                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
                   style={{
                     background: "radial-gradient(circle, rgba(212,175,55,0.4) 0%, transparent 70%)",
                     borderRadius: "50%",
-                    width: "80px",
-                    height: "80px",
+                    width: "90px",
+                    height: "90px",
                   }}
                 />
-                <Star className="w-16 h-16 text-gold fill-gold drop-shadow-[0_0_15px_rgba(212,175,55,0.6)]" />
+                <Star className="w-16 h-16 text-gold fill-gold drop-shadow-[0_0_20px_rgba(212,175,55,0.6)]" />
               </div>
             </motion.div>
 
             {/* Texte de remerciement */}
             <motion.h3
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
+              transition={{ delay: 0.5, duration: 0.7 }}
               className="text-2xl font-bold text-white mb-3 relative z-10"
             >
               Merci{prenom ? ` ${prenom}` : ""} !
             </motion.h3>
 
             <motion.p
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
-              className="text-white/75 relative z-10"
+              transition={{ delay: 0.8, duration: 0.7 }}
+              className="text-white/75 relative z-10 text-center px-4"
             >
               Nous avons bien recu votre demande. Notre equipe vous repondra dans les 24 heures.
             </motion.p>
@@ -226,7 +308,7 @@ export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimatio
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
+              transition={{ delay: 1.2, duration: 0.6 }}
               className="mt-6 flex items-center justify-center gap-2 text-gold/80 text-sm relative z-10"
             >
               <ShieldCheck className="w-4 h-4" />
@@ -236,15 +318,15 @@ export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimatio
             {/* Étoiles Hollywood décoratives autour */}
             {phase === "reveal" && (
               <>
-                <HollywoodStar delay={0} x="8%" y="15%" size={18} />
-                <HollywoodStar delay={0.15} x="85%" y="10%" size={14} />
-                <HollywoodStar delay={0.3} x="5%" y="70%" size={12} />
-                <HollywoodStar delay={0.4} x="90%" y="65%" size={16} />
-                <HollywoodStar delay={0.2} x="15%" y="40%" size={10} />
-                <HollywoodStar delay={0.35} x="80%" y="40%" size={11} />
-                <HollywoodStar delay={0.5} x="50%" y="5%" size={9} />
-                <HollywoodStar delay={0.45} x="30%" y="80%" size={13} />
-                <HollywoodStar delay={0.55} x="70%" y="80%" size={10} />
+                <HollywoodStar delay={0} x="8%" y="10%" size={18} />
+                <HollywoodStar delay={0.2} x="88%" y="8%" size={14} />
+                <HollywoodStar delay={0.4} x="3%" y="65%" size={12} />
+                <HollywoodStar delay={0.5} x="92%" y="60%" size={16} />
+                <HollywoodStar delay={0.3} x="12%" y="38%" size={10} />
+                <HollywoodStar delay={0.45} x="82%" y="35%" size={11} />
+                <HollywoodStar delay={0.6} x="50%" y="2%" size={9} />
+                <HollywoodStar delay={0.55} x="28%" y="78%" size={13} />
+                <HollywoodStar delay={0.65} x="72%" y="78%" size={10} />
               </>
             )}
 

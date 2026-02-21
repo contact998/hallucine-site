@@ -648,3 +648,8 @@
 ## Animation cinéma soumission SmartForm
 - [x] Créer composant CinemaSuccessAnimation (clap cinéma + étoiles Hollywood + projecteur)
 - [x] Intégrer l'animation dans le SmartForm à la place du simple checkmark
+
+## Amélioration animation cinéma
+- [x] Ralentir l'animation (doubler les durées de chaque phase)
+- [x] Ajouter un jingle cinéma libre de droits à la soumission
+- [x] Bouton mute discret pour couper le son
