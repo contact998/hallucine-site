@@ -43,12 +43,9 @@ const applications = [
 
 const images = [
   { src: "https://www.hallucinecran.com/photoset/Tentes%20V/blanc%201.jpg", alt: "Tente gonflable blanche en forme de V, vue de face" },
-  { src: "https://www.hallucinecran.com/photoset/Tentes%20V/blanc%202.jpg", alt: "Tente gonflable blanche en forme de V, vue de côté" },
-  { src: "https://www.hallucinecran.com/photoset/Tentes%20V/blanc%203.jpg", alt: "Tente gonflable blanche en forme de V, vue de trois-quarts" },
   { src: "https://www.hallucinecran.com/photoset/Tentes%20V/blanc%204.jpg", alt: "Tente gonflable blanche en forme de V, vue d'ensemble" },
   { src: "https://www.hallucinecran.com/photoset/Tentes%20V/15b4c24de8e92b7b9047951a3057fe0.jpg", alt: "Tente gonflable en V personnalisée avec un logo pour un stand d'exposition" },
   { src: "https://www.hallucinecran.com/photoset/Tentes%20V/d871ba2388a592607d77921d311069a.jpg", alt: "Tente gonflable en V utilisée comme stand lors d'un événement en extérieur" },
-  { src: "https://www.hallucinecran.com/photoset/Tentes%20V/Weixin%20Image_20240530130153.png", alt: "Gros plan sur la structure et les matériaux d'une tente gonflable en V" },
 ];
 
 export default function TentesV() {
