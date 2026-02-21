@@ -176,7 +176,7 @@ export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimatio
   })), []);
 
   return (
-    <div className="relative py-8 overflow-hidden min-h-[280px]">
+    <div className="relative overflow-hidden flex flex-col items-center justify-center min-h-[70vh]">
       {/* Bouton mute discret en haut à droite */}
       <button
         onClick={() => setMuted(!muted)}

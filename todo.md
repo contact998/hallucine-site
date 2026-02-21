@@ -653,3 +653,4 @@
 - [x] Ralentir l'animation (doubler les durées de chaque phase)
 - [x] Ajouter un jingle cinéma libre de droits à la soumission
 - [x] Bouton mute discret pour couper le son
+- [x] Centrer l'animation cinéma verticalement au milieu de l'écran
