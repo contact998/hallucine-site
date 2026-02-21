@@ -2,20 +2,17 @@
  * CinemaSuccessAnimation — Luxury Brand Reveal
  *
  * Animation ultra luxe minimaliste style pub parfum haut de gamme.
- * Fond velvet noir, anneaux dorés concentriques, logo Halluciné,
+ * Fond velvet noir plein écran, anneaux dorés concentriques, logo Halluciné,
  * rugissement de lion au moment du reveal.
  *
- * Timeline (~7s) :
- *  0:00 — Noir pur velvet
- *  0:01 — Glow or champagne au centre
- *  0:02 — Anneaux concentriques dorés émergent un par un
- *  0:03 — Léger zoom cinématique (push-in)
- *  0:04 — Logo Halluciné + rugissement de lion
- *  0:05 — Stabilisation, particules dorées
- *  0:06 — Texte de confirmation
+ * Timeline rapide (~4s) :
+ *  0:00 — Glow or champagne immédiat
+ *  0:30 — Anneaux concentriques dorés émergent
+ *  1:50 — Logo Halluciné + rugissement de lion
+ *  3:00 — Texte de confirmation
  */
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
 
 // CDN assets
@@ -50,7 +47,7 @@ function GoldRing({ size, delay, thickness = 1 }: { size: number; delay: number;
       }}
       transition={{
         delay,
-        duration: 1.8,
+        duration: 1.4,
         ease: [0.25, 0.46, 0.45, 0.94],
       }}
     />
@@ -85,7 +82,7 @@ function GoldParticle({ x, y, delay }: { x: string; y: string; delay: number }) 
 
 // ─── Composant principal ────────────────────────────────────────────────
 export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimationProps) {
-  const [phase, setPhase] = useState<"black" | "glow" | "rings" | "logo" | "text">("black");
+  const [phase, setPhase] = useState<"glow" | "rings" | "logo" | "text">("glow");
   const [muted, setMuted] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -111,48 +108,46 @@ export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimatio
     }
   }, []);
 
-  // Séquence d'animation
+  // Séquence d'animation rapide (~4s total)
   useEffect(() => {
     const timers = [
-      setTimeout(() => setPhase("glow"), 1000),
-      setTimeout(() => setPhase("rings"), 1800),
+      setTimeout(() => setPhase("rings"), 300),
       setTimeout(() => {
         setPhase("logo");
         playLionRoar();
-      }, 3500),
-      setTimeout(() => setPhase("text"), 5500),
+      }, 1500),
+      setTimeout(() => setPhase("text"), 3000),
     ];
     return () => timers.forEach(clearTimeout);
   }, [playLionRoar]);
 
   // Particules stables
   const particles = useMemo(() => [
-    { x: "45%", y: "35%", delay: 4.0 },
-    { x: "55%", y: "40%", delay: 4.3 },
-    { x: "42%", y: "55%", delay: 4.6 },
-    { x: "58%", y: "50%", delay: 4.9 },
-    { x: "48%", y: "45%", delay: 5.2 },
-    { x: "52%", y: "58%", delay: 5.5 },
+    { x: "45%", y: "35%", delay: 2.5 },
+    { x: "55%", y: "40%", delay: 2.8 },
+    { x: "42%", y: "55%", delay: 3.1 },
+    { x: "58%", y: "50%", delay: 3.4 },
+    { x: "48%", y: "45%", delay: 3.7 },
+    { x: "52%", y: "58%", delay: 4.0 },
   ], []);
 
-  // Anneaux stables
+  // Anneaux — délais réduits pour démarrage rapide
   const rings = useMemo(() => [
-    { size: 60, delay: 1.8, thickness: 1.5 },
-    { size: 100, delay: 2.0, thickness: 1 },
-    { size: 145, delay: 2.2, thickness: 1 },
-    { size: 190, delay: 2.4, thickness: 1.5 },
-    { size: 240, delay: 2.6, thickness: 1 },
-    { size: 290, delay: 2.8, thickness: 1 },
-    { size: 340, delay: 3.0, thickness: 1.5 },
+    { size: 60, delay: 0.3, thickness: 1.5 },
+    { size: 100, delay: 0.45, thickness: 1 },
+    { size: 145, delay: 0.6, thickness: 1 },
+    { size: 190, delay: 0.75, thickness: 1.5 },
+    { size: 240, delay: 0.9, thickness: 1 },
+    { size: 290, delay: 1.05, thickness: 1 },
+    { size: 340, delay: 1.2, thickness: 1.5 },
   ], []);
 
-  const phaseIndex = ["black", "glow", "rings", "logo", "text"].indexOf(phase);
+  const phaseIndex = ["glow", "rings", "logo", "text"].indexOf(phase);
 
   return (
     <div
-      className="relative overflow-hidden flex items-center justify-center"
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center"
       style={{
-        minHeight: "70vh",
         background: "radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%)",
       }}
     >
@@ -165,13 +160,13 @@ export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimatio
       />
 
       {/* Barres cinémascope */}
-      <div className="absolute top-0 left-0 right-0 h-[12%] bg-black z-30" />
-      <div className="absolute bottom-0 left-0 right-0 h-[12%] bg-black z-30" />
+      <div className="absolute top-0 left-0 right-0 h-[8%] bg-black z-30" />
+      <div className="absolute bottom-0 left-0 right-0 h-[8%] bg-black z-30" />
 
       {/* Bouton mute */}
       <button
         onClick={() => setMuted(!muted)}
-        className="absolute top-[14%] right-3 z-50 p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors"
+        className="absolute top-[10%] right-4 z-50 p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors"
         title={muted ? "Activer le son" : "Couper le son"}
       >
         {muted ? (
@@ -181,58 +176,49 @@ export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimatio
         )}
       </button>
 
-      {/* Glow or champagne central */}
+      {/* Glow or champagne central — immédiat */}
       <motion.div
-        className="absolute rounded-full"
+        className="absolute rounded-full pointer-events-none"
         style={{
           width: 400,
           height: 400,
           background: "radial-gradient(circle, rgba(201,169,110,0.15) 0%, rgba(201,169,110,0.05) 40%, transparent 70%)",
         }}
         initial={{ opacity: 0, scale: 0.5 }}
-        animate={phaseIndex >= 1 ? { opacity: 1, scale: 1 } : {}}
-        transition={{ duration: 2, ease: "easeOut" }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
       />
 
-      {/* Conteneur zoom cinématique */}
+      {/* Zone centrale : anneaux + logo */}
       <motion.div
         className="relative flex items-center justify-center"
+        style={{ width: 340, height: 340 }}
         initial={{ scale: 0.97 }}
-        animate={phaseIndex >= 2 ? { scale: 1.03 } : {}}
-        transition={{ duration: 6, ease: [0.25, 0.1, 0.25, 1] }}
+        animate={phaseIndex >= 1 ? { scale: 1.03 } : {}}
+        transition={{ duration: 5, ease: [0.25, 0.1, 0.25, 1] }}
       >
         {/* Anneaux concentriques dorés */}
-        <div className="absolute" style={{ width: 340, height: 340 }}>
-          {phaseIndex >= 2 && rings.map((ring, i) => (
-            <GoldRing key={i} size={ring.size} delay={ring.delay} thickness={ring.thickness} />
-          ))}
-          {/* Pulsation douce des anneaux après reveal */}
-          {phaseIndex >= 4 && (
-            <motion.div
-              className="absolute inset-0"
-              animate={{ scale: [1, 1.015, 1] }}
-              transition={{ duration: 6, ease: "easeInOut", repeat: Infinity }}
-            />
-          )}
-        </div>
+        {phaseIndex >= 1 && rings.map((ring, i) => (
+          <GoldRing key={i} size={ring.size} delay={ring.delay} thickness={ring.thickness} />
+        ))}
 
         {/* Logo Halluciné */}
         <motion.div
           className="relative z-10"
           initial={{ opacity: 0, filter: "brightness(0.3)", scale: 0.95 }}
           animate={
-            phaseIndex >= 3
+            phaseIndex >= 2
               ? { opacity: 1, filter: "brightness(1)", scale: 1 }
               : {}
           }
-          transition={{ duration: 2.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 2, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
           {/* Rim light or */}
           <motion.div
-            className="absolute -inset-2 rounded-lg"
+            className="absolute -inset-2 rounded-lg pointer-events-none"
             initial={{ opacity: 0 }}
-            animate={phaseIndex >= 3 ? { opacity: 1 } : {}}
-            transition={{ delay: 0.7, duration: 2, ease: "easeOut" }}
+            animate={phaseIndex >= 2 ? { opacity: 1 } : {}}
+            transition={{ delay: 0.5, duration: 1.5, ease: "easeOut" }}
             style={{
               boxShadow:
                 "0 0 30px rgba(201, 169, 110, 0.15), 0 0 60px rgba(201, 169, 110, 0.08), inset 0 0 30px rgba(201, 169, 110, 0.05)",
@@ -240,10 +226,10 @@ export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimatio
           />
           {/* Inner glow bleu subtil */}
           <motion.div
-            className="absolute inset-0 rounded"
+            className="absolute inset-0 rounded pointer-events-none"
             initial={{ opacity: 0 }}
-            animate={phaseIndex >= 3 ? { opacity: 1 } : {}}
-            transition={{ delay: 1.0, duration: 2, ease: "easeOut" }}
+            animate={phaseIndex >= 2 ? { opacity: 1 } : {}}
+            transition={{ delay: 0.8, duration: 1.5, ease: "easeOut" }}
             style={{
               boxShadow: "inset 0 0 40px rgba(42, 74, 127, 0.2)",
             }}
@@ -258,47 +244,39 @@ export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimatio
       </motion.div>
 
       {/* Particules dorées subtiles */}
-      {phaseIndex >= 3 && particles.map((p, i) => (
+      {phaseIndex >= 2 && particles.map((p, i) => (
         <GoldParticle key={i} x={p.x} y={p.y} delay={p.delay} />
       ))}
 
-      {/* Ligne dorée fine */}
+      {/* Ligne dorée fine — juste au-dessus du texte */}
       <motion.div
-        className="absolute"
         style={{
-          bottom: "22%",
-          left: "50%",
-          transform: "translateX(-50%)",
           height: 1,
+          marginTop: 20,
+          marginBottom: 16,
           background: "linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.4), transparent)",
         }}
         initial={{ width: 0 }}
-        animate={phaseIndex >= 4 ? { width: 120 } : {}}
-        transition={{ duration: 1.5, ease: "easeOut" }}
+        animate={phaseIndex >= 3 ? { width: 120 } : {}}
+        transition={{ duration: 1.2, ease: "easeOut" }}
       />
 
-      {/* Texte de confirmation */}
+      {/* Texte de confirmation — directement sous le logo */}
       <motion.div
-        className="absolute text-center z-10"
-        style={{
-          bottom: "24%",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "90%",
-          maxWidth: 600,
-        }}
-        initial={{ opacity: 0, y: 15 }}
-        animate={phaseIndex >= 4 ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 2, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="text-center z-10 px-6"
+        style={{ maxWidth: 600 }}
+        initial={{ opacity: 0, y: 10 }}
+        animate={phaseIndex >= 3 ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 1.5, ease: [0.25, 0.46, 0.45, 0.94] }}
       >
         <h2
           style={{
             color: "rgba(201, 169, 110, 1)",
-            fontSize: 26,
+            fontSize: 22,
             fontWeight: 400,
-            letterSpacing: "0.3em",
+            letterSpacing: "0.25em",
             textTransform: "uppercase" as const,
-            marginBottom: 18,
+            marginBottom: 12,
             fontFamily: "'Cormorant Garamond', serif",
           }}
         >
@@ -306,11 +284,11 @@ export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimatio
         </h2>
         <p
           style={{
-            color: "rgba(255, 255, 255, 0.65)",
-            fontSize: 15,
+            color: "rgba(255, 255, 255, 0.6)",
+            fontSize: 14,
             fontWeight: 300,
-            letterSpacing: "0.15em",
-            lineHeight: 1.8,
+            letterSpacing: "0.12em",
+            lineHeight: 1.7,
             fontFamily: "'Cormorant Garamond', serif",
           }}
         >
@@ -318,12 +296,12 @@ export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimatio
         </p>
         <p
           style={{
-            color: "rgba(255, 255, 255, 0.65)",
-            fontSize: 15,
+            color: "rgba(255, 255, 255, 0.45)",
+            fontSize: 13,
             fontWeight: 300,
-            letterSpacing: "0.15em",
-            lineHeight: 1.8,
-            marginTop: 8,
+            letterSpacing: "0.1em",
+            lineHeight: 1.7,
+            marginTop: 6,
             fontFamily: "'Cormorant Garamond', serif",
           }}
         >
@@ -332,7 +310,7 @@ export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimatio
       </motion.div>
 
       {/* Reflets métalliques sur les anneaux (shimmer) */}
-      {phaseIndex >= 3 && rings.map((ring, i) => (
+      {phaseIndex >= 2 && rings.map((ring, i) => (
         <motion.div
           key={`shimmer-${i}`}
           className="absolute rounded-full pointer-events-none"
@@ -357,7 +335,7 @@ export default function CinemaSuccessAnimation({ prenom }: CinemaSuccessAnimatio
           initial={{ opacity: 0, rotate: 0 }}
           animate={{ opacity: [0, 1, 0], rotate: 180 }}
           transition={{
-            delay: 3.5,
+            delay: 2.0,
             duration: 4,
             ease: "easeInOut",
             repeat: Infinity,

@@ -659,3 +659,8 @@
 - [x] Réécrire CinemaSuccessAnimation en style luxury brand reveal (fond velvet noir, anneaux dorés, logo, rugissement lion)
 - [x] Texte : "Nous avons bien reçu votre demande" + sous-textes
 - [x] Son : rugissement de lion au moment du logo reveal
+
+## Corrections animation luxury reveal
+- [x] Réduire le délai de démarrage (glow immédiat, logo à 1.5s, texte à 3s)
+- [x] Centrer l'animation en plein écran (fixed overlay fullscreen)
+- [x] Rapprocher le texte du logo et ajuster les marges
