@@ -108,8 +108,8 @@ export default function TentesX() {
       <section className="py-16 bg-background">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-10 items-center">
-            <div className="cursor-pointer" onClick={() => openLightbox(contentImages.tenteCote, "Tente gonflable X Hallucine vue de côté")}>
-              <img src={contentImages.tenteCote} alt="Tente gonflable X Hallucine vue de côté" className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
+            <div className="cursor-pointer" onClick={() => openLightbox(heroImages[0].src, heroImages[0].alt)}>
+              <img src={heroImages[0].src} alt={heroImages[0].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
             </div>
             <div>
               <h2 className="text-3xl font-bold text-ivory mb-4">
@@ -145,8 +145,8 @@ export default function TentesX() {
                 </li>
               </ul>
             </div>
-            <div className="cursor-pointer" onClick={() => openLightbox(contentImages.tenteFace, "Tente gonflable X vue de face")}>
-              <img src={contentImages.tenteFace} alt="Tente gonflable X vue de face" className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
+            <div className="cursor-pointer" onClick={() => openLightbox(heroImages[1].src, heroImages[1].alt)}>
+              <img src={heroImages[1].src} alt={heroImages[1].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
             </div>
           </div>
         </div>
@@ -156,8 +156,8 @@ export default function TentesX() {
       <section className="py-16 bg-background">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-10 items-start">
-            <div className="cursor-pointer order-2 md:order-1" onClick={() => openLightbox(contentImages.tenteNoire, "Tente gonflable X Hallucine noire")}>
-              <img src={contentImages.tenteNoire} alt="Tente gonflable X Hallucine noire" className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
+            <div className="cursor-pointer order-2 md:order-1" onClick={() => openLightbox(heroImages[2].src, heroImages[2].alt)}>
+              <img src={heroImages[2].src} alt={heroImages[2].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
             </div>
             <div className="order-1 md:order-2">
               <h2 className="text-3xl font-bold text-ivory mb-6">Un Système Fiable et Facile à Entretenir</h2>
@@ -195,8 +195,8 @@ export default function TentesX() {
                 </li>
               </ul>
             </div>
-            <div className="cursor-pointer" onClick={() => openLightbox(contentImages.schemaEclate, "Schéma éclaté des éléments techniques de la tente X")}>
-              <img src={contentImages.schemaEclate} alt="Schéma éclaté des éléments techniques de la tente gonflable X" className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
+            <div className="cursor-pointer" onClick={() => openLightbox(heroImages[3].src, heroImages[3].alt)}>
+              <img src={heroImages[3].src} alt={heroImages[3].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
             </div>
           </div>
         </div>

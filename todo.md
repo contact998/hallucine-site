@@ -704,3 +704,4 @@
 - [x] Refaire /tente-gonflable-x à l'identique de l'ancien site (mêmes images, même contenu, même structure)
 - [x] Corriger page Tente X : hero avec 4 photos en grille + sections en damier (alternance image/texte)
 - [x] Remplacer photo 1 et 4 du hero Tente X par nouvelles images (Meguiar's + Ealing Eagles)
+- [x] Utiliser les 4 photos du hero dans les sections damier (damier 1=photo1, damier 2=photo2, etc.)
