@@ -711,3 +711,5 @@
 
 ## Refonte page Tente Gonflable N
 - [x] Refaire /tente-gonflable-n à l'identique de l'ancien site (mêmes images, même contenu, même structure, grille hero + damier)
+
+- [x] Page /tente-gonflable-v : reconstruire à partir de la page anglaise hallucinecran.com/inflatable-tents-v
