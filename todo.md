@@ -739,3 +739,4 @@
 - [x] Créer sitemap.xml + robots.txt
 - [x] Nettoyer les fichiers de travail inutiles à la racine (29 fichiers supprimés)
 - [x] Corriger l'erreur TentesN.tsx (résolue — erreur d'état précédent, page charge sans erreur)
+- [x] Corriger les liens hallucinecran.fr dans emailTemplates.ts (2 liens → hallucine-site.manus.space)
