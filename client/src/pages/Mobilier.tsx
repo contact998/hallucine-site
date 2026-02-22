@@ -201,7 +201,7 @@ export default function Mobilier() {
         </div>
       </section>
 
-      {/* Catalogue mobilier */}
+      {/* Catalogue mobilier — Damier 4 lignes */}
       <section className="py-24 md:py-32 bg-white/[0.02]">
         <div className="container">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={0} className="mb-16">
@@ -213,37 +213,47 @@ export default function Mobilier() {
             <p className="text-white/50 mt-4 max-w-2xl">Chaque pièce est disponible en standard (blanc ou noir) ou en version personnalisée aux couleurs de votre marque.</p>
           </motion.div>
 
-          <div className="space-y-8">
-            {mobilierProducts.map((product, i) => (
-              <motion.div
-                key={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeIn}
-                custom={i}
-                className="grid lg:grid-cols-5 gap-6 p-6 border border-white/[0.06] rounded-lg"
-              >
-                <div className="lg:col-span-2">
-                  <img src={product.img} alt={product.title} className="w-full h-48 lg:h-full object-cover rounded-lg border border-white/10" loading="lazy" />
-                </div>
-                <div className="lg:col-span-3">
-                  <h3 className="text-xl font-bold text-white mb-3">{product.title}</h3>
-                  <p className="text-white/60 text-sm leading-relaxed mb-5">{product.desc}</p>
-                  <div className="space-y-2">
-                    {product.specs.map((spec, j) => (
-                      <div key={j} className="flex justify-between text-sm border-b border-white/5 pb-2">
-                        <span className="text-white/40">{spec.label}</span>
-                        <span className="text-white/70 font-medium">{spec.value}</span>
-                      </div>
-                    ))}
+          <div className="space-y-0">
+            {mobilierProducts.map((product, i) => {
+              const isEven = i % 2 === 0;
+              return (
+                <motion.div
+                  key={i}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={fadeIn}
+                  custom={i}
+                  className="grid md:grid-cols-2 min-h-[400px]"
+                >
+                  {/* Image */}
+                  <div className={`relative overflow-hidden ${isEven ? 'md:order-1' : 'md:order-2'}`}>
+                    <img
+                      src={product.img}
+                      alt={product.title}
+                      className="w-full h-64 md:h-full object-cover"
+                      loading="lazy"
+                    />
                   </div>
-                  <Link href="/contactez-nous" className="mt-5 inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-navy-deep font-semibold rounded-lg hover:bg-gold-light transition-all text-sm">
-                    Demander un devis <ChevronRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
+                  {/* Texte */}
+                  <div className={`flex flex-col justify-center p-8 md:p-12 ${isEven ? 'md:order-2 bg-white/[0.03]' : 'md:order-1 bg-white/[0.06]'}`}>
+                    <h3 className="text-2xl font-bold text-white mb-4">{product.title}</h3>
+                    <p className="text-white/60 text-sm leading-relaxed mb-6">{product.desc}</p>
+                    <div className="space-y-2 mb-6">
+                      {product.specs.map((spec, j) => (
+                        <div key={j} className="flex justify-between text-sm border-b border-white/5 pb-2">
+                          <span className="text-white/40">{spec.label}</span>
+                          <span className="text-white/70 font-medium">{spec.value}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <Link href="/contactez-nous" className="inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-navy-deep font-semibold rounded-lg hover:bg-gold-light transition-all text-sm w-fit">
+                      Demander un devis <ChevronRight className="w-4 h-4" />
+                    </Link>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
