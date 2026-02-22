@@ -103,7 +103,7 @@ export default function Galerie() {
           />
           <div className="absolute inset-0 bg-black/20" />
           {/* Titre + filtres sur la même ligne */}
-          <div className="absolute top-0 left-0 right-0 z-10 pt-24">
+          <div className="absolute top-0 left-0 right-0 z-10 pt-40">
             <div className="container">
               <div className="flex items-center gap-6 flex-wrap">
                 <h1 className="text-4xl md:text-5xl font-bold text-ivory leading-tight shrink-0">
