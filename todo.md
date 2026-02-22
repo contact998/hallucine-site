@@ -713,3 +713,4 @@
 - [x] Refaire /tente-gonflable-n à l'identique de l'ancien site (mêmes images, même contenu, même structure, grille hero + damier)
 
 - [x] Page /tente-gonflable-v : reconstruire à partir de la page anglaise hallucinecran.com/inflatable-tents-v
+- [x] Page /tente-gonflable-araignee : supprimer photo 4 et mettre les photos restantes sur la même ligne

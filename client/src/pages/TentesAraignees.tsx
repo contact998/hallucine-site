@@ -64,7 +64,6 @@ const images = [
   { src: "https://www.hallucinecran.com/photoset/Tents%20spider/.Sider%20tentes%20bleues.jpg_m.jpg", alt: "Tente araignée gonflable bleue installée sur l'herbe pour un événement en plein air" },
   { src: "https://www.hallucinecran.com/photoset/Tents%20spider/.Sider%20tentes%20rideau%20jaunes.jpg_m.jpg", alt: "Tente araignée gonflable avec des parois latérales jaunes, créant un espace abrité" },
   { src: "https://www.hallucinecran.com/photoset/Tents%20spider/.Sider%20tentes%20vertes.png_m.jpg", alt: "Tente araignée gonflable de couleur verte, se fondant dans un décor naturel" },
-  { src: "https://www.hallucinecran.com/photoset/Tents%20spider/.Sider%20tentes%20noir%20jaunes.jpg_m.jpg", alt: "Tente araignée gonflable noire et jaune, aux couleurs vives pour attirer l'attention" },
   { src: "https://www.hallucinecran.com/Tentes/Tents%20spider/Sider%20tentes%20noires%20mouchetees.jpg", alt: "Tente araignée gonflable noire personnalisée avec le logo 'Ealing Eagles', utilisée pour un événement sportif" },
 ];
 
@@ -99,7 +98,7 @@ export default function TentesAraignees() {
       <section className="py-16 bg-background">
         <div className="container">
           <h2 className="text-3xl font-bold text-ivory mb-8">Tentes Araignées en images</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {images.map((img, i) => (
               <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden group">
                 <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
