@@ -30,19 +30,19 @@ const accessoires = [
   {
     icon: Sofa,
     title: "Canapé gonflable",
-    img: "https://www.hallucinecran.com/Tentes/meubles/canape%20fauteuil%20noir%20rouge.jpg",
+    img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/zsJNdIWSKKGVEgQI.webp",
     desc: "Facile à gonfler, avec une excellente conception anti-dégonflement. Ces canapés extrêmement durables conviennent à vous, votre famille et vos amis pour tout événement Hallucine.",
   },
   {
     icon: Monitor,
     title: "Cabine de projection",
-    img: "https://www.hallucinecran.com/Gallery/48.webp",
+    img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/shzKbinYJnHLyUdb.webp",
     desc: "La cabine de projection fonctionne parfaitement avec les écrans gonflables d'Hallucine. Placez votre projecteur directement et assurez-vous qu'il est en sécurité pour des effets vidéo étonnants.",
   },
   {
     icon: Package,
     title: "Forfaits AV",
-    img: "https://www.hallucinecran.com/Gallery/46.webp",
+    img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/RNSJXzqcGNnEJwlz.webp",
     desc: "De 50 à plus de 400 personnes, quelle que soit la taille de l'événement, vous pouvez offrir une expérience audio et vidéo étonnante à votre public. Forfaits complets incluant projecteur, son et accessoires.",
   },
 ];

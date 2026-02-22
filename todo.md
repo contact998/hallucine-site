@@ -721,3 +721,4 @@
 - [x] Page /arche-gonflable : section Gamme/Applications/FAQ en 3 colonnes avec FAQ de la page anglaise
 - [x] Page /mobilier-gonflable : corriger la photo coupée en haut
 - [x] Page /mobilier-gonflable : damier sur 4 lignes avec les pièces de mobilier
+- [x] Page /accessoire-cinema-plein-air : supprimer photos 4, 5, 6 et remplacer par canapés, cabine projection, AV packages
