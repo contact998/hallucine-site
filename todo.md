@@ -734,3 +734,8 @@
 - [x] Code splitting React.lazy sur les 34 pages (App.tsx)
 - [x] Meta title/description dynamique par page (hook useDocumentMeta + 32 pages)
 - [x] Lazy loading images (21 ajoutées) + lien Blog corrigé
+
+## Audit — Suite des corrections
+- [x] Créer sitemap.xml + robots.txt
+- [x] Nettoyer les fichiers de travail inutiles à la racine (29 fichiers supprimés)
+- [x] Corriger l'erreur TentesN.tsx (résolue — erreur d'état précédent, page charge sans erreur)

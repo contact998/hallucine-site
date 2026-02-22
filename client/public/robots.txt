@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hallucine-site.manus.space/sitemap.xml
+
+# Pages admin et profil
+Disallow: /admin
+Disallow: /admin/
+Disallow: /profil
+Disallow: /api/
