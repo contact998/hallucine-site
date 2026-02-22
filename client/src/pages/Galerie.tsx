@@ -137,27 +137,23 @@ export default function Galerie() {
 
 
 
-      {/* Barre sticky filtres */}
-      <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-md border-b border-border">
-        <div className="container py-3">
-          <div className="flex items-center gap-6 flex-wrap">
-            <h2 className="text-xl font-bold text-ivory shrink-0">Galerie</h2>
-            <div className="flex flex-wrap gap-2 items-center">
-              {categories.map((cat) => (
-                <button
-                  key={`sticky-${cat}`}
-                  onClick={() => setFilter(cat)}
-                  className={`px-3 py-1.5 text-xs rounded transition-colors ${
-                    cat === filter
-                      ? "bg-warm text-charcoal font-semibold"
-                      : "bg-card border border-border text-white/60 hover:text-warm hover:border-warm/30"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-            <span className="text-white/40 text-xs ml-auto">{filtered.length} photo{filtered.length > 1 ? "s" : ""}</span>
+      {/* Barre filtres centrée */}
+      <div className="bg-background border-b border-border">
+        <div className="container py-4">
+          <div className="flex flex-wrap gap-2 justify-center">
+            {categories.map((cat) => (
+              <button
+                key={`bar-${cat}`}
+                onClick={() => setFilter(cat)}
+                className={`px-4 py-2 text-sm rounded transition-colors ${
+                  cat === filter
+                    ? "bg-warm text-charcoal font-semibold"
+                    : "bg-card border border-border text-white/60 hover:text-warm hover:border-warm/30"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
         </div>
       </div>
