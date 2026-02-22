@@ -748,3 +748,4 @@
 - [x] Optimiser les images : decoding=async (69 images) + loading=lazy (6 ajoutées) sur 25 fichiers
 - [x] Intégrer Google Analytics G-JKHPG2Q6GK dans index.html
 - [x] Soumettre le sitemap à Google Search Console (instructions fournies)
+- [x] Ajouter le fichier de vérification Google Search Console google608a77cbc2babbfa.html
