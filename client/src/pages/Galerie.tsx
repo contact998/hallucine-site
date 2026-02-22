@@ -81,7 +81,7 @@ export default function Galerie() {
         />
         <div className="absolute inset-0 bg-black/40" />
         <FlashEffect />
-        <div className="container relative z-10 text-center">
+        <div className="container relative z-10">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight">
             Galerie
           </h1>
