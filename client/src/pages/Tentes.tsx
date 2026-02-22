@@ -42,7 +42,7 @@ const categories = [
 ];
 
 export default function Tentes() {
-  useDocumentMeta("Tentes Gonflables Événementielles", "Tentes gonflables pour événements : tentes X, N, V et araignées. Montage rapide, personnalisables, résistantes au vent. Fabricant depuis 1995.");
+  useDocumentMeta("Tentes Gonflables Événementielles", "Tentes gonflables pour événements : tentes X, N, V et araignées. Montage rapide, personnalisables, résistantes au vent. Fabricant depuis 1995.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eZVHaksoPSdOKbyX.jpg");
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -67,7 +67,7 @@ export default function Tentes() {
       {/* Grille des catégories */}
       <section className="py-20 bg-background">
         <div className="container">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.map((cat) => (
               <Link
                 key={cat.href}

@@ -127,7 +127,7 @@ const faqItems = [
 ];
 
 export default function Mobilier() {
-  useDocumentMeta("Mobilier Gonflable Événementiel", "Mobilier gonflable pour événements : canapés, fauteuils, bars, mange-debout. Design moderne, confortable, personnalisable aux couleurs de votre marque.");
+  useDocumentMeta("Mobilier Gonflable Événementiel", "Mobilier gonflable pour événements : canapés, fauteuils, bars, mange-debout. Design moderne, confortable, personnalisable aux couleurs de votre marque.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg");
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 

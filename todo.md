@@ -741,3 +741,6 @@
 - [x] Corriger l'erreur TentesN.tsx (résolue — erreur d'état précédent, page charge sans erreur)
 - [x] Corriger les liens hallucinecran.fr dans emailTemplates.ts (2 liens → hallucine-site.manus.space)
 - [x] Mettre à jour sitemap.xml, robots.txt et emailTemplates.ts avec hallucinecran.fr
+- [x] Corriger l'erreur d'import dans AdminDashboard.tsx (déjà corrigé, erreur ancienne dans les logs)
+- [x] Ajouter les balises Open Graph (image + description) par page (22 pages + index.html)
+- [x] Vérifier et corriger le responsive mobile sur les pages produits (7 fichiers corrigés)

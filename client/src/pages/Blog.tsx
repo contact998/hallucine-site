@@ -24,7 +24,7 @@ interface Article {
 }
 
 export default function Blog() {
-  useDocumentMeta("Blog | Actualités Cinéma en Plein Air", "Actualités, conseils et tendances du cinéma en plein air. Articles sur les écrans gonflables, événements et innovations.");
+  useDocumentMeta("Blog | Actualités Cinéma en Plein Air", "Actualités, conseils et tendances du cinéma en plein air. Articles sur les écrans gonflables, événements et innovations.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg");
 
   const [categorieActive, setCategorieActive] = useState("Toutes");
   const [expandedComments, setExpandedComments] = useState<Record<string, boolean>>({});

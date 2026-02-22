@@ -85,7 +85,7 @@ const photos = [
 const categories = ["Tous", "Écrans gonflables", "Événements", "Équipement", "Tentes", "Arches", "Mobilier"];
 
 export default function Galerie() {
-  useDocumentMeta("Galerie Photos | Nos Réalisations", "Découvrez nos réalisations en images : écrans de cinéma gonflables, tentes événementielles, arches et mobilier en action lors d'événements réels.");
+  useDocumentMeta("Galerie Photos | Nos Réalisations", "Découvrez nos réalisations en images : écrans de cinéma gonflables, tentes événementielles, arches et mobilier en action lors d'événements réels.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/oDtUBYZZFsCNDfjT.JPG");
 
   const [filter, setFilter] = useState("Tous");
   const [lightbox, setLightbox] = useState<number | null>(null);
@@ -112,12 +112,12 @@ export default function Galerie() {
               <h1 className="text-2xl md:text-3xl font-bold text-ivory shrink-0">
                 Galerie
               </h1>
-              <div className="absolute inset-0 flex flex-wrap gap-4 items-center justify-center pointer-events-none">
+              <div className="absolute inset-0 flex flex-wrap gap-2 sm:gap-4 items-center justify-center pointer-events-none">
                 {categories.map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setFilter(cat)}
-                    className={`pointer-events-auto px-5 py-2 text-sm rounded transition-colors ${
+                    className={`pointer-events-auto px-3 py-1.5 text-xs sm:px-5 sm:py-2 sm:text-sm rounded transition-colors ${
                       cat === filter
                         ? "bg-warm text-charcoal font-semibold"
                         : "bg-white/10 border border-white/20 text-white/70 hover:text-warm hover:border-warm/30"
@@ -143,7 +143,7 @@ export default function Galerie() {
       {/* Grille photos */}
       <section className="py-12 bg-background">
         <div className="container">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {filtered.map((photo, i) => (
               <div
                 key={i}

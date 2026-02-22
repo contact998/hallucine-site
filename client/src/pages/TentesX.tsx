@@ -77,7 +77,7 @@ function ImageLightbox({ src, alt, isOpen, onClose }: { src: string; alt: string
 
 /* ─── Page principale ─── */
 export default function TentesX() {
-  useDocumentMeta("Tente Gonflable X | Tente Événementielle", "Tente gonflable X pour événements. Structure robuste, montage en 10 minutes, personnalisation complète. Idéale pour salons, festivals et promotions.");
+  useDocumentMeta("Tente Gonflable X | Tente Événementielle", "Tente gonflable X pour événements. Structure robuste, montage en 10 minutes, personnalisation complète. Idéale pour salons, festivals et promotions.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eZVHaksoPSdOKbyX.jpg");
 
   const [showCountdown, setShowCountdown] = useState(true);
   const [lightboxImg, setLightboxImg] = useState<{ src: string; alt: string } | null>(null);
@@ -97,7 +97,7 @@ export default function TentesX() {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory text-center mb-10">
             Tentes événementielles <span className="text-warm">en forme de X</span>
           </h1>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
             {heroImages.map((img, i) => (
               <div key={i} className="cursor-pointer overflow-hidden rounded-lg" onClick={() => openLightbox(img.src, img.alt)}>
                 <img src={img.src} alt={img.alt} className="w-full aspect-[4/3] object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
@@ -278,7 +278,7 @@ export default function TentesX() {
             Chez Hallucine, nous nous engageons à fournir des structures gonflables qui incarnent les valeurs de <strong className="text-ivory">fiabilité</strong>, d'<strong className="text-ivory">expertise</strong>, et de <strong className="text-ivory">qualité</strong>. Conçus pour répondre aux attentes les plus élevées, nos produits vous offrent la tranquillité d'esprit lors de chaque utilisation.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-5xl mx-auto">
             <div className="p-6 bg-card border border-border rounded-xl">
               <h3 className="text-warm font-bold text-xl mb-3">Fiabilité</h3>
               <p className="text-white/60 text-sm leading-relaxed">

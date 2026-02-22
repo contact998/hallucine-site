@@ -93,7 +93,7 @@ function ImageCarousel({ images }: { images: { src: string; alt: string }[] }) {
 
 // ─── Composant principal ───────────────────────────────────────────────────────
 export default function EcranEconomique() {
-  useDocumentMeta("Écran Gonflable Économique | Prix Accessibles", "Écran de cinéma gonflable économique pour petits budgets. Qualité professionnelle à prix réduit. Idéal pour débuter le cinéma en plein air.");
+  useDocumentMeta("Écran Gonflable Économique | Prix Accessibles", "Écran de cinéma gonflable économique pour petits budgets. Qualité professionnelle à prix réduit. Idéal pour débuter le cinéma en plein air.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg");
 
   const [showCountdown, setShowCountdown] = useState(true);
 
@@ -321,7 +321,7 @@ export default function EcranEconomique() {
       {/* Section finale — Images + texte */}
       <section className="py-20 bg-background">
         <div className="container">
-          <div className="grid grid-cols-3 gap-4 mb-10">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
             {imagesFinales.map((img, i) => (
               <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden group">
                 <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />

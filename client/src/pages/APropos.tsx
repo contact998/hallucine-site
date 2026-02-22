@@ -16,7 +16,7 @@ const chiffres = [
 ];
 
 export default function APropos() {
-  useDocumentMeta("À Propos | L'Histoire d'Hallucine", "Découvrez l'histoire d'Hallucine, fabricant français d'écrans de cinéma gonflables depuis 1995. Notre passion, notre savoir-faire, notre équipe.");
+  useDocumentMeta("À Propos | L'Histoire d'Hallucine", "Découvrez l'histoire d'Hallucine, fabricant français d'écrans de cinéma gonflables depuis 1995. Notre passion, notre savoir-faire, notre équipe.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg");
 
   return (
     <div className="min-h-screen bg-background text-foreground">

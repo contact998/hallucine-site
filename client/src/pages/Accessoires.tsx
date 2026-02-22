@@ -49,7 +49,7 @@ const accessoires = [
 ];
 
 export default function Accessoires() {
-  useDocumentMeta("Accessoires Cinéma en Plein Air", "Accessoires pour cinéma en plein air : projecteurs, systèmes audio, toiles de rechange, kits de réparation. Tout pour réussir votre événement.");
+  useDocumentMeta("Accessoires Cinéma en Plein Air", "Accessoires pour cinéma en plein air : projecteurs, systèmes audio, toiles de rechange, kits de réparation. Tout pour réussir votre événement.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg");
 
   return (
     <div className="min-h-screen bg-background text-foreground">

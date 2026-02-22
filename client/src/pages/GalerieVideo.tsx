@@ -7,7 +7,7 @@ import VideoLightbox from "@/components/VideoLightbox";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 export default function GalerieVideo() {
-  useDocumentMeta("Galerie Vidéo | Nos Produits en Action", "Vidéos de nos écrans de cinéma gonflables, tentes et mobilier événementiel en action. Montage, installation et événements filmés.");
+  useDocumentMeta("Galerie Vidéo | Nos Produits en Action", "Vidéos de nos écrans de cinéma gonflables, tentes et mobilier événementiel en action. Montage, installation et événements filmés.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/oDtUBYZZFsCNDfjT.JPG");
 
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
 

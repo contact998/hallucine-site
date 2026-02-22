@@ -26,7 +26,7 @@ const contentImages = {
 };
 
 export default function TentesN() {
-  useDocumentMeta("Tente Gonflable N | Tente Humanitaire et Événementielle", "Tente gonflable N polyvalente. Utilisée par la Croix-Rouge et pour événements. Grande surface couverte, montage rapide, résistante.");
+  useDocumentMeta("Tente Gonflable N | Tente Humanitaire et Événementielle", "Tente gonflable N polyvalente. Utilisée par la Croix-Rouge et pour événements. Grande surface couverte, montage rapide, résistante.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eZVHaksoPSdOKbyX.jpg");
 
   /* ─── Lightbox ─── */
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);

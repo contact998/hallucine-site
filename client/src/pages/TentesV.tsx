@@ -24,7 +24,7 @@ const heroImages = [
 const schemaEclate = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/clooOhpeyxauIkZO.jpg";
 
 export default function TentesV() {
-  useDocumentMeta("Tente Gonflable V | Design Élégant", "Tente gonflable V au design élégant et moderne. Idéale pour événements haut de gamme, mariages et réceptions. Personnalisation complète.");
+  useDocumentMeta("Tente Gonflable V | Design Élégant", "Tente gonflable V au design élégant et moderne. Idéale pour événements haut de gamme, mariages et réceptions. Personnalisation complète.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eZVHaksoPSdOKbyX.jpg");
 
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);

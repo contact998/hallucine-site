@@ -72,7 +72,7 @@ const faqItems = [
 ];
 
 export default function Ecrans() {
-  useDocumentMeta("Écrans de Cinéma Gonflables", "Découvrez notre gamme complète d'écrans de cinéma gonflables. Écrans géants, étanches, économiques — de 3m à 24m. Fabricant depuis 1995.");
+  useDocumentMeta("Écrans de Cinéma Gonflables", "Découvrez notre gamme complète d'écrans de cinéma gonflables. Écrans géants, étanches, économiques — de 3m à 24m. Fabricant depuis 1995.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg");
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [showCountdown, setShowCountdown] = useState(true);
@@ -127,7 +127,7 @@ export default function Ecrans() {
       <section className="py-20 bg-charcoal-light">
         <div className="container">
           <h2 className="text-3xl font-bold text-ivory mb-8">Pourquoi choisir Hallucine ?</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { title: "3× plus léger", desc: "Tissus techniques de kitesurf et d'airbag automobile au lieu de bâche PVC." },
               { title: "Garantie 10 ans", desc: "Structure gonflable garantie 10 ans, toile de projection garantie 5 ans." },

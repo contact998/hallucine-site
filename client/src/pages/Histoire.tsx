@@ -103,7 +103,7 @@ const keyFigures = [
 ];
 
 export default function Histoire() {
-  useDocumentMeta("Notre Histoire | Depuis 1995", "L'histoire d'Hallucine depuis 1995 : de la première projection en plein air à aujourd'hui. 30 ans d'innovation dans le cinéma gonflable.");
+  useDocumentMeta("Notre Histoire | Depuis 1995", "L'histoire d'Hallucine depuis 1995 : de la première projection en plein air à aujourd'hui. 30 ans d'innovation dans le cinéma gonflable.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg");
 
   return (
     <div className="min-h-screen bg-background text-foreground">

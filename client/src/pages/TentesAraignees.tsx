@@ -41,7 +41,7 @@ const images = [
 ];
 
 export default function TentesAraignees() {
-  useDocumentMeta("Tente Gonflable Araignée | Tente Spider", "Tente gonflable araignée (spider) pour événements. Design unique, montage ultra-rapide, résistante au vent. Disponible en plusieurs tailles et couleurs.");
+  useDocumentMeta("Tente Gonflable Araignée | Tente Spider", "Tente gonflable araignée (spider) pour événements. Design unique, montage ultra-rapide, résistante au vent. Disponible en plusieurs tailles et couleurs.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eZVHaksoPSdOKbyX.jpg");
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 

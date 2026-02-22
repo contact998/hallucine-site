@@ -67,7 +67,7 @@ const galleryImages = [
 ];
 
 export default function EcranEtanche() {
-  useDocumentMeta("Écran Gonflable Étanche à l'Air | Technologie TPU", "Écran de cinéma gonflable étanche à l'air avec technologie TPU. Silencieux, sans soufflerie, résistant au vent. De 3m à 12m.");
+  useDocumentMeta("Écran Gonflable Étanche à l'Air | Technologie TPU", "Écran de cinéma gonflable étanche à l'air avec technologie TPU. Silencieux, sans soufflerie, résistant au vent. De 3m à 12m.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg");
 
   const [showCountdown, setShowCountdown] = useState(true);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -147,7 +147,7 @@ export default function EcranEtanche() {
       <section className="py-16 bg-charcoal-light">
         <div className="container">
           <h2 className="text-3xl font-bold text-ivory mb-8">Nos écrans étanches en images</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {galleryImages.map((img, i) => (
               <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden group">
                 <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
@@ -184,7 +184,7 @@ export default function EcranEtanche() {
       <section className="py-20 bg-charcoal-light">
         <div className="container">
           <h2 className="text-3xl font-bold text-ivory mb-8">Applications idéales</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { title: "Cinéma en plein air", desc: "Soirées cinéma dans les parcs, jardins, places publiques. Le silence de l'écran étanche permet une immersion totale." },
               { title: "Cinéma piscine", desc: "Projections au bord de la piscine ou sur l'eau. L'étanchéité protège l'écran de l'humidité ambiante." },

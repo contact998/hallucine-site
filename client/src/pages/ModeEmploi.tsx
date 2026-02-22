@@ -24,7 +24,7 @@ const IMG = {
 };
 
 export default function ModeEmploi() {
-  useDocumentMeta("Mode d'Emploi | Installation Écran Gonflable", "Guide d'installation de votre écran de cinéma gonflable. Instructions étape par étape, conseils et astuces pour une projection réussie.");
+  useDocumentMeta("Mode d'Emploi | Installation Écran Gonflable", "Guide d'installation de votre écran de cinéma gonflable. Instructions étape par étape, conseils et astuces pour une projection réussie.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg");
 
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
   const [lightboxImg, setLightboxImg] = useState<{ src: string; alt: string } | null>(null);

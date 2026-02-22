@@ -48,7 +48,7 @@ const galleryImages = [
 ];
 
 export default function EcranGeant() {
-  useDocumentMeta("Écran Gonflable Géant à Soufflerie | De 5m à 24m", "Écran de cinéma gonflable géant à soufflerie continue. Tailles de 5m à 24m, installation rapide, qualité professionnelle. Idéal pour cinéma en plein air.");
+  useDocumentMeta("Écran Gonflable Géant à Soufflerie | De 5m à 24m", "Écran de cinéma gonflable géant à soufflerie continue. Tailles de 5m à 24m, installation rapide, qualité professionnelle. Idéal pour cinéma en plein air.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg");
 
   const [showCountdown, setShowCountdown] = useState(true);
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
@@ -90,7 +90,7 @@ export default function EcranGeant() {
       <section className="py-16 bg-background">
         <div className="container">
           <h2 className="text-3xl font-bold text-ivory mb-8">Nos écrans géants en images</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {galleryImages.map((img, i) => (
               <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden group">
                 <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
@@ -176,7 +176,7 @@ export default function EcranGeant() {
       {/* 3 icônes — Les plus légers / Garantie / Souffleur */}
       <section className="py-16 bg-background">
         <div className="container">
-          <div className="grid grid-cols-3 gap-8 max-w-3xl mx-auto text-center">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl mx-auto text-center">
             <div>
               <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZBLnaDLOhibqZTwD.png" alt="Icône écran gonflable le plus léger du monde par Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" />
               <p className="text-ivory font-semibold">Les plus légers du monde</p>
@@ -323,7 +323,7 @@ export default function EcranGeant() {
         <div className="container">
           <h2 className="text-3xl font-bold text-ivory mb-4">Applications et Usages</h2>
           <p className="text-white/60 mb-10 max-w-2xl">Nos écrans gonflables géants sont idéaux pour :</p>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { icon: Film, title: "Ciné-parcs", desc: "Offrez une expérience cinéma unique en plein air. Créez des drive-in avec nos écrans géants, visibles depuis les véhicules." },
               { icon: Trophy, title: "Événements sportifs", desc: "Diffusez des matchs en grand format. Retransmettez compétitions et événements pour vos fans et supporters." },

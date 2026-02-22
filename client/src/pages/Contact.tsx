@@ -62,7 +62,7 @@ const faqContact = [
 ];
 
 export default function Contact() {
-  useDocumentMeta("Contactez-nous | Devis Gratuit", "Contactez Hallucine pour un devis gratuit. Écrans de cinéma gonflables, tentes, arches, mobilier. Réponse rapide, conseil personnalisé.");
+  useDocumentMeta("Contactez-nous | Devis Gratuit", "Contactez Hallucine pour un devis gratuit. Écrans de cinéma gonflables, tentes, arches, mobilier. Réponse rapide, conseil personnalisé.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg");
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
