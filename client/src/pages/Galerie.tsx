@@ -82,10 +82,16 @@ export default function Galerie() {
         <FlashEffect />
         <div className="container relative z-10">
           <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">Portfolio</p>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight mb-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight">
             Galerie
           </h1>
-          <p className="text-white/80 text-lg max-w-3xl leading-relaxed">
+        </div>
+      </section>
+
+      {/* Description sous l'image */}
+      <section className="py-8 bg-background">
+        <div className="container">
+          <p className="text-white/70 text-lg max-w-3xl leading-relaxed">
             Découvrez nos réalisations à travers le monde. Écrans de cinéma gonflables, tentes événementielles, 
             arches et mobilier — nos produits en action lors d'événements réels.
           </p>
