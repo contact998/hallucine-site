@@ -725,3 +725,6 @@
 - [x] Page /galerie-evenements : ajouter image de fond au header
 - [x] Page /galerie-evenements : ajouter 31 nouvelles photos uploadées par l'utilisateur
 - [x] Retirer les effets d'étoiles et d'arrière-plan animés du site
+
+## Galerie filtres overlay
+- [x] Barre filtres en overlay sur l'image hero (top-160px) sans sticky

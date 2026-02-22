@@ -93,7 +93,7 @@ export default function Galerie() {
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
 
-      {/* Hero */}
+      {/* Hero avec barre filtres en overlay en haut */}
       <section className="relative overflow-hidden bg-black">
         <div className="relative w-full" style={{ aspectRatio: '16/7' }}>
           <img
@@ -102,6 +102,30 @@ export default function Galerie() {
             className="w-full h-full object-contain"
           />
           <div className="absolute inset-0 bg-black/20" />
+
+          {/* Barre filtres overlay en haut de l'image */}
+          <div className="absolute top-[160px] left-0 right-0 z-20 bg-black/60 backdrop-blur-sm py-3">
+            <div className="container relative flex items-center">
+              <h1 className="text-2xl md:text-3xl font-bold text-ivory shrink-0">
+                Galerie
+              </h1>
+              <div className="absolute inset-0 flex flex-wrap gap-4 items-center justify-center pointer-events-none">
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setFilter(cat)}
+                    className={`pointer-events-auto px-5 py-2 text-sm rounded transition-colors ${
+                      cat === filter
+                        ? "bg-warm text-charcoal font-semibold"
+                        : "bg-white/10 border border-white/20 text-white/70 hover:text-warm hover:border-warm/30"
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
 
           {/* Description centrée en bas */}
           <div className="absolute bottom-0 left-0 right-0 z-10 pb-6">
@@ -112,34 +136,6 @@ export default function Galerie() {
           </div>
         </div>
       </section>
-
-
-
-
-
-      {/* Barre unique : Galerie à gauche + filtres centrés, sticky au scroll */}
-      <div className="sticky top-0 z-40 bg-charcoal/95 backdrop-blur-md border-b border-white/10 py-3">
-        <div className="container relative flex items-center">
-          <h1 className="text-2xl md:text-3xl font-bold text-ivory shrink-0">
-            Galerie
-          </h1>
-          <div className="absolute inset-0 flex flex-wrap gap-4 items-center justify-center pointer-events-none">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setFilter(cat)}
-                className={`pointer-events-auto px-5 py-2 text-sm rounded transition-colors ${
-                  cat === filter
-                    ? "bg-warm text-charcoal font-semibold"
-                    : "bg-white/10 border border-white/20 text-white/70 hover:text-warm hover:border-warm/30"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
 
       {/* Grille photos */}
       <section className="py-12 bg-background">
