@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://hallucine-site.manus.space/sitemap.xml
+Sitemap: https://hallucinecran.fr/sitemap.xml
 
 # Pages admin et profil
 Disallow: /admin

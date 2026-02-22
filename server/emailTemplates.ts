@@ -60,13 +60,13 @@ export function buildConfirmationEmail(data: ConfirmationEmailData): EmailMessag
 
   lines.push(
     "En attendant, n'hésitez pas à consulter notre site pour découvrir l'ensemble de notre gamme :",
-    "https://hallucine-site.manus.space",
+    "https://hallucinecran.fr",
     "",
     "À très bientôt,",
     "",
     "L'équipe Hallucine",
     "Écrans de cinéma gonflables",
-    "https://hallucine-site.manus.space",
+    "https://hallucinecran.fr",
     "",
     "---",
     "Cet email a été envoyé automatiquement suite à votre demande sur notre site. Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer ce message.",
