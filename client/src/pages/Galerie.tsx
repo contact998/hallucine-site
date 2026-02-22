@@ -102,30 +102,7 @@ export default function Galerie() {
             className="w-full h-full object-contain"
           />
           <div className="absolute inset-0 bg-black/20" />
-          {/* Titre à gauche */}
-          <div className="absolute top-0 left-0 z-10 pt-40 pl-8">
-            <h1 className="text-4xl md:text-5xl font-bold text-ivory leading-tight">
-              Galerie
-            </h1>
-          </div>
-          {/* Filtres centrés sur toute la largeur */}
-          <div className="absolute top-0 left-0 right-0 z-10 pt-[10.5rem]">
-            <div className="flex flex-wrap gap-4 items-center justify-center">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setFilter(cat)}
-                  className={`px-5 py-2 text-sm rounded transition-colors ${
-                    cat === filter
-                      ? "bg-warm text-charcoal font-semibold"
-                      : "bg-white/10 backdrop-blur-sm border border-white/20 text-white/70 hover:text-warm hover:border-warm/30"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-          </div>
+
           {/* Description centrée en bas */}
           <div className="absolute bottom-0 left-0 right-0 z-10 pb-6">
             <p className="text-white/50 text-base md:text-lg max-w-3xl mx-auto text-center leading-relaxed">
@@ -140,22 +117,27 @@ export default function Galerie() {
 
 
 
-      {/* Barre filtres sticky */}
+      {/* Barre unique : Galerie à gauche + filtres centrés, sticky au scroll */}
       <div className="sticky top-0 z-40 bg-charcoal/95 backdrop-blur-md border-b border-white/10 py-3">
-        <div className="flex flex-wrap gap-4 items-center justify-center">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setFilter(cat)}
-              className={`px-5 py-2 text-sm rounded transition-colors ${
-                cat === filter
-                  ? "bg-warm text-charcoal font-semibold"
-                  : "bg-white/10 border border-white/20 text-white/70 hover:text-warm hover:border-warm/30"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
+        <div className="container relative flex items-center">
+          <h1 className="text-2xl md:text-3xl font-bold text-ivory shrink-0">
+            Galerie
+          </h1>
+          <div className="absolute inset-0 flex flex-wrap gap-4 items-center justify-center pointer-events-none">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setFilter(cat)}
+                className={`pointer-events-auto px-5 py-2 text-sm rounded transition-colors ${
+                  cat === filter
+                    ? "bg-warm text-charcoal font-semibold"
+                    : "bg-white/10 border border-white/20 text-white/70 hover:text-warm hover:border-warm/30"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
