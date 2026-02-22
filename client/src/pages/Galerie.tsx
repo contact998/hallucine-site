@@ -72,26 +72,24 @@ export default function Galerie() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative overflow-hidden min-h-[500px] flex items-center justify-center">
+      <section className="relative overflow-hidden min-h-[500px] flex flex-col justify-between">
         <img
           src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BTjyZEhykZpPjzlQ.webp"
           alt="Cinéma en plein air Hallucine"
           className="absolute inset-0 w-full h-full object-cover"
           style={{ objectPosition: 'center 85%' }}
         />
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-black/30" />
         <FlashEffect />
-        <div className="container relative z-10">
+        {/* Titre en haut à gauche */}
+        <div className="container relative z-10 pt-32">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight">
             Galerie
           </h1>
         </div>
-      </section>
-
-      {/* Description sous l'image */}
-      <section className="py-8 bg-background">
-        <div className="container">
-          <p className="text-white/70 text-lg max-w-3xl leading-relaxed">
+        {/* Description centrée en bas, dans la zone du public */}
+        <div className="container relative z-10 pb-8">
+          <p className="text-white/50 text-base md:text-lg max-w-3xl mx-auto text-center leading-relaxed">
             Découvrez nos réalisations à travers le monde. Écrans de cinéma gonflables, tentes événementielles, 
             arches et mobilier — nos produits en action lors d'événements réels.
           </p>
