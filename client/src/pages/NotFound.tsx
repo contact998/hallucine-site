@@ -2,8 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AlertCircle, Home } from "lucide-react";
 import { useLocation } from "wouter";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 export default function NotFound() {
+  useDocumentMeta("Page non trouvée", "La page que vous recherchez n'existe pas ou a été déplacée.");
+
   const [, setLocation] = useLocation();
 
   const handleGoHome = () => {

@@ -9,6 +9,7 @@ import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 const gammes = [
   {
@@ -71,6 +72,8 @@ const faqItems = [
 ];
 
 export default function Ecrans() {
+  useDocumentMeta("Écrans de Cinéma Gonflables", "Découvrez notre gamme complète d'écrans de cinéma gonflables. Écrans géants, étanches, économiques — de 3m à 24m. Fabricant depuis 1995.");
+
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [showCountdown, setShowCountdown] = useState(true);
 

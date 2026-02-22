@@ -5,8 +5,11 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 export default function PolitiqueCookies() {
+  useDocumentMeta("Politique de Cookies", "Politique de cookies du site Hallucine. Informations sur les cookies utilisés et gestion de vos préférences.");
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />

@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import GearsEffect from "@/components/GearsEffect";
 import VideoLightbox from "@/components/VideoLightbox";
 import { Play, Package, AlertTriangle, Wrench } from "lucide-react";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 /* ── CDN URLs des images ── */
 const IMG = {
@@ -23,6 +24,8 @@ const IMG = {
 };
 
 export default function ModeEmploi() {
+  useDocumentMeta("Mode d'Emploi | Installation Écran Gonflable", "Guide d'installation de votre écran de cinéma gonflable. Instructions étape par étape, conseils et astuces pour une projection réussie.");
+
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
   const [lightboxImg, setLightboxImg] = useState<{ src: string; alt: string } | null>(null);
 

@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 const tailles = [
   { dim: "4m × 4m", poids: "~50 kg", montage: "10-15 min" },
@@ -33,13 +34,15 @@ const faqItems = [
 ];
 
 const images = [
-  { src: "https://www.hallucinecran.com/photoset/Tents%20spider/.Sider%20tentes%20bleues.jpg_m.jpg", alt: "Tente araignée gonflable bleue installée sur l'herbe pour un événement en plein air" },
-  { src: "https://www.hallucinecran.com/photoset/Tents%20spider/.Sider%20tentes%20rideau%20jaunes.jpg_m.jpg", alt: "Tente araignée gonflable avec des parois latérales jaunes, créant un espace abrité" },
-  { src: "https://www.hallucinecran.com/photoset/Tents%20spider/.Sider%20tentes%20vertes.png_m.jpg", alt: "Tente araignée gonflable de couleur verte, se fondant dans un décor naturel" },
-  { src: "https://www.hallucinecran.com/Tentes/Tents%20spider/Sider%20tentes%20noires%20mouchetees.jpg", alt: "Tente araignée gonflable noire personnalisée avec le logo 'Ealing Eagles', utilisée pour un événement sportif" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hDCKMeLGkjmBRLKa.jpg", alt: "Tente araignée gonflable bleue installée sur l'herbe pour un événement en plein air" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/OBHIVVjccbzbfKim.jpg", alt: "Tente araignée gonflable avec des parois latérales jaunes, créant un espace abrité" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hUuhrvIVebKgCbma.jpg", alt: "Tente araignée gonflable de couleur verte, se fondant dans un décor naturel" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CnodnlZAbVhIUKXG.jpg", alt: "Tente araignée gonflable noire personnalisée avec le logo 'Ealing Eagles', utilisée pour un événement sportif" },
 ];
 
 export default function TentesAraignees() {
+  useDocumentMeta("Tente Gonflable Araignée | Tente Spider", "Tente gonflable araignée (spider) pour événements. Design unique, montage ultra-rapide, résistante au vent. Disponible en plusieurs tailles et couleurs.");
+
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (

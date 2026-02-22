@@ -10,19 +10,22 @@ import Footer from "@/components/Footer";
 import VideoLightbox from "@/components/VideoLightbox";
 import { Link } from "wouter";
 import { Play, X as XIcon } from "lucide-react";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 /* ─── Images hero (grille identique à l'ancien site) ─── */
 const heroImages = [
-  { src: "https://www.hallucinecran.com/photoset/Tentes%20V/blanc%201.jpg", alt: "Tente gonflable V blanche vue de face" },
-  { src: "https://www.hallucinecran.com/photoset/Tentes%20V/blanc%204.jpg", alt: "Tente gonflable V blanche vue d'ensemble" },
-  { src: "https://www.hallucinecran.com/photoset/Tentes%20V/15b4c24de8e92b7b9047951a3057fe0.jpg", alt: "Tente gonflable V personnalisée avec logo" },
-  { src: "https://www.hallucinecran.com/photoset/Tentes%20V/d871ba2388a592607d77921d311069a.jpg", alt: "Tente gonflable V stand événement extérieur" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/levBSUmDnUKzAJuS.jpg", alt: "Tente gonflable V blanche vue de face" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/LntxIWlRRRRzhjSp.jpg", alt: "Tente gonflable V blanche vue d'ensemble" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IfApwgmZbVWYaCWW.jpg", alt: "Tente gonflable V personnalisée avec logo" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/cemLvwvOIigfPaCE.jpg", alt: "Tente gonflable V stand événement extérieur" },
 ];
 
 /* ─── Image schéma éclaté ─── */
-const schemaEclate = "https://www.hallucinecran.com/photoset/Tentes%20V/eclate%20en%20francais.jpg";
+const schemaEclate = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/clooOhpeyxauIkZO.jpg";
 
 export default function TentesV() {
+  useDocumentMeta("Tente Gonflable V | Design Élégant", "Tente gonflable V au design élégant et moderne. Idéale pour événements haut de gamme, mariages et réceptions. Personnalisation complète.");
+
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
   const openLightbox = useCallback((src: string, alt: string) => setLightbox({ src, alt }), []);
@@ -65,7 +68,7 @@ export default function TentesV() {
       <section className="py-20 bg-charcoal-light relative overflow-hidden">
         {/* Image de fond subtile */}
         <div className="absolute inset-0 opacity-10">
-          <img src={heroImages[0].src} alt="" className="w-full h-full object-cover" />
+          <img loading="lazy" src={heroImages[0].src} alt="" className="w-full h-full object-cover" />
         </div>
         <div className="container relative z-10">
           <div className="grid lg:grid-cols-3 gap-10 items-start">

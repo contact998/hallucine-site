@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { Users, TrendingUp, Award, MessageCircle } from "lucide-react";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 const avantages = [
   {
@@ -26,6 +27,8 @@ const avantages = [
 ];
 
 export default function DevenirDistributeur() {
+  useDocumentMeta("Devenez Distributeur Hallucine", "Rejoignez le réseau de distributeurs Hallucine. Devenez revendeur d'écrans de cinéma gonflables et de produits événementiels.");
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />

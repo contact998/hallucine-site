@@ -6,8 +6,11 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 export default function MentionsLegales() {
+  useDocumentMeta("Mentions Légales", "Mentions légales du site Hallucine. Informations sur l'éditeur, l'hébergeur et les conditions d'utilisation.");
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />

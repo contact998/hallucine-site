@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { Link } from "wouter";
 import { useTimezone } from "@/hooks/useTimezone";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 type SortField = "createdAt" | "totalPageViews" | "uniqueVisitors" | "totalEvents" | "avgDuration" | "weeklySubmissions";
 type SortDir = "asc" | "desc";
@@ -63,6 +64,8 @@ function KpiCard({
 }
 
 export default function AdminAuditHistory() {
+  useDocumentMeta("Historique des Audits", "Historique des audits IA Hallucine.");
+
   const { user, loading: authLoading, isAuthenticated } = useAuth();
   const [sortField, setSortField] = useState<SortField>("createdAt");
   const [sortDir, setSortDir] = useState<SortDir>("desc");

@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 const archesData = [
   { ref: "CA-4/2.6/0.45", taille: "400×260(H)×45cm" },
@@ -45,6 +46,8 @@ const faqItems = [
 ];
 
 export default function ArchesGonflables() {
+  useDocumentMeta("Arches Gonflables | Arches Publicitaires", "Arches gonflables personnalisables pour événements sportifs, salons et promotions. Impression haute définition, montage rapide.");
+
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (

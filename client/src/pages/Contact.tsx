@@ -8,6 +8,7 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import { ChevronDown, Clock, Globe, Shield, Truck, HelpCircle } from "lucide-react";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -61,6 +62,8 @@ const faqContact = [
 ];
 
 export default function Contact() {
+  useDocumentMeta("Contactez-nous | Devis Gratuit", "Contactez Hallucine pour un devis gratuit. Écrans de cinéma gonflables, tentes, arches, mobilier. Réponse rapide, conseil personnalisé.");
+
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (

@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { MessageSquare, ThumbsUp, User } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 interface Commentaire {
   auteur: string;
@@ -23,6 +24,8 @@ interface Article {
 }
 
 export default function Blog() {
+  useDocumentMeta("Blog | Actualités Cinéma en Plein Air", "Actualités, conseils et tendances du cinéma en plein air. Articles sur les écrans gonflables, événements et innovations.");
+
   const [categorieActive, setCategorieActive] = useState("Toutes");
   const [expandedComments, setExpandedComments] = useState<Record<string, boolean>>({});
 
@@ -249,7 +252,7 @@ export default function Blog() {
                       </p>
                       <div className="flex items-center justify-between">
                         <a
-                          href={`https://www.hallucinecran.com/fr/blogs/post/${article.slug}`}
+                          href={`/blog#${article.slug}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-2 text-[#DAA520] font-medium hover:underline"

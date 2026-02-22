@@ -728,3 +728,9 @@
 
 ## Galerie filtres overlay
 - [x] Barre filtres en overlay sur l'image hero (top-160px) sans sticky
+
+## Audit — Corrections critiques et haute priorité
+- [x] Migrer les ~92 images de hallucinecran.com vers S3 (59 images migrées, 82 remplacements dans 10 fichiers)
+- [x] Code splitting React.lazy sur les 34 pages (App.tsx)
+- [x] Meta title/description dynamique par page (hook useDocumentMeta + 32 pages)
+- [x] Lazy loading images (21 ajoutées) + lien Blog corrigé

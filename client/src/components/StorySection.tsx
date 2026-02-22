@@ -110,13 +110,13 @@ export default function StorySection() {
                 <div className={`${imageLeft ? "order-1" : "order-1 lg:order-2"} relative ${item.smallImage ? "min-h-[200px] lg:min-h-[280px]" : "min-h-[300px] lg:min-h-[400px]"} overflow-hidden flex items-center justify-center bg-black/20`}>
                   {item.image ? (
                     item.smallImage ? (
-                      <img
+                      <img loading="lazy"
                         src={item.image}
                         alt={item.title}
                         className={`${item.extraSmall ? "w-[65%] max-h-[200px]" : "w-[85%] max-h-[260px]"} h-auto object-contain hover:scale-105 transition-transform duration-700 rounded`}
                       />
                     ) : (
-                      <img
+                      <img loading="lazy"
                         src={item.image}
                         alt={item.title}
                         className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700"

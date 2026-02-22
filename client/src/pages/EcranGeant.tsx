@@ -12,6 +12,7 @@ import { Link } from "wouter";
 import { Play } from "lucide-react";
 import { Wind, Clock, Shield, Feather, Users, ArrowRight, Film, Trophy, Music, Presentation, CheckCircle, Phone, Mail } from "lucide-react";
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 const specsData = [
   { taille: "8m × 6m", toile: "7m × 5m", poids: "35 kg", montage: "30 min", personnes: "1" },
@@ -32,21 +33,23 @@ const avantages = [
 ];
 
 const galleryImages = [
-  { src: "https://www.hallucinecran.com/Giant%20Inf/1.webp", alt: "Écran de cinéma géant gonflable installé en plein centre-ville de Paris" },
-  { src: "https://www.hallucinecran.com/Products/21.PNG", alt: "Écran de cinéma géant gonflable de 17m sur 12m installé au Château de Vincennes" },
-  { src: "https://www.hallucinecran.com/Products/ecran-geant-gonflable-24x15-metres.PNG", alt: "Écran de cinéma géant gonflable de 24m sur 15m au Stade Vélodrome de Marseille" },
-  { src: "https://www.hallucinecran.com/Products/23.PNG", alt: "Écran géant gonflable publicitaire pour la compagnie aérienne Air Tahiti Nui" },
-  { src: "https://www.hallucinecran.com/Products/24.PNG", alt: "Écran de cinéma géant gonflable sur la pelouse du stade Orange Vélodrome à Marseille" },
-  { src: "https://www.hallucinecran.com/Gallery/46.webp", alt: "Écran géant gonflable utilisé lors d'un concert de musique classique en plein air" },
-  { src: "https://www.hallucinecran.com/Giant%20Inf/4.webp", alt: "Projection de film sur un écran géant gonflable installé sur le pont d'un bateau de croisière" },
-  { src: "https://www.hallucinecran.com/Giant%20Inf/6.webp", alt: "Spectacle nocturne avec trois écrans géants gonflables et feu d'artifice en arrière-plan" },
-  { src: "https://www.hallucinecran.com/Giant%20Inf/8.webp", alt: "Trois écrans de cinéma géants gonflables installés en plein air au coucher du soleil" },
-  { src: "https://www.hallucinecran.com/Giant%20Inf/9.webp", alt: "Démonstration du montage facile d'un écran géant gonflable par une équipe de trois personnes" },
-  { src: "https://www.hallucinecran.com/Giant%20Inf/10.webp", alt: "Vue depuis les gradins de l'écran géant gonflable au stade Vélodrome Orange de Marseille" },
-  { src: "https://www.hallucinecran.com/Gallery/37.webp", alt: "Écran géant gonflable lors d'un événement en plein air organisé par Canal+" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ovmwyURMeWpJmbWh.webp", alt: "Écran de cinéma géant gonflable installé en plein centre-ville de Paris" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yHWjsrlbpwWzGZEW.PNG", alt: "Écran de cinéma géant gonflable de 17m sur 12m installé au Château de Vincennes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/amMbxSIBiqONYYrz.PNG", alt: "Écran de cinéma géant gonflable de 24m sur 15m au Stade Vélodrome de Marseille" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/mWKCtrftSCKoYYgO.PNG", alt: "Écran géant gonflable publicitaire pour la compagnie aérienne Air Tahiti Nui" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/GXqXGzLVaZDBALTz.PNG", alt: "Écran de cinéma géant gonflable sur la pelouse du stade Orange Vélodrome à Marseille" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZoMWmWANxpLZiwgl.webp", alt: "Écran géant gonflable utilisé lors d'un concert de musique classique en plein air" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/csJbMnnCKYXrRblF.webp", alt: "Projection de film sur un écran géant gonflable installé sur le pont d'un bateau de croisière" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vCEZpDoXlFWlOWBw.webp", alt: "Spectacle nocturne avec trois écrans géants gonflables et feu d'artifice en arrière-plan" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HcyORNSRsOXZgRJi.webp", alt: "Trois écrans de cinéma géants gonflables installés en plein air au coucher du soleil" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CDQRmcvyQxeQZbqX.webp", alt: "Démonstration du montage facile d'un écran géant gonflable par une équipe de trois personnes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YTepnRCYVdygxbxC.webp", alt: "Vue depuis les gradins de l'écran géant gonflable au stade Vélodrome Orange de Marseille" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/UqFIfUVGLTLPxCVg.webp", alt: "Écran géant gonflable lors d'un événement en plein air organisé par Canal+" },
 ];
 
 export default function EcranGeant() {
+  useDocumentMeta("Écran Gonflable Géant à Soufflerie | De 5m à 24m", "Écran de cinéma gonflable géant à soufflerie continue. Tailles de 5m à 24m, installation rapide, qualité professionnelle. Idéal pour cinéma en plein air.");
+
   const [showCountdown, setShowCountdown] = useState(true);
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
 
@@ -153,7 +156,7 @@ export default function EcranGeant() {
             {/* Vidéo montage 10m — miniature cliquable */}
             <div className="bg-card border border-border rounded-lg overflow-hidden cursor-pointer group" onClick={() => setActiveVideo({ id: 'bAxDUrxFUXw', title: 'Montage écran soufflerie 10m' })}>
               <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                <img src="https://img.youtube.com/vi/bAxDUrxFUXw/hqdefault.jpg" alt="Tutoriel montage écran soufflerie 10m Hallucine" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                <img loading="lazy" src="https://img.youtube.com/vi/bAxDUrxFUXw/hqdefault.jpg" alt="Tutoriel montage écran soufflerie 10m Hallucine" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
@@ -175,15 +178,15 @@ export default function EcranGeant() {
         <div className="container">
           <div className="grid grid-cols-3 gap-8 max-w-3xl mx-auto text-center">
             <div>
-              <img src="https://www.hallucinecran.com/Accessories/4-removebg-preview%20-1-.png" alt="Icône écran gonflable le plus léger du monde par Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" />
+              <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZBLnaDLOhibqZTwD.png" alt="Icône écran gonflable le plus léger du monde par Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" />
               <p className="text-ivory font-semibold">Les plus légers du monde</p>
             </div>
             <div>
-              <img src="https://www.hallucinecran.com/Accessories/5-removebg-preview.png" alt="Icône garantie 10 ans sur les écrans gonflables Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" />
+              <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/OQtINjKpErmTXqRM.png" alt="Icône garantie 10 ans sur les écrans gonflables Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" />
               <p className="text-ivory font-semibold">Avec 10 ans de garantie</p>
             </div>
             <div>
-              <img src="https://www.hallucinecran.com/Accessories/6-removebg-preview.png" alt="Icône souffleur permanent pour écrans gonflables Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" />
+              <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yRObkNiXlvsgzhLl.png" alt="Icône souffleur permanent pour écrans gonflables Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" />
               <p className="text-ivory font-semibold">(avec souffleur permanent)</p>
             </div>
           </div>
@@ -258,7 +261,7 @@ export default function EcranGeant() {
             {/* Vidéo démontage — miniature cliquable */}
             <div className="bg-card border border-border rounded-lg overflow-hidden cursor-pointer group" onClick={() => setActiveVideo({ id: 'sHeVec7oZfQ', title: 'Démontage écran soufflerie' })}>
               <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                <img src="https://img.youtube.com/vi/sHeVec7oZfQ/hqdefault.jpg" alt="Tutoriel démontage écran soufflerie Hallucine" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                <img loading="lazy" src="https://img.youtube.com/vi/sHeVec7oZfQ/hqdefault.jpg" alt="Tutoriel démontage écran soufflerie Hallucine" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">

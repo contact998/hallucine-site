@@ -9,22 +9,25 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { X as XIcon } from "lucide-react";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 /* ─── Images hero (grille identique à l'ancien site) ─── */
 const heroImages = [
-  { src: "https://www.hallucinecran.com/photoset/Tentes%20N/.ntent.jpg_m.jpg", alt: "Tente gonflable N Hallucine blanche dans la neige" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eZVHaksoPSdOKbyX.jpg", alt: "Tente gonflable N Hallucine blanche dans la neige" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vvfgDxjiqpyUexFX.jpg", alt: "Tente gonflable N Volvo Discover dans la neige" },
-  { src: "https://www.hallucinecran.com/photoset/Tentes%20N/.Weixin%20Image_20240530160133.jpg_m.jpg", alt: "Tente gonflable N blanche grande vue latérale" },
-  { src: "https://www.hallucinecran.com/photoset/Tentes%20N/.ntent%20croix%20rouge.jpg_m.jpg", alt: "Tente gonflable N Croix-Rouge verte" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/EqoWvWzoAbpjQAoZ.jpg", alt: "Tente gonflable N blanche grande vue latérale" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qzswpRtwfebgxLHb.jpg", alt: "Tente gonflable N Croix-Rouge verte" },
 ];
 
 /* ─── Image contenu ─── */
 const contentImages = {
   tenteVolvo: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vvfgDxjiqpyUexFX.jpg",
-  schemaEclate: "https://www.hallucinecran.com/Tentes/Tentes%20N/ntent%20eclate%20french.jpg",
+  schemaEclate: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/UJADgFBXuANKFjRn.jpg",
 };
 
 export default function TentesN() {
+  useDocumentMeta("Tente Gonflable N | Tente Humanitaire et Événementielle", "Tente gonflable N polyvalente. Utilisée par la Croix-Rouge et pour événements. Grande surface couverte, montage rapide, résistante.");
+
   /* ─── Lightbox ─── */
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
   const openLightbox = useCallback((src: string, alt: string) => setLightbox({ src, alt }), []);

@@ -7,14 +7,17 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { Construction } from "lucide-react";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 const ledImages = [
-  { src: "https://www.hallucinecran.com/Accessories/Ecran-LED-5m-1920w.webp", alt: "Écran LED gonflable Hallucine de 5m pour projection de jour comme de nuit" },
-  { src: "https://www.hallucinecran.com/Accessories/Ecran-LED-4m-1920w.webp", alt: "Écran LED gonflable Hallucine de 4m avec haute luminosité pour événements" },
-  { src: "https://www.hallucinecran.com/Accessories/Montage-LED-1920w.webp", alt: "Démonstration du montage rapide d'un écran LED gonflable Hallucine en extérieur" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HsaFiIxAyJbaFOdZ.webp", alt: "Écran LED gonflable Hallucine de 5m pour projection de jour comme de nuit" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TpuAaOOOZSSoYWkG.webp", alt: "Écran LED gonflable Hallucine de 4m avec haute luminosité pour événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bIHLJvxkdwtLCety.webp", alt: "Démonstration du montage rapide d'un écran LED gonflable Hallucine en extérieur" },
 ];
 
 export default function EcransLED() {
+  useDocumentMeta("Écrans LED Événementiels", "Écrans LED pour événements en plein air et intérieur. Solutions d'affichage haute luminosité pour concerts, festivals et événements corporate.");
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />

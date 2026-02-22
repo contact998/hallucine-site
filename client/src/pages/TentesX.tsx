@@ -15,22 +15,23 @@ import {
   X as XIcon,
 } from "lucide-react";
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 /* ─── Images (identiques à l'ancien site) ─── */
 
 const heroImages = [
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/dNeaCqaVkukLmROr.jpg", alt: "Tentes gonflables X Meguiar's noires et jaunes de nuit" },
-  { src: "https://www.hallucinecran.com/photoset/Tentes%20X/.xtent.jpg_m.jpg", alt: "Tente gonflable X Hallucine noire avec logo" },
-  { src: "https://www.hallucinecran.com/photoset/Tentes%20X/.1078c8cca1c101dbe2d41d70cadf4a0.jpg_m.jpg", alt: "Tentes gonflables X personnalisées multiples" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/nhpkoFFubHgBCQNH.jpg", alt: "Tente gonflable X Hallucine noire avec logo" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jMbXxGnqqBQpaSKf.jpg", alt: "Tentes gonflables X personnalisées multiples" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eHeFyOrReLiuoZGN.jpg", alt: "Tente gonflable X Ealing Eagles personnalisée" },
 ];
 
 const contentImages = {
-  tenteCote: "https://www.hallucinecran.com/Tentes/Tentes%20X/tente-x.jpg",
-  tenteFace: "https://www.hallucinecran.com/Tentes/Tentes%20X/671bade5ef4fb27a93d3034de910dc4.jpg",
-  tentePerso: "https://www.hallucinecran.com/Tentes/Tentes%20X/1078c8cca1c101dbe2d41d70cadf4a0.jpg",
-  tenteNoire: "https://www.hallucinecran.com/Tentes/xtent-1.jpg",
-  schemaEclate: "https://www.hallucinecran.com/Tentes/x%20tent%20Eclate%20french-1.jpg",
+  tenteCote: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/cLlNaQCWrtNrWacm.jpg",
+  tenteFace: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CxWnWAyIeijNmhYL.jpg",
+  tentePerso: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/pIlydvGvCDSAtbwe.jpg",
+  tenteNoire: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PnLAIpGjzrlXUmMH.jpg",
+  schemaEclate: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qxcyMzCtAkChGKtg.jpg",
 };
 
 /* ─── Mini carousel ─── */
@@ -69,13 +70,15 @@ function ImageLightbox({ src, alt, isOpen, onClose }: { src: string; alt: string
       <button onClick={onClose} className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors" aria-label="Fermer">
         <XIcon className="w-6 h-6" />
       </button>
-      <img src={src} alt={alt} className="max-w-[92vw] max-h-[88vh] object-contain rounded-lg shadow-2xl" onClick={(e) => e.stopPropagation()} />
+      <img loading="lazy" src={src} alt={alt} className="max-w-[92vw] max-h-[88vh] object-contain rounded-lg shadow-2xl" onClick={(e) => e.stopPropagation()} />
     </div>
   );
 }
 
 /* ─── Page principale ─── */
 export default function TentesX() {
+  useDocumentMeta("Tente Gonflable X | Tente Événementielle", "Tente gonflable X pour événements. Structure robuste, montage en 10 minutes, personnalisation complète. Idéale pour salons, festivals et promotions.");
+
   const [showCountdown, setShowCountdown] = useState(true);
   const [lightboxImg, setLightboxImg] = useState<{ src: string; alt: string } | null>(null);
 

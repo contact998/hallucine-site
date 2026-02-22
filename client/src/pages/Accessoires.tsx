@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { Headphones, Armchair, Radio, Sofa, Monitor, Package } from "lucide-react";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 const accessoires = [
   {
@@ -48,6 +49,8 @@ const accessoires = [
 ];
 
 export default function Accessoires() {
+  useDocumentMeta("Accessoires Cinéma en Plein Air", "Accessoires pour cinéma en plein air : projecteurs, systèmes audio, toiles de rechange, kits de réparation. Tout pour réussir votre événement.");
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />

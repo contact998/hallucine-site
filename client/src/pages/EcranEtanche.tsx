@@ -10,6 +10,7 @@ import FilmCountdown from "@/components/FilmCountdown";
 import { Link } from "wouter";
 import { VolumeX, Droplets, Clock, Feather, ChevronDown, Shield, Wind, Zap } from "lucide-react";
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 const specsData = [
   { taille: "245 × 200 cm", toile: "218 × 122 cm", poids: "7 kg", hauteur: "50 cm", personnes: "1" },
@@ -57,15 +58,17 @@ const faqItems = [
 ];
 
 const galleryImages = [
-  { src: "https://www.hallucinecran.com/ecran%20etanches.jpg", alt: "Grand écran de cinéma gonflable étanche à l'air installé en extérieur" },
-  { src: "https://www.hallucinecran.com/Le%20cin%C3%A9ma%20%C3%A0%20la%20maison%20037.jpg", alt: "Comparaison de la taille d'un écran gonflable étanche avec une personne" },
-  { src: "https://www.hallucinecran.com/ECRAN%207-5.jpg", alt: "Vue arrière d'un écran gonflable étanche de 7.5m montrant sa structure" },
-  { src: "https://www.hallucinecran.com/Gallery/25.webp", alt: "Écran de cinéma gonflable étanche installé dans un jardin pour un événement" },
-  { src: "https://www.hallucinecran.com/Gallery/47.webp", alt: "Projection de film en plein air sur un grand écran gonflable étanche la nuit" },
-  { src: "https://www.hallucinecran.com/Gallery/49.webp", alt: "Image de haute qualité projetée sur un écran gonflable étanche lors d'un cinéma en plein air nocturne" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/EPgkfmHRzXvUcdzd.jpg", alt: "Grand écran de cinéma gonflable étanche à l'air installé en extérieur" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QbCjkqnaayQbCPAI.jpg", alt: "Comparaison de la taille d'un écran gonflable étanche avec une personne" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eKOtDMUHutnqjXdh.jpg", alt: "Vue arrière d'un écran gonflable étanche de 7.5m montrant sa structure" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bgGbQjCtvAcizIlL.webp", alt: "Écran de cinéma gonflable étanche installé dans un jardin pour un événement" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ncYxRulsuwTbmqyt.webp", alt: "Projection de film en plein air sur un grand écran gonflable étanche la nuit" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wfNnGSUZpZLANRrm.webp", alt: "Image de haute qualité projetée sur un écran gonflable étanche lors d'un cinéma en plein air nocturne" },
 ];
 
 export default function EcranEtanche() {
+  useDocumentMeta("Écran Gonflable Étanche à l'Air | Technologie TPU", "Écran de cinéma gonflable étanche à l'air avec technologie TPU. Silencieux, sans soufflerie, résistant au vent. De 3m à 12m.");
+
   const [showCountdown, setShowCountdown] = useState(true);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 

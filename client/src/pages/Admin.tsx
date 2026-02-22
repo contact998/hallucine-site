@@ -16,6 +16,7 @@ import {
   Send, ExternalLink, Wifi, WifiOff
 } from "lucide-react";
 import { useTimezone } from "@/hooks/useTimezone";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 type SortField = "id" | "createdAt" | "type" | "nom" | "email" | "status" | "produit";
 type SortDir = "asc" | "desc";
@@ -34,6 +35,8 @@ const TYPE_LABELS: Record<string, { label: string; color: string }> = {
 };
 
 export default function Admin() {
+  useDocumentMeta("Administration", "Panneau d'administration Hallucine.");
+
   const { user, loading: authLoading, isAuthenticated } = useAuth();
   const [sortField, setSortField] = useState<SortField>("createdAt");
   const [sortDir, setSortDir] = useState<SortDir>("desc");

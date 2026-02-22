@@ -4,8 +4,11 @@ import { Play } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import VideoLightbox from "@/components/VideoLightbox";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 export default function GalerieVideo() {
+  useDocumentMeta("Galerie Vidéo | Nos Produits en Action", "Vidéos de nos écrans de cinéma gonflables, tentes et mobilier événementiel en action. Montage, installation et événements filmés.");
+
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
 
   const videos = [

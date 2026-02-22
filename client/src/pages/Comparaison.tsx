@@ -8,6 +8,7 @@ import FilmCountdown from "@/components/FilmCountdown";
 import { Link } from "wouter";
 import { useState } from "react";
 import { Check, X, Trophy, Feather, Clock, Shield, Wind, Truck, Wrench, Leaf, Users, Mountain, Package, Ruler, Star } from "lucide-react";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 const comparisonData = [
   { carac: "Légèreté", hallucine: "3 fois plus léger (ex : 13m = 80 kg)", concurrent: "Jusqu'à 260 kg", icon: Feather },
@@ -67,6 +68,8 @@ const arguments7 = [
 ];
 
 export default function Comparaison() {
+  useDocumentMeta("Comparaison des Écrans Gonflables | Guide d'Achat", "Comparez nos écrans de cinéma gonflables : géant vs étanche vs économique. Tableau comparatif de 16 critères pour choisir le bon écran.");
+
   const [showCountdown, setShowCountdown] = useState(true);
 
   return (

@@ -11,6 +11,7 @@ import FilmCountdown from "@/components/FilmCountdown";
 import { Link } from "wouter";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 // ─── Données tableaux ──────────────────────────────────────────────────────────
 const avecSouffleur = [
@@ -29,19 +30,19 @@ const sansSouffleur = [
 
 // ─── Images carousels (identiques à l'ancien site) ────────────────────────────
 const imagesAvecSouffleur = [
-  { src: "https://www.hallucinecran.com/1/20160902_183937.jpg", alt: "Écran économique avec souffleur installé dans la cour d'un bâtiment" },
-  { src: "https://www.hallucinecran.com/Gallery/48.webp", alt: "Écran économique avec souffleur pour un petit public" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/FbgHJgCUoERCuJos.jpg", alt: "Écran économique avec souffleur installé dans la cour d'un bâtiment" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BFaZoFomGXqerqBf.webp", alt: "Écran économique avec souffleur pour un petit public" },
 ];
 
 const imagesSansSouffleur = [
-  { src: "https://www.hallucinecran.com/Giant%20Inf/2.PNG", alt: "Écran économique sans souffleur installé dans un parc" },
-  { src: "https://www.hallucinecran.com/ecran%20etanches.jpg", alt: "Écran économique sans souffleur sur la plage" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/JRJHgNwIipwxbWac.PNG", alt: "Écran économique sans souffleur installé dans un parc" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/EPgkfmHRzXvUcdzd.jpg", alt: "Écran économique sans souffleur sur la plage" },
 ];
 
 const imagesFinales = [
-  { src: "https://www.hallucinecran.com/Le%20cin%C3%A9ma%20%C3%A0%20la%20maison%20037.jpg", alt: "Écran économique comparaison de taille humaine" },
-  { src: "https://www.hallucinecran.com/ECRAN%207-5.jpg", alt: "Écran économique vue de derrière" },
-  { src: "https://www.hallucinecran.com/1/20160902_183937.jpg", alt: "Écran économique installé en extérieur" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QbCjkqnaayQbCPAI.jpg", alt: "Écran économique comparaison de taille humaine" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eKOtDMUHutnqjXdh.jpg", alt: "Écran économique vue de derrière" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/FbgHJgCUoERCuJos.jpg", alt: "Écran économique installé en extérieur" },
 ];
 
 // ─── Mini carousel ─────────────────────────────────────────────────────────────
@@ -92,6 +93,8 @@ function ImageCarousel({ images }: { images: { src: string; alt: string }[] }) {
 
 // ─── Composant principal ───────────────────────────────────────────────────────
 export default function EcranEconomique() {
+  useDocumentMeta("Écran Gonflable Économique | Prix Accessibles", "Écran de cinéma gonflable économique pour petits budgets. Qualité professionnelle à prix réduit. Idéal pour débuter le cinéma en plein air.");
+
   const [showCountdown, setShowCountdown] = useState(true);
 
   return (
@@ -300,15 +303,15 @@ export default function EcranEconomique() {
         <div className="container">
           <div className="flex flex-wrap justify-center items-center gap-8">
             <div className="flex flex-col items-center gap-2">
-              <img src="https://www.hallucinecran.com/Accessories/4-removebg-preview%20-1-.png" alt="Ancre marine" className="w-16 h-16 object-contain" loading="lazy" />
+              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZBLnaDLOhibqZTwD.png" alt="Ancre marine" className="w-16 h-16 object-contain" loading="lazy" />
               <p className="text-white/60 text-xs text-center">L'un des moins chers<br />au monde alliant robustesse</p>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <img src="https://www.hallucinecran.com/Accessories/5-removebg-preview.png" alt="Garantie 1 an" className="w-16 h-16 object-contain" loading="lazy" />
+              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/OQtINjKpErmTXqRM.png" alt="Garantie 1 an" className="w-16 h-16 object-contain" loading="lazy" />
               <p className="text-white/60 text-xs text-center">Garantie 1 an.</p>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <img src="https://www.hallucinecran.com/Accessories/6-removebg-preview.png" alt="Souffleur" className="w-16 h-16 object-contain" loading="lazy" />
+              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yRObkNiXlvsgzhLl.png" alt="Souffleur" className="w-16 h-16 object-contain" loading="lazy" />
               <p className="text-white/60 text-xs text-center">Avec souffleur<br />&amp; Sans souffleur</p>
             </div>
           </div>

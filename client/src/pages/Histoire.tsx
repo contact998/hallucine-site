@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import { ArrowLeft, Globe, Award, Feather, Users, ChevronRight } from "lucide-react";
 import { Link } from "wouter";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 const ETANCHE_3M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XkmcCQJvGfnRZRxz.jpg";
 const ETANCHE_5M_RITZ = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CzprNCGHiOGRIkTg.jpg";
@@ -102,6 +103,8 @@ const keyFigures = [
 ];
 
 export default function Histoire() {
+  useDocumentMeta("Notre Histoire | Depuis 1995", "L'histoire d'Hallucine depuis 1995 : de la première projection en plein air à aujourd'hui. 30 ans d'innovation dans le cinéma gonflable.");
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
@@ -109,7 +112,7 @@ export default function Histoire() {
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <img src={TENTE} alt="Tente gonflable Hallucine lors d'un événement en plein air" className="w-full h-full object-cover" />
+          <img loading="lazy" src={TENTE} alt="Tente gonflable Hallucine lors d'un événement en plein air" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.10_0.03_260_/_0.95)] via-[oklch(0.12_0.03_260_/_0.80)] to-[oklch(0.10_0.03_260_/_0.6)]" />
           <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260)] via-transparent to-transparent" />
         </div>

@@ -6,8 +6,11 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { MapPin, Phone, Mail } from "lucide-react";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 export default function TrouverDistributeur() {
+  useDocumentMeta("Trouvez un Distributeur | Réseau Mondial", "Trouvez un distributeur Hallucine près de chez vous. Réseau mondial de revendeurs d'écrans de cinéma gonflables et produits événementiels.");
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />

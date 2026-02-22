@@ -8,15 +8,16 @@ import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import { Check, ChevronRight, ChevronDown, Feather, Clock, Shield, Palette, ArrowLeft, Package, HelpCircle, Sofa, Wine, Truck, Ruler } from "lucide-react";
 import { Link } from "wouter";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
-const MOBILIER_SUPPORT = "https://www.hallucinecran.com/Tentes/meubles/fauteuils%20tabouret.jpg";
-const MOBILIER_FAUTEUIL = "https://www.hallucinecran.com/Tentes/meubles/fauteuil.jpg";
-const MOBILIER_CANAPE = "https://www.hallucinecran.com/Tentes/meubles/canape%20fauteuil%20noir%20rouge.jpg";
-const MOBILIER_BAR = "https://www.hallucinecran.com/Tentes/meubles/Bar.jpg";
-const MOBILIER_MANGE_DEBOUT = "https://www.hallucinecran.com/Tentes/meubles/mange%20debout.jpg";
-const MOBILIER_CANAPE_BLEU = "https://www.hallucinecran.com/Tentes/meubles/canape%20bleu.jpg";
-const ACCESSOIRE_CHARIOT = "https://www.hallucinecran.com/Tentes/meubles/fauteuils%20tabouret.jpg";
-const ACCESSOIRE_FLYCASE = "https://www.hallucinecran.com/Tentes/meubles/canape%20fauteuil%20noir%20rouge.jpg";
+const MOBILIER_SUPPORT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/MoRIdWaeeTcOqCpJ.jpg";
+const MOBILIER_FAUTEUIL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WwkJlfLpECCcYGmU.jpg";
+const MOBILIER_CANAPE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/KCilunXaTvaFDvKR.jpg";
+const MOBILIER_BAR = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/pgGljsUzRdyrOHDq.jpg";
+const MOBILIER_MANGE_DEBOUT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/FwQqfrsOzrFnxmtI.jpg";
+const MOBILIER_CANAPE_BLEU = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bWcQbEFfeNczmMmc.jpg";
+const ACCESSOIRE_CHARIOT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/MoRIdWaeeTcOqCpJ.jpg";
+const ACCESSOIRE_FLYCASE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/KCilunXaTvaFDvKR.jpg";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -126,6 +127,8 @@ const faqItems = [
 ];
 
 export default function Mobilier() {
+  useDocumentMeta("Mobilier Gonflable Événementiel", "Mobilier gonflable pour événements : canapés, fauteuils, bars, mange-debout. Design moderne, confortable, personnalisable aux couleurs de votre marque.");
+
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
@@ -135,7 +138,7 @@ export default function Mobilier() {
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yIjIIOgOUQsaauXF.jpg" alt="Mobilier gonflable Hallucine en plein air : tente araignée, canapés et table" className="w-full h-full object-cover" style={{ objectPosition: 'center 20%' }} />
+          <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yIjIIOgOUQsaauXF.jpg" alt="Mobilier gonflable Hallucine en plein air : tente araignée, canapés et table" className="w-full h-full object-cover" style={{ objectPosition: 'center 20%' }} />
           <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.10_0.03_260_/_0.5)] via-[oklch(0.12_0.03_260_/_0.3)] to-[oklch(0.10_0.03_260_/_0.05)]" />
           <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260_/_0.6)] via-transparent to-transparent" />
         </div>
@@ -161,7 +164,7 @@ export default function Mobilier() {
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={0} className="order-2 lg:order-1">
-              <img src={MOBILIER_SUPPORT} alt="Structure étanche du mobilier gonflable Hallucine avec chambre à air scellée" className="w-full rounded-lg border border-white/10" />
+              <img loading="lazy" src={MOBILIER_SUPPORT} alt="Structure étanche du mobilier gonflable Hallucine avec chambre à air scellée" className="w-full rounded-lg border border-white/10" />
               <p className="text-white/40 text-xs mt-3 text-center italic">Structure étanche — chambre à air scellée, même technologie que nos écrans</p>
             </motion.div>
 

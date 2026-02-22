@@ -5,8 +5,11 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 export default function Confidentialite() {
+  useDocumentMeta("Politique de Confidentialité", "Politique de confidentialité d'Hallucine. Protection de vos données personnelles, cookies et droits RGPD.");
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />

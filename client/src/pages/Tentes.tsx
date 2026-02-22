@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 const categories = [
   {
@@ -41,6 +42,8 @@ const categories = [
 ];
 
 export default function Tentes() {
+  useDocumentMeta("Tentes Gonflables Événementielles", "Tentes gonflables pour événements : tentes X, N, V et araignées. Montage rapide, personnalisables, résistantes au vent. Fabricant depuis 1995.");
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />

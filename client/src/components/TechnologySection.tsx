@@ -41,21 +41,21 @@ export default function TechnologySection() {
           className="grid grid-cols-3 gap-4 mb-20"
         >
           <div className="overflow-hidden rounded-lg">
-            <img
+            <img loading="lazy"
               src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ygOqSANxPCGqihoq.jpg"
               alt="Écran 24m gonflé au Stade Vélodrome"
               className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
             />
           </div>
           <div className="overflow-hidden rounded-lg">
-            <img
+            <img loading="lazy"
               src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PMQSUHNnXmKFYbHW.jpg"
               alt="Écran 24m à plat au Stade Vélodrome"
               className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
             />
           </div>
           <div className="overflow-hidden rounded-lg">
-            <img
+            <img loading="lazy"
               src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ODQsEVAASBhVGLWu.jpg"
               alt="Équipe portant l'écran 24m à dos d'homme"
               className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"

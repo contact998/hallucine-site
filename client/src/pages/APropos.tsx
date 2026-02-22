@@ -6,6 +6,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 const chiffres = [
   { value: "25+", label: "Années d'expérience" },
@@ -15,6 +16,8 @@ const chiffres = [
 ];
 
 export default function APropos() {
+  useDocumentMeta("À Propos | L'Histoire d'Hallucine", "Découvrez l'histoire d'Hallucine, fabricant français d'écrans de cinéma gonflables depuis 1995. Notre passion, notre savoir-faire, notre équipe.");
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
