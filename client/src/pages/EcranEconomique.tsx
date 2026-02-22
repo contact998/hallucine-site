@@ -58,7 +58,7 @@ function ImageCarousel({ images }: { images: { src: string; alt: string }[] }) {
         alt={images[idx].alt}
         className="w-full h-full object-cover"
         loading="lazy"
-      />
+      decoding="async" />
       {images.length > 1 && (
         <>
           <button
@@ -303,15 +303,15 @@ export default function EcranEconomique() {
         <div className="container">
           <div className="flex flex-wrap justify-center items-center gap-8">
             <div className="flex flex-col items-center gap-2">
-              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZBLnaDLOhibqZTwD.png" alt="Ancre marine" className="w-16 h-16 object-contain" loading="lazy" />
+              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZBLnaDLOhibqZTwD.png" alt="Ancre marine" className="w-16 h-16 object-contain" loading="lazy" decoding="async" />
               <p className="text-white/60 text-xs text-center">L'un des moins chers<br />au monde alliant robustesse</p>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/OQtINjKpErmTXqRM.png" alt="Garantie 1 an" className="w-16 h-16 object-contain" loading="lazy" />
+              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/OQtINjKpErmTXqRM.png" alt="Garantie 1 an" className="w-16 h-16 object-contain" loading="lazy" decoding="async" />
               <p className="text-white/60 text-xs text-center">Garantie 1 an.</p>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yRObkNiXlvsgzhLl.png" alt="Souffleur" className="w-16 h-16 object-contain" loading="lazy" />
+              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yRObkNiXlvsgzhLl.png" alt="Souffleur" className="w-16 h-16 object-contain" loading="lazy" decoding="async" />
               <p className="text-white/60 text-xs text-center">Avec souffleur<br />&amp; Sans souffleur</p>
             </div>
           </div>
@@ -324,7 +324,7 @@ export default function EcranEconomique() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
             {imagesFinales.map((img, i) => (
               <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden group">
-                <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" />
               </div>
             ))}
           </div>

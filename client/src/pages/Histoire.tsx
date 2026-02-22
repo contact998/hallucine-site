@@ -112,7 +112,7 @@ export default function Histoire() {
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <img loading="lazy" src={TENTE} alt="Tente gonflable Hallucine lors d'un événement en plein air" className="w-full h-full object-cover" />
+          <img loading="lazy" src={TENTE} alt="Tente gonflable Hallucine lors d'un événement en plein air" className="w-full h-full object-cover" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.10_0.03_260_/_0.95)] via-[oklch(0.12_0.03_260_/_0.80)] to-[oklch(0.10_0.03_260_/_0.6)]" />
           <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260)] via-transparent to-transparent" />
         </div>
@@ -197,7 +197,7 @@ export default function Histoire() {
                       alt={chapter.title}
                       className="w-full h-64 md:h-80 object-cover hover:scale-105 transition-transform duration-700"
                       loading="lazy"
-                    />
+                    decoding="async" />
                   </div>
                 </div>
               )}

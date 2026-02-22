@@ -82,7 +82,7 @@ export default function ArchesGonflables() {
               { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/zbkdmCgoFZLzrsJh.jpg", alt: "Arche gonflable blanche décorée motifs floraux" },
             ].map((img, i) => (
               <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden group">
-                <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-end">
                   <p className="text-white text-xs p-2 opacity-0 group-hover:opacity-100 transition-opacity">{img.alt}</p>
                 </div>
@@ -271,7 +271,7 @@ export default function ArchesGonflables() {
                 alt="Schéma éclaté des composants de l'arche gonflable — pompe manuelle, pompes électriques, pile, sac à main, valves, surpression, réparation TPU, corde, couverture extérieure, endobiliaire TPU, base"
                 className="w-full rounded-lg shadow-lg"
                 loading="lazy"
-              />
+              decoding="async" />
             </div>
           </div>
         </div>

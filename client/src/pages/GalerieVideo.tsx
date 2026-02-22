@@ -78,7 +78,7 @@ export default function GalerieVideo() {
                     alt={video.title}
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     loading="lazy"
-                  />
+                  decoding="async" />
                   {/* Overlay sombre au hover */}
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
                   {/* Bouton play central */}

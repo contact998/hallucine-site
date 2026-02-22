@@ -93,7 +93,7 @@ export default function EcranGeant() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {galleryImages.map((img, i) => (
               <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden group">
-                <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-end">
                   <p className="text-white text-xs p-2 opacity-0 group-hover:opacity-100 transition-opacity">{img.alt}</p>
                 </div>
@@ -156,7 +156,7 @@ export default function EcranGeant() {
             {/* Vidéo montage 10m — miniature cliquable */}
             <div className="bg-card border border-border rounded-lg overflow-hidden cursor-pointer group" onClick={() => setActiveVideo({ id: 'bAxDUrxFUXw', title: 'Montage écran soufflerie 10m' })}>
               <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                <img loading="lazy" src="https://img.youtube.com/vi/bAxDUrxFUXw/hqdefault.jpg" alt="Tutoriel montage écran soufflerie 10m Hallucine" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                <img loading="lazy" src="https://img.youtube.com/vi/bAxDUrxFUXw/hqdefault.jpg" alt="Tutoriel montage écran soufflerie 10m Hallucine" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" decoding="async" />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
@@ -178,15 +178,15 @@ export default function EcranGeant() {
         <div className="container">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl mx-auto text-center">
             <div>
-              <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZBLnaDLOhibqZTwD.png" alt="Icône écran gonflable le plus léger du monde par Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" />
+              <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZBLnaDLOhibqZTwD.png" alt="Icône écran gonflable le plus léger du monde par Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" decoding="async" />
               <p className="text-ivory font-semibold">Les plus légers du monde</p>
             </div>
             <div>
-              <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/OQtINjKpErmTXqRM.png" alt="Icône garantie 10 ans sur les écrans gonflables Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" />
+              <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/OQtINjKpErmTXqRM.png" alt="Icône garantie 10 ans sur les écrans gonflables Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" decoding="async" />
               <p className="text-ivory font-semibold">Avec 10 ans de garantie</p>
             </div>
             <div>
-              <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yRObkNiXlvsgzhLl.png" alt="Icône souffleur permanent pour écrans gonflables Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" />
+              <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yRObkNiXlvsgzhLl.png" alt="Icône souffleur permanent pour écrans gonflables Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" decoding="async" />
               <p className="text-ivory font-semibold">(avec souffleur permanent)</p>
             </div>
           </div>
@@ -261,7 +261,7 @@ export default function EcranGeant() {
             {/* Vidéo démontage — miniature cliquable */}
             <div className="bg-card border border-border rounded-lg overflow-hidden cursor-pointer group" onClick={() => setActiveVideo({ id: 'sHeVec7oZfQ', title: 'Démontage écran soufflerie' })}>
               <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                <img loading="lazy" src="https://img.youtube.com/vi/sHeVec7oZfQ/hqdefault.jpg" alt="Tutoriel démontage écran soufflerie Hallucine" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                <img loading="lazy" src="https://img.youtube.com/vi/sHeVec7oZfQ/hqdefault.jpg" alt="Tutoriel démontage écran soufflerie Hallucine" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" decoding="async" />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">

@@ -246,7 +246,7 @@ export default function CinemaSuccessAnimation({ prenom, onClose }: CinemaSucces
             alt="Halluciné"
             className="block"
             style={{ width: 280, height: "auto" }}
-          />
+          decoding="async" />
         </motion.div>
       </motion.div>
 

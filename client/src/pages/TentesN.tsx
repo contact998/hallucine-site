@@ -49,7 +49,7 @@ export default function TentesN() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {heroImages.map((img, i) => (
               <div key={i} className="cursor-pointer rounded-lg overflow-hidden aspect-[4/3]" onClick={() => openLightbox(img.src, img.alt)}>
-                <img src={img.src} alt={img.alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+                <img src={img.src} alt={img.alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
               </div>
             ))}
           </div>
@@ -74,7 +74,7 @@ export default function TentesN() {
         <div className="container">
           <div className="grid md:grid-cols-2 gap-10 items-center">
             <div className="cursor-pointer" onClick={() => openLightbox(heroImages[0].src, heroImages[0].alt)}>
-              <img src={heroImages[0].src} alt={heroImages[0].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
+              <img src={heroImages[0].src} alt={heroImages[0].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
             </div>
             <div>
               <h2 className="text-3xl font-bold text-ivory mb-4">
@@ -119,7 +119,7 @@ export default function TentesN() {
               </p>
             </div>
             <div className="cursor-pointer" onClick={() => openLightbox(heroImages[1].src, heroImages[1].alt)}>
-              <img src={heroImages[1].src} alt={heroImages[1].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
+              <img src={heroImages[1].src} alt={heroImages[1].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
             </div>
           </div>
         </div>
@@ -130,7 +130,7 @@ export default function TentesN() {
         <div className="container">
           <div className="grid md:grid-cols-2 gap-10 items-center">
             <div className="cursor-pointer" onClick={() => openLightbox(heroImages[2].src, heroImages[2].alt)}>
-              <img src={heroImages[2].src} alt={heroImages[2].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
+              <img src={heroImages[2].src} alt={heroImages[2].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
             </div>
             <div>
               <h2 className="text-3xl font-bold text-ivory mb-4">
@@ -181,7 +181,7 @@ export default function TentesN() {
               </ul>
             </div>
             <div className="cursor-pointer" onClick={() => openLightbox(heroImages[3].src, heroImages[3].alt)}>
-              <img src={heroImages[3].src} alt={heroImages[3].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
+              <img src={heroImages[3].src} alt={heroImages[3].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
             </div>
           </div>
         </div>
@@ -192,7 +192,7 @@ export default function TentesN() {
         <div className="container">
           <div className="grid md:grid-cols-2 gap-10 items-start">
             <div className="cursor-pointer" onClick={() => openLightbox(contentImages.schemaEclate, "Schéma éclaté des éléments techniques de la tente N")}>
-              <img src={contentImages.schemaEclate} alt="Schéma éclaté des éléments techniques de la tente gonflable N" className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
+              <img src={contentImages.schemaEclate} alt="Schéma éclaté des éléments techniques de la tente gonflable N" className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
             </div>
             <div>
               <h2 className="text-3xl font-bold text-ivory mb-6">
@@ -235,7 +235,7 @@ export default function TentesN() {
           <button onClick={closeLightbox} className="absolute top-4 right-4 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors" aria-label="Fermer">
             <XIcon className="w-6 h-6" />
           </button>
-          <img src={lightbox.src} alt={lightbox.alt} className="max-w-full max-h-[90vh] object-contain rounded-lg" onClick={(e) => e.stopPropagation()} />
+          <img src={lightbox.src} alt={lightbox.alt} className="max-w-full max-h-[90vh] object-contain rounded-lg" onClick={(e) => e.stopPropagation()} decoding="async" loading="lazy" />
         </div>
       )}
     </div>

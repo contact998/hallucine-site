@@ -42,7 +42,7 @@ function ImageCarousel({ images }: { images: { src: string; alt: string }[] }) {
 
   return (
     <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-black/20">
-      <img src={images[idx].src} alt={images[idx].alt} className="w-full h-full object-cover" loading="lazy" />
+      <img src={images[idx].src} alt={images[idx].alt} className="w-full h-full object-cover" loading="lazy" decoding="async" />
       {images.length > 1 && (
         <>
           <button onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white transition-colors" aria-label="Image précédente">
@@ -70,7 +70,7 @@ function ImageLightbox({ src, alt, isOpen, onClose }: { src: string; alt: string
       <button onClick={onClose} className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors" aria-label="Fermer">
         <XIcon className="w-6 h-6" />
       </button>
-      <img loading="lazy" src={src} alt={alt} className="max-w-[92vw] max-h-[88vh] object-contain rounded-lg shadow-2xl" onClick={(e) => e.stopPropagation()} />
+      <img loading="lazy" src={src} alt={alt} className="max-w-[92vw] max-h-[88vh] object-contain rounded-lg shadow-2xl" onClick={(e) => e.stopPropagation()} decoding="async" />
     </div>
   );
 }
@@ -100,7 +100,7 @@ export default function TentesX() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
             {heroImages.map((img, i) => (
               <div key={i} className="cursor-pointer overflow-hidden rounded-lg" onClick={() => openLightbox(img.src, img.alt)}>
-                <img src={img.src} alt={img.alt} className="w-full aspect-[4/3] object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+                <img src={img.src} alt={img.alt} className="w-full aspect-[4/3] object-cover hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
               </div>
             ))}
           </div>
@@ -112,7 +112,7 @@ export default function TentesX() {
         <div className="container">
           <div className="grid md:grid-cols-2 gap-10 items-center">
             <div className="cursor-pointer" onClick={() => openLightbox(heroImages[0].src, heroImages[0].alt)}>
-              <img src={heroImages[0].src} alt={heroImages[0].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
+              <img src={heroImages[0].src} alt={heroImages[0].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
             </div>
             <div>
               <h2 className="text-3xl font-bold text-ivory mb-4">
@@ -149,7 +149,7 @@ export default function TentesX() {
               </ul>
             </div>
             <div className="cursor-pointer" onClick={() => openLightbox(heroImages[1].src, heroImages[1].alt)}>
-              <img src={heroImages[1].src} alt={heroImages[1].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
+              <img src={heroImages[1].src} alt={heroImages[1].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
             </div>
           </div>
         </div>
@@ -160,7 +160,7 @@ export default function TentesX() {
         <div className="container">
           <div className="grid md:grid-cols-2 gap-10 items-start">
             <div className="cursor-pointer order-2 md:order-1" onClick={() => openLightbox(heroImages[2].src, heroImages[2].alt)}>
-              <img src={heroImages[2].src} alt={heroImages[2].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
+              <img src={heroImages[2].src} alt={heroImages[2].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
             </div>
             <div className="order-1 md:order-2">
               <h2 className="text-3xl font-bold text-ivory mb-6">Un Système Fiable et Facile à Entretenir</h2>
@@ -199,7 +199,7 @@ export default function TentesX() {
               </ul>
             </div>
             <div className="cursor-pointer" onClick={() => openLightbox(heroImages[3].src, heroImages[3].alt)}>
-              <img src={heroImages[3].src} alt={heroImages[3].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
+              <img src={heroImages[3].src} alt={heroImages[3].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
             </div>
           </div>
         </div>
@@ -210,7 +210,7 @@ export default function TentesX() {
         <div className="container">
           <div className="grid md:grid-cols-2 gap-10 items-start">
             <div className="cursor-pointer order-2 md:order-1" onClick={() => openLightbox(contentImages.tentePerso, "Tentes gonflables X personnalisées")}>
-              <img src={contentImages.tentePerso} alt="Tentes gonflables X personnalisées avec différentes couleurs et logos" className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" />
+              <img src={contentImages.tentePerso} alt="Tentes gonflables X personnalisées avec différentes couleurs et logos" className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
             </div>
             <div className="order-1 md:order-2">
               <h2 className="text-3xl font-bold text-ivory mb-6">Personnalisation Complète</h2>

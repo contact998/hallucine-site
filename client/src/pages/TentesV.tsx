@@ -48,7 +48,7 @@ export default function TentesV() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {heroImages.map((img, i) => (
               <div key={i} className="cursor-pointer rounded-lg overflow-hidden aspect-[4/3]" onClick={() => openLightbox(img.src, img.alt)}>
-                <img src={img.src} alt={img.alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+                <img src={img.src} alt={img.alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
               </div>
             ))}
           </div>
@@ -68,7 +68,7 @@ export default function TentesV() {
       <section className="py-20 bg-charcoal-light relative overflow-hidden">
         {/* Image de fond subtile */}
         <div className="absolute inset-0 opacity-10">
-          <img loading="lazy" src={heroImages[0].src} alt="" className="w-full h-full object-cover" />
+          <img loading="lazy" src={heroImages[0].src} alt="" className="w-full h-full object-cover" decoding="async" />
         </div>
         <div className="container relative z-10">
           <div className="grid lg:grid-cols-3 gap-10 items-start">
@@ -166,7 +166,7 @@ export default function TentesV() {
             {/* Vidéo YouTube droite */}
             <div className="bg-card border border-border rounded-lg overflow-hidden cursor-pointer group" onClick={() => setActiveVideo({ id: '-cga1EVZQtg', title: 'Tente gonflable V — Montage' })}>
               <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                <img src="https://img.youtube.com/vi/-cga1EVZQtg/hqdefault.jpg" alt="Tutoriel montage tente gonflable en V Hallucine" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+                <img src="https://img.youtube.com/vi/-cga1EVZQtg/hqdefault.jpg" alt="Tutoriel montage tente gonflable en V Hallucine" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
@@ -250,7 +250,7 @@ export default function TentesV() {
               alt="Schéma éclaté des composants de la Tente Gonflable V — pompe, valve, sardines, sac de transport, tissu, structure Dacron, sacs de lestage"
               className="w-full rounded-lg shadow-lg hover:scale-[1.01] transition-transform"
               loading="lazy"
-            />
+            decoding="async" />
           </div>
           <p className="text-white/50 text-sm text-center mt-4">Cliquez sur l'image pour agrandir</p>
         </div>
@@ -345,7 +345,7 @@ export default function TentesV() {
           <button onClick={closeLightbox} className="absolute top-4 right-4 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors" aria-label="Fermer">
             <XIcon className="w-6 h-6" />
           </button>
-          <img src={lightbox.src} alt={lightbox.alt} className="max-w-full max-h-[90vh] object-contain rounded-lg" onClick={(e) => e.stopPropagation()} />
+          <img src={lightbox.src} alt={lightbox.alt} className="max-w-full max-h-[90vh] object-contain rounded-lg" onClick={(e) => e.stopPropagation()} decoding="async" loading="lazy" />
         </div>
       )}
 

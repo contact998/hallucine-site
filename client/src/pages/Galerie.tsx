@@ -103,7 +103,7 @@ export default function Galerie() {
             src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BTjyZEhykZpPjzlQ.webp"
             alt="Cinéma en plein air Hallucine"
             className="w-full h-full object-contain"
-          />
+          decoding="async" />
           <div className="absolute inset-0 bg-black/20" />
 
           {/* Barre filtres overlay en haut de l'image */}
@@ -150,7 +150,7 @@ export default function Galerie() {
                 className="relative aspect-[4/3] rounded-lg overflow-hidden group cursor-pointer"
                 onClick={() => setLightbox(i)}
               >
-                <img src={photo.src} alt={photo.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                <img src={photo.src} alt={photo.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-end">
                   <p className="text-white text-xs p-2 opacity-0 group-hover:opacity-100 transition-opacity">{photo.alt}</p>
                 </div>
@@ -189,7 +189,7 @@ export default function Galerie() {
             </button>
           )}
           <div className="max-w-5xl max-h-[85vh]" onClick={(e) => e.stopPropagation()}>
-            <img src={filtered[lightbox].src} alt={filtered[lightbox].alt} className="max-w-full max-h-[80vh] object-contain rounded" />
+            <img src={filtered[lightbox].src} alt={filtered[lightbox].alt} className="max-w-full max-h-[80vh] object-contain rounded" decoding="async" loading="lazy" />
             <p className="text-white/70 text-sm mt-3 text-center">{filtered[lightbox].alt}</p>
           </div>
         </div>

@@ -138,7 +138,7 @@ export default function Mobilier() {
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yIjIIOgOUQsaauXF.jpg" alt="Mobilier gonflable Hallucine en plein air : tente araignée, canapés et table" className="w-full h-full object-cover" style={{ objectPosition: 'center 20%' }} />
+          <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yIjIIOgOUQsaauXF.jpg" alt="Mobilier gonflable Hallucine en plein air : tente araignée, canapés et table" className="w-full h-full object-cover" style={{ objectPosition: 'center 20%' }} decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.10_0.03_260_/_0.5)] via-[oklch(0.12_0.03_260_/_0.3)] to-[oklch(0.10_0.03_260_/_0.05)]" />
           <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260_/_0.6)] via-transparent to-transparent" />
         </div>
@@ -164,7 +164,7 @@ export default function Mobilier() {
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={0} className="order-2 lg:order-1">
-              <img loading="lazy" src={MOBILIER_SUPPORT} alt="Structure étanche du mobilier gonflable Hallucine avec chambre à air scellée" className="w-full rounded-lg border border-white/10" />
+              <img loading="lazy" src={MOBILIER_SUPPORT} alt="Structure étanche du mobilier gonflable Hallucine avec chambre à air scellée" className="w-full rounded-lg border border-white/10" decoding="async" />
               <p className="text-white/40 text-xs mt-3 text-center italic">Structure étanche — chambre à air scellée, même technologie que nos écrans</p>
             </motion.div>
 
@@ -234,7 +234,7 @@ export default function Mobilier() {
                       alt={product.title}
                       className="w-full h-64 md:h-full object-cover"
                       loading="lazy"
-                    />
+                    decoding="async" />
                   </div>
                   {/* Texte */}
                   <div className={`flex flex-col justify-center p-8 md:p-12 ${isEven ? 'md:order-2 bg-white/[0.03]' : 'md:order-1 bg-white/[0.06]'}`}>
@@ -282,7 +282,7 @@ export default function Mobilier() {
                 custom={i}
                 className="border border-white/[0.06] rounded-lg overflow-hidden"
               >
-                <img src={product.img} alt={product.title} className="w-full h-56 object-cover" loading="lazy" />
+                <img src={product.img} alt={product.title} className="w-full h-56 object-cover" loading="lazy" decoding="async" />
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-white mb-3">{product.title}</h3>
                   <p className="text-white/60 text-sm leading-relaxed mb-5">{product.desc}</p>

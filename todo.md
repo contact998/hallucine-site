@@ -744,3 +744,5 @@
 - [x] Corriger l'erreur d'import dans AdminDashboard.tsx (déjà corrigé, erreur ancienne dans les logs)
 - [x] Ajouter les balises Open Graph (image + description) par page (22 pages + index.html)
 - [x] Vérifier et corriger le responsive mobile sur les pages produits (7 fichiers corrigés)
+- [x] Page 404 personnalisée avec design cinéma vintage
+- [x] Optimiser les images : decoding=async (69 images) + loading=lazy (6 ajoutées) sur 25 fichiers

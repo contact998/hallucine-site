@@ -143,7 +143,7 @@ export default function RealisationsSection() {
                 alt={photo.alt}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 loading="lazy"
-              />
+              decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
                 <span className="text-white text-sm font-medium">{photo.caption}</span>
@@ -172,7 +172,7 @@ export default function RealisationsSection() {
             src={photos[lightbox].src}
             alt={photos[lightbox].alt}
             className="max-w-full max-h-[85vh] object-contain"
-          />
+          decoding="async" loading="lazy" />
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
             <p className="text-white/70 text-sm font-medium">{photos[lightbox].caption}</p>
           </div>

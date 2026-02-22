@@ -114,13 +114,13 @@ export default function StorySection() {
                         src={item.image}
                         alt={item.title}
                         className={`${item.extraSmall ? "w-[65%] max-h-[200px]" : "w-[85%] max-h-[260px]"} h-auto object-contain hover:scale-105 transition-transform duration-700 rounded`}
-                      />
+                      decoding="async" />
                     ) : (
                       <img loading="lazy"
                         src={item.image}
                         alt={item.title}
                         className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                      />
+                      decoding="async" />
                     )
                   ) : (
                     <div className="absolute inset-0 bg-white/[0.03] border border-white/[0.06] flex items-center justify-center">
