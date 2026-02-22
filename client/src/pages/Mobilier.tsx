@@ -137,7 +137,7 @@ export default function Mobilier() {
       <section className="relative min-h-[60vh] flex items-center overflow-hidden">
         <BokehEffect />
         <div className="absolute inset-0">
-          <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yIjIIOgOUQsaauXF.jpg" alt="Mobilier gonflable Hallucine en plein air : tente araignée, canapés et table" className="w-full h-full object-cover" />
+          <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yIjIIOgOUQsaauXF.jpg" alt="Mobilier gonflable Hallucine en plein air : tente araignée, canapés et table" className="w-full h-full object-cover object-top" />
           <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.10_0.03_260_/_0.5)] via-[oklch(0.12_0.03_260_/_0.3)] to-[oklch(0.10_0.03_260_/_0.05)]" />
           <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260_/_0.6)] via-transparent to-transparent" />
         </div>
