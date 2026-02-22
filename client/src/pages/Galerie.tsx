@@ -77,7 +77,7 @@ export default function Galerie() {
           src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BTjyZEhykZpPjzlQ.webp"
           alt="Cinéma en plein air Hallucine"
           className="absolute inset-0 w-full h-full object-cover"
-          style={{ objectPosition: 'center 70%' }}
+          style={{ objectPosition: 'center 85%' }}
         />
         <div className="absolute inset-0 bg-black/40" />
         <FlashEffect />
