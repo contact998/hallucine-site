@@ -112,29 +112,78 @@ export default function ArchesGonflables() {
         </div>
       </section>
 
-      {/* Tarifs arches */}
+      {/* Gamme d'arches (2 col) + FAQ (1 col) — 3 colonnes */}
       <section className="py-20 bg-charcoal-light">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-4">Gamme d'arches gonflables</h2>
-          <p className="text-white/60 mb-2 text-sm">Tissu blanc + vessie TPU. Les arches sont étanches — un seul gonflage suffit.</p>
-          <p className="text-white/60 mb-8 text-sm">11 références disponibles, de 4m à 12m de large. Diamètre maximal : 90 cm.</p>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-warm/30">
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Référence</th>
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Taille</th>
-                </tr>
-              </thead>
-              <tbody>
-                {archesData.map((row, i) => (
-                  <tr key={i} className="border-b border-border hover:bg-white/5 transition-colors">
-                    <td className="py-3 px-3 text-ivory font-medium">{row.ref}</td>
-                    <td className="py-3 px-3 text-white/70">{row.taille}</td>
-                  </tr>
+          <div className="grid md:grid-cols-3 gap-10">
+            {/* Colonnes 1-2 : Gamme d'arches */}
+            <div className="md:col-span-2">
+              <h2 className="text-3xl font-bold text-ivory mb-4">
+                Gamme d'arches <span className="text-warm">gonflables</span>
+              </h2>
+              <p className="text-white/60 mb-2 text-sm">Tissu blanc + vessie TPU. Les arches sont étanches — un seul gonflage suffit.</p>
+              <p className="text-white/60 mb-6 text-sm">11 références disponibles, de 4m à 12m de large. Diamètre maximal : 90 cm.</p>
+              <div className="grid grid-cols-2 gap-4">
+                {/* Moitié gauche du tableau */}
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-warm/30">
+                      <th className="text-left py-3 px-3 text-warm font-semibold">Référence</th>
+                      <th className="text-left py-3 px-3 text-warm font-semibold">Taille</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {archesData.slice(0, 6).map((row, i) => (
+                      <tr key={i} className="border-b border-border hover:bg-white/5 transition-colors">
+                        <td className="py-2 px-3 text-ivory font-medium text-xs">{row.ref}</td>
+                        <td className="py-2 px-3 text-white/70 text-xs">{row.taille}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {/* Moitié droite du tableau */}
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-warm/30">
+                      <th className="text-left py-3 px-3 text-warm font-semibold">Référence</th>
+                      <th className="text-left py-3 px-3 text-warm font-semibold">Taille</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {archesData.slice(6).map((row, i) => (
+                      <tr key={i} className="border-b border-border hover:bg-white/5 transition-colors">
+                        <td className="py-2 px-3 text-ivory font-medium text-xs">{row.ref}</td>
+                        <td className="py-2 px-3 text-white/70 text-xs">{row.taille}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            {/* Colonne 3 : FAQ */}
+            <div>
+              <h2 className="text-3xl font-bold text-ivory mb-6">
+                Questions <span className="text-warm">Fréquentes</span>
+              </h2>
+              <div className="space-y-3">
+                {faqItems.map((item, i) => (
+                  <div key={i} className="border border-border rounded-lg overflow-hidden">
+                    <button
+                      onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                      className="w-full flex items-center justify-between p-4 text-left hover:bg-white/5 transition-colors"
+                    >
+                      <span className="text-ivory font-medium text-sm pr-3">{item.q}</span>
+                      <ChevronDown className={`w-4 h-4 text-warm shrink-0 transition-transform ${openFaq === i ? "rotate-180" : ""}`} />
+                    </button>
+                    {openFaq === i && (
+                      <div className="px-4 pb-4">
+                        <p className="text-white/60 text-sm leading-relaxed">{item.a}</p>
+                      </div>
+                    )}
+                  </div>
                 ))}
-              </tbody>
-            </table>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -227,53 +276,24 @@ export default function ArchesGonflables() {
         </div>
       </section>
 
-      {/* Applications + FAQ — 2 colonnes */}
+      {/* Applications */}
       <section className="py-20 bg-background">
         <div className="container">
-          <div className="grid md:grid-cols-2 gap-10">
-            {/* Colonne gauche — Applications */}
-            <div>
-              <h2 className="text-3xl font-bold text-ivory mb-6">
-                Applications <span className="text-warm">Possibles</span>
-              </h2>
-              <div className="space-y-4">
-                <div className="p-5 bg-card border border-border rounded-lg">
-                  <h3 className="text-warm font-semibold mb-2">Événements sportifs</h3>
-                  <p className="text-white/60 text-sm">Portique pour les départs et arrivées de courses. Points d'entrée pour les compétitions en plein air.</p>
-                </div>
-                <div className="p-5 bg-card border border-border rounded-lg">
-                  <h3 className="text-warm font-semibold mb-2">Expositions et foires</h3>
-                  <p className="text-white/60 text-sm">Signalétique pour guider les visiteurs. Décorations promotionnelles pour stands.</p>
-                </div>
-                <div className="p-5 bg-card border border-border rounded-lg">
-                  <h3 className="text-warm font-semibold mb-2">Publicité mobile</h3>
-                  <p className="text-white/60 text-sm">Supports pour campagnes publicitaires locales ou itinérantes.</p>
-                </div>
-              </div>
+          <h2 className="text-3xl font-bold text-ivory mb-6">
+            Applications <span className="text-warm">Possibles</span>
+          </h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="p-5 bg-card border border-border rounded-lg">
+              <h3 className="text-warm font-semibold mb-2">Événements sportifs</h3>
+              <p className="text-white/60 text-sm">Portique pour les départs et arrivées de courses. Points d'entrée pour les compétitions en plein air.</p>
             </div>
-            {/* Colonne droite — FAQ */}
-            <div>
-              <h2 className="text-3xl font-bold text-ivory mb-6">
-                Questions <span className="text-warm">Fréquentes</span>
-              </h2>
-              <div className="space-y-3">
-                {faqItems.map((item, i) => (
-                  <div key={i} className="border border-border rounded-lg overflow-hidden">
-                    <button
-                      onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                      className="w-full flex items-center justify-between p-5 text-left hover:bg-white/5 transition-colors"
-                    >
-                      <span className="text-ivory font-medium pr-4">{item.q}</span>
-                      <ChevronDown className={`w-5 h-5 text-warm shrink-0 transition-transform ${openFaq === i ? "rotate-180" : ""}`} />
-                    </button>
-                    {openFaq === i && (
-                      <div className="px-5 pb-5">
-                        <p className="text-white/60 leading-relaxed">{item.a}</p>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
+            <div className="p-5 bg-card border border-border rounded-lg">
+              <h3 className="text-warm font-semibold mb-2">Expositions et foires</h3>
+              <p className="text-white/60 text-sm">Signalétique pour guider les visiteurs. Décorations promotionnelles pour stands.</p>
+            </div>
+            <div className="p-5 bg-card border border-border rounded-lg">
+              <h3 className="text-warm font-semibold mb-2">Publicité mobile</h3>
+              <p className="text-white/60 text-sm">Supports pour campagnes publicitaires locales ou itinérantes.</p>
             </div>
           </div>
         </div>

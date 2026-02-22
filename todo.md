@@ -718,3 +718,4 @@
 - [x] Page /arche-gonflable : supprimer les photos 4, 6, 7 et 8
 - [x] Page /arche-gonflable : section Caractéristiques Techniques en 2 colonnes (texte + image éclatée)
 - [x] Page /arche-gonflable : Applications possibles et Questions fréquentes en 2 colonnes côte à côte
+- [x] Page /arche-gonflable : section Gamme/Applications/FAQ en 3 colonnes avec FAQ de la page anglaise
