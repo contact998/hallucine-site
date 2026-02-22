@@ -72,16 +72,16 @@ export default function Galerie() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative overflow-hidden pt-32 pb-20 min-h-[400px] flex items-end">
+      <section className="relative overflow-hidden min-h-[500px] flex items-center justify-center">
         <img
           src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BTjyZEhykZpPjzlQ.webp"
           alt="Cinéma en plein air Hallucine"
           className="absolute inset-0 w-full h-full object-cover"
+          style={{ objectPosition: 'center 70%' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+        <div className="absolute inset-0 bg-black/40" />
         <FlashEffect />
-        <div className="container relative z-10">
-          <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">Portfolio</p>
+        <div className="container relative z-10 text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight">
             Galerie
           </h1>
