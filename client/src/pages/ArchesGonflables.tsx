@@ -115,7 +115,7 @@ export default function ArchesGonflables() {
       {/* Gamme d'arches (2 col) + FAQ (1 col) — 3 colonnes */}
       <section className="py-20 bg-charcoal-light">
         <div className="container">
-          <div className="grid md:grid-cols-3 gap-10">
+          <div className="grid md:grid-cols-3 gap-10 items-start">
             {/* Colonnes 1-2 : Gamme d'arches */}
             <div className="md:col-span-2">
               <h2 className="text-3xl font-bold text-ivory mb-4">
