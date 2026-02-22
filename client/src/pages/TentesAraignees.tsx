@@ -17,33 +17,6 @@ const tailles = [
   { dim: "10m × 10m", poids: "~80 kg", montage: "15 min" },
 ];
 
-const prixTableau = [
-  { element: "Structure", detail: "Toit", cols: ["✓", "✓", "✓", "✓"] },
-  { element: "", detail: "Pieds (les 4)", cols: ["✓", "✓", "✓", "✓"] },
-  { element: "Tissu Mur", detail: "Standard", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "", detail: "Porte", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "", detail: "Fenêtre", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "Structure Auvent", detail: "Par côté ajouté", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "Impression Générale", detail: "Toit", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "", detail: "Pieds Structure (×4)", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "", detail: "PVC Pieds Structure (×4)", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "", detail: "Couvertures Zips Pieds Base (×4)", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "", detail: "Mur (par mur imprimé)", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "Impression Auvent", detail: "Bannière (par côté)", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "", detail: "Pieds (par côté)", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "", detail: "PVC Pieds (par côté)", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "", detail: "Tissu Auvent (par côté)", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "Accessoires", detail: "Sac Transport", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "", detail: "Pompe Électrique", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "", detail: "Pompe Manuelle", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "", detail: "Sac de Sable (unité)", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "", detail: "Sac d'Eau (unité)", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "", detail: "Lumière LED", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "", detail: "Kit de réparation", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "", detail: "Système d'ancrage", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "", detail: "Tapis de sol", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-  { element: "", detail: "Système de connexion", cols: ["Opt.", "Opt.", "Opt.", "Opt."] },
-];
 
 const faqItems = [
   {
@@ -168,38 +141,6 @@ export default function TentesAraignees() {
         </div>
       </section>
 
-      {/* Tableau de prix / éléments */}
-      <section className="py-20 bg-charcoal-light">
-        <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-4">Tableau des Éléments Disponibles</h2>
-          <p className="text-white/50 text-sm mb-8">Contactez-nous pour obtenir les prix détaillés de chaque élément.</p>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm min-w-[700px]">
-              <thead>
-                <tr className="border-b-2 border-warm/40">
-                  <th className="text-left py-3 px-3 text-warm font-semibold w-36">Catégorie</th>
-                  <th className="text-left py-3 px-3 text-warm font-semibold w-56">Élément</th>
-                  <th className="text-center py-3 px-3 text-warm font-semibold">4m×4m</th>
-                  <th className="text-center py-3 px-3 text-warm font-semibold">6m×6m</th>
-                  <th className="text-center py-3 px-3 text-warm font-semibold">8m×8m</th>
-                  <th className="text-center py-3 px-3 text-warm font-semibold">10m×10m</th>
-                </tr>
-              </thead>
-              <tbody>
-                {prixTableau.map((row, i) => (
-                  <tr key={i} className="border-b border-border hover:bg-white/5 transition-colors">
-                    <td className="py-3 px-3 text-ivory font-medium text-xs">{row.element}</td>
-                    <td className="py-3 px-3 text-white/70 text-xs">{row.detail}</td>
-                    {row.cols.map((c, j) => (
-                      <td key={j} className={`py-3 px-3 text-center text-xs ${c === "✓" ? "text-green-400" : "text-white/40"}`}>{c}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
 
       {/* Caractéristiques techniques */}
       <section className="py-20 bg-background">

@@ -714,3 +714,4 @@
 
 - [x] Page /tente-gonflable-v : reconstruire à partir de la page anglaise hallucinecran.com/inflatable-tents-v
 - [x] Page /tente-gonflable-araignee : supprimer photo 4 et mettre les photos restantes sur la même ligne
+- [x] Page /tente-gonflable-araignee : supprimer le tableau des éléments disponibles
