@@ -102,8 +102,8 @@ export default function Galerie() {
             className="w-full h-full object-contain"
           />
           <div className="absolute inset-0 bg-black/20" />
-          {/* Titre en haut à gauche */}
-          <div className="absolute top-0 left-0 container z-10 pt-24">
+          {/* Titre à gauche, centré verticalement */}
+          <div className="absolute inset-y-0 left-0 container z-10 flex items-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight">
               Galerie
             </h1>
