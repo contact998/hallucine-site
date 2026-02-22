@@ -109,12 +109,12 @@ export default function Galerie() {
                 <h1 className="text-4xl md:text-5xl font-bold text-ivory leading-tight shrink-0">
                   Galerie
                 </h1>
-                <div className="flex flex-wrap gap-2 items-center flex-1 justify-center">
+                <div className="flex flex-wrap gap-4 items-center flex-1 justify-center">
                   {categories.map((cat) => (
                     <button
                       key={cat}
                       onClick={() => setFilter(cat)}
-                      className={`px-3 py-1.5 text-xs rounded transition-colors ${
+                      className={`px-5 py-2 text-sm rounded transition-colors ${
                         cat === filter
                           ? "bg-warm text-charcoal font-semibold"
                           : "bg-white/10 backdrop-blur-sm border border-white/20 text-white/70 hover:text-warm hover:border-warm/30"
