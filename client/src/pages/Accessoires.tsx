@@ -44,6 +44,7 @@ const accessoires = [
     title: "Forfaits AV",
     img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/RNSJXzqcGNnEJwlz.webp",
     desc: "De 50 à plus de 400 personnes, quelle que soit la taille de l'événement, vous pouvez offrir une expérience audio et vidéo étonnante à votre public. Forfaits complets incluant projecteur, son et accessoires.",
+    bgWhite: true,
   },
 ];
 
@@ -74,7 +75,7 @@ export default function Accessoires() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {accessoires.map((a) => (
               <div key={a.title} className="bg-card border border-border rounded-lg overflow-hidden card-hover">
-                <div className="aspect-[4/3] bg-charcoal-light">
+                <div className={`aspect-[4/3] ${a.bgWhite ? 'bg-white' : 'bg-charcoal-light'}`}>
                   <img src={a.img} alt={`Accessoire Hallucine — ${a.title} pour événements cinéma en plein air`} className="w-full h-full object-contain p-4" loading="lazy" />
                 </div>
                 <div className="p-6">
