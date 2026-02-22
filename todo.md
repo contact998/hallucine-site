@@ -717,3 +717,4 @@
 - [x] Page /tente-gonflable-araignee : supprimer le tableau des éléments disponibles
 - [x] Page /arche-gonflable : supprimer les photos 4, 6, 7 et 8
 - [x] Page /arche-gonflable : section Caractéristiques Techniques en 2 colonnes (texte + image éclatée)
+- [x] Page /arche-gonflable : Applications possibles et Questions fréquentes en 2 colonnes côte à côte

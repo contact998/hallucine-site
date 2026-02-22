@@ -227,48 +227,54 @@ export default function ArchesGonflables() {
         </div>
       </section>
 
-      {/* Applications */}
+      {/* Applications + FAQ — 2 colonnes */}
       <section className="py-20 bg-background">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-8">Applications possibles</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-3">Événements sportifs</h3>
-              <p className="text-white/60 text-sm">Portique pour les départs et arrivées de courses. Points d'entrée pour les compétitions en plein air.</p>
-            </div>
-            <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-3">Expositions et foires</h3>
-              <p className="text-white/60 text-sm">Signalétique pour guider les visiteurs. Décorations promotionnelles pour stands.</p>
-            </div>
-            <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-3">Publicité mobile</h3>
-              <p className="text-white/60 text-sm">Supports pour campagnes publicitaires locales ou itinérantes.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="py-20 bg-charcoal-light">
-        <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-8">Questions fréquentes</h2>
-          <div className="max-w-3xl space-y-3">
-            {faqItems.map((item, i) => (
-              <div key={i} className="border border-border rounded-lg overflow-hidden">
-                <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full flex items-center justify-between p-5 text-left hover:bg-white/5 transition-colors"
-                >
-                  <span className="text-ivory font-medium pr-4">{item.q}</span>
-                  <ChevronDown className={`w-5 h-5 text-warm shrink-0 transition-transform ${openFaq === i ? "rotate-180" : ""}`} />
-                </button>
-                {openFaq === i && (
-                  <div className="px-5 pb-5">
-                    <p className="text-white/60 leading-relaxed">{item.a}</p>
-                  </div>
-                )}
+          <div className="grid md:grid-cols-2 gap-10">
+            {/* Colonne gauche — Applications */}
+            <div>
+              <h2 className="text-3xl font-bold text-ivory mb-6">
+                Applications <span className="text-warm">Possibles</span>
+              </h2>
+              <div className="space-y-4">
+                <div className="p-5 bg-card border border-border rounded-lg">
+                  <h3 className="text-warm font-semibold mb-2">Événements sportifs</h3>
+                  <p className="text-white/60 text-sm">Portique pour les départs et arrivées de courses. Points d'entrée pour les compétitions en plein air.</p>
+                </div>
+                <div className="p-5 bg-card border border-border rounded-lg">
+                  <h3 className="text-warm font-semibold mb-2">Expositions et foires</h3>
+                  <p className="text-white/60 text-sm">Signalétique pour guider les visiteurs. Décorations promotionnelles pour stands.</p>
+                </div>
+                <div className="p-5 bg-card border border-border rounded-lg">
+                  <h3 className="text-warm font-semibold mb-2">Publicité mobile</h3>
+                  <p className="text-white/60 text-sm">Supports pour campagnes publicitaires locales ou itinérantes.</p>
+                </div>
               </div>
-            ))}
+            </div>
+            {/* Colonne droite — FAQ */}
+            <div>
+              <h2 className="text-3xl font-bold text-ivory mb-6">
+                Questions <span className="text-warm">Fréquentes</span>
+              </h2>
+              <div className="space-y-3">
+                {faqItems.map((item, i) => (
+                  <div key={i} className="border border-border rounded-lg overflow-hidden">
+                    <button
+                      onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                      className="w-full flex items-center justify-between p-5 text-left hover:bg-white/5 transition-colors"
+                    >
+                      <span className="text-ivory font-medium pr-4">{item.q}</span>
+                      <ChevronDown className={`w-5 h-5 text-warm shrink-0 transition-transform ${openFaq === i ? "rotate-180" : ""}`} />
+                    </button>
+                    {openFaq === i && (
+                      <div className="px-5 pb-5">
+                        <p className="text-white/60 leading-relaxed">{item.a}</p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
