@@ -166,24 +166,63 @@ export default function ArchesGonflables() {
         </div>
       </section>
 
-      {/* Caractéristiques */}
+      {/* Caractéristiques techniques — 2 colonnes texte + image */}
       <section className="py-20 bg-charcoal-light">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-8">Caractéristiques techniques</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { title: "Matériaux", desc: "PVC renforcé ou tissu Oxford, résistant aux intempéries." },
-              { title: "Personnalisation", desc: "Impression numérique haute définition sur toute la surface." },
-              { title: "Installation", desc: "Système de gonflage rapide (moins de 5 minutes)." },
-              { title: "Accessoires inclus", desc: "Ventilateur électrique, sacs de sable, cordes et chevilles." },
-              { title: "Durabilité", desc: "Résistantes aux UV et aux déchirures." },
-              { title: "Étanchéité", desc: "Un seul gonflage suffit — pas de souffleur permanent nécessaire." },
-            ].map((item) => (
-              <div key={item.title} className="p-5 bg-card border border-border rounded-lg">
-                <h3 className="text-warm font-semibold mb-2">{item.title}</h3>
-                <p className="text-white/60 text-sm">{item.desc}</p>
-              </div>
-            ))}
+          <div className="grid md:grid-cols-2 gap-10 items-center">
+            {/* Colonne texte */}
+            <div>
+              <h2 className="text-3xl font-bold text-ivory mb-6">
+                Caractéristiques <span className="text-warm">Techniques</span>
+              </h2>
+              <ul className="space-y-4 text-white/70 leading-relaxed">
+                <li className="flex gap-4">
+                  <span className="shrink-0 w-2 h-2 bg-warm rounded-full mt-2" />
+                  <div>
+                    <strong className="text-ivory">Matériaux :</strong> PVC renforcé ou tissu Oxford, résistant aux intempéries et aux UV.
+                  </div>
+                </li>
+                <li className="flex gap-4">
+                  <span className="shrink-0 w-2 h-2 bg-warm rounded-full mt-2" />
+                  <div>
+                    <strong className="text-ivory">Personnalisation :</strong> Impression numérique haute définition sur toute la surface de l'arche.
+                  </div>
+                </li>
+                <li className="flex gap-4">
+                  <span className="shrink-0 w-2 h-2 bg-warm rounded-full mt-2" />
+                  <div>
+                    <strong className="text-ivory">Installation rapide :</strong> Système de gonflage en moins de 5 minutes grâce à la pompe électrique.
+                  </div>
+                </li>
+                <li className="flex gap-4">
+                  <span className="shrink-0 w-2 h-2 bg-warm rounded-full mt-2" />
+                  <div>
+                    <strong className="text-ivory">Accessoires inclus :</strong> Pompe électrique et manuelle, sacs de sable, cordes, piquets et kit de réparation TPU.
+                  </div>
+                </li>
+                <li className="flex gap-4">
+                  <span className="shrink-0 w-2 h-2 bg-warm rounded-full mt-2" />
+                  <div>
+                    <strong className="text-ivory">Étanchéité :</strong> Endobiliaire TPU — un seul gonflage suffit, pas de souffleur permanent nécessaire.
+                  </div>
+                </li>
+                <li className="flex gap-4">
+                  <span className="shrink-0 w-2 h-2 bg-warm rounded-full mt-2" />
+                  <div>
+                    <strong className="text-ivory">Couverture extérieure :</strong> Housse amovible personnalisable, protégeant la structure interne.
+                  </div>
+                </li>
+              </ul>
+            </div>
+            {/* Colonne image éclatée */}
+            <div>
+              <img
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/oxFQOUUYfchnVhOX.jpg"
+                alt="Schéma éclaté des composants de l'arche gonflable — pompe manuelle, pompes électriques, pile, sac à main, valves, surpression, réparation TPU, corde, couverture extérieure, endobiliaire TPU, base"
+                className="w-full rounded-lg shadow-lg"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </section>
