@@ -6,7 +6,6 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
-import FlashEffect from "@/components/FlashEffect";
 
 const photos = [
   // Écrans gonflables
@@ -103,7 +102,6 @@ export default function Galerie() {
           style={{ objectPosition: 'center 85%' }}
         />
         <div className="absolute inset-0 bg-black/30" />
-        <FlashEffect />
         {/* Titre en haut à gauche */}
         <div className="container relative z-10 pt-32">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight">

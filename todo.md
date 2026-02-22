@@ -724,3 +724,4 @@
 - [x] Page /accessoire-cinema-plein-air : supprimer photos 4, 5, 6 et remplacer par canapés, cabine projection, AV packages
 - [x] Page /galerie-evenements : ajouter image de fond au header
 - [x] Page /galerie-evenements : ajouter 31 nouvelles photos uploadées par l'utilisateur
+- [x] Retirer les effets d'étoiles et d'arrière-plan animés du site

@@ -6,7 +6,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { Headphones, Armchair, Radio, Sofa, Monitor, Package } from "lucide-react";
-import StarsEffect from "@/components/StarsEffect";
 
 const accessoires = [
   {
@@ -55,7 +54,6 @@ export default function Accessoires() {
 
       {/* Hero */}
       <section className="relative overflow-hidden pt-32 pb-16 bg-charcoal-light">
-        <StarsEffect />
         <div className="container">
           <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">Équipement</p>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight mb-6">
