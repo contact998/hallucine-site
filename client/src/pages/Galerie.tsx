@@ -102,29 +102,28 @@ export default function Galerie() {
             className="w-full h-full object-contain"
           />
           <div className="absolute inset-0 bg-black/20" />
-          {/* Titre + filtres sur la même ligne */}
-          <div className="absolute top-0 left-0 right-0 z-10 pt-40">
-            <div className="container">
-              <div className="flex items-center gap-6 flex-wrap">
-                <h1 className="text-4xl md:text-5xl font-bold text-ivory leading-tight shrink-0">
-                  Galerie
-                </h1>
-                <div className="flex flex-wrap gap-4 items-center flex-1 justify-center">
-                  {categories.map((cat) => (
-                    <button
-                      key={cat}
-                      onClick={() => setFilter(cat)}
-                      className={`px-5 py-2 text-sm rounded transition-colors ${
-                        cat === filter
-                          ? "bg-warm text-charcoal font-semibold"
-                          : "bg-white/10 backdrop-blur-sm border border-white/20 text-white/70 hover:text-warm hover:border-warm/30"
-                      }`}
-                    >
-                      {cat}
-                    </button>
-                  ))}
-                </div>
-              </div>
+          {/* Titre à gauche */}
+          <div className="absolute top-0 left-0 z-10 pt-40 pl-8">
+            <h1 className="text-4xl md:text-5xl font-bold text-ivory leading-tight">
+              Galerie
+            </h1>
+          </div>
+          {/* Filtres centrés sur toute la largeur */}
+          <div className="absolute top-0 left-0 right-0 z-10 pt-[10.5rem]">
+            <div className="flex flex-wrap gap-4 items-center justify-center">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setFilter(cat)}
+                  className={`px-5 py-2 text-sm rounded transition-colors ${
+                    cat === filter
+                      ? "bg-warm text-charcoal font-semibold"
+                      : "bg-white/10 backdrop-blur-sm border border-white/20 text-white/70 hover:text-warm hover:border-warm/30"
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
             </div>
           </div>
           {/* Description centrée en bas */}
