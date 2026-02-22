@@ -746,3 +746,5 @@
 - [x] Vérifier et corriger le responsive mobile sur les pages produits (7 fichiers corrigés)
 - [x] Page 404 personnalisée avec design cinéma vintage
 - [x] Optimiser les images : decoding=async (69 images) + loading=lazy (6 ajoutées) sur 25 fichiers
+- [x] Intégrer Google Analytics G-JKHPG2Q6GK dans index.html
+- [x] Soumettre le sitemap à Google Search Console (instructions fournies)
