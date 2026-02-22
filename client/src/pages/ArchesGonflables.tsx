@@ -78,11 +78,7 @@ export default function ArchesGonflables() {
               { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/msjlSvvcXPPgZNDW.png", alt: "Arche gonflable cinéma en plein air avec écran de projection" },
               { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qaWexEDLrhQudeax.png", alt: "Arche gonflable colorée pour arrivée de course sportive" },
               { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CZcgjOTtIqUOapyp.jpg", alt: "Arche gonflable bleue et rouge pour entrée de projection" },
-              { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/dRuvKidcdjNXhYOn.jpg", alt: "Arche gonflable personnalisée Bienvenue pour événement" },
               { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/zbkdmCgoFZLzrsJh.jpg", alt: "Arche gonflable blanche décorée motifs floraux" },
-              { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PccZsJjRQKmTphXx.jpg", alt: "Arche gonflable bleue SKYGO pour événement corporate" },
-              { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eWinssACUrKSNlmM.jpg", alt: "Arche gonflable bleue SKYGO en cours d'installation" },
-              { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QBUmTczXjVzScxWG.jpg", alt: "Arche gonflable Hallucine modèle standard gris" },
             ].map((img, i) => (
               <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden group">
                 <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
