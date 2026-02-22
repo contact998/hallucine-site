@@ -140,6 +140,25 @@ export default function Galerie() {
 
 
 
+      {/* Barre filtres sticky */}
+      <div className="sticky top-0 z-40 bg-charcoal/95 backdrop-blur-md border-b border-white/10 py-3">
+        <div className="flex flex-wrap gap-4 items-center justify-center">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setFilter(cat)}
+              className={`px-5 py-2 text-sm rounded transition-colors ${
+                cat === filter
+                  ? "bg-warm text-charcoal font-semibold"
+                  : "bg-white/10 border border-white/20 text-white/70 hover:text-warm hover:border-warm/30"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Grille photos */}
       <section className="py-12 bg-background">
         <div className="container">
