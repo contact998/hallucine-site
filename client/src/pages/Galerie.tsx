@@ -102,11 +102,30 @@ export default function Galerie() {
             className="w-full h-full object-contain"
           />
           <div className="absolute inset-0 bg-black/20" />
-          {/* Titre seul en haut à gauche */}
-          <div className="absolute top-0 left-0 right-0 container z-10 pt-24">
-            <h1 className="text-4xl md:text-5xl font-bold text-ivory leading-tight">
-              Galerie
-            </h1>
+          {/* Titre + filtres sur la même ligne */}
+          <div className="absolute top-0 left-0 right-0 z-10 pt-24">
+            <div className="container">
+              <div className="flex items-center gap-6 flex-wrap">
+                <h1 className="text-4xl md:text-5xl font-bold text-ivory leading-tight shrink-0">
+                  Galerie
+                </h1>
+                <div className="flex flex-wrap gap-2 items-center flex-1 justify-center">
+                  {categories.map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => setFilter(cat)}
+                      className={`px-3 py-1.5 text-xs rounded transition-colors ${
+                        cat === filter
+                          ? "bg-warm text-charcoal font-semibold"
+                          : "bg-white/10 backdrop-blur-sm border border-white/20 text-white/70 hover:text-warm hover:border-warm/30"
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
           {/* Description centrée en bas */}
           <div className="absolute bottom-0 left-0 right-0 z-10 pb-6">
@@ -120,26 +139,7 @@ export default function Galerie() {
 
 
 
-      {/* Barre filtres centrée */}
-      <div className="bg-background border-b border-border">
-        <div className="container py-4">
-          <div className="flex flex-wrap gap-2 justify-center">
-            {categories.map((cat) => (
-              <button
-                key={`bar-${cat}`}
-                onClick={() => setFilter(cat)}
-                className={`px-4 py-2 text-sm rounded transition-colors ${
-                  cat === filter
-                    ? "bg-warm text-charcoal font-semibold"
-                    : "bg-card border border-border text-white/60 hover:text-warm hover:border-warm/30"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+
 
       {/* Grille photos */}
       <section className="py-12 bg-background">
