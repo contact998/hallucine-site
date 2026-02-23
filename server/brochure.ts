@@ -3,7 +3,7 @@
  * Génère un document HTML imprimable avec les specs du produit
  */
 
-const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HBEEwasIKCOORlrf.webp";
+const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/RRuPcEubZpMSilcb.webp";
 
 interface ProductData {
   name: string;

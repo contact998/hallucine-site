@@ -838,3 +838,9 @@
 - [x] Fix accessibilité : boutons navigation carrousel agrandis à 44px (w-11 h-11)
 - [x] Régénérer les 27 pages pré-rendues (SSG)
 - [x] Build OK + 289 tests passent
+
+## Bug: Logo rideau cinéma sur fond blanc
+- [x] Diagnostiquer pourquoi le logo s'affiche sur fond blanc au lieu de transparent
+- [x] Corriger le logo pour qu'il soit transparent sur le rideau rouge (ancien logo RGB sans alpha → nouveau logo RGBA transparent uploadé sur S3)
+- [x] Mettre à jour le logo dans CinemaRideau, Navbar, Footer, brochure.ts et 27 fichiers pré-rendus
+- [ ] Vérifier l'affichage dans le Preview Manus
