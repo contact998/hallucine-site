@@ -73,7 +73,7 @@ const faqItems = [
 ];
 
 export default function Ecrans() {
-  useDocumentMeta("Écrans de Cinéma Gonflables", "Découvrez notre gamme complète d'écrans de cinéma gonflables. Écrans géants, étanches, économiques — de 3m à 24m. Fabricant depuis 1995.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp");
+  useDocumentMeta("Écrans de Cinéma Gonflables", "Découvrez notre gamme complète d'écrans de cinéma gonflables. Écrans géants, étanches, économiques — de 3m à 24m. Fabricant depuis 1995.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [showCountdown, setShowCountdown] = useState(true);
@@ -91,7 +91,7 @@ export default function Ecrans() {
         product={{
           name: "Écrans de Cinéma Gonflables Hallucine",
           description: "Gamme complète d'écrans de cinéma gonflables de 3m à 24m. Technologie étanche et soufflerie. 3× plus légers que la concurrence. Garantie 10 ans.",
-          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp",
+          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp",
           url: "/ecran-gonflable",
           category: "Écrans de cinéma gonflables",
           minPrice: 990,

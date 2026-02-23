@@ -48,7 +48,7 @@ const PRODUCTS: Record<string, ProductData> = {
       { size: "24m × 14m", weight: "280 kg", capacity: "5 000 pers.", price: "À partir de 24 900€" },
     ],
     images: [
-      "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WwOGMpsKPBSqcBkz.webp",
+      "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eEXwXGCYYCdjehRy.webp",
     ],
   },
   "ecran-etanche": {
@@ -82,7 +82,7 @@ const PRODUCTS: Record<string, ProductData> = {
       { size: "8m", weight: "45 kg", capacity: "350 pers.", price: "À partir de 8 900€" },
     ],
     images: [
-      "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/zECmtMYvdilieczU.webp",
+      "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/oWJlmXMcJLDivNJi.webp",
     ],
   },
   "ecran-economique": {

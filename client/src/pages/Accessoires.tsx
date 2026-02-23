@@ -13,44 +13,44 @@ const accessoires = [
   {
     icon: Headphones,
     title: "Casques",
-    img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/UlnOxjTGncpBOJwv.webp",
+    img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wNIxhZRwHKCxifIM.webp",
     desc: "Casque pour tous les événements Hallucine, cinéma en plein air. Obtenez une expérience sonore étonnante pour votre corps et votre âme. Idéal pour les projections silencieuses et les événements en zone résidentielle.",
   },
   {
     icon: Armchair,
     title: "Transats",
-    img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/nZmqdOLFPHAaEGsn.webp",
+    img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/EuKdMCwdXBJSlNeL.webp",
     desc: "Détendez-vous, soyez à l'aise tout en regardant des films, des jeux de sport avec vos amis et votre famille. Nos transats sont conçus pour le confort lors de longues projections en extérieur.",
   },
   {
     icon: Radio,
     title: "Transmetteur FM",
-    img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wmQDsCcnIydTkdEj.webp",
+    img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/iVwKLqZcDAZHqcQS.webp",
     desc: "Atteignez les gens dans les véhicules à proximité. Délivrez des sons exceptionnels en temps réel pour une expérience de cinéma drive-in. Parfait pour les ciné-parcs et les événements en voiture.",
   },
   {
     icon: Sofa,
     title: "Canapé gonflable",
-    img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/zsJNdIWSKKGVEgQI.webp",
+    img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/gvHeJxbdjQzzfoZe.webp",
     desc: "Facile à gonfler, avec une excellente conception anti-dégonflement. Ces canapés extrêmement durables conviennent à vous, votre famille et vos amis pour tout événement Hallucine.",
   },
   {
     icon: Monitor,
     title: "Cabine de projection",
-    img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/shzKbinYJnHLyUdb.webp",
+    img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wpkWdAtohcYNVAzC.webp",
     desc: "La cabine de projection fonctionne parfaitement avec les écrans gonflables d'Hallucine. Placez votre projecteur directement et assurez-vous qu'il est en sécurité pour des effets vidéo étonnants.",
   },
   {
     icon: Package,
     title: "Forfaits AV",
-    img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/RNSJXzqcGNnEJwlz.webp",
+    img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/DWwZRSyIwFxpRLoR.webp",
     desc: "De 50 à plus de 400 personnes, quelle que soit la taille de l'événement, vous pouvez offrir une expérience audio et vidéo étonnante à votre public. Forfaits complets incluant projecteur, son et accessoires.",
     bgWhite: true,
   },
 ];
 
 export default function Accessoires() {
-  useDocumentMeta("Accessoires Cinéma en Plein Air", "Accessoires pour cinéma en plein air : projecteurs, systèmes audio, toiles de rechange, kits de réparation. Tout pour réussir votre événement.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp");
+  useDocumentMeta("Accessoires Cinéma en Plein Air", "Accessoires pour cinéma en plein air : projecteurs, systèmes audio, toiles de rechange, kits de réparation. Tout pour réussir votre événement.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -60,7 +60,7 @@ export default function Accessoires() {
         product={{
           name: "Accessoires pour Cinéma en Plein Air",
           description: "Complétez votre installation avec nos accessoires professionnels. Casques audio, transats, transmetteurs FM, mobilier gonflable, cabines de projection et forfaits audiovisuels complets.",
-          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp",
+          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp",
           url: "https://hallucine.ai/accessoire-cinema-plein-air",
           category: "Accessoires",
           minPrice: 99,

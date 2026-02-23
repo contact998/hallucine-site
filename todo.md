@@ -862,3 +862,13 @@
 
 ## Bug: Texte manquant sur image de fond page Galerie
 - [x] Le texte descriptif ajouté sur l'image de fond du hero de la page Galerie (gradient + texte en overlay)
+
+## SEO: Retirer pages admin du sitemap + robots.txt
+- [ ] Retirer /admin, /profil du sitemap.xml
+- [ ] Bloquer /admin, /profil dans robots.txt avec Disallow + noindex
+
+## Optimisation images : recompression + redimensionnement
+- [x] Extraire toutes les URLs d'images du site (hors rideau) — 153 images trouvées
+- [x] Télécharger, recompresser WebP q70, redimensionner à taille utile — 153/153 OK
+- [x] Ré-uploader sur CDN et remplacer les URLs dans le code — 237 remplacements dans 32 fichiers + 15 pré-rendus
+- [x] Résultat : 22.9 Mo → 8.0 Mo = 14.9 Mo économisés (65%)

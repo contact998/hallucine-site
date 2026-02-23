@@ -16,7 +16,7 @@ import { motion } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
 
 // CDN assets
-const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QAhTiORxjnpzDMxY.webp";
+const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qPMcyKAfHGwXPKfm.webp";
 const LION_ROAR_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yuhDGjetZRdDdWwT.mp3";
 
 interface CinemaSuccessAnimationProps {

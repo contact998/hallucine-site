@@ -4,7 +4,7 @@ const DEFAULT_TITLE = "Hallucine — Écrans de Cinéma Gonflables | Fabricant d
 const DEFAULT_DESCRIPTION =
   "Hallucine, fabricant français d'écrans de cinéma gonflables depuis 1995. Écrans géants, tentes gonflables, arches, mobilier événementiel. Livraison mondiale.";
 const DEFAULT_IMAGE =
-  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp";
+  "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp";
 
 function setMeta(selector: string, attr: string, value: string | undefined, prev: { value: string; el: Element | null }) {
   const el = document.querySelector(selector);

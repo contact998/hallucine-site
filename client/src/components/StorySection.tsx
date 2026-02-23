@@ -5,17 +5,17 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
-const ECRAN_ETANCHE_3M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/rPcNabMBCorkMwha.webp";
-const ECRAN_SOUFFLERIE_15 = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/cUDhAPDzimpwpEAw.webp";
-const ECRAN_24M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PGbRUViATZiGchmE.webp";
-const ECRAN_ETANCHE_6M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jEFZHbndJLBJrZrL.webp";
-const KYTEA_HK = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/SCBCurALKnXkcsMM.webp";
-const ECRAN_TUBULAIRE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/UQTOhAHRbAFprQCw.webp";
-const VOILERIE_BRETAGNE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ktazmzoptZJiIRJB.webp";
-const TROIS_ECRANS = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QIDYATXVloCJSMRa.webp";
-const REPAS_CHINOIS = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/GnSyiaJDcREwalDT.webp";
-const ECLATE_ETANCHE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/MOVeGAmUzTeZFEhA.webp";
-const ECRANS_ETANCHE_5_6 = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WqGIHYUxSWGjVUmW.webp";
+const ECRAN_ETANCHE_3M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hIDMieDLnUJYNHGY.webp";
+const ECRAN_SOUFFLERIE_15 = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/idjDFwRrXlFoOMDE.webp";
+const ECRAN_24M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TtkkkbFGUyodwTtN.webp";
+const ECRAN_ETANCHE_6M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CbfKnfRcHBlCLSYM.webp";
+const KYTEA_HK = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ihAHJqPuCbLEmeIQ.webp";
+const ECRAN_TUBULAIRE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/JlNlzGmvIyCrQHIY.webp";
+const VOILERIE_BRETAGNE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HuaJYMAXkcNubwBZ.webp";
+const TROIS_ECRANS = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fGEhAORVzMgloRQI.webp";
+const REPAS_CHINOIS = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VGMyogZBklEVINLW.webp";
+const ECLATE_ETANCHE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ORYwRnlcyusmCmpC.webp";
+const ECRANS_ETANCHE_5_6 = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VDWrGjsVLLnZNbTR.webp";
 
 const chapters: { year: string; title: string; text: string; image: string | null; smallImage?: boolean; extraSmall?: boolean }[] = [
   {

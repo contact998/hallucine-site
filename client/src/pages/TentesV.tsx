@@ -15,17 +15,17 @@ import PageStructuredData from "@/components/PageStructuredData";
 
 /* ─── Images hero (grille identique à l'ancien site) ─── */
 const heroImages = [
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/sULADLfdWVDOnRle.webp", alt: "Tente gonflable V blanche vue de face" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IVvCTgvcisKCkHRM.webp", alt: "Tente gonflable V blanche vue d'ensemble" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/kmtZVKqOoMWYIyrj.webp", alt: "Tente gonflable V personnalisée avec logo" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/UyqHGQYUaSuzexRu.webp", alt: "Tente gonflable V stand événement extérieur" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HiOAOTLZaOhqpcQk.webp", alt: "Tente gonflable V blanche vue de face" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/nvpNhKQWdZSYGIgR.webp", alt: "Tente gonflable V blanche vue d'ensemble" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/EpaIyWYtXIFowiQT.webp", alt: "Tente gonflable V personnalisée avec logo" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/deVDPczivrfxEEVT.webp", alt: "Tente gonflable V stand événement extérieur" },
 ];
 
 /* ─── Image schéma éclaté ─── */
-const schemaEclate = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QBMxExrdWVnoxgdV.webp";
+const schemaEclate = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qSTOOwNPJJIAFgwe.webp";
 
 export default function TentesV() {
-  useDocumentMeta("Tente Gonflable V | Design Élégant", "Tente gonflable V au design élégant et moderne. Idéale pour événements haut de gamme, mariages et réceptions. Personnalisation complète.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/iuzByqgDGSYABkrJ.webp");
+  useDocumentMeta("Tente Gonflable V | Design Élégant", "Tente gonflable V au design élégant et moderne. Idéale pour événements haut de gamme, mariages et réceptions. Personnalisation complète.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp");
 
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);

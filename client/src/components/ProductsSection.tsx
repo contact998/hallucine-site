@@ -8,10 +8,10 @@ import { ArrowRight, Shield, Wind, Feather, Ruler, ChevronRight, Tent, Armchair 
 import { Link } from "wouter";
 import { useRef } from "react";
 
-const ECRAN_ETANCHE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WnxgfBXHHUGlBaPA.webp";
-const ECRAN_SOUFFLERIE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/gtfhNXQnhCWwIEdM.webp";
-const TENTE_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qyodWKKyFTzWZrQE.webp";
-const MOBILIER_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QVvgYxUHUerCCetG.webp";
+const ECRAN_ETANCHE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tWHlxkXeLyoqBOzz.webp";
+const ECRAN_SOUFFLERIE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HpSkkCcPrajdeXOF.webp";
+const TENTE_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/zisRVgFNBpzCScJO.webp";
+const MOBILIER_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yLbqpriBLKZrILqt.webp";
 
 export default function ProductsSection() {
   const ref = useRef<HTMLDivElement>(null);

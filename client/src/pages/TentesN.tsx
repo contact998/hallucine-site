@@ -14,20 +14,20 @@ import PageStructuredData from "@/components/PageStructuredData";
 
 /* ─── Images hero (grille identique à l'ancien site) ─── */
 const heroImages = [
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/iuzByqgDGSYABkrJ.webp", alt: "Tente gonflable N Hallucine blanche dans la neige" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BhUAcwWISijmdIaI.webp", alt: "Tente gonflable N Volvo Discover dans la neige" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/npLMTTjJiEZJctxH.webp", alt: "Tente gonflable N blanche grande vue latérale" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YIlDCPUhlJSkcczX.webp", alt: "Tente gonflable N Croix-Rouge verte" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp", alt: "Tente gonflable N Hallucine blanche dans la neige" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/apmHySbtINxVnjYV.webp", alt: "Tente gonflable N Volvo Discover dans la neige" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/erdtrTEYYaBaTrbE.webp", alt: "Tente gonflable N blanche grande vue latérale" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WMxgFPZnUaijiyGz.webp", alt: "Tente gonflable N Croix-Rouge verte" },
 ];
 
 /* ─── Image contenu ─── */
 const contentImages = {
-  tenteVolvo: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BhUAcwWISijmdIaI.webp",
-  schemaEclate: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ALqeSYUpOlFUwXmL.webp",
+  tenteVolvo: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/apmHySbtINxVnjYV.webp",
+  schemaEclate: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BhBEducothOIuNNg.webp",
 };
 
 export default function TentesN() {
-  useDocumentMeta("Tente Gonflable N | Tente Humanitaire et Événementielle", "Tente gonflable N polyvalente. Utilisée par la Croix-Rouge et pour événements. Grande surface couverte, montage rapide, résistante.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/iuzByqgDGSYABkrJ.webp");
+  useDocumentMeta("Tente Gonflable N | Tente Humanitaire et Événementielle", "Tente gonflable N polyvalente. Utilisée par la Croix-Rouge et pour événements. Grande surface couverte, montage rapide, résistante.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp");
 
   /* ─── Lightbox ─── */
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
@@ -46,7 +46,7 @@ export default function TentesN() {
         product={{
           name: "Tentes en forme de N",
           description: "Tente gonflable N polyvalente. Utilisée par la Croix-Rouge et pour événements. Grande surface couverte, montage rapide, résistante.",
-          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/iuzByqgDGSYABkrJ.webp",
+          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp",
           url: "https://hallucinecran.fr/tentes-gonflables-n",
           category: "Tentes gonflables",
           minPrice: 1990,

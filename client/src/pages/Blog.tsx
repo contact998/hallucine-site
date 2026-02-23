@@ -25,7 +25,7 @@ interface Article {
 }
 
 export default function Blog() {
-  useDocumentMeta("Blog | Actualités Cinéma en Plein Air", "Actualités, conseils et tendances du cinéma en plein air. Articles sur les écrans gonflables, événements et innovations.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp");
+  useDocumentMeta("Blog | Actualités Cinéma en Plein Air", "Actualités, conseils et tendances du cinéma en plein air. Articles sur les écrans gonflables, événements et innovations.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   const [categorieActive, setCategorieActive] = useState("Toutes");
   const [expandedComments, setExpandedComments] = useState<Record<string, boolean>>({});
@@ -224,7 +224,7 @@ export default function Blog() {
           headline: "Blog Hallucine",
           description: "Actualités, conseils et tendances du cinéma en plein air. Articles sur les écrans gonflables, événements et innovations.",
           url: "https://hallucine.ai/blog",
-          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp"
+          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp"
         }}
       />
       <Navbar />

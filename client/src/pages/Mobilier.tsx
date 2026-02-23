@@ -12,14 +12,14 @@ import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 
-const MOBILIER_SUPPORT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QMaiyJJpGNDlQYCM.webp";
-const MOBILIER_FAUTEUIL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/kCJQHsGvphErugzQ.webp";
-const MOBILIER_CANAPE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/UIcmejSadRWEtlDG.webp";
-const MOBILIER_BAR = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hsXciBAkABiYidtp.webp";
-const MOBILIER_MANGE_DEBOUT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/cfUCARloUkKyBbnx.webp";
-const MOBILIER_CANAPE_BLEU = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ywPRhTcuHiFXaBee.webp";
-const ACCESSOIRE_CHARIOT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QMaiyJJpGNDlQYCM.webp";
-const ACCESSOIRE_FLYCASE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/UIcmejSadRWEtlDG.webp";
+const MOBILIER_SUPPORT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/efvnhrOKvRVMyuHr.webp";
+const MOBILIER_FAUTEUIL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VUhsCVHmnpGqweWv.webp";
+const MOBILIER_CANAPE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CYlbsneVJDOkGOhF.webp";
+const MOBILIER_BAR = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ufvprHQgVPbbyBlI.webp";
+const MOBILIER_MANGE_DEBOUT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yUqGwSVTzsTRviNh.webp";
+const MOBILIER_CANAPE_BLEU = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/AHGATdyMDWenpusd.webp";
+const ACCESSOIRE_CHARIOT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/efvnhrOKvRVMyuHr.webp";
+const ACCESSOIRE_FLYCASE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CYlbsneVJDOkGOhF.webp";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -129,7 +129,7 @@ const faqItems = [
 ];
 
 export default function Mobilier() {
-  useDocumentMeta("Mobilier Gonflable Événementiel", "Mobilier gonflable pour événements : canapés, fauteuils, bars, mange-debout. Design moderne, confortable, personnalisable aux couleurs de votre marque.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp");
+  useDocumentMeta("Mobilier Gonflable Événementiel", "Mobilier gonflable pour événements : canapés, fauteuils, bars, mange-debout. Design moderne, confortable, personnalisable aux couleurs de votre marque.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
@@ -144,7 +144,7 @@ export default function Mobilier() {
         product={{
           name: "Mobilier Gonflable Événementiel",
           description: "Notre gamme complète de mobilier gonflable pour tous vos événements. Canapés, fauteuils, bars, et comptoirs utilisant une technologie étanche à chambre à air scellée pour un confort et une stabilité exceptionnels.",
-          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ytkLZHJNRKgHDqIc.webp",
+          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jCghaPHMczbtTjIn.webp",
           url: "https://hallucinecran.fr/mobilier",
           category: "Mobilier Gonflable",
           minPrice: 490,
@@ -156,7 +156,7 @@ export default function Mobilier() {
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ytkLZHJNRKgHDqIc.webp" alt="Mobilier gonflable Hallucine en plein air : tente araignée, canapés et table" className="w-full h-full object-cover" style={{ objectPosition: 'center 20%' }} decoding="async" />
+          <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jCghaPHMczbtTjIn.webp" alt="Mobilier gonflable Hallucine en plein air : tente araignée, canapés et table" className="w-full h-full object-cover" style={{ objectPosition: 'center 20%' }} decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.10_0.03_260_/_0.5)] via-[oklch(0.12_0.03_260_/_0.3)] to-[oklch(0.10_0.03_260_/_0.05)]" />
           <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260_/_0.6)] via-transparent to-transparent" />
         </div>

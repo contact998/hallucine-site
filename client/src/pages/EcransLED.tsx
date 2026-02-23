@@ -11,13 +11,13 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 
 const ledImages = [
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bACzkvedGMIRwGMS.webp", alt: "Écran LED gonflable Hallucine de 5m pour projection de jour comme de nuit" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TpuAaOOOZSSoYWkG.webp", alt: "Écran LED gonflable Hallucine de 4m avec haute luminosité pour événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bIHLJvxkdwtLCety.webp", alt: "Démonstration du montage rapide d'un écran LED gonflable Hallucine en extérieur" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/cNgCebtnqSvVUvmF.webp", alt: "Écran LED gonflable Hallucine de 5m pour projection de jour comme de nuit" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/dAPzbTqdeJCYzZGT.webp", alt: "Écran LED gonflable Hallucine de 4m avec haute luminosité pour événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eqozEqSIUbdLwesq.webp", alt: "Démonstration du montage rapide d'un écran LED gonflable Hallucine en extérieur" },
 ];
 
 export default function EcransLED() {
-  useDocumentMeta("Écrans LED Événementiels", "Écrans LED pour événements en plein air et intérieur. Solutions d'affichage haute luminosité pour concerts, festivals et événements corporate.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp");
+  useDocumentMeta("Écrans LED Événementiels", "Écrans LED pour événements en plein air et intérieur. Solutions d'affichage haute luminosité pour concerts, festivals et événements corporate.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   return (
     <div className="min-h-screen bg-background text-foreground">

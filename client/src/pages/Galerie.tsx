@@ -11,82 +11,82 @@ import PageStructuredData from "@/components/PageStructuredData";
 
 const photos = [
   // Écrans gonflables
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/iHeKkriOUImCLwKk.webp", alt: "Écran gonflable 2.5m sur pieds pour projection en extérieur", cat: "Écrans gonflables" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/lIHVsQcOijumuBQx.webp", alt: "Écran de cinéma gonflable de nuit sur toit d'immeuble", cat: "Écrans gonflables" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hZzmERjPunHTTNsQ.webp", alt: "Projection nocturne sur écran gonflable installé sur un toit", cat: "Écrans gonflables" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ucPMyEUniRmyKEdn.webp", alt: "Écran gonflable avec arche sur toit-terrasse", cat: "Écrans gonflables" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/GLxgsBrksfUScqkK.webp", alt: "Écran 5m léger en gymnase pour la FIFA", cat: "Écrans gonflables" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/MKPEYgRVUhwZagRz.webp", alt: "Le plus fin écran gonflable 8m de large", cat: "Écrans gonflables" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/dnaHKJUkWzquIkBm.webp", alt: "Écran gonflable 8m de base à Saint-Germain", cat: "Écrans gonflables" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PNHSEIDaxMouReeA.webp", alt: "Écran géant gonflable 24m à Marseille", cat: "Écrans gonflables" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YMJYpUnslhOmIiPC.webp", alt: "Écran de cinéma gonflable étanche à l'air, idéal pour les piscines", cat: "Écrans gonflables" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TXuxOQPMMNpkSJyD.webp", alt: "Comparaison de la taille d'un écran gonflable étanche avec une personne", cat: "Écrans gonflables" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XDRRcwbNXnMRbTnK.webp", alt: "Vue arrière d'un écran de cinéma gonflable étanche de 7.5 mètres", cat: "Écrans gonflables" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IDghLbPxebJUfXVC.webp", alt: "Écran gonflable 2.5m sur pieds pour projection en extérieur", cat: "Écrans gonflables" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eMBtaurEbmzQnzOE.webp", alt: "Écran de cinéma gonflable de nuit sur toit d'immeuble", cat: "Écrans gonflables" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IYMOAKIQfiKLkGNA.webp", alt: "Projection nocturne sur écran gonflable installé sur un toit", cat: "Écrans gonflables" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jqiWDQvcjhPhCtBX.webp", alt: "Écran gonflable avec arche sur toit-terrasse", cat: "Écrans gonflables" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZshizyjDOejMjIKn.webp", alt: "Écran 5m léger en gymnase pour la FIFA", cat: "Écrans gonflables" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jZPlgGHnKqpYQwqo.webp", alt: "Le plus fin écran gonflable 8m de large", cat: "Écrans gonflables" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/pyvWFmXAUZRkzqHX.webp", alt: "Écran gonflable 8m de base à Saint-Germain", cat: "Écrans gonflables" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZRTtjuFGnMbHIPCI.webp", alt: "Écran géant gonflable 24m à Marseille", cat: "Écrans gonflables" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IhxDeQNxHxMYBwlG.webp", alt: "Écran de cinéma gonflable étanche à l'air, idéal pour les piscines", cat: "Écrans gonflables" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QClDxPadLVEYKlxM.webp", alt: "Comparaison de la taille d'un écran gonflable étanche avec une personne", cat: "Écrans gonflables" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hzkcpmfnpyIExDbf.webp", alt: "Vue arrière d'un écran de cinéma gonflable étanche de 7.5 mètres", cat: "Écrans gonflables" },
 
   // Événements & Projections
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BTjyZEhykZpPjzlQ.webp", alt: "Séance de cinéma en plein air avec public nombreux", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/DJEXdRAiXtMmgFgf.webp", alt: "Projection à Bruxelles à la tombée de la nuit", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/GpjovoMlGINeFMkR.webp", alt: "Événement cinéma en plein air avec écran gonflable", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/lcLThLwfTTAXwyBC.webp", alt: "Projection en plein air à Toulouse", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZJLHpcrslCpBUeho.webp", alt: "Projecteur 2x7kW laser au Vélodrome de Marseille", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HFTCwgTzDKgkyobW.webp", alt: "Cinéma drive-in en Suisse avec écran gonflable", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hCyoAdrmBRzMqSkf.webp", alt: "Projection événementielle en extérieur", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VVKgUSkUMrWjPLli.webp", alt: "Cinéma en plein air à Paris, Cour du Ritz", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/LjmRQcBgphFHinix.webp", alt: "Passeur d'images — projection itinérante", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/AVwdDnnQdSJYUpVA.webp", alt: "3 écrans pour mapping vidéo à Dunkerque", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/LlViPqGlNfhaOSBj.webp", alt: "Projection événementielle grand format en extérieur", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hQhZlOwcgvxTqzcb.webp", alt: "Installation haubanée à Saint-Denis avec bouches d'égout", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ORldRrkOZGNhugrg.webp", alt: "Projection en ville sur écran gonflable", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/mMmglvIttlPcaegT.webp", alt: "Événement cinéma plein air nocturne", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/JKWZTtzrHGzWkLIy.webp", alt: "Projection en extérieur avec public assis", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HGcGiGvBnBpnEaiM.webp", alt: "Séance de cinéma en plein air ambiance festive", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZoMWmWANxpLZiwgl.webp", alt: "Concert de musique classique en soirée avec un orchestre sur scène", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ncYxRulsuwTbmqyt.webp", alt: "Ambiance d'une séance de cinéma en plein air de nuit", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BFaZoFomGXqerqBf.webp", alt: "Projection d'un film en extérieur pour un petit groupe sur l'herbe", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wfNnGSUZpZLANRrm.webp", alt: "Séance de cinéma drive-in avec voitures devant un grand écran gonflable", cat: "Événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wChOWnTuNAnNsSIL.webp", alt: "Séance de cinéma en plein air avec public nombreux", cat: "Événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bQsAjlQHIThVuBhI.webp", alt: "Projection à Bruxelles à la tombée de la nuit", cat: "Événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/xLoHlJSobIMyvuVl.webp", alt: "Événement cinéma en plein air avec écran gonflable", cat: "Événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yUosquMyorrMTehR.webp", alt: "Projection en plein air à Toulouse", cat: "Événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/KyASvJooCSwRBpRc.webp", alt: "Projecteur 2x7kW laser au Vélodrome de Marseille", cat: "Événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WNNTcwtAzSbhcfWo.webp", alt: "Cinéma drive-in en Suisse avec écran gonflable", cat: "Événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CSDzmpWKXaxraSOj.webp", alt: "Projection événementielle en extérieur", cat: "Événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/GnXnITCGvBWnQkuF.webp", alt: "Cinéma en plein air à Paris, Cour du Ritz", cat: "Événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CbIVjrStlnrHkTaD.webp", alt: "Passeur d'images — projection itinérante", cat: "Événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YyHtFWBLkwLygCgF.webp", alt: "3 écrans pour mapping vidéo à Dunkerque", cat: "Événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hRrSUUUDZLGnodhi.webp", alt: "Projection événementielle grand format en extérieur", cat: "Événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QXuBhbAyfuElBhJi.webp", alt: "Installation haubanée à Saint-Denis avec bouches d'égout", cat: "Événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fqDJEDLXjMlvgRxV.webp", alt: "Projection en ville sur écran gonflable", cat: "Événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/abKrKxvdyZZTJtHo.webp", alt: "Événement cinéma plein air nocturne", cat: "Événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/awDroXWpEBclfegR.webp", alt: "Projection en extérieur avec public assis", cat: "Événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/OnxcjQhFOtxzhIcR.webp", alt: "Séance de cinéma en plein air ambiance festive", cat: "Événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/noESUDgrqVMksAfK.webp", alt: "Concert de musique classique en soirée avec un orchestre sur scène", cat: "Événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VvQWHBvtXBXHrCWK.webp", alt: "Ambiance d'une séance de cinéma en plein air de nuit", cat: "Événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qoINhxiIteIjBXYG.webp", alt: "Projection d'un film en extérieur pour un petit groupe sur l'herbe", cat: "Événements" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/GrHCmqNBbWZgeozA.webp", alt: "Séance de cinéma drive-in avec voitures devant un grand écran gonflable", cat: "Événements" },
 
   // Équipement technique
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/nbvuaBPDkUozfSFa.webp", alt: "Projecteur Barco en hauteur pour projection grand format", cat: "Équipement" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hlNfdLDVazoQchxk.webp", alt: "Cabine de projection mobile pour cinéma en plein air", cat: "Équipement" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qtzJtKXwRloXHfEO.webp", alt: "Équipement audiovisuel pour projection en extérieur", cat: "Équipement" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/lmEozjPugTLSAHVj.webp", alt: "Setup technique pour événement cinéma plein air", cat: "Équipement" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/JQhWDpMEkFFtjlJP.webp", alt: "Installation technique complète pour projection en extérieur", cat: "Équipement" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/cVwzLRsopuDpSaeO.webp", alt: "Projecteur Barco en hauteur pour projection grand format", cat: "Équipement" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/xYqnbzovqxtBbTTL.webp", alt: "Cabine de projection mobile pour cinéma en plein air", cat: "Équipement" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/pteHpCAbtyihjCtb.webp", alt: "Équipement audiovisuel pour projection en extérieur", cat: "Équipement" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/DbFYGUoDnOzyuIqc.webp", alt: "Setup technique pour événement cinéma plein air", cat: "Équipement" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/myQOmuwLkZOAzRRs.webp", alt: "Installation technique complète pour projection en extérieur", cat: "Équipement" },
 
   // Tentes
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WBPtkVmXwYeQzylG.webp", alt: "Tente gonflable en forme de X pour événements", cat: "Tentes" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/gfjZlUztmRpFkTMl.webp", alt: "Tente gonflable événementielle en forme de X", cat: "Tentes" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wSyrwQstEehyPZjG.webp", alt: "Tentes gonflables en forme de X personnalisées avec logos", cat: "Tentes" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/datZthCdkwHITcDv.webp", alt: "Tente gonflable modèle N Hallucine", cat: "Tentes" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wxhmpeFVNRrkuyZM.webp", alt: "Tente gonflable modèle N personnalisée Volvo", cat: "Tentes" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PSRTSVMjlaeIrCsx.webp", alt: "Tente gonflable modèle N Croix-Rouge", cat: "Tentes" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/sULADLfdWVDOnRle.webp", alt: "Tente gonflable blanche en forme de V", cat: "Tentes" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/smDtImRPUmKTicoC.webp", alt: "Tente gonflable blanche en forme de V — autre vue", cat: "Tentes" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XOAINGMCdjrkSVSl.webp", alt: "Tentes gonflables bleues en forme d'araignée", cat: "Tentes" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/foieoRxOMClglGqw.webp", alt: "Tentes gonflables en forme d'araignée noire et jaune", cat: "Tentes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/LyytgyImxlrBebLu.webp", alt: "Tente gonflable en forme de X pour événements", cat: "Tentes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/SUFOlyWxjMBsVhPG.webp", alt: "Tente gonflable événementielle en forme de X", cat: "Tentes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YDVeZvrXTWvHTZKL.webp", alt: "Tentes gonflables en forme de X personnalisées avec logos", cat: "Tentes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/aGPwYnsYBzrWtrwV.webp", alt: "Tente gonflable modèle N Hallucine", cat: "Tentes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/aSmtFstezqZGmsFX.webp", alt: "Tente gonflable modèle N personnalisée Volvo", cat: "Tentes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/kfAbnBLwOXPYLGqi.webp", alt: "Tente gonflable modèle N Croix-Rouge", cat: "Tentes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HiOAOTLZaOhqpcQk.webp", alt: "Tente gonflable blanche en forme de V", cat: "Tentes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/xIcftkrBZrhnUDtQ.webp", alt: "Tente gonflable blanche en forme de V — autre vue", cat: "Tentes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/kiWJObYQcRsDjmVd.webp", alt: "Tentes gonflables bleues en forme d'araignée", cat: "Tentes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/LalbLaLjfhTWtCQX.webp", alt: "Tentes gonflables en forme d'araignée noire et jaune", cat: "Tentes" },
 
   // Arches
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/AmZzmccAPAWiJMXu.webp", alt: "Arche gonflable pour festival de cinéma en plein air", cat: "Arches" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/URHUGqPUFQmnMZRI.webp", alt: "Arche gonflable ligne d'arrivée course sportive", cat: "Arches" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/uMgcuJpZiBQPPGmX.webp", alt: "Arche gonflable personnalisée pour projection en plein air", cat: "Arches" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ugvUXaZIOpaTTSGL.webp", alt: "Arche gonflable de bienvenue pour événement", cat: "Arches" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/nNXWzRdxpJfkgHDY.webp", alt: "Arche gonflable blanche personnalisable", cat: "Arches" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VAKfQtrSnnVPEWpY.webp", alt: "Arche gonflable bleue pour événement sportif", cat: "Arches" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/LAhtJVWpmNguSbyg.webp", alt: "Arche gonflable publicitaire SKYGO", cat: "Arches" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/SozTrHGryVKjifJR.webp", alt: "Arche gonflable modèle standard Hallucine", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vbfbnQBVCUGrWUOw.webp", alt: "Arche gonflable pour festival de cinéma en plein air", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eqdRLmacrGAlLxMw.webp", alt: "Arche gonflable ligne d'arrivée course sportive", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yuLqkYzSuwxDVzhu.webp", alt: "Arche gonflable personnalisée pour projection en plein air", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/RwlUZIhnbBNsLqCd.webp", alt: "Arche gonflable de bienvenue pour événement", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tZPYCxQHEVFUCaJD.webp", alt: "Arche gonflable blanche personnalisable", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/cKuqdbWgdycResDX.webp", alt: "Arche gonflable bleue pour événement sportif", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/nAUCiZOIoXxUsOWB.webp", alt: "Arche gonflable publicitaire SKYGO", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QXbIEeUzJKlGwZuE.webp", alt: "Arche gonflable modèle standard Hallucine", cat: "Arches" },
 
   // Mobilier
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/UIcmejSadRWEtlDG.webp", alt: "Canapé et fauteuil gonflables noirs et rouges", cat: "Mobilier" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/kCJQHsGvphErugzQ.webp", alt: "Fauteuil gonflable individuel pour événement", cat: "Mobilier" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hsXciBAkABiYidtp.webp", alt: "Bar comptoir gonflable pour événement en plein air", cat: "Mobilier" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/cfUCARloUkKyBbnx.webp", alt: "Table mange-debout gonflable pour cocktail", cat: "Mobilier" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QMaiyJJpGNDlQYCM.webp", alt: "Fauteuils et tabourets gonflables espace lounge", cat: "Mobilier" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ywPRhTcuHiFXaBee.webp", alt: "Canapé gonflable bleu deux places", cat: "Mobilier" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CYlbsneVJDOkGOhF.webp", alt: "Canapé et fauteuil gonflables noirs et rouges", cat: "Mobilier" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VUhsCVHmnpGqweWv.webp", alt: "Fauteuil gonflable individuel pour événement", cat: "Mobilier" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ufvprHQgVPbbyBlI.webp", alt: "Bar comptoir gonflable pour événement en plein air", cat: "Mobilier" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yUqGwSVTzsTRviNh.webp", alt: "Table mange-debout gonflable pour cocktail", cat: "Mobilier" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/efvnhrOKvRVMyuHr.webp", alt: "Fauteuils et tabourets gonflables espace lounge", cat: "Mobilier" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/AHGATdyMDWenpusd.webp", alt: "Canapé gonflable bleu deux places", cat: "Mobilier" },
 ];
 
 const categories = ["Tous", "Écrans gonflables", "Événements", "Équipement", "Tentes", "Arches", "Mobilier"];
 
 export default function Galerie() {
-  useDocumentMeta("Galerie Photos | Nos Réalisations", "Découvrez nos réalisations en images : écrans de cinéma gonflables, tentes événementielles, arches et mobilier en action lors d'événements réels.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/iHeKkriOUImCLwKk.webp");
+  useDocumentMeta("Galerie Photos | Nos Réalisations", "Découvrez nos réalisations en images : écrans de cinéma gonflables, tentes événementielles, arches et mobilier en action lors d'événements réels.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IDghLbPxebJUfXVC.webp");
 
   const [filter, setFilter] = useState("Tous");
   const [lightbox, setLightbox] = useState<number | null>(null);
@@ -110,7 +110,7 @@ export default function Galerie() {
       <section className="relative overflow-hidden bg-black">
         <div className="relative w-full" style={{ aspectRatio: '16/7' }}>
           <img loading="lazy"
-            src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BTjyZEhykZpPjzlQ.webp"
+            src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wChOWnTuNAnNsSIL.webp"
             alt="Cinéma en plein air Hallucine"
             className="w-full h-full object-contain"
           decoding="async" />

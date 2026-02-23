@@ -4,7 +4,7 @@
  */
 
 const SITE_URL = "https://hallucinecran.fr";
-const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp";
+const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp";
 const COMPANY_PHONE = "+33 6 63 91 72 50";
 const COMPANY_EMAIL = "contact@hallucine.fr";
 
