@@ -876,3 +876,7 @@
 - [x] Télécharger, recompresser WebP q70, redimensionner à taille utile — 153/153 OK
 - [x] Ré-uploader sur CDN et remplacer les URLs dans le code — 237 remplacements dans 32 fichiers + 15 pré-rendus
 - [x] Résultat : 22.9 Mo → 8.0 Mo = 14.9 Mo économisés (65%)
+
+## Nettoyage optimisations PageSpeed inutiles/nuisibles
+- [x] Identifier et supprimer will-change, contain, et autres micro-optimisations
+- [x] Tester et régénérer le pré-rendu

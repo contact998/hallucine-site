@@ -148,7 +148,6 @@ export default function CinemaRideau() {
         style={{
           transform: isOpening ? "translateX(-105%)" : "translateX(0)",
           transition: isOpening ? openTransition : "none",
-          willChange: isOpening ? "transform" : "auto",
         }}
       >
         <div className="relative w-full h-full" style={{ background: "linear-gradient(90deg, #5a0a0a 0%, #8b1a1a 15%, #6b0f0f 25%, #a02020 40%, #7a1212 55%, #8b1a1a 70%, #6b0f0f 85%, #4a0808 100%)" }}>
@@ -165,7 +164,6 @@ export default function CinemaRideau() {
         style={{
           transform: isOpening ? "translateX(105%)" : "translateX(0)",
           transition: isOpening ? openTransition : "none",
-          willChange: isOpening ? "transform" : "auto",
         }}
       >
         <div className="relative w-full h-full" style={{ background: "linear-gradient(270deg, #5a0a0a 0%, #8b1a1a 15%, #6b0f0f 25%, #a02020 40%, #7a1212 55%, #8b1a1a 70%, #6b0f0f 85%, #4a0808 100%)" }}>
