@@ -795,3 +795,8 @@
 - [x] Ajouter priceValidUntil (fin d'année suivante)
 - [x] Régénérer les fichiers pré-rendus (27/27 pages)
 - [x] JSON-LD avec price dans le head du HTML pré-rendu (vérifié)
+
+## Corrections SEO (février 2026)
+- [x] H1 dupliqué : différencier le H1 de la page d'accueil et de /ecran-gonflable
+- [x] Meta description trop longue : réécrire en moins de 160 caractères
+- [x] Calendrier éditorial blog : créer un plan de contenu ciblant des mots-clés longue traîne

@@ -79,7 +79,7 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="text-xl sm:text-2xl lg:text-3xl font-semibold tracking-wide uppercase text-white/70 mb-12"
           >
-            L'écran de cinéma <span className="text-gradient-gold">le plus léger</span> au monde
+            Écrans de cinéma gonflables <span className="text-gradient-gold">fabriqués en France</span> depuis 1995
           </motion.h1>
 
           {/* CTAs */}
