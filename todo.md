@@ -856,3 +856,9 @@
 - [x] Vérifier le nouveau logo PNG transparent (752x550, RGBA, fond transparent, 717 Ko)
 - [x] Remplacer le logo dans CinemaRideau, Navbar, Footer, brochure.ts
 - [x] Mettre à jour les 27 fichiers pré-rendus
+
+## Bug: Texte manquant sur image de fond page Galerie
+- [x] Le texte descriptif ajouté sur l'image de fond du hero de la page Galerie (gradient + texte en overlay)
+
+## Bug: Texte manquant sur image de fond page Galerie
+- [x] Le texte descriptif ajouté sur l'image de fond du hero de la page Galerie (gradient + texte en overlay)

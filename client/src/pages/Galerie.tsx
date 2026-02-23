@@ -114,7 +114,14 @@ export default function Galerie() {
             alt="Cinéma en plein air Hallucine"
             className="w-full h-full object-contain"
           decoding="async" />
-          <div className="absolute inset-0 bg-black/20" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
+
+          {/* Texte descriptif sur l'image de fond */}
+          <div className="absolute bottom-6 left-0 right-0 z-10 px-6">
+            <p className="text-white/80 text-sm md:text-base text-center max-w-3xl mx-auto leading-relaxed">
+              Découvrez nos projets à travers le monde. Écrans de cinéma gonflables, tentes événementielles, arches et mobilier : nos produits en action lors d'événements réels.
+            </p>
+          </div>
 
           {/* Barre filtres overlay en haut de l'image */}
           <div className="absolute top-[160px] left-0 right-0 z-20 bg-black/60 backdrop-blur-sm py-3">
