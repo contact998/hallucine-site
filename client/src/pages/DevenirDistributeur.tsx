@@ -28,7 +28,7 @@ const avantages = [
 ];
 
 export default function DevenirDistributeur() {
-  useDocumentMeta("Devenez Distributeur Hallucine", "Rejoignez le réseau de distributeurs Hallucine. Devenez revendeur d'écrans de cinéma gonflables et de produits événementiels.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg");
+  useDocumentMeta("Devenez Distributeur Hallucine", "Rejoignez le réseau de distributeurs Hallucine. Devenez revendeur d'écrans de cinéma gonflables et de produits événementiels.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp");
 
   return (
     <div className="min-h-screen bg-background text-foreground">

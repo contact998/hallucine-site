@@ -11,17 +11,17 @@ import PageStructuredData from "@/components/PageStructuredData";
 
 const photos = [
   // Écrans gonflables
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/oDtUBYZZFsCNDfjT.JPG", alt: "Écran gonflable 2.5m sur pieds pour projection en extérieur", cat: "Écrans gonflables" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jehwdTBugibhhkqD.jpg", alt: "Écran de cinéma gonflable de nuit sur toit d'immeuble", cat: "Écrans gonflables" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ToYOcoZKNzviDegc.jpg", alt: "Projection nocturne sur écran gonflable installé sur un toit", cat: "Écrans gonflables" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/JMsbNQksEitYvcle.JPG", alt: "Écran gonflable avec arche sur toit-terrasse", cat: "Écrans gonflables" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/iHeKkriOUImCLwKk.webp", alt: "Écran gonflable 2.5m sur pieds pour projection en extérieur", cat: "Écrans gonflables" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/lIHVsQcOijumuBQx.webp", alt: "Écran de cinéma gonflable de nuit sur toit d'immeuble", cat: "Écrans gonflables" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hZzmERjPunHTTNsQ.webp", alt: "Projection nocturne sur écran gonflable installé sur un toit", cat: "Écrans gonflables" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ucPMyEUniRmyKEdn.webp", alt: "Écran gonflable avec arche sur toit-terrasse", cat: "Écrans gonflables" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/GLxgsBrksfUScqkK.webp", alt: "Écran 5m léger en gymnase pour la FIFA", cat: "Écrans gonflables" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/MKPEYgRVUhwZagRz.webp", alt: "Le plus fin écran gonflable 8m de large", cat: "Écrans gonflables" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/dnaHKJUkWzquIkBm.webp", alt: "Écran gonflable 8m de base à Saint-Germain", cat: "Écrans gonflables" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PNHSEIDaxMouReeA.webp", alt: "Écran géant gonflable 24m à Marseille", cat: "Écrans gonflables" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/EPgkfmHRzXvUcdzd.jpg", alt: "Écran de cinéma gonflable étanche à l'air, idéal pour les piscines", cat: "Écrans gonflables" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QbCjkqnaayQbCPAI.jpg", alt: "Comparaison de la taille d'un écran gonflable étanche avec une personne", cat: "Écrans gonflables" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eKOtDMUHutnqjXdh.jpg", alt: "Vue arrière d'un écran de cinéma gonflable étanche de 7.5 mètres", cat: "Écrans gonflables" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YMJYpUnslhOmIiPC.webp", alt: "Écran de cinéma gonflable étanche à l'air, idéal pour les piscines", cat: "Écrans gonflables" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TXuxOQPMMNpkSJyD.webp", alt: "Comparaison de la taille d'un écran gonflable étanche avec une personne", cat: "Écrans gonflables" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XDRRcwbNXnMRbTnK.webp", alt: "Vue arrière d'un écran de cinéma gonflable étanche de 7.5 mètres", cat: "Écrans gonflables" },
 
   // Événements & Projections
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BTjyZEhykZpPjzlQ.webp", alt: "Séance de cinéma en plein air avec public nombreux", cat: "Événements" },
@@ -53,40 +53,40 @@ const photos = [
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/JQhWDpMEkFFtjlJP.webp", alt: "Installation technique complète pour projection en extérieur", cat: "Équipement" },
 
   // Tentes
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/cLlNaQCWrtNrWacm.jpg", alt: "Tente gonflable en forme de X pour événements", cat: "Tentes" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CxWnWAyIeijNmhYL.jpg", alt: "Tente gonflable événementielle en forme de X", cat: "Tentes" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/pIlydvGvCDSAtbwe.jpg", alt: "Tentes gonflables en forme de X personnalisées avec logos", cat: "Tentes" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BoYSmcwYZYwyJyKs.jpg", alt: "Tente gonflable modèle N Hallucine", cat: "Tentes" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/lwNOuikOEKnufWFv.jpg", alt: "Tente gonflable modèle N personnalisée Volvo", cat: "Tentes" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IxinXsdzXXydRyVP.jpg", alt: "Tente gonflable modèle N Croix-Rouge", cat: "Tentes" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/levBSUmDnUKzAJuS.jpg", alt: "Tente gonflable blanche en forme de V", cat: "Tentes" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WXotPBHFjznmLgfQ.jpg", alt: "Tente gonflable blanche en forme de V — autre vue", cat: "Tentes" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/nsbDlDrvvBRoOdiV.jpg", alt: "Tentes gonflables bleues en forme d'araignée", cat: "Tentes" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/kQPOPmGzqJsnrWDD.jpg", alt: "Tentes gonflables en forme d'araignée noire et jaune", cat: "Tentes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WBPtkVmXwYeQzylG.webp", alt: "Tente gonflable en forme de X pour événements", cat: "Tentes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/gfjZlUztmRpFkTMl.webp", alt: "Tente gonflable événementielle en forme de X", cat: "Tentes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wSyrwQstEehyPZjG.webp", alt: "Tentes gonflables en forme de X personnalisées avec logos", cat: "Tentes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/datZthCdkwHITcDv.webp", alt: "Tente gonflable modèle N Hallucine", cat: "Tentes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wxhmpeFVNRrkuyZM.webp", alt: "Tente gonflable modèle N personnalisée Volvo", cat: "Tentes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PSRTSVMjlaeIrCsx.webp", alt: "Tente gonflable modèle N Croix-Rouge", cat: "Tentes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/sULADLfdWVDOnRle.webp", alt: "Tente gonflable blanche en forme de V", cat: "Tentes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/smDtImRPUmKTicoC.webp", alt: "Tente gonflable blanche en forme de V — autre vue", cat: "Tentes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XOAINGMCdjrkSVSl.webp", alt: "Tentes gonflables bleues en forme d'araignée", cat: "Tentes" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/foieoRxOMClglGqw.webp", alt: "Tentes gonflables en forme d'araignée noire et jaune", cat: "Tentes" },
 
   // Arches
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/msjlSvvcXPPgZNDW.png", alt: "Arche gonflable pour festival de cinéma en plein air", cat: "Arches" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qaWexEDLrhQudeax.png", alt: "Arche gonflable ligne d'arrivée course sportive", cat: "Arches" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CZcgjOTtIqUOapyp.jpg", alt: "Arche gonflable personnalisée pour projection en plein air", cat: "Arches" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/dRuvKidcdjNXhYOn.jpg", alt: "Arche gonflable de bienvenue pour événement", cat: "Arches" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/zbkdmCgoFZLzrsJh.jpg", alt: "Arche gonflable blanche personnalisable", cat: "Arches" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PccZsJjRQKmTphXx.jpg", alt: "Arche gonflable bleue pour événement sportif", cat: "Arches" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eWinssACUrKSNlmM.jpg", alt: "Arche gonflable publicitaire SKYGO", cat: "Arches" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QBUmTczXjVzScxWG.jpg", alt: "Arche gonflable modèle standard Hallucine", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/AmZzmccAPAWiJMXu.webp", alt: "Arche gonflable pour festival de cinéma en plein air", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ceBOWBOWONxDdwkP.webp", alt: "Arche gonflable ligne d'arrivée course sportive", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ohdgEdMErtsLWFZA.webp", alt: "Arche gonflable personnalisée pour projection en plein air", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ugvUXaZIOpaTTSGL.webp", alt: "Arche gonflable de bienvenue pour événement", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/nNXWzRdxpJfkgHDY.webp", alt: "Arche gonflable blanche personnalisable", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VAKfQtrSnnVPEWpY.webp", alt: "Arche gonflable bleue pour événement sportif", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/LAhtJVWpmNguSbyg.webp", alt: "Arche gonflable publicitaire SKYGO", cat: "Arches" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/SozTrHGryVKjifJR.webp", alt: "Arche gonflable modèle standard Hallucine", cat: "Arches" },
 
   // Mobilier
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/KCilunXaTvaFDvKR.jpg", alt: "Canapé et fauteuil gonflables noirs et rouges", cat: "Mobilier" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WwkJlfLpECCcYGmU.jpg", alt: "Fauteuil gonflable individuel pour événement", cat: "Mobilier" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/pgGljsUzRdyrOHDq.jpg", alt: "Bar comptoir gonflable pour événement en plein air", cat: "Mobilier" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/FwQqfrsOzrFnxmtI.jpg", alt: "Table mange-debout gonflable pour cocktail", cat: "Mobilier" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/MoRIdWaeeTcOqCpJ.jpg", alt: "Fauteuils et tabourets gonflables espace lounge", cat: "Mobilier" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bWcQbEFfeNczmMmc.jpg", alt: "Canapé gonflable bleu deux places", cat: "Mobilier" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/UIcmejSadRWEtlDG.webp", alt: "Canapé et fauteuil gonflables noirs et rouges", cat: "Mobilier" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/kCJQHsGvphErugzQ.webp", alt: "Fauteuil gonflable individuel pour événement", cat: "Mobilier" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hsXciBAkABiYidtp.webp", alt: "Bar comptoir gonflable pour événement en plein air", cat: "Mobilier" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/cfUCARloUkKyBbnx.webp", alt: "Table mange-debout gonflable pour cocktail", cat: "Mobilier" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QMaiyJJpGNDlQYCM.webp", alt: "Fauteuils et tabourets gonflables espace lounge", cat: "Mobilier" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ywPRhTcuHiFXaBee.webp", alt: "Canapé gonflable bleu deux places", cat: "Mobilier" },
 ];
 
 const categories = ["Tous", "Écrans gonflables", "Événements", "Équipement", "Tentes", "Arches", "Mobilier"];
 
 export default function Galerie() {
-  useDocumentMeta("Galerie Photos | Nos Réalisations", "Découvrez nos réalisations en images : écrans de cinéma gonflables, tentes événementielles, arches et mobilier en action lors d'événements réels.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/oDtUBYZZFsCNDfjT.JPG");
+  useDocumentMeta("Galerie Photos | Nos Réalisations", "Découvrez nos réalisations en images : écrans de cinéma gonflables, tentes événementielles, arches et mobilier en action lors d'événements réels.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/iHeKkriOUImCLwKk.webp");
 
   const [filter, setFilter] = useState("Tous");
   const [lightbox, setLightbox] = useState<number | null>(null);
@@ -172,7 +172,7 @@ export default function Galerie() {
       {lightbox !== null && (
         <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center" onClick={() => setLightbox(null)}>
           <div className="relative max-w-4xl max-h-[90vh] p-4">
-            <img src={filtered[lightbox].src} alt={filtered[lightbox].alt} className="max-w-full max-h-full object-contain rounded-lg" />
+            <img src={filtered[lightbox].src} alt={filtered[lightbox].alt} className="max-w-full max-h-full object-contain rounded-lg" loading="lazy" decoding="async" />
             <button onClick={() => setLightbox(null)} className="absolute top-4 right-4 text-white text-3xl font-bold">&times;</button>
             {lightbox > 0 && (
               <button onClick={(e) => { e.stopPropagation(); setLightbox(lightbox - 1); }} className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-4xl font-bold">‹</button>

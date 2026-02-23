@@ -10,13 +10,13 @@ import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 
-const ETANCHE_3M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XkmcCQJvGfnRZRxz.jpg";
-const ETANCHE_5M_RITZ = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CzprNCGHiOGRIkTg.jpg";
-const SOUFFLERIE_13M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bWqLOjfHSsVoXNHz.jpg";
-const SOUFFLERIE_24M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/KzXxmgVsjMoEdlML.jpg";
-const SOUFFLERIE_15M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/xEbWQMioMZQLtuDK.jpg";
-const SOUFFLERIE_12M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/AFizhJVCNHvXVtJS.jpg";
-const TENTE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YqpLPgGtuwNJbHEB.png";
+const ETANCHE_3M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BJEGXwtAVTOdazRK.webp";
+const ETANCHE_5M_RITZ = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tjbNBvVjKOzglOrU.webp";
+const SOUFFLERIE_13M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bCLNmCLimwOmcdhL.webp";
+const SOUFFLERIE_24M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/pCHhMDegkXgNjHWG.webp";
+const SOUFFLERIE_15M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XuQcntPFwWwFYAlz.webp";
+const SOUFFLERIE_12M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ANycGQMxmJtfRodR.webp";
+const TENTE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ADGlImZQfottkQnM.webp";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -104,7 +104,7 @@ const keyFigures = [
 ];
 
 export default function Histoire() {
-  useDocumentMeta("Notre Histoire | Depuis 1995", "L'histoire d'Hallucine depuis 1995 : de la première projection en plein air à aujourd'hui. 30 ans d'innovation dans le cinéma gonflable.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg");
+  useDocumentMeta("Notre Histoire | Depuis 1995", "L'histoire d'Hallucine depuis 1995 : de la première projection en plein air à aujourd'hui. 30 ans d'innovation dans le cinéma gonflable.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp");
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -114,7 +114,7 @@ export default function Histoire() {
           article={{
             headline: "Notre Histoire | Depuis 1995",
             description: "L'histoire d'Hallucine depuis 1995 : de la première projection en plein air à aujourd'hui. 30 ans d'innovation dans le cinéma gonflable.",
-            image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg",
+            image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp",
             url: "https://hallucine.ai/histoire-hallucine",
             datePublished: "2023-01-15T09:00:00+00:00",
             dateModified: "2024-05-20T14:30:00+00:00",

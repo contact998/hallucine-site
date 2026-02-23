@@ -11,7 +11,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 
 export default function TrouverDistributeur() {
-  useDocumentMeta("Trouvez un Distributeur | Réseau Mondial", "Trouvez un distributeur Hallucine près de chez vous. Réseau mondial de revendeurs d'écrans de cinéma gonflables et produits événementiels.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg");
+  useDocumentMeta("Trouvez un Distributeur | Réseau Mondial", "Trouvez un distributeur Hallucine près de chez vous. Réseau mondial de revendeurs d'écrans de cinéma gonflables et produits événementiels.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp");
 
   return (
     <div className="min-h-screen bg-background text-foreground">

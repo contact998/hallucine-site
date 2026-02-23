@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 import { useTimezone } from "@/hooks/useTimezone";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import { useNoIndex } from "@/hooks/useNoIndex";
 
 type SortField = "createdAt" | "type" | "status" | "sujet";
 type SortDir = "asc" | "desc";
@@ -80,6 +81,7 @@ function SortHeader({
 
 export default function Profil() {
   useDocumentMeta("Mon Profil | Mes Demandes", "Consultez votre profil et suivez l'état de vos demandes de devis Hallucine.");
+  useNoIndex();
 
   const { user, loading: authLoading, isAuthenticated, logout } = useAuth();
   const [sortField, setSortField] = useState<SortField>("createdAt");

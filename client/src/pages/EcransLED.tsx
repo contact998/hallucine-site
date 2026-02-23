@@ -17,7 +17,7 @@ const ledImages = [
 ];
 
 export default function EcransLED() {
-  useDocumentMeta("Écrans LED Événementiels", "Écrans LED pour événements en plein air et intérieur. Solutions d'affichage haute luminosité pour concerts, festivals et événements corporate.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg");
+  useDocumentMeta("Écrans LED Événementiels", "Écrans LED pour événements en plein air et intérieur. Solutions d'affichage haute luminosité pour concerts, festivals et événements corporate.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp");
 
   return (
     <div className="min-h-screen bg-background text-foreground">

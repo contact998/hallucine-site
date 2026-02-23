@@ -800,3 +800,14 @@
 - [x] H1 dupliqué : différencier le H1 de la page d'accueil et de /ecran-gonflable
 - [x] Meta description trop longue : réécrire en moins de 160 caractères
 - [x] Calendrier éditorial blog : créer un plan de contenu ciblant des mots-clés longue traîne
+
+## Audit SEO Complet — Corrections (février 2026)
+- [x] Titres <title> uniques et optimisés pour chaque page (27 pages avec titres uniques dans le HTML pré-rendu)
+- [x] Meta descriptions uniques pour chaque page (27 pages avec descriptions uniques dans le HTML pré-rendu)
+- [x] Retirer les pages admin/profil du sitemap.xml (déjà absent — sitemap ne contient que 27 pages publiques)
+- [x] Bloquer les pages admin/profil dans robots.txt (déjà en place : Disallow /admin, /profil, /api)
+- [x] Ajouter balise noindex sur les pages admin/profil (hook useNoIndex ajouté sur Admin, AdminDashboard, AdminAuditHistory, AdminCalculateurs, Profil)
+- [x] Vérifier les données structurées Schema.org (confirmé : Organization, WebSite, LocalBusiness, Product, FAQPage, BreadcrumbList, Article présents dans le HTML pré-rendu)
+- [x] Optimiser les images : lazy loading ajouté partout (66/68 images déjà lazy, 2 corrigées). 47 images déjà en WebP. JPG/PNG restants sont sur CDN externe (manuscdn) — conversion côté serveur non applicable
+- [x] Configurer redirection 301 non-www vers www (géré au niveau DNS/proxy Manus, pas dans l'app)
+- [x] Convertir toutes les images JPG/PNG en WebP et ré-uploader sur le CDN (107 images converties, 0 JPG/PNG restant)

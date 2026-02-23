@@ -69,7 +69,7 @@ const arguments7 = [
 ];
 
 export default function Comparaison() {
-  useDocumentMeta("Comparaison des Écrans Gonflables | Guide d'Achat", "Comparez nos écrans de cinéma gonflables : géant vs étanche vs économique. Tableau comparatif de 16 critères pour choisir le bon écran.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg");
+  useDocumentMeta("Comparaison des Écrans Gonflables | Guide d'Achat", "Comparez nos écrans de cinéma gonflables : géant vs étanche vs économique. Tableau comparatif de 16 critères pour choisir le bon écran.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp");
 
   const [showCountdown, setShowCountdown] = useState(true);
 

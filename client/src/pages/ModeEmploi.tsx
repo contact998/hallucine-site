@@ -10,22 +10,22 @@ import PageStructuredData from "@/components/PageStructuredData";
 
 /* ── CDN URLs des images ── */
 const IMG = {
-  schema1: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/whKrSXMXRQLlaxYD.jpg",
-  schema2: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/GvocDovsKTBPpHTW.jpg",
-  schema3: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fOhocnnIzeNSYCnb.jpg",
-  schema4: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jGAvIORRLFaBGOwH.jpg",
-  schema5: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/gxELcgzbYzxUKpHb.jpg",
-  schema6: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/DlnrjGoFUVTwrESw.jpg",
-  schema7: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/OnVSRLghTtMGMqBo.jpg",
+  schema1: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BRoYsXDdUVIJrXEy.webp",
+  schema2: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/AbZlmTrPhhNMzzcU.webp",
+  schema3: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qbxmLqUzyXiJWvKS.webp",
+  schema4: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/LMSRqHXKuzXGpqdl.webp",
+  schema5: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QypLSMDkrsPmaSVk.webp",
+  schema6: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/UImXQMQvbOYARZXN.webp",
+  schema7: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hVlcliDqTeugtfBz.webp",
   masse: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/cumCntiEjCLJiWXQ.webp",
-  piquet: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/iXwtJPsqGsxhogzF.jpg",
-  bache: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bRosVlxfuQBUAGFo.jpg",
-  metre: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZLzKkCMaGeLLXhAp.jpg",
-  souffleur: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ULtikgICfEVZCJBk.jpg",
+  piquet: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/gmKPxcPIEqUothUY.webp",
+  bache: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/nQnQuuDnaMgLiaAI.webp",
+  metre: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qkAKnPBluKLYtgoz.webp",
+  souffleur: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZjmyIIGVxLxQXCRC.webp",
 };
 
 export default function ModeEmploi() {
-  useDocumentMeta("Mode d'Emploi | Installation Écran Gonflable", "Guide d'installation de votre écran de cinéma gonflable. Instructions étape par étape, conseils et astuces pour une projection réussie.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg");
+  useDocumentMeta("Mode d'Emploi | Installation Écran Gonflable", "Guide d'installation de votre écran de cinéma gonflable. Instructions étape par étape, conseils et astuces pour une projection réussie.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp");
 
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
   const [lightboxImg, setLightboxImg] = useState<{ src: string; alt: string } | null>(null);

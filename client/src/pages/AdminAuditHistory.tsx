@@ -19,6 +19,7 @@ import {
 import { Link } from "wouter";
 import { useTimezone } from "@/hooks/useTimezone";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import { useNoIndex } from "@/hooks/useNoIndex";
 
 type SortField = "createdAt" | "totalPageViews" | "uniqueVisitors" | "totalEvents" | "avgDuration" | "weeklySubmissions";
 type SortDir = "asc" | "desc";
@@ -65,6 +66,7 @@ function KpiCard({
 
 export default function AdminAuditHistory() {
   useDocumentMeta("Historique des Audits", "Historique des audits IA Hallucine.");
+  useNoIndex();
 
   const { user, loading: authLoading, isAuthenticated } = useAuth();
   const [sortField, setSortField] = useState<SortField>("createdAt");

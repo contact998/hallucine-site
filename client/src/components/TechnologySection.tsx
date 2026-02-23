@@ -42,21 +42,21 @@ export default function TechnologySection() {
         >
           <div className="overflow-hidden rounded-lg">
             <img loading="lazy"
-              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ygOqSANxPCGqihoq.jpg"
+              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/DBLuNEuJLnRbIrlg.webp"
               alt="Écran 24m gonflé au Stade Vélodrome"
               className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
             decoding="async" />
           </div>
           <div className="overflow-hidden rounded-lg">
             <img loading="lazy"
-              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PMQSUHNnXmKFYbHW.jpg"
+              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/JOhQQyWFbEUHrMoa.webp"
               alt="Écran 24m à plat au Stade Vélodrome"
               className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
             decoding="async" />
           </div>
           <div className="overflow-hidden rounded-lg">
             <img loading="lazy"
-              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ODQsEVAASBhVGLWu.jpg"
+              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/oVGAOdVaRqiOlcQp.webp"
               alt="Équipe portant l'écran 24m à dos d'homme"
               className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
             decoding="async" />

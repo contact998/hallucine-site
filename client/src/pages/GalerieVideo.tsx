@@ -8,7 +8,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 
 export default function GalerieVideo() {
-  useDocumentMeta("Galerie Vidéo | Nos Produits en Action", "Vidéos de nos écrans de cinéma gonflables, tentes et mobilier événementiel en action. Montage, installation et événements filmés.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/oDtUBYZZFsCNDfjT.JPG");
+  useDocumentMeta("Galerie Vidéo | Nos Produits en Action", "Vidéos de nos écrans de cinéma gonflables, tentes et mobilier événementiel en action. Montage, installation et événements filmés.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/iHeKkriOUImCLwKk.webp");
 
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
 

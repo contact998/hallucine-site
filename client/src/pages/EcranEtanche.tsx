@@ -59,16 +59,16 @@ const faqItems = [
 ];
 
 const galleryImages = [
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/EPgkfmHRzXvUcdzd.jpg", alt: "Grand écran de cinéma gonflable étanche à l'air installé en extérieur" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QbCjkqnaayQbCPAI.jpg", alt: "Comparaison de la taille d'un écran gonflable étanche avec une personne" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eKOtDMUHutnqjXdh.jpg", alt: "Vue arrière d'un écran gonflable étanche de 7.5m montrant sa structure" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YMJYpUnslhOmIiPC.webp", alt: "Grand écran de cinéma gonflable étanche à l'air installé en extérieur" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TXuxOQPMMNpkSJyD.webp", alt: "Comparaison de la taille d'un écran gonflable étanche avec une personne" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XDRRcwbNXnMRbTnK.webp", alt: "Vue arrière d'un écran gonflable étanche de 7.5m montrant sa structure" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bgGbQjCtvAcizIlL.webp", alt: "Écran de cinéma gonflable étanche installé dans un jardin pour un événement" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ncYxRulsuwTbmqyt.webp", alt: "Projection de film en plein air sur un grand écran gonflable étanche la nuit" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wfNnGSUZpZLANRrm.webp", alt: "Image de haute qualité projetée sur un écran gonflable étanche lors d'un cinéma en plein air nocturne" },
 ];
 
 export default function EcranEtanche() {
-  useDocumentMeta("Écran Gonflable Étanche à l'Air | Technologie TPU", "Écran de cinéma gonflable étanche à l'air avec technologie TPU. Silencieux, sans soufflerie, résistant au vent. De 3m à 12m.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg");
+  useDocumentMeta("Écran Gonflable Étanche à l'Air | Technologie TPU", "Écran de cinéma gonflable étanche à l'air avec technologie TPU. Silencieux, sans soufflerie, résistant au vent. De 3m à 12m.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp");
 
   const [showCountdown, setShowCountdown] = useState(true);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -85,7 +85,7 @@ export default function EcranEtanche() {
         product={{
           name: "Écran gonflable étanche à l'air",
           description: "Les écrans gonflables étanches à l'air offrent une solution pratique et esthétique pour vos événements en intérieur et en extérieur. Disponibles en tailles allant de 2 à 10 mètres, ils s'adaptent parfaitement aux projections de films, soirées sportives ou tout autre événement nécessitant une toile grand format.",
-          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/EPgkfmHRzXvUcdzd.jpg",
+          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YMJYpUnslhOmIiPC.webp",
           url: "https://hallucinecran.fr/ecran-gonflable-etanche",
           category: "Écrans gonflables",
           minPrice: 990,

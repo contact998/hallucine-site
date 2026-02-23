@@ -43,7 +43,7 @@ const categories = [
 ];
 
 export default function Tentes() {
-  useDocumentMeta("Tentes Gonflables Événementielles", "Tentes gonflables pour événements : tentes X, N, V et araignées. Montage rapide, personnalisables, résistantes au vent. Fabricant depuis 1995.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eZVHaksoPSdOKbyX.jpg");
+  useDocumentMeta("Tentes Gonflables Événementielles", "Tentes gonflables pour événements : tentes X, N, V et araignées. Montage rapide, personnalisables, résistantes au vent. Fabricant depuis 1995.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/iuzByqgDGSYABkrJ.webp");
 
   return (
     <div className="min-h-screen bg-background text-foreground">

@@ -10,7 +10,7 @@ import { Link } from "wouter";
 import { useRef } from "react";
 
 
-const HERO_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg";
+const HERO_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp";
 
 const stats = [
   { value: "30", suffix: " ans", label: "d'expertise" },

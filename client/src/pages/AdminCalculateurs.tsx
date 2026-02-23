@@ -8,6 +8,7 @@ import CalculateurTenteV from "@/components/calculateurs/CalculateurTenteV";
 import CalculateurTenteN from "@/components/calculateurs/CalculateurTenteN";
 import CalculateurTenteAraignee from "@/components/calculateurs/CalculateurTenteAraignee";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import { useNoIndex } from "@/hooks/useNoIndex";
 
 type TabId = "x" | "v" | "n" | "araignee";
 
@@ -20,6 +21,7 @@ const TABS: { id: TabId; label: string }[] = [
 
 export default function AdminCalculateurs() {
   useDocumentMeta("Calculateurs Admin", "Outils de calcul pour l'administration Hallucine.");
+  useNoIndex();
 
   const [activeTab, setActiveTab] = useState<TabId>("x");
 

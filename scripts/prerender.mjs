@@ -148,12 +148,9 @@ async function prerenderPage(browser, route) {
     // Attendre un peu plus pour les animations/lazy loading
     await new Promise(r => setTimeout(r, 1000));
     
-    // Récupérer le HTML complet
+    // Récupérer le HTML complet — page.content() capture le DOM *après* React,
+    // donc le <title> et les <meta> ont déjà été mis à jour par useDocumentMeta.
     let html = await page.content();
-    
-    // Supprimer les scripts d'analytics/tracking du HTML pré-rendu
-    // (ils seront rechargés par le client de toute façon)
-    // Mais garder les scripts Vite pour l'hydratation React
     
     // Remplacer les URLs localhost par la vraie URL de production
     const PRODUCTION_URL = 'https://hallucinecran.fr';

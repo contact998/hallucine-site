@@ -11,6 +11,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import { useNoIndex } from "@/hooks/useNoIndex";
 import {
   BarChart3, TrendingUp, Users, Clock, Eye, MousePointerClick,
   Smartphone, Monitor, Tablet, Globe, ArrowLeft, Loader2,
@@ -20,6 +21,7 @@ import {
 
 export default function AdminDashboard() {
   useDocumentMeta("Dashboard Analytics", "Tableau de bord analytics Hallucine.");
+  useNoIndex();
 
   const { user, loading: authLoading, isAuthenticated } = useAuth();
   const [daysBack, setDaysBack] = useState(30);

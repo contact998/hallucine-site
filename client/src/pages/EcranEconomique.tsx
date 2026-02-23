@@ -31,19 +31,19 @@ const sansSouffleur = [
 
 // ─── Images carousels (identiques à l'ancien site) ────────────────────────────
 const imagesAvecSouffleur = [
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/FbgHJgCUoERCuJos.jpg", alt: "Écran économique avec souffleur installé dans la cour d'un bâtiment" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tjnMrwkkMTKJlYFC.webp", alt: "Écran économique avec souffleur installé dans la cour d'un bâtiment" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BFaZoFomGXqerqBf.webp", alt: "Écran économique avec souffleur pour un petit public" },
 ];
 
 const imagesSansSouffleur = [
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/JRJHgNwIipwxbWac.PNG", alt: "Écran économique sans souffleur installé dans un parc" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/EPgkfmHRzXvUcdzd.jpg", alt: "Écran économique sans souffleur sur la plage" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XlRwRmgffURmyirR.webp", alt: "Écran économique sans souffleur installé dans un parc" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YMJYpUnslhOmIiPC.webp", alt: "Écran économique sans souffleur sur la plage" },
 ];
 
 const imagesFinales = [
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QbCjkqnaayQbCPAI.jpg", alt: "Écran économique comparaison de taille humaine" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eKOtDMUHutnqjXdh.jpg", alt: "Écran économique vue de derrière" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/FbgHJgCUoERCuJos.jpg", alt: "Écran économique installé en extérieur" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TXuxOQPMMNpkSJyD.webp", alt: "Écran économique comparaison de taille humaine" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XDRRcwbNXnMRbTnK.webp", alt: "Écran économique vue de derrière" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tjnMrwkkMTKJlYFC.webp", alt: "Écran économique installé en extérieur" },
 ];
 
 // ─── Mini carousel ─────────────────────────────────────────────────────────────
@@ -94,7 +94,7 @@ function ImageCarousel({ images }: { images: { src: string; alt: string }[] }) {
 
 // ─── Composant principal ───────────────────────────────────────────────────────
 export default function EcranEconomique() {
-  useDocumentMeta("Écran Gonflable Économique | Prix Accessibles", "Écran de cinéma gonflable économique pour petits budgets. Qualité professionnelle à prix réduit. Idéal pour débuter le cinéma en plein air.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg");
+  useDocumentMeta("Écran Gonflable Économique | Prix Accessibles", "Écran de cinéma gonflable économique pour petits budgets. Qualité professionnelle à prix réduit. Idéal pour débuter le cinéma en plein air.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp");
 
   const [showCountdown, setShowCountdown] = useState(true);
 
@@ -111,12 +111,12 @@ export default function EcranEconomique() {
           name: "Écrans Gonflables Économiques",
           description: "Nos écrans gonflables économiques sont la solution idéale pour des événements à petit budget sans compromis sur la qualité. Conçus pour une utilisation facile et rapide, ces écrans sont parfaits pour des projections de films, des événements sportifs, des soirées en plein air, et bien plus encore.",
           image: [
-            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/FbgHJgCUoERCuJos.jpg",
+            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tjnMrwkkMTKJlYFC.webp",
             "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BFaZoFomGXqerqBf.webp",
-            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/JRJHgNwIipwxbWac.PNG",
-            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/EPgkfmHRzXvUcdzd.jpg",
-            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QbCjkqnaayQbCPAI.jpg",
-            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eKOtDMUHutnqjXdh.jpg",
+            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XlRwRmgffURmyirR.webp",
+            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YMJYpUnslhOmIiPC.webp",
+            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TXuxOQPMMNpkSJyD.webp",
+            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XDRRcwbNXnMRbTnK.webp",
           ],
           url: "https://hallucinecran.fr/ecran-economique",
           category: "Ecrans Gonflables",
@@ -326,15 +326,15 @@ export default function EcranEconomique() {
         <div className="container">
           <div className="flex flex-wrap justify-center items-center gap-8">
             <div className="flex flex-col items-center gap-2">
-              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZBLnaDLOhibqZTwD.png" alt="Ancre marine" className="w-16 h-16 object-contain" loading="lazy" decoding="async" />
+              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fTaohlHxyAwumChG.webp" alt="Ancre marine" className="w-16 h-16 object-contain" loading="lazy" decoding="async" />
               <p className="text-white/60 text-xs text-center">L'un des moins chers<br />au monde alliant robustesse</p>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/OQtINjKpErmTXqRM.png" alt="Garantie 1 an" className="w-16 h-16 object-contain" loading="lazy" decoding="async" />
+              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eYDihzECtVeZRChx.webp" alt="Garantie 1 an" className="w-16 h-16 object-contain" loading="lazy" decoding="async" />
               <p className="text-white/60 text-xs text-center">Garantie 1 an.</p>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yRObkNiXlvsgzhLl.png" alt="Souffleur" className="w-16 h-16 object-contain" loading="lazy" decoding="async" />
+              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ngrLwWawFZpdurjV.webp" alt="Souffleur" className="w-16 h-16 object-contain" loading="lazy" decoding="async" />
               <p className="text-white/60 text-xs text-center">Avec souffleur<br />&amp; Sans souffleur</p>
             </div>
           </div>

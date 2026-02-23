@@ -22,18 +22,18 @@ import PageStructuredData from "@/components/PageStructuredData";
 /* ─── Images (identiques à l'ancien site) ─── */
 
 const heroImages = [
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/dNeaCqaVkukLmROr.jpg", alt: "Tentes gonflables X Meguiar's noires et jaunes de nuit" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/nhpkoFFubHgBCQNH.jpg", alt: "Tente gonflable X Hallucine noire avec logo" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jMbXxGnqqBQpaSKf.jpg", alt: "Tentes gonflables X personnalisées multiples" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eHeFyOrReLiuoZGN.jpg", alt: "Tente gonflable X Ealing Eagles personnalisée" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/DDfByDgwYyjZTbIp.webp", alt: "Tentes gonflables X Meguiar's noires et jaunes de nuit" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wKJLmhSaWGjOINLS.webp", alt: "Tente gonflable X Hallucine noire avec logo" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TxKlmzDywYrajVyS.webp", alt: "Tentes gonflables X personnalisées multiples" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/OpXdNdoeRupqNamb.webp", alt: "Tente gonflable X Ealing Eagles personnalisée" },
 ];
 
 const contentImages = {
-  tenteCote: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/cLlNaQCWrtNrWacm.jpg",
-  tenteFace: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CxWnWAyIeijNmhYL.jpg",
-  tentePerso: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/pIlydvGvCDSAtbwe.jpg",
-  tenteNoire: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PnLAIpGjzrlXUmMH.jpg",
-  schemaEclate: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qxcyMzCtAkChGKtg.jpg",
+  tenteCote: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WBPtkVmXwYeQzylG.webp",
+  tenteFace: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/gfjZlUztmRpFkTMl.webp",
+  tentePerso: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wSyrwQstEehyPZjG.webp",
+  tenteNoire: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/OvkGqmApxFrMLBas.webp",
+  schemaEclate: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QDyLmkEXBrdgaxFX.webp",
 };
 
 /* ─── Mini carousel ─── */
@@ -79,7 +79,7 @@ function ImageLightbox({ src, alt, isOpen, onClose }: { src: string; alt: string
 
 /* ─── Page principale ─── */
 export default function TentesX() {
-  useDocumentMeta("Tente Gonflable X | Tente Événementielle", "Tente gonflable X pour événements. Structure robuste, montage en 10 minutes, personnalisation complète. Idéale pour salons, festivals et promotions.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eZVHaksoPSdOKbyX.jpg");
+  useDocumentMeta("Tente Gonflable X | Tente Événementielle", "Tente gonflable X pour événements. Structure robuste, montage en 10 minutes, personnalisation complète. Idéale pour salons, festivals et promotions.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/iuzByqgDGSYABkrJ.webp");
 
   const [showCountdown, setShowCountdown] = useState(true);
   const [lightboxImg, setLightboxImg] = useState<{ src: string; alt: string } | null>(null);

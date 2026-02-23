@@ -50,7 +50,7 @@ const accessoires = [
 ];
 
 export default function Accessoires() {
-  useDocumentMeta("Accessoires Cinéma en Plein Air", "Accessoires pour cinéma en plein air : projecteurs, systèmes audio, toiles de rechange, kits de réparation. Tout pour réussir votre événement.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg");
+  useDocumentMeta("Accessoires Cinéma en Plein Air", "Accessoires pour cinéma en plein air : projecteurs, systèmes audio, toiles de rechange, kits de réparation. Tout pour réussir votre événement.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp");
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -60,7 +60,7 @@ export default function Accessoires() {
         product={{
           name: "Accessoires pour Cinéma en Plein Air",
           description: "Complétez votre installation avec nos accessoires professionnels. Casques audio, transats, transmetteurs FM, mobilier gonflable, cabines de projection et forfaits audiovisuels complets.",
-          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg",
+          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp",
           url: "https://hallucine.ai/accessoire-cinema-plein-air",
           category: "Accessoires",
           minPrice: 99,
