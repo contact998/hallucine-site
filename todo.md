@@ -759,3 +759,10 @@
 - [x] Configurer le serveur pour servir les HTML pré-rendus
 - [x] Tester le build + pré-rendu et vérifier que le HTML contient le contenu (27/27 pages, 11507 chars de texte visible)
 - [x] Vérifier que le site fonctionne normalement après le pré-rendu (289 tests passent, serveur OK)
+
+## Fix pré-rendu SSG — inclure les HTML dans le code source
+- [x] Extraire le contenu div#root de chaque page → 27 fichiers .content.html (1.4 MB total)
+- [x] Modifier le serveur (vite.ts) : injection du contenu pré-rendu dans index.html au démarrage
+- [x] Retirer prerender.mjs du script build (garder le script pour régénération manuelle)
+- [x] Build fonctionne sans Puppeteer (24s au lieu de 5min)
+- [x] Test production : pages publiques = HTML complet, pages admin = SPA vide

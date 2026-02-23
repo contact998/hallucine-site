@@ -47,6 +47,37 @@ export async function setupVite(app: Express, server: Server) {
   });
 }
 
+// Mapping des routes vers les fichiers de contenu pré-rendu
+const PRERENDERED_ROUTES: Record<string, string> = {
+  "/": "home",
+  "/ecran-gonflable": "ecran-gonflable",
+  "/ecran-gonflable-geant-soufflerie": "ecran-gonflable-geant-soufflerie",
+  "/ecran-gonflable-etanche-air": "ecran-gonflable-etanche-air",
+  "/ecran-gonflable-economique": "ecran-gonflable-economique",
+  "/comparaison-ecran-gonflable": "comparaison-ecran-gonflable",
+  "/ecrans-led": "ecrans-led",
+  "/tente-gonflable": "tente-gonflable",
+  "/tente-gonflable-x": "tente-gonflable-x",
+  "/tente-gonflable-n": "tente-gonflable-n",
+  "/tente-gonflable-v": "tente-gonflable-v",
+  "/tente-gonflable-araignee": "tente-gonflable-araignee",
+  "/arche-gonflable": "arche-gonflable",
+  "/mobilier-gonflable": "mobilier-gonflable",
+  "/accessoire-cinema-plein-air": "accessoire-cinema-plein-air",
+  "/galerie-evenements": "galerie-evenements",
+  "/galerie-video": "galerie-video",
+  "/contactez-nous": "contactez-nous",
+  "/a-propos-hallucine": "a-propos-hallucine",
+  "/histoire-hallucine": "histoire-hallucine",
+  "/blog": "blog",
+  "/mode-emploi": "mode-emploi",
+  "/devenir-distributeur": "devenir-distributeur",
+  "/trouver-distributeur": "trouver-distributeur",
+  "/mentions-legales": "mentions-legales",
+  "/politique-confidentialite": "politique-confidentialite",
+  "/politique-cookies": "politique-cookies",
+};
+
 export function serveStatic(app: Express) {
   const distPath =
     process.env.NODE_ENV === "development"
@@ -58,37 +89,47 @@ export function serveStatic(app: Express) {
     );
   }
 
+  // Charger le template index.html (SPA) et les contenus pré-rendus au démarrage
+  const indexHtmlPath = path.resolve(distPath, "index.html");
+  const baseIndexHtml = fs.readFileSync(indexHtmlPath, "utf-8");
+
+  // Pré-générer les pages HTML complètes en mémoire (injection du contenu dans le template)
+  const prerenderedPages: Record<string, string> = {};
+  const prerenderedDir = path.resolve(distPath, "prerendered");
+
+  if (fs.existsSync(prerenderedDir)) {
+    for (const [route, fileName] of Object.entries(PRERENDERED_ROUTES)) {
+      const contentFile = path.resolve(prerenderedDir, `${fileName}.content.html`);
+      if (fs.existsSync(contentFile)) {
+        const content = fs.readFileSync(contentFile, "utf-8");
+        // Injecter le contenu pré-rendu dans le div#root du template index.html
+        const fullHtml = baseIndexHtml.replace(
+          '<div id="root"></div>',
+          `<div id="root">${content}</div>`
+        );
+        prerenderedPages[route] = fullHtml;
+      }
+    }
+    console.log(`[SSG] ${Object.keys(prerenderedPages).length} pages pré-rendues chargées en mémoire`);
+  } else {
+    console.warn("[SSG] Dossier prerendered/ non trouvé — mode SPA classique");
+  }
+
   // Servir les fichiers statiques (JS, CSS, images, etc.)
   app.use(express.static(distPath));
 
-  // Pour les routes SPA : chercher d'abord un fichier HTML pré-rendu,
+  // Pour les routes SPA : servir le HTML pré-rendu si disponible,
   // sinon fallback vers le SPA original
   app.use("*", (req, res) => {
     const url = req.originalUrl.split("?")[0].replace(/\/$/, "") || "/";
 
-    // 1. Essayer route/index.html (pré-rendu dans un dossier)
-    if (url !== "/") {
-      const dirIndexPath = path.resolve(distPath, url.slice(1), "index.html");
-      if (fs.existsSync(dirIndexPath)) {
-        res.sendFile(dirIndexPath);
-        return;
-      }
-
-      // 2. Essayer route.html (pré-rendu en fichier plat)
-      const flatHtmlPath = path.resolve(distPath, `${url.slice(1)}.html`);
-      if (fs.existsSync(flatHtmlPath)) {
-        res.sendFile(flatHtmlPath);
-        return;
-      }
+    // Servir la page pré-rendue si elle existe
+    if (prerenderedPages[url]) {
+      res.status(200).set({ "Content-Type": "text/html" }).end(prerenderedPages[url]);
+      return;
     }
 
-    // 3. Fallback : SPA fallback (pour les routes non pré-rendues comme /admin, /profil)
-    const spaFallback = path.resolve(distPath, "_spa_fallback.html");
-    if (fs.existsSync(spaFallback)) {
-      res.sendFile(spaFallback);
-    } else {
-      // Si pas de fallback SPA, servir index.html (qui est pré-rendu pour /)
-      res.sendFile(path.resolve(distPath, "index.html"));
-    }
+    // Fallback : SPA classique (pour /admin, /profil, etc.)
+    res.status(200).set({ "Content-Type": "text/html" }).end(baseIndexHtml);
   });
 }
