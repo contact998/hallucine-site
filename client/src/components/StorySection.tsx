@@ -5,10 +5,10 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
-const ECRAN_ETANCHE_3M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BJEGXwtAVTOdazRK.webp";
-const ECRAN_SOUFFLERIE_15 = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IBSGwnJIfTkJVDcS.webp";
-const ECRAN_24M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/RaaYulZPgnqKROFE.webp";
-const ECRAN_ETANCHE_6M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ftYcQWrxVqvHlMPR.webp";
+const ECRAN_ETANCHE_3M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/rPcNabMBCorkMwha.webp";
+const ECRAN_SOUFFLERIE_15 = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/cUDhAPDzimpwpEAw.webp";
+const ECRAN_24M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PGbRUViATZiGchmE.webp";
+const ECRAN_ETANCHE_6M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jEFZHbndJLBJrZrL.webp";
 const KYTEA_HK = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/SCBCurALKnXkcsMM.webp";
 const ECRAN_TUBULAIRE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/UQTOhAHRbAFprQCw.webp";
 const VOILERIE_BRETAGNE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ktazmzoptZJiIRJB.webp";

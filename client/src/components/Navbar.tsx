@@ -161,7 +161,7 @@ export default function Navbar() {
         <div className="container flex items-center justify-between py-3">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 shrink-0">
-            <img src={LOGO_URL} alt="Hallucine" className="h-12 md:h-14 w-auto" decoding="async" />
+            <img src={LOGO_URL} alt="Hallucine" className="h-12 md:h-14 w-auto" width={56} height={56} decoding="async" />
           </Link>
 
           {/* Desktop Nav */}

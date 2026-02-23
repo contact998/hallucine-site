@@ -10,12 +10,12 @@ import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 
-const ETANCHE_3M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BJEGXwtAVTOdazRK.webp";
+const ETANCHE_3M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/rPcNabMBCorkMwha.webp";
 const ETANCHE_5M_RITZ = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tjbNBvVjKOzglOrU.webp";
 const SOUFFLERIE_13M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bCLNmCLimwOmcdhL.webp";
-const SOUFFLERIE_24M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/pCHhMDegkXgNjHWG.webp";
-const SOUFFLERIE_15M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XuQcntPFwWwFYAlz.webp";
-const SOUFFLERIE_12M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ANycGQMxmJtfRodR.webp";
+const SOUFFLERIE_24M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WwOGMpsKPBSqcBkz.webp";
+const SOUFFLERIE_15M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/uxtSQwzMiBwMQHYE.webp";
+const SOUFFLERIE_12M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jnLOUisOIqLxvbTr.webp";
 const TENTE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ADGlImZQfottkQnM.webp";
 
 const fadeIn = {

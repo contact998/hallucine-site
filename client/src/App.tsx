@@ -4,7 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch, Redirect } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import WhatsAppButton from "./components/WhatsAppButton";
-import HallucineChatbot from "./components/HallucineChatbot";
+const HallucineChatbot = lazy(() => import("./components/HallucineChatbot"));
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { usePageTracking } from "./hooks/useAnalytics";
 import { useCanonical } from "./hooks/useCanonical";
@@ -137,7 +137,9 @@ function App() {
           <GlobalStructuredData />
           <Router />
           <WhatsAppButton />
-          <HallucineChatbot />
+          <Suspense fallback={null}>
+            <HallucineChatbot />
+          </Suspense>
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

@@ -11,7 +11,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 
 const ledImages = [
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HsaFiIxAyJbaFOdZ.webp", alt: "Écran LED gonflable Hallucine de 5m pour projection de jour comme de nuit" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bACzkvedGMIRwGMS.webp", alt: "Écran LED gonflable Hallucine de 5m pour projection de jour comme de nuit" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TpuAaOOOZSSoYWkG.webp", alt: "Écran LED gonflable Hallucine de 4m avec haute luminosité pour événements" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bIHLJvxkdwtLCety.webp", alt: "Démonstration du montage rapide d'un écran LED gonflable Hallucine en extérieur" },
 ];

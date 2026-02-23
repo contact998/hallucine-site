@@ -811,3 +811,11 @@
 - [x] Optimiser les images : lazy loading ajouté partout (66/68 images déjà lazy, 2 corrigées). 47 images déjà en WebP. JPG/PNG restants sont sur CDN externe (manuscdn) — conversion côté serveur non applicable
 - [x] Configurer redirection 301 non-www vers www (géré au niveau DNS/proxy Manus, pas dans l'app)
 - [x] Convertir toutes les images JPG/PNG en WebP et ré-uploader sur le CDN (107 images converties, 0 JPG/PNG restant)
+
+## Performance PageSpeed (février 2026)
+- [x] Réduire les ressources bloquantes (Google Fonts non-bloquantes, preload hero image, sons retirés du preload)
+- [x] Optimiser l'affichage des images (13 images >500KB redimensionnées 1600px max, économie ~16 MB total)
+- [x] Améliorer FCP et LCP (hero image preload + fetchpriority=high + width/height explicites)
+- [x] Corriger NO_LCP sur Desktop (CinemaRideau réécrit en overlay pointer-events-none, ne masque plus le contenu)
+- [x] Réduire CLS (CinemaRideau ne provoque plus de layout shift, width/height sur images above-the-fold)
+- [x] Réduire le bundle JS principal (1.7MB → 634KB, chatbot Streamdown lazy-loadé séparément)

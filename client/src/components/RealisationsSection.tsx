@@ -8,7 +8,7 @@ import { X } from "lucide-react";
 
 const photos = [
   {
-    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/pCHhMDegkXgNjHWG.webp",
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WwOGMpsKPBSqcBkz.webp",
     alt: "Spectaculaire projection nocturne sur un écran de cinéma gonflable de 24m par Hallucine",
     caption: "Écran 24m — Soufflerie",
     span: "col-span-2 row-span-2",
@@ -32,25 +32,25 @@ const photos = [
     span: "col-span-1 row-span-1",
   },
   {
-    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hNHDxfqtJMFhPcBZ.webp",
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/PJGRjDexThcnYOmD.webp",
     alt: "Fauteuil gonflable design et confortable par Hallucine, mobilier événementiel moderne et personnalisable",
     caption: "Mobilier gonflable",
     span: "col-span-1 row-span-1",
   },
   {
-    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XuQcntPFwWwFYAlz.webp",
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/uxtSQwzMiBwMQHYE.webp",
     alt: "Projection cinématographique en plein air sur un écran gonflable de 15m par Hallucine, ambiance nocturne magique",
     caption: "Écran 15m — Soufflerie",
     span: "col-span-2 row-span-2",
   },
   {
-    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/lYgSkHWUiArVcAaV.webp",
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZinsEbksrADPdCiM.webp",
     alt: "Petit écran de cinéma étanche de 4m par Hallucine, idéal pour des projections intimistes à Paris",
     caption: "Écran étanche 4m — Paris",
     span: "col-span-1 row-span-1",
   },
   {
-    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/guOiYhRtHydKdJCA.webp",
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/KERohrCZmFhnQBkk.webp",
     alt: "Écran de cinéma gonflable de 10m par Hallucine pour un événement de cinéma drive-in",
     caption: "Écran 10m — Drive-in",
     span: "col-span-1 row-span-1",
@@ -62,7 +62,7 @@ const photos = [
     span: "col-span-1 row-span-1",
   },
   {
-    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ohdgEdMErtsLWFZA.webp",
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/uMgcuJpZiBQPPGmX.webp",
     alt: "Arche gonflable Hallucine servant d'entrée immersive pour une projection de film en plein air",
     caption: "Arche — Entrée projection",
     span: "col-span-1 row-span-1",

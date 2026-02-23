@@ -33,7 +33,11 @@ export default function HeroSection() {
           src={HERO_IMG}
           alt="Écran de cinéma gonflable géant Hallucine en projection nocturne"
           className="w-full h-full object-cover scale-110"
-        decoding="async" loading="lazy" />
+          width={1920}
+          height={1080}
+          decoding="async"
+          fetchPriority="high"
+        />
       </motion.div>
 
       {/* Cinematic overlays */}

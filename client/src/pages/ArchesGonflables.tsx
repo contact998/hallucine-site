@@ -65,8 +65,8 @@ export default function ArchesGonflables() {
           description: "Les arches gonflables sont des éléments incontournables pour vos événements sportifs, expositions, et campagnes promotionnelles. Faciles à personnaliser, elles offrent une visibilité accrue grâce à leur grande taille et leur design adaptable. De 4m à 12m de large.",
           image: [
             "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/AmZzmccAPAWiJMXu.webp",
-            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ceBOWBOWONxDdwkP.webp",
-            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ohdgEdMErtsLWFZA.webp",
+            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/URHUGqPUFQmnMZRI.webp",
+            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/uMgcuJpZiBQPPGmX.webp",
             "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/nNXWzRdxpJfkgHDY.webp",
           ],
           url: "https://hallucinecran.fr/arches-gonflables",
@@ -100,8 +100,8 @@ export default function ArchesGonflables() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
               { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/AmZzmccAPAWiJMXu.webp", alt: "Arche gonflable cinéma en plein air avec écran de projection" },
-              { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ceBOWBOWONxDdwkP.webp", alt: "Arche gonflable colorée pour arrivée de course sportive" },
-              { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ohdgEdMErtsLWFZA.webp", alt: "Arche gonflable bleue et rouge pour entrée de projection" },
+              { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/URHUGqPUFQmnMZRI.webp", alt: "Arche gonflable colorée pour arrivée de course sportive" },
+              { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/uMgcuJpZiBQPPGmX.webp", alt: "Arche gonflable bleue et rouge pour entrée de projection" },
               { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/nNXWzRdxpJfkgHDY.webp", alt: "Arche gonflable blanche décorée motifs floraux" },
             ].map((img, i) => (
               <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden group">
@@ -280,7 +280,7 @@ export default function ArchesGonflables() {
             </div>
             {/* Colonne image */}
             <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
-              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ceBOWBOWONxDdwkP.webp" alt="Détails techniques d'une arche gonflable" className="w-full h-full object-cover" loading="lazy" decoding="async" />
+              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/URHUGqPUFQmnMZRI.webp" alt="Détails techniques d'une arche gonflable" className="w-full h-full object-cover" loading="lazy" decoding="async" />
             </div>
           </div>
         </div>
