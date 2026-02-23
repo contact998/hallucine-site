@@ -1,0 +1,36 @@
+{
+  "query": "SHOW CREATE TABLE `audit_history`;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user khoDaLNR7QanKY6.24e870245d7c --database e2MtNjHsQcTUTnWGsGBMg7 --execute SHOW CREATE TABLE `audit_history`;",
+  "rows": [
+    {
+      "Table": "audit_history",
+      "Create Table": "CREATE TABLE `audit_history` ("
+    }
+  ],
+  "messages": [
+    "  `id` int(11) NOT NULL AUTO_INCREMENT,",
+    "  `period` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `timezone` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `performanceSummary` text COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `workflowAnalysis` text COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `conversionAnalysis` text COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `codeRecommendations` text COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `prioritizedActions` text COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `rawMetrics` text COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `totalPageViews` int(11) NOT NULL DEFAULT '0',",
+    "  `uniqueVisitors` int(11) NOT NULL DEFAULT '0',",
+    "  `totalEvents` int(11) NOT NULL DEFAULT '0',",
+    "  `avgDuration` int(11) NOT NULL DEFAULT '0',",
+    "  `totalSubmissions` int(11) NOT NULL DEFAULT '0',",
+    "  `weeklySubmissions` int(11) NOT NULL DEFAULT '0',",
+    "  `emailSubject` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `emailBody` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `emailSent` enum('pending','sent','failed') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',",
+    "  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,",
+    "  PRIMARY KEY (`id`) /*T![clustered_index] CLUSTERED */",
+    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+  ],
+  "stdout": "Table\tCreate Table\naudit_history\tCREATE TABLE `audit_history` (\n  `id` int(11) NOT NULL AUTO_INCREMENT,\n  `period` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `timezone` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `performanceSummary` text COLLATE utf8mb4_unicode_ci NOT NULL,\n  `workflowAnalysis` text COLLATE utf8mb4_unicode_ci NOT NULL,\n  `conversionAnalysis` text COLLATE utf8mb4_unicode_ci NOT NULL,\n  `codeRecommendations` text COLLATE utf8mb4_unicode_ci NOT NULL,\n  `prioritizedActions` text COLLATE utf8mb4_unicode_ci NOT NULL,\n  `rawMetrics` text COLLATE utf8mb4_unicode_ci NOT NULL,\n  `totalPageViews` int(11) NOT NULL DEFAULT '0',\n  `uniqueVisitors` int(11) NOT NULL DEFAULT '0',\n  `totalEvents` int(11) NOT NULL DEFAULT '0',\n  `avgDuration` int(11) NOT NULL DEFAULT '0',\n  `totalSubmissions` int(11) NOT NULL DEFAULT '0',\n  `weeklySubmissions` int(11) NOT NULL DEFAULT '0',\n  `emailSubject` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `emailBody` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `emailSent` enum('pending','sent','failed') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',\n  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  PRIMARY KEY (`id`) /*T![clustered_index] CLUSTERED */\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci\n",
+  "stderr": "",
+  "execution_time_ms": 384
+}

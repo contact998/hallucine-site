@@ -1,0 +1,32 @@
+{
+  "query": "SHOW CREATE TABLE `page_views`;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user khoDaLNR7QanKY6.24e870245d7c --database e2MtNjHsQcTUTnWGsGBMg7 --execute SHOW CREATE TABLE `page_views`;",
+  "rows": [
+    {
+      "Table": "page_views",
+      "Create Table": "CREATE TABLE `page_views` ("
+    }
+  ],
+  "messages": [
+    "  `id` int(11) NOT NULL AUTO_INCREMENT,",
+    "  `path` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `pageTitle` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `referrer` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `trafficSource` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `userAgent` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `deviceType` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `country` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `sessionId` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `userId` int(11) DEFAULT NULL,",
+    "  `duration` int(11) DEFAULT NULL,",
+    "  `utmSource` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `utmMedium` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `utmCampaign` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,",
+    "  PRIMARY KEY (`id`) /*T![clustered_index] CLUSTERED */",
+    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=870001"
+  ],
+  "stdout": "Table\tCreate Table\npage_views\tCREATE TABLE `page_views` (\n  `id` int(11) NOT NULL AUTO_INCREMENT,\n  `path` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `pageTitle` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `referrer` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `trafficSource` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `userAgent` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `deviceType` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `country` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `sessionId` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `userId` int(11) DEFAULT NULL,\n  `duration` int(11) DEFAULT NULL,\n  `utmSource` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `utmMedium` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `utmCampaign` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  PRIMARY KEY (`id`) /*T![clustered_index] CLUSTERED */\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=870001\n",
+  "stderr": "",
+  "execution_time_ms": 398
+}

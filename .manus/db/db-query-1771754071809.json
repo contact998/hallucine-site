@@ -1,0 +1,22 @@
+{
+  "query": "SHOW CREATE TABLE `site_settings`;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user khoDaLNR7QanKY6.24e870245d7c --database e2MtNjHsQcTUTnWGsGBMg7 --execute SHOW CREATE TABLE `site_settings`;",
+  "rows": [
+    {
+      "Table": "site_settings",
+      "Create Table": "CREATE TABLE `site_settings` ("
+    }
+  ],
+  "messages": [
+    "  `id` int(11) NOT NULL AUTO_INCREMENT,",
+    "  `settingKey` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `settingValue` text COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,",
+    "  PRIMARY KEY (`id`) /*T![clustered_index] CLUSTERED */,",
+    "  UNIQUE KEY `site_settings_settingKey_unique` (`settingKey`)",
+    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=30001"
+  ],
+  "stdout": "Table\tCreate Table\nsite_settings\tCREATE TABLE `site_settings` (\n  `id` int(11) NOT NULL AUTO_INCREMENT,\n  `settingKey` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `settingValue` text COLLATE utf8mb4_unicode_ci NOT NULL,\n  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (`id`) /*T![clustered_index] CLUSTERED */,\n  UNIQUE KEY `site_settings_settingKey_unique` (`settingKey`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=30001\n",
+  "stderr": "",
+  "execution_time_ms": 357
+}

@@ -69,6 +69,7 @@ export async function sendProspectToCrm(input: CrmWebhookInput): Promise<CrmWebh
     if (input.contactType) payload.contactType = input.contactType;
     if (input.dateRealisationEnvisagee) payload.dateRealisationEnvisagee = input.dateRealisationEnvisagee;
     if (input.abandonPartiel) payload.abandonPartiel = true;
+    payload.lang = "fr";
 
     console.log(`[CRM Webhook] Envoi prospect ${input.email || input.entreprise} (abandon: ${!!input.abandonPartiel})`);
 

@@ -1,0 +1,24 @@
+{
+  "query": "SHOW CREATE TABLE `analytics_events`;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user khoDaLNR7QanKY6.24e870245d7c --database e2MtNjHsQcTUTnWGsGBMg7 --execute SHOW CREATE TABLE `analytics_events`;",
+  "rows": [
+    {
+      "Table": "analytics_events",
+      "Create Table": "CREATE TABLE `analytics_events` ("
+    }
+  ],
+  "messages": [
+    "  `id` int(11) NOT NULL AUTO_INCREMENT,",
+    "  `eventType` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `eventData` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `path` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `sessionId` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `userId` int(11) DEFAULT NULL,",
+    "  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,",
+    "  PRIMARY KEY (`id`) /*T![clustered_index] CLUSTERED */",
+    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+  ],
+  "stdout": "Table\tCreate Table\nanalytics_events\tCREATE TABLE `analytics_events` (\n  `id` int(11) NOT NULL AUTO_INCREMENT,\n  `eventType` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `eventData` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `path` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `sessionId` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `userId` int(11) DEFAULT NULL,\n  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  PRIMARY KEY (`id`) /*T![clustered_index] CLUSTERED */\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci\n",
+  "stderr": "",
+  "execution_time_ms": 346
+}

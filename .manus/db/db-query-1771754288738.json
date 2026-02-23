@@ -1,0 +1,32 @@
+{
+  "query": "SHOW CREATE TABLE `contact_submissions`;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user khoDaLNR7QanKY6.24e870245d7c --database e2MtNjHsQcTUTnWGsGBMg7 --execute SHOW CREATE TABLE `contact_submissions`;",
+  "rows": [
+    {
+      "Table": "contact_submissions",
+      "Create Table": "CREATE TABLE `contact_submissions` ("
+    }
+  ],
+  "messages": [
+    "  `id` int(11) NOT NULL AUTO_INCREMENT,",
+    "  `type` enum('contact','devis','distributeur') COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `email` varchar(320) COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `telephone` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `entreprise` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `sujet` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `message` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `produit` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `objectif` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,",
+    "  `userId` int(11) DEFAULT NULL,",
+    "  `status` enum('en_attente','en_cours','traite','annule') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'en_attente',",
+    "  `adminNote` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,",
+    "  PRIMARY KEY (`id`) /*T![clustered_index] CLUSTERED */",
+    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=390001"
+  ],
+  "stdout": "Table\tCreate Table\ncontact_submissions\tCREATE TABLE `contact_submissions` (\n  `id` int(11) NOT NULL AUTO_INCREMENT,\n  `type` enum('contact','devis','distributeur') COLLATE utf8mb4_unicode_ci NOT NULL,\n  `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `email` varchar(320) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `telephone` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `entreprise` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `sujet` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `message` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `produit` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `objectif` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `userId` int(11) DEFAULT NULL,\n  `status` enum('en_attente','en_cours','traite','annule') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'en_attente',\n  `adminNote` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (`id`) /*T![clustered_index] CLUSTERED */\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=390001\n",
+  "stderr": "",
+  "execution_time_ms": 365
+}

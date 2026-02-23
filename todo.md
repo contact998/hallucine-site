@@ -749,3 +749,6 @@
 - [x] Intégrer Google Analytics G-JKHPG2Q6GK dans index.html
 - [x] Soumettre le sitemap à Google Search Console (instructions fournies)
 - [x] Ajouter le fichier de vérification Google Search Console google608a77cbc2babbfa.html
+
+## Traçabilité des prospects (lang)
+- [x] Ajouter lang: "fr" dans le payload du webhook CRM (crmWebhook.ts)
