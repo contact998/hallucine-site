@@ -1,12 +1,9 @@
 /*
  * CinemaRideau — Effet de rideau de cinéma rouge qui s'ouvre au clic
- * 
- * OPTIMISATION PERFORMANCE :
- * - Le rideau utilise `will-change: transform` pour les animations GPU
- * - Pas de `position: fixed` sur le contenu principal → le LCP est détectable
- * - Le rideau est retiré du DOM dès l'ouverture terminée
- * - Dimensions fixes pour éviter le CLS
- * - Détection des bots (Lighthouse/Googlebot) → pas de rideau pour eux
+ * Pas de fond noir : le rideau s'ouvre directement sur la page d'accueil.
+ * Le logo s'efface progressivement (fade-out) pendant l'ouverture.
+ * Le clic initial contourne la politique autoplay des navigateurs.
+ * Détection des bots (Lighthouse/Googlebot) → pas de rideau pour eux
  */
 import { useState, useEffect, useRef, useCallback } from "react";
 
@@ -14,10 +11,10 @@ const CURTAIN_SOUND_URL = "https://files.manuscdn.com/user_upload_by_module/sess
 const LOGO_TRANSPARENT_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tWSEvNLkFkmjxAXj.png";
 
 // Timings (en ms)
-const OPEN_DURATION = 3000;
-const LOGO_FADE_DURATION = 1500;
-const FADE_OUT_START = 2600;
-const REMOVE_DELAY = 3800;
+const OPEN_DURATION = 3000;       // Durée de l'animation d'ouverture (lente)
+const LOGO_FADE_DURATION = 1500;  // Durée du fade-out du logo
+const FADE_OUT_START = 2600;      // Début du fade-out du son
+const REMOVE_DELAY = 3800;        // Retrait du DOM
 
 type Phase = "waiting" | "opening" | "done";
 
@@ -59,14 +56,20 @@ export default function CinemaRideau() {
     }
     return "waiting";
   });
-  
+
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const fadeRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Forcer le scroll en haut de page dès l'affichage du rideau
+  useEffect(() => {
+    if (phase === "done") return;
+    window.scrollTo(0, 0);
+  }, [phase]);
 
   // Précharger le son dès le montage (sans le jouer)
   useEffect(() => {
     if (phase === "done") return;
-    
+
     const audio = new Audio();
     audio.preload = "auto";
     audio.volume = 0.6;
@@ -78,16 +81,18 @@ export default function CinemaRideau() {
       audio.pause();
       audio.src = "";
     };
-  }, [phase]);
+  }, []); // PAS de dépendance sur phase — on charge le son une seule fois au montage
 
-  // Clic utilisateur → ouvrir le rideau
+  // Clic utilisateur → ouvrir le rideau directement avec le son
   const handleClick = useCallback(() => {
     if (phase !== "waiting") return;
     setPhase("opening");
     markCurtainSeen();
 
+    // Forcer le scroll en haut de page à l'ouverture
     window.scrollTo({ top: 0, behavior: "instant" });
 
+    // Jouer le son du rideau (le clic autorise l'autoplay)
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
       audioRef.current.play().catch(() => {});
@@ -98,6 +103,7 @@ export default function CinemaRideau() {
   useEffect(() => {
     if (phase !== "opening") return;
 
+    // Fade-out du son vers la fin de l'ouverture
     const t1 = setTimeout(() => {
       if (audioRef.current) {
         fadeRef.current = setInterval(() => {
@@ -114,6 +120,7 @@ export default function CinemaRideau() {
       }
     }, FADE_OUT_START);
 
+    // Retirer du DOM
     const t2 = setTimeout(() => setPhase("done"), REMOVE_DELAY);
 
     return () => {
@@ -123,7 +130,6 @@ export default function CinemaRideau() {
     };
   }, [phase]);
 
-  // Ne rien rendre si terminé ou bot
   if (phase === "done") return null;
 
   const isOpening = phase === "opening";
@@ -131,12 +137,8 @@ export default function CinemaRideau() {
 
   return (
     <div
-      className="fixed inset-0 z-[9999]"
-      style={{
-        cursor: phase === "waiting" ? "pointer" : "default",
-        // Pas de will-change sur le conteneur, seulement sur les rideaux
-        contain: "layout style paint",
-      }}
+      className="fixed inset-0 z-[9999] pointer-events-auto"
+      style={{ cursor: phase === "waiting" ? "pointer" : "default" }}
       onClick={handleClick}
       aria-hidden="true"
     >
@@ -147,7 +149,6 @@ export default function CinemaRideau() {
           transform: isOpening ? "translateX(-105%)" : "translateX(0)",
           transition: isOpening ? openTransition : "none",
           willChange: isOpening ? "transform" : "auto",
-          contain: "strict",
         }}
       >
         <div className="relative w-full h-full" style={{ background: "linear-gradient(90deg, #5a0a0a 0%, #8b1a1a 15%, #6b0f0f 25%, #a02020 40%, #7a1212 55%, #8b1a1a 70%, #6b0f0f 85%, #4a0808 100%)" }}>
@@ -165,7 +166,6 @@ export default function CinemaRideau() {
           transform: isOpening ? "translateX(105%)" : "translateX(0)",
           transition: isOpening ? openTransition : "none",
           willChange: isOpening ? "transform" : "auto",
-          contain: "strict",
         }}
       >
         <div className="relative w-full h-full" style={{ background: "linear-gradient(270deg, #5a0a0a 0%, #8b1a1a 15%, #6b0f0f 25%, #a02020 40%, #7a1212 55%, #8b1a1a 70%, #6b0f0f 85%, #4a0808 100%)" }}>
@@ -194,7 +194,7 @@ export default function CinemaRideau() {
         <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: "linear-gradient(90deg, #c5942a, #e8b84a, #c5942a, #e8b84a, #c5942a)" }} />
       </div>
 
-      {/* Logo + invitation à cliquer */}
+      {/* Logo + invitation à cliquer — s'efface progressivement pendant l'ouverture */}
       <div
         className="absolute inset-0 flex items-center justify-center z-20"
         style={{

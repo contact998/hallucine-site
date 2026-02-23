@@ -261,6 +261,10 @@
 ## Widget navigation flottante Hallucine
 - [x] Ajouter le script externe nav-widget dans client/index.html avant </body>
 
+## Bug: Musique du rideau de cinéma ne joue plus
+- [x] Diagnostiquer pourquoi la musique du rideau ne joue plus
+- [x] Corriger le problème
+
 ## Bug: tRPC mutation retourne HTML au lieu de JSON
 - [ ] Identifier quelle mutation tRPC cause l'erreur "Unexpected token '<'" au chargement de la page d'accueil
 - [ ] Corriger le problème
