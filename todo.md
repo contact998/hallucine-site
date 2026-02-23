@@ -766,3 +766,12 @@
 - [x] Retirer prerender.mjs du script build (garder le script pour régénération manuelle)
 - [x] Build fonctionne sans Puppeteer (24s au lieu de 5min)
 - [x] Test production : pages publiques = HTML complet, pages admin = SPA vide
+
+## Fix canonical URL — toutes les pages pointent vers la page d'accueil (bloque l'indexation Google)
+- [x] Supprimer la balise canonical statique de index.html
+- [x] Créer le hook useCanonical qui met à jour dynamiquement canonical + og:url selon la route
+- [x] Mettre à jour aussi og:url dynamiquement
+- [x] Injecter la bonne canonical dans les HTML pré-rendus (SSG)
+- [x] Régénérer les fichiers .content.html avec la bonne canonical (27/27 pages)
+- [x] Corriger les URLs localhost dans les fichiers pré-rendus (og:url, OAuth)
+- [x] Tester et vérifier (289 tests passent)

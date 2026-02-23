@@ -7,6 +7,7 @@ import WhatsAppButton from "./components/WhatsAppButton";
 import HallucineChatbot from "./components/HallucineChatbot";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { usePageTracking } from "./hooks/useAnalytics";
+import { useCanonical } from "./hooks/useCanonical";
 
 // Lazy-loaded pages (code splitting)
 const Home = lazy(() => import("./pages/Home"));
@@ -119,6 +120,11 @@ function AnalyticsTracker() {
   return null;
 }
 
+function CanonicalUpdater() {
+  useCanonical();
+  return null;
+}
+
 function App() {
   return (
     <ErrorBoundary>
@@ -126,6 +132,7 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <AnalyticsTracker />
+          <CanonicalUpdater />
           <Router />
           <WhatsAppButton />
           <HallucineChatbot />

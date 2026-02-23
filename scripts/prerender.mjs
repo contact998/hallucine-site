@@ -155,6 +155,10 @@ async function prerenderPage(browser, route) {
     // (ils seront rechargés par le client de toute façon)
     // Mais garder les scripts Vite pour l'hydratation React
     
+    // Remplacer les URLs localhost par la vraie URL de production
+    const PRODUCTION_URL = 'https://hallucinecran.fr';
+    html = html.replaceAll(`http://localhost:${PORT}`, PRODUCTION_URL);
+    
     // Ajouter un commentaire pour identifier le HTML pré-rendu
     html = html.replace(
       '<head>',
