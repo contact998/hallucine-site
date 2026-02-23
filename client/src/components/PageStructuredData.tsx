@@ -20,6 +20,7 @@ interface ProductInfo {
   url: string;
   category?: string;
   sku?: string;
+  minPrice?: number;
 }
 
 interface FaqItem {

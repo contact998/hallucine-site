@@ -47,6 +47,7 @@ export default function TentesV() {
             image: heroImages.map(img => img.src),
             url: "https://hallucinecran.fr/tentes-gonflables-v",
             category: "Tentes gonflables",
+          minPrice: 1490,
           }}
         />
       <Navbar />

@@ -62,7 +62,8 @@ export default function Accessoires() {
           description: "Complétez votre installation avec nos accessoires professionnels. Casques audio, transats, transmetteurs FM, mobilier gonflable, cabines de projection et forfaits audiovisuels complets.",
           image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg",
           url: "https://hallucine.ai/accessoire-cinema-plein-air",
-          category: "Accessoires"
+          category: "Accessoires",
+          minPrice: 99,
         }}
       />
       <Navbar />

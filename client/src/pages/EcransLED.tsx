@@ -32,7 +32,8 @@ export default function EcransLED() {
           description: "Découvrez notre nouvelle gamme d\'écrans LED pour des projections visibles même en plein jour. Haute luminosité, installation rapide, qualité d\'image exceptionnelle.",
           image: ledImages.map(img => img.src),
           url: "https://hallucinecran.fr/ecrans-led",
-          category: "Écrans LED"
+          category: "Écrans LED",
+          minPrice: 4990,
         }}
       />
       <Navbar />

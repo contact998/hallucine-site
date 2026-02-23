@@ -789,3 +789,9 @@
 - [x] Fix serveur : route SSG avant express.static pour éviter que index.html soit servi directement
 - [x] Test production : accueil 1 JSON-LD, ecran-gonflable 4 JSON-LD (Product+FAQ+Breadcrumb+Global), admin 0
 - [x] 289 tests passent, 0 erreur TypeScript
+
+## Fix Schema Product — erreurs Rich Results Test
+- [x] Ajouter price (minPrice) dans les offres Product (12 pages produits)
+- [x] Ajouter priceValidUntil (fin d'année suivante)
+- [x] Régénérer les fichiers pré-rendus (27/27 pages)
+- [x] JSON-LD avec price dans le head du HTML pré-rendu (vérifié)

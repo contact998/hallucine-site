@@ -62,6 +62,7 @@ export default function TentesAraignees() {
           image: images.map(img => img.src),
           url: "https://hallucinecran.fr/tentes-araignees",
           category: "Tentes gonflables",
+          minPrice: 990,
         }}
         faqs={faqItems.map(item => ({ question: item.q, answer: item.a }))}
       />

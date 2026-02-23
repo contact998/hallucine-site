@@ -147,6 +147,7 @@ export default function Mobilier() {
           image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yIjIIOgOUQsaauXF.jpg",
           url: "https://hallucinecran.fr/mobilier",
           category: "Mobilier Gonflable",
+          minPrice: 490,
         }}
         faqs={faqItems.map(item => ({ question: item.q, answer: item.a }))}
       />

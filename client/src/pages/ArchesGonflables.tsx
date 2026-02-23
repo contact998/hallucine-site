@@ -71,6 +71,7 @@ export default function ArchesGonflables() {
           ],
           url: "https://hallucinecran.fr/arches-gonflables",
           category: "Structures gonflables",
+          minPrice: 790,
         }}
         faqs={faqItems.map(item => ({ question: item.q, answer: item.a }))}
       />

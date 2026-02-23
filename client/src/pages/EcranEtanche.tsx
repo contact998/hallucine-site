@@ -88,6 +88,7 @@ export default function EcranEtanche() {
           image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/EPgkfmHRzXvUcdzd.jpg",
           url: "https://hallucinecran.fr/ecran-gonflable-etanche",
           category: "Écrans gonflables",
+          minPrice: 990,
         }}
         faqs={faqItems.map(item => ({ question: item.q, answer: item.a }))}
       />

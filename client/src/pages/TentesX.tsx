@@ -103,6 +103,7 @@ export default function TentesX() {
           image: heroImages.map(img => img.src),
           url: "https://hallucinecran.fr/tentes-gonflables-x",
           category: "Tentes gonflables",
+          minPrice: 1490,
         }}
       />
       {showCountdown && <FilmCountdown onComplete={() => setShowCountdown(false)} />}

@@ -94,6 +94,7 @@ export default function Ecrans() {
           image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg",
           url: "/ecran-gonflable",
           category: "Écrans de cinéma gonflables",
+          minPrice: 990,
         }}
         faqs={ecransFaqs}
       />

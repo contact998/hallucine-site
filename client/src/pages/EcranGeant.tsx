@@ -69,6 +69,7 @@ export default function EcranGeant() {
           image: galleryImages.map(img => img.src),
           url: "https://hallucinecran.fr/ecran-gonflable-geant-soufflerie",
           category: "Écrans gonflables",
+          minPrice: 2490,
         }}
       />
       {showCountdown && <FilmCountdown onComplete={() => setShowCountdown(false)} />}

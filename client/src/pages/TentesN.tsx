@@ -49,6 +49,7 @@ export default function TentesN() {
           image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eZVHaksoPSdOKbyX.jpg",
           url: "https://hallucinecran.fr/tentes-gonflables-n",
           category: "Tentes gonflables",
+          minPrice: 1990,
         }}
       />
       <Navbar />

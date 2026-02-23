@@ -135,6 +135,8 @@ interface ProductData {
   brand?: string;
   category?: string;
   sku?: string;
+  minPrice?: number;
+  maxPrice?: number;
 }
 
 export function productSchema(product: ProductData) {
@@ -160,6 +162,8 @@ export function productSchema(product: ProductData) {
       "@type": "Offer",
       availability: "https://schema.org/InStock",
       priceCurrency: "EUR",
+      price: product.minPrice || 990,
+      priceValidUntil: `${new Date().getFullYear() + 1}-12-31`,
       seller: {
         "@type": "Organization",
         name: "Hallucine",
