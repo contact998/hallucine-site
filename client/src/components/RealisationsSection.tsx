@@ -165,6 +165,7 @@ export default function RealisationsSection() {
           <button
             onClick={() => setLightbox(null)}
             className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors"
+            aria-label="Fermer la photo"
           >
             <X className="w-8 h-8" />
           </button>

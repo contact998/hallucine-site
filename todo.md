@@ -819,3 +819,9 @@
 - [x] Corriger NO_LCP sur Desktop (CinemaRideau réécrit en overlay pointer-events-none, ne masque plus le contenu)
 - [x] Réduire CLS (CinemaRideau ne provoque plus de layout shift, width/height sur images above-the-fold)
 - [x] Réduire le bundle JS principal (1.7MB → 634KB, chatbot Streamdown lazy-loadé séparément)
+
+## Corrections Accessibilité et Bonnes Pratiques (février 2026)
+- [x] Ajouter aria-label sur tous les boutons icône sans texte visible (Navbar mobile toggle, Chatbot close/send, Lightbox close)
+- [x] Augmenter la taille des zones tactiles (icônes sociales top bar + footer, liens email/phone top bar)
+- [x] Corriger les erreurs console JavaScript (warning scroll position fixé, erreur Vite WebSocket = dev only)
+- [x] Source maps en production : non incluses volontairement (sécurité, bonne pratique)

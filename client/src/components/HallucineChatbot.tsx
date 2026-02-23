@@ -232,6 +232,7 @@ export default function HallucineChatbot() {
               <button
                 onClick={() => setIsOpen(false)}
                 className="w-8 h-8 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors"
+                aria-label="Réduire le chat"
               >
                 <ChevronDown className="w-5 h-5" />
               </button>
@@ -240,7 +241,7 @@ export default function HallucineChatbot() {
             {/* Messages */}
             <div
               ref={scrollRef}
-              className="flex-1 overflow-y-auto px-4 py-4 space-y-4 scrollbar-thin scrollbar-thumb-white/10"
+              className="relative flex-1 overflow-y-auto px-4 py-4 space-y-4 scrollbar-thin scrollbar-thumb-white/10"
             >
               {messages.map((msg, i) => (
                 <div
@@ -391,6 +392,7 @@ export default function HallucineChatbot() {
                   type="submit"
                   disabled={!input.trim() || chatMutation.isPending}
                   className="w-10 h-10 rounded-xl bg-warm flex items-center justify-center text-charcoal hover:bg-warm-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
+                  aria-label="Envoyer le message"
                 >
                   {chatMutation.isPending ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
