@@ -752,3 +752,10 @@
 
 ## Traçabilité des prospects (lang)
 - [x] Ajouter lang: "fr" dans le payload du webhook CRM (crmWebhook.ts)
+
+## Pré-rendu statique (SSG) pour SEO Google
+- [x] Installer Puppeteer
+- [x] Créer le script de pré-rendu (prerender.mjs) pour les 27 pages publiques
+- [x] Configurer le serveur pour servir les HTML pré-rendus
+- [x] Tester le build + pré-rendu et vérifier que le HTML contient le contenu (27/27 pages, 11507 chars de texte visible)
+- [x] Vérifier que le site fonctionne normalement après le pré-rendu (289 tests passent, serveur OK)

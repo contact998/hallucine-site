@@ -58,10 +58,37 @@ export function serveStatic(app: Express) {
     );
   }
 
+  // Servir les fichiers statiques (JS, CSS, images, etc.)
   app.use(express.static(distPath));
 
-  // fall through to index.html if the file doesn't exist
-  app.use("*", (_req, res) => {
-    res.sendFile(path.resolve(distPath, "index.html"));
+  // Pour les routes SPA : chercher d'abord un fichier HTML pré-rendu,
+  // sinon fallback vers le SPA original
+  app.use("*", (req, res) => {
+    const url = req.originalUrl.split("?")[0].replace(/\/$/, "") || "/";
+
+    // 1. Essayer route/index.html (pré-rendu dans un dossier)
+    if (url !== "/") {
+      const dirIndexPath = path.resolve(distPath, url.slice(1), "index.html");
+      if (fs.existsSync(dirIndexPath)) {
+        res.sendFile(dirIndexPath);
+        return;
+      }
+
+      // 2. Essayer route.html (pré-rendu en fichier plat)
+      const flatHtmlPath = path.resolve(distPath, `${url.slice(1)}.html`);
+      if (fs.existsSync(flatHtmlPath)) {
+        res.sendFile(flatHtmlPath);
+        return;
+      }
+    }
+
+    // 3. Fallback : SPA fallback (pour les routes non pré-rendues comme /admin, /profil)
+    const spaFallback = path.resolve(distPath, "_spa_fallback.html");
+    if (fs.existsSync(spaFallback)) {
+      res.sendFile(spaFallback);
+    } else {
+      // Si pas de fallback SPA, servir index.html (qui est pré-rendu pour /)
+      res.sendFile(path.resolve(distPath, "index.html"));
+    }
   });
 }
