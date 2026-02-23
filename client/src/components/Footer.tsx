@@ -25,7 +25,7 @@ export default function Footer() {
           {/* Brand + description */}
           <div>
             <Link href="/">
-              <img loading="lazy" src={LOGO_URL} alt="Hallucine" className="h-20 md:h-24 w-auto mb-4" decoding="async" />
+              <img loading="lazy" src={LOGO_URL} alt="Hallucine" className="h-20 md:h-24 w-auto mb-4" width={96} height={96} decoding="async" />
             </Link>
             <p className="text-white/65 text-sm leading-relaxed">
               Fabricant d'écrans de cinéma gonflables depuis 1995. Les écrans les plus légers au monde, 

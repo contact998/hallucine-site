@@ -38,20 +38,11 @@
     <!-- Préchargement de l'image hero (LCP) -->
     <link rel="preload" href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XoVIsDKghhCzbhqj.webp" as="image" type="image/webp" fetchpriority="high" />
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JKHPG2Q6GK"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-JKHPG2Q6GK');
-    </script>
-
-    <!-- Fonts: DM Sans (geometric modern) + Source Serif 4 (editorial elegance) -->
+    <!-- Fonts: Chargement non-bloquant avec font-display:swap via media trick -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-    <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet" /></noscript>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet" /></noscript>
   </head>
 
   <body>
@@ -61,10 +52,28 @@
       defer
       src="%VITE_ANALYTICS_ENDPOINT%/umami"
       data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
+    <!-- Google Analytics — chargé après le contenu interactif -->
+    <script>
+      // Defer GA loading to after page becomes interactive
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          var s = document.createElement('script');
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=G-JKHPG2Q6GK';
+          s.async = true;
+          document.head.appendChild(s);
+          s.onload = function() {
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-JKHPG2Q6GK');
+          };
+        }, 2000);
+      });
+    </script>
     <script>
       // Widget navigation Hallucine : visible uniquement pour les admins connectés
-      (function() {
-        function loadNavWidget() {
+      window.addEventListener('load', function() {
+        setTimeout(function() {
           fetch('/api/trpc/auth.me', { credentials: 'include' })
             .then(function(r) { return r.json(); })
             .then(function(data) {
@@ -76,13 +85,8 @@
               }
             })
             .catch(function() {});
-        }
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', loadNavWidget);
-        } else {
-          loadNavWidget();
-        }
-      })();
+        }, 3000);
+      });
     </script>
   </body>
 

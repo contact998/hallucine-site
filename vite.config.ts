@@ -167,6 +167,27 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // Séparer framer-motion dans son propre chunk (chargé à la demande)
+          if (id.includes('framer-motion')) {
+            return 'framer-motion';
+          }
+          // Séparer React et React-DOM
+          if (id.includes('node_modules/react-dom')) {
+            return 'react-dom';
+          }
+          if (id.includes('node_modules/react/') || id.includes('node_modules/react-is')) {
+            return 'react';
+          }
+          // Séparer les composants UI lourds
+          if (id.includes('@radix-ui')) {
+            return 'radix-ui';
+          }
+        },
+      },
+    },
   },
   server: {
     host: true,

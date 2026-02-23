@@ -134,14 +134,16 @@ export default function TestimonialsSection() {
           <button
             onClick={() => goTo(current - 1)}
             disabled={current === 0}
-            className="absolute -left-4 lg:-left-8 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-warm hover:border-warm/30 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+            aria-label="Témoignage précédent"
+            className="absolute -left-4 lg:-left-8 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-warm hover:border-warm/30 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <button
             onClick={() => goTo(current + 1)}
             disabled={current >= maxIndex}
-            className="absolute -right-4 lg:-right-8 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-warm hover:border-warm/30 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+            aria-label="Témoignage suivant"
+            className="absolute -right-4 lg:-right-8 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-warm hover:border-warm/30 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
@@ -204,10 +206,13 @@ export default function TestimonialsSection() {
               <button
                 key={i}
                 onClick={() => goTo(i)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  i === current ? "bg-warm w-6" : "bg-white/20 hover:bg-white/40"
-                }`}
-              />
+                aria-label={`Aller au témoignage ${i + 1}`}
+                className="relative flex items-center justify-center min-w-[44px] min-h-[44px]"
+              >
+                <span className={`block rounded-full transition-all duration-300 ${
+                  i === current ? "bg-warm w-6 h-2" : "bg-white/20 hover:bg-white/40 w-2 h-2"
+                }`} />
+              </button>
             ))}
           </div>
         </div>

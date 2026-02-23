@@ -825,3 +825,16 @@
 - [x] Augmenter la taille des zones tactiles (icônes sociales top bar + footer, liens email/phone top bar)
 - [x] Corriger les erreurs console JavaScript (warning scroll position fixé, erreur Vite WebSocket = dev only)
 - [x] Source maps en production : non incluses volontairement (sécurité, bonne pratique)
+
+## Optimisation Performance PageSpeed v2 (février 2026)
+- [x] Fix CLS : ajouter width/height explicites sur toutes les images (ProductsSection, TechnologySection, StorySection, RealisationsSection, Footer)
+- [x] Fix CLS : ajouter sizes="100vw" sur l'image hero
+- [x] Fix requêtes bloquantes : déférer Google Analytics après window.load + 2s
+- [x] Fix requêtes bloquantes : déférer widget admin après window.load + 3s
+- [x] Fix requêtes bloquantes : réduire les variantes Google Fonts (moins de poids)
+- [x] Fix JS inutilisé : séparer framer-motion, react-dom, radix-ui en chunks distincts (manualChunks)
+- [x] Fix accessibilité : aria-label sur boutons carrousel témoignages (précédent/suivant/dots)
+- [x] Fix accessibilité : zones tactiles 44px minimum sur dots carrousel témoignages
+- [x] Fix accessibilité : boutons navigation carrousel agrandis à 44px (w-11 h-11)
+- [x] Régénérer les 27 pages pré-rendues (SSG)
+- [x] Build OK + 289 tests passent

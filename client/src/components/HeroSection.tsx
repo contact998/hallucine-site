@@ -35,6 +35,7 @@ export default function HeroSection() {
           className="w-full h-full object-cover scale-110"
           width={1920}
           height={1080}
+          sizes="100vw"
           decoding="async"
           fetchPriority="high"
         />
