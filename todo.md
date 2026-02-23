@@ -851,3 +851,8 @@
 
 ## Restauration détection bot headlesschrome
 - [x] Remettre headlesschrome dans la détection bot du rideau pour PageSpeed
+
+## Remplacement logo par le PNG transparent original
+- [x] Vérifier le nouveau logo PNG transparent (752x550, RGBA, fond transparent, 717 Ko)
+- [x] Remplacer le logo dans CinemaRideau, Navbar, Footer, brochure.ts
+- [x] Mettre à jour les 27 fichiers pré-rendus

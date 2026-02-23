@@ -6,7 +6,7 @@ import { Mail, Phone, MessageCircle } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
 
-const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/RRuPcEubZpMSilcb.webp";
+const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tWSEvNLkFkmjxAXj.png";
 
 export default function Footer() {
   const [email, setEmail] = useState("");

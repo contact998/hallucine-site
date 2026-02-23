@@ -11,7 +11,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { AvailabilityBadge } from "@/components/AvailabilityIndicator";
 
-const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/RRuPcEubZpMSilcb.webp";
+const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tWSEvNLkFkmjxAXj.png";
 
 interface DropdownItem {
   label: string;

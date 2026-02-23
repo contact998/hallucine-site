@@ -11,7 +11,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
 const CURTAIN_SOUND_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/iwEWTRdKZwhOWzcW.mp3";
-const LOGO_TRANSPARENT_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/RRuPcEubZpMSilcb.webp";
+const LOGO_TRANSPARENT_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tWSEvNLkFkmjxAXj.png";
 
 // Timings (en ms)
 const OPEN_DURATION = 3000;
