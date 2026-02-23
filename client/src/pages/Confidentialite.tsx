@@ -6,12 +6,25 @@ import Footer from "@/components/Footer";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 export default function Confidentialite() {
   useDocumentMeta("Politique de Confidentialité", "Politique de confidentialité d'Hallucine. Protection de vos données personnelles, cookies et droits RGPD.");
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+        <PageStructuredData
+          id="politique-de-confidentialite"
+          breadcrumbs={[
+            { name: "Accueil", url: "/" },
+            { name: "Politique de Confidentialité", url: "/politique-confidentialite" },
+          ]}
+          page={{
+            name: "Politique de confidentialité",
+            description: "Politique de confidentialité d'Hallucine. Protection de vos données personnelles, cookies et droits RGPD.",
+            url: "https://hallucine.fr/politique-confidentialite",
+          }}
+        />
       <Navbar />
 
       <section className="pt-32 pb-24">

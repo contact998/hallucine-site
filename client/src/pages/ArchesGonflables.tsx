@@ -8,6 +8,7 @@ import { Link } from "wouter";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 const archesData = [
   { ref: "CA-4/2.6/0.45", taille: "400×260(H)×45cm" },
@@ -52,6 +53,27 @@ export default function ArchesGonflables() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PageStructuredData
+        id="arches-gonflables"
+        breadcrumbs={[
+          { name: "Accueil", url: "https://hallucinecran.fr" },
+          { name: "Structures gonflables", url: "https://hallucinecran.fr/" },
+          { name: "Arches Gonflables", url: "https://hallucinecran.fr/arches-gonflables" },
+        ]}
+        product={{
+          name: "Arches Gonflables Personnalisées pour Événements",
+          description: "Les arches gonflables sont des éléments incontournables pour vos événements sportifs, expositions, et campagnes promotionnelles. Faciles à personnaliser, elles offrent une visibilité accrue grâce à leur grande taille et leur design adaptable. De 4m à 12m de large.",
+          image: [
+            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/msjlSvvcXPPgZNDW.png",
+            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qaWexEDLrhQudeax.png",
+            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CZcgjOTtIqUOapyp.jpg",
+            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/zbkdmCgoFZLzrsJh.jpg",
+          ],
+          url: "https://hallucinecran.fr/arches-gonflables",
+          category: "Structures gonflables",
+        }}
+        faqs={faqItems.map(item => ({ question: item.q, answer: item.a }))}
+      />
       <Navbar />
 
       {/* Hero */}
@@ -225,76 +247,39 @@ export default function ArchesGonflables() {
               <h2 className="text-3xl font-bold text-ivory mb-6">
                 Caractéristiques <span className="text-warm">Techniques</span>
               </h2>
-              <ul className="space-y-4 text-white/70 leading-relaxed">
-                <li className="flex gap-4">
-                  <span className="shrink-0 w-2 h-2 bg-warm rounded-full mt-2" />
+              <ul className="space-y-4 text-white/70">
+                <li className="flex items-start">
+                  <div className="w-8 h-8 rounded-full bg-warm/10 text-warm flex items-center justify-center mr-4 shrink-0">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 6V4m0 16v-2M8 9l-1 1m8 8l1-1M9 16l-1-1M15 9l1 1" /></svg>
+                  </div>
                   <div>
-                    <strong className="text-ivory">Matériaux :</strong> PVC renforcé ou tissu Oxford, résistant aux intempéries et aux UV.
+                    <h4 className="font-semibold text-ivory">Matériaux</h4>
+                    <p className="text-sm">Tissu Oxford 600D et PVC renforcé pour une durabilité maximale.</p>
                   </div>
                 </li>
-                <li className="flex gap-4">
-                  <span className="shrink-0 w-2 h-2 bg-warm rounded-full mt-2" />
+                <li className="flex items-start">
+                  <div className="w-8 h-8 rounded-full bg-warm/10 text-warm flex items-center justify-center mr-4 shrink-0">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg>
+                  </div>
                   <div>
-                    <strong className="text-ivory">Personnalisation :</strong> Impression numérique haute définition sur toute la surface de l'arche.
+                    <h4 className="font-semibold text-ivory">Impression</h4>
+                    <p className="text-sm">Impression numérique haute définition pour des couleurs vives et un rendu professionnel.</p>
                   </div>
                 </li>
-                <li className="flex gap-4">
-                  <span className="shrink-0 w-2 h-2 bg-warm rounded-full mt-2" />
-                  <div>
-                    <strong className="text-ivory">Installation rapide :</strong> Système de gonflage en moins de 5 minutes grâce à la pompe électrique.
+                <li className="flex items-start">
+                  <div className="w-8 h-8 rounded-full bg-warm/10 text-warm flex items-center justify-center mr-4 shrink-0">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                   </div>
-                </li>
-                <li className="flex gap-4">
-                  <span className="shrink-0 w-2 h-2 bg-warm rounded-full mt-2" />
                   <div>
-                    <strong className="text-ivory">Accessoires inclus :</strong> Pompe électrique et manuelle, sacs de sable, cordes, piquets et kit de réparation TPU.
-                  </div>
-                </li>
-                <li className="flex gap-4">
-                  <span className="shrink-0 w-2 h-2 bg-warm rounded-full mt-2" />
-                  <div>
-                    <strong className="text-ivory">Étanchéité :</strong> Endobiliaire TPU — un seul gonflage suffit, pas de souffleur permanent nécessaire.
-                  </div>
-                </li>
-                <li className="flex gap-4">
-                  <span className="shrink-0 w-2 h-2 bg-warm rounded-full mt-2" />
-                  <div>
-                    <strong className="text-ivory">Couverture extérieure :</strong> Housse amovible personnalisable, protégeant la structure interne.
+                    <h4 className="font-semibold text-ivory">Installation</h4>
+                    <p className="text-sm">Montage rapide en moins de 10 minutes avec une pompe électrique.</p>
                   </div>
                 </li>
               </ul>
             </div>
-            {/* Colonne image éclatée */}
-            <div>
-              <img
-                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/oxFQOUUYfchnVhOX.jpg"
-                alt="Schéma éclaté des composants de l'arche gonflable — pompe manuelle, pompes électriques, pile, sac à main, valves, surpression, réparation TPU, corde, couverture extérieure, endobiliaire TPU, base"
-                className="w-full rounded-lg shadow-lg"
-                loading="lazy"
-              decoding="async" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Applications */}
-      <section className="py-20 bg-background">
-        <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-6">
-            Applications <span className="text-warm">Possibles</span>
-          </h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="p-5 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-2">Événements sportifs</h3>
-              <p className="text-white/60 text-sm">Portique pour les départs et arrivées de courses. Points d'entrée pour les compétitions en plein air.</p>
-            </div>
-            <div className="p-5 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-2">Expositions et foires</h3>
-              <p className="text-white/60 text-sm">Signalétique pour guider les visiteurs. Décorations promotionnelles pour stands.</p>
-            </div>
-            <div className="p-5 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-2">Publicité mobile</h3>
-              <p className="text-white/60 text-sm">Supports pour campagnes publicitaires locales ou itinérantes.</p>
+            {/* Colonne image */}
+            <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
+              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YJjWvVqVqZqJzZqJ.jpg" alt="Détails techniques d'une arche gonflable" className="w-full h-full object-cover" loading="lazy" decoding="async" />
             </div>
           </div>
         </div>
@@ -303,16 +288,13 @@ export default function ArchesGonflables() {
       {/* CTA */}
       <section className="py-20 bg-background">
         <div className="container text-center">
-          <h2 className="text-3xl font-bold text-ivory mb-4">Besoin d'une arche gonflable ?</h2>
-          <p className="text-white/60 mb-8">Contactez-nous pour un devis personnalisé ou consultez nos tarifs.</p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
-              Nous Contacter
-            </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
-              Demande de prix
-            </Link>
-          </div>
+          <h2 className="text-3xl font-bold text-ivory mb-4">Prêt à créer votre arche ?</h2>
+          <p className="text-white/70 max-w-2xl mx-auto mb-8">
+            Contactez-nous dès aujourd'hui pour un devis personnalisé et donnez vie à votre projet.
+          </p>
+          <Link href="/contact" className="inline-block bg-warm text-charcoal-dark font-semibold py-3 px-8 rounded-lg hover:bg-warm/90 transition-colors">
+            Demander un devis
+          </Link>
         </div>
       </section>
 

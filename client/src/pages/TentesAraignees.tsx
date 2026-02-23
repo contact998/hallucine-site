@@ -1,3 +1,4 @@
+
 /*
  * Page Tentes Araignées Gonflables
  * Contenu complet du site d'origine hallucinecran.com
@@ -9,6 +10,7 @@ import { Link } from "wouter";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 const tailles = [
   { dim: "4m × 4m", poids: "~50 kg", montage: "10-15 min" },
@@ -47,6 +49,22 @@ export default function TentesAraignees() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PageStructuredData
+        id="tentes-araignees"
+        breadcrumbs={[
+          { name: "Accueil", url: "https://hallucinecran.fr" },
+          { name: "Tentes gonflables", url: "https://hallucinecran.fr/tentes-gonflables" },
+          { name: "Tente Araignée Gonflable", url: "https://hallucinecran.fr/tentes-araignees" },
+        ]}
+        product={{
+          name: "Tente Araignée Gonflable",
+          description: "Tente gonflable araignée (spider) pour événements. Design unique, montage ultra-rapide, résistante au vent. Disponible en plusieurs tailles et couleurs.",
+          image: images.map(img => img.src),
+          url: "https://hallucinecran.fr/tentes-araignees",
+          category: "Tentes gonflables",
+        }}
+        faqs={faqItems.map(item => ({ question: item.q, answer: item.a }))}
+      />
       <Navbar />
 
       {/* Hero */}

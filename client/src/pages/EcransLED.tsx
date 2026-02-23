@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { Construction } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 const ledImages = [
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HsaFiIxAyJbaFOdZ.webp", alt: "Écran LED gonflable Hallucine de 5m pour projection de jour comme de nuit" },
@@ -20,6 +21,20 @@ export default function EcransLED() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PageStructuredData
+        id="ecrans-led"
+        breadcrumbs={[
+          { name: "Accueil", url: "https://hallucinecran.fr" },
+          { name: "Écrans LED", url: "https://hallucinecran.fr/ecrans-led" }
+        ]}
+        product={{
+          name: "Écrans LED Événementiels",
+          description: "Découvrez notre nouvelle gamme d\'écrans LED pour des projections visibles même en plein jour. Haute luminosité, installation rapide, qualité d\'image exceptionnelle.",
+          image: ledImages.map(img => img.src),
+          url: "https://hallucinecran.fr/ecrans-led",
+          category: "Écrans LED"
+        }}
+      />
       <Navbar />
 
       {/* Hero */}

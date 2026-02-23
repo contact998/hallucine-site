@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import VideoLightbox from "@/components/VideoLightbox";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 export default function GalerieVideo() {
   useDocumentMeta("Galerie Vidéo | Nos Produits en Action", "Vidéos de nos écrans de cinéma gonflables, tentes et mobilier événementiel en action. Montage, installation et événements filmés.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/oDtUBYZZFsCNDfjT.JPG");
@@ -46,6 +47,18 @@ export default function GalerieVideo() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PageStructuredData
+        id="galerie-video-page"
+        breadcrumbs={[
+          { name: "Accueil", url: "/" },
+          { name: "Galerie Vidéo", url: "/galerie-video" },
+        ]}
+        page={{
+          name: "Galerie Vidéo",
+          description: "Vidéos de nos écrans de cinéma gonflables, tentes et mobilier événementiel en action. Montage, installation et événements filmés.",
+          url: "/galerie-video",
+        }}
+      />
       <Navbar />
 
       {/* Hero */}

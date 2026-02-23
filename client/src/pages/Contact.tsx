@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import { ChevronDown, Clock, Globe, Shield, Truck, HelpCircle } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -68,6 +69,40 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PageStructuredData
+        id="contact"
+        breadcrumbs={[
+          { name: "Accueil", url: "/" },
+          { name: "Contact", url: "/contactez-nous" },
+        ]}
+        page={{
+          name: "Contactez-nous | Devis Gratuit",
+          description: "Contactez Hallucine pour un devis gratuit. Écrans de cinéma gonflables, tentes, arches, mobilier. Réponse rapide, conseil personnalisé.",
+          url: "https://hallucine.fr/contactez-nous",
+        }}
+        faqs={[
+          {
+            question: "Quels sont les délais de fabrication ?",
+            answer: "Pour les produits standard (blanc ou noir, sans personnalisation) : 2 semaines. Pour les produits personnalisés (couleurs, impression de logos) : 3 à 4 semaines. Les délais de livraison s'ajoutent : environ 1 semaine pour l'Europe, 2 semaines pour le reste du monde.",
+          },
+          {
+            question: "Proposez-vous de la location ?",
+            answer: "Nous ne proposons pas directement de la location, mais nous travaillons avec un réseau de loueurs partenaires dans plusieurs pays. Contactez-nous en précisant votre besoin et votre localisation, et nous vous orienterons vers le loueur le plus proche.",
+          },
+          {
+            question: "Peut-on visiter votre usine ?",
+            answer: "Oui. Notre usine partenaire est située à Dongguan, en Chine, à environ 1h30 de Shenzhen. Si vous êtes dans la région, nous serons ravis de vous accueillir pour une visite. Contactez-nous pour organiser un rendez-vous.",
+          },
+          {
+            question: "Quels sont les moyens de paiement acceptés ?",
+            answer: "Nous acceptons les virements bancaires (SEPA pour l'Europe, SWIFT pour l'international). Pour les commandes importantes, nous proposons un paiement en 2 fois : 50% à la commande, 50% avant expédition. Contactez-nous pour discuter des modalités.",
+          },
+          {
+            question: "Proposez-vous des tarifs pour les revendeurs ?",
+            answer: "Oui. Nous proposons des conditions spéciales pour les revendeurs, les loueurs et les acheteurs en volume. Contactez-nous en précisant votre activité et le volume envisagé, et nous vous ferons une proposition adaptée.",
+          },
+        ]}
+      />
       <Navbar />
       <div className="pt-24">
         <ContactSection />

@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 const chiffres = [
   { value: "25+", label: "Années d'expérience" },
@@ -20,6 +21,25 @@ export default function APropos() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PageStructuredData
+        id="a-propos-hallucine"
+        breadcrumbs={[
+          { name: "Accueil", url: "/" },
+          { name: "À propos", url: "/a-propos-hallucine" },
+        ]}
+        page={{
+          name: "À Propos | L'Histoire d'Hallucine",
+          description: "Découvrez l'histoire d'Hallucine, fabricant français d'écrans de cinéma gonflables depuis 1995. Notre passion, notre savoir-faire, notre équipe.",
+          url: "https://hallucine.com/a-propos-hallucine",
+        }}
+        article={{
+          headline: "L'histoire de Hallucine",
+          description: "Depuis plus de 25 ans, Hallucine conçoit et fabrique des écrans de cinéma gonflables, des tentes événementielles et du mobilier gonflable. Une aventure familiale née de la passion pour le cinéma et la projection en plein air.",
+          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg",
+          url: "https://hallucine.com/a-propos-hallucine",
+          datePublished: "1992-01-01T00:00:00Z",
+        }}
+      />
       <Navbar />
 
       {/* Hero */}

@@ -10,6 +10,7 @@ import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 const gammes = [
   {
@@ -77,8 +78,25 @@ export default function Ecrans() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [showCountdown, setShowCountdown] = useState(true);
 
+  const ecransFaqs = faqItems.map(f => ({ question: f.q, answer: f.a }));
+
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PageStructuredData
+        id="ecrans"
+        breadcrumbs={[
+          { name: "Accueil", url: "/" },
+          { name: "Écrans Gonflables", url: "/ecran-gonflable" },
+        ]}
+        product={{
+          name: "Écrans de Cinéma Gonflables Hallucine",
+          description: "Gamme complète d'écrans de cinéma gonflables de 3m à 24m. Technologie étanche et soufflerie. 3× plus légers que la concurrence. Garantie 10 ans.",
+          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg",
+          url: "/ecran-gonflable",
+          category: "Écrans de cinéma gonflables",
+        }}
+        faqs={ecransFaqs}
+      />
       {showCountdown && <FilmCountdown onComplete={() => setShowCountdown(false)} />}
       <Navbar />
 

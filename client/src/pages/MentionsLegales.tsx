@@ -7,12 +7,25 @@ import Footer from "@/components/Footer";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 export default function MentionsLegales() {
   useDocumentMeta("Mentions Légales", "Mentions légales du site Hallucine. Informations sur l'éditeur, l'hébergeur et les conditions d'utilisation.");
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PageStructuredData
+        id="mentions-legales"
+        breadcrumbs={[
+          { name: "Accueil", url: "/" },
+          { name: "Mentions Légales", url: "/mentions-legales" },
+        ]}
+        page={{
+          name: "Mentions légales",
+          description: "Mentions légales du site Hallucine. Informations sur l'éditeur, l'hébergeur et les conditions d'utilisation.",
+          url: "https://hallucine.ai/mentions-legales",
+        }}
+      />
       <Navbar />
 
       <section className="pt-32 pb-24">

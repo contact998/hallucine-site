@@ -8,6 +8,7 @@ import HallucineChatbot from "./components/HallucineChatbot";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { usePageTracking } from "./hooks/useAnalytics";
 import { useCanonical } from "./hooks/useCanonical";
+import GlobalStructuredData from "./components/GlobalStructuredData";
 
 // Lazy-loaded pages (code splitting)
 const Home = lazy(() => import("./pages/Home"));
@@ -133,6 +134,7 @@ function App() {
           <Toaster />
           <AnalyticsTracker />
           <CanonicalUpdater />
+          <GlobalStructuredData />
           <Router />
           <WhatsAppButton />
           <HallucineChatbot />

@@ -775,3 +775,17 @@
 - [x] Régénérer les fichiers .content.html avec la bonne canonical (27/27 pages)
 - [x] Corriger les URLs localhost dans les fichiers pré-rendus (og:url, OAuth)
 - [x] Tester et vérifier (289 tests passent)
+
+## Données structurées Schema.org (JSON-LD) pour rich results Google
+- [x] Créer le hook useStructuredData pour injecter du JSON-LD dans le head
+- [x] Schema Organization : infos entreprise Hallucine (logo, adresse, téléphone, réseaux sociaux)
+- [x] Schema WebSite : nom du site + SearchAction pour le sitelinks search box
+- [x] Schema BreadcrumbList : fil d'Ariane sur toutes les pages (27 pages)
+- [x] Schema Product : sur les pages produits (écrans, tentes, arches, mobilier, accessoires)
+- [x] Schema FAQPage : sur les pages avec FAQ (accueil, écrans, tentes, comparaison)
+- [x] Schema LocalBusiness : coordonnées et horaires d'ouverture
+- [x] Schema Article : sur la page blog
+- [x] Régénérer les fichiers pré-rendus avec les données structurées (27/27 pages, 3 JSON-LD chacune)
+- [x] Fix serveur : route SSG avant express.static pour éviter que index.html soit servi directement
+- [x] Test production : accueil 1 JSON-LD, ecran-gonflable 4 JSON-LD (Product+FAQ+Breadcrumb+Global), admin 0
+- [x] 289 tests passent, 0 erreur TypeScript

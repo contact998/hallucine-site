@@ -6,12 +6,25 @@ import Footer from "@/components/Footer";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 export default function PolitiqueCookies() {
   useDocumentMeta("Politique de Cookies", "Politique de cookies du site Hallucine. Informations sur les cookies utilisés et gestion de vos préférences.");
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+        <PageStructuredData
+          id="politique-cookies"
+          page={{
+            name: "Politique de Cookies",
+            description: "Politique de cookies du site Hallucine. Informations sur les cookies utilisés et gestion de vos préférences.",
+            url: "/politique-cookies",
+          }}
+          breadcrumbs={[
+            { name: "Accueil", url: "/" },
+            { name: "Politique Cookies", url: "/politique-cookies" },
+          ]}
+        />
       <Navbar />
 
       <section className="pt-32 pb-24">

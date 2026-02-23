@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { Headphones, Armchair, Radio, Sofa, Monitor, Package } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 const accessoires = [
   {
@@ -53,6 +54,17 @@ export default function Accessoires() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PageStructuredData
+        id="accessoires-page"
+        breadcrumbs={[{ name: "Accueil", url: "https://hallucine.ai/" }, { name: "Accessoires", url: "https://hallucine.ai/accessoire-cinema-plein-air" }]}
+        product={{
+          name: "Accessoires pour Cinéma en Plein Air",
+          description: "Complétez votre installation avec nos accessoires professionnels. Casques audio, transats, transmetteurs FM, mobilier gonflable, cabines de projection et forfaits audiovisuels complets.",
+          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg",
+          url: "https://hallucine.ai/accessoire-cinema-plein-air",
+          category: "Accessoires"
+        }}
+      />
       <Navbar />
 
       {/* Hero */}

@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 const categories = [
   {
@@ -46,6 +47,18 @@ export default function Tentes() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+        <PageStructuredData
+          id="tentes-hub-page"
+          breadcrumbs={[
+            { name: "Accueil", url: "https://hallucinecran.fr" },
+            { name: "Tentes, Arches & Mobilier Gonflable", url: "https://hallucinecran.fr/tentes-gonflables" },
+          ]}
+          page={{
+            name: "Tentes Gonflables Événementielles",
+            description: "Tentes gonflables pour événements : tentes X, N, V et araignées. Montage rapide, personnalisables, résistantes au vent. Fabricant depuis 1995.",
+            url: "https://hallucinecran.fr/tentes-gonflables",
+          }}
+        />
       <Navbar />
 
       {/* Hero */}

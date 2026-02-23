@@ -1,3 +1,4 @@
+
 /*
  * Page Tentes Gonflables X
  * Reproduit fidèlement la page hallucinecran.com/fr/tentes-gonflables-x
@@ -16,6 +17,7 @@ import {
 } from "lucide-react";
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 /* ─── Images (identiques à l'ancien site) ─── */
 
@@ -88,6 +90,21 @@ export default function TentesX() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PageStructuredData
+        id="tentes-x"
+        breadcrumbs={[
+          { name: "Accueil", url: "https://hallucinecran.fr" },
+          { name: "Tentes gonflables", url: "https://hallucinecran.fr/tentes-gonflables" },
+          { name: "Tentes X", url: "https://hallucinecran.fr/tentes-gonflables-x" },
+        ]}
+        product={{
+          name: "Tente Gonflable X",
+          description: "La tente gonflable Hallucine X est la solution parfaite pour vos événements extérieurs. Elle combine praticité, solidité, et personnalisation pour offrir une expérience unique à vos clients.",
+          image: heroImages.map(img => img.src),
+          url: "https://hallucinecran.fr/tentes-gonflables-x",
+          category: "Tentes gonflables",
+        }}
+      />
       {showCountdown && <FilmCountdown onComplete={() => setShowCountdown(false)} />}
       <Navbar />
 
@@ -116,7 +133,7 @@ export default function TentesX() {
             </div>
             <div>
               <h2 className="text-3xl font-bold text-ivory mb-4">
-                Tente Gonflable Hallucine X :<br />
+                Tente Gonflable Hallucine X:<br />
                 <span className="text-warm">L'Allié Parfait de Vos Événements</span>
               </h2>
               <p className="text-white/70 leading-relaxed mb-4">
@@ -191,7 +208,7 @@ export default function TentesX() {
               </p>
               <ul className="space-y-4">
                 <li className="text-white/70 leading-relaxed">
-                  <strong className="text-warm">Fixation pratique</strong> : Des attaches sont intégrées sur les boudins pour faciliter l'ajout de poids de lestage ou d'accessoires.
+                  <strong className="text-warm">Sacs de lestage</strong> : Conçus pour être remplis de sable, ils assurent une stabilité optimale.
                 </li>
                 <li className="text-white/70 leading-relaxed">
                   <strong className="text-warm">Jonction en aluminium</strong> : Le nouveau système de jonction en partie haute permet de démonter les quatre boudins indépendamment et de les maintenir solidement grâce à des profilés en aluminium.

@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { Users, TrendingUp, Award, MessageCircle } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 const avantages = [
   {
@@ -31,6 +32,18 @@ export default function DevenirDistributeur() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PageStructuredData
+        id="devenir-distributeur"
+        breadcrumbs={[
+          { name: "Accueil", url: "/" },
+          { name: "Devenir Distributeur", url: "/devenir-distributeur" },
+        ]}
+        page={{
+          name: "Devenez Distributeur Hallucine",
+          description: "Rejoignez le réseau de distributeurs Hallucine. Devenez revendeur d'écrans de cinéma gonflables et de produits événementiels.",
+          url: "https://hallucine.fr/devenir-distributeur",
+        }}
+      />
       <Navbar />
 
       {/* Hero */}

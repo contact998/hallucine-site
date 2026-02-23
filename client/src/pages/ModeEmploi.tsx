@@ -6,6 +6,7 @@ import GearsEffect from "@/components/GearsEffect";
 import VideoLightbox from "@/components/VideoLightbox";
 import { Play, Package, AlertTriangle, Wrench } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 /* ── CDN URLs des images ── */
 const IMG = {
@@ -129,6 +130,18 @@ export default function ModeEmploi() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PageStructuredData
+        id="mode-emploi"
+        breadcrumbs={[
+          { name: "Accueil", url: "/" },
+          { name: "Mode d'emploi", url: "/mode-emploi" },
+        ]}
+        page={{
+          name: "Mode d'Emploi | Installation Écran Gonflable",
+          description: "Guide d'installation de votre écran de cinéma gonflable. Instructions étape par étape, conseils et astuces pour une projection réussie.",
+          url: "https://hallucine.ai/mode-emploi",
+        }}
+      />
       <Navbar />
 
       {/* Hero */}

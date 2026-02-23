@@ -1,3 +1,4 @@
+
 /*
  * Page Mobilier Gonflable — Contenu texte complet et enrichi
  * Détails produits, dimensions, personnalisation, accessoires transport, FAQ
@@ -9,6 +10,7 @@ import { motion } from "framer-motion";
 import { Check, ChevronRight, ChevronDown, Feather, Clock, Shield, Palette, ArrowLeft, Package, HelpCircle, Sofa, Wine, Truck, Ruler } from "lucide-react";
 import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 const MOBILIER_SUPPORT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/MoRIdWaeeTcOqCpJ.jpg";
 const MOBILIER_FAUTEUIL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WwkJlfLpECCcYGmU.jpg";
@@ -133,6 +135,21 @@ export default function Mobilier() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PageStructuredData
+        id="mobilier"
+        breadcrumbs={[
+          { name: "Accueil", url: "https://hallucinecran.fr" },
+          { name: "Mobilier", url: "https://hallucinecran.fr/mobilier" },
+        ]}
+        product={{
+          name: "Mobilier Gonflable Événementiel",
+          description: "Notre gamme complète de mobilier gonflable pour tous vos événements. Canapés, fauteuils, bars, et comptoirs utilisant une technologie étanche à chambre à air scellée pour un confort et une stabilité exceptionnels.",
+          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yIjIIOgOUQsaauXF.jpg",
+          url: "https://hallucinecran.fr/mobilier",
+          category: "Mobilier Gonflable",
+        }}
+        faqs={faqItems.map(item => ({ question: item.q, answer: item.a }))}
+      />
       <Navbar />
 
       {/* Hero */}
@@ -182,121 +199,54 @@ export default function Mobilier() {
               <p className="text-white/60 mt-4 leading-relaxed">
                 Nous proposons également des accessoires de transport professionnels — chariots et flycases — pour les équipes qui installent régulièrement nos écrans et nos tentes.
               </p>
-
-              <div className="mt-8 grid grid-cols-2 gap-4">
-                {[
-                  { icon: Feather, label: "Ultra-léger", desc: "De 3 à 10 kg par pièce" },
-                  { icon: Clock, label: "Montage express", desc: "1 à 3 minutes par pièce" },
-                  { icon: Shield, label: "Résistant", desc: "UV, pluie, usage intensif" },
-                  { icon: Palette, label: "Personnalisable", desc: "Couleurs et impression" },
-                ].map((f, i) => (
-                  <div key={i} className="p-4 border border-white/10 rounded-lg bg-white/[0.02]">
-                    <f.icon className="w-6 h-6 text-gold mb-2" />
-                    <div className="text-white font-semibold text-sm">{f.label}</div>
-                    <div className="text-white/40 text-xs">{f.desc}</div>
-                  </div>
-                ))}
+              <div className="mt-8 flex flex-wrap gap-4">
+                <div className="flex items-center gap-3 text-white/80">
+                  <Feather className="w-5 h-5 text-gold" />
+                  <span>Léger & Compact</span>
+                </div>
+                <div className="flex items-center gap-3 text-white/80">
+                  <Clock className="w-5 h-5 text-gold" />
+                  <span>Installation rapide</span>
+                </div>
+                <div className="flex items-center gap-3 text-white/80">
+                  <Shield className="w-5 h-5 text-gold" />
+                  <span>Robuste & Durable</span>
+                </div>
+                <div className="flex items-center gap-3 text-white/80">
+                  <Palette className="w-5 h-5 text-gold" />
+                  <span>Personnalisable</span>
+                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Catalogue mobilier — Damier 4 lignes */}
-      <section className="py-24 md:py-32 bg-white/[0.02]">
+      {/* Section Mobilier */}
+      <section className="py-24 md:py-32 bg-background-darker">
         <div className="container">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={0} className="mb-16">
-            <div className="flex items-center gap-3 mb-6">
-              <Sofa className="w-6 h-6 text-gold" />
-              <span className="text-gold text-xs font-semibold tracking-[0.3em] uppercase">Catalogue mobilier</span>
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">Nos pièces de mobilier</h2>
-            <p className="text-white/50 mt-4 max-w-2xl">Chaque pièce est disponible en standard (blanc ou noir) ou en version personnalisée aux couleurs de votre marque.</p>
-          </motion.div>
-
-          <div className="space-y-0">
-            {mobilierProducts.map((product, i) => {
-              const isEven = i % 2 === 0;
-              return (
-                <motion.div
-                  key={i}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={fadeIn}
-                  custom={i}
-                  className="grid md:grid-cols-2 min-h-[400px]"
-                >
-                  {/* Image */}
-                  <div className={`relative overflow-hidden ${isEven ? 'md:order-1' : 'md:order-2'}`}>
-                    <img
-                      src={product.img}
-                      alt={product.title}
-                      className="w-full h-64 md:h-full object-cover"
-                      loading="lazy"
-                    decoding="async" />
-                  </div>
-                  {/* Texte */}
-                  <div className={`flex flex-col justify-center p-8 md:p-12 ${isEven ? 'md:order-2 bg-white/[0.03]' : 'md:order-1 bg-white/[0.06]'}`}>
-                    <h3 className="text-2xl font-bold text-white mb-4">{product.title}</h3>
-                    <p className="text-white/60 text-sm leading-relaxed mb-6">{product.desc}</p>
-                    <div className="space-y-2 mb-6">
-                      {product.specs.map((spec, j) => (
-                        <div key={j} className="flex justify-between text-sm border-b border-white/5 pb-2">
-                          <span className="text-white/40">{spec.label}</span>
-                          <span className="text-white/70 font-medium">{spec.value}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <Link href="/contactez-nous" className="inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-navy-deep font-semibold rounded-lg hover:bg-gold-light transition-all text-sm w-fit">
-                      Demander un devis <ChevronRight className="w-4 h-4" />
-                    </Link>
-                  </div>
-                </motion.div>
-              );
-            })}
+          <div className="text-center max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-white">Notre gamme de mobilier</h2>
+            <p className="text-white/60 mt-4 text-lg leading-relaxed">
+              Du canapé au bar, chaque pièce est conçue pour être à la fois esthétique, confortable et incroyablement pratique. Gonflez, placez, profitez.
+            </p>
           </div>
-        </div>
-      </section>
 
-      {/* Accessoires de transport */}
-      <section className="py-24 md:py-32">
-        <div className="container">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={0} className="mb-16">
-            <div className="flex items-center gap-3 mb-6">
-              <Truck className="w-6 h-6 text-gold" />
-              <span className="text-gold text-xs font-semibold tracking-[0.3em] uppercase">Transport & stockage</span>
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">Accessoires de transport</h2>
-            <p className="text-white/50 mt-4 max-w-2xl">Pour les professionnels qui installent régulièrement nos écrans et nos tentes : chariots et flycases conçus sur mesure.</p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {transportProducts.map((product, i) => (
-              <motion.div
-                key={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeIn}
-                custom={i}
-                className="border border-white/[0.06] rounded-lg overflow-hidden"
-              >
-                <img src={product.img} alt={product.title} className="w-full h-56 object-cover" loading="lazy" decoding="async" />
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-white mb-3">{product.title}</h3>
-                  <p className="text-white/60 text-sm leading-relaxed mb-5">{product.desc}</p>
-                  <div className="space-y-2">
-                    {product.specs.map((spec, j) => (
-                      <div key={j} className="flex justify-between text-sm border-b border-white/5 pb-2">
-                        <span className="text-white/40">{spec.label}</span>
-                        <span className="text-white/70 font-medium">{spec.value}</span>
+          <div className="mt-16 grid md:grid-cols-2 gap-8 lg:gap-12">
+            {mobilierProducts.map((product, i) => (
+              <motion.div key={product.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={i} className="bg-background rounded-lg overflow-hidden border border-white/10 flex flex-col">
+                <img loading="lazy" src={product.img} alt={product.title} className="w-full h-64 object-cover" decoding="async" />
+                <div className="p-6 lg:p-8 flex-grow flex flex-col">
+                  <h3 className="text-xl font-bold text-white">{product.title}</h3>
+                  <p className="text-white/60 mt-3 leading-relaxed flex-grow">{product.desc}</p>
+                  <div className="mt-6 pt-6 border-t border-white/10 text-sm space-y-3 text-white/60">
+                    {product.specs.map(spec => (
+                      <div key={spec.label} className="flex justify-between">
+                        <span className="font-semibold text-white/80">{spec.label}</span>
+                        <span>{spec.value}</span>
                       </div>
                     ))}
                   </div>
-                  <Link href="/contactez-nous" className="mt-5 inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-navy-deep font-semibold rounded-lg hover:bg-gold-light transition-all text-sm">
-                    Demander un devis <ChevronRight className="w-4 h-4" />
-                  </Link>
                 </div>
               </motion.div>
             ))}
@@ -304,69 +254,85 @@ export default function Mobilier() {
         </div>
       </section>
 
-      {/* Cas d'utilisation */}
-      <section className="py-24 md:py-32 bg-white/[0.02]">
-        <div className="container max-w-4xl">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={0} className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-white">Pour quels événements ?</h2>
-            <p className="text-white/60 mt-4">Notre mobilier s'adapte à tous les contextes.</p>
-          </motion.div>
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              { title: "Festivals & concerts", desc: "Zones lounge, espaces VIP, bars et comptoirs de buvette. Le mobilier gonflable crée des espaces conviviaux sans logistique lourde. Montage en quelques minutes, démontage encore plus rapide." },
-              { title: "Événements corporate", desc: "Mobilier aux couleurs de votre marque pour salons professionnels, lancements de produit, séminaires et team building. Le comptoir d'accueil personnalisé fait forte impression." },
-              { title: "Mariages & réceptions", desc: "Espaces détente élégants pour vos invités. Le canapé et les fauteuils créent des coins de conversation en extérieur. Disponibles en blanc pour s'intégrer à la décoration." },
-              { title: "Événements sportifs", desc: "Zones d'accueil partenaires, espaces de repos pour les athlètes, bars pour les spectateurs. Le mobilier résiste aux intempéries et à l'usage intensif d'une journée de compétition." },
-            ].map((item, i) => (
-              <motion.div key={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={i} className="p-6 border border-white/10 rounded-lg">
-                <h3 className="text-lg font-bold text-gold mb-3">{item.title}</h3>
-                <p className="text-white/60 text-sm leading-relaxed">{item.desc}</p>
-              </motion.div>
-            ))}
+      {/* Section Accessoires */}
+      <section className="py-24 md:py-32">
+        <div className="container">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={0}>
+              <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+                Accessoires de transport<br />
+                <span className="text-white/60 text-2xl">pour les pros</span>
+              </h2>
+              <p className="text-white/60 mt-6 leading-relaxed">
+                Pour les prestataires, les loueurs et les équipes techniques, nous avons développé des solutions de transport robustes et pratiques. Fini le matériel qui s'abîme pendant le transport ou le stockage.
+              </p>
+              <div className="mt-8 space-y-6">
+                {transportProducts.map(product => (
+                  <div key={product.title} className="bg-background-darker p-6 rounded-lg border border-white/10 flex gap-6 items-start">
+                    <img loading="lazy" src={product.img} alt={product.title} className="w-24 h-24 object-cover rounded-md flex-shrink-0" decoding="async" />
+                    <div>
+                      <h4 className="font-bold text-white">{product.title}</h4>
+                      <p className="text-white/60 text-sm mt-1">{product.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={1} className="relative h-[500px] hidden lg:block">
+              <img loading="lazy" src={ACCESSOIRE_CHARIOT} alt="Chariot de transport pour écran gonflable" className="absolute top-0 left-0 w-3/4 rounded-lg border border-white/10 transform -rotate-6" decoding="async" />
+              <img loading="lazy" src={ACCESSOIRE_FLYCASE} alt="Flycase professionnel pour matériel événementiel" className="absolute bottom-0 right-0 w-3/4 rounded-lg border border-white/10 transform rotate-3" decoding="async" />
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="py-24 md:py-32">
-        <div className="container max-w-3xl">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={0} className="text-center mb-16">
-            <HelpCircle className="w-8 h-8 text-gold mx-auto mb-4" />
-            <h2 className="text-3xl md:text-4xl font-bold text-white">Questions fréquentes — Mobilier</h2>
-          </motion.div>
-
-          <div className="space-y-3">
-            {faqItems.map((item, i) => (
-              <motion.div
-                key={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeIn}
-                custom={i}
-                className="border border-white/10 rounded-lg overflow-hidden"
-              >
+      <section className="py-24 md:py-32 bg-background-darker">
+        <div className="container max-w-4xl mx-auto">
+          <div className="text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-white">Questions fréquentes</h2>
+            <p className="text-white/60 mt-4 text-lg">Les réponses à vos interrogations sur notre mobilier gonflable.</p>
+          </div>
+          <div className="mt-12 space-y-4">
+            {faqItems.map((item, index) => (
+              <div key={index} className="border border-white/10 rounded-lg overflow-hidden">
                 <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full flex items-center justify-between p-5 text-left hover:bg-white/[0.02] transition-colors"
+                  className="w-full text-left p-5 flex justify-between items-center hover:bg-white/5 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
                 >
-                  <span className="text-white font-medium text-sm pr-4">{item.q}</span>
-                  <ChevronDown className={`w-5 h-5 text-gold shrink-0 transition-transform duration-300 ${openFaq === i ? "rotate-180" : ""}`} />
+                  <span className="font-semibold text-white">{item.q}</span>
+                  {openFaq === index ? <ChevronDown className="w-5 h-5 text-gold" /> : <ChevronRight className="w-5 h-5 text-white/50" />}
                 </button>
-                {openFaq === i && (
-                  <div className="px-5 pb-5">
-                    <p className="text-white/60 text-sm leading-relaxed">{item.a}</p>
-                  </div>
+                {openFaq === index && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="px-5 pb-5 border-t border-white/10"
+                  >
+                    <p className="text-white/70 pt-4">{item.a}</p>
+                  </motion.div>
                 )}
-              </motion.div>
+              </div>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="text-center mt-12">
-            <Link href="/contactez-nous" className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-lg hover:bg-gold-light transition-all glow-gold">
-              Demander un devis mobilier <ChevronRight className="w-5 h-5" />
-            </Link>
-          </div>
+      {/* CTA */}
+      <section className="py-24 md:py-32">
+        <div className="container text-center">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={0}>
+            <h2 className="text-3xl md:text-4xl font-bold text-white">Prêt à meubler votre prochain événement ?</h2>
+            <p className="text-white/60 mt-4 text-lg max-w-2xl mx-auto">
+              Contactez-nous pour un devis personnalisé, des conseils sur le choix du mobilier ou pour discuter de vos options de branding.
+            </p>
+            <div className="mt-8 flex justify-center gap-4">
+              <Link href="/contact" className="px-6 py-3 bg-gold text-background font-semibold rounded-md hover:bg-gold/90 transition-colors">Demander un devis</Link>
+              <Link href="/realisations" className="px-6 py-3 bg-white/10 text-white font-semibold rounded-md hover:bg-white/20 transition-colors">Voir nos réalisations</Link>
+            </div>
+          </motion.div>
         </div>
       </section>
 

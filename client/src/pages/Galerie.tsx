@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 const photos = [
   // Écrans gonflables
@@ -94,6 +95,15 @@ export default function Galerie() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PageStructuredData
+        id="galerie-evenements"
+        breadcrumbs={[{ name: "Accueil", url: "/" }, { name: "Galerie", url: "/galerie-evenements" }]}
+        page={{
+          name: "Galerie Photos | Nos Réalisations",
+          description: "Découvrez nos réalisations en images : écrans de cinéma gonflables, tentes événementielles, arches et mobilier en action lors d'événements réels.",
+          url: "https://hallucine.fr/galerie-evenements"
+        }}
+      />
       <Navbar />
 
       {/* Hero avec barre filtres en overlay en haut */}
@@ -113,98 +123,66 @@ export default function Galerie() {
                 Galerie
               </h1>
               <div className="absolute inset-0 flex flex-wrap gap-2 sm:gap-4 items-center justify-center pointer-events-none">
-                {categories.map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setFilter(cat)}
-                    className={`pointer-events-auto px-3 py-1.5 text-xs sm:px-5 sm:py-2 sm:text-sm rounded transition-colors ${
-                      cat === filter
-                        ? "bg-warm text-charcoal font-semibold"
-                        : "bg-white/10 border border-white/20 text-white/70 hover:text-warm hover:border-warm/30"
-                    }`}
+                <div className="hidden xl:flex flex-wrap gap-2 sm:gap-4 items-center justify-center">
+                  {categories.map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => setFilter(cat)}
+                      className={`px-4 py-2 text-sm font-semibold rounded-full transition-colors duration-200 pointer-events-auto ${
+                        filter === cat ? "bg-accent text-white" : "bg-gray-700/50 text-gray-300 hover:bg-gray-600/70"
+                      }`}>
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Dropdown pour mobile/tablette */}
+                <div className="relative xl:hidden">
+                  <select
+                    onChange={(e) => setFilter(e.target.value)}
+                    value={filter}
+                    className="px-4 py-2 text-sm font-semibold rounded-full transition-colors duration-200 pointer-events-auto appearance-none bg-gray-700/50 text-gray-300 hover:bg-gray-600/70 focus:outline-none focus:ring-2 focus:ring-accent/80 pr-8"
                   >
-                    {cat}
-                  </button>
-                ))}
+                    {categories.map((cat) => (
+                      <option key={cat} value={cat}>{cat}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
-          </div>
-
-          {/* Description centrée en bas */}
-          <div className="absolute bottom-0 left-0 right-0 z-10 pb-6">
-            <p className="text-white/50 text-base md:text-lg max-w-3xl mx-auto text-center leading-relaxed">
-              Découvrez nos réalisations à travers le monde. Écrans de cinéma gonflables, tentes événementielles, 
-              arches et mobilier — nos produits en action lors d'événements réels.
-            </p>
           </div>
         </div>
       </section>
 
       {/* Grille photos */}
-      <section className="py-12 bg-background">
-        <div className="container">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {filtered.map((photo, i) => (
-              <div
-                key={i}
-                className="relative aspect-[4/3] rounded-lg overflow-hidden group cursor-pointer"
-                onClick={() => setLightbox(i)}
-              >
-                <img src={photo.src} alt={photo.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-end">
-                  <p className="text-white text-xs p-2 opacity-0 group-hover:opacity-100 transition-opacity">{photo.alt}</p>
-                </div>
+      <main className="container py-12 md:py-16">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+          {filtered.map((photo, index) => (
+            <div key={index} className="group relative aspect-square overflow-hidden rounded-lg cursor-pointer" onClick={() => setLightbox(index)}>
+              <img loading="lazy" src={photo.src} alt={photo.alt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" decoding="async" />
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                <p className="text-white text-center text-sm font-medium">{photo.alt}</p>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-      </section>
+      </main>
 
       {/* Lightbox */}
       {lightbox !== null && (
-        <div
-          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
-          onClick={() => setLightbox(null)}
-        >
-          <button
-            className="absolute top-6 right-6 text-white/70 hover:text-white text-3xl"
-            onClick={() => setLightbox(null)}
-          >
-            ✕
-          </button>
-          {lightbox > 0 && (
-            <button
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-4xl"
-              onClick={(e) => { e.stopPropagation(); setLightbox(lightbox - 1); }}
-            >
-              ‹
-            </button>
-          )}
-          {lightbox < filtered.length - 1 && (
-            <button
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-4xl"
-              onClick={(e) => { e.stopPropagation(); setLightbox(lightbox + 1); }}
-            >
-              ›
-            </button>
-          )}
-          <div className="max-w-5xl max-h-[85vh]" onClick={(e) => e.stopPropagation()}>
-            <img src={filtered[lightbox].src} alt={filtered[lightbox].alt} className="max-w-full max-h-[80vh] object-contain rounded" decoding="async" loading="lazy" />
-            <p className="text-white/70 text-sm mt-3 text-center">{filtered[lightbox].alt}</p>
+        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center" onClick={() => setLightbox(null)}>
+          <div className="relative max-w-4xl max-h-[90vh] p-4">
+            <img src={filtered[lightbox].src} alt={filtered[lightbox].alt} className="max-w-full max-h-full object-contain rounded-lg" />
+            <button onClick={() => setLightbox(null)} className="absolute top-4 right-4 text-white text-3xl font-bold">&times;</button>
+            {lightbox > 0 && (
+              <button onClick={(e) => { e.stopPropagation(); setLightbox(lightbox - 1); }} className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-4xl font-bold">‹</button>
+            )}
+            {lightbox < filtered.length - 1 && (
+              <button onClick={(e) => { e.stopPropagation(); setLightbox(lightbox + 1); }} className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-4xl font-bold">›</button>
+            )}
           </div>
         </div>
       )}
-
-      {/* CTA */}
-      <section className="py-20 bg-charcoal-light">
-        <div className="container text-center">
-          <h2 className="text-3xl font-bold text-ivory mb-4">Envie de voir votre événement ici ?</h2>
-          <p className="text-white/60 mb-8">Contactez-nous pour organiser votre prochain événement avec Hallucine.</p>
-          <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors inline-block">
-            Nous Contacter
-          </Link>
-        </div>
-      </section>
 
       <Footer />
     </div>

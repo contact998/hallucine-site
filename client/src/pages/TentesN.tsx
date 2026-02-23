@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { X as XIcon } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 /* ─── Images hero (grille identique à l'ancien site) ─── */
 const heroImages = [
@@ -35,6 +36,21 @@ export default function TentesN() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PageStructuredData
+        id="tentes-n-page"
+        breadcrumbs={[
+          { name: "Accueil", url: "https://hallucinecran.fr" },
+          { name: "Tentes gonflables", url: "https://hallucinecran.fr/tentes-gonflables" },
+          { name: "Tentes en forme de N", url: "https://hallucinecran.fr/tentes-gonflables-n" },
+        ]}
+        product={{
+          name: "Tentes en forme de N",
+          description: "Tente gonflable N polyvalente. Utilisée par la Croix-Rouge et pour événements. Grande surface couverte, montage rapide, résistante.",
+          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eZVHaksoPSdOKbyX.jpg",
+          url: "https://hallucinecran.fr/tentes-gonflables-n",
+          category: "Tentes gonflables",
+        }}
+      />
       <Navbar />
 
       {/* ═══ HERO — titre + grille 4 photos ═══ */}

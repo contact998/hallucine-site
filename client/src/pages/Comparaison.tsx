@@ -9,6 +9,7 @@ import { Link } from "wouter";
 import { useState } from "react";
 import { Check, X, Trophy, Feather, Clock, Shield, Wind, Truck, Wrench, Leaf, Users, Mountain, Package, Ruler, Star } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 const comparisonData = [
   { carac: "Légèreté", hallucine: "3 fois plus léger (ex : 13m = 80 kg)", concurrent: "Jusqu'à 260 kg", icon: Feather },
@@ -74,6 +75,22 @@ export default function Comparaison() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PageStructuredData
+        id="comparaison-page"
+        breadcrumbs={[
+          { name: "Accueil", url: "https://hallucinecran.fr" },
+          { name: "Comparaison", url: "https://hallucinecran.fr/comparaison" },
+        ]}
+        page={{
+          name: "Comparaison des Écrans Gonflables | Guide d'Achat",
+          description: "Comparez nos écrans de cinéma gonflables : géant vs étanche vs économique. Tableau comparatif de 16 critères pour choisir le bon écran.",
+          url: "https://hallucinecran.fr/comparaison",
+        }}
+        faqs={arguments7.map((arg) => ({
+          question: arg.title,
+          answer: arg.text,
+        }))}
+      />
       {showCountdown && <FilmCountdown onComplete={() => setShowCountdown(false)} />}
       <Navbar />
 

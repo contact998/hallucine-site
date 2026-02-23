@@ -12,6 +12,7 @@ import { Link } from "wouter";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 // ─── Données tableaux ──────────────────────────────────────────────────────────
 const avecSouffleur = [
@@ -99,6 +100,28 @@ export default function EcranEconomique() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PageStructuredData
+        id="ecran-economique"
+        breadcrumbs={[
+          { name: "Accueil", url: "https://hallucinecran.fr" },
+          { name: "Ecrans Gonflables", url: "https://hallucinecran.fr/ecrans-gonflables" },
+          { name: "Écran Économique", url: "https://hallucinecran.fr/ecran-economique" },
+        ]}
+        product={{
+          name: "Écrans Gonflables Économiques",
+          description: "Nos écrans gonflables économiques sont la solution idéale pour des événements à petit budget sans compromis sur la qualité. Conçus pour une utilisation facile et rapide, ces écrans sont parfaits pour des projections de films, des événements sportifs, des soirées en plein air, et bien plus encore.",
+          image: [
+            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/FbgHJgCUoERCuJos.jpg",
+            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BFaZoFomGXqerqBf.webp",
+            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/JRJHgNwIipwxbWac.PNG",
+            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/EPgkfmHRzXvUcdzd.jpg",
+            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QbCjkqnaayQbCPAI.jpg",
+            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eKOtDMUHutnqjXdh.jpg",
+          ],
+          url: "https://hallucinecran.fr/ecran-economique",
+          category: "Ecrans Gonflables",
+        }}
+      />
       {showCountdown && <FilmCountdown onComplete={() => setShowCountdown(false)} />}
       <Navbar />
 

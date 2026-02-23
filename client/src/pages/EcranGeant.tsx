@@ -13,6 +13,7 @@ import { Play } from "lucide-react";
 import { Wind, Clock, Shield, Feather, Users, ArrowRight, Film, Trophy, Music, Presentation, CheckCircle, Phone, Mail } from "lucide-react";
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 const specsData = [
   { taille: "8m × 6m", toile: "7m × 5m", poids: "35 kg", montage: "30 min", personnes: "1" },
@@ -55,6 +56,21 @@ export default function EcranGeant() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PageStructuredData
+        id="ecran-geant-soufflerie"
+        breadcrumbs={[
+          { name: "Accueil", url: "https://hallucinecran.fr" },
+          { name: "Écrans gonflables", url: "https://hallucinecran.fr/ecrans-gonflables" },
+          { name: "Écran Gonflable Géant à Soufflerie", url: "https://hallucinecran.fr/ecran-gonflable-geant-soufflerie" },
+        ]}
+        product={{
+          name: "Écran Gonflable Géant à Soufflerie",
+          description: "Écran de cinéma gonflable géant à soufflerie continue. Tailles de 5m à 24m, installation rapide, qualité professionnelle. Idéal pour cinéma en plein air.",
+          image: galleryImages.map(img => img.src),
+          url: "https://hallucinecran.fr/ecran-gonflable-geant-soufflerie",
+          category: "Écrans gonflables",
+        }}
+      />
       {showCountdown && <FilmCountdown onComplete={() => setShowCountdown(false)} />}
       <Navbar />
 

@@ -11,6 +11,7 @@ import { Link } from "wouter";
 import { VolumeX, Droplets, Clock, Feather, ChevronDown, Shield, Wind, Zap } from "lucide-react";
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 const specsData = [
   { taille: "245 × 200 cm", toile: "218 × 122 cm", poids: "7 kg", hauteur: "50 cm", personnes: "1" },
@@ -74,6 +75,22 @@ export default function EcranEtanche() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PageStructuredData
+        id="ecran-etanche"
+        breadcrumbs={[
+          { name: "Accueil", url: "https://hallucinecran.fr" },
+          { name: "Écrans gonflables", url: "https://hallucinecran.fr/ecrans-gonflables" },
+          { name: "Écran gonflable étanche à l'air", url: "https://hallucinecran.fr/ecran-gonflable-etanche" },
+        ]}
+        product={{
+          name: "Écran gonflable étanche à l'air",
+          description: "Les écrans gonflables étanches à l'air offrent une solution pratique et esthétique pour vos événements en intérieur et en extérieur. Disponibles en tailles allant de 2 à 10 mètres, ils s'adaptent parfaitement aux projections de films, soirées sportives ou tout autre événement nécessitant une toile grand format.",
+          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/EPgkfmHRzXvUcdzd.jpg",
+          url: "https://hallucinecran.fr/ecran-gonflable-etanche",
+          category: "Écrans gonflables",
+        }}
+        faqs={faqItems.map(item => ({ question: item.q, answer: item.a }))}
+      />
       {showCountdown && <FilmCountdown onComplete={() => setShowCountdown(false)} />}
       <Navbar />
 

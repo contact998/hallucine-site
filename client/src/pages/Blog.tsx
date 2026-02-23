@@ -4,6 +4,7 @@ import { MessageSquare, ThumbsUp, User } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 interface Commentaire {
   auteur: string;
@@ -211,6 +212,21 @@ export default function Blog() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PageStructuredData
+        id="blog"
+        breadcrumbs={[{ name: "Accueil", url: "/" }, { name: "Blog", url: "/blog" }]}
+        page={{
+          name: "Blog | Actualités Cinéma en Plein Air",
+          description: "Actualités, conseils et tendances du cinéma en plein air. Articles sur les écrans gonflables, événements et innovations.",
+          url: "https://hallucine.ai/blog"
+        }}
+        article={{
+          headline: "Blog Hallucine",
+          description: "Actualités, conseils et tendances du cinéma en plein air. Articles sur les écrans gonflables, événements et innovations.",
+          url: "https://hallucine.ai/blog",
+          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg"
+        }}
+      />
       <Navbar />
 
       {/* Hero */}

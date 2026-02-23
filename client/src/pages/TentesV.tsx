@@ -11,6 +11,7 @@ import VideoLightbox from "@/components/VideoLightbox";
 import { Link } from "wouter";
 import { Play, X as XIcon } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 /* ─── Images hero (grille identique à l'ancien site) ─── */
 const heroImages = [
@@ -33,6 +34,21 @@ export default function TentesV() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+        <PageStructuredData
+          id="tentes-v"
+          breadcrumbs={[
+            { name: "Accueil", url: "https://hallucinecran.fr/" },
+            { name: "Tentes Gonflables", url: "https://hallucinecran.fr/tente-gonflable" },
+            { name: "Tentes en Forme de V", url: "https://hallucinecran.fr/tentes-gonflables-v" },
+          ]}
+          product={{
+            name: "Tente Gonflable en Forme de V",
+            description: "Tente gonflable V au design élégant et moderne. Idéale pour événements haut de gamme, mariages et réceptions. Personnalisation complète.",
+            image: heroImages.map(img => img.src),
+            url: "https://hallucinecran.fr/tentes-gonflables-v",
+            category: "Tentes gonflables",
+          }}
+        />
       <Navbar />
 
       {/* ═══ HERO — titre + grille 4 photos ═══ */}

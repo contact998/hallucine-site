@@ -101,12 +101,27 @@ export function serveStatic(app: Express) {
     for (const [route, fileName] of Object.entries(PRERENDERED_ROUTES)) {
       const contentFile = path.resolve(prerenderedDir, `${fileName}.content.html`);
       if (fs.existsSync(contentFile)) {
-        const content = fs.readFileSync(contentFile, "utf-8");
-        // Injecter le contenu pré-rendu dans le div#root du template index.html
-        const fullHtml = baseIndexHtml.replace(
+        const rawContent = fs.readFileSync(contentFile, "utf-8");
+
+        // Séparer les JSON-LD (à injecter dans <head>) du contenu HTML (à injecter dans <div#root>)
+        let jsonldBlock = "";
+        let bodyContent = rawContent;
+        const jsonldMatch = rawContent.match(/<!-- JSONLD -->([\s\S]*?)<!-- \/JSONLD -->/);
+        if (jsonldMatch) {
+          jsonldBlock = jsonldMatch[1].trim();
+          bodyContent = rawContent.replace(/<!-- JSONLD -->[\s\S]*?<!-- \/JSONLD -->/, "").replace("<!-- CONTENT -->\n", "").replace("<!-- CONTENT -->", "");
+        } else {
+          bodyContent = rawContent.replace("<!-- CONTENT -->\n", "").replace("<!-- CONTENT -->", "");
+        }
+
+        // Injecter les JSON-LD dans le <head> et le contenu dans le <div#root>
+        let fullHtml = baseIndexHtml.replace(
           '<div id="root"></div>',
-          `<div id="root">${content}</div>`
+          `<div id="root">${bodyContent}</div>`
         );
+        if (jsonldBlock) {
+          fullHtml = fullHtml.replace("</head>", `${jsonldBlock}\n</head>`);
+        }
         prerenderedPages[route] = fullHtml;
       }
     }
@@ -115,21 +130,22 @@ export function serveStatic(app: Express) {
     console.warn("[SSG] Dossier prerendered/ non trouvé — mode SPA classique");
   }
 
-  // Servir les fichiers statiques (JS, CSS, images, etc.)
-  app.use(express.static(distPath));
-
-  // Pour les routes SPA : servir le HTML pré-rendu si disponible,
-  // sinon fallback vers le SPA original
-  app.use("*", (req, res) => {
+  // Intercepter les routes SSG AVANT express.static
+  // (sinon express.static sert index.html pour / et les sous-dossiers avec index.html)
+  app.use((req, res, next) => {
     const url = req.originalUrl.split("?")[0].replace(/\/$/, "") || "/";
-
-    // Servir la page pré-rendue si elle existe
     if (prerenderedPages[url]) {
       res.status(200).set({ "Content-Type": "text/html" }).end(prerenderedPages[url]);
       return;
     }
+    next();
+  });
 
-    // Fallback : SPA classique (pour /admin, /profil, etc.)
+  // Servir les fichiers statiques (JS, CSS, images, etc.)
+  app.use(express.static(distPath, { index: false }));
+
+  // Fallback : SPA classique (pour /admin, /profil, etc.)
+  app.use("*", (_req, res) => {
     res.status(200).set({ "Content-Type": "text/html" }).end(baseIndexHtml);
   });
 }

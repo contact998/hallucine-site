@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Globe, Award, Feather, Users, ChevronRight } from "lucide-react";
 import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import PageStructuredData from "@/components/PageStructuredData";
 
 const ETANCHE_3M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/XkmcCQJvGfnRZRxz.jpg";
 const ETANCHE_5M_RITZ = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CzprNCGHiOGRIkTg.jpg";
@@ -107,6 +108,23 @@ export default function Histoire() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+        <PageStructuredData
+          id="histoire"
+          breadcrumbs={[{ name: "Accueil", url: "/" }, { name: "Histoire", url: "/histoire-hallucine" }]}
+          article={{
+            headline: "Notre Histoire | Depuis 1995",
+            description: "L'histoire d'Hallucine depuis 1995 : de la première projection en plein air à aujourd'hui. 30 ans d'innovation dans le cinéma gonflable.",
+            image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HWQTHYrijbwFXBld.jpg",
+            url: "https://hallucine.ai/histoire-hallucine",
+            datePublished: "2023-01-15T09:00:00+00:00",
+            dateModified: "2024-05-20T14:30:00+00:00",
+          }}
+          page={{
+            name: "Notre Histoire | Depuis 1995",
+            description: "L'histoire d'Hallucine depuis 1995 : de la première projection en plein air à aujourd'hui. 30 ans d'innovation dans le cinéma gonflable.",
+            url: "https://hallucine.ai/histoire-hallucine",
+          }}
+        />
       <Navbar />
 
       {/* Hero */}
