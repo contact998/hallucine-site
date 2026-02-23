@@ -21,8 +21,7 @@ const REMOVE_DELAY = 3800;
 
 type Phase = "waiting" | "opening" | "done";
 
-// Détecte si c'est un bot SEO (Lighthouse, Googlebot, etc.)
-// Note: on ne bloque PAS headlesschrome car le Preview Manus l'utilise
+// Détecte si c'est un bot (Lighthouse, Googlebot, HeadlessChrome, etc.)
 function isBot(): boolean {
   if (typeof navigator === "undefined") return false;
   const ua = navigator.userAgent.toLowerCase();
@@ -30,6 +29,7 @@ function isBot(): boolean {
     ua.includes("lighthouse") ||
     ua.includes("googlebot") ||
     ua.includes("pagespeed") ||
+    ua.includes("headlesschrome") ||
     ua.includes("chrome-lighthouse") ||
     ua.includes("gtmetrix") ||
     ua.includes("pingdom")

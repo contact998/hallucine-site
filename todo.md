@@ -848,3 +848,6 @@
 ## Bug: Son rideau + affichage Preview
 - [x] Plus de son à l'ouverture du rideau de cinéma (cause: headlesschrome bloquait le rideau dans le Preview → pas de clic → pas de son)
 - [x] Le rideau ne s'affiche plus dans le Preview Manus (retiré headlesschrome de la détection bot)
+
+## Restauration détection bot headlesschrome
+- [x] Remettre headlesschrome dans la détection bot du rideau pour PageSpeed
