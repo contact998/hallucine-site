@@ -844,3 +844,7 @@
 - [x] Corriger le logo pour qu'il soit transparent sur le rideau rouge (ancien logo RGB sans alpha → nouveau logo RGBA transparent uploadé sur S3)
 - [x] Mettre à jour le logo dans CinemaRideau, Navbar, Footer, brochure.ts et 27 fichiers pré-rendus
 - [ ] Vérifier l'affichage dans le Preview Manus
+
+## Bug: Son rideau + affichage Preview
+- [x] Plus de son à l'ouverture du rideau de cinéma (cause: headlesschrome bloquait le rideau dans le Preview → pas de clic → pas de son)
+- [x] Le rideau ne s'affiche plus dans le Preview Manus (retiré headlesschrome de la détection bot)
