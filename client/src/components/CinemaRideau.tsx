@@ -137,8 +137,11 @@ export default function CinemaRideau() {
 
   return (
     <div
-      className="fixed inset-0 z-[9999] pointer-events-auto"
-      style={{ cursor: phase === "waiting" ? "pointer" : "default" }}
+      className="fixed inset-0 z-[9999]"
+      style={{
+        cursor: phase === "waiting" ? "pointer" : "default",
+        pointerEvents: isOpening ? "none" : "auto",
+      }}
       onClick={handleClick}
       aria-hidden="true"
     >
