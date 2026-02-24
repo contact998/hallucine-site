@@ -6,6 +6,7 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
+import { Video } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 
@@ -129,6 +130,13 @@ export default function Galerie() {
               <h1 className="text-2xl md:text-3xl font-bold text-ivory shrink-0">
                 Galerie
               </h1>
+              <Link
+                href="/galerie-video"
+                className="shrink-0 ml-3 flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-full bg-warm/20 text-warm border border-warm/30 hover:bg-warm/30 transition-colors z-30 pointer-events-auto"
+              >
+                <Video className="w-4 h-4" />
+                Vidéos
+              </Link>
               <div className="absolute inset-0 flex flex-wrap gap-2 sm:gap-4 items-center justify-center pointer-events-none">
                 <div className="hidden xl:flex flex-wrap gap-2 sm:gap-4 items-center justify-center">
                   {categories.map((cat) => (
