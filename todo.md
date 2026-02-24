@@ -885,3 +885,9 @@
 
 ## Logo animation fin de formulaire
 - [x] Remplacer le logo dans l'animation de fin de formulaire par le logo transparent (même que le rideau)
+
+## Régénération SSG avec hreflang
+- [x] Régénérer les 27 fichiers pré-rendus pour inclure les balises hreflang + sélecteur de langue
+
+## Régénération SSG avec hreflang
+- [x] Régénérer les 27 fichiers pré-rendus pour inclure les balises hreflang + sélecteur de langue
