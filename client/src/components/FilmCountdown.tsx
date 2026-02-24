@@ -16,16 +16,40 @@ const FADE_DURATION = 500;
 // Timeout max pour le préchargement (2s)
 const MAX_PRELOAD_WAIT = 2000;
 
+// Vérifie si le countdown a déjà été vu dans cette session
+function hasSeenCountdown(): boolean {
+  try {
+    return sessionStorage.getItem("countdown_seen") === "1";
+  } catch {
+    return false;
+  }
+}
+
+function markCountdownSeen(): void {
+  try {
+    sessionStorage.setItem("countdown_seen", "1");
+  } catch {}
+}
+
 export default function FilmCountdown({
   onComplete,
 }: {
   onComplete?: () => void;
 }) {
+  // Skip si déjà vu dans cette session
+  const alreadySeen = hasSeenCountdown();
   const [ready, setReady] = useState(false);
   const [count, setCount] = useState(3);
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(!alreadySeen);
   const [fading, setFading] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Si déjà vu, appeler onComplete immédiatement
+  useEffect(() => {
+    if (alreadySeen) {
+      onComplete?.();
+    }
+  }, [alreadySeen, onComplete]);
 
   // Étape 1 : précharger le son, puis marquer "ready"
   useEffect(() => {
@@ -92,6 +116,7 @@ export default function FilmCountdown({
     }
     setTimeout(() => {
       setVisible(false);
+      markCountdownSeen();
       onComplete?.();
     }, FADE_DURATION);
   }, [onComplete]);

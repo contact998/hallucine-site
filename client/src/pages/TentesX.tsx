@@ -8,7 +8,6 @@
 import { useState, useCallback } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import FilmCountdown from "@/components/FilmCountdown";
 import { Link } from "wouter";
 import {
   ChevronLeft,
@@ -81,7 +80,6 @@ function ImageLightbox({ src, alt, isOpen, onClose }: { src: string; alt: string
 export default function TentesX() {
   useDocumentMeta("Tente Gonflable X | Tente Événementielle", "Tente gonflable X pour événements. Structure robuste, montage en 10 minutes, personnalisation complète. Idéale pour salons, festivals et promotions.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp");
 
-  const [showCountdown, setShowCountdown] = useState(true);
   const [lightboxImg, setLightboxImg] = useState<{ src: string; alt: string } | null>(null);
 
   const openLightbox = useCallback((src: string, alt: string) => {
@@ -106,7 +104,6 @@ export default function TentesX() {
           minPrice: 1490,
         }}
       />
-      {showCountdown && <FilmCountdown onComplete={() => setShowCountdown(false)} />}
       <Navbar />
 
       {/* ═══ HERO : Titre + 4 photos en grille ═══ */}

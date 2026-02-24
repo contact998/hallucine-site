@@ -898,3 +898,5 @@
 - [x] Créer un endpoint admin pour déclencher la soumission des URLs
 - [x] Ajouter un bouton "Soumettre à IndexNow" dans le dashboard admin
 - [x] Ajouter un bouton retour vers /admin dans la page AdminCalculateurs
+- [x] FilmCountdown : jouer une seule fois par session (pas à chaque navigation entre pages écrans)
+- [x] FilmCountdown : retirer de la page TentesX
