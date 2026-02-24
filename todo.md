@@ -882,3 +882,6 @@
 - [x] Tester et régénérer le pré-rendu
 - [x] Ajouter les balises hreflang dans client/index.html
 - [x] Ajouter un sélecteur de langue (drapeaux FR/EN/DE/ES) dans la navbar
+
+## Logo animation fin de formulaire
+- [x] Remplacer le logo dans l'animation de fin de formulaire par le logo transparent (même que le rideau)
