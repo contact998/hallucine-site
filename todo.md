@@ -896,3 +896,4 @@
 - [x] Intégrer IndexNow pour notifier Bing/Yandex automatiquement
 - [x] Générer une clé IndexNow et ajouter le fichier de vérification
 - [x] Créer un endpoint admin pour déclencher la soumission des URLs
+- [x] Ajouter un bouton "Soumettre à IndexNow" dans le dashboard admin

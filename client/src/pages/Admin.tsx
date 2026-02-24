@@ -35,6 +35,33 @@ const TYPE_LABELS: Record<string, { label: string; color: string }> = {
   distributeur: { label: "Distributeur", color: "bg-cyan-500/20 text-cyan-400" },
 };
 
+function IndexNowButton() {
+  const submitAll = trpc.indexnow.submitAll.useMutation();
+  return (
+    <button
+      onClick={() => submitAll.mutate()}
+      disabled={submitAll.isPending}
+      className={`flex items-center gap-2 px-4 py-2 border rounded text-sm transition-colors ${
+        submitAll.isSuccess
+          ? "border-green-500/30 text-green-400 bg-green-500/10"
+          : submitAll.isError
+          ? "border-red-500/30 text-red-400 bg-red-500/10"
+          : "border-orange-500/30 text-orange-400 hover:bg-orange-500/10"
+      } disabled:opacity-50`}
+    >
+      {submitAll.isPending ? (
+        <><Loader2 className="w-4 h-4 animate-spin" /> Soumission...</>
+      ) : submitAll.isSuccess ? (
+        <><CheckCircle className="w-4 h-4" /> {submitAll.data?.submitted} URLs soumises</>
+      ) : submitAll.isError ? (
+        <><AlertTriangle className="w-4 h-4" /> Erreur IndexNow</>
+      ) : (
+        <><Send className="w-4 h-4" /> IndexNow</>
+      )}
+    </button>
+  );
+}
+
 export default function Admin() {
   useDocumentMeta("Administration", "Panneau d'administration Hallucine.");
   useNoIndex();
@@ -280,6 +307,7 @@ export default function Admin() {
               >
                 <ExternalLink className="w-4 h-4" /> Ouvrir CRM
               </a>
+              <IndexNowButton />
             </div>
           </div>
 
