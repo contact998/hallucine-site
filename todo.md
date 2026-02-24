@@ -904,3 +904,4 @@
 - [x] Déplacer le sélecteur de langue de la navbar principale vers la top bar
 - [x] Rideau : ajouter pointer-events none dès que l'animation d'ouverture est terminée
 - [x] Ajouter un bouton "Voir les vidéos" dans la page Galerie photos vers /galerie-video
+- [x] FilmCountdown : ajouter fondu enchaîné (page apparaît progressivement derrière le compteur)
