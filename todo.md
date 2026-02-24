@@ -901,3 +901,4 @@
 - [x] FilmCountdown : jouer une seule fois par session (pas à chaque navigation entre pages écrans)
 - [x] FilmCountdown : retirer de la page TentesX
 - [x] Ajouter le tableau comparatif visuel des 16 critères dans la page Comparaison
+- [x] Déplacer le sélecteur de langue de la navbar principale vers la top bar
