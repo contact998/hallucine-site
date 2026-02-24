@@ -45,6 +45,7 @@ import {
   getWeekOverWeekComparison,
 } from "./weeklyAudit";
 import { getAvailability } from "./availabilityService";
+import { submitToIndexNow, submitSingleUrl } from "./indexnow";
 
 // ─── Anti-spam : Rate limiting en mémoire ───
 const rateLimitMap = new Map<string, number[]>();
@@ -715,6 +716,21 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
         jbAvailable: jbCommercial?.available ?? false,
       };
     }),
+  }),
+
+  // ===== IndexNow SEO =====
+  indexnow: router({
+    /** Soumet toutes les pages publiques à IndexNow (Bing, Yandex, DuckDuckGo) */
+    submitAll: adminProcedure.mutation(async () => {
+      return submitToIndexNow();
+    }),
+    /** Soumet une URL spécifique */
+    submitUrl: adminProcedure
+      .input(z.object({ url: z.string().url() }))
+      .mutation(async ({ input }) => {
+        const success = await submitSingleUrl(input.url);
+        return { success, url: input.url };
+      }),
   }),
 });
 
