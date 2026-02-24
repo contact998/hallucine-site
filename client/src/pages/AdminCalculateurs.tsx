@@ -3,6 +3,8 @@
  * Style Excel : fond blanc, tableaux avec bordures, simple et lisible
  */
 import { useState } from "react";
+import { Link } from "wouter";
+import { ArrowLeft } from "lucide-react";
 import CalculateurTenteX from "@/components/calculateurs/CalculateurTenteX";
 import CalculateurTenteV from "@/components/calculateurs/CalculateurTenteV";
 import CalculateurTenteN from "@/components/calculateurs/CalculateurTenteN";
@@ -28,9 +30,16 @@ export default function AdminCalculateurs() {
   return (
     <div className="min-h-screen bg-white text-gray-900">
       <div className="max-w-5xl mx-auto px-4 py-6">
-        <h1 className="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-gray-300 pb-2">
-          Calculateurs de prix — Tentes gonflables
-        </h1>
+        <div className="flex items-center gap-4 mb-4 border-b-2 border-gray-300 pb-2">
+          <Link href="/admin">
+            <button className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors">
+              <ArrowLeft className="w-5 h-5 text-gray-600" />
+            </button>
+          </Link>
+          <h1 className="text-2xl font-bold text-gray-800">
+            Calculateurs de prix — Tentes gonflables
+          </h1>
+        </div>
 
         {/* Onglets style Excel */}
         <div className="flex border-b border-gray-300">
