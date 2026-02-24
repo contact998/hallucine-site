@@ -880,3 +880,5 @@
 ## Nettoyage optimisations PageSpeed inutiles/nuisibles
 - [x] Identifier et supprimer will-change, contain, et autres micro-optimisations
 - [x] Tester et régénérer le pré-rendu
+- [x] Ajouter les balises hreflang dans client/index.html
+- [x] Ajouter un sélecteur de langue (drapeaux FR/EN/DE/ES) dans la navbar

@@ -13,6 +13,88 @@ import { AvailabilityBadge } from "@/components/AvailabilityIndicator";
 
 const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tWSEvNLkFkmjxAXj.png";
 
+const languages = [
+  { code: "fr", label: "FR", flag: "🇫🇷", url: "https://hallucinecran.fr" },
+  { code: "en", label: "EN", flag: "🇬🇧", url: "https://hallucinecran.com" },
+  { code: "de", label: "DE", flag: "🇩🇪", url: "https://hallucinecran.de" },
+  { code: "es", label: "ES", flag: "🇪🇸", url: "https://hallucinecran.es" },
+];
+
+const currentLang = "fr";
+
+function LanguageSwitcher({ mobile = false }: { mobile?: boolean }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const current = languages.find((l) => l.code === currentLang)!;
+  const others = languages.filter((l) => l.code !== currentLang);
+
+  if (mobile) {
+    return (
+      <div className="flex items-center gap-2 px-2 py-2">
+        {languages.map((lang) => (
+          <a
+            key={lang.code}
+            href={lang.url}
+            className={`flex items-center gap-1.5 px-3 py-2 rounded text-sm font-medium transition-colors ${
+              lang.code === currentLang
+                ? "bg-warm/20 text-warm border border-warm/30"
+                : "text-white/70 hover:text-warm hover:bg-white/5 border border-white/10"
+            }`}
+          >
+            <span className="text-base leading-none">{lang.flag}</span>
+            {lang.label}
+          </a>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex items-center gap-1.5 px-2 py-1.5 rounded border border-white/15 hover:border-warm/40 transition-colors text-sm text-white/80 hover:text-warm"
+        aria-label="Changer de langue"
+      >
+        <span className="text-base leading-none">{current.flag}</span>
+        <span className="font-medium">{current.label}</span>
+        <ChevronDown className={`w-3 h-3 transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 4 }}
+            transition={{ duration: 0.15 }}
+            className="absolute top-full right-0 mt-1.5 bg-[oklch(0.16_0.012_260)] border border-white/10 rounded shadow-xl shadow-black/30 overflow-hidden z-50 min-w-[120px]"
+          >
+            {others.map((lang) => (
+              <a
+                key={lang.code}
+                href={lang.url}
+                className="flex items-center gap-2 px-3 py-2.5 text-sm text-white/80 hover:text-warm hover:bg-white/5 transition-colors"
+              >
+                <span className="text-base leading-none">{lang.flag}</span>
+                {lang.label}
+              </a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 interface DropdownItem {
   label: string;
   href: string;
@@ -199,8 +281,9 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* CTA Desktop + Profil */}
+          {/* CTA Desktop + Profil + Langue */}
           <div className="hidden xl:flex items-center gap-2 shrink-0">
+            <LanguageSwitcher />
             <Link
               href="/devis"
               className="flex items-center gap-2 px-5 py-2 bg-warm text-charcoal font-semibold text-sm rounded hover:bg-warm-light transition-all duration-300"
@@ -334,6 +417,10 @@ export default function Navbar() {
                     Connexion
                   </a>
                 )}
+                <div className="mt-3 border-t border-white/10 pt-3">
+                  <p className="text-xs text-white/50 px-2 mb-2">Langue</p>
+                  <LanguageSwitcher mobile />
+                </div>
               </div>
             </motion.div>
           )}
