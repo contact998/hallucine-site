@@ -109,6 +109,64 @@ export default function Comparaison() {
         </div>
       </section>
 
+      {/* Tableau comparatif visuel */}
+      <section className="py-20 bg-background">
+        <div className="container">
+          <h2 className="text-3xl font-bold text-ivory mb-4">Tableau Comparatif Détaillé</h2>
+          <p className="text-white/60 mb-10 max-w-3xl">
+            16 critères passés au crible pour vous aider à faire le bon choix.
+          </p>
+
+          {/* En-tête du tableau */}
+          <div className="hidden md:grid md:grid-cols-[2fr_3fr_3fr] gap-0 mb-1">
+            <div className="p-4 bg-warm/20 rounded-tl-lg">
+              <span className="text-warm font-bold text-sm uppercase tracking-wider">Critère</span>
+            </div>
+            <div className="p-4 bg-warm/20 flex items-center gap-2">
+              <Trophy className="w-4 h-4 text-warm" />
+              <span className="text-warm font-bold text-sm uppercase tracking-wider">Hallucine</span>
+            </div>
+            <div className="p-4 bg-white/5 rounded-tr-lg">
+              <span className="text-white/40 font-bold text-sm uppercase tracking-wider">Concurrent</span>
+            </div>
+          </div>
+
+          {/* Lignes du tableau */}
+          <div className="space-y-px">
+            {comparisonData.map((row, i) => {
+              const Icon = row.icon;
+              return (
+                <div
+                  key={i}
+                  className={`grid grid-cols-1 md:grid-cols-[2fr_3fr_3fr] gap-0 ${
+                    i % 2 === 0 ? "bg-card" : "bg-card/60"
+                  } ${i === comparisonData.length - 1 ? "rounded-b-lg" : ""}`}
+                >
+                  {/* Critère */}
+                  <div className="p-4 flex items-center gap-3 border-b border-white/5 md:border-b-0 md:border-r md:border-r-white/5">
+                    <div className="shrink-0 w-8 h-8 rounded-full bg-warm/15 flex items-center justify-center">
+                      <Icon className="w-4 h-4 text-warm" />
+                    </div>
+                    <span className="font-semibold text-ivory text-sm">{row.carac}</span>
+                  </div>
+
+                  {/* Hallucine */}
+                  <div className="p-4 flex items-start gap-3 border-b border-white/5 md:border-b-0 md:border-r md:border-r-white/5 bg-green-950/10">
+                    <Check className="w-5 h-5 text-green-400 shrink-0 mt-0.5" />
+                    <span className="text-white/80 text-sm leading-relaxed">{row.hallucine}</span>
+                  </div>
+
+                  {/* Concurrent */}
+                  <div className="p-4 flex items-start gap-3 bg-red-950/10">
+                    <X className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+                    <span className="text-white/50 text-sm leading-relaxed">{row.concurrent}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
       {/* 7 arguments détaillés */}
       <section className="py-20 bg-charcoal-light">

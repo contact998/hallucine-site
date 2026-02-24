@@ -900,3 +900,4 @@
 - [x] Ajouter un bouton retour vers /admin dans la page AdminCalculateurs
 - [x] FilmCountdown : jouer une seule fois par session (pas à chaque navigation entre pages écrans)
 - [x] FilmCountdown : retirer de la page TentesX
+- [x] Ajouter le tableau comparatif visuel des 16 critères dans la page Comparaison
