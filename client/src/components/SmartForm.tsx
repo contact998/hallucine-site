@@ -16,6 +16,7 @@
  *  - onSubmitSuccess : callback après soumission réussie
  */
 import { useState, useEffect, useCallback, useRef } from "react";
+import { generateChallenge, solveProofOfWork } from "@/lib/proofOfWork";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Monitor, Tent, Armchair, Trophy, ArrowRight, ArrowLeft, Send,
@@ -226,9 +227,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   const [submitted, setSubmitted] = useState(false);
   const [showResumeBanner, setShowResumeBanner] = useState(false);
 
-  // Anti-spam : honeypot (champ invisible) + timestamp d'ouverture
+  // Anti-spam : honeypot (champ invisible) + timestamp d'ouverture + PoW
   const [honeypot, setHoneypot] = useState("");
   const [formOpenedAt] = useState(() => Date.now());
+  const [powChallenge] = useState(() => generateChallenge());
+  const [powSolving, setPowSolving] = useState(false);
 
   // États d'erreur pour validation visuelle
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
@@ -488,8 +491,9 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     },
   });
 
-  const handleSubmit = () => {
-    if (submitted || submitMutation.isPending) return;
+  const handleSubmit = async () => {
+    if (submitted || submitMutation.isPending || powSolving) return;
+
 
     const trimmedEmail = email.trim();
     const trimmedPrenom = prenom.trim();
@@ -521,6 +525,16 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
       ? `\nPreference rappel : ${callbackDay || "Pas de preference"} ${callbackTime || ""}`
       : "";
 
+    // Résoudre le Proof of Work avant soumission (invisible, ~100-500ms)
+    setPowSolving(true);
+    let powNonce: number | undefined;
+    try {
+      powNonce = await solveProofOfWork(powChallenge);
+    } catch {
+      // Si PoW échoue, on soumet quand même (score sera plus bas côté serveur)
+    }
+    setPowSolving(false);
+
     submitMutation.mutate({
       type: "devis",
       nom: fullName,
@@ -533,6 +547,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
       objectif: objectif || undefined,
       _hp: honeypot,
       _ts: formOpenedAt,
+      _powChallenge: powChallenge,
+      _powNonce: powNonce,
     });
 
     try { localStorage.removeItem(STORAGE_KEY); } catch { /* ignore */ }

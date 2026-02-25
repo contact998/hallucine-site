@@ -905,3 +905,7 @@
 - [x] Rideau : ajouter pointer-events none dès que l'animation d'ouverture est terminée
 - [x] Ajouter un bouton "Voir les vidéos" dans la page Galerie photos vers /galerie-video
 - [x] FilmCountdown : ajouter fondu enchaîné (page apparaît progressivement derrière le compteur)
+- [x] Mettre en place un antispam plus robuste sur les formulaires
+  - [x] Proof of Work (PoW) côté client
+  - [x] Validation email renforcée (domaines jetables)
+  - [x] Score de confiance composite côté serveur

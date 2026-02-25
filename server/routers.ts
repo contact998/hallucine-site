@@ -46,6 +46,7 @@ import {
 } from "./weeklyAudit";
 import { getAvailability } from "./availabilityService";
 import { submitToIndexNow, submitSingleUrl } from "./indexnow";
+import { computeSpamScore } from "./antispam";
 
 // ─── Anti-spam : Rate limiting en mémoire ───
 const rateLimitMap = new Map<string, number[]>();
@@ -144,40 +145,31 @@ export const appRouter = router({
           // Anti-spam
           _hp: z.string().optional(),  // Honeypot
           _ts: z.number().optional(),  // Timestamp d'ouverture du formulaire
+          _powChallenge: z.string().optional(), // Proof of Work challenge
+          _powNonce: z.number().optional(),     // Proof of Work nonce
         })
       )
       .mutation(async ({ input, ctx }) => {
-        // ─── Anti-spam : Honeypot ───
-        if (input._hp) {
-          console.log(`[Anti-spam] Honeypot rempli, rejet silencieux pour ${input.email}`);
+        // ─── Anti-spam : Score de confiance composite ───
+        const clientIp = ctx.req.ip || ctx.req.headers["x-forwarded-for"] as string || "unknown";
+        const spamResult = await computeSpamScore({
+          honeypot: input._hp,
+          timestamp: input._ts,
+          ip: clientIp,
+          email: input.email,
+          powChallenge: input._powChallenge,
+          powNonce: input._powNonce,
+        });
+
+        if (spamResult.blocked) {
+          console.log(`[Anti-spam] BLOQUÉ (score=${spamResult.score}) pour ${input.email} — ${spamResult.reasons.join(", ")}`);
+          // Rejet silencieux : le bot pense que ça a marché
           return { success: true, crmSynced: false };
         }
 
-        // ─── Anti-spam : Délai minimum (5 secondes) ───
-        if (input._ts) {
-          const elapsed = Date.now() - input._ts;
-          if (elapsed < 5000) {
-            console.log(`[Anti-spam] Soumission trop rapide (${elapsed}ms) pour ${input.email}`);
-            return { success: true, crmSynced: false };
-          }
+        if (spamResult.score < 70) {
+          console.log(`[Anti-spam] SUSPECT (score=${spamResult.score}) pour ${input.email} — ${spamResult.reasons.join(", ")}`);
         }
-
-        // ─── Anti-spam : Rate limiting par IP (5/heure) ───
-        const clientIp = ctx.req.ip || ctx.req.headers["x-forwarded-for"] as string || "unknown";
-        const now = Date.now();
-        const hourAgo = now - 3600000;
-        // Nettoyer les anciennes entrées
-        Array.from(rateLimitMap.entries()).forEach(([ip, timestamps]) => {
-          const recent = timestamps.filter((t: number) => t > hourAgo);
-          if (recent.length === 0) rateLimitMap.delete(ip);
-          else rateLimitMap.set(ip, recent);
-        });
-        const ipTimestamps = rateLimitMap.get(clientIp) || [];
-        if (ipTimestamps.length >= 5) {
-          console.log(`[Anti-spam] Rate limit atteint pour IP ${clientIp} (${ipTimestamps.length} soumissions/heure)`);
-          throw new Error("Trop de demandes. Veuillez r\u00e9essayer dans quelques minutes.");
-        }
-        rateLimitMap.set(clientIp, [...ipTimestamps, now]);
 
         await insertContactSubmission({
           type: input.type,
