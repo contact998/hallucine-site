@@ -124,7 +124,7 @@ export default function Galerie() {
 
       {/* Hero avec barre filtres en overlay en haut */}
       <section className="relative overflow-hidden bg-black" ref={heroRef}>
-        <div className="relative w-full" style={{ aspectRatio: '16/7' }}>
+        <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
           <img loading="lazy"
             src="https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/new_0e670248.jpg"
             alt="Cinéma en plein air Hallucine"
@@ -186,7 +186,7 @@ export default function Galerie() {
       </section>
 
       {/* Grille photos */}
-      <main className="container py-12 md:py-16">
+      <main className="container py-12 md:py-16 relative -mt-32 md:-mt-48 z-30">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           {filtered.map((photo, index) => (
             <div key={index} className="group relative isolate aspect-square overflow-hidden rounded-lg cursor-pointer" onClick={() => setLightbox(index)}>
