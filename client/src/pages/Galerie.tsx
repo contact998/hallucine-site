@@ -2,7 +2,7 @@
  * Page Galerie
  * Grille de photos d'événements avec filtrage par catégorie
  */
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
@@ -90,6 +90,22 @@ export default function Galerie() {
 
   const [filter, setFilter] = useState("Tous");
   const [lightbox, setLightbox] = useState<number | null>(null);
+  const [parallaxOffset, setParallaxOffset] = useState(0);
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (heroRef.current) {
+        const scrollY = window.scrollY;
+        const heroTop = heroRef.current.offsetTop;
+        const distance = scrollY - heroTop;
+        setParallaxOffset(distance * 0.3);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const filtered = filter === "Tous" ? photos : photos.filter((p) => p.cat === filter);
 
@@ -107,12 +123,13 @@ export default function Galerie() {
       <Navbar />
 
       {/* Hero avec barre filtres en overlay en haut */}
-      <section className="relative overflow-hidden bg-black">
+      <section className="relative overflow-hidden bg-black" ref={heroRef}>
         <div className="relative w-full" style={{ aspectRatio: '16/7' }}>
           <img loading="lazy"
             src="https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/new_0e670248.jpg"
             alt="Cinéma en plein air Hallucine"
             className="w-full h-full object-contain"
+            style={{ transform: `translateY(${parallaxOffset}px)` }}
           decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
 
