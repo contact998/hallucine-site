@@ -178,7 +178,7 @@ export default function Galerie() {
               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                 <p className="text-white text-center text-sm font-medium">{photo.alt}</p>
               </div>
-              <div className="pointer-events-none absolute left-2 top-2 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-warm text-charcoal text-lg font-bold shadow-lg ring-2 ring-white/60">
+              <div className="pointer-events-none absolute left-2 top-2 z-30 flex h-8 w-8 items-center justify-center rounded-full bg-warm/70 text-charcoal text-sm font-semibold shadow-md ring-1 ring-white/40 opacity-70 hover:opacity-100 transition-opacity">
                 {index + 1}
               </div>
             </div>
