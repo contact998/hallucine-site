@@ -116,7 +116,7 @@ export default function Galerie() {
       />
       <Navbar />
 
-      {/* Hero avec barre filtres en overlay en haut */}
+      {/* Hero image section */}
       <section className="relative overflow-hidden bg-black">
         <div className="relative w-full" style={{ aspectRatio: '16/7' }}>
           <img loading="lazy"
@@ -126,75 +126,78 @@ export default function Galerie() {
             style={{ transform: `translateY(${parallaxOffset}px)` }}
           decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
-
-          {/* Texte descriptif sur l'image de fond */}
-          <div className="absolute bottom-6 left-0 right-0 z-10 px-6">
-            <p className="text-white/80 text-sm md:text-base text-center max-w-3xl mx-auto leading-relaxed">
-              Découvrez nos projets à travers le monde. Écrans de cinéma gonflables, tentes événementielles, arches et mobilier : nos produits en action lors d'événements réels.
-            </p>
-          </div>
-
-          {/* Barre filtres overlay sur la foule */}
-          <div className="absolute bottom-[15%] left-0 right-0 z-20 bg-black/60 backdrop-blur-sm py-3">
-            <div className="container relative flex items-center">
-              <h1 className="text-2xl md:text-3xl font-bold text-ivory shrink-0">
-                Galerie
-              </h1>
-              <Link
-                href="/galerie-video"
-                className="shrink-0 ml-3 flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-full bg-warm/20 text-warm border border-warm/30 hover:bg-warm/30 transition-colors z-30 pointer-events-auto"
-              >
-                <Video className="w-4 h-4" />
-                Vidéos
-              </Link>
-              <div className="absolute inset-0 flex flex-wrap gap-2 sm:gap-4 items-center justify-center pointer-events-none">
-                <div className="hidden xl:flex flex-wrap gap-2 sm:gap-4 items-center justify-center">
-                  {categories.map((cat) => (
-                    <button
-                      key={cat}
-                      onClick={() => setFilter(cat)}
-                      className={`px-4 py-2 text-sm font-semibold rounded-full transition-colors duration-200 pointer-events-auto ${
-                        filter === cat ? "bg-accent text-white" : "bg-gray-700/50 text-gray-300 hover:bg-gray-600/70"
-                      }`}>
-                      {cat}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Dropdown pour mobile/tablette */}
-                <div className="relative xl:hidden">
-                  <select
-                    onChange={(e) => setFilter(e.target.value)}
-                    value={filter}
-                    className="px-4 py-2 text-sm font-semibold rounded-full transition-colors duration-200 pointer-events-auto appearance-none bg-gray-700/50 text-gray-300 hover:bg-gray-600/70 focus:outline-none focus:ring-2 focus:ring-accent/80 pr-8"
-                  >
-                    {categories.map((cat) => (
-                      <option key={cat} value={cat}>{cat}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* Grille photos */}
-      <main className="container py-12 md:py-16">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-          {filtered.map((photo, index) => (
-            <div key={index} className="group relative isolate aspect-square overflow-hidden rounded-lg cursor-pointer" onClick={() => setLightbox(index)}>
-              <img loading="lazy" src={photo.src} alt={photo.alt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" decoding="async" />
-              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                <p className="text-white text-center text-sm font-medium">{photo.alt}</p>
+      {/* Unified container: menu, text, and gallery overlapping hero */}
+      <div className="relative -mt-64 md:-mt-96 z-30">
+        {/* Barre filtres */}
+        <div className="bg-black/60 backdrop-blur-sm py-3 mb-8 md:mb-12">
+          <div className="container relative flex items-center">
+            <h1 className="text-2xl md:text-3xl font-bold text-ivory shrink-0">
+              Galerie
+            </h1>
+            <Link
+              href="/galerie-video"
+              className="shrink-0 ml-3 flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-full bg-warm/20 text-warm border border-warm/30 hover:bg-warm/30 transition-colors z-30 pointer-events-auto"
+            >
+              <Video className="w-4 h-4" />
+              Vidéos
+            </Link>
+            <div className="absolute inset-0 flex flex-wrap gap-2 sm:gap-4 items-center justify-center pointer-events-none">
+              <div className="hidden xl:flex flex-wrap gap-2 sm:gap-4 items-center justify-center">
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setFilter(cat)}
+                    className={`px-4 py-2 text-sm font-semibold rounded-full transition-colors duration-200 pointer-events-auto ${
+                      filter === cat ? "bg-accent text-white" : "bg-gray-700/50 text-gray-300 hover:bg-gray-600/70"
+                    }`}>
+                    {cat}
+                  </button>
+                ))}
               </div>
-              <div className="pointer-events-none absolute left-2 top-2 z-30 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-white text-xs font-bold shadow-md">
-                {index + 1}
+
+              {/* Dropdown pour mobile/tablette */}
+              <div className="relative xl:hidden">
+                <select
+                  onChange={(e) => setFilter(e.target.value)}
+                  value={filter}
+                  className="px-4 py-2 text-sm font-semibold rounded-full transition-colors duration-200 pointer-events-auto appearance-none bg-gray-700/50 text-gray-300 hover:bg-gray-600/70 focus:outline-none focus:ring-2 focus:ring-accent/80 pr-8"
+                >
+                  {categories.map((cat) => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))}
+                </select>
               </div>
             </div>
-          ))}
+          </div>
         </div>
-      </main>
+
+        {/* Texte descriptif */}
+        <div className="px-6 mb-8 md:mb-12">
+          <p className="text-white/80 text-sm md:text-base text-center max-w-3xl mx-auto leading-relaxed">
+            Découvrez nos projets à travers le monde. Écrans de cinéma gonflables, tentes événementielles, arches et mobilier : nos produits en action lors d'événements réels.
+          </p>
+        </div>
+
+        {/* Grille photos */}
+        <main className="container py-12 md:py-16">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            {filtered.map((photo, index) => (
+              <div key={index} className="group relative isolate aspect-square overflow-hidden rounded-lg cursor-pointer" onClick={() => setLightbox(index)}>
+                <img loading="lazy" src={photo.src} alt={photo.alt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" decoding="async" />
+                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                  <p className="text-white text-center text-sm font-medium">{photo.alt}</p>
+                </div>
+                <div className="pointer-events-none absolute left-2 top-2 z-30 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-white text-xs font-bold shadow-md">
+                  {index + 1}
+                </div>
+              </div>
+            ))}
+          </div>
+        </main>
+      </div>
 
       {/* Lightbox */}
       {lightbox !== null && (
