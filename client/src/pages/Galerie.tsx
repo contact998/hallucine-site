@@ -125,7 +125,7 @@ export default function Galerie() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const filtered = filter === "Tous" ? photos : photos.filter((p) => p.cat === filter);
+  const filtered = shuffleArray(filter === "Tous" ? photos : photos.filter((p) => p.cat === filter));
 
   return (
     <div className="min-h-screen bg-background text-foreground">
