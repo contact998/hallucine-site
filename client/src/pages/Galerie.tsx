@@ -63,7 +63,6 @@ const photos = [
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/myQOmuwLkZOAzRRs.webp", alt: "Installation technique complète pour projection en extérieur", cat: "Équipement" },
 
   // Tentes
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/LyytgyImxlrBebLu.webp", alt: "Tente gonflable en forme de X pour événements", cat: "Tentes" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/SUFOlyWxjMBsVhPG.webp", alt: "Tente gonflable événementielle en forme de X", cat: "Tentes" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YDVeZvrXTWvHTZKL.webp", alt: "Tentes gonflables en forme de X personnalisées avec logos", cat: "Tentes" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/aGPwYnsYBzrWtrwV.webp", alt: "Tente gonflable modèle N Hallucine", cat: "Tentes" },
