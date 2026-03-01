@@ -124,7 +124,7 @@ export default function Galerie() {
           </div>
 
           {/* Barre filtres overlay sur la foule */}
-          <div className="absolute top-[50%] left-0 right-0 z-20 bg-black/60 backdrop-blur-sm py-3">
+          <div className="absolute bottom-[15%] left-0 right-0 z-20 bg-black/60 backdrop-blur-sm py-3">
             <div className="container relative flex items-center">
               <h1 className="text-2xl md:text-3xl font-bold text-ivory shrink-0">
                 Galerie
