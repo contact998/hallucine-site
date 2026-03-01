@@ -2,7 +2,7 @@
  * Page Galerie
  * Grille de photos d'événements avec filtrage par catégorie
  */
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
@@ -90,22 +90,6 @@ export default function Galerie() {
 
   const [filter, setFilter] = useState("Tous");
   const [lightbox, setLightbox] = useState<number | null>(null);
-  const [parallaxOffset, setParallaxOffset] = useState(0);
-  const heroRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (heroRef.current) {
-        const scrollY = window.scrollY;
-        const heroTop = heroRef.current.offsetTop;
-        const distance = scrollY - heroTop;
-        setParallaxOffset(distance * 0.3);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const filtered = filter === "Tous" ? photos : photos.filter((p) => p.cat === filter);
 
@@ -123,13 +107,12 @@ export default function Galerie() {
       <Navbar />
 
       {/* Hero avec barre filtres en overlay en haut */}
-      <section className="relative overflow-hidden bg-black" ref={heroRef}>
-        <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
+      <section className="relative overflow-hidden bg-black">
+        <div className="relative w-full" style={{ aspectRatio: '16/7' }}>
           <img loading="lazy"
-            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/new_0e670248.jpg"
+            src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wChOWnTuNAnNsSIL.webp"
             alt="Cinéma en plein air Hallucine"
             className="w-full h-full object-contain"
-            style={{ transform: `translateY(${parallaxOffset}px)` }}
           decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
 
@@ -186,7 +169,7 @@ export default function Galerie() {
       </section>
 
       {/* Grille photos */}
-      <main className="container py-12 md:py-16 relative -mt-64 md:-mt-96 z-30">
+      <main className="container py-12 md:py-16">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           {filtered.map((photo, index) => (
             <div key={index} className="group relative isolate aspect-square overflow-hidden rounded-lg cursor-pointer" onClick={() => setLightbox(index)}>
