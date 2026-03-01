@@ -110,7 +110,7 @@ export default function Galerie() {
       <section className="relative overflow-hidden bg-black">
         <div className="relative w-full" style={{ aspectRatio: '16/7' }}>
           <img loading="lazy"
-            src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wChOWnTuNAnNsSIL.webp"
+            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/new_0e670248.jpg"
             alt="Cinéma en plein air Hallucine"
             className="w-full h-full object-contain"
           decoding="async" />
