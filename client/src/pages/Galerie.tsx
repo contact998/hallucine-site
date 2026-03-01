@@ -134,14 +134,14 @@ export default function Galerie() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
 
           {/* Texte descriptif sur l'image de fond */}
-          <div className="absolute -bottom-32 md:-bottom-48 left-0 right-0 z-10 px-6">
+          <div className="absolute bottom-6 left-0 right-0 z-10 px-6">
             <p className="text-white/80 text-sm md:text-base text-center max-w-3xl mx-auto leading-relaxed">
               Découvrez nos projets à travers le monde. Écrans de cinéma gonflables, tentes événementielles, arches et mobilier : nos produits en action lors d'événements réels.
             </p>
           </div>
 
           {/* Barre filtres overlay sur la foule */}
-          <div className="absolute -bottom-64 md:-bottom-96 left-0 right-0 z-20 bg-black/60 backdrop-blur-sm py-3">
+          <div className="absolute bottom-[15%] left-0 right-0 z-20 bg-black/60 backdrop-blur-sm py-3">
             <div className="container relative flex items-center">
               <h1 className="text-2xl md:text-3xl font-bold text-ivory shrink-0">
                 Galerie
