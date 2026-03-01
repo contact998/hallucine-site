@@ -70,7 +70,7 @@ const photos = [
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yuLqkYzSuwxDVzhu.webp", alt: "Arche gonflable personnalisée pour projection en plein air", cat: "Arches" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/RwlUZIhnbBNsLqCd.webp", alt: "Arche gonflable de bienvenue pour événement", cat: "Arches" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tZPYCxQHEVFUCaJD.webp", alt: "Arche gonflable blanche personnalisable", cat: "Arches" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/cKuqdbWgdycResDX.webp", alt: "Arche gonflable bleue pour événement sportif", cat: "Arches" },
+
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/nAUCiZOIoXxUsOWB.webp", alt: "Arche gonflable publicitaire SKYGO", cat: "Arches" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QXbIEeUzJKlGwZuE.webp", alt: "Arche gonflable modèle standard Hallucine", cat: "Arches" },
 
