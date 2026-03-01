@@ -100,16 +100,6 @@ const photos = [
 
 const categories = ["Tous", "Écrans gonflables", "Événements", "Équipement", "Tentes", "Arches", "Mobilier"];
 
-// Fonction pour mélanger les photos
-const shuffleArray = (array: typeof photos) => {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
-};
-
 export default function Galerie() {
   useDocumentMeta("Galerie Photos | Nos Réalisations", "Découvrez nos réalisations en images : écrans de cinéma gonflables, tentes événementielles, arches et mobilier en action lors d'événements réels.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IDghLbPxebJUfXVC.webp");
 
@@ -125,7 +115,7 @@ export default function Galerie() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const filtered = shuffleArray(filter === "Tous" ? photos : photos.filter((p) => p.cat === filter));
+  const filtered = filter === "Tous" ? photos : photos.filter((p) => p.cat === filter);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
