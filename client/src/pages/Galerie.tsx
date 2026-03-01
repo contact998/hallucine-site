@@ -186,7 +186,7 @@ export default function Galerie() {
       </section>
 
       {/* Grille photos */}
-      <main className="container py-12 md:py-16 relative -mt-32 md:-mt-48 z-30">
+      <main className="container py-12 md:py-16 relative -mt-64 md:-mt-96 z-30">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           {filtered.map((photo, index) => (
             <div key={index} className="group relative isolate aspect-square overflow-hidden rounded-lg cursor-pointer" onClick={() => setLightbox(index)}>
