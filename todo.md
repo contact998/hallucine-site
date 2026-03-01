@@ -868,8 +868,9 @@
 - [x] Le texte descriptif ajouté sur l'image de fond du hero de la page Galerie (gradient + texte en overlay)
 
 ## SEO: Retirer pages admin du sitemap + robots.txt
-- [ ] Retirer /admin, /profil du sitemap.xml
-- [ ] Bloquer /admin, /profil dans robots.txt avec Disallow + noindex
+- [x] Retirer /admin, /profil du sitemap.xml
+- [x] Bloquer /admin, /profil dans robots.txt avec Disallow + noindex
+- [x] Ajouter meta robots noindex/nofollow dynamiquement pour /admin et /profil
 
 ## Optimisation images : recompression + redimensionnement
 - [x] Extraire toutes les URLs d'images du site (hors rideau) — 153 images trouvées
