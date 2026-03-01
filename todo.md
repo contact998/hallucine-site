@@ -914,3 +914,4 @@
 ## Images & Assets
 - [x] Remplacer les 6 images de la page "Écrans gonflables étanches" par les nouvelles optimisées
 - [x] Ajouter la numérotation des photos (1/6, 2/6, etc.) dans la galerie
+- [x] Repositionner la numérotation en bas à droite (visible et non cachée)
