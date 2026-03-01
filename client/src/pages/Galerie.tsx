@@ -12,6 +12,15 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 
 const photos = [
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/pasted_file_lj0vsC_onepongeapreslapluiePlaceaujeune_0787bac5.jpg", alt: "Une ponge apres la pluie Place au jeune", cat: "Événements" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/pasted_file_sCzDrf_Ecrande20malatelier_b865e38c.jpg", alt: "Ecran de 20m a l'atelier", cat: "Écrans gonflables" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/pasted_file_GfjC2j_ProjecteurBuisseUnpeudenostalgie_286e537c.jpg", alt: "Projecteur Buisse un peu de nostalgie", cat: "Équipement" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/pasted_file_bLFuXL_Onetaitjeuneetbeau_7e18fb73.jpg", alt: "On etait jeune et beau", cat: "Événements" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/pasted_file_MdkZcC_Ecran20mdansun12m3_4c110e35.jpg", alt: "Ecran 20m dans un 12m3", cat: "Écrans gonflables" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/pasted_file_gtSn5p_Onenabesoin_54c9b7e9.jpg", alt: "On a besoin", cat: "Équipement" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/pasted_file_lTfzbp_Africa.._b7bbd255.jpg", alt: "Africa", cat: "Événements" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/pasted_file_Q9sJqv_Ecran5mParistoutestpret_f47e9677.jpg", alt: "Ecran 5m Paris tout est pret", cat: "Écrans gonflables" },
+  
   // Écrans gonflables
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IDghLbPxebJUfXVC.webp", alt: "Écran gonflable 2.5m sur pieds pour projection en extérieur", cat: "Écrans gonflables" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eMBtaurEbmzQnzOE.webp", alt: "Écran de cinéma gonflable de nuit sur toit d'immeuble", cat: "Écrans gonflables" },
