@@ -82,9 +82,33 @@ const photos = [
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yUqGwSVTzsTRviNh.webp", alt: "Table mange-debout gonflable pour cocktail", cat: "Mobilier" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/efvnhrOKvRVMyuHr.webp", alt: "Fauteuils et tabourets gonflables espace lounge", cat: "Mobilier" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/AHGATdyMDWenpusd.webp", alt: "Canapé gonflable bleu deux places", cat: "Mobilier" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/avantpremiere_9bf14570.jpg", alt: "Avant-première cinéma en plein air", cat: "Événements" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/Crevezpasmescanapes_0d77456c.jpg", alt: "Installation canapés gonflables", cat: "Mobilier" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/Entrechienetloup_cfd5e5ec.jpg", alt: "Projection Entre chien et loup", cat: "Événements" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/Cacestduserieux_d5c77eb8.jpg", alt: "Installation écran de cinéma", cat: "Écrans gonflables" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/20160726_225223_7c70f846.jpg", alt: "Projection nocturne événement", cat: "Événements" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/17NOIR_c6cca538.JPG", alt: "Écran gonflable 17m noir", cat: "Écrans gonflables" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/plein-airParistoilesdeminuit_74b10659.jpg", alt: "Cinéma plein air Paris étoiles de minuit", cat: "Événements" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/Ecrande1omjemefaittoutpetit_70cb6359.jpg", alt: "Écran de 10m projection", cat: "Écrans gonflables" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/new_5faf5bb0.jpg", alt: "Foule devant écran de cinéma", cat: "Événements" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/Cestlecirque_1ece50ba.jpg", alt: "C'est le cirque projection", cat: "Événements" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/Apresletravailunpeudedetente_1b9695c4.jpg", alt: "Détente après le travail", cat: "Événements" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/ecrande24mencoreuneffort_fec872ad.jpg", alt: "Écran de 24m encore un effort", cat: "Écrans gonflables" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/Soyersageecrande17m_5ad24436.jpg", alt: "Soyez sage écran de 17m", cat: "Écrans gonflables" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/Vincennesfaisceaulumineux_1458c920.jpg", alt: "Vincennes faisceau lumineux", cat: "Événements" },
 ];
 
 const categories = ["Tous", "Écrans gonflables", "Événements", "Équipement", "Tentes", "Arches", "Mobilier"];
+
+// Fonction pour mélanger les photos
+const shuffleArray = (array: typeof photos) => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
 
 export default function Galerie() {
   useDocumentMeta("Galerie Photos | Nos Réalisations", "Découvrez nos réalisations en images : écrans de cinéma gonflables, tentes événementielles, arches et mobilier en action lors d'événements réels.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IDghLbPxebJUfXVC.webp");
@@ -101,7 +125,7 @@ export default function Galerie() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const filtered = filter === "Tous" ? photos : photos.filter((p) => p.cat === filter);
+  const filtered = shuffleArray(filter === "Tous" ? photos : photos.filter((p) => p.cat === filter));
 
   return (
     <div className="min-h-screen bg-background text-foreground">
