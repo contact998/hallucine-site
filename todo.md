@@ -910,3 +910,6 @@
   - [x] Proof of Work (PoW) côté client
   - [x] Validation email renforcée (domaines jetables)
   - [x] Score de confiance composite côté serveur
+
+## Images & Assets
+- [x] Remplacer les 6 images de la page "Écrans gonflables étanches" par les nouvelles optimisées

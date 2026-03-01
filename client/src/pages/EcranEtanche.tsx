@@ -59,12 +59,12 @@ const faqItems = [
 ];
 
 const galleryImages = [
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IhxDeQNxHxMYBwlG.webp", alt: "Grand écran de cinéma gonflable étanche à l'air installé en extérieur" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QClDxPadLVEYKlxM.webp", alt: "Comparaison de la taille d'un écran gonflable étanche avec une personne" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hzkcpmfnpyIExDbf.webp", alt: "Vue arrière d'un écran gonflable étanche de 7.5m montrant sa structure" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ItFxIvKOJtMJpkfG.webp", alt: "Écran de cinéma gonflable étanche installé dans un jardin pour un événement" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VvQWHBvtXBXHrCWK.webp", alt: "Projection de film en plein air sur un grand écran gonflable étanche la nuit" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/GrHCmqNBbWZgeozA.webp", alt: "Image de haute qualité projetée sur un écran gonflable étanche lors d'un cinéma en plein air nocturne" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/Ecran6mpartenvacances_264eeb1d.png", alt: "Écran gonflable étanche de 6m en sac de transport" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/7Metanchesurletoit_1caa358e.jpg", alt: "Écran gonflable étanche de 7m installé sur un toit" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/ecran5mRitz_e1a4b8d3.jpg", alt: "Écran gonflable étanche de 5m au Ritz avec chaises longues" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/5MPROFILS_3db17625.jpg", alt: "Profil latéral d'un écran gonflable étanche de 5m" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/2ECRANSIFAUTEUIL_7d030a1f.jpeg", alt: "Deux écrans gonflables étanches avec fauteuils gonflables rouges" },
+  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/shemadunecranetanche_7c68b681.jpg", alt: "Schéma technique d'un écran gonflable étanche montrant la structure" },
 ];
 
 export default function EcranEtanche() {
