@@ -94,7 +94,6 @@ const photos = [
   { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/Cestlecirque_1ece50ba.jpg", alt: "C'est le cirque projection", cat: "Événements" },
   { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/Apresletravailunpeudedetente_1b9695c4.jpg", alt: "Détente après le travail", cat: "Événements" },
   { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/ecrande24mencoreuneffort_fec872ad.jpg", alt: "Écran de 24m encore un effort", cat: "Écrans gonflables" },
-  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/Soyersageecrande17m_5ad24436.jpg", alt: "Soyez sage écran de 17m", cat: "Écrans gonflables" },
   { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/Vincennesfaisceaulumineux_1458c920.jpg", alt: "Vincennes faisceau lumineux", cat: "Événements" },
 ];
 
