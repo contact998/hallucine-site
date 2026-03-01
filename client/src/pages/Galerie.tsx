@@ -22,7 +22,6 @@ const photos = [
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZRTtjuFGnMbHIPCI.webp", alt: "Écran géant gonflable 24m à Marseille", cat: "Écrans gonflables" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IhxDeQNxHxMYBwlG.webp", alt: "Écran de cinéma gonflable étanche à l'air, idéal pour les piscines", cat: "Écrans gonflables" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QClDxPadLVEYKlxM.webp", alt: "Comparaison de la taille d'un écran gonflable étanche avec une personne", cat: "Écrans gonflables" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hzkcpmfnpyIExDbf.webp", alt: "Vue arrière d'un écran de cinéma gonflable étanche de 7.5 mètres", cat: "Écrans gonflables" },
 
   // Événements & Projections
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wChOWnTuNAnNsSIL.webp", alt: "Séance de cinéma en plein air avec public nombreux", cat: "Événements" },
@@ -178,7 +177,7 @@ export default function Galerie() {
               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                 <p className="text-white text-center text-sm font-medium">{photo.alt}</p>
               </div>
-              <div className="pointer-events-none absolute left-2 top-2 z-30 flex h-8 w-8 items-center justify-center rounded-full bg-warm/70 text-charcoal text-sm font-semibold shadow-md ring-1 ring-white/40 opacity-70 hover:opacity-100 transition-opacity">
+              <div className="pointer-events-none absolute left-2 top-2 z-30 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-white text-xs font-bold shadow-md">
                 {index + 1}
               </div>
             </div>
