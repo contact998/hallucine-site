@@ -15,7 +15,7 @@ const photos = [
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IDghLbPxebJUfXVC.webp", alt: "Écran gonflable 2.5m sur pieds pour projection en extérieur", cat: "Écrans gonflables" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eMBtaurEbmzQnzOE.webp", alt: "Écran de cinéma gonflable de nuit sur toit d'immeuble", cat: "Écrans gonflables" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IYMOAKIQfiKLkGNA.webp", alt: "Projection nocturne sur écran gonflable installé sur un toit", cat: "Écrans gonflables" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jqiWDQvcjhPhCtBX.webp", alt: "Écran gonflable avec arche sur toit-terrasse", cat: "Écrans gonflables" },
+
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZshizyjDOejMjIKn.webp", alt: "Écran 5m léger en gymnase pour la FIFA", cat: "Écrans gonflables" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jZPlgGHnKqpYQwqo.webp", alt: "Le plus fin écran gonflable 8m de large", cat: "Écrans gonflables" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/pyvWFmXAUZRkzqHX.webp", alt: "Écran gonflable 8m de base à Saint-Germain", cat: "Écrans gonflables" },
@@ -24,23 +24,23 @@ const photos = [
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QClDxPadLVEYKlxM.webp", alt: "Comparaison de la taille d'un écran gonflable étanche avec une personne", cat: "Écrans gonflables" },
 
   // Événements & Projections
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wChOWnTuNAnNsSIL.webp", alt: "Séance de cinéma en plein air avec public nombreux", cat: "Événements" },
+
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bQsAjlQHIThVuBhI.webp", alt: "Projection à Bruxelles à la tombée de la nuit", cat: "Événements" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/xLoHlJSobIMyvuVl.webp", alt: "Événement cinéma en plein air avec écran gonflable", cat: "Événements" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yUosquMyorrMTehR.webp", alt: "Projection en plein air à Toulouse", cat: "Événements" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/KyASvJooCSwRBpRc.webp", alt: "Projecteur 2x7kW laser au Vélodrome de Marseille", cat: "Événements" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WNNTcwtAzSbhcfWo.webp", alt: "Cinéma drive-in en Suisse avec écran gonflable", cat: "Événements" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CSDzmpWKXaxraSOj.webp", alt: "Projection événementielle en extérieur", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/GnXnITCGvBWnQkuF.webp", alt: "Cinéma en plein air à Paris, Cour du Ritz", cat: "Événements" },
+
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CbIVjrStlnrHkTaD.webp", alt: "Passeur d'images — projection itinérante", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YyHtFWBLkwLygCgF.webp", alt: "3 écrans pour mapping vidéo à Dunkerque", cat: "Événements" },
+
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hRrSUUUDZLGnodhi.webp", alt: "Projection événementielle grand format en extérieur", cat: "Événements" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QXuBhbAyfuElBhJi.webp", alt: "Installation haubanée à Saint-Denis avec bouches d'égout", cat: "Événements" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fqDJEDLXjMlvgRxV.webp", alt: "Projection en ville sur écran gonflable", cat: "Événements" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/abKrKxvdyZZTJtHo.webp", alt: "Événement cinéma plein air nocturne", cat: "Événements" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/awDroXWpEBclfegR.webp", alt: "Projection en extérieur avec public assis", cat: "Événements" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/OnxcjQhFOtxzhIcR.webp", alt: "Séance de cinéma en plein air ambiance festive", cat: "Événements" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/noESUDgrqVMksAfK.webp", alt: "Concert de musique classique en soirée avec un orchestre sur scène", cat: "Événements" },
+
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VvQWHBvtXBXHrCWK.webp", alt: "Ambiance d'une séance de cinéma en plein air de nuit", cat: "Événements" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qoINhxiIteIjBXYG.webp", alt: "Projection d'un film en extérieur pour un petit groupe sur l'herbe", cat: "Événements" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/GrHCmqNBbWZgeozA.webp", alt: "Séance de cinéma drive-in avec voitures devant un grand écran gonflable", cat: "Événements" },
@@ -48,7 +48,7 @@ const photos = [
   // Équipement technique
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/cVwzLRsopuDpSaeO.webp", alt: "Projecteur Barco en hauteur pour projection grand format", cat: "Équipement" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/xYqnbzovqxtBbTTL.webp", alt: "Cabine de projection mobile pour cinéma en plein air", cat: "Équipement" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/pteHpCAbtyihjCtb.webp", alt: "Équipement audiovisuel pour projection en extérieur", cat: "Équipement" },
+
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/DbFYGUoDnOzyuIqc.webp", alt: "Setup technique pour événement cinéma plein air", cat: "Équipement" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/myQOmuwLkZOAzRRs.webp", alt: "Installation technique complète pour projection en extérieur", cat: "Équipement" },
 
