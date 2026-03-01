@@ -64,7 +64,7 @@ const galleryImages = [
   { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/ecran5mRitz_e1a4b8d3.jpg", alt: "Écran gonflable étanche de 5m au Ritz avec chaises longues" },
   { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/5MPROFILS_3db17625.jpg", alt: "Profil latéral d'un écran gonflable étanche de 5m" },
   { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/2ECRANSIFAUTEUIL_7d030a1f.jpeg", alt: "Deux écrans gonflables étanches avec fauteuils gonflables rouges" },
-  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/shemadunecranetanche_7c68b681.jpg", alt: "Schéma technique d'un écran gonflable étanche montrant la structure" },
+
 ];
 
 export default function EcranEtanche() {
