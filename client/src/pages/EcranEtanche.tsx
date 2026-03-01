@@ -172,9 +172,6 @@ export default function EcranEtanche() {
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-end">
                   <p className="text-white text-xs p-2 opacity-0 group-hover:opacity-100 transition-opacity">{img.alt}</p>
                 </div>
-                <div className="absolute bottom-3 right-3 bg-warm text-charcoal px-2 py-1 rounded text-xs font-semibold">
-                  {i + 1}/{galleryImages.length}
-                </div>
               </div>
             ))}
           </div>
