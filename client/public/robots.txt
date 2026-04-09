@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
-
 Sitemap: https://hallucinecran.fr/sitemap.xml
 
 # Pages admin et profil

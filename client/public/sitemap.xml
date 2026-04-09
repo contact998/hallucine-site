@@ -6,7 +6,6 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-
   <!-- Écrans -->
   <url>
     <loc>https://hallucinecran.fr/ecran-gonflable</loc>
@@ -38,7 +37,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <!-- Tentes -->
   <url>
     <loc>https://hallucinecran.fr/tente-gonflable</loc>
@@ -65,28 +63,24 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <!-- Arches -->
   <url>
     <loc>https://hallucinecran.fr/arche-gonflable</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <!-- Mobilier -->
   <url>
     <loc>https://hallucinecran.fr/mobilier-gonflable</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <!-- Accessoires -->
   <url>
     <loc>https://hallucinecran.fr/accessoire-cinema-plein-air</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <!-- Galerie -->
   <url>
     <loc>https://hallucinecran.fr/galerie-evenements</loc>
@@ -98,14 +92,12 @@
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <!-- Contact -->
   <url>
     <loc>https://hallucinecran.fr/contactez-nous</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <!-- À propos -->
   <url>
     <loc>https://hallucinecran.fr/a-propos-hallucine</loc>
@@ -117,21 +109,18 @@
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
-
   <!-- Blog -->
   <url>
     <loc>https://hallucinecran.fr/blog</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <!-- Mode d'emploi -->
   <url>
     <loc>https://hallucinecran.fr/mode-emploi</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <!-- Distributeurs -->
   <url>
     <loc>https://hallucinecran.fr/devenir-distributeur</loc>
@@ -143,7 +132,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <!-- Légal -->
   <url>
     <loc>https://hallucinecran.fr/mentions-legales</loc>
