@@ -950,3 +950,16 @@
 - [x] Créer fichiers JSON FR pour les 11 namespaces produits
 - [x] Traduire via DeepL vers EN, DE et ES (11 fichiers × 3 langues = 33 fichiers)
 - [x] Corriger les namespaces dans config i18n (arches-gonflables au lieu de arches)
+
+## Internationalisation i18n — Pages et Composants Communs
+- [x] Auditer les fichiers JSON existants (common, nav, home, contact, legal)
+- [x] Compléter/créer les fichiers JSON FR manquants (blog, histoire, not-found, contact, ecrans-led)
+- [x] Traduire via DeepL vers EN/DE/ES (12 nouveaux fichiers × 3 langues = 36 fichiers)
+- [x] Refactoriser Navbar.tsx avec useTranslation (déjà fait)
+- [x] Refactoriser Footer.tsx avec useTranslation (déjà fait)
+- [x] Refactoriser Home.tsx avec useTranslation (FAQs + métadonnées)
+- [x] Refactoriser APropos.tsx avec useTranslation
+- [x] Refactoriser Contact.tsx avec useTranslation
+- [x] Refactoriser Blog.tsx avec useTranslation (UI uniquement)
+- [x] Refactoriser les autres pages communes (ModeEmploi, Galerie, GalerieVideo, Ecrans, Tentes, Accessoires, MentionsLegales, PolitiqueCookies, Confidentialite, DevenirDistributeur, TrouverDistributeur, EcransLED, Histoire, NotFound)
+- [x] 28 pages publiques utilisent useTranslation — 32 fichiers JSON × 4 langues = 128 fichiers de traduction

@@ -16,17 +16,20 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import CinemaRideau from "@/components/CinemaRideau";
 import PageStructuredData from "@/components/PageStructuredData";
-
-const HOME_FAQS = [
-  { question: "Qu'est-ce qu'un écran de cinéma gonflable ?", answer: "Un écran de cinéma gonflable est une structure légère et portable qui se gonfle à l'air pour créer une surface de projection en plein air. Hallucine fabrique des écrans gonflables de 2 à 24 mètres de large." },
-  { question: "Pourquoi choisir Hallucine plutôt qu'un autre fabricant ?", answer: "Nos écrans sont 3 fois plus légers que la concurrence grâce à nos tissus techniques. 30 ans d'expérience terrain et garantie 10 ans sur la structure." },
-  { question: "Quelle est la différence entre vos deux gammes d'écrans ?", answer: "La gamme étanche (2 à 8m) utilise une chambre à air scellée. La gamme soufflerie (5 à 24m) utilise une soufflerie permanente pour les grands formats. Les deux sont garanties 10 ans." },
-  { question: "Combien coûte un écran gonflable Hallucine ?", answer: "Le prix dépend de la taille et de la technologie choisie. Contactez-nous pour un devis personnalisé gratuit." },
-  { question: "Livrez-vous à l'international ?", answer: "Oui. Nous livrons dans le monde entier. Les délais sont de 2 à 4 semaines selon la destination." },
-  { question: "Proposez-vous aussi des tentes et du mobilier gonflable ?", answer: "Oui. Nous fabriquons des tentes gonflables et du mobilier événementiel avec la même technologie étanche." },
-];
+import { useTranslation } from "react-i18next";
 
 export default function Home() {
+  const { t } = useTranslation("home");
+
+  const HOME_FAQS = [
+    { question: t("faq.q1"), answer: t("faq.a1") },
+    { question: t("faq.q2"), answer: t("faq.a2") },
+    { question: t("faq.q3"), answer: t("faq.a3") },
+    { question: t("faq.q4"), answer: t("faq.a4") },
+    { question: t("faq.q5"), answer: t("faq.a5") },
+    { question: t("faq.q6"), answer: t("faq.a6") },
+  ];
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData

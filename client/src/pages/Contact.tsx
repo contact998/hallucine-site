@@ -10,62 +10,34 @@ import { motion } from "framer-motion";
 import { ChevronDown, Clock, Globe, Shield, Truck, HelpCircle } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { useTranslation } from "react-i18next";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
 };
 
-const reassuranceItems = [
-  {
-    icon: Clock,
-    title: "Réponse sous 24h",
-    desc: "Nous nous engageons à répondre à chaque demande dans les 24 heures ouvrées. Pour les demandes urgentes, précisez-le dans votre message.",
-  },
-  {
-    icon: Globe,
-    title: "Livraison mondiale",
-    desc: "Nous livrons dans le monde entier depuis notre usine partenaire à Dongguan (Chine). Délai moyen : 2 à 4 semaines selon la destination.",
-  },
-  {
-    icon: Shield,
-    title: "Devis gratuit et sans engagement",
-    desc: "Chaque devis est personnalisé et détaillé. Nous incluons les frais de port, les délais et les options de personnalisation.",
-  },
-  {
-    icon: Truck,
-    title: "Accompagnement complet",
-    desc: "De la conception à la livraison, nous vous accompagnons à chaque étape. Conseil technique, choix des options, suivi de fabrication.",
-  },
-];
-
-const faqContact = [
-  {
-    q: "Quels sont les délais de fabrication ?",
-    a: "Pour les produits standard (blanc ou noir, sans personnalisation) : 2 semaines. Pour les produits personnalisés (couleurs, impression de logos) : 3 à 4 semaines. Les délais de livraison s'ajoutent : environ 1 semaine pour l'Europe, 2 semaines pour le reste du monde."
-  },
-  {
-    q: "Proposez-vous de la location ?",
-    a: "Nous ne proposons pas directement de la location, mais nous travaillons avec un réseau de loueurs partenaires dans plusieurs pays. Contactez-nous en précisant votre besoin et votre localisation, et nous vous orienterons vers le loueur le plus proche."
-  },
-  {
-    q: "Peut-on visiter votre usine ?",
-    a: "Oui. Notre usine partenaire est située à Dongguan, en Chine, à environ 1h30 de Shenzhen. Si vous êtes dans la région, nous serons ravis de vous accueillir pour une visite. Contactez-nous pour organiser un rendez-vous."
-  },
-  {
-    q: "Quels sont les moyens de paiement acceptés ?",
-    a: "Nous acceptons les virements bancaires (SEPA pour l'Europe, SWIFT pour l'international). Pour les commandes importantes, nous proposons un paiement en 2 fois : 50% à la commande, 50% avant expédition. Contactez-nous pour discuter des modalités."
-  },
-  {
-    q: "Proposez-vous des tarifs pour les revendeurs ?",
-    a: "Oui. Nous proposons des conditions spéciales pour les revendeurs, les loueurs et les acheteurs en volume. Contactez-nous en précisant votre activité et le volume envisagé, et nous vous ferons une proposition adaptée."
-  },
-];
-
 export default function Contact() {
-  useDocumentMeta("Contactez-nous | Devis Gratuit", "Contactez Hallucine pour un devis gratuit. Écrans de cinéma gonflables, tentes, arches, mobilier. Réponse rapide, conseil personnalisé.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
+  const { t } = useTranslation("contact");
+
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const reassuranceItems = [
+    { icon: Clock, title: t("r1_title"), desc: t("r1_desc") },
+    { icon: Globe, title: t("r2_title"), desc: t("r2_desc") },
+    { icon: Shield, title: t("r3_title"), desc: t("r3_desc") },
+    { icon: Truck, title: t("r4_title"), desc: t("r4_desc") },
+  ];
+
+  const faqContact = [
+    { q: t("faq_q1"), a: t("faq_a1") },
+    { q: t("faq_q2"), a: t("faq_a2") },
+    { q: t("faq_q3"), a: t("faq_a3") },
+    { q: t("faq_q4"), a: t("faq_a4") },
+    { q: t("faq_q5"), a: t("faq_a5") },
+  ];
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -76,32 +48,11 @@ export default function Contact() {
           { name: "Contact", url: "/contactez-nous" },
         ]}
         page={{
-          name: "Contactez-nous | Devis Gratuit",
-          description: "Contactez Hallucine pour un devis gratuit. Écrans de cinéma gonflables, tentes, arches, mobilier. Réponse rapide, conseil personnalisé.",
+          name: t("meta_title"),
+          description: t("meta_desc"),
           url: "https://hallucine.fr/contactez-nous",
         }}
-        faqs={[
-          {
-            question: "Quels sont les délais de fabrication ?",
-            answer: "Pour les produits standard (blanc ou noir, sans personnalisation) : 2 semaines. Pour les produits personnalisés (couleurs, impression de logos) : 3 à 4 semaines. Les délais de livraison s'ajoutent : environ 1 semaine pour l'Europe, 2 semaines pour le reste du monde.",
-          },
-          {
-            question: "Proposez-vous de la location ?",
-            answer: "Nous ne proposons pas directement de la location, mais nous travaillons avec un réseau de loueurs partenaires dans plusieurs pays. Contactez-nous en précisant votre besoin et votre localisation, et nous vous orienterons vers le loueur le plus proche.",
-          },
-          {
-            question: "Peut-on visiter votre usine ?",
-            answer: "Oui. Notre usine partenaire est située à Dongguan, en Chine, à environ 1h30 de Shenzhen. Si vous êtes dans la région, nous serons ravis de vous accueillir pour une visite. Contactez-nous pour organiser un rendez-vous.",
-          },
-          {
-            question: "Quels sont les moyens de paiement acceptés ?",
-            answer: "Nous acceptons les virements bancaires (SEPA pour l'Europe, SWIFT pour l'international). Pour les commandes importantes, nous proposons un paiement en 2 fois : 50% à la commande, 50% avant expédition. Contactez-nous pour discuter des modalités.",
-          },
-          {
-            question: "Proposez-vous des tarifs pour les revendeurs ?",
-            answer: "Oui. Nous proposons des conditions spéciales pour les revendeurs, les loueurs et les acheteurs en volume. Contactez-nous en précisant votre activité et le volume envisagé, et nous vous ferons une proposition adaptée.",
-          },
-        ]}
+        faqs={faqContact.map(f => ({ question: f.q, answer: f.a }))}
       />
       <Navbar />
       <div className="pt-24">
@@ -134,40 +85,38 @@ export default function Contact() {
       <section className="py-20 md:py-24">
         <div className="container max-w-4xl">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">Informations pratiques</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">{t("infos_title")}</h2>
             <div className="grid md:grid-cols-2 gap-8">
               <div className="space-y-4 text-white/60 text-sm leading-relaxed">
-                <h3 className="text-white font-semibold text-base mb-2">Coordonnées</h3>
+                <h3 className="text-white font-semibold text-base mb-2">{t("coords_title")}</h3>
                 <p>
-                  <strong className="text-white/80">Téléphone :</strong> +33 4 58 21 20 10
+                  <strong className="text-white/80">{t("phone_label_long")}</strong> +33 4 58 21 20 10
                 </p>
                 <p>
-                  <strong className="text-white/80">Mobile :</strong> +33 6 80 14 76 94
+                  <strong className="text-white/80">{t("mobile_label")}</strong> +33 6 80 14 76 94
                 </p>
                 <p>
-                  <strong className="text-white/80">WhatsApp :</strong> +33 6 80 14 76 94
+                  <strong className="text-white/80">{t("whatsapp_label")}</strong> +33 6 80 14 76 94
                 </p>
                 <p>
-                  <strong className="text-white/80">WeChat :</strong> (+86) 13172020714
+                  <strong className="text-white/80">{t("wechat_label")}</strong> (+86) 13172020714
                 </p>
                 <p>
-                  <strong className="text-white/80">Email :</strong>{" "}
+                  <strong className="text-white/80">{t("email_label_long")}</strong>{" "}
                   <a href="mailto:contact@hallucine.fr" className="text-gold hover:underline">contact@hallucine.fr</a>
                 </p>
                 <p>
-                  <strong className="text-white/80">Langues :</strong> Français, Anglais, Chinois
+                  <strong className="text-white/80">{t("langues_label")}</strong> {t("langues_value")}
                 </p>
               </div>
               <div className="space-y-4 text-white/60 text-sm leading-relaxed">
-                <h3 className="text-white font-semibold text-base mb-2">Fabrication et logistique</h3>
+                <h3 className="text-white font-semibold text-base mb-2">{t("fab_title")}</h3>
+                <p>{t("fab_desc")}</p>
                 <p>
-                  Nos produits sont fabriqués dans notre usine partenaire à Dongguan (province du Guangdong, Chine). Cette usine est spécialisée dans les structures gonflables depuis plus de 15 ans.
+                  <strong className="text-white/80">{t("qualite_label")}</strong> {t("qualite_desc")}
                 </p>
                 <p>
-                  <strong className="text-white/80">Contrôle qualité :</strong> Chaque produit est inspecté et testé avant expédition. Le fondateur supervise personnellement la production.
-                </p>
-                <p>
-                  <strong className="text-white/80">Expédition :</strong> Par voie maritime (délai 3–4 semaines) ou aérienne (délai 1–2 semaines, supplément). Nous gérons les formalités douanières et le transport jusqu'à votre porte.
+                  <strong className="text-white/80">{t("expedition_label")}</strong> {t("expedition_desc")}
                 </p>
               </div>
             </div>
@@ -180,7 +129,7 @@ export default function Contact() {
         <div className="container max-w-3xl">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="text-center mb-12">
             <HelpCircle className="w-8 h-8 text-gold mx-auto mb-4" />
-            <h2 className="text-2xl md:text-3xl font-bold text-white">Questions fréquentes — Commande & livraison</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-white">{t("faq_title")}</h2>
           </motion.div>
 
           <div className="space-y-3">

@@ -6,43 +6,22 @@ import Footer from "@/components/Footer";
 import VideoLightbox from "@/components/VideoLightbox";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { useTranslation } from "react-i18next";
 
 export default function GalerieVideo() {
-  useDocumentMeta("Galerie Vidéo | Nos Produits en Action", "Vidéos de nos écrans de cinéma gonflables, tentes et mobilier événementiel en action. Montage, installation et événements filmés.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IDghLbPxebJUfXVC.webp");
+  const { t } = useTranslation("galerie-video");
+
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IDghLbPxebJUfXVC.webp");
 
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
 
   const videos = [
-    {
-      id: "bAxDUrxFUXw",
-      title: "Montage écran soufflerie 10m",
-      category: "Tutoriel"
-    },
-    {
-      id: "sHeVec7oZfQ",
-      title: "Démontage écran soufflerie",
-      category: "Tutoriel"
-    },
-    {
-      id: "lnZ_fbEXH44",
-      title: "Écran gonflable en action",
-      category: "Événement"
-    },
-    {
-      id: "UQmA8fZRDYg",
-      title: "Tutoriel montage complet",
-      category: "Tutoriel"
-    },
-    {
-      id: "hmSlBIWP_jI",
-      title: "Présentation produit Hallucine",
-      category: "Présentation"
-    },
-    {
-      id: "-cga1EVZQtg",
-      title: "Tente gonflable V — Montage",
-      category: "Tutoriel"
-    }
+    { id: "bAxDUrxFUXw", title: t("v1_title"), category: t("v1_cat") },
+    { id: "sHeVec7oZfQ", title: t("v2_title"), category: t("v2_cat") },
+    { id: "lnZ_fbEXH44", title: t("v3_title"), category: t("v3_cat") },
+    { id: "UQmA8fZRDYg", title: t("v4_title"), category: t("v4_cat") },
+    { id: "hmSlBIWP_jI", title: t("v5_title"), category: t("v5_cat") },
+    { id: "-cga1EVZQtg", title: t("v6_title"), category: t("v6_cat") },
   ];
 
   return (
@@ -51,11 +30,11 @@ export default function GalerieVideo() {
         id="galerie-video-page"
         breadcrumbs={[
           { name: "Accueil", url: "/" },
-          { name: "Galerie Vidéo", url: "/galerie-video" },
+          { name: t("hero_title"), url: "/galerie-video" },
         ]}
         page={{
-          name: "Galerie Vidéo",
-          description: "Vidéos de nos écrans de cinéma gonflables, tentes et mobilier événementiel en action. Montage, installation et événements filmés.",
+          name: t("hero_title"),
+          description: t("meta_desc"),
           url: "/galerie-video",
         }}
       />
@@ -65,11 +44,10 @@ export default function GalerieVideo() {
       <section className="relative bg-[#1a1a2e] text-white py-20 md:py-28">
         <div className="container max-w-5xl text-center">
           <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Galerie Vidéo
+            {t("hero_title")}
           </h1>
           <p className="text-lg md:text-xl max-w-3xl mx-auto opacity-90 leading-relaxed">
-            Découvrez nos écrans gonflables, tentes et mobilier en action. 
-            Tutoriels de montage, démonstrations produits et événements filmés.
+            {t("hero_desc")}
           </p>
         </div>
       </section>
@@ -114,10 +92,10 @@ export default function GalerieVideo() {
           {/* Lien chaîne YouTube */}
           <div className="text-center mt-12 p-8 bg-muted/30 rounded-lg border border-border">
             <h3 className="font-display text-2xl font-bold mb-3">
-              Retrouvez toutes nos vidéos
+              {t("youtube_title")}
             </h3>
             <p className="text-muted-foreground mb-6">
-              Abonnez-vous à notre chaîne YouTube pour ne manquer aucune nouvelle vidéo.
+              {t("youtube_desc")}
             </p>
             <a
               href="https://www.youtube.com/channel/UCqIaNSl1_6_I3ABfzFIJ2Ow"
@@ -126,7 +104,7 @@ export default function GalerieVideo() {
               className="inline-flex items-center gap-2 bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><path fill="#fff" d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-              S'abonner à notre chaîne YouTube
+              {t("youtube_btn")}
             </a>
           </div>
         </div>
@@ -136,13 +114,13 @@ export default function GalerieVideo() {
       <section className="py-16 bg-[#8B7500] text-white text-center">
         <div className="container max-w-3xl">
           <h2 className="font-display text-3xl font-bold mb-4">
-            Besoin d'un mode d'emploi détaillé ?
+            {t("cta_title")}
           </h2>
           <p className="text-lg opacity-90 mb-8">
-            Consultez notre guide d'installation étape par étape avec vidéos et instructions écrites.
+            {t("cta_desc")}
           </p>
           <Link href="/mode-emploi" className="inline-block bg-white text-[#8B7500] px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-            Voir le mode d'emploi
+            {t("cta_btn")}
           </Link>
         </div>
       </section>

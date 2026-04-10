@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { useTranslation } from "react-i18next";
 
 interface Commentaire {
   auteur: string;
@@ -25,7 +26,8 @@ interface Article {
 }
 
 export default function Blog() {
-  useDocumentMeta("Blog | Actualités Cinéma en Plein Air", "Actualités, conseils et tendances du cinéma en plein air. Articles sur les écrans gonflables, événements et innovations.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
+  const { t } = useTranslation("blog");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   const [categorieActive, setCategorieActive] = useState("Toutes");
   const [expandedComments, setExpandedComments] = useState<Record<string, boolean>>({});
@@ -233,11 +235,10 @@ export default function Blog() {
       <section className="relative bg-[#1a1a2e] text-white py-20 md:py-28">
         <div className="container max-w-5xl text-center">
           <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Blog Hallucine
+            {t("hero_title")}
           </h1>
           <p className="text-lg md:text-xl max-w-3xl mx-auto opacity-90 leading-relaxed">
-            Actualités, guides pratiques et conseils d'experts pour vos événements en plein air 
-            avec des écrans gonflables, tentes et mobilier.
+            {t("hero_desc")}
           </p>
         </div>
       </section>
@@ -273,7 +274,7 @@ export default function Blog() {
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-2 text-[#DAA520] font-medium hover:underline"
                         >
-                          Lire l'article complet
+                          {t("read_more")}
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                         </a>
                         <button
@@ -316,7 +317,7 @@ export default function Blog() {
                                     </span>
                                     {commentaire.auteur === "Hallucine" && (
                                       <span className="text-[10px] bg-[#DAA520]/20 text-[#DAA520] px-1.5 py-0.5 rounded font-medium">
-                                        ÉQUIPE
+                                        {t("team_label")}
                                       </span>
                                     )}
                                     <span className="text-xs text-muted-foreground">
@@ -342,7 +343,7 @@ export default function Blog() {
 
                           {/* Formulaire de commentaire */}
                           <div className="mt-8 pt-6 border-t border-border">
-                            <h4 className="text-sm font-semibold mb-4">Laisser un commentaire</h4>
+                            <h4 className="text-sm font-semibold mb-4">{t("leave_comment")}</h4>
                             <div className="flex gap-4">
                               <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
                                 <User className="w-5 h-5 text-white/40" />
@@ -351,22 +352,22 @@ export default function Blog() {
                                 <div className="grid grid-cols-2 gap-3">
                                   <input
                                     type="text"
-                                    placeholder="Votre nom"
+                                    placeholder={t("your_name")}
                                     className="px-3 py-2 bg-background border border-border rounded-lg text-sm placeholder:text-muted-foreground focus:border-[#DAA520] focus:outline-none transition-colors"
                                   />
                                   <input
                                     type="email"
-                                    placeholder="Votre email"
+                                    placeholder={t("your_email")}
                                     className="px-3 py-2 bg-background border border-border rounded-lg text-sm placeholder:text-muted-foreground focus:border-[#DAA520] focus:outline-none transition-colors"
                                   />
                                 </div>
                                 <textarea
                                   rows={3}
-                                  placeholder="Votre commentaire..."
+                                  placeholder={t("your_comment")}
                                   className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm placeholder:text-muted-foreground focus:border-[#DAA520] focus:outline-none transition-colors resize-none"
                                 />
                                 <button className="px-5 py-2 bg-[#DAA520] text-white text-sm font-semibold rounded-lg hover:bg-[#B8860B] transition-colors">
-                                  Publier le commentaire
+                                  {t("publish")}
                                 </button>
                               </div>
                             </div>
@@ -383,7 +384,7 @@ export default function Blog() {
             <aside className="lg:w-72 shrink-0">
               {/* Catégories */}
               <div className="bg-card rounded-lg border border-border p-6 mb-6">
-                <h3 className="font-display text-lg font-bold mb-4">Catégories</h3>
+                <h3 className="font-display text-lg font-bold mb-4">{t("categories_title")}</h3>
                 <div className="space-y-2">
                   {categories.map((cat) => (
                     <button
@@ -403,7 +404,7 @@ export default function Blog() {
 
               {/* Tags */}
               <div className="bg-card rounded-lg border border-border p-6 mb-6">
-                <h3 className="font-display text-lg font-bold mb-4">Tags</h3>
+                <h3 className="font-display text-lg font-bold mb-4">{t("tags_title")}</h3>
                 <div className="flex flex-wrap gap-2">
                   {["Écrans Gonflables", "Cinéma en Plein Air", "Planification d'Événements", "Événements d'Entreprise", "Solutions pour Festivals", "Guides de Produits", "Tentes Gonflables", "Mobilier pour Événements"].map((tag) => (
                     <span key={tag} className="text-xs bg-muted px-3 py-1.5 rounded-full text-muted-foreground">
@@ -416,13 +417,13 @@ export default function Blog() {
               {/* CTA */}
               <div className="bg-[#1a1a2e] text-white rounded-lg p-6">
                 <h3 className="font-display text-lg font-bold mb-3">
-                  Besoin d'un devis ?
+                  {t("cta_title")}
                 </h3>
                 <p className="text-sm opacity-80 mb-4">
-                  Contactez notre équipe pour un devis personnalisé adapté à votre événement.
+                  {t("cta_desc")}
                 </p>
                 <Link href="/contactez-nous" className="inline-block w-full text-center bg-[#DAA520] text-white px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#B8860B] transition-colors">
-                  Demander un devis
+                  {t("cta_btn")}
                 </Link>
               </div>
             </aside>

@@ -8,9 +8,11 @@ import { Home, Search, Film, ArrowLeft } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import { useTranslation } from "react-i18next";
 
 export default function NotFound() {
-  useDocumentMeta("Page non trouvée | Hallucine", "La page que vous recherchez n'existe pas ou a été déplacée.");
+  const { t } = useTranslation("not-found");
+  useDocumentMeta(t("meta_title"), t("meta_desc"));
 
   const [, setLocation] = useLocation();
 
@@ -43,16 +45,15 @@ export default function NotFound() {
           </h1>
 
           <h2 className="text-2xl md:text-3xl font-bold text-ivory mb-4">
-            Scène introuvable
+            {t("heading")}
           </h2>
 
           <p className="text-white/60 text-lg mb-4 leading-relaxed max-w-lg mx-auto">
-            On dirait que cette bobine s'est perdue en chemin.
-            La page que vous cherchez n'existe pas ou a été déplacée.
+            {t("desc1")}
           </p>
 
           <p className="text-white/40 text-sm mb-10">
-            Pas de panique — le projecteur tourne toujours.
+            {t("desc2")}
           </p>
 
           {/* Pellicule décorative */}
@@ -63,39 +64,42 @@ export default function NotFound() {
           </div>
 
           {/* Boutons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div
+            id="not-found-button-group"
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+          >
             <button
               onClick={() => window.history.back()}
               className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-warm/30 text-warm rounded hover:bg-warm/10 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              Retour
+              {t("btn_back")}
             </button>
             <Link
               href="/"
               className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors"
             >
               <Home className="w-4 h-4" />
-              Retour à l'accueil
+              {t("btn_home")}
             </Link>
             <Link
               href="/contactez-nous"
               className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-white/20 text-white/70 rounded hover:text-warm hover:border-warm/30 transition-colors"
             >
               <Search className="w-4 h-4" />
-              Nous contacter
+              {t("btn_contact")}
             </Link>
           </div>
 
           {/* Liens rapides */}
           <div className="mt-16 pt-8 border-t border-white/10">
-            <p className="text-white/40 text-sm mb-4">Pages populaires</p>
+            <p className="text-white/40 text-sm mb-4">{t("popular_pages")}</p>
             <div className="flex flex-wrap justify-center gap-3">
               {[
-                { label: "Écrans gonflables", href: "/ecran-gonflable" },
-                { label: "Tentes gonflables", href: "/tente-gonflable" },
-                { label: "Galerie", href: "/galerie-evenements" },
-                { label: "Demander un devis", href: "/contactez-nous" },
+                { label: t("link_ecrans"), href: "/ecran-gonflable" },
+                { label: t("link_tentes"), href: "/tente-gonflable" },
+                { label: t("link_galerie"), href: "/galerie-evenements" },
+                { label: t("link_devis"), href: "/contactez-nous" },
               ].map((link) => (
                 <Link
                   key={link.href}

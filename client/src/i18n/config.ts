@@ -88,7 +88,7 @@ i18n
     lng: detectedLang,
     fallbackLng: "fr",
     supportedLngs: ["fr", "en", "de", "es"],
-    ns: ["common", "home", "products", "contact", "legal", "nav", "ecran-geant", "ecran-etanche", "ecran-economique", "comparaison", "ecrans-led", "tentes", "tente-x", "tente-n", "tente-v", "tente-araignee", "arches-gonflables", "mobilier", "accessoires"],
+    ns: ["common", "home", "products", "contact", "legal", "nav", "ecran-geant", "ecran-etanche", "ecran-economique", "comparaison", "ecrans-led", "ecrans", "tentes", "tente-x", "tente-n", "tente-v", "tente-araignee", "arches-gonflables", "mobilier", "accessoires", "a-propos", "mode-emploi", "mentions-legales", "devenir-distributeur", "trouver-distributeur", "galerie", "galerie-video", "politique-cookies", "confidentialite", "blog", "histoire", "not-found"],
     defaultNS: "common",
     backend: {
       loadPath: "/locales/{{lng}}/{{ns}}.json",

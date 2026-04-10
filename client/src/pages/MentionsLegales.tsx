@@ -8,9 +8,12 @@ import { ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { useTranslation } from "react-i18next";
 
 export default function MentionsLegales() {
-  useDocumentMeta("Mentions Légales", "Mentions légales du site Hallucine. Informations sur l'éditeur, l'hébergeur et les conditions d'utilisation.");
+  const { t } = useTranslation("mentions-legales");
+
+  useDocumentMeta(t("meta_title"), t("meta_desc"));
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -18,11 +21,11 @@ export default function MentionsLegales() {
         id="mentions-legales"
         breadcrumbs={[
           { name: "Accueil", url: "/" },
-          { name: "Mentions Légales", url: "/mentions-legales" },
+          { name: t("meta_title"), url: "/mentions-legales" },
         ]}
         page={{
-          name: "Mentions légales",
-          description: "Mentions légales du site Hallucine. Informations sur l'éditeur, l'hébergeur et les conditions d'utilisation.",
+          name: t("meta_title"),
+          description: t("meta_desc"),
           url: "https://hallucine.ai/mentions-legales",
         }}
       />
@@ -31,109 +34,92 @@ export default function MentionsLegales() {
       <section className="pt-32 pb-24">
         <div className="container max-w-3xl">
           <Link href="/" className="inline-flex items-center gap-2 text-white/50 hover:text-gold transition-colors mb-8 text-sm">
-            <ArrowLeft className="w-4 h-4" /> Retour à l'accueil
+            <ArrowLeft className="w-4 h-4" /> {t("back")}
           </Link>
 
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-12">Mentions légales</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-12">{t("page_title")}</h1>
 
           <div className="space-y-10 text-white/60 text-sm leading-relaxed">
             <div>
-              <h2 className="text-xl font-bold text-white mb-4">1. Informations légales</h2>
+              <h2 className="text-xl font-bold text-white mb-4">{t("s1_title")}</h2>
               <p>
-                <strong className="text-white/80">Raison sociale :</strong> Hallucine EURL
+                <strong className="text-white/80">{t("s1_raison")}</strong> {t("s1_raison_value")}
               </p>
               <p className="mt-2">
-                <strong className="text-white/80">Adresse :</strong> 350 Chemin du Pré Neuf, La Mure d'Isère 38350, France
+                <strong className="text-white/80">{t("s1_adresse")}</strong> {t("s1_adresse_value")}
               </p>
               <p className="mt-2">
-                <strong className="text-white/80">Numéro SIREN :</strong> 387770084
+                <strong className="text-white/80">{t("s1_siren")}</strong> {t("s1_siren_value")}
               </p>
               <p className="mt-2">
-                <strong className="text-white/80">Capital social :</strong> 7 622,45 € (fixe)
+                <strong className="text-white/80">{t("s1_capital")}</strong> {t("s1_capital_value")}
               </p>
               <p className="mt-2">
-                <strong className="text-white/80">Numéro de TVA intracommunautaire :</strong> FR31387770084
+                <strong className="text-white/80">{t("s1_tva")}</strong> {t("s1_tva_value")}
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white mb-4">2. Directeur de la publication</h2>
+              <h2 className="text-xl font-bold text-white mb-4">{t("s2_title")}</h2>
               <p>
-                Le directeur de la publication du site internet est <strong className="text-white/80">Daniel Chesneau</strong>, en qualité de Dirigeant.
+                {t("s2_text")}
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white mb-4">3. Hébergement du site</h2>
+              <h2 className="text-xl font-bold text-white mb-4">{t("s3_title")}</h2>
               <p>
-                <strong className="text-white/80">Hébergeur :</strong> Manus
+                <strong className="text-white/80">{t("s3_hebergeur")}</strong> {t("s3_hebergeur_value")}
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white mb-4">4. Propriété intellectuelle</h2>
-              <p>
-                Le contenu du site, incluant les textes, images, logos, graphismes, vidéos, ainsi que le design du site, 
-                est la propriété exclusive de Hallucine EURL. Toute reproduction, distribution, ou utilisation sans 
-                autorisation est strictement interdite.
-              </p>
+              <h2 className="text-xl font-bold text-white mb-4">{t("s4_title")}</h2>
+              <p>{t("s4_text")}</p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white mb-4">5. Données personnelles</h2>
+              <h2 className="text-xl font-bold text-white mb-4">{t("s5_title")}</h2>
               <p>
-                Nous respectons la confidentialité de vos données personnelles. Les informations collectées via notre site 
-                sont traitées dans le respect de la législation en vigueur, y compris le RGPD (Règlement Général sur la 
-                Protection des Données). Pour plus d'informations, consultez notre page{" "}
+                {t("s5_text")}{" "}
                 <Link href="/politique-confidentialite" className="text-gold hover:underline">
-                  Politique de Confidentialité
-                </Link>.
+                  {t("s5_link")}
+                </Link>
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white mb-4">6. Conditions d'utilisation</h2>
-              <p>
-                L'accès au site est soumis aux présentes conditions d'utilisation. En naviguant sur notre site, 
-                vous acceptez sans réserve ces conditions. Nous nous réservons le droit de modifier ces conditions à tout moment.
-              </p>
+              <h2 className="text-xl font-bold text-white mb-4">{t("s6_title")}</h2>
+              <p>{t("s6_text")}</p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white mb-4">7. Responsabilité</h2>
-              <p>
-                Hallucine EURL met tout en œuvre pour offrir des informations fiables et à jour sur son site internet. 
-                Cependant, nous ne saurions être tenus responsables des erreurs, omissions, ou inexactitudes présentes 
-                sur le site, ni des éventuels problèmes techniques liés à l'utilisation de celui-ci.
-              </p>
+              <h2 className="text-xl font-bold text-white mb-4">{t("s7_title")}</h2>
+              <p>{t("s7_text")}</p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white mb-4">8. Cookies</h2>
+              <h2 className="text-xl font-bold text-white mb-4">{t("s8_title")}</h2>
               <p>
-                Le site utilise des cookies pour améliorer l'expérience utilisateur et analyser la fréquentation. 
-                Vous pouvez gérer vos préférences en matière de cookies dans les paramètres de votre navigateur. 
-                Pour plus d'informations, consultez notre{" "}
+                {t("s8_text")}{" "}
                 <Link href="/politique-cookies" className="text-gold hover:underline">
-                  Politique de Cookies
-                </Link>.
+                  {t("s8_link")}
+                </Link>
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white mb-4">9. Contact</h2>
-              <p>
-                Pour toute question relative aux mentions légales, vous pouvez nous contacter :
-              </p>
+              <h2 className="text-xl font-bold text-white mb-4">{t("s9_title")}</h2>
+              <p>{t("s9_text")}</p>
               <p className="mt-2">
-                <strong className="text-white/80">Email :</strong>{" "}
+                <strong className="text-white/80">{t("s9_email")}</strong>{" "}
                 <a href="mailto:contact@hallucine.fr" className="text-gold hover:underline">contact@hallucine.fr</a>
               </p>
               <p className="mt-2">
-                <strong className="text-white/80">Téléphone :</strong> +33 4 58 21 20 10
+                <strong className="text-white/80">{t("s9_tel")}</strong> +33 4 58 21 20 10
               </p>
               <p className="mt-2">
-                <strong className="text-white/80">Mobile :</strong> +33 6 80 14 76 94
+                <strong className="text-white/80">{t("s9_mobile")}</strong> +33 6 80 14 76 94
               </p>
             </div>
           </div>

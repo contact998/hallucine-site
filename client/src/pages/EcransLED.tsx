@@ -1,7 +1,6 @@
 /*
  * Page Écrans LED — En construction
  * Design: cinéma vintage — fond sombre, accents dorés
- * Contenu du site d'origine hallucinecran.com
  */
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -9,6 +8,7 @@ import { Link } from "wouter";
 import { Construction } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { useTranslation } from "react-i18next";
 
 const ledImages = [
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/cNgCebtnqSvVUvmF.webp", alt: "Écran LED gonflable Hallucine de 5m pour projection de jour comme de nuit" },
@@ -17,7 +17,9 @@ const ledImages = [
 ];
 
 export default function EcransLED() {
-  useDocumentMeta("Écrans LED Événementiels", "Écrans LED pour événements en plein air et intérieur. Solutions d'affichage haute luminosité pour concerts, festivals et événements corporate.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
+  const { t } = useTranslation("ecrans-led");
+
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -25,11 +27,11 @@ export default function EcransLED() {
         id="ecrans-led"
         breadcrumbs={[
           { name: "Accueil", url: "https://hallucinecran.fr" },
-          { name: "Écrans LED", url: "https://hallucinecran.fr/ecrans-led" }
+          { name: t("breadcrumb"), url: "https://hallucinecran.fr/ecrans-led" }
         ]}
         product={{
-          name: "Écrans LED Événementiels",
-          description: "Découvrez notre nouvelle gamme d\'écrans LED pour des projections visibles même en plein jour. Haute luminosité, installation rapide, qualité d\'image exceptionnelle.",
+          name: t("meta_title"),
+          description: t("hero_desc"),
           image: ledImages.map(img => img.src),
           url: "https://hallucinecran.fr/ecrans-led",
           category: "Écrans LED",
@@ -41,14 +43,13 @@ export default function EcransLED() {
       {/* Hero */}
       <section className="pt-32 pb-16 bg-charcoal-light">
         <div className="container">
-          <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">Nouvelle gamme</p>
+          <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">{t("badge")}</p>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight mb-6">
-            Écrans LED<br />
-            <span className="text-warm">Projections de jour et nuit</span>
+            {t("hero_title")}<br />
+            <span className="text-warm">{t("hero_subtitle")}</span>
           </h1>
           <p className="text-white/70 text-lg max-w-3xl leading-relaxed">
-            Découvrez notre nouvelle gamme d'écrans LED pour des projections visibles même en plein jour. 
-            Haute luminosité, installation rapide, qualité d'image exceptionnelle.
+            {t("hero_desc")}
           </p>
         </div>
       </section>
@@ -73,17 +74,16 @@ export default function EcransLED() {
       <section className="py-20 bg-charcoal-light">
         <div className="container text-center">
           <Construction className="w-16 h-16 text-warm mx-auto mb-6" />
-          <h2 className="text-3xl font-bold text-ivory mb-4">Page en construction</h2>
+          <h2 className="text-3xl font-bold text-ivory mb-4">{t("wip_title")}</h2>
           <p className="text-white/60 mb-8 max-w-xl mx-auto leading-relaxed">
-            Cette page est en cours de développement. Contactez-nous pour plus d'informations 
-            sur notre gamme d'écrans LED ou pour obtenir un devis personnalisé.
+            {t("wip_desc")}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
-              Nous Contacter
+              {t("btn_contact")}
             </Link>
             <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
-              Demander un Devis
+              {t("btn_devis")}
             </Link>
           </div>
         </div>
