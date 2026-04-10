@@ -58,7 +58,7 @@ export default function Footer() {
             <h4 className="text-white font-semibold text-sm mb-4 tracking-wide uppercase">{t("footer.menu.title")}</h4>
             <ul className="space-y-2.5 text-sm">
               {menuLinks.map((link) => (
-                <li key={link.href}>
+                <li key={link.labelKey}>
                   <Link href={link.href} className="text-white/70 hover:text-warm transition-colors">
                     {t(link.labelKey)}
                   </Link>
