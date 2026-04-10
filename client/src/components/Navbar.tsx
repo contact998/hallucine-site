@@ -12,6 +12,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { AvailabilityBadge } from "@/components/AvailabilityIndicator";
 import { useTranslation } from "react-i18next";
+import i18n from "@/i18n/config";
 import { LANGUAGE_DOMAINS, detectLanguage } from "@/i18n/config";
 import { ROUTES } from "@/i18n/routes";
 
@@ -22,6 +23,7 @@ const languages = [
   { code: "en", label: "EN", flag: "🇬🇧", url: LANGUAGE_DOMAINS.en },
   { code: "de", label: "DE", flag: "🇩🇪", url: LANGUAGE_DOMAINS.de },
   { code: "es", label: "ES", flag: "🇪🇸", url: LANGUAGE_DOMAINS.es },
+  { code: "it", label: "IT", flag: "🇮🇹", url: LANGUAGE_DOMAINS.it },
 ];
 
 const currentLang = detectLanguage();
@@ -29,6 +31,8 @@ const currentLang = detectLanguage();
 function LanguageSwitcher({ mobile = false }: { mobile?: boolean }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  // Utiliser i18n.language (réactif) plutôt que la constante statique detectLanguage()
+  const activeLang = i18n.language || currentLang;
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -38,8 +42,8 @@ function LanguageSwitcher({ mobile = false }: { mobile?: boolean }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const current = languages.find((l) => l.code === currentLang) ?? languages[0];
-  const others = languages.filter((l) => l.code !== currentLang);
+  const current = languages.find((l) => l.code === activeLang) ?? languages.find((l) => l.code === currentLang) ?? languages[0];
+  const others = languages.filter((l) => l.code !== activeLang);
 
   if (mobile) {
     return (
@@ -49,7 +53,7 @@ function LanguageSwitcher({ mobile = false }: { mobile?: boolean }) {
             key={lang.code}
             href={lang.url}
             className={`flex items-center gap-1.5 px-3 py-2 rounded text-sm font-medium transition-colors ${
-              lang.code === currentLang
+              lang.code === activeLang
                 ? "bg-warm/20 text-warm border border-warm/30"
                 : "text-white/70 hover:text-warm hover:bg-white/5 border border-white/10"
             }`}

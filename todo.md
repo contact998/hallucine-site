@@ -999,3 +999,6 @@
 - [x] Ajouter <link rel="alternate" hreflang="it" href="https://hallucinecran.it/"> dans client/index.html
 - [x] Validé : ?lang=it affiche le site en italien (Produttore francese dal 1995, Schermi cinematografici gonfiabili...)
 - [ ] Acheter et configurer le domaine hallucinecran.it dans Manus (Settings → Domains)
+
+## Sélecteur de langue Navbar — ajout IT
+- [x] Ajouter { code: "it", label: "IT", flag: "🇮🇹", url: LANGUAGE_DOMAINS.it } dans le tableau languages de Navbar.tsx
