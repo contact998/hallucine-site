@@ -935,3 +935,18 @@
 - [ ] Phase 6 : Mettre à jour le script SSG (prerender.mjs) pour les 4 domaines
 - [ ] Phase 6 : Ajouter champ langue dans contactSubmissions (DB)
 - [ ] Phase 7 : Tests, checkpoint et déploiement
+
+## Internationalisation i18n — Pages Produits
+- [x] Refactoriser EcranGeant.tsx avec useTranslation (namespace "ecran-geant")
+- [x] Refactoriser EcranEtanche.tsx avec useTranslation (namespace "ecran-etanche")
+- [x] Refactoriser EcranEconomique.tsx avec useTranslation (namespace "ecran-economique")
+- [x] Refactoriser Comparaison.tsx avec useTranslation (namespace "comparaison")
+- [x] Refactoriser TentesX.tsx avec useTranslation (namespace "tente-x")
+- [x] Refactoriser TentesN.tsx avec useTranslation (namespace "tente-n")
+- [x] Refactoriser TentesV.tsx avec useTranslation (namespace "tente-v")
+- [x] Refactoriser TentesAraignees.tsx avec useTranslation (namespace "tente-araignee")
+- [x] Refactoriser ArchesGonflables.tsx avec useTranslation (namespace "arches-gonflables")
+- [x] Refactoriser Mobilier.tsx avec useTranslation (namespace "mobilier")
+- [x] Créer fichiers JSON FR pour les 11 namespaces produits
+- [x] Traduire via DeepL vers EN, DE et ES (11 fichiers × 3 langues = 33 fichiers)
+- [x] Corriger les namespaces dans config i18n (arches-gonflables au lieu de arches)

@@ -1,9 +1,10 @@
 /*
  * Page Écran Gonflable Étanche à l'Air
  * Design: cinéma vintage — fond sombre, accents dorés, typographie serif
- * Contenu complet du site d'origine hallucinecran.com
+ * Contenu i18n via namespace "ecran-etanche"
  */
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FilmCountdown from "@/components/FilmCountdown";
@@ -25,53 +26,49 @@ const specsData = [
   { taille: "1024 × 753 cm", toile: "1000 × 570 cm", poids: "73 kg", hauteur: "160 cm", personnes: "2 ou 3" },
 ];
 
-const avantages = [
-  { icon: VolumeX, title: "100% Silencieux", desc: "Pas de bruit de souffleur pendant la projection. Idéal pour les cinémas en plein air, les concerts acoustiques et les projections urbaines où le silence est essentiel." },
-  { icon: Droplets, title: "Étanche à l'air", desc: "Technologie de chambre à air scellée en TPU. Un seul gonflage suffit — l'écran reste en place pendant toute la durée de l'événement sans alimentation électrique." },
-  { icon: Clock, title: "Installation rapide", desc: "Prêt à l'emploi en quelques minutes. Gonflez une seule fois avec une pompe ou un souffleur, puis débranchez. L'écran reste gonflé pendant des jours." },
-  { icon: Feather, title: "Ultra-léger", desc: "Fabriqué en tissu polyamide de kitesurf — le plus mince et le plus léger de sa catégorie. Facile à transporter dans une voiture et à stocker." },
-  { icon: Shield, title: "Garantie 3 ans", desc: "Structure gonflable garantie 3 ans. Toile de projection lavable en machine. Matériaux résistants aux UV et aux intempéries." },
-  { icon: Wind, title: "Résistant au vent", desc: "Conception flexible qui résiste aux vents jusqu'à 40-50 km/h. La structure plie sous le vent au lieu de casser, protégeant l'écran et les spectateurs." },
-  { icon: Zap, title: "Autonome", desc: "Pas besoin d'électricité permanente. Idéal pour les lieux sans accès au courant : plages, parcs, toits, bateaux, zones isolées." },
-];
-
-const faqItems = [
-  {
-    q: "Combien de temps l'écran reste-t-il gonflé ?",
-    a: "Grâce à la chambre à air en TPU, l'écran reste gonflé pendant plusieurs jours sans avoir besoin de regonfler. La technologie étanche à l'air garantit une tenue parfaite pendant toute la durée de votre événement."
-  },
-  {
-    q: "Peut-on utiliser l'écran étanche sous la pluie ?",
-    a: "Oui, l'écran étanche est conçu pour résister aux intempéries. Le tissu polyamide de kitesurf est hydrofuge et résistant aux UV. Cependant, nous recommandons de protéger le vidéoprojecteur."
-  },
-  {
-    q: "Quelle est la différence avec l'écran à soufflerie ?",
-    a: "L'écran étanche utilise une chambre à air scellée : vous le gonflez une fois, il reste en forme sans électricité ni bruit. L'écran à soufflerie utilise un souffleur permanent — nécessaire pour les très grands formats (au-delà de 8m)."
-  },
-  {
-    q: "Comment se fait l'installation ?",
-    a: "Dépliez l'écran, branchez une pompe ou un souffleur pour le gonflage initial (5-10 minutes), débranchez, et c'est prêt. L'écran tient seul grâce à sa base lestable. Une seule personne suffit pour les modèles jusqu'à 6m."
-  },
-  {
-    q: "La toile de projection est-elle amovible ?",
-    a: "Oui, la toile de projection est amovible et réversible (projection frontale et rétroprojection). Elle est lavable en machine, ce qui simplifie grandement l'entretien."
-  },
-];
-
 const galleryImages = [
   { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/Ecran6mpartenvacances_264eeb1d.png", alt: "Écran gonflable étanche de 6m en sac de transport" },
-
   { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/ecran5mRitz_e1a4b8d3.jpg", alt: "Écran gonflable étanche de 5m au Ritz avec chaises longues" },
   { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/5MPROFILS_3db17625.jpg", alt: "Profil latéral d'un écran gonflable étanche de 5m" },
   { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/2ECRANSIFAUTEUIL_7d030a1f.jpeg", alt: "Deux écrans gonflables étanches avec fauteuils gonflables rouges" },
-
 ];
 
 export default function EcranEtanche() {
-  useDocumentMeta("Écran Gonflable Étanche à l'Air | Technologie TPU", "Écran de cinéma gonflable étanche à l'air avec technologie TPU. Silencieux, sans soufflerie, résistant au vent. De 3m à 12m.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
+  const { t } = useTranslation("ecran-etanche");
+
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   const [showCountdown, setShowCountdown] = useState(true);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const avantages = [
+    { icon: VolumeX, title: t("adv_silent_title"), desc: t("adv_silent_desc") },
+    { icon: Droplets, title: t("adv_sealed_title"), desc: t("adv_sealed_desc") },
+    { icon: Clock, title: t("adv_fast_title"), desc: t("adv_fast_desc") },
+    { icon: Feather, title: t("adv_light_title"), desc: t("adv_light_desc") },
+    { icon: Shield, title: t("adv_warranty_title"), desc: t("adv_warranty_desc") },
+    { icon: Wind, title: t("adv_wind_title"), desc: t("adv_wind_desc") },
+    { icon: Zap, title: t("adv_auto_title"), desc: t("adv_auto_desc") },
+  ];
+
+  const faqItems = [
+    { q: t("faq_q1"), a: t("faq_a1") },
+    { q: t("faq_q2"), a: t("faq_a2") },
+    { q: t("faq_q3"), a: t("faq_a3") },
+    { q: t("faq_q4"), a: t("faq_a4") },
+    { q: t("faq_q5"), a: t("faq_a5") },
+  ];
+
+  const apps = [
+    { title: t("app_cinema_title"), desc: t("app_cinema_desc") },
+    { title: t("app_pool_title"), desc: t("app_pool_desc") },
+    { title: t("app_hotel_title"), desc: t("app_hotel_desc") },
+    { title: t("app_private_title"), desc: t("app_private_desc") },
+    { title: t("app_camping_title"), desc: t("app_camping_desc") },
+    { title: t("app_urban_title"), desc: t("app_urban_desc") },
+    { title: t("app_sport_title"), desc: t("app_sport_desc") },
+    { title: t("app_corp_title"), desc: t("app_corp_desc") },
+  ];
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -98,28 +95,23 @@ export default function EcranEtanche() {
       {/* Hero */}
       <section className="pt-32 pb-16 bg-charcoal-light">
         <div className="container">
-          <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">Écrans gonflables</p>
+          <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">{t("section_label")}</p>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight mb-6">
-            Écran gonflable<br />
-            <span className="text-warm">étanche à l'air</span>
+            {t("hero_title")}<br />
+            <span className="text-warm">{t("hero_title_colored")}</span>
           </h1>
           <p className="text-white/70 text-lg max-w-3xl leading-relaxed mb-6">
-            Les écrans gonflables étanches à l'air offrent une solution pratique et esthétique pour vos événements 
-            en intérieur et en extérieur. Disponibles en tailles allant de <strong className="text-ivory">2 à 10 mètres</strong>, 
-            ils s'adaptent parfaitement aux projections de films, soirées sportives ou tout autre événement nécessitant 
-            une toile grand format.
+            {t("hero_p1")} <strong className="text-ivory">{t("hero_p1_bold")}</strong>, {t("hero_p1_end")}
           </p>
           <p className="text-white/70 text-lg max-w-3xl leading-relaxed mb-8">
-            Leur conception légère en <strong className="text-ivory">tissu polyamide de kitesurf</strong> et sans souffleur permanent 
-            garantit une expérience <strong className="text-ivory">100% silencieuse</strong> et facile à transporter, 
-            avec une <strong className="text-warm">garantie de 3 ans</strong> pour une durabilité exceptionnelle.
+            {t("hero_p2_before")} <strong className="text-ivory">{t("hero_p2_bold1")}</strong> {t("hero_p2_mid")} <strong className="text-ivory">{t("hero_p2_bold2")}</strong> {t("hero_p2_end")} <strong className="text-warm">{t("hero_p2_guarantee")}</strong> {t("hero_p2_end2")}
           </p>
           <div className="flex flex-wrap gap-4">
             <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
-              Demander un Devis
+              {t("hero_cta_devis")}
             </Link>
             <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
-              Nous Contacter
+              {t("hero_cta_contact")}
             </Link>
             <BrochureDownloadButton productSlug="ecran-etanche" productName="Écran Étanche" variant="compact" />
           </div>
@@ -129,33 +121,22 @@ export default function EcranEtanche() {
       {/* Technologie */}
       <section className="py-20 bg-background">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-4">Technologie étanche à l'air</h2>
+          <h2 className="text-3xl font-bold text-ivory mb-4">{t("tech_title")}</h2>
           <p className="text-white/60 mb-8 max-w-3xl text-lg leading-relaxed">
-            Contrairement aux écrans à soufflerie qui nécessitent une alimentation électrique permanente, 
-            nos écrans étanches utilisent une <strong className="text-ivory">chambre à air scellée en TPU</strong> (thermoplastique polyuréthane). 
-            Un seul gonflage suffit pour maintenir l'écran en forme pendant plusieurs jours.
+            {t("tech_desc")} <strong className="text-ivory">{t("tech_desc_bold")}</strong> {t("tech_desc_end")}
           </p>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-3">Chambre à air TPU</h3>
-              <p className="text-white/60 text-sm leading-relaxed">
-                La chambre intérieure en thermoplastique polyuréthane assure une étanchéité parfaite. 
-                L'air reste emprisonné, maintenant la structure rigide sans aucune alimentation externe.
-              </p>
+              <h3 className="text-warm font-semibold mb-3">{t("tech_tpu_title")}</h3>
+              <p className="text-white/60 text-sm leading-relaxed">{t("tech_tpu_desc")}</p>
             </div>
             <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-3">Tissu polyamide de kitesurf</h3>
-              <p className="text-white/60 text-sm leading-relaxed">
-                Le même tissu utilisé dans les voiles de kitesurf : ultra-léger, résistant aux UV, 
-                hydrofuge et extrêmement durable. Résultat : un écran 3× plus léger que la concurrence.
-              </p>
+              <h3 className="text-warm font-semibold mb-3">{t("tech_kite_title")}</h3>
+              <p className="text-white/60 text-sm leading-relaxed">{t("tech_kite_desc")}</p>
             </div>
             <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-3">Toile de projection amovible</h3>
-              <p className="text-white/60 text-sm leading-relaxed">
-                La toile est amovible et réversible pour la projection frontale et la rétroprojection. 
-                Elle est lavable en machine, simplifiant grandement l'entretien entre les événements.
-              </p>
+              <h3 className="text-warm font-semibold mb-3">{t("tech_screen_title")}</h3>
+              <p className="text-white/60 text-sm leading-relaxed">{t("tech_screen_desc")}</p>
             </div>
           </div>
         </div>
@@ -164,7 +145,7 @@ export default function EcranEtanche() {
       {/* Galerie photos */}
       <section className="py-16 bg-charcoal-light">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-8">Nos écrans étanches en images</h2>
+          <h2 className="text-3xl font-bold text-ivory mb-8">{t("gallery_title")}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {galleryImages.map((img, i) => (
               <div key={i} className="relative aspect-[4/3]">
@@ -186,11 +167,8 @@ export default function EcranEtanche() {
       {/* Avantages */}
       <section className="py-20 bg-background">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-4">Pourquoi choisir l'écran étanche ?</h2>
-          <p className="text-white/60 mb-12 max-w-3xl">
-            L'écran étanche à l'air est la solution idéale pour les événements où le silence, 
-            l'autonomie et la facilité de transport sont essentiels.
-          </p>
+          <h2 className="text-3xl font-bold text-ivory mb-4">{t("adv_title")}</h2>
+          <p className="text-white/60 mb-12 max-w-3xl">{t("adv_subtitle")}</p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {avantages.map((a) => (
               <div key={a.title} className="p-6 bg-card border border-border rounded-lg card-hover">
@@ -206,18 +184,9 @@ export default function EcranEtanche() {
       {/* Applications idéales */}
       <section className="py-20 bg-charcoal-light">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-8">Applications idéales</h2>
+          <h2 className="text-3xl font-bold text-ivory mb-8">{t("apps_title")}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { title: "Cinéma en plein air", desc: "Soirées cinéma dans les parcs, jardins, places publiques. Le silence de l'écran étanche permet une immersion totale." },
-              { title: "Cinéma piscine", desc: "Projections au bord de la piscine ou sur l'eau. L'étanchéité protège l'écran de l'humidité ambiante." },
-              { title: "Hôtels & Resorts", desc: "Animations pour les clients en soirée. Installation discrète et silencieuse, parfaite pour l'ambiance hôtelière." },
-              { title: "Événements privés", desc: "Mariages, anniversaires, soirées entre amis. Compact et facile à installer dans n'importe quel jardin." },
-              { title: "Campings", desc: "Soirées cinéma pour les campeurs. Pas besoin d'électricité permanente — idéal pour les emplacements isolés." },
-              { title: "Projections urbaines", desc: "Festivals de quartier, projections sur les toits. Le silence est un atout majeur en milieu urbain." },
-              { title: "Événements sportifs", desc: "Retransmissions de matchs en extérieur. L'écran résiste au vent et s'installe rapidement." },
-              { title: "Entreprises", desc: "Présentations en extérieur, team building, lancements de produits. Image professionnelle garantie." },
-            ].map((app) => (
+            {apps.map((app) => (
               <div key={app.title} className="p-5 bg-card border border-border rounded-lg">
                 <h3 className="text-warm font-semibold mb-2">{app.title}</h3>
                 <p className="text-white/60 text-sm leading-relaxed">{app.desc}</p>
@@ -230,17 +199,17 @@ export default function EcranEtanche() {
       {/* Tableau specs */}
       <section className="py-20 bg-background">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-4">Guide des tailles et spécifications techniques</h2>
-          <p className="text-white/60 mb-8">Écran Gonflable Étanche à l'Air — Format 16/9</p>
+          <h2 className="text-3xl font-bold text-ivory mb-4">{t("specs_title")}</h2>
+          <p className="text-white/60 mb-8">{t("specs_subtitle")}</p>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-warm/30">
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Taille globale (cm)</th>
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Toile 16/9 (cm)</th>
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Poids</th>
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Hauteur base image</th>
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Nb. personnes</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">{t("specs_col_size")}</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">{t("specs_col_screen")}</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">{t("specs_col_weight")}</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">{t("specs_col_height")}</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">{t("specs_col_persons")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -265,7 +234,7 @@ export default function EcranEtanche() {
       {/* FAQ */}
       <section className="py-20 bg-charcoal-light">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-8">Questions fréquentes</h2>
+          <h2 className="text-3xl font-bold text-ivory mb-8">{t("faq_title")}</h2>
           <div className="max-w-3xl space-y-3">
             {faqItems.map((item, i) => (
               <div key={i} className="border border-border rounded-lg overflow-hidden">
@@ -290,20 +259,17 @@ export default function EcranEtanche() {
       {/* CTA */}
       <section className="py-20 bg-background">
         <div className="container text-center">
-          <h2 className="text-3xl font-bold text-ivory mb-4">Vous organisez un événement ?</h2>
-          <p className="text-white/60 mb-8 max-w-xl mx-auto">
-            Obtenez un devis personnalisé pour votre écran gonflable étanche à l'air. 
-            Notre équipe vous accompagne dans le choix de la taille idéale.
-          </p>
+          <h2 className="text-3xl font-bold text-ivory mb-4">{t("cta_title")}</h2>
+          <p className="text-white/60 mb-8 max-w-xl mx-auto">{t("cta_desc")}</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
-              Nous Contacter
+              {t("cta_contact")}
             </Link>
             <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
-              Demander un Devis
+              {t("cta_devis")}
             </Link>
             <Link href="/contactez-nous" className="px-8 py-3 border border-white/20 text-white/70 font-semibold rounded hover:bg-white/5 transition-colors">
-              Voir Nos Tarifs
+              {t("cta_tarifs")}
             </Link>
           </div>
         </div>

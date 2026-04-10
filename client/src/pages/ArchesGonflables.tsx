@@ -1,7 +1,8 @@
 /*
  * Page Arches Gonflables
- * Tarifs complets, specs, FAQ, accessoires
+ * Contenu i18n via namespace "arches-gonflables"
  */
+import { useTranslation } from "react-i18next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
@@ -24,32 +25,31 @@ const archesData = [
   { ref: "CA-12/5.8/0.9", taille: "1200×580(H)×90cm" },
 ];
 
-const accessoires = [
-  { ref: "CA-EP", nom: "Pompe électrique", desc: "Prises en fonction de votre pays" },
-  { ref: "CA-HP", nom: "Pompe manuelle", desc: "Utilisation extérieur" },
-  { ref: "CA-ACC-1", nom: "Cordes/Piquets", desc: "Pour la sécurité et la stabilité" },
-  { ref: "CA-ACC-2", nom: "Valve de rechange", desc: "Standby application" },
-];
-
-const faqItems = [
-  {
-    q: "Quelle est la durée de vie d'une arche gonflable ?",
-    a: "Avec un entretien approprié, nos arches peuvent durer plusieurs années grâce à leur conception robuste en PVC renforcé et tissu Oxford."
-  },
-  {
-    q: "Est-ce que les arches sont personnalisables ?",
-    a: "Oui, toutes nos arches peuvent être personnalisées avec votre logo, vos couleurs et vos messages. Impression numérique haute définition disponible."
-  },
-  {
-    q: "Que faire en cas de vent fort ?",
-    a: "Nos arches sont fournies avec des sacs de sable et des chevilles pour assurer leur stabilité. En cas de conditions climatiques extrêmes, il est recommandé de les dégonfler temporairement."
-  },
+const galleryImages = [
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vbfbnQBVCUGrWUOw.webp", alt: "Arche gonflable cinéma en plein air avec écran de projection" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eqdRLmacrGAlLxMw.webp", alt: "Arche gonflable colorée pour arrivée de course sportive" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yuLqkYzSuwxDVzhu.webp", alt: "Arche gonflable bleue et rouge pour entrée de projection" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tZPYCxQHEVFUCaJD.webp", alt: "Arche gonflable blanche décorée motifs floraux" },
 ];
 
 export default function ArchesGonflables() {
-  useDocumentMeta("Arches Gonflables | Arches Publicitaires", "Arches gonflables personnalisables pour événements sportifs, salons et promotions. Impression haute définition, montage rapide.");
+  const { t } = useTranslation("arches-gonflables");
+  useDocumentMeta(t("meta_title"), t("meta_desc"));
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const faqItems = [
+    { q: t("faq_q1"), a: t("faq_a1") },
+    { q: t("faq_q2"), a: t("faq_a2") },
+    { q: t("faq_q3"), a: t("faq_a3") },
+  ];
+
+  const accessoires = [
+    { ref: "CA-EP", nom: t("acc1_name"), desc: t("acc1_desc") },
+    { ref: "CA-HP", nom: t("acc2_name"), desc: t("acc2_desc") },
+    { ref: "CA-ACC-1", nom: t("acc3_name"), desc: t("acc3_desc") },
+    { ref: "CA-ACC-2", nom: t("acc4_name"), desc: t("acc4_desc") },
+  ];
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -62,13 +62,8 @@ export default function ArchesGonflables() {
         ]}
         product={{
           name: "Arches Gonflables Personnalisées pour Événements",
-          description: "Les arches gonflables sont des éléments incontournables pour vos événements sportifs, expositions, et campagnes promotionnelles. Faciles à personnaliser, elles offrent une visibilité accrue grâce à leur grande taille et leur design adaptable. De 4m à 12m de large.",
-          image: [
-            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vbfbnQBVCUGrWUOw.webp",
-            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eqdRLmacrGAlLxMw.webp",
-            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yuLqkYzSuwxDVzhu.webp",
-            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tZPYCxQHEVFUCaJD.webp",
-          ],
+          description: "Les arches gonflables sont des éléments incontournables pour vos événements sportifs, expositions, et campagnes promotionnelles.",
+          image: galleryImages.map(img => img.src),
           url: "https://hallucinecran.fr/arches-gonflables",
           category: "Structures gonflables",
           minPrice: 790,
@@ -80,30 +75,21 @@ export default function ArchesGonflables() {
       {/* Hero */}
       <section className="relative overflow-hidden pt-32 pb-16 bg-charcoal-light">
         <div className="container">
-          <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">Structures gonflables</p>
+          <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">{t("section_label")}</p>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight mb-6">
-            Arches Gonflables<br />
-            <span className="text-warm">Personnalisées pour Événements</span>
+            {t("hero_title")}<br />
+            <span className="text-warm">{t("hero_colored")}</span>
           </h1>
-          <p className="text-white/70 text-lg max-w-3xl leading-relaxed">
-            Les arches gonflables sont des éléments incontournables pour vos événements sportifs, expositions, 
-            et campagnes promotionnelles. Faciles à personnaliser, elles offrent une visibilité accrue grâce à 
-            leur grande taille et leur design adaptable. De 4m à 12m de large.
-          </p>
+          <p className="text-white/70 text-lg max-w-3xl leading-relaxed">{t("hero_desc")}</p>
         </div>
       </section>
 
       {/* Galerie photos */}
       <section className="py-16 bg-background">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-8">Nos arches en images</h2>
+          <h2 className="text-3xl font-bold text-ivory mb-8">{t("gallery_title")}</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vbfbnQBVCUGrWUOw.webp", alt: "Arche gonflable cinéma en plein air avec écran de projection" },
-              { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eqdRLmacrGAlLxMw.webp", alt: "Arche gonflable colorée pour arrivée de course sportive" },
-              { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yuLqkYzSuwxDVzhu.webp", alt: "Arche gonflable bleue et rouge pour entrée de projection" },
-              { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tZPYCxQHEVFUCaJD.webp", alt: "Arche gonflable blanche décorée motifs floraux" },
-            ].map((img, i) => (
+            {galleryImages.map((img, i) => (
               <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden group">
                 <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-end">
@@ -118,42 +104,40 @@ export default function ArchesGonflables() {
       {/* Modèles */}
       <section className="py-20 bg-charcoal-light">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-8">Modèles disponibles</h2>
+          <h2 className="text-3xl font-bold text-ivory mb-8">{t("models_title")}</h2>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold text-lg mb-3">Arche standard</h3>
-              <p className="text-white/60 text-sm leading-relaxed">Design simple et épuré. Disponible en différentes tailles de 4m à 12m. Idéale pour des événements sportifs ou comme point d'entrée.</p>
+              <h3 className="text-warm font-semibold text-lg mb-3">{t("model1_title")}</h3>
+              <p className="text-white/60 text-sm leading-relaxed">{t("model1_desc")}</p>
             </div>
             <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold text-lg mb-3">Arche personnalisée</h3>
-              <p className="text-white/60 text-sm leading-relaxed">Formes et designs sur mesure. Impression de logos ou slogans pour vos campagnes marketing. Compatible avec des systèmes d'éclairage intégrés.</p>
+              <h3 className="text-warm font-semibold text-lg mb-3">{t("model2_title")}</h3>
+              <p className="text-white/60 text-sm leading-relaxed">{t("model2_desc")}</p>
             </div>
             <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold text-lg mb-3">Arche à plusieurs pieds</h3>
-              <p className="text-white/60 text-sm leading-relaxed">Offre une meilleure stabilité. Parfaite pour les conditions météorologiques difficiles. Conçue pour des utilisations prolongées.</p>
+              <h3 className="text-warm font-semibold text-lg mb-3">{t("model3_title")}</h3>
+              <p className="text-white/60 text-sm leading-relaxed">{t("model3_desc")}</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Gamme d'arches (2 col) + FAQ (1 col) — 3 colonnes */}
+      {/* Gamme + FAQ */}
       <section className="py-20 bg-charcoal-light">
         <div className="container">
           <div className="grid md:grid-cols-3 gap-10 items-center">
-            {/* Colonnes 1-2 : Gamme d'arches */}
             <div className="md:col-span-2">
               <h2 className="text-3xl font-bold text-ivory mb-4">
-                Gamme d'arches <span className="text-warm">gonflables</span>
+                {t("range_title")} <span className="text-warm">{t("range_colored")}</span>
               </h2>
-              <p className="text-white/60 mb-2 text-sm">Tissu blanc + vessie TPU. Les arches sont étanches — un seul gonflage suffit.</p>
-              <p className="text-white/60 mb-6 text-sm">11 références disponibles, de 4m à 12m de large. Diamètre maximal : 90 cm.</p>
+              <p className="text-white/60 mb-2 text-sm">{t("range_note1")}</p>
+              <p className="text-white/60 mb-6 text-sm">{t("range_note2")}</p>
               <div className="grid grid-cols-2 gap-4">
-                {/* Moitié gauche du tableau */}
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-warm/30">
-                      <th className="text-left py-3 px-3 text-warm font-semibold">Référence</th>
-                      <th className="text-left py-3 px-3 text-warm font-semibold">Taille</th>
+                      <th className="text-left py-3 px-3 text-warm font-semibold">{t("col_ref")}</th>
+                      <th className="text-left py-3 px-3 text-warm font-semibold">{t("col_size")}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -165,12 +149,11 @@ export default function ArchesGonflables() {
                     ))}
                   </tbody>
                 </table>
-                {/* Moitié droite du tableau */}
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-warm/30">
-                      <th className="text-left py-3 px-3 text-warm font-semibold">Référence</th>
-                      <th className="text-left py-3 px-3 text-warm font-semibold">Taille</th>
+                      <th className="text-left py-3 px-3 text-warm font-semibold">{t("col_ref")}</th>
+                      <th className="text-left py-3 px-3 text-warm font-semibold">{t("col_size")}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -184,10 +167,9 @@ export default function ArchesGonflables() {
                 </table>
               </div>
             </div>
-            {/* Colonne 3 : FAQ */}
             <div>
               <h2 className="text-3xl font-bold text-ivory mb-6">
-                Questions <span className="text-warm">Fréquentes</span>
+                {t("faq_title")} <span className="text-warm">{t("faq_colored")}</span>
               </h2>
               <div className="space-y-3">
                 {faqItems.map((item, i) => (
@@ -215,14 +197,14 @@ export default function ArchesGonflables() {
       {/* Accessoires */}
       <section className="py-20 bg-background">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-8">Accessoires</h2>
+          <h2 className="text-3xl font-bold text-ivory mb-8">{t("accessories_title")}</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm max-w-3xl">
               <thead>
                 <tr className="border-b border-warm/30">
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Référence</th>
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Nom</th>
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Description</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">{t("acc_col_ref")}</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">{t("acc_col_name")}</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">{t("acc_col_desc")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -239,14 +221,13 @@ export default function ArchesGonflables() {
         </div>
       </section>
 
-      {/* Caractéristiques techniques — 2 colonnes texte + image */}
+      {/* Caractéristiques techniques */}
       <section className="py-20 bg-charcoal-light">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-10 items-center">
-            {/* Colonne texte */}
             <div>
               <h2 className="text-3xl font-bold text-ivory mb-6">
-                Caractéristiques <span className="text-warm">Techniques</span>
+                {t("tech_title")} <span className="text-warm">{t("tech_colored")}</span>
               </h2>
               <ul className="space-y-4 text-white/70">
                 <li className="flex items-start">
@@ -254,8 +235,8 @@ export default function ArchesGonflables() {
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 6V4m0 16v-2M8 9l-1 1m8 8l1-1M9 16l-1-1M15 9l1 1" /></svg>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-ivory">Matériaux</h4>
-                    <p className="text-sm">Tissu Oxford 600D et PVC renforcé pour une durabilité maximale.</p>
+                    <h4 className="font-semibold text-ivory">{t("tech1_title")}</h4>
+                    <p className="text-sm">{t("tech1_desc")}</p>
                   </div>
                 </li>
                 <li className="flex items-start">
@@ -263,8 +244,8 @@ export default function ArchesGonflables() {
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-ivory">Impression</h4>
-                    <p className="text-sm">Impression numérique haute définition pour des couleurs vives et un rendu professionnel.</p>
+                    <h4 className="font-semibold text-ivory">{t("tech2_title")}</h4>
+                    <p className="text-sm">{t("tech2_desc")}</p>
                   </div>
                 </li>
                 <li className="flex items-start">
@@ -272,13 +253,12 @@ export default function ArchesGonflables() {
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-ivory">Installation</h4>
-                    <p className="text-sm">Montage rapide en moins de 10 minutes avec une pompe électrique.</p>
+                    <h4 className="font-semibold text-ivory">{t("tech3_title")}</h4>
+                    <p className="text-sm">{t("tech3_desc")}</p>
                   </div>
                 </li>
               </ul>
             </div>
-            {/* Colonne image */}
             <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
               <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eqdRLmacrGAlLxMw.webp" alt="Détails techniques d'une arche gonflable" className="w-full h-full object-cover" loading="lazy" decoding="async" />
             </div>
@@ -289,12 +269,10 @@ export default function ArchesGonflables() {
       {/* CTA */}
       <section className="py-20 bg-background">
         <div className="container text-center">
-          <h2 className="text-3xl font-bold text-ivory mb-4">Prêt à créer votre arche ?</h2>
-          <p className="text-white/70 max-w-2xl mx-auto mb-8">
-            Contactez-nous dès aujourd'hui pour un devis personnalisé et donnez vie à votre projet.
-          </p>
-          <Link href="/contact" className="inline-block bg-warm text-charcoal-dark font-semibold py-3 px-8 rounded-lg hover:bg-warm/90 transition-colors">
-            Demander un devis
+          <h2 className="text-3xl font-bold text-ivory mb-4">{t("cta_title")}</h2>
+          <p className="text-white/70 max-w-2xl mx-auto mb-8">{t("cta_desc")}</p>
+          <Link href="/contactez-nous" className="inline-block bg-warm text-charcoal-dark font-semibold py-3 px-8 rounded-lg hover:bg-warm/90 transition-colors">
+            {t("cta_devis")}
           </Link>
         </div>
       </section>

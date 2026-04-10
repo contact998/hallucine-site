@@ -1,9 +1,8 @@
-
 /*
  * Page Tentes Araignées Gonflables
- * Contenu complet du site d'origine hallucinecran.com
- * Design: cinéma vintage — fond sombre, accents dorés
+ * Contenu i18n via namespace "tente-araignee"
  */
+import { useTranslation } from "react-i18next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
@@ -19,33 +18,24 @@ const tailles = [
   { dim: "10m × 10m", poids: "~80 kg", montage: "15 min" },
 ];
 
-
-const faqItems = [
-  {
-    q: "Qu'est-ce qu'une tente araignée gonflable ?",
-    a: "Une tente araignée gonflable est une structure gonflable unique, idéale pour des événements extérieurs tels que des projections de films, des festivals, ou des événements sportifs. Ces tentes sont dotées de pieds gonflables qui assurent leur stabilité, même par temps venteux, et leur forme distinctive ressemble à celle d'une toile d'araignée."
-  },
-  {
-    q: "Quels sont les avantages d'une tente araignée gonflable ?",
-    a: "Les tentes araignées gonflables offrent de nombreux avantages pour les événements en plein air : installation rapide (moins de 15 minutes), stabilité exceptionnelle grâce aux pieds gonflables, résistance aux UV et à l'eau, grande mobilité grâce à un poids réduit, et personnalisation complète."
-  },
-  {
-    q: "Combien de temps faut-il pour installer une tente araignée gonflable ?",
-    a: "Nos tentes araignées gonflables sont conçues pour une installation rapide en moins de 30 minutes. Vous n'avez besoin d'aucun équipement lourd, tout se fait simplement avec un souffleur intégré. Le processus peut être réalisé par une seule personne."
-  },
-];
-
 const images = [
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/KGkXbQCcXEGqyaSz.webp", alt: "Tente araignée gonflable bleue installée sur l'herbe pour un événement en plein air" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/zlXEEbFQipJgezJx.webp", alt: "Tente araignée gonflable avec des parois latérales jaunes, créant un espace abrité" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/NNxCkFqPVeqmFjFC.webp", alt: "Tente araignée gonflable de couleur verte, se fondant dans un décor naturel" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/uOKkoMGgvsDEguJm.webp", alt: "Tente araignée gonflable noire personnalisée avec le logo 'Ealing Eagles', utilisée pour un événement sportif" },
+  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/uOKkoMGgvsDEguJm.webp", alt: "Tente araignée gonflable noire personnalisée avec le logo 'Ealing Eagles'" },
 ];
 
 export default function TentesAraignees() {
-  useDocumentMeta("Tente Gonflable Araignée | Tente Spider", "Tente gonflable araignée (spider) pour événements. Design unique, montage ultra-rapide, résistante au vent. Disponible en plusieurs tailles et couleurs.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp");
+  const { t } = useTranslation("tente-araignee");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp");
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const faqItems = [
+    { q: t("faq_q1"), a: t("faq_a1") },
+    { q: t("faq_q2"), a: t("faq_a2") },
+    { q: t("faq_q3"), a: t("faq_a3") },
+  ];
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -58,7 +48,7 @@ export default function TentesAraignees() {
         ]}
         product={{
           name: "Tente Araignée Gonflable",
-          description: "Tente gonflable araignée (spider) pour événements. Design unique, montage ultra-rapide, résistante au vent. Disponible en plusieurs tailles et couleurs.",
+          description: "Tente gonflable araignée (spider) pour événements. Design unique, montage ultra-rapide, résistante au vent.",
           image: images.map(img => img.src),
           url: "https://hallucinecran.fr/tentes-araignees",
           category: "Tentes gonflables",
@@ -71,26 +61,20 @@ export default function TentesAraignees() {
       {/* Hero */}
       <section className="relative overflow-hidden pt-32 pb-16 bg-charcoal-light">
         <div className="container relative z-10">
-          <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">Tentes gonflables</p>
+          <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">{t("section_label")}</p>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight mb-6">
-            Tente Araignée Gonflable<br />
-            <span className="text-warm">Solution Idéale pour vos Événements</span>
+            {t("hero_title")}<br />
+            <span className="text-warm">{t("hero_colored")}</span>
           </h1>
-          <p className="text-white/70 text-lg max-w-3xl leading-relaxed mb-4">
-            Nos tentes araignées gonflables combinent un design unique avec une facilité d'installation 
-            remarquable. Disponibles de 4m à 10m de diamètre, elles s'adaptent à tous vos événements extérieurs.
-          </p>
-          <p className="text-white/50 text-base max-w-3xl leading-relaxed">
-            Fabriquées avec des matériaux résistants aux UV et à l'eau, nos tentes assurent une protection 
-            fiable contre les intempéries pendant vos événements.
-          </p>
+          <p className="text-white/70 text-lg max-w-3xl leading-relaxed mb-4">{t("hero_p1")}</p>
+          <p className="text-white/50 text-base max-w-3xl leading-relaxed">{t("hero_p2")}</p>
         </div>
       </section>
 
       {/* Galerie photos */}
       <section className="py-16 bg-background">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-8">Tentes Araignées en images</h2>
+          <h2 className="text-3xl font-bold text-ivory mb-8">{t("gallery_title")}</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {images.map((img, i) => (
               <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden group">
@@ -107,28 +91,19 @@ export default function TentesAraignees() {
       {/* Pourquoi choisir */}
       <section className="py-20 bg-charcoal-light">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-8">Pourquoi Choisir nos Tentes Araignées Gonflables ?</h2>
+          <h2 className="text-3xl font-bold text-ivory mb-8">{t("why_title")}</h2>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-3">Installation rapide</h3>
-              <p className="text-white/60 text-sm leading-relaxed">
-                Installation rapide en moins de 30 minutes. Vous n'avez besoin d'aucun équipement lourd, 
-                tout se fait simplement avec un souffleur intégré.
-              </p>
+              <h3 className="text-warm font-semibold mb-3">{t("why1_title")}</h3>
+              <p className="text-white/60 text-sm leading-relaxed">{t("why1_desc")}</p>
             </div>
             <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-3">Protection fiable</h3>
-              <p className="text-white/60 text-sm leading-relaxed">
-                Fabriquées avec des matériaux résistants aux UV et à l'eau, nos tentes assurent une protection 
-                fiable contre les intempéries pendant vos événements.
-              </p>
+              <h3 className="text-warm font-semibold mb-3">{t("why2_title")}</h3>
+              <p className="text-white/60 text-sm leading-relaxed">{t("why2_desc")}</p>
             </div>
             <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-3">Tailles adaptées</h3>
-              <p className="text-white/60 text-sm leading-relaxed">
-                Choisissez la taille idéale pour votre événement : de 4m à 10m de diamètre. 
-                Nos tentes sont adaptées pour des festivals, projections de films en plein air, ou des salons professionnels.
-              </p>
+              <h3 className="text-warm font-semibold mb-3">{t("why3_title")}</h3>
+              <p className="text-white/60 text-sm leading-relaxed">{t("why3_desc")}</p>
             </div>
           </div>
         </div>
@@ -137,22 +112,22 @@ export default function TentesAraignees() {
       {/* Tailles et specs */}
       <section className="py-20 bg-background">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-8">Tailles et Spécifications</h2>
+          <h2 className="text-3xl font-bold text-ivory mb-8">{t("specs_title")}</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm max-w-2xl">
               <thead>
                 <tr className="border-b border-warm/30">
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Dimensions</th>
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Poids</th>
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Temps de montage</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">{t("specs_col_dim")}</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">{t("specs_col_weight")}</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">{t("specs_col_setup")}</th>
                 </tr>
               </thead>
               <tbody>
-                {tailles.map((t, i) => (
+                {tailles.map((row, i) => (
                   <tr key={i} className="border-b border-border hover:bg-white/5 transition-colors">
-                    <td className="py-4 px-3 text-ivory font-medium">{t.dim}</td>
-                    <td className="py-4 px-3 text-white/70">{t.poids}</td>
-                    <td className="py-4 px-3 text-white/70">{t.montage}</td>
+                    <td className="py-4 px-3 text-ivory font-medium">{row.dim}</td>
+                    <td className="py-4 px-3 text-white/70">{row.poids}</td>
+                    <td className="py-4 px-3 text-white/70">{row.montage}</td>
                   </tr>
                 ))}
               </tbody>
@@ -161,36 +136,26 @@ export default function TentesAraignees() {
         </div>
       </section>
 
-
       {/* Caractéristiques techniques */}
       <section className="py-20 bg-background">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-8">Caractéristiques Techniques</h2>
+          <h2 className="text-3xl font-bold text-ivory mb-8">{t("tech_title")}</h2>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-2">Pieds gonflables</h3>
-              <p className="text-white/60 text-sm leading-relaxed">
-                Pieds gonflables pour une stabilité exceptionnelle, même sur terrain irrégulier et par temps venteux.
-              </p>
+              <h3 className="text-warm font-semibold mb-2">{t("tech1_title")}</h3>
+              <p className="text-white/60 text-sm leading-relaxed">{t("tech1_desc")}</p>
             </div>
             <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-2">Personnalisation complète</h3>
-              <p className="text-white/60 text-sm leading-relaxed">
-                Impression de logos et visuels sur le toit, les pieds, le PVC des pieds, les couvertures des zips et les murs.
-              </p>
+              <h3 className="text-warm font-semibold mb-2">{t("tech2_title")}</h3>
+              <p className="text-white/60 text-sm leading-relaxed">{t("tech2_desc")}</p>
             </div>
             <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-2">Murs et auvents</h3>
-              <p className="text-white/60 text-sm leading-relaxed">
-                Options pour les murs (standard, porte, fenêtre) et auvents avec bannière, pieds, PVC et tissu personnalisables.
-              </p>
+              <h3 className="text-warm font-semibold mb-2">{t("tech3_title")}</h3>
+              <p className="text-white/60 text-sm leading-relaxed">{t("tech3_desc")}</p>
             </div>
             <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-2">Accessoires complets</h3>
-              <p className="text-white/60 text-sm leading-relaxed">
-                Sac de transport, pompes (électrique et manuelle), sacs de sable/eau, lumière LED, kit de réparation, 
-                système d'ancrage, tapis de sol, système de connexion.
-              </p>
+              <h3 className="text-warm font-semibold mb-2">{t("tech4_title")}</h3>
+              <p className="text-white/60 text-sm leading-relaxed">{t("tech4_desc")}</p>
             </div>
           </div>
         </div>
@@ -199,23 +164,23 @@ export default function TentesAraignees() {
       {/* Applications */}
       <section className="py-20 bg-charcoal-light">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-8">Applications Idéales</h2>
+          <h2 className="text-3xl font-bold text-ivory mb-8">{t("apps_title")}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-3">Projections de films</h3>
-              <p className="text-white/60 text-sm">Créez un espace couvert unique pour vos projections en plein air.</p>
+              <h3 className="text-warm font-semibold mb-3">{t("app1_title")}</h3>
+              <p className="text-white/60 text-sm">{t("app1_desc")}</p>
             </div>
             <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-3">Festivals</h3>
-              <p className="text-white/60 text-sm">Structure originale et robuste pour vos festivals et concerts.</p>
+              <h3 className="text-warm font-semibold mb-3">{t("app2_title")}</h3>
+              <p className="text-white/60 text-sm">{t("app2_desc")}</p>
             </div>
             <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-3">Salons professionnels</h3>
-              <p className="text-white/60 text-sm">Stand d'exposition élégant pour vos salons et foires commerciales.</p>
+              <h3 className="text-warm font-semibold mb-3">{t("app3_title")}</h3>
+              <p className="text-white/60 text-sm">{t("app3_desc")}</p>
             </div>
             <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold mb-3">Événements sportifs</h3>
-              <p className="text-white/60 text-sm">Zones VIP, points de ravitaillement, espaces d'accueil.</p>
+              <h3 className="text-warm font-semibold mb-3">{t("app4_title")}</h3>
+              <p className="text-white/60 text-sm">{t("app4_desc")}</p>
             </div>
           </div>
         </div>
@@ -224,7 +189,7 @@ export default function TentesAraignees() {
       {/* FAQ */}
       <section className="py-20 bg-background">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-8">Questions Fréquentes (FAQ)</h2>
+          <h2 className="text-3xl font-bold text-ivory mb-8">{t("faq_title")}</h2>
           <div className="max-w-3xl space-y-3">
             {faqItems.map((item, i) => (
               <div key={i} className="border border-border rounded-lg overflow-hidden">
@@ -249,14 +214,14 @@ export default function TentesAraignees() {
       {/* CTA */}
       <section className="py-20 bg-charcoal-light">
         <div className="container text-center">
-          <h2 className="text-3xl font-bold text-ivory mb-4">Demandez un Devis pour votre Tente Araignée</h2>
-          <p className="text-white/60 mb-8">Contactez-nous pour un devis personnalisé adapté à vos besoins.</p>
+          <h2 className="text-3xl font-bold text-ivory mb-4">{t("cta_title")}</h2>
+          <p className="text-white/60 mb-8">{t("cta_desc")}</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
-              Demande de devis
+              {t("cta_devis")}
             </Link>
             <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
-              Voir Nos Tarifs
+              {t("cta_tarifs")}
             </Link>
           </div>
         </div>

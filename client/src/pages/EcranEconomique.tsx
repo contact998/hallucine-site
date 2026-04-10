@@ -1,10 +1,9 @@
 /*
  * Page Écran Gonflable Économique
- * Reproduit fidèlement la page hallucinecran.com/fr/ecran-economique
- * Layout 2 colonnes : avec souffleur / sans souffleur
- * Design cinéma vintage — fond sombre, accents dorés
+ * Contenu i18n via namespace "ecran-economique"
  */
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FilmCountdown from "@/components/FilmCountdown";
@@ -29,7 +28,6 @@ const sansSouffleur = [
   { taille: "7.5 × 5.5 m", toile: "600 × 340 cm", poids: "85 kg", hauteur: "100 cm", personnes: "2" },
 ];
 
-// ─── Images carousels (identiques à l'ancien site) ────────────────────────────
 const imagesAvecSouffleur = [
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WXsnQMOOUttRbUlr.webp", alt: "Écran économique avec souffleur installé dans la cour d'un bâtiment" },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qoINhxiIteIjBXYG.webp", alt: "Écran économique avec souffleur pour un petit public" },
@@ -54,36 +52,18 @@ function ImageCarousel({ images }: { images: { src: string; alt: string }[] }) {
 
   return (
     <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-black/20 mb-6">
-      <img
-        src={images[idx].src}
-        alt={images[idx].alt}
-        className="w-full h-full object-cover"
-        loading="lazy"
-      decoding="async" />
+      <img src={images[idx].src} alt={images[idx].alt} className="w-full h-full object-cover" loading="lazy" decoding="async" />
       {images.length > 1 && (
         <>
-          <button
-            onClick={prev}
-            className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white transition-colors"
-            aria-label="Image précédente"
-          >
+          <button onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white transition-colors" aria-label="Image précédente">
             <ChevronLeft className="w-5 h-5" />
           </button>
-          <button
-            onClick={next}
-            className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white transition-colors"
-            aria-label="Image suivante"
-          >
+          <button onClick={next} className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white transition-colors" aria-label="Image suivante">
             <ChevronRight className="w-5 h-5" />
           </button>
           <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
             {images.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setIdx(i)}
-                className={`w-2.5 h-2.5 rounded-full transition-colors ${i === idx ? "bg-warm" : "bg-white/40"}`}
-                aria-label={`Image ${i + 1}`}
-              />
+              <button key={i} onClick={() => setIdx(i)} className={`w-2.5 h-2.5 rounded-full transition-colors ${i === idx ? "bg-warm" : "bg-white/40"}`} aria-label={`Image ${i + 1}`} />
             ))}
           </div>
         </>
@@ -94,7 +74,8 @@ function ImageCarousel({ images }: { images: { src: string; alt: string }[] }) {
 
 // ─── Composant principal ───────────────────────────────────────────────────────
 export default function EcranEconomique() {
-  useDocumentMeta("Écran Gonflable Économique | Prix Accessibles", "Écran de cinéma gonflable économique pour petits budgets. Qualité professionnelle à prix réduit. Idéal pour débuter le cinéma en plein air.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
+  const { t } = useTranslation("ecran-economique");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   const [showCountdown, setShowCountdown] = useState(true);
 
@@ -109,7 +90,7 @@ export default function EcranEconomique() {
         ]}
         product={{
           name: "Écrans Gonflables Économiques",
-          description: "Nos écrans gonflables économiques sont la solution idéale pour des événements à petit budget sans compromis sur la qualité. Conçus pour une utilisation facile et rapide, ces écrans sont parfaits pour des projections de films, des événements sportifs, des soirées en plein air, et bien plus encore.",
+          description: "Nos écrans gonflables économiques sont la solution idéale pour des événements à petit budget sans compromis sur la qualité.",
           image: [
             "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WXsnQMOOUttRbUlr.webp",
             "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qoINhxiIteIjBXYG.webp",
@@ -129,17 +110,13 @@ export default function EcranEconomique() {
       <section className="pt-32 pb-16 bg-charcoal-light">
         <div className="container text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight mb-6">
-            Écrans Gonflables <span className="text-warm">Économiques</span>
+            {t("hero_title")} <span className="text-warm">{t("hero_title_colored")}</span>
           </h1>
           <h2 className="text-xl md:text-2xl font-semibold text-ivory/90 mb-6">
-            Des écrans gonflables abordables<br />
-            pour vos événements extérieurs et intérieurs.
+            {t("hero_h2")}
           </h2>
           <p className="text-white/70 text-lg max-w-3xl mx-auto leading-relaxed">
-            Nos écrans gonflables économiques sont la solution idéale pour des événements à petit budget 
-            sans compromis sur la qualité. Conçus pour une utilisation facile et rapide, ces écrans sont 
-            parfaits pour des projections de films, des événements sportifs, des soirées en plein air, 
-            et bien plus encore.
+            {t("hero_p")}
           </p>
         </div>
       </section>
@@ -152,55 +129,41 @@ export default function EcranEconomique() {
             {/* ─── Colonne gauche : Avec souffleur ─── */}
             <div className="border border-border rounded-xl p-6 bg-card">
               <h2 className="text-2xl md:text-3xl font-bold text-ivory mb-6">
-                Écrans Gonflables Économiques<br />
-                <span className="text-warm">avec souffleur</span>
+                {t("with_blower_title")}<br />
+                <span className="text-warm">{t("with_blower_colored")}</span>
               </h2>
-
               <ImageCarousel images={imagesAvecSouffleur} />
-
-              <p className="text-white/70 leading-relaxed mb-6">
-                Les écrans gonflables avec souffleur sont dotés d'un système de gonflage permanent 
-                pour une installation rapide et un maintien stable de l'écran tout au long de l'événement. 
-                Ces modèles sont adaptés à des événements extérieurs et intérieurs, grâce à leur souffleur 
-                faible consommation (seulement 250 Watts). Vous pouvez ainsi profiter de votre écran en toute tranquillité.
-              </p>
-
+              <p className="text-white/70 leading-relaxed mb-6">{t("with_blower_desc")}</p>
               <h3 className="text-xl font-bold text-ivory mb-4">
-                Les avantages de nos écrans<br />
-                gonflables <span className="text-warm">avec souffleur</span> :
+                {t("with_blower_adv_title")}<br />
+                gonflables <span className="text-warm">{t("with_blower_adv_colored")} :</span>
               </h3>
               <ul className="space-y-3 mb-6">
                 <li className="text-white/70 leading-relaxed">
-                  <strong className="text-ivory">Installation rapide et facile</strong> : grâce au souffleur, 
-                  l'écran est prêt en quelques minutes.
+                  <strong className="text-ivory">{t("with_blower_adv1_bold")}</strong> : {t("with_blower_adv1")}
                 </li>
                 <li className="text-white/70 leading-relaxed">
-                  <strong className="text-ivory">Stabilité assurée</strong> : même dans des conditions extérieures 
-                  variables, nos écrans restent solides grâce au souffleur permanent.
+                  <strong className="text-ivory">{t("with_blower_adv2_bold")}</strong> : {t("with_blower_adv2")}
                 </li>
                 <li className="text-white/70 leading-relaxed">
-                  <strong className="text-ivory">Utilisation intérieure et extérieure</strong> : idéal pour tous 
-                  types d'événements, qu'ils soient en plein air ou en intérieur.
+                  <strong className="text-ivory">{t("with_blower_adv3_bold")}</strong> : {t("with_blower_adv3")}
                 </li>
               </ul>
-
               <h4 className="text-lg font-semibold text-ivory mb-1">
-                Caractéristiques des écrans<br />
-                <span className="text-warm">avec souffleur :</span>
+                {t("with_blower_specs_title")}<br />
+                <span className="text-warm">{t("with_blower_specs_colored")}</span>
               </h4>
-              <p className="text-ivory font-bold text-xl mb-6">Autoportant de 4m à 6m</p>
-
-              {/* Tableau avec souffleur */}
-              <h3 className="text-xl font-bold text-warm mb-4">Écrans Économiques avec Souffleur</h3>
+              <p className="text-ivory font-bold text-xl mb-6">{t("with_blower_range")}</p>
+              <h3 className="text-xl font-bold text-warm mb-4">{t("with_blower_table_title")}</h3>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-warm/30">
-                      <th className="text-left py-3 px-2 text-warm font-semibold text-xs">Taille globale</th>
-                      <th className="text-left py-3 px-2 text-warm font-semibold text-xs">Toile 4:3</th>
-                      <th className="text-left py-3 px-2 text-warm font-semibold text-xs">Poids</th>
-                      <th className="text-left py-3 px-2 text-warm font-semibold text-xs">Hauteur</th>
-                      <th className="text-left py-3 px-2 text-warm font-semibold text-xs">Pers.</th>
+                      <th className="text-left py-3 px-2 text-warm font-semibold text-xs">{t("specs_col_size")}</th>
+                      <th className="text-left py-3 px-2 text-warm font-semibold text-xs">{t("specs_col_screen")}</th>
+                      <th className="text-left py-3 px-2 text-warm font-semibold text-xs">{t("specs_col_weight")}</th>
+                      <th className="text-left py-3 px-2 text-warm font-semibold text-xs">{t("specs_col_height")}</th>
+                      <th className="text-left py-3 px-2 text-warm font-semibold text-xs">{t("specs_col_persons")}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -221,54 +184,41 @@ export default function EcranEconomique() {
             {/* ─── Colonne droite : Sans souffleur ─── */}
             <div className="border border-border rounded-xl p-6 bg-card">
               <h2 className="text-2xl md:text-3xl font-bold text-ivory mb-6">
-                Écrans Gonflables Économiques<br />
-                <span className="text-warm">sans souffleur</span>
+                {t("without_blower_title")}<br />
+                <span className="text-warm">{t("without_blower_colored")}</span>
               </h2>
-
               <ImageCarousel images={imagesSansSouffleur} />
-
-              <p className="text-white/70 leading-relaxed mb-6">
-                Les écrans gonflables sans souffleur sont parfaits pour ceux qui recherchent une option 
-                économique tout en gardant une bonne qualité de projection. Ces écrans sont facilement 
-                transportables et peuvent être installés rapidement sans nécessiter un souffleur permanent.
-              </p>
-
+              <p className="text-white/70 leading-relaxed mb-6">{t("without_blower_desc")}</p>
               <h3 className="text-xl font-bold text-ivory mb-4">
-                Les avantages de nos écrans<br />
-                gonflables <span className="text-warm">sans souffleur</span> :
+                {t("without_blower_adv_title")}<br />
+                gonflables <span className="text-warm">{t("without_blower_adv_colored")} :</span>
               </h3>
               <ul className="space-y-3 mb-6">
                 <li className="text-white/70 leading-relaxed">
-                  <strong className="text-ivory">Solution économique</strong> : idéal pour ceux qui recherchent 
-                  une option abordable sans équipement supplémentaire.
+                  <strong className="text-ivory">{t("without_blower_adv1_bold")}</strong> : {t("without_blower_adv1")}
                 </li>
                 <li className="text-white/70 leading-relaxed">
-                  <strong className="text-ivory">Mobilité</strong> : ces écrans sont faciles à transporter et à 
-                  stocker, ce qui les rend parfaits pour des événements temporaires ou des locations.
+                  <strong className="text-ivory">{t("without_blower_adv2_bold")}</strong> : {t("without_blower_adv2")}
                 </li>
                 <li className="text-white/70 leading-relaxed">
-                  <strong className="text-ivory">Utilisation flexible</strong> : avec des tailles de toiles allant 
-                  de 2m à 6m, il y a un écran adapté à chaque événement, qu'il soit petit ou grand.
+                  <strong className="text-ivory">{t("without_blower_adv3_bold")}</strong> : {t("without_blower_adv3")}
                 </li>
               </ul>
-
               <h4 className="text-lg font-semibold text-ivory mb-1">
-                Caractéristiques des écrans<br />
-                <span className="text-warm">sans souffleur :</span>
+                {t("without_blower_specs_title")}<br />
+                <span className="text-warm">{t("without_blower_specs_colored")}</span>
               </h4>
-              <p className="text-ivory font-bold text-xl mb-6">Autoportant de 2m à 6m</p>
-
-              {/* Tableau sans souffleur */}
-              <h3 className="text-xl font-bold text-warm mb-4">Écrans Économiques sans Souffleur</h3>
+              <p className="text-ivory font-bold text-xl mb-6">{t("without_blower_range")}</p>
+              <h3 className="text-xl font-bold text-warm mb-4">{t("without_blower_table_title")}</h3>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-warm/30">
-                      <th className="text-left py-3 px-2 text-warm font-semibold text-xs">Taille globale</th>
-                      <th className="text-left py-3 px-2 text-warm font-semibold text-xs">Toile 4:3</th>
-                      <th className="text-left py-3 px-2 text-warm font-semibold text-xs">Poids</th>
-                      <th className="text-left py-3 px-2 text-warm font-semibold text-xs">Hauteur</th>
-                      <th className="text-left py-3 px-2 text-warm font-semibold text-xs">Pers.</th>
+                      <th className="text-left py-3 px-2 text-warm font-semibold text-xs">{t("specs_col_size")}</th>
+                      <th className="text-left py-3 px-2 text-warm font-semibold text-xs">{t("specs_col_screen")}</th>
+                      <th className="text-left py-3 px-2 text-warm font-semibold text-xs">{t("specs_col_weight")}</th>
+                      <th className="text-left py-3 px-2 text-warm font-semibold text-xs">{t("specs_col_height")}</th>
+                      <th className="text-left py-3 px-2 text-warm font-semibold text-xs">{t("specs_col_persons")}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -301,20 +251,17 @@ export default function EcranEconomique() {
         </div>
       </section>
 
-      {/* CTA — Vous organisez un événement ? */}
+      {/* CTA */}
       <section className="py-20 bg-background">
         <div className="container text-center">
-          <h2 className="text-3xl font-bold text-ivory mb-4">Vous organisez un événement ?</h2>
-          <p className="text-white/60 mb-8 max-w-xl mx-auto">
-            Obtenez des solutions gonflables sur mesure pour votre événement en plein air. 
-            Contactez-nous, demandez un devis rapide ou découvrez nos tarifs compétitifs.
-          </p>
+          <h2 className="text-3xl font-bold text-ivory mb-4">{t("cta_title")}</h2>
+          <p className="text-white/60 mb-8 max-w-xl mx-auto">{t("cta_desc")}</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
-              Nous Contacter
+              {t("cta_contact")}
             </Link>
             <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
-              Demander un Devis
+              {t("cta_devis")}
             </Link>
             <BrochureDownloadButton productSlug="ecran-economique" productName="Écran Économique" variant="compact" />
           </div>
@@ -327,21 +274,21 @@ export default function EcranEconomique() {
           <div className="flex flex-wrap justify-center items-center gap-8">
             <div className="flex flex-col items-center gap-2">
               <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wXQjDSVfzojKfGxl.webp" alt="Ancre marine" className="w-16 h-16 object-contain" loading="lazy" decoding="async" />
-              <p className="text-white/60 text-xs text-center">L'un des moins chers<br />au monde alliant robustesse</p>
+              <p className="text-white/60 text-xs text-center">{t("icon1_label")}</p>
             </div>
             <div className="flex flex-col items-center gap-2">
               <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YplQWxdVdPyLKIiY.webp" alt="Garantie 1 an" className="w-16 h-16 object-contain" loading="lazy" decoding="async" />
-              <p className="text-white/60 text-xs text-center">Garantie 1 an.</p>
+              <p className="text-white/60 text-xs text-center">{t("icon2_label")}</p>
             </div>
             <div className="flex flex-col items-center gap-2">
               <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZUADZwnRzRLzkrrt.webp" alt="Souffleur" className="w-16 h-16 object-contain" loading="lazy" decoding="async" />
-              <p className="text-white/60 text-xs text-center">Avec souffleur<br />&amp; Sans souffleur</p>
+              <p className="text-white/60 text-xs text-center">{t("icon3_label")}</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Section finale — Images + texte */}
+      {/* Section finale */}
       <section className="py-20 bg-background">
         <div className="container">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
@@ -352,12 +299,8 @@ export default function EcranEconomique() {
             ))}
           </div>
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-ivory mb-4">Idéal pour tous vos événements</h2>
-            <p className="text-white/70 max-w-3xl mx-auto leading-relaxed">
-              Que ce soit pour un événement en plein air, une projection de film, ou un événement sportif, 
-              nos écrans gonflables économiques sont conçus pour être simples à utiliser, solides, et abordables. 
-              Profitez de vos événements en toute simplicité avec un écran de qualité professionnelle.
-            </p>
+            <h2 className="text-3xl font-bold text-ivory mb-4">{t("final_title")}</h2>
+            <p className="text-white/70 max-w-3xl mx-auto leading-relaxed">{t("final_desc")}</p>
           </div>
         </div>
       </section>

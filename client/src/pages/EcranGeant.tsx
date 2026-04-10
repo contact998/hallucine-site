@@ -1,7 +1,6 @@
 /*
  * Page Écran Gonflable Géant (soufflerie)
- * Contenu complet aligné sur le site de référence hallucinecran.com
- * Specs techniques, montage simplifié, avantages, applications, CTA, vidéos
+ * i18n : textes traduits via react-i18next (namespace "ecran-geant")
  */
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
@@ -14,6 +13,7 @@ import { Wind, Clock, Shield, Feather, Users, ArrowRight, Film, Trophy, Music, P
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { useTranslation } from "react-i18next";
 
 const specsData = [
   { taille: "8m × 6m", toile: "7m × 5m", poids: "35 kg", montage: "30 min", personnes: "1" },
@@ -23,14 +23,6 @@ const specsData = [
   { taille: "17m × 12m", toile: "15m × 10m", poids: "180 kg", montage: "1h", personnes: "3" },
   { taille: "20m × 14m", toile: "18m × 12m", poids: "220 kg", montage: "1h", personnes: "4" },
   { taille: "24m × 14m", toile: "22m × 12m", poids: "280 kg", montage: "1h", personnes: "4" },
-];
-
-const avantages = [
-  { icon: Feather, title: "Légèreté inégalée", desc: "Les plus légers au monde, faciles à transporter. Nos écrans sont jusqu'à 3× plus légers que la concurrence grâce à notre technologie de tissu airbag brevetée." },
-  { icon: Clock, title: "Installation rapide", desc: "Gonflage en quelques minutes avec souffleur permanent. Un seul opérateur suffit pour les modèles jusqu'à 13m." },
-  { icon: Shield, title: "Résistance exceptionnelle", desc: "Conçus pour résister aux intempéries et aux terrains irréguliers. Tissu airbag haute résistance, coutures renforcées." },
-  { icon: Wind, title: "Garantie 10 ans", desc: "Investissez en toute confiance dans un équipement fiable et durable. Preuve de notre confiance dans la qualité de nos matériaux." },
-  { icon: Users, title: "Polyvalence", desc: "Convient à une variété d'événements extérieurs, du cinéma en plein air aux rassemblements sportifs, festivals et conférences." },
 ];
 
 const galleryImages = [
@@ -49,10 +41,26 @@ const galleryImages = [
 ];
 
 export default function EcranGeant() {
-  useDocumentMeta("Écran Gonflable Géant à Soufflerie | De 5m à 24m", "Écran de cinéma gonflable géant à soufflerie continue. Tailles de 5m à 24m, installation rapide, qualité professionnelle. Idéal pour cinéma en plein air.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
+  const { t } = useTranslation("ecran-geant");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   const [showCountdown, setShowCountdown] = useState(true);
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
+
+  const avantages = [
+    { icon: Feather, title: t("adv_light_title"), desc: t("adv_light_desc") },
+    { icon: Clock, title: t("adv_fast_title"), desc: t("adv_fast_desc") },
+    { icon: Shield, title: t("adv_solid_title"), desc: t("adv_solid_desc") },
+    { icon: Wind, title: t("adv_silent_title"), desc: t("adv_silent_desc") },
+    { icon: Users, title: t("adv_quality_title"), desc: t("adv_quality_desc") },
+  ];
+
+  const applications = [
+    { icon: Film, title: t("app_cinema_title"), desc: t("app_cinema_desc") },
+    { icon: Trophy, title: t("app_sport_title"), desc: t("app_sport_desc") },
+    { icon: Music, title: t("app_festival_title"), desc: t("app_festival_desc") },
+    { icon: Presentation, title: t("app_conf_title"), desc: t("app_conf_desc") },
+  ];
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -60,15 +68,15 @@ export default function EcranGeant() {
         id="ecran-geant-soufflerie"
         breadcrumbs={[
           { name: "Accueil", url: "https://hallucinecran.fr" },
-          { name: "Écrans gonflables", url: "https://hallucinecran.fr/ecrans-gonflables" },
-          { name: "Écran Gonflable Géant à Soufflerie", url: "https://hallucinecran.fr/ecran-gonflable-geant-soufflerie" },
+          { name: t("section_label"), url: "https://hallucinecran.fr/ecran-gonflable" },
+          { name: t("hero_title"), url: "https://hallucinecran.fr/ecran-gonflable-geant-soufflerie" },
         ]}
         product={{
-          name: "Écran Gonflable Géant à Soufflerie",
-          description: "Écran de cinéma gonflable géant à soufflerie continue. Tailles de 5m à 24m, installation rapide, qualité professionnelle. Idéal pour cinéma en plein air.",
+          name: t("hero_title"),
+          description: t("meta_desc"),
           image: galleryImages.map(img => img.src),
           url: "https://hallucinecran.fr/ecran-gonflable-geant-soufflerie",
-          category: "Écrans gonflables",
+          category: t("section_label"),
           minPrice: 2490,
         }}
       />
@@ -78,25 +86,24 @@ export default function EcranGeant() {
       {/* Hero */}
       <section className="pt-32 pb-16 bg-charcoal-light">
         <div className="container">
-          <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">Écrans gonflables</p>
+          <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">{t("section_label")}</p>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight mb-6">
-            Écrans Gonflables Géants<br />
-            <span className="text-warm">Pour Vos Projections Extérieures</span>
+            {t("hero_title")}<br />
+            <span className="text-warm">{t("hero_subtitle_colored")}</span>
           </h1>
           <h2 className="text-xl md:text-2xl text-ivory/80 font-medium mb-6">
-            Des Écrans Géants Adaptés à Tous Vos Événements
+            {t("hero_h2")}
           </h2>
           <p className="text-white/70 text-lg max-w-3xl leading-relaxed mb-4">
-            Transformez vos événements en plein air grâce à nos écrans gonflables géants, disponibles 
-            dans des tailles allant de <strong className="text-ivory">8 à 30 mètres</strong>.
+            {t("hero_p1")} <strong className="text-ivory">{t("hero_p1_bold")}</strong>.
           </p>
           <p className="text-white/70 text-lg max-w-3xl leading-relaxed mb-8">
-            Pour des projections de films, des événements sportifs ou des festivals, nos écrans allient 
-            <strong className="text-warm"> légèreté</strong>, <strong className="text-warm">durabilité</strong> et <strong className="text-warm">facilité d'installation</strong>.
+            {t("hero_p2_before")}
+            <strong className="text-warm"> {t("hero_p2_w1")}</strong>, <strong className="text-warm">{t("hero_p2_w2")}</strong> {t("hero_p2_w3") ? <span>et <strong className="text-warm">{t("hero_p2_w3")}</strong></span> : null}.
           </p>
           <div className="flex flex-wrap gap-4">
             <Link href="/contactez-nous" className="inline-flex items-center gap-2 px-6 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-all">
-              Demander un devis <ArrowRight className="w-4 h-4" />
+              {t("hero_cta_devis")} <ArrowRight className="w-4 h-4" />
             </Link>
             <BrochureDownloadButton productSlug="ecran-soufflerie" productName="Écran Soufflerie" />
           </div>
@@ -106,7 +113,7 @@ export default function EcranGeant() {
       {/* Galerie photos */}
       <section className="py-16 bg-background">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-8">Nos écrans géants en images</h2>
+          <h2 className="text-3xl font-bold text-ivory mb-8">{t("gallery_title")}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {galleryImages.map((img, i) => (
               <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden group">
@@ -120,7 +127,7 @@ export default function EcranGeant() {
         </div>
       </section>
 
-      {/* Section Montage simplifié — NOUVEAU */}
+      {/* Section Montage simplifié */}
       <section className="py-20 bg-charcoal-light relative overflow-hidden">
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
@@ -213,7 +220,8 @@ export default function EcranGeant() {
       {/* Avantages */}
       <section className="py-20 bg-charcoal-light">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-12">Avantages de Nos Écrans Gonflables Géants</h2>
+          <h2 className="text-3xl font-bold text-ivory mb-4">{t("advantages_title")}</h2>
+          <p className="text-white/60 mb-12">{t("advantages_subtitle")}</p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {avantages.map((a) => (
               <div key={a.title} className="p-6 bg-card border border-border rounded-lg card-hover">
@@ -229,17 +237,17 @@ export default function EcranGeant() {
       {/* Tableau specs */}
       <section className="py-20 bg-background">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-4">Guide des Tailles et Spécifications Techniques</h2>
-          <p className="text-white/60 mb-8">7 tailles disponibles, de 8m à 24m de large</p>
+          <h2 className="text-3xl font-bold text-ivory mb-4">{t("specs_title")}</h2>
+          <p className="text-white/60 mb-8">{t("specs_subtitle")}</p>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-warm/30">
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Taille globale (m)</th>
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Écran de projection (m)</th>
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Poids (kg)</th>
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Temps d'assemblage</th>
-                  <th className="text-left py-4 px-3 text-warm font-semibold">Personnes nécessaires</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">{t("specs_col_size")}</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">{t("specs_col_screen")}</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">{t("specs_col_weight")}</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">{t("specs_col_setup")}</th>
+                  <th className="text-left py-4 px-3 text-warm font-semibold">{t("specs_col_persons")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -256,9 +264,8 @@ export default function EcranGeant() {
             </table>
           </div>
 
-          {/* Contact sous le tableau — NOUVEAU */}
           <div className="mt-8 p-6 bg-card border border-warm/20 rounded-lg flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8">
-            <p className="text-ivory font-medium">Besoin d'informations ?</p>
+            <p className="text-ivory font-medium">{t("specs_note")}</p>
             <a href="mailto:contact@hallucine.fr" className="flex items-center gap-2 text-warm hover:text-warm-light transition-colors">
               <Mail className="w-4 h-4" />
               contact@hallucine.fr
@@ -271,7 +278,7 @@ export default function EcranGeant() {
         </div>
       </section>
 
-      {/* Section vidéo installation 24m — NOUVEAU */}
+      {/* Section vidéo installation */}
       <section className="py-20 bg-charcoal-light">
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
@@ -287,49 +294,61 @@ export default function EcranGeant() {
                 </div>
               </div>
               <div className="p-4">
-                <h3 className="text-ivory font-semibold">Démontage écran soufflerie</h3>
-                <p className="text-white/60 text-sm mt-1">Comment démonter et ranger votre écran gonflable en toute simplicité.</p>
+                <h3 className="text-ivory font-semibold">{t("video_title")}</h3>
+                <p className="text-white/60 text-sm mt-1">{t("video_subtitle")}</p>
               </div>
             </div>
 
             <div>
               <h2 className="text-3xl md:text-4xl font-bold text-ivory mb-6">
-                <span className="text-warm">Découvrez l'Installation Facile</span><br />
-                en Vidéo
+                <span className="text-warm">{t("install_title")}</span><br />
+                {t("install_subtitle")}
               </h2>
-              <p className="text-white/70 text-lg leading-relaxed mb-6">
-                Découvrez comment installer un écran gonflable géant de <strong className="text-warm">24 mètres</strong> sans effort !
-              </p>
-              <p className="text-white/70 leading-relaxed mb-8">
-                Installation rapide, pas besoin d'engin de levage ou d'une grande équipe. 
-                Nos écrans sont conçus pour être déployés facilement, même dans les conditions 
-                les plus exigeantes.
-              </p>
+              <div className="space-y-6 mb-8">
+                <div className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-warm text-charcoal font-bold flex items-center justify-center shrink-0">1</div>
+                  <div>
+                    <h3 className="text-ivory font-semibold mb-1">{t("install_step1_title")}</h3>
+                    <p className="text-white/60 text-sm">{t("install_step1_desc")}</p>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-warm text-charcoal font-bold flex items-center justify-center shrink-0">2</div>
+                  <div>
+                    <h3 className="text-ivory font-semibold mb-1">{t("install_step2_title")}</h3>
+                    <p className="text-white/60 text-sm">{t("install_step2_desc")}</p>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-warm text-charcoal font-bold flex items-center justify-center shrink-0">3</div>
+                  <div>
+                    <h3 className="text-ivory font-semibold mb-1">{t("install_step3_title")}</h3>
+                    <p className="text-white/60 text-sm">{t("install_step3_desc")}</p>
+                  </div>
+                </div>
+              </div>
               <Link href="/mode-emploi" className="text-warm hover:underline font-medium inline-flex items-center gap-2">
-                Voir le mode d'emploi complet <ArrowRight className="w-4 h-4" />
+                {t("install_link")} <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA — Vous organisez un événement ? */}
+      {/* CTA */}
       <section className="py-20 bg-background">
         <div className="container text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-ivory mb-4">Vous organisez un événement ?</h2>
-          <p className="text-white/60 text-lg mb-8 max-w-2xl mx-auto">
-            Obtenez des solutions gonflables sur mesure pour votre événement en plein air. 
-            Contactez-nous, demandez un devis rapide ou découvrez nos tarifs compétitifs.
-          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-ivory mb-4">{t("cta_title")}</h2>
+          <p className="text-white/60 text-lg mb-8 max-w-2xl mx-auto">{t("cta_desc")}</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
-              Nous Contacter
+              {t("cta_contact")}
             </Link>
             <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
-              Demander un Devis
+              {t("cta_devis")}
             </Link>
             <Link href="/contactez-nous" className="px-8 py-3 border border-white/20 text-ivory font-semibold rounded hover:bg-white/5 transition-colors">
-              Voir Nos Tarifs
+              {t("cta_tarifs")}
             </Link>
           </div>
         </div>
@@ -338,15 +357,10 @@ export default function EcranGeant() {
       {/* Applications et Usages */}
       <section className="py-20 bg-charcoal-light">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-4">Applications et Usages</h2>
-          <p className="text-white/60 mb-10 max-w-2xl">Nos écrans gonflables géants sont idéaux pour :</p>
+          <h2 className="text-3xl font-bold text-ivory mb-4">{t("apps_title")}</h2>
+          <p className="text-white/60 mb-10 max-w-2xl">{t("apps_subtitle")}</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { icon: Film, title: "Ciné-parcs", desc: "Offrez une expérience cinéma unique en plein air. Créez des drive-in avec nos écrans géants, visibles depuis les véhicules." },
-              { icon: Trophy, title: "Événements sportifs", desc: "Diffusez des matchs en grand format. Retransmettez compétitions et événements pour vos fans et supporters." },
-              { icon: Music, title: "Festivals", desc: "Attirez les foules avec des projections géantes. Films, concerts visuels, spectacles — nos écrans s'adaptent à tous les formats." },
-              { icon: Presentation, title: "Conférences et séminaires", desc: "Donnez une visibilité accrue à vos présentations. Lancements de produits, séminaires corporate en extérieur." },
-            ].map((app) => (
+            {applications.map((app) => (
               <div key={app.title} className="p-6 bg-card border border-border rounded-lg card-hover">
                 <app.icon className="w-8 h-8 text-warm mb-4" />
                 <h3 className="text-ivory font-semibold mb-2">{app.title}</h3>
@@ -360,19 +374,19 @@ export default function EcranGeant() {
       {/* Pourquoi Choisir Hallucine */}
       <section className="py-20 bg-background">
         <div className="container">
-          <h2 className="text-3xl font-bold text-ivory mb-8">Pourquoi Choisir Hallucine ?</h2>
+          <h2 className="text-3xl font-bold text-ivory mb-8">{t("why_title")}</h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold text-lg mb-3">Expérience éprouvée</h3>
-              <p className="text-white/60 text-sm leading-relaxed">Plus de 30 ans à concevoir des solutions gonflables. Plus de 1000 écrans vendus dans le monde entier.</p>
+              <h3 className="text-warm font-semibold text-lg mb-3">{t("why_exp_title")}</h3>
+              <p className="text-white/60 text-sm leading-relaxed">{t("why_exp_desc")}</p>
             </div>
             <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold text-lg mb-3">Service clé en main</h3>
-              <p className="text-white/60 text-sm leading-relaxed">De la conception à l'installation, nous vous accompagnons. Conseil technique, personnalisation, logistique internationale.</p>
+              <h3 className="text-warm font-semibold text-lg mb-3">{t("why_service_title")}</h3>
+              <p className="text-white/60 text-sm leading-relaxed">{t("why_service_desc")}</p>
             </div>
             <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="text-warm font-semibold text-lg mb-3">Produits personnalisables</h3>
-              <p className="text-white/60 text-sm leading-relaxed">Ajoutez des logos ou des visuels spécifiques. Chaque écran peut être adapté à vos besoins : dimensions sur mesure, impression personnalisée.</p>
+              <h3 className="text-warm font-semibold text-lg mb-3">{t("why_custom_title")}</h3>
+              <p className="text-white/60 text-sm leading-relaxed">{t("why_custom_desc")}</p>
             </div>
           </div>
         </div>

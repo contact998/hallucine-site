@@ -88,7 +88,7 @@ i18n
     lng: detectedLang,
     fallbackLng: "fr",
     supportedLngs: ["fr", "en", "de", "es"],
-    ns: ["common", "home", "products", "contact", "legal", "nav"],
+    ns: ["common", "home", "products", "contact", "legal", "nav", "ecran-geant", "ecran-etanche", "ecran-economique", "comparaison", "ecrans-led", "tentes", "tente-x", "tente-n", "tente-v", "tente-araignee", "arches-gonflables", "mobilier", "accessoires"],
     defaultNS: "common",
     backend: {
       loadPath: "/locales/{{lng}}/{{ns}}.json",
