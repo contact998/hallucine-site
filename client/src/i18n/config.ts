@@ -44,19 +44,19 @@ const VALID_LANGS = ["fr", "en", "de", "es"];
 export function detectLanguage(): string {
   if (typeof window === "undefined") return "fr";
 
-  // 1. Langue injectée par Puppeteer SSG (Object.defineProperty → non-overridable)
-  if (window.__INITIAL_LOCALE__ && VALID_LANGS.includes(window.__INITIAL_LOCALE__)) {
-    return window.__INITIAL_LOCALE__;
-  }
-
-  // 2. Paramètre URL ?lang=xx (dev + tests)
+  // 1. Paramètre URL ?lang=xx (priorité absolue — dev + tests)
   const urlParams = new URLSearchParams(window.location.search);
   const langParam = urlParams.get("lang");
   if (langParam && VALID_LANGS.includes(langParam)) {
     return langParam;
   }
 
-  // 3. Domaine (production sans SSG injecté)
+  // 2. Langue injectée par le serveur selon le domaine (production)
+  if (window.__INITIAL_LOCALE__ && VALID_LANGS.includes(window.__INITIAL_LOCALE__)) {
+    return window.__INITIAL_LOCALE__;
+  }
+
+  // 3. Domaine (fallback si __INITIAL_LOCALE__ non injecté)
   const hostname = window.location.hostname;
   if (DOMAIN_LANG_MAP[hostname]) {
     return DOMAIN_LANG_MAP[hostname];
