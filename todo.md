@@ -913,3 +913,23 @@
 
 ## Images & Assets
 - [x] Remplacer les 6 images de la page "Écrans gonflables étanches" par les nouvelles optimisées
+
+## Internationalisation (i18n) — 4 langues, 4 domaines
+
+- [x] Phase 1 : Installer i18next, react-i18next, i18next-browser-languagedetector
+- [x] Phase 1 : Créer la configuration i18next avec détection de langue par domaine
+- [x] Phase 2 : Extraire tous les textes du site en fichiers JSON (locales/fr/)
+- [x] Phase 3 : Traduire automatiquement EN/DE/ES via LLM (6 fichiers × 3 langues = 18 fichiers)
+- [x] Phase 4 : Refactoriser Navbar, HeroSection, Footer avec t('clé')
+- [x] Phase 4 : Adapter le chatbot IA pour répondre dans la langue du domaine
+- [ ] Phase 4 : Adapter les brochures PDF pour la langue du visiteur
+- [ ] Phase 4 : Adapter les calculateurs de tentes (labels, résultats)
+- [x] Phase 5 : Configurer les URLs traduites par domaine
+- [x] Phase 5 : Mettre à jour le routing dans App.tsx
+- [ ] Phase 5 : Gérer les redirections 301 pour les anciennes URLs
+- [ ] Phase 6 : Adapter index.html (lang, og:locale, canonical) par domaine
+- [ ] Phase 6 : Mettre à jour les hreflang avec URLs traduites
+- [ ] Phase 6 : Créer un sitemap par domaine
+- [ ] Phase 6 : Mettre à jour le script SSG (prerender.mjs) pour les 4 domaines
+- [ ] Phase 6 : Ajouter champ langue dans contactSubmissions (DB)
+- [ ] Phase 7 : Tests, checkpoint et déploiement

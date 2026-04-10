@@ -1,29 +1,28 @@
 /*
  * Hero Section — Design cinématographique premium
- * + Faisceau de projecteur animé (ProjectorBeam)
- * + Particules dorées flottantes (GoldenParticles via tsParticles)
- * + Text glow renforcé sur les titres
+ * i18n : textes traduits via react-i18next
  */
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown, ArrowRight, Play } from "lucide-react";
 import { Link } from "wouter";
 import { useRef } from "react";
-
+import { useTranslation } from "react-i18next";
 
 const HERO_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp";
-
-const stats = [
-  { value: "30", suffix: " ans", label: "d'expertise" },
-  { value: "3×", suffix: "", label: "plus léger" },
-  { value: "10", suffix: " ans", label: "de garantie" },
-  { value: "24", suffix: "m", label: "écran max" },
-];
 
 export default function HeroSection() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const { t } = useTranslation("home");
+
+  const stats = [
+    { value: "30", suffix: t("hero.stats.expertise_suffix"), label: t("hero.stats.expertise") },
+    { value: "3×", suffix: "", label: t("hero.stats.lighter") },
+    { value: "10", suffix: t("hero.stats.guarantee_suffix"), label: t("hero.stats.guarantee") },
+    { value: "24", suffix: "m", label: t("hero.stats.screen_max") },
+  ];
 
   return (
     <section ref={ref} id="hero" className="relative min-h-screen flex items-end overflow-hidden">
@@ -31,7 +30,7 @@ export default function HeroSection() {
       <motion.div style={{ y: imgY }} className="absolute inset-0 -top-[10%] -bottom-[10%]">
         <img
           src={HERO_IMG}
-          alt="Écran de cinéma gonflable géant Hallucine en projection nocturne"
+          alt={t("hero.img_alt")}
           className="w-full h-full object-cover scale-110"
           width={1920}
           height={1080}
@@ -50,7 +49,6 @@ export default function HeroSection() {
         backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
       }} />
 
-
       {/* Content */}
       <motion.div style={{ opacity, zIndex: 5 }} className="relative container pb-32 pt-48">
         <div className="max-w-3xl">
@@ -62,10 +60,10 @@ export default function HeroSection() {
             className="flex items-center gap-3 mb-10"
           >
             <div className="w-12 h-[1px] bg-gold" />
-            <span className="text-gold text-sm font-semibold tracking-[0.3em] uppercase">Fabricant français depuis 1995</span>
+            <span className="text-gold text-sm font-semibold tracking-[0.3em] uppercase">{t("hero.badge")}</span>
           </motion.div>
 
-          {/* 💫 Citation principale — slogan accrocheur */}
+          {/* Citation principale */}
           <motion.blockquote
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -73,18 +71,18 @@ export default function HeroSection() {
             className="mb-10 max-w-4xl"
           >
             <p className="text-3xl sm:text-4xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-white font-serif italic">
-              «&nbsp;Nos concurrents n'ont jamais eu, à 3h du matin, à devoir replier un écran pour aller se coucher. <span className="text-gradient-gold text-glow-gold-intense">Nous, si.</span> C'est pour cela que nous avons tout repensé.&nbsp;»
+              «&nbsp;{t("hero.quote_before")}&nbsp;<span className="text-gradient-gold text-glow-gold-intense">{t("hero.quote_highlight")}</span>&nbsp;{t("hero.quote_after")}&nbsp;»
             </p>
           </motion.blockquote>
 
-          {/* Sous-titre — L'écran de cinéma le plus léger au monde */}
+          {/* Sous-titre */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
             className="text-xl sm:text-2xl lg:text-3xl font-semibold tracking-wide uppercase text-white/70 mb-12"
           >
-            Écrans de cinéma gonflables <span className="text-gradient-gold">fabriqués en France</span> depuis 1995
+            {t("hero.subtitle_before")} <span className="text-gradient-gold">{t("hero.subtitle_highlight")}</span> {t("hero.subtitle_after")}
           </motion.h1>
 
           {/* CTAs */}
@@ -98,7 +96,7 @@ export default function HeroSection() {
               href="/contactez-nous"
               className="group flex items-center gap-3 px-8 py-4 bg-gold text-navy-deep font-semibold text-base hover:bg-gold-light transition-all duration-500 glow-gold"
             >
-              Demander un devis gratuit
+              {t("hero.cta_devis")}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
@@ -106,7 +104,7 @@ export default function HeroSection() {
               className="group flex items-center gap-3 px-8 py-4 border border-white/15 text-white/90 font-medium text-base hover:border-gold/40 hover:text-gold transition-all duration-500"
             >
               <Play className="w-4 h-4" />
-              Découvrir nos écrans
+              {t("hero.cta_discover")}
             </Link>
           </motion.div>
         </div>
@@ -136,7 +134,7 @@ export default function HeroSection() {
         transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
         className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <span className="text-xs text-white/40 tracking-[0.3em] uppercase">Scroll</span>
+        <span className="text-xs text-white/40 tracking-[0.3em] uppercase">{t("hero.scroll")}</span>
         <ChevronDown className="w-5 h-5 text-white/40" />
       </motion.div>
     </section>

@@ -5,6 +5,7 @@
  * Après quelques échanges, propose un bouton "Demander un devis" pré-rempli
  */
 import { useState, useRef, useEffect, useCallback } from "react";
+import { detectLanguage } from "@/i18n/config";
 import { trpc } from "@/lib/trpc";
 import { MessageCircle, X, Send, Loader2, Sparkles, User, ChevronDown, FileText, Monitor, Mail } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -151,7 +152,7 @@ export default function HallucineChatbot() {
     const conversationHistory = newMessages.filter(
       (m) => m !== WELCOME_MESSAGE || m.role === "user"
     );
-    chatMutation.mutate({ messages: conversationHistory });
+    chatMutation.mutate({ messages: conversationHistory, lang: detectLanguage() as "fr" | "en" | "de" | "es" });
   }, [messages, chatMutation]);
 
   const handleSubmit = (e: React.FormEvent) => {

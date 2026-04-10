@@ -1,0 +1,83 @@
+{
+  "hero": {
+    "badge": "Fabricant français depuis 1995",
+    "quote_before": "Nos concurrents n'ont jamais eu, à 3h du matin, à devoir replier un écran pour aller se coucher.",
+    "quote_highlight": "Nous, si.",
+    "quote_after": "C'est pour cela que nous avons tout repensé.",
+    "subtitle_before": "Écrans de cinéma gonflables",
+    "subtitle_highlight": "fabriqués en France",
+    "subtitle_after": "depuis 1995",
+    "cta_devis": "Demander un devis gratuit",
+    "cta_discover": "Découvrir nos écrans",
+    "img_alt": "Écran de cinéma gonflable géant Hallucine en projection nocturne",
+    "scroll": "Scroll",
+    "stats": {
+      "expertise": "d'expertise",
+      "expertise_suffix": " ans",
+      "lighter": "plus léger",
+      "guarantee": "de garantie",
+      "guarantee_suffix": " ans",
+      "screen_max": "écran max"
+    }
+  },
+  "products": {
+    "title": "Nos Produits",
+    "subtitle": "Une gamme complète pour tous vos événements",
+    "ecrans_title": "Écrans Gonflables",
+    "ecrans_desc": "De 2m à 24m, les écrans les plus légers au monde. Technologie soufflerie ou étanche à l'air.",
+    "tentes_title": "Tentes Gonflables",
+    "tentes_desc": "Tentes événementielles gonflables pour tous vos événements en plein air.",
+    "arches_title": "Arches Gonflables",
+    "arches_desc": "Arches gonflables pour événements sportifs et promotionnels.",
+    "mobilier_title": "Mobilier Gonflable",
+    "mobilier_desc": "Fauteuils, canapés, poufs gonflables pour vos espaces lounge."
+  },
+  "technology": {
+    "title": "Notre Technologie",
+    "subtitle": "30 ans d'innovation au service du cinéma en plein air",
+    "leger_title": "3× Plus Léger",
+    "leger_desc": "Notre technologie brevetée rend nos écrans 3 fois plus légers que la concurrence.",
+    "montage_title": "10 min de Montage",
+    "montage_desc": "Montage en 10 minutes par 2 personnes, sans outils.",
+    "garantie_title": "10 ans de Garantie",
+    "garantie_desc": "Nos écrans sont garantis 10 ans, pièces et main d'œuvre.",
+    "taille_title": "Jusqu'à 24m",
+    "taille_desc": "Le plus grand écran gonflable du monde, 24 mètres de base."
+  },
+  "usecases": {
+    "title": "Ils nous font confiance",
+    "subtitle": "Des milliers d'événements organisés dans le monde entier",
+    "cinema_title": "Cinéma en Plein Air",
+    "cinema_desc": "Projections estivales, festivals de cinéma, drive-in.",
+    "sport_title": "Événements Sportifs",
+    "sport_desc": "Fan zones, retransmissions, Jeux Olympiques.",
+    "corporate_title": "Événements Corporate",
+    "corporate_desc": "Séminaires, lancements de produits, team building.",
+    "mariage_title": "Mariages & Fêtes",
+    "mariage_desc": "Soirées privées, mariages, anniversaires."
+  },
+  "story": {
+    "title": "Notre Histoire",
+    "subtitle": "30 ans de passion pour le cinéma en plein air"
+  },
+  "realisations": {
+    "title": "Nos Réalisations",
+    "subtitle": "Quelques-uns de nos projets emblématiques"
+  },
+  "faq": {
+    "title": "Questions Fréquentes",
+    "subtitle": "Tout ce que vous devez savoir sur nos écrans gonflables",
+    "q1": "Quelle est la durée de vie d'un écran gonflable Hallucine ?",
+    "a1": "Nos écrans sont garantis 10 ans et peuvent durer bien au-delà avec un entretien approprié. La toile de projection est remplaçable.",
+    "q2": "Combien de temps faut-il pour monter un écran ?",
+    "a2": "Le montage prend environ 10 minutes pour 2 personnes, sans outils. Le dégonflage est encore plus rapide.",
+    "q3": "Les écrans résistent-ils au vent ?",
+    "a3": "Nos écrans sont testés jusqu'à 80 km/h de vent. Au-delà, nous recommandons de les dégonfler par précaution.",
+    "q4": "Livrez-vous à l'international ?",
+    "a4": "Oui, nous livrons dans le monde entier. Les délais varient selon la destination."
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "subtitle": "Notre équipe est disponible pour répondre à toutes vos questions"
+  }
+}

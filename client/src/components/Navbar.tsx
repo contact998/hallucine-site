@@ -1,7 +1,8 @@
-/*
+/**
  * Navigation complète Hallucine
  * Top bar (email, tel, réseaux sociaux) + Menu principal avec dropdowns
  * Reproduit fidèlement la structure du site de référence
+ * i18n : textes traduits via react-i18next
  */
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -10,17 +11,19 @@ import { Link, useLocation } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { AvailabilityBadge } from "@/components/AvailabilityIndicator";
+import { useTranslation } from "react-i18next";
+import { LANGUAGE_DOMAINS, detectLanguage } from "@/i18n/config";
 
 const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tWSEvNLkFkmjxAXj.png";
 
 const languages = [
-  { code: "fr", label: "FR", flag: "🇫🇷", url: "https://hallucinecran.fr" },
-  { code: "en", label: "EN", flag: "🇬🇧", url: "https://hallucinecran.com" },
-  { code: "de", label: "DE", flag: "🇩🇪", url: "https://hallucinecran.de" },
-  { code: "es", label: "ES", flag: "🇪🇸", url: "https://hallucinecran.es" },
+  { code: "fr", label: "FR", flag: "🇫🇷", url: LANGUAGE_DOMAINS.fr },
+  { code: "en", label: "EN", flag: "🇬🇧", url: LANGUAGE_DOMAINS.en },
+  { code: "de", label: "DE", flag: "🇩🇪", url: LANGUAGE_DOMAINS.de },
+  { code: "es", label: "ES", flag: "🇪🇸", url: LANGUAGE_DOMAINS.es },
 ];
 
-const currentLang = "fr";
+const currentLang = detectLanguage();
 
 function LanguageSwitcher({ mobile = false }: { mobile?: boolean }) {
   const [open, setOpen] = useState(false);
@@ -34,7 +37,7 @@ function LanguageSwitcher({ mobile = false }: { mobile?: boolean }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const current = languages.find((l) => l.code === currentLang)!;
+  const current = languages.find((l) => l.code === currentLang) ?? languages[0];
   const others = languages.filter((l) => l.code !== currentLang);
 
   if (mobile) {
@@ -106,45 +109,6 @@ interface NavItem {
   dropdown?: DropdownItem[];
 }
 
-const navItems: NavItem[] = [
-  { label: "Accueil", href: "/" },
-  {
-    label: "Ecran gonflable",
-    dropdown: [
-      { label: "Écran gonflable géant (soufflerie)", href: "/ecran-gonflable-geant-soufflerie" },
-      { label: "Comparaison", href: "/comparaison-ecran-gonflable" },
-      { label: "Écran gonflable étanche à l'air", href: "/ecran-gonflable-etanche-air" },
-      { label: "Écran économique", href: "/ecran-gonflable-economique" },
-      { label: "Mode d'emploi", href: "/mode-emploi" },
-      { label: "Écrans LED", href: "/ecrans-led" },
-    ],
-  },
-  {
-    label: "Tente Arche & Meuble",
-    dropdown: [
-      { label: "Tentes X", href: "/tente-gonflable-x" },
-      { label: "Tentes N", href: "/tente-gonflable-n" },
-      { label: "Tentes V", href: "/tente-gonflable-v" },
-      { label: "Tentes araignées", href: "/tente-gonflable-araignee" },
-      { label: "Arches gonflables", href: "/arche-gonflable" },
-      { label: "Mobilier gonflable", href: "/mobilier-gonflable" },
-    ],
-  },
-  { label: "Accessoires", href: "/accessoire-cinema-plein-air" },
-  { label: "Galerie", href: "/galerie-evenements" },
-  { label: "Contactez-nous", href: "/contactez-nous" },
-  {
-    label: "Plus",
-    dropdown: [
-      { label: "À propos", href: "/a-propos-hallucine" },
-      { label: "Devis gratuit", href: "/devis" },
-      { label: "Mode d'emploi", href: "/mode-emploi" },
-      { label: "Galerie vidéo", href: "/galerie-video" },
-      { label: "Blog", href: "/blog" },
-    ],
-  },
-];
-
 function DesktopDropdown({ items, isOpen }: { items: DropdownItem[]; isOpen: boolean }) {
   return (
     <AnimatePresence>
@@ -179,6 +143,47 @@ export default function Navbar() {
   const [location] = useLocation();
   const dropdownTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { isAuthenticated, user } = useAuth();
+  const { t } = useTranslation("nav");
+
+  // Menu de navigation traduit dynamiquement
+  const navItems: NavItem[] = [
+    { label: t("accueil"), href: "/" },
+    {
+      label: t("ecran_gonflable"),
+      dropdown: [
+        { label: t("ecran_geant"), href: "/ecran-gonflable-geant-soufflerie" },
+        { label: t("comparaison"), href: "/comparaison-ecran-gonflable" },
+        { label: t("ecran_etanche"), href: "/ecran-gonflable-etanche-air" },
+        { label: t("ecran_economique"), href: "/ecran-gonflable-economique" },
+        { label: t("mode_emploi"), href: "/mode-emploi" },
+        { label: t("ecrans_led"), href: "/ecrans-led" },
+      ],
+    },
+    {
+      label: t("tente_arche_meuble"),
+      dropdown: [
+        { label: t("tentes_x"), href: "/tente-gonflable-x" },
+        { label: t("tentes_n"), href: "/tente-gonflable-n" },
+        { label: t("tentes_v"), href: "/tente-gonflable-v" },
+        { label: t("tentes_araignees"), href: "/tente-gonflable-araignee" },
+        { label: t("arches"), href: "/arche-gonflable" },
+        { label: t("mobilier"), href: "/mobilier-gonflable" },
+      ],
+    },
+    { label: t("accessoires"), href: "/accessoire-cinema-plein-air" },
+    { label: t("galerie"), href: "/galerie-evenements" },
+    { label: t("contactez_nous"), href: "/contactez-nous" },
+    {
+      label: t("plus"),
+      dropdown: [
+        { label: t("a_propos"), href: "/a-propos-hallucine" },
+        { label: t("devis_gratuit"), href: "/devis" },
+        { label: t("mode_emploi"), href: "/mode-emploi" },
+        { label: t("galerie_video"), href: "/galerie-video" },
+        { label: t("blog"), href: "/blog" },
+      ],
+    },
+  ];
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -216,7 +221,7 @@ export default function Navbar() {
               +33 6 80 14 76 94
             </a>
           </div>
-            <div className="hidden sm:flex items-center gap-3">
+          <div className="hidden sm:flex items-center gap-3">
             <AvailabilityBadge />
             <div className="w-px h-3 bg-white/20" />
             <a href="https://www.linkedin.com/company/hallucine" target="_blank" rel="noopener noreferrer" className="hover:text-warm transition-colors p-2 -m-1.5 inline-flex items-center justify-center" aria-label="LinkedIn">
@@ -289,7 +294,7 @@ export default function Navbar() {
               href="/devis"
               className="flex items-center gap-2 px-5 py-2 bg-warm text-charcoal font-semibold text-sm rounded hover:bg-warm-light transition-all duration-300"
             >
-              Devis gratuit
+              {t("devis_gratuit")}
             </Link>
             {isAuthenticated && user?.role === "admin" && (
               <Link
@@ -305,7 +310,7 @@ export default function Navbar() {
                 className="flex items-center gap-1.5 px-3 py-2 border border-white/20 text-white/80 text-sm rounded hover:border-warm/50 hover:text-warm transition-colors"
               >
                 <User className="w-4 h-4" />
-                Profil
+                {t("profil")}
               </Link>
             ) : (
               <a
@@ -313,7 +318,7 @@ export default function Navbar() {
                 className="flex items-center gap-1.5 px-3 py-2 border border-white/20 text-white/80 text-sm rounded hover:border-warm/50 hover:text-warm transition-colors"
               >
                 <User className="w-4 h-4" />
-                Connexion
+                {t("connexion")}
               </a>
             )}
           </div>
@@ -322,7 +327,7 @@ export default function Navbar() {
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="xl:hidden text-white p-2"
-            aria-label={mobileOpen ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-label={mobileOpen ? t("fermer_menu") : t("ouvrir_menu")}
           >
             {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -389,7 +394,7 @@ export default function Navbar() {
                   onClick={() => setMobileOpen(false)}
                   className="mt-3 flex items-center justify-center gap-2 px-6 py-3 bg-warm text-charcoal font-semibold rounded"
                 >
-                  Devis gratuit
+                  {t("devis_gratuit")}
                 </Link>
                 {isAuthenticated && user?.role === "admin" && (
                   <Link
@@ -397,7 +402,7 @@ export default function Navbar() {
                     onClick={() => setMobileOpen(false)}
                     className="mt-2 flex items-center justify-center gap-2 px-6 py-3 bg-warm/10 border border-warm/30 text-warm font-semibold rounded hover:bg-warm/20"
                   >
-                    Panneau Admin
+                    {t("panneau_admin")}
                   </Link>
                 )}
                 {isAuthenticated ? (
@@ -407,7 +412,7 @@ export default function Navbar() {
                     className="mt-2 flex items-center justify-center gap-2 px-6 py-3 border border-white/20 text-white/80 font-semibold rounded hover:border-warm/50 hover:text-warm"
                   >
                     <User className="w-4 h-4" />
-                    Mon Profil
+                    {t("mon_profil")}
                   </Link>
                 ) : (
                   <a
@@ -415,11 +420,11 @@ export default function Navbar() {
                     className="mt-2 flex items-center justify-center gap-2 px-6 py-3 border border-white/20 text-white/80 font-semibold rounded hover:border-warm/50 hover:text-warm"
                   >
                     <User className="w-4 h-4" />
-                    Connexion
+                    {t("connexion")}
                   </a>
                 )}
                 <div className="mt-3 border-t border-white/10 pt-3">
-                  <p className="text-xs text-white/50 px-2 mb-2">Langue</p>
+                  <p className="text-xs text-white/50 px-2 mb-2">{t("langue")}</p>
                   <LanguageSwitcher mobile />
                 </div>
               </div>

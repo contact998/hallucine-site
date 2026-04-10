@@ -1,0 +1,83 @@
+{
+  "hero": {
+    "badge": "Französischer Hersteller seit 1995",
+    "quote_before": "Unsere Konkurrenten mussten noch nie um 3 Uhr morgens einen Bildschirm zusammenklappen, um ins Bett zu gehen.",
+    "quote_highlight": "Wir schon.",
+    "quote_after": "Deshalb haben wir alles neu durchdacht.",
+    "subtitle_before": "Aufblasbare Kinoleinwände",
+    "subtitle_highlight": "hergestellt in Frankreich",
+    "subtitle_after": "seit 1995",
+    "cta_devis": "Kostenloses Angebot anfordern",
+    "cta_discover": "Unsere Bildschirme entdecken",
+    "img_alt": "Riesige aufblasbare Hallucine Kinoleinwand bei Nachtprojektion",
+    "scroll": "Scrollen",
+    "stats": {
+      "expertise": "Jahre Erfahrung",
+      "expertise_suffix": "",
+      "lighter": "leichter",
+      "guarantee": "Jahre Garantie",
+      "guarantee_suffix": "",
+      "screen_max": "max. Bildschirmgröße"
+    }
+  },
+  "products": {
+    "title": "Unsere Produkte",
+    "subtitle": "Ein komplettes Sortiment für all Ihre Veranstaltungen",
+    "ecrans_title": "Aufblasbare Leinwände",
+    "ecrans_desc": "Von 2m bis 24m, die leichtesten Leinwände der Welt. Gebläse- oder luftdichte Technologie.",
+    "tentes_title": "Aufblasbare Zelte",
+    "tentes_desc": "Aufblasbare Eventzelte für all Ihre Outdoor-Veranstaltungen.",
+    "arches_title": "Aufblasbare Bögen",
+    "arches_desc": "Aufblasbare Bögen für Sport- und Werbeveranstaltungen.",
+    "mobilier_title": "Aufblasbare Möbel",
+    "mobilier_desc": "Aufblasbare Sessel, Sofas, Sitzsäcke für Ihre Lounge-Bereiche."
+  },
+  "technology": {
+    "title": "Unsere Technologie",
+    "subtitle": "30 Jahre Innovation im Dienste des Open-Air-Kinos",
+    "leger_title": "3× Leichter",
+    "leger_desc": "Unsere patentierte Technologie macht unsere Leinwände 3-mal leichter als die Konkurrenz.",
+    "montage_title": "10 Min. Aufbau",
+    "montage_desc": "Aufbau in 10 Minuten durch 2 Personen, ohne Werkzeug.",
+    "garantie_title": "10 Jahre Garantie",
+    "garantie_desc": "Unsere Leinwände haben 10 Jahre Garantie auf Teile und Arbeitsleistung.",
+    "taille_title": "Bis zu 24m",
+    "taille_desc": "Die größte aufblasbare Leinwand der Welt, 24 Meter Basis."
+  },
+  "usecases": {
+    "title": "Sie vertrauen uns",
+    "subtitle": "Tausende von Veranstaltungen weltweit organisiert",
+    "cinema_title": "Open-Air-Kino",
+    "cinema_desc": "Sommerprojektionen, Filmfestivals, Drive-Ins.",
+    "sport_title": "Sportveranstaltungen",
+    "sport_desc": "Fanzonen, Übertragungen, Olympische Spiele.",
+    "corporate_title": "Firmenveranstaltungen",
+    "corporate_desc": "Seminare, Produkteinführungen, Teambuilding.",
+    "mariage_title": "Hochzeiten & Feste",
+    "mariage_desc": "Private Partys, Hochzeiten, Geburtstage."
+  },
+  "story": {
+    "title": "Unsere Geschichte",
+    "subtitle": "30 Jahre Leidenschaft für das Open-Air-Kino"
+  },
+  "realisations": {
+    "title": "Unsere Projekte",
+    "subtitle": "Einige unserer emblematischen Projekte"
+  },
+  "faq": {
+    "title": "Häufig gestellte Fragen",
+    "subtitle": "Alles, was Sie über unsere aufblasbaren Leinwände wissen müssen",
+    "q1": "Wie lange hält eine aufblasbare Hallucine Leinwand?",
+    "a1": "Unsere Leinwände haben eine Garantie von 10 Jahren und können bei richtiger Pflege weit darüber hinaus halten. Die Projektionsfläche ist austauschbar.",
+    "q2": "Wie lange dauert der Aufbau einer Leinwand?",
+    "a2": "Der Aufbau dauert etwa 10 Minuten für 2 Personen, ohne Werkzeug. Das Ablassen der Luft ist noch schneller.",
+    "q3": "Sind die Leinwände windbeständig?",
+    "a3": "Unsere Leinwände sind bis zu 80 km/h Wind getestet. Darüber hinaus empfehlen wir, sie vorsichtshalber abzubauen.",
+    "q4": "Liefern Sie international?",
+    "a4": "Ja, wir liefern weltweit. Die Lieferzeiten variieren je nach Zielort."
+  },
+  "contact": {
+    "title": "Kontaktieren Sie uns",
+    "subtitle": "Unser Team steht Ihnen für alle Ihre Fragen zur Verfügung"
+  }
+}

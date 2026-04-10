@@ -1,0 +1,83 @@
+{
+  "hero": {
+    "badge": "French manufacturer since 1995",
+    "quote_before": "Our competitors have never had to fold a screen at 3 AM to go to bed.",
+    "quote_highlight": "We have.",
+    "quote_after": "That's why we've rethought everything.",
+    "subtitle_before": "Inflatable cinema screens",
+    "subtitle_highlight": "made in France",
+    "subtitle_after": "since 1995",
+    "cta_devis": "Request a free quote",
+    "cta_discover": "Discover our screens",
+    "img_alt": "Giant Hallucine inflatable cinema screen during a night projection",
+    "scroll": "Scroll",
+    "stats": {
+      "expertise": "of expertise",
+      "expertise_suffix": " years",
+      "lighter": "lighter",
+      "guarantee": "guarantee",
+      "guarantee_suffix": " years",
+      "screen_max": "max screen"
+    }
+  },
+  "products": {
+    "title": "Our Products",
+    "subtitle": "A complete range for all your events",
+    "ecrans_title": "Inflatable Screens",
+    "ecrans_desc": "From 2m to 24m, the lightest screens in the world. Blower or airtight technology.",
+    "tentes_title": "Inflatable Tents",
+    "tentes_desc": "Inflatable event tents for all your outdoor events.",
+    "arches_title": "Inflatable Arches",
+    "arches_desc": "Inflatable arches for sports and promotional events.",
+    "mobilier_title": "Inflatable Furniture",
+    "mobilier_desc": "Inflatable armchairs, sofas, ottomans for your lounge areas."
+  },
+  "technology": {
+    "title": "Our Technology",
+    "subtitle": "30 years of innovation for open-air cinema",
+    "leger_title": "3× Lighter",
+    "leger_desc": "Our patented technology makes our screens 3 times lighter than the competition.",
+    "montage_title": "10 min Setup",
+    "montage_desc": "Setup in 10 minutes by 2 people, without tools.",
+    "garantie_title": "10-year Warranty",
+    "garantie_desc": "Our screens are guaranteed for 10 years, parts and labor.",
+    "taille_title": "Up to 24m",
+    "taille_desc": "The world's largest inflatable screen, 24 meters wide."
+  },
+  "usecases": {
+    "title": "They trust us",
+    "subtitle": "Thousands of events organized worldwide",
+    "cinema_title": "Open-Air Cinema",
+    "cinema_desc": "Summer screenings, film festivals, drive-ins.",
+    "sport_title": "Sporting Events",
+    "sport_desc": "Fan zones, broadcasts, Olympic Games.",
+    "corporate_title": "Corporate Events",
+    "corporate_desc": "Seminars, product launches, team building.",
+    "mariage_title": "Weddings & Parties",
+    "mariage_desc": "Private parties, weddings, birthdays."
+  },
+  "story": {
+    "title": "Our Story",
+    "subtitle": "30 years of passion for open-air cinema"
+  },
+  "realisations": {
+    "title": "Our Achievements",
+    "subtitle": "Some of our emblematic projects"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Everything you need to know about our inflatable screens",
+    "q1": "What is the lifespan of a Hallucine inflatable screen?",
+    "a1": "Our screens are guaranteed for 10 years and can last much longer with proper maintenance. The projection surface is replaceable.",
+    "q2": "How long does it take to set up a screen?",
+    "a2": "Setup takes about 10 minutes for 2 people, without tools. Deflation is even faster.",
+    "q3": "Are the screens wind resistant?",
+    "a3": "Our screens are tested up to 80 km/h wind. Beyond that, we recommend deflating them as a precaution.",
+    "q4": "Do you ship internationally?",
+    "a4": "Yes, we ship worldwide. Delivery times vary depending on the destination."
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Our team is available to answer all your questions"
+  }
+}

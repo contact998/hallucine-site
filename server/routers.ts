@@ -445,10 +445,11 @@ export const appRouter = router({
               content: z.string(),
             })
           ),
+          lang: z.enum(["fr", "en", "de", "es"]).optional().default("fr"),
         })
       )
       .mutation(async ({ input }) => {
-        const response = await chatWithAssistant(input.messages);
+        const response = await chatWithAssistant(input.messages, input.lang);
         return { response };
       }),
   }),

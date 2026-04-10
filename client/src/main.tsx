@@ -1,4 +1,5 @@
 import { trpc } from "@/lib/trpc";
+import "./i18n/config"; // Initialisation i18n — doit être importé avant App
 import { UNAUTHED_ERR_MSG } from '@shared/const';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, retryLink, TRPCClientError } from "@trpc/client";
@@ -7,6 +8,7 @@ import superjson from "superjson";
 import App from "./App";
 import { getLoginUrl } from "./const";
 import "./index.css";
+import { Suspense } from "react";
 
 /**
  * Détecte si une erreur tRPC est causée par une réponse HTML (502/503 du proxy)
@@ -104,7 +106,9 @@ const trpcClient = trpc.createClient({
 createRoot(document.getElementById("root")!).render(
   <trpc.Provider client={trpcClient} queryClient={queryClient}>
     <QueryClientProvider client={queryClient}>
-      <App />
+      <Suspense fallback={<div className="min-h-screen bg-background" />}>
+        <App />
+      </Suspense>
     </QueryClientProvider>
   </trpc.Provider>
 );

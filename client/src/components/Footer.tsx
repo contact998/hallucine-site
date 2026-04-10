@@ -1,22 +1,40 @@
 /*
  * Footer complet — Reproduit la structure du site de référence
- * Menu, Restez en contact, Restez connectés (newsletter), SEO Schema.org
+ * i18n : textes traduits via react-i18next
  */
 import { Mail, Phone, MessageCircle } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tWSEvNLkFkmjxAXj.png";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const { t } = useTranslation("common");
 
   const handleNewsletter = (e: React.FormEvent) => {
     e.preventDefault();
     setSubscribed(true);
     setEmail("");
   };
+
+  const menuLinks = [
+    { labelKey: "footer.menu.contact", href: "/contactez-nous" },
+    { labelKey: "footer.menu.devis", href: "/devis" },
+    { labelKey: "footer.menu.a_propos", href: "/a-propos-hallucine" },
+    { labelKey: "footer.menu.galerie", href: "/galerie-evenements" },
+    { labelKey: "footer.menu.accessoires", href: "/accessoire-cinema-plein-air" },
+    { labelKey: "footer.menu.mode_emploi", href: "/mode-emploi" },
+    { labelKey: "footer.menu.galerie_video", href: "/galerie-video" },
+    { labelKey: "footer.menu.blog", href: "/blog" },
+    { labelKey: "footer.menu.trouver_distributeur", href: "/trouver-distributeur" },
+    { labelKey: "footer.menu.devenir_distributeur", href: "/devenir-distributeur" },
+    { labelKey: "footer.menu.confidentialite", href: "/politique-confidentialite" },
+    { labelKey: "footer.menu.mentions_legales", href: "/mentions-legales" },
+    { labelKey: "footer.menu.cookies", href: "/politique-cookies" },
+  ];
 
   return (
     <footer className="border-t border-white/10 bg-[oklch(0.10_0.03_260)]">
@@ -28,33 +46,18 @@ export default function Footer() {
               <img loading="lazy" src={LOGO_URL} alt="Hallucine" className="h-20 md:h-24 w-auto mb-4" width={96} height={96} decoding="async" />
             </Link>
             <p className="text-white/65 text-sm leading-relaxed">
-              Fabricant d'écrans de cinéma gonflables depuis 1995. Les écrans les plus légers au monde, 
-              de 2 à 24 mètres. Tentes, arches et mobilier gonflable.
+              {t("footer.description")}
             </p>
           </div>
 
           {/* Menu */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-4 tracking-wide uppercase">Menu</h4>
+            <h4 className="text-white font-semibold text-sm mb-4 tracking-wide uppercase">{t("footer.menu.title")}</h4>
             <ul className="space-y-2.5 text-sm">
-              {[
-                { label: "Contactez-nous", href: "/contactez-nous" },
-                { label: "Devis gratuit", href: "/devis" },
-                { label: "À propos", href: "/a-propos-hallucine" },
-                { label: "Galerie", href: "/galerie-evenements" },
-                { label: "Accessoires", href: "/accessoire-cinema-plein-air" },
-                { label: "Mode d'emploi", href: "/mode-emploi" },
-                { label: "Galerie vidéo", href: "/galerie-video" },
-                { label: "Blog", href: "/blog" },
-                { label: "Trouvez un distributeur", href: "/trouver-distributeur" },
-                { label: "Devenez distributeur", href: "/devenir-distributeur" },
-                { label: "Politique de confidentialité", href: "/politique-confidentialite" },
-                { label: "Mentions Légales", href: "/mentions-legales" },
-                { label: "Politique de Cookies", href: "/politique-cookies" },
-              ].map((link) => (
+              {menuLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-white/70 hover:text-warm transition-colors">
-                    {link.label}
+                    {t(link.labelKey)}
                   </Link>
                 </li>
               ))}
@@ -63,7 +66,7 @@ export default function Footer() {
 
           {/* Restez en contact */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-4 tracking-wide uppercase">Restez en contact</h4>
+            <h4 className="text-white font-semibold text-sm mb-4 tracking-wide uppercase">{t("footer.contact.title")}</h4>
             <ul className="space-y-4 text-sm">
               <li className="flex items-start gap-3">
                 <Phone className="w-4 h-4 text-warm mt-0.5 shrink-0" />
@@ -90,20 +93,20 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Restez connectés (newsletter) */}
+          {/* Newsletter */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-4 tracking-wide uppercase">Restez connectés</h4>
+            <h4 className="text-white font-semibold text-sm mb-4 tracking-wide uppercase">{t("footer.newsletter.title")}</h4>
             <p className="text-white/65 text-sm mb-4">
-              Inscrivez-vous à notre newsletter pour recevoir nos dernières actualités et offres.
+              {t("footer.newsletter.subtitle")}
             </p>
             {subscribed ? (
-              <p className="text-warm text-sm">Merci pour votre inscription !</p>
+              <p className="text-warm text-sm">{t("footer.newsletter.thanks")}</p>
             ) : (
               <form onSubmit={handleNewsletter} className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="email"
                   required
-                  placeholder="Votre email"
+                  placeholder={t("footer.newsletter.placeholder")}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded text-sm text-ivory placeholder:text-white/40 focus:border-warm focus:outline-none transition-colors"
@@ -112,7 +115,7 @@ export default function Footer() {
                   type="submit"
                   className="px-4 py-2 bg-warm text-charcoal text-sm font-semibold rounded hover:bg-warm-light transition-colors shrink-0"
                 >
-                  Transmettre
+                  {t("footer.newsletter.submit")}
                 </button>
               </form>
             )}
@@ -135,12 +138,12 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-white/50 text-xs">
-            &copy; {new Date().getFullYear()} Hallucine. Tous droits réservés. Fabricant d'écrans de cinéma gonflables depuis 1995.
+            &copy; {new Date().getFullYear()} Hallucine. {t("footer.copyright")}
           </p>
           <div className="flex gap-6">
-            <Link href="/mentions-legales" className="text-white/50 text-xs hover:text-warm transition-colors">Mentions légales</Link>
-            <Link href="/politique-confidentialite" className="text-white/50 text-xs hover:text-warm transition-colors">Politique de confidentialité</Link>
-            <Link href="/politique-cookies" className="text-white/50 text-xs hover:text-warm transition-colors">Cookies</Link>
+            <Link href="/mentions-legales" className="text-white/50 text-xs hover:text-warm transition-colors">{t("footer.menu.mentions_legales")}</Link>
+            <Link href="/politique-confidentialite" className="text-white/50 text-xs hover:text-warm transition-colors">{t("footer.menu.confidentialite")}</Link>
+            <Link href="/politique-cookies" className="text-white/50 text-xs hover:text-warm transition-colors">{t("footer.menu.cookies")}</Link>
           </div>
         </div>
       </div>

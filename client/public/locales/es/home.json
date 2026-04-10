@@ -1,0 +1,83 @@
+{
+  "hero": {
+    "badge": "Fabricante francés desde 1995",
+    "quote_before": "Nuestros competidores nunca han tenido, a las 3 de la mañana, que plegar una pantalla para irse a dormir.",
+    "quote_highlight": "Nosotros, sí.",
+    "quote_after": "Por eso lo hemos repensado todo.",
+    "subtitle_before": "Pantallas de cine hinchables",
+    "subtitle_highlight": "fabricadas en Francia",
+    "subtitle_after": "desde 1995",
+    "cta_devis": "Solicitar un presupuesto gratuito",
+    "cta_discover": "Descubrir nuestras pantallas",
+    "img_alt": "Pantalla de cine hinchable gigante Hallucine en proyección nocturna",
+    "scroll": "Desplazarse",
+    "stats": {
+      "expertise": "de experiencia",
+      "expertise_suffix": " años",
+      "lighter": "más ligero",
+      "guarantee": "de garantía",
+      "guarantee_suffix": " años",
+      "screen_max": "pantalla máx."
+    }
+  },
+  "products": {
+    "title": "Nuestros Productos",
+    "subtitle": "Una gama completa para todos sus eventos",
+    "ecrans_title": "Pantallas Hinchables",
+    "ecrans_desc": "De 2m a 24m, las pantallas más ligeras del mundo. Tecnología de soplado o herméticas.",
+    "tentes_title": "Tiendas Hinchables",
+    "tentes_desc": "Tiendas de eventos hinchables para todos sus eventos al aire libre.",
+    "arches_title": "Arcos Hinchables",
+    "arches_desc": "Arcos hinchables para eventos deportivos y promocionales.",
+    "mobilier_title": "Mobiliario Hinchable",
+    "mobilier_desc": "Sillones, sofás, pufs hinchables para sus zonas lounge."
+  },
+  "technology": {
+    "title": "Nuestra Tecnología",
+    "subtitle": "30 años de innovación al servicio del cine al aire libre",
+    "leger_title": "3× Más Ligero",
+    "leger_desc": "Nuestra tecnología patentada hace que nuestras pantallas sean 3 veces más ligeras que las de la competencia.",
+    "montage_title": "10 min de Montaje",
+    "montage_desc": "Montaje en 10 minutos por 2 personas, sin herramientas.",
+    "garantie_title": "10 años de Garantía",
+    "garantie_desc": "Nuestras pantallas tienen 10 años de garantía, piezas y mano de obra.",
+    "taille_title": "Hasta 24m",
+    "taille_desc": "La pantalla hinchable más grande del mundo, 24 metros de base."
+  },
+  "usecases": {
+    "title": "Confían en nosotros",
+    "subtitle": "Miles de eventos organizados en todo el mundo",
+    "cinema_title": "Cine al Aire Libre",
+    "cinema_desc": "Proyecciones de verano, festivales de cine, autocines.",
+    "sport_title": "Eventos Deportivos",
+    "sport_desc": "Fan zones, retransmisiones, Juegos Olímpicos.",
+    "corporate_title": "Eventos Corporativos",
+    "corporate_desc": "Seminarios, lanzamientos de productos, team building.",
+    "mariage_title": "Bodas y Fiestas",
+    "mariage_desc": "Fiestas privadas, bodas, cumpleaños."
+  },
+  "story": {
+    "title": "Nuestra Historia",
+    "subtitle": "30 años de pasión por el cine al aire libre"
+  },
+  "realisations": {
+    "title": "Nuestras Realizaciones",
+    "subtitle": "Algunos de nuestros proyectos emblemáticos"
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "subtitle": "Todo lo que necesita saber sobre nuestras pantallas hinchables",
+    "q1": "¿Cuál es la vida útil de una pantalla hinchable Hallucine?",
+    "a1": "Nuestras pantallas tienen 10 años de garantía y pueden durar mucho más con un mantenimiento adecuado. La tela de proyección es reemplazable.",
+    "q2": "¿Cuánto tiempo se tarda en montar una pantalla?",
+    "a2": "El montaje tarda unos 10 minutos para 2 personas, sin herramientas. El desinflado es aún más rápido.",
+    "q3": "¿Las pantallas resisten el viento?",
+    "a3": "Nuestras pantallas están probadas hasta 80 km/h de viento. Por encima de eso, recomendamos desinflarlas por precaución.",
+    "q4": "¿Realizan envíos internacionales?",
+    "a4": "Sí, realizamos envíos a todo el mundo. Los plazos varían según el destino."
+  },
+  "contact": {
+    "title": "Contáctenos",
+    "subtitle": "Nuestro equipo está disponible para responder a todas sus preguntas"
+  }
+}
