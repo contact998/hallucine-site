@@ -1002,3 +1002,7 @@
 
 ## Sélecteur de langue Navbar — ajout IT
 - [x] Ajouter { code: "it", label: "IT", flag: "🇮🇹", url: LANGUAGE_DOMAINS.it } dans le tableau languages de Navbar.tsx
+
+## Sitemap et robots.txt — mise à jour multilingue
+- [x] Réécrire sitemap.xml : 5 langues × 27 pages avec balises xhtml:link hreflang (format sitemap multilingue Google)
+- [x] Mettre à jour robots.txt : ajouter les 5 sitemaps (un par domaine)

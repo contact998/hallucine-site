@@ -1,138 +1,876 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Accueil -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- ===== ACCUEIL ===== -->
   <url>
     <loc>https://hallucinecran.fr/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/"/>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-  <!-- Écrans -->
+  <url>
+    <loc>https://hallucinecran.com/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.de/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.es/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.it/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- ===== ÉCRANS GONFLABLES ===== -->
   <url>
     <loc>https://hallucinecran.fr/ecran-gonflable</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/ecran-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-screen"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbarer-bildschirm"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/pantalla-inflable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/schermo-gonfiabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-screen"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
+  <url>
+    <loc>https://hallucinecran.com/inflatable-screen</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/ecran-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-screen"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbarer-bildschirm"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/pantalla-inflable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/schermo-gonfiabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-screen"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.de/aufblasbarer-bildschirm</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/ecran-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-screen"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbarer-bildschirm"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/pantalla-inflable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/schermo-gonfiabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-screen"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.es/pantalla-inflable</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/ecran-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-screen"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbarer-bildschirm"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/pantalla-inflable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/schermo-gonfiabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-screen"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.it/schermo-gonfiabile</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/ecran-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-screen"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbarer-bildschirm"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/pantalla-inflable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/schermo-gonfiabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-screen"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- ===== ÉCRAN GÉANT SOUFFLERIE ===== -->
   <url>
     <loc>https://hallucinecran.fr/ecran-gonflable-geant-soufflerie</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/ecran-gonflable-geant-soufflerie"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/giant-inflatable-screen"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/grosser-aufblasbarer-bildschirm"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/pantalla-inflable-gigante"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/schermo-gonfiabile-gigante"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/giant-inflatable-screen"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://hallucinecran.com/giant-inflatable-screen</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/ecran-gonflable-geant-soufflerie"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/giant-inflatable-screen"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/grosser-aufblasbarer-bildschirm"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/pantalla-inflable-gigante"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/schermo-gonfiabile-gigante"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/giant-inflatable-screen"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.de/grosser-aufblasbarer-bildschirm</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/ecran-gonflable-geant-soufflerie"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/giant-inflatable-screen"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/grosser-aufblasbarer-bildschirm"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/pantalla-inflable-gigante"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/schermo-gonfiabile-gigante"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/giant-inflatable-screen"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.es/pantalla-inflable-gigante</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/ecran-gonflable-geant-soufflerie"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/giant-inflatable-screen"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/grosser-aufblasbarer-bildschirm"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/pantalla-inflable-gigante"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/schermo-gonfiabile-gigante"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/giant-inflatable-screen"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.it/schermo-gonfiabile-gigante</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/ecran-gonflable-geant-soufflerie"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/giant-inflatable-screen"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/grosser-aufblasbarer-bildschirm"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/pantalla-inflable-gigante"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/schermo-gonfiabile-gigante"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/giant-inflatable-screen"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ===== ÉCRAN ÉTANCHE ===== -->
   <url>
     <loc>https://hallucinecran.fr/ecran-gonflable-etanche-air</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/ecran-gonflable-etanche-air"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/waterproof-inflatable-screen"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/wasserdichter-aufblasbarer-bildschirm"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/pantalla-inflable-impermeable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/schermo-gonfiabile-impermeabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/waterproof-inflatable-screen"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://hallucinecran.com/waterproof-inflatable-screen</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/ecran-gonflable-etanche-air"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/waterproof-inflatable-screen"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/wasserdichter-aufblasbarer-bildschirm"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/pantalla-inflable-impermeable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/schermo-gonfiabile-impermeabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/waterproof-inflatable-screen"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.de/wasserdichter-aufblasbarer-bildschirm</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/ecran-gonflable-etanche-air"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/waterproof-inflatable-screen"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/wasserdichter-aufblasbarer-bildschirm"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/pantalla-inflable-impermeable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/schermo-gonfiabile-impermeabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/waterproof-inflatable-screen"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.es/pantalla-inflable-impermeable</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/ecran-gonflable-etanche-air"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/waterproof-inflatable-screen"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/wasserdichter-aufblasbarer-bildschirm"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/pantalla-inflable-impermeable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/schermo-gonfiabile-impermeabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/waterproof-inflatable-screen"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.it/schermo-gonfiabile-impermeabile</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/ecran-gonflable-etanche-air"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/waterproof-inflatable-screen"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/wasserdichter-aufblasbarer-bildschirm"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/pantalla-inflable-impermeable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/schermo-gonfiabile-impermeabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/waterproof-inflatable-screen"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ===== ÉCRAN ÉCONOMIQUE ===== -->
   <url>
     <loc>https://hallucinecran.fr/ecran-gonflable-economique</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/ecran-gonflable-economique"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/budget-inflatable-screen"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/guenstiger-aufblasbarer-bildschirm"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/pantalla-inflable-economica"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/schermo-gonfiabile-economico"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/budget-inflatable-screen"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://hallucinecran.com/budget-inflatable-screen</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/ecran-gonflable-economique"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/budget-inflatable-screen"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/guenstiger-aufblasbarer-bildschirm"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/pantalla-inflable-economica"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/schermo-gonfiabile-economico"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/budget-inflatable-screen"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.de/guenstiger-aufblasbarer-bildschirm</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/ecran-gonflable-economique"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/budget-inflatable-screen"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/guenstiger-aufblasbarer-bildschirm"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/pantalla-inflable-economica"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/schermo-gonfiabile-economico"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/budget-inflatable-screen"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.es/pantalla-inflable-economica</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/ecran-gonflable-economique"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/budget-inflatable-screen"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/guenstiger-aufblasbarer-bildschirm"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/pantalla-inflable-economica"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/schermo-gonfiabile-economico"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/budget-inflatable-screen"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.it/schermo-gonfiabile-economico</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/ecran-gonflable-economique"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/budget-inflatable-screen"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/guenstiger-aufblasbarer-bildschirm"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/pantalla-inflable-economica"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/schermo-gonfiabile-economico"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/budget-inflatable-screen"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ===== COMPARAISON ===== -->
   <url>
     <loc>https://hallucinecran.fr/comparaison-ecran-gonflable</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/comparaison-ecran-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-screen-comparison"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbarer-bildschirm-vergleich"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/comparacion-pantalla-inflable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/confronto-schermo-gonfiabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-screen-comparison"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://hallucinecran.fr/ecrans-led</loc>
+    <loc>https://hallucinecran.com/inflatable-screen-comparison</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/comparaison-ecran-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-screen-comparison"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbarer-bildschirm-vergleich"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/comparacion-pantalla-inflable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/confronto-schermo-gonfiabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-screen-comparison"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-  <!-- Tentes -->
+  <url>
+    <loc>https://hallucinecran.de/aufblasbarer-bildschirm-vergleich</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/comparaison-ecran-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-screen-comparison"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbarer-bildschirm-vergleich"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/comparacion-pantalla-inflable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/confronto-schermo-gonfiabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-screen-comparison"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.es/comparacion-pantalla-inflable</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/comparaison-ecran-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-screen-comparison"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbarer-bildschirm-vergleich"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/comparacion-pantalla-inflable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/confronto-schermo-gonfiabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-screen-comparison"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.it/confronto-schermo-gonfiabile</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/comparaison-ecran-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-screen-comparison"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbarer-bildschirm-vergleich"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/comparacion-pantalla-inflable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/confronto-schermo-gonfiabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-screen-comparison"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== TENTES GONFLABLES ===== -->
   <url>
     <loc>https://hallucinecran.fr/tente-gonflable</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/tente-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-tent"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbares-zelt"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/tienda-inflable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/tenda-gonfiabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-tent"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://hallucinecran.fr/tente-gonflable-x</loc>
+    <loc>https://hallucinecran.com/inflatable-tent</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/tente-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-tent"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbares-zelt"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/tienda-inflable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/tenda-gonfiabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-tent"/>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://hallucinecran.fr/tente-gonflable-n</loc>
+    <loc>https://hallucinecran.de/aufblasbares-zelt</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/tente-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-tent"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbares-zelt"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/tienda-inflable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/tenda-gonfiabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-tent"/>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://hallucinecran.fr/tente-gonflable-v</loc>
+    <loc>https://hallucinecran.es/tienda-inflable</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/tente-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-tent"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbares-zelt"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/tienda-inflable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/tenda-gonfiabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-tent"/>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://hallucinecran.fr/tente-gonflable-araignee</loc>
+    <loc>https://hallucinecran.it/tenda-gonfiabile</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/tente-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-tent"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbares-zelt"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/tienda-inflable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/tenda-gonfiabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-tent"/>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
-  <!-- Arches -->
+
+  <!-- ===== ARCHES GONFLABLES ===== -->
   <url>
     <loc>https://hallucinecran.fr/arche-gonflable</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/arche-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-arch"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbarer-bogen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/arco-inflable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/arco-gonfiabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-arch"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <!-- Mobilier -->
+  <url>
+    <loc>https://hallucinecran.com/inflatable-arch</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/arche-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-arch"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbarer-bogen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/arco-inflable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/arco-gonfiabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-arch"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.de/aufblasbarer-bogen</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/arche-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-arch"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbarer-bogen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/arco-inflable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/arco-gonfiabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-arch"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.es/arco-inflable</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/arche-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-arch"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbarer-bogen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/arco-inflable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/arco-gonfiabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-arch"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.it/arco-gonfiabile</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/arche-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-arch"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbarer-bogen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/arco-inflable"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/arco-gonfiabile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-arch"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ===== MOBILIER GONFLABLE ===== -->
   <url>
     <loc>https://hallucinecran.fr/mobilier-gonflable</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/mobilier-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-furniture"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbare-moebel"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/muebles-inflables"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/mobili-gonfiabili"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-furniture"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <!-- Accessoires -->
+  <url>
+    <loc>https://hallucinecran.com/inflatable-furniture</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/mobilier-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-furniture"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbare-moebel"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/muebles-inflables"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/mobili-gonfiabili"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-furniture"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.de/aufblasbare-moebel</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/mobilier-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-furniture"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbare-moebel"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/muebles-inflables"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/mobili-gonfiabili"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-furniture"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.es/muebles-inflables</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/mobilier-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-furniture"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbare-moebel"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/muebles-inflables"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/mobili-gonfiabili"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-furniture"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.it/mobili-gonfiabili</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/mobilier-gonflable"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/inflatable-furniture"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/aufblasbare-moebel"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/muebles-inflables"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/mobili-gonfiabili"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/inflatable-furniture"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ===== ACCESSOIRES ===== -->
   <url>
     <loc>https://hallucinecran.fr/accessoire-cinema-plein-air</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/accessoire-cinema-plein-air"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/outdoor-cinema-accessories"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/freiluftkino-zubehoer"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/accesorios-cine-exterior"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/accessori-cinema-all-aperto"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/outdoor-cinema-accessories"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-  <!-- Galerie -->
+  <url>
+    <loc>https://hallucinecran.com/outdoor-cinema-accessories</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/accessoire-cinema-plein-air"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/outdoor-cinema-accessories"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/freiluftkino-zubehoer"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/accesorios-cine-exterior"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/accessori-cinema-all-aperto"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/outdoor-cinema-accessories"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.de/freiluftkino-zubehoer</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/accessoire-cinema-plein-air"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/outdoor-cinema-accessories"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/freiluftkino-zubehoer"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/accesorios-cine-exterior"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/accessori-cinema-all-aperto"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/outdoor-cinema-accessories"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.es/accesorios-cine-exterior</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/accessoire-cinema-plein-air"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/outdoor-cinema-accessories"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/freiluftkino-zubehoer"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/accesorios-cine-exterior"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/accessori-cinema-all-aperto"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/outdoor-cinema-accessories"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.it/accessori-cinema-all-aperto</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/accessoire-cinema-plein-air"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/outdoor-cinema-accessories"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/freiluftkino-zubehoer"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/accesorios-cine-exterior"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/accessori-cinema-all-aperto"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/outdoor-cinema-accessories"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== GALERIE ===== -->
   <url>
     <loc>https://hallucinecran.fr/galerie-evenements</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/galerie-evenements"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/events-gallery"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/veranstaltungsgalerie"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/galeria-eventos"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/galleria-eventi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/events-gallery"/>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://hallucinecran.fr/galerie-video</loc>
+    <loc>https://hallucinecran.com/events-gallery</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/galerie-evenements"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/events-gallery"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/veranstaltungsgalerie"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/galeria-eventos"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/galleria-eventi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/events-gallery"/>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
-  <!-- Contact -->
+  <url>
+    <loc>https://hallucinecran.de/veranstaltungsgalerie</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/galerie-evenements"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/events-gallery"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/veranstaltungsgalerie"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/galeria-eventos"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/galleria-eventi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/events-gallery"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.es/galeria-eventos</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/galerie-evenements"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/events-gallery"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/veranstaltungsgalerie"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/galeria-eventos"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/galleria-eventi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/events-gallery"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.it/galleria-eventi</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/galerie-evenements"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/events-gallery"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/veranstaltungsgalerie"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/galeria-eventos"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/galleria-eventi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/events-gallery"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== CONTACT ===== -->
   <url>
     <loc>https://hallucinecran.fr/contactez-nous</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/contactez-nous"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/contact-us"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/kontakt"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/contactenos"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/contattaci"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/contact-us"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
-  <!-- À propos -->
+  <url>
+    <loc>https://hallucinecran.com/contact-us</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/contactez-nous"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/contact-us"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/kontakt"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/contactenos"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/contattaci"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/contact-us"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.de/kontakt</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/contactez-nous"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/contact-us"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/kontakt"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/contactenos"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/contattaci"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/contact-us"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.es/contactenos</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/contactez-nous"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/contact-us"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/kontakt"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/contactenos"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/contattaci"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/contact-us"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.it/contattaci</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/contactez-nous"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/contact-us"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/kontakt"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/contactenos"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/contattaci"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/contact-us"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- ===== À PROPOS ===== -->
   <url>
     <loc>https://hallucinecran.fr/a-propos-hallucine</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/a-propos-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/about-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/ueber-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/sobre-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/chi-siamo-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/about-hallucine"/>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://hallucinecran.fr/histoire-hallucine</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://hallucinecran.com/about-hallucine</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/a-propos-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/about-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/ueber-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/sobre-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/chi-siamo-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/about-hallucine"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
-  <!-- Blog -->
+  <url>
+    <loc>https://hallucinecran.de/ueber-hallucine</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/a-propos-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/about-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/ueber-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/sobre-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/chi-siamo-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/about-hallucine"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.es/sobre-hallucine</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/a-propos-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/about-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/ueber-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/sobre-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/chi-siamo-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/about-hallucine"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.it/chi-siamo-hallucine</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/a-propos-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/about-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/ueber-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/sobre-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/chi-siamo-hallucine"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/about-hallucine"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- ===== BLOG ===== -->
   <url>
     <loc>https://hallucinecran.fr/blog</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/blog"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/blog"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/blog"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/blog"/>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-  <!-- Mode d'emploi -->
-  <url>
-    <loc>https://hallucinecran.fr/mode-emploi</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <!-- Distributeurs -->
+
+  <!-- ===== DISTRIBUTEURS ===== -->
   <url>
     <loc>https://hallucinecran.fr/devenir-distributeur</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/devenir-distributeur"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/become-distributor"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/haendler-werden"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/convertirse-distribuidor"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/diventare-distributore"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/become-distributor"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://hallucinecran.fr/trouver-distributeur</loc>
+    <loc>https://hallucinecran.com/become-distributor</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/devenir-distributeur"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/become-distributor"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/haendler-werden"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/convertirse-distribuidor"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/diventare-distributore"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/become-distributor"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-  <!-- Légal -->
+  <url>
+    <loc>https://hallucinecran.de/haendler-werden</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/devenir-distributeur"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/become-distributor"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/haendler-werden"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/convertirse-distribuidor"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/diventare-distributore"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/become-distributor"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.es/convertirse-distribuidor</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/devenir-distributeur"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/become-distributor"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/haendler-werden"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/convertirse-distribuidor"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/diventare-distributore"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/become-distributor"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.it/diventare-distributore</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/devenir-distributeur"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/become-distributor"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/haendler-werden"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/convertirse-distribuidor"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/diventare-distributore"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/become-distributor"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== TROUVER DISTRIBUTEUR ===== -->
+  <url>
+    <loc>https://hallucinecran.fr/trouver-distributeur</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/trouver-distributeur"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/find-distributor"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/haendler-finden"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/encontrar-distribuidor"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/trova-distributore"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/find-distributor"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.com/find-distributor</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/trouver-distributeur"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/find-distributor"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/haendler-finden"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/encontrar-distribuidor"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/trova-distributore"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/find-distributor"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.de/haendler-finden</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/trouver-distributeur"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/find-distributor"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/haendler-finden"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/encontrar-distribuidor"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/trova-distributore"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/find-distributor"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.es/encontrar-distribuidor</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/trouver-distributeur"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/find-distributor"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/haendler-finden"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/encontrar-distribuidor"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/trova-distributore"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/find-distributor"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hallucinecran.it/trova-distributore</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://hallucinecran.fr/trouver-distributeur"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hallucinecran.com/find-distributor"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hallucinecran.de/haendler-finden"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://hallucinecran.es/encontrar-distribuidor"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://hallucinecran.it/trova-distributore"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hallucinecran.com/find-distributor"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== MENTIONS LÉGALES (FR uniquement) ===== -->
   <url>
     <loc>https://hallucinecran.fr/mentions-legales</loc>
     <changefreq>yearly</changefreq>
@@ -148,4 +886,5 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+
 </urlset>

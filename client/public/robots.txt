@@ -1,6 +1,12 @@
 User-agent: *
 Allow: /
+
+# Sitemaps — un par domaine/langue
 Sitemap: https://hallucinecran.fr/sitemap.xml
+Sitemap: https://hallucinecran.com/sitemap.xml
+Sitemap: https://hallucinecran.de/sitemap.xml
+Sitemap: https://hallucinecran.es/sitemap.xml
+Sitemap: https://hallucinecran.it/sitemap.xml
 
 # Pages admin et profil
 Disallow: /admin
