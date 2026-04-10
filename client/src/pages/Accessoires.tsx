@@ -8,8 +8,6 @@ import { Link } from "wouter";
 import { Headphones, Armchair, Radio, Sofa, Monitor, Package } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import { detectLanguage } from "@/i18n/config";
-import { getRoute } from "@/i18n/routes";
 
 const accessoires = [
   {
@@ -52,7 +50,6 @@ const accessoires = [
 ];
 
 export default function Accessoires() {
-  const lang = detectLanguage();
   useDocumentMeta("Accessoires Cinéma en Plein Air", "Accessoires pour cinéma en plein air : projecteurs, systèmes audio, toiles de rechange, kits de réparation. Tout pour réussir votre événement.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   return (
@@ -144,10 +141,10 @@ export default function Accessoires() {
             Contactez-nous pour composer le forfait idéal pour votre événement.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href={getRoute("contact", lang)} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Nous Contacter
             </Link>
-            <Link href={getRoute("contact", lang)} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href="/devis" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               Demander un devis gratuit
             </Link>
           </div>

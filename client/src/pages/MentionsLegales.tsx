@@ -8,11 +8,8 @@ import { ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import { detectLanguage } from "@/i18n/config";
-import { getRoute } from "@/i18n/routes";
 
 export default function MentionsLegales() {
-  const lang = detectLanguage();
   useDocumentMeta("Mentions Légales", "Mentions légales du site Hallucine. Informations sur l'éditeur, l'hébergeur et les conditions d'utilisation.");
 
   return (
@@ -88,7 +85,7 @@ export default function MentionsLegales() {
                 Nous respectons la confidentialité de vos données personnelles. Les informations collectées via notre site 
                 sont traitées dans le respect de la législation en vigueur, y compris le RGPD (Règlement Général sur la 
                 Protection des Données). Pour plus d'informations, consultez notre page{" "}
-                <Link href={getRoute("confidentialite", lang)} className="text-gold hover:underline">
+                <Link href="/politique-confidentialite" className="text-gold hover:underline">
                   Politique de Confidentialité
                 </Link>.
               </p>
@@ -117,7 +114,7 @@ export default function MentionsLegales() {
                 Le site utilise des cookies pour améliorer l'expérience utilisateur et analyser la fréquentation. 
                 Vous pouvez gérer vos préférences en matière de cookies dans les paramètres de votre navigateur. 
                 Pour plus d'informations, consultez notre{" "}
-                <Link href={getRoute("cookies", lang)} className="text-gold hover:underline">
+                <Link href="/politique-cookies" className="text-gold hover:underline">
                   Politique de Cookies
                 </Link>.
               </p>

@@ -10,8 +10,6 @@ import { Link } from "wouter";
 import { Video } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import { detectLanguage } from "@/i18n/config";
-import { getRoute } from "@/i18n/routes";
 
 const photos = [
   { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/pasted_file_lj0vsC_onepongeapreslapluiePlaceaujeune_0787bac5.jpg", alt: "Une ponge apres la pluie Place au jeune", cat: "Événements" },
@@ -110,7 +108,6 @@ const photos = [
 const categories = ["Tous", "Écrans gonflables", "Événements", "Équipement", "Tentes", "Arches", "Mobilier"];
 
 export default function Galerie() {
-  const lang = detectLanguage();
   useDocumentMeta("Galerie Photos | Nos Réalisations", "Découvrez nos réalisations en images : écrans de cinéma gonflables, tentes événementielles, arches et mobilier en action lors d'événements réels.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IDghLbPxebJUfXVC.webp");
 
   const [filter, setFilter] = useState("Tous");
@@ -162,7 +159,7 @@ export default function Galerie() {
               Galerie
             </h1>
             <Link
-              href={getRoute("galerie-video", lang)}
+              href="/galerie-video"
               className="shrink-0 ml-3 flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-full bg-warm/20 text-warm border border-warm/30 hover:bg-warm/30 transition-colors z-30 pointer-events-auto"
             >
               <Video className="w-4 h-4" />

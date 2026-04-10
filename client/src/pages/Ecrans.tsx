@@ -11,8 +11,6 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import { detectLanguage } from "@/i18n/config";
-import { getRoute } from "@/i18n/routes";
 
 const gammes = [
   {
@@ -75,7 +73,6 @@ const faqItems = [
 ];
 
 export default function Ecrans() {
-  const lang = detectLanguage();
   useDocumentMeta("Écrans de Cinéma Gonflables", "Découvrez notre gamme complète d'écrans de cinéma gonflables. Écrans géants, étanches, économiques — de 3m à 24m. Fabricant depuis 1995.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -196,10 +193,10 @@ export default function Ecrans() {
           <h2 className="text-3xl font-bold text-ivory mb-4">Prêt à équiper votre événement ?</h2>
           <p className="text-white/60 mb-8">Contactez-nous pour un devis personnalisé ou consultez nos tarifs.</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href={getRoute("contact", lang)} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Nous Contacter
             </Link>
-            <Link href={getRoute("contact", lang)} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               Demande de prix
             </Link>
           </div>

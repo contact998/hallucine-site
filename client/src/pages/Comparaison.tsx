@@ -10,8 +10,6 @@ import { useState } from "react";
 import { Check, X, Trophy, Feather, Clock, Shield, Wind, Truck, Wrench, Leaf, Users, Mountain, Package, Ruler, Star } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import { detectLanguage } from "@/i18n/config";
-import { getRoute } from "@/i18n/routes";
 
 const comparisonData = [
   { carac: "Légèreté", hallucine: "3 fois plus léger (ex : 13m = 80 kg)", concurrent: "Jusqu'à 260 kg", icon: Feather },
@@ -71,7 +69,6 @@ const arguments7 = [
 ];
 
 export default function Comparaison() {
-  const lang = detectLanguage();
   useDocumentMeta("Comparaison des Écrans Gonflables | Guide d'Achat", "Comparez nos écrans de cinéma gonflables : géant vs étanche vs économique. Tableau comparatif de 16 critères pour choisir le bon écran.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   const [showCountdown, setShowCountdown] = useState(true);
@@ -233,13 +230,13 @@ export default function Comparaison() {
             Découvrez notre gamme complète d'écrans ou demandez un devis personnalisé.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href={getRoute("ecrans", lang)} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href="/ecran-gonflable" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Voir les écrans
             </Link>
-            <Link href={getRoute("contact", lang)} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               Demander un Devis
             </Link>
-            <Link href={getRoute("contact", lang)} className="px-8 py-3 border border-white/20 text-white/70 font-semibold rounded hover:bg-white/5 transition-colors">
+            <Link href="/contactez-nous" className="px-8 py-3 border border-white/20 text-white/70 font-semibold rounded hover:bg-white/5 transition-colors">
               Nous Contacter
             </Link>
           </div>

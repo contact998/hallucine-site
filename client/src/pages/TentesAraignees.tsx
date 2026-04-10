@@ -11,8 +11,6 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import { detectLanguage } from "@/i18n/config";
-import { getRoute } from "@/i18n/routes";
 
 const tailles = [
   { dim: "4m × 4m", poids: "~50 kg", montage: "10-15 min" },
@@ -45,7 +43,6 @@ const images = [
 ];
 
 export default function TentesAraignees() {
-  const lang = detectLanguage();
   useDocumentMeta("Tente Gonflable Araignée | Tente Spider", "Tente gonflable araignée (spider) pour événements. Design unique, montage ultra-rapide, résistante au vent. Disponible en plusieurs tailles et couleurs.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp");
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -255,10 +252,10 @@ export default function TentesAraignees() {
           <h2 className="text-3xl font-bold text-ivory mb-4">Demandez un Devis pour votre Tente Araignée</h2>
           <p className="text-white/60 mb-8">Contactez-nous pour un devis personnalisé adapté à vos besoins.</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href={getRoute("contact", lang)} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Demande de devis
             </Link>
-            <Link href={getRoute("contact", lang)} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               Voir Nos Tarifs
             </Link>
           </div>

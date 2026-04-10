@@ -9,8 +9,6 @@ import { ArrowLeft, Globe, Award, Feather, Users, ChevronRight } from "lucide-re
 import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import { detectLanguage } from "@/i18n/config";
-import { getRoute } from "@/i18n/routes";
 
 const ETANCHE_3M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hIDMieDLnUJYNHGY.webp";
 const ETANCHE_5M_RITZ = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IzUUAouVxqDCjGMh.webp";
@@ -106,7 +104,6 @@ const keyFigures = [
 ];
 
 export default function Histoire() {
-  const lang = detectLanguage();
   useDocumentMeta("Notre Histoire | Depuis 1995", "L'histoire d'Hallucine depuis 1995 : de la première projection en plein air à aujourd'hui. 30 ans d'innovation dans le cinéma gonflable.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   return (
@@ -321,7 +318,7 @@ export default function Histoire() {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Envie d'écrire la suite avec nous ?</h2>
             <p className="text-white/50 mb-8 max-w-xl mx-auto">Que vous soyez organisateur d'événements, loueur de matériel ou simplement curieux, nous serions ravis de discuter avec vous.</p>
-            <Link href={getRoute("contact", lang)} className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-lg hover:bg-gold-light transition-all glow-gold">
+            <Link href="/contactez-nous" className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-lg hover:bg-gold-light transition-all glow-gold">
               Contactez-nous <ChevronRight className="w-5 h-5" />
             </Link>
           </motion.div>

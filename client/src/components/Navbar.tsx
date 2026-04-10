@@ -13,7 +13,6 @@ import { getLoginUrl } from "@/const";
 import { AvailabilityBadge } from "@/components/AvailabilityIndicator";
 import { useTranslation } from "react-i18next";
 import { LANGUAGE_DOMAINS, detectLanguage } from "@/i18n/config";
-import { getRoute } from "@/i18n/routes";
 
 const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tWSEvNLkFkmjxAXj.png";
 
@@ -123,7 +122,7 @@ function DesktopDropdown({ items, isOpen }: { items: DropdownItem[]; isOpen: boo
         >
           {items.map((item) => (
             <Link
-              key={item.label}
+              key={item.href}
               href={item.href}
               className="block px-4 py-3 text-sm text-white/80 hover:text-warm hover:bg-white/5 transition-colors border-b border-white/5 last:border-b-0"
             >
@@ -145,44 +144,43 @@ export default function Navbar() {
   const dropdownTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { isAuthenticated, user } = useAuth();
   const { t } = useTranslation("nav");
-  const lang = detectLanguage();
 
-  // Menu de navigation avec URLs traduites selon la langue du domaine
+  // Menu de navigation traduit dynamiquement
   const navItems: NavItem[] = [
     { label: t("accueil"), href: "/" },
     {
       label: t("ecran_gonflable"),
       dropdown: [
-        { label: t("ecran_geant"), href: getRoute("ecran-geant", lang) },
-        { label: t("comparaison"), href: getRoute("comparaison", lang) },
-        { label: t("ecran_etanche"), href: getRoute("ecran-etanche", lang) },
-        { label: t("ecran_economique"), href: getRoute("ecran-economique", lang) },
-        { label: t("mode_emploi"), href: getRoute("mode-emploi", lang) },
-        { label: t("ecrans_led"), href: getRoute("ecrans-led", lang) },
+        { label: t("ecran_geant"), href: "/ecran-gonflable-geant-soufflerie" },
+        { label: t("comparaison"), href: "/comparaison-ecran-gonflable" },
+        { label: t("ecran_etanche"), href: "/ecran-gonflable-etanche-air" },
+        { label: t("ecran_economique"), href: "/ecran-gonflable-economique" },
+        { label: t("mode_emploi"), href: "/mode-emploi" },
+        { label: t("ecrans_led"), href: "/ecrans-led" },
       ],
     },
     {
       label: t("tente_arche_meuble"),
       dropdown: [
-        { label: t("tentes_x"), href: getRoute("tente-x", lang) },
-        { label: t("tentes_n"), href: getRoute("tente-n", lang) },
-        { label: t("tentes_v"), href: getRoute("tente-v", lang) },
-        { label: t("tentes_araignees"), href: getRoute("tente-araignee", lang) },
-        { label: t("arches"), href: getRoute("arches", lang) },
-        { label: t("mobilier"), href: getRoute("mobilier", lang) },
+        { label: t("tentes_x"), href: "/tente-gonflable-x" },
+        { label: t("tentes_n"), href: "/tente-gonflable-n" },
+        { label: t("tentes_v"), href: "/tente-gonflable-v" },
+        { label: t("tentes_araignees"), href: "/tente-gonflable-araignee" },
+        { label: t("arches"), href: "/arche-gonflable" },
+        { label: t("mobilier"), href: "/mobilier-gonflable" },
       ],
     },
-    { label: t("accessoires"), href: getRoute("accessoires", lang) },
-    { label: t("galerie"), href: getRoute("galerie", lang) },
-    { label: t("contactez_nous"), href: getRoute("contact", lang) },
+    { label: t("accessoires"), href: "/accessoire-cinema-plein-air" },
+    { label: t("galerie"), href: "/galerie-evenements" },
+    { label: t("contactez_nous"), href: "/contactez-nous" },
     {
       label: t("plus"),
       dropdown: [
-        { label: t("a_propos"), href: getRoute("a-propos", lang) },
-        { label: t("devis_gratuit"), href: getRoute("contact", lang) },
-        { label: t("mode_emploi"), href: getRoute("mode-emploi", lang) },
-        { label: t("galerie_video"), href: getRoute("galerie-video", lang) },
-        { label: t("blog"), href: getRoute("blog", lang) },
+        { label: t("a_propos"), href: "/a-propos-hallucine" },
+        { label: t("devis_gratuit"), href: "/devis" },
+        { label: t("mode_emploi"), href: "/mode-emploi" },
+        { label: t("galerie_video"), href: "/galerie-video" },
+        { label: t("blog"), href: "/blog" },
       ],
     },
   ];
@@ -293,7 +291,7 @@ export default function Navbar() {
             <LanguageSwitcher />
             <div className="w-px h-5 bg-white/20" />
             <Link
-              href={getRoute("contact", lang)}
+              href="/devis"
               className="flex items-center gap-2 px-5 py-2 bg-warm text-charcoal font-semibold text-sm rounded hover:bg-warm-light transition-all duration-300"
             >
               {t("devis_gratuit")}
@@ -376,7 +374,7 @@ export default function Navbar() {
                             >
                               {item.dropdown.map((sub) => (
                                 <Link
-                                  key={sub.label}
+                                  key={sub.href}
                                   href={sub.href}
                                   onClick={() => setMobileOpen(false)}
                                   className="block py-2.5 px-2 text-sm text-white/70 hover:text-warm transition-colors"
@@ -392,7 +390,7 @@ export default function Navbar() {
                   </div>
                 ))}
                 <Link
-                  href={getRoute("contact", lang)}
+                  href="/devis"
                   onClick={() => setMobileOpen(false)}
                   className="mt-3 flex items-center justify-center gap-2 px-6 py-3 bg-warm text-charcoal font-semibold rounded"
                 >

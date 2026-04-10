@@ -8,8 +8,6 @@ import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import { detectLanguage } from "@/i18n/config";
-import { getRoute } from "@/i18n/routes";
 
 const categories = [
   {
@@ -45,7 +43,6 @@ const categories = [
 ];
 
 export default function Tentes() {
-  const lang = detectLanguage();
   useDocumentMeta("Tentes Gonflables Événementielles", "Tentes gonflables pour événements : tentes X, N, V et araignées. Montage rapide, personnalisables, résistantes au vent. Fabricant depuis 1995.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp");
 
   return (
@@ -132,10 +129,10 @@ export default function Tentes() {
             la plus adaptée à votre événement.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href={getRoute("contact", lang)} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Nous Contacter
             </Link>
-            <Link href={getRoute("contact", lang)} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               Demande de prix
             </Link>
           </div>

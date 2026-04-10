@@ -8,8 +8,6 @@ import { Link } from "wouter";
 import { Users, TrendingUp, Award, MessageCircle } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import { detectLanguage } from "@/i18n/config";
-import { getRoute } from "@/i18n/routes";
 
 const avantages = [
   {
@@ -30,7 +28,6 @@ const avantages = [
 ];
 
 export default function DevenirDistributeur() {
-  const lang = detectLanguage();
   useDocumentMeta("Devenez Distributeur Hallucine", "Rejoignez le réseau de distributeurs Hallucine. Devenez revendeur d'écrans de cinéma gonflables et de produits événementiels.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   return (
@@ -126,7 +123,7 @@ export default function DevenirDistributeur() {
             des festivals, et bien plus encore.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href={getRoute("contact", lang)} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Nous Contacter
             </Link>
             <a href="mailto:contact@hallucine.fr" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">

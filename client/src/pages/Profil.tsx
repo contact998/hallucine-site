@@ -29,8 +29,6 @@ import {
 import { useTimezone } from "@/hooks/useTimezone";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useNoIndex } from "@/hooks/useNoIndex";
-import { detectLanguage } from "@/i18n/config";
-import { getRoute } from "@/i18n/routes";
 
 type SortField = "createdAt" | "type" | "status" | "sujet";
 type SortDir = "asc" | "desc";
@@ -82,7 +80,6 @@ function SortHeader({
 }
 
 export default function Profil() {
-  const lang = detectLanguage();
   useDocumentMeta("Mon Profil | Mes Demandes", "Consultez votre profil et suivez l'état de vos demandes de devis Hallucine.");
   useNoIndex();
 
@@ -302,7 +299,7 @@ export default function Profil() {
                 Vous n'avez pas encore fait de demande de devis ou de contact.
               </p>
               <Link
-                href={getRoute("contact", lang)}
+                href="/contactez-nous"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors"
               >
                 Demander un devis
@@ -393,13 +390,13 @@ export default function Profil() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              href={getRoute("contact", lang)}
+              href="/contactez-nous"
               className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors"
             >
               Demander un devis
             </Link>
             <Link
-              href={getRoute("contact", lang)}
+              href="/contactez-nous"
               className="px-8 py-3 border border-warm/30 text-warm font-semibold rounded hover:bg-warm/10 transition-colors"
             >
               Nous contacter

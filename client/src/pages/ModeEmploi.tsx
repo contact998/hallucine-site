@@ -7,8 +7,6 @@ import VideoLightbox from "@/components/VideoLightbox";
 import { Play, Package, AlertTriangle, Wrench } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import { detectLanguage } from "@/i18n/config";
-import { getRoute } from "@/i18n/routes";
 
 /* ── CDN URLs des images ── */
 const IMG = {
@@ -27,7 +25,6 @@ const IMG = {
 };
 
 export default function ModeEmploi() {
-  const lang = detectLanguage();
   useDocumentMeta("Mode d'Emploi | Installation Écran Gonflable", "Guide d'installation de votre écran de cinéma gonflable. Instructions étape par étape, conseils et astuces pour une projection réussie.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
@@ -321,7 +318,7 @@ export default function ModeEmploi() {
             Notre équipe est disponible pour vous accompagner dans l'installation de vos produits Hallucine.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href={getRoute("contact", lang)} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Contactez-nous
             </Link>
             <a

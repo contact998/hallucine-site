@@ -9,8 +9,6 @@ import { Link } from "wouter";
 import { Construction } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import { detectLanguage } from "@/i18n/config";
-import { getRoute } from "@/i18n/routes";
 
 const ledImages = [
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/cNgCebtnqSvVUvmF.webp", alt: "Écran LED gonflable Hallucine de 5m pour projection de jour comme de nuit" },
@@ -19,7 +17,6 @@ const ledImages = [
 ];
 
 export default function EcransLED() {
-  const lang = detectLanguage();
   useDocumentMeta("Écrans LED Événementiels", "Écrans LED pour événements en plein air et intérieur. Solutions d'affichage haute luminosité pour concerts, festivals et événements corporate.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   return (
@@ -82,10 +79,10 @@ export default function EcransLED() {
             sur notre gamme d'écrans LED ou pour obtenir un devis personnalisé.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href={getRoute("contact", lang)} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Nous Contacter
             </Link>
-            <Link href={getRoute("contact", lang)} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               Demander un Devis
             </Link>
           </div>

@@ -13,8 +13,6 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import { detectLanguage } from "@/i18n/config";
-import { getRoute } from "@/i18n/routes";
 
 // ─── Données tableaux ──────────────────────────────────────────────────────────
 const avecSouffleur = [
@@ -96,7 +94,6 @@ function ImageCarousel({ images }: { images: { src: string; alt: string }[] }) {
 
 // ─── Composant principal ───────────────────────────────────────────────────────
 export default function EcranEconomique() {
-  const lang = detectLanguage();
   useDocumentMeta("Écran Gonflable Économique | Prix Accessibles", "Écran de cinéma gonflable économique pour petits budgets. Qualité professionnelle à prix réduit. Idéal pour débuter le cinéma en plein air.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   const [showCountdown, setShowCountdown] = useState(true);
@@ -313,10 +310,10 @@ export default function EcranEconomique() {
             Contactez-nous, demandez un devis rapide ou découvrez nos tarifs compétitifs.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href={getRoute("contact", lang)} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Nous Contacter
             </Link>
-            <Link href={getRoute("contact", lang)} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               Demander un Devis
             </Link>
             <BrochureDownloadButton productSlug="ecran-economique" productName="Écran Économique" variant="compact" />
