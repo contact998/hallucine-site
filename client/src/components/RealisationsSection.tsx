@@ -5,6 +5,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const photos = [
   {
@@ -103,6 +104,7 @@ export default function RealisationsSection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const [lightbox, setLightbox] = useState<number | null>(null);
+  const { t } = useTranslation("home");
 
   return (
     <section id="realisations" className="relative py-32 overflow-hidden">
@@ -116,14 +118,14 @@ export default function RealisationsSection() {
         >
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-[1px] bg-gold" />
-            <span className="text-gold text-sm font-semibold tracking-[0.3em] uppercase">Réalisations</span>
+            <span className="text-gold text-sm font-semibold tracking-[0.3em] uppercase">{t("realisations.section_label")}</span>
           </div>
           <h2 className="text-4xl lg:text-6xl font-bold text-white leading-tight max-w-3xl">
-            Ils nous font confiance<br />
-            <span className="text-gradient-gold text-glow-gold-intense">dans le monde entier</span>
+            {t("realisations.title_before")}<br />
+            <span className="text-gradient-gold text-glow-gold-intense">{t("realisations.title_highlight")}</span>
           </h2>
           <p className="text-white/75 text-lg mt-6 max-w-xl leading-relaxed">
-            Des festivals aux événements corporate, des plages aux stades, nos écrans transforment chaque lieu en expérience unique.
+            {t("realisations.section_desc")}
           </p>
         </motion.div>
 
@@ -166,7 +168,7 @@ export default function RealisationsSection() {
           <button
             onClick={() => setLightbox(null)}
             className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors"
-            aria-label="Fermer la photo"
+            aria-label={t("realisations.close_photo")}
           >
             <X className="w-8 h-8" />
           </button>

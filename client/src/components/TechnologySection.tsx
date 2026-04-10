@@ -1,22 +1,23 @@
 /*
  * Section Technologie — Design premium
- * Comparatif de poids multi-tailles avec barres animées
- * Histoire du tissu d'airbag + technologie kitesurf
+ * Histoire du tissu d airbag + technologie kitesurf
+ * Refactorise avec i18n
  */
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Feather, Shield, Zap, Award } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function TechnologySection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
+  const { t } = useTranslation("home");
 
   return (
     <section id="technologie" className="relative py-32 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-background via-[oklch(0.12_0.04_260)] to-background" />
 
       <div ref={ref} className="container relative">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -25,15 +26,14 @@ export default function TechnologySection() {
         >
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-[1px] bg-gold" />
-            <span className="text-gold text-sm font-semibold tracking-[0.3em] uppercase">Technologie</span>
+            <span className="text-gold text-sm font-semibold tracking-[0.3em] uppercase">{t("technology.section_label")}</span>
           </div>
           <h2 className="text-4xl lg:text-6xl font-bold text-white leading-tight max-w-3xl">
-            3× plus léger.<br />
-            <span className="text-gradient-gold text-glow-gold-intense">Ce n'est pas un slogan.</span>
+            {t("technology.title_1")}<br />
+            <span className="text-gradient-gold text-glow-gold-intense">{t("technology.title_2")}</span>
           </h2>
         </motion.div>
 
-        {/* 3 photos Vélodrome côte à côte */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -43,37 +43,33 @@ export default function TechnologySection() {
           <div className="overflow-hidden rounded-lg">
             <img loading="lazy"
               src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/zjGTWRUKMYDyOTDz.webp"
-              alt="Écran 24m gonflé au Stade Vélodrome"
+              alt="Ecran 24m gonfle au Stade Velodrome"
               className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
-              width={600} height={400}
-            decoding="async" />
+              width={600} height={400} decoding="async" />
           </div>
           <div className="overflow-hidden rounded-lg">
             <img loading="lazy"
               src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fVlIGWRbdtnxnbtQ.webp"
-              alt="Écran 24m à plat au Stade Vélodrome"
+              alt="Ecran 24m a plat au Stade Velodrome"
               className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
-              width={600} height={400}
-            decoding="async" />
+              width={600} height={400} decoding="async" />
           </div>
           <div className="overflow-hidden rounded-lg">
             <img loading="lazy"
               src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ahSYgICnXZOUogFE.webp"
-              alt="Équipe portant l'écran 24m à dos d'homme"
+              alt="Equipe portant l ecran 24m a dos d homme"
               className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
-              width={600} height={400}
-            decoding="async" />
+              width={600} height={400} decoding="async" />
           </div>
         </motion.div>
 
-        {/* Citation sous les photos */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-center text-3xl lg:text-5xl font-bold italic text-white mb-20 leading-tight"
         >
-          « Même pas besoin de grue pour me déplacer, mes <span className="text-gold">jambes</span> me suffisent »
+          {t("technology.quote_1_before")} <span className="text-gold">{t("technology.quote_1_highlight")}</span> {t("technology.quote_1_after")}
         </motion.p>
 
         <motion.p
@@ -82,7 +78,7 @@ export default function TechnologySection() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="text-center text-2xl lg:text-4xl font-bold italic text-white mb-20 leading-tight"
         >
-          Je suis arrivé tout seul dans un utilitaire de 12 m³ et je repars tout seul pour un repos bien mérité jusqu'à ma prochaine séance
+          {t("technology.quote_2")}
         </motion.p>
 
         <div className="max-w-3xl">
@@ -91,27 +87,27 @@ export default function TechnologySection() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h3 className="text-2xl font-bold text-white mb-6">Du secret défense à l'écran de cinéma</h3>
+            <h3 className="text-2xl font-bold text-white mb-6">{t("technology.story_title")}</h3>
 
             <div className="space-y-5 text-white/75 text-base leading-relaxed">
               <p>
-                Tout commence à Lyon, capitale historique du textile. En cherchant un tissu à la fois léger et indestructible, nous avons découvert que les <strong className="text-white/90">airbags automobiles</strong> utilisaient exactement ce que nous cherchions.
+                {t("technology.story_p1_before")}{" "}
+                <strong className="text-white/90">{t("technology.story_p1_highlight")}</strong>{" "}
+                {t("technology.story_p1_after")}
               </p>
               <p>
-                Les constructeurs nous ont dit que c'était «&nbsp;secret défense&nbsp;». Nous ne nous sommes pas découragés. Après des mois d'enquête, nous avons identifié le tissu : un <strong className="text-white/90">polyamide haute ténacité de Dupont de Nemours</strong>.
+                {t("technology.story_p2_before")}{" "}
+                <strong className="text-white/90">{t("technology.story_p2_highlight")}</strong>.
               </p>
-              <p>
-                Pour la gamme étanche, l'inspiration est venue d'ailleurs : sur une plage de Hong Kong, en observant des kitesurfs. Leurs boudins gonflables étaient légers, résistants, et parfaitement étanches. La technologie était là, sous nos yeux.
-              </p>
+              <p>{t("technology.story_p3")}</p>
             </div>
 
-            {/* Innovation badges */}
             <div className="grid grid-cols-2 gap-4 mt-8">
               {[
-                { icon: Feather, label: "Ultra-léger", desc: "Polyamide haute ténacité" },
-                { icon: Shield, label: "Garanti 10 ans", desc: "Tissu d'airbag automobile" },
-                { icon: Zap, label: "Montage rapide", desc: "3 min pour un écran étanche" },
-                { icon: Award, label: "Conception française", desc: "Design et R&D en France" },
+                { icon: Feather, label: t("technology.badge_leger"), desc: t("technology.badge_leger_desc") },
+                { icon: Shield, label: t("technology.badge_garantie"), desc: t("technology.badge_garantie_desc") },
+                { icon: Zap, label: t("technology.badge_montage"), desc: t("technology.badge_montage_desc") },
+                { icon: Award, label: t("technology.badge_france"), desc: t("technology.badge_france_desc") },
               ].map((item) => (
                 <div key={item.label} className="flex items-start gap-3 p-4 bg-white/[0.02] border border-white/[0.05]">
                   <item.icon className="w-5 h-5 text-gold shrink-0 mt-0.5" />

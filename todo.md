@@ -923,6 +923,8 @@
 - [x] Phase 4 : Refactoriser Navbar, HeroSection, Footer avec t('clé')
 - [x] Phase 4 : Adapter le chatbot IA pour répondre dans la langue du domaine
 - [ ] Phase 4 : Adapter les brochures PDF pour la langue du visiteur
+- [x] Phase 4 : Refactoriser ProductsSection, TechnologySection, UseCasesSection, FaqSection, StorySection, RealisationsSection, TestimonialsSection, ContactSection avec i18n
+- [x] Phase 4 : Mettre à jour les fichiers de traduction EN/DE/ES pour tous les composants refactorisés
 - [ ] Phase 4 : Adapter les calculateurs de tentes (labels, résultats)
 - [x] Phase 5 : Configurer les URLs traduites par domaine
 - [x] Phase 5 : Mettre à jour le routing dans App.tsx

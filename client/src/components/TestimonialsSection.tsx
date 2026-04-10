@@ -5,6 +5,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface Testimonial {
   name: string;
@@ -82,6 +83,7 @@ function StarRating({ rating }: { rating: number }) {
 export default function TestimonialsSection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
+  const { t } = useTranslation("home");
   const [current, setCurrent] = useState(0);
   const [autoplay, setAutoplay] = useState(true);
 
@@ -117,11 +119,11 @@ export default function TestimonialsSection() {
         >
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-12 h-[1px] bg-gold" />
-            <span className="text-gold text-sm font-semibold tracking-[0.3em] uppercase">Témoignages</span>
+            <span className="text-gold text-sm font-semibold tracking-[0.3em] uppercase">{t("testimonials.section_label")}</span>
             <div className="w-12 h-[1px] bg-gold" />
           </div>
           <h2 className="text-4xl lg:text-5xl font-bold text-white leading-tight">
-            Ce que disent <span className="text-gradient-gold text-glow-gold-intense">nos clients</span>
+            {t("testimonials.title_before")} <span className="text-gradient-gold text-glow-gold-intense">{t("testimonials.title_highlight")}</span>
           </h2>
           <p className="text-white/75 text-lg mt-4 max-w-2xl mx-auto">
             Des professionnels de l'événementiel, de l'hôtellerie et des collectivités nous font confiance depuis plus de 25 ans.
