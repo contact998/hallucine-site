@@ -123,7 +123,7 @@ function DesktopDropdown({ items, isOpen }: { items: DropdownItem[]; isOpen: boo
         >
           {items.map((item) => (
             <Link
-              key={item.href}
+              key={item.label}
               href={item.href}
               className="block px-4 py-3 text-sm text-white/80 hover:text-warm hover:bg-white/5 transition-colors border-b border-white/5 last:border-b-0"
             >
@@ -377,7 +377,7 @@ export default function Navbar() {
                             >
                               {item.dropdown.map((sub) => (
                                 <Link
-                                  key={sub.href}
+                                  key={sub.label}
                                   href={sub.href}
                                   onClick={() => setMobileOpen(false)}
                                   className="block py-2.5 px-2 text-sm text-white/70 hover:text-warm transition-colors"
