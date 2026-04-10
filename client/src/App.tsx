@@ -10,7 +10,7 @@ import { usePageTracking } from "./hooks/useAnalytics";
 import { useCanonical } from "./hooks/useCanonical";
 import GlobalStructuredData from "./components/GlobalStructuredData";
 import { detectLanguage } from "./i18n/config";
-import { ROUTES } from "./i18n/routes";
+import { ROUTES, getRouteKey } from "./i18n/routes";
 
 // Lazy-loaded pages (code splitting)
 const Home = lazy(() => import("./pages/Home"));
@@ -62,6 +62,20 @@ function Router() {
   // Détecte la langue selon le domaine (production) ou ?lang= (dev)
   const lang = detectLanguage();
   const r = ROUTES[lang] ?? ROUTES["fr"];
+
+  // Redirection automatique : si l'URL est en FR mais le domaine est EN/DE/ES,
+  // on redirige vers l'URL traduite dans la langue du domaine
+  if (lang !== "fr" && typeof window !== "undefined") {
+    const currentPath = window.location.pathname;
+    const routeKey = getRouteKey(currentPath, "fr");
+    if (routeKey && routeKey !== "home") {
+      const translatedPath = r[routeKey];
+      if (translatedPath && translatedPath !== currentPath) {
+        window.location.replace(translatedPath);
+        return null;
+      }
+    }
+  }
 
   return (
     <Suspense fallback={<PageLoader />}>
