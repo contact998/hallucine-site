@@ -4,11 +4,11 @@
  * FIX DÉFINITIF : Ressources bundlées dans le JS (pas de HTTP backend)
  * → i18next synchrone dès le premier render
  * → zéro hydration mismatch
- * → zéro race condition avec Puppeteer SSG
+ * → zéro race condition avec le rendu serveur
  *
  * Ordre de priorité pour la détection de langue :
- * 1. window.__INITIAL_LOCALE__ (injecté par Puppeteer via Object.defineProperty) ← priorité absolue
- * 2. Paramètre URL ?lang=xx (pour les tests en dev — nettoyé après init)
+ * 1. Paramètre URL ?lang=xx (priorité absolue — pour les tests en dev)
+ * 2. window.__INITIAL_LOCALE__ (injecté par le serveur selon le domaine)
  * 3. Domaine (hallucinecran.fr → fr, .com → en, .de → de, .es → es)
  * 4. Défaut : fr
  */
@@ -122,13 +122,11 @@ i18n
     // Pas de détecteurs automatiques → aucun conflit navigateur/cookies/localStorage
     detection: undefined,
     react: {
-      // Désactiver useSuspense pendant le prerender Puppeteer pour que changeLanguage
-      // déclenche un re-render immédiat sans Suspense boundary
-      useSuspense: typeof window !== 'undefined' ? !(window as any).__PRERENDER__ : false,
+      useSuspense: true,
     },
   })
   .then(() => {
-    // Exposer i18next sur window pour que Puppeteer puisse vérifier isInitialized + language
+    // Exposer i18next sur window (utile pour le debug en dev)
     window.i18next = i18n;
 
     // Nettoyer ?lang= de l'URL après init (propre pour le SEO)
@@ -140,13 +138,7 @@ i18n
       window.history.replaceState({}, "", newUrl);
     }
 
-    // Écouter les changements de navigation SPA
-    window.addEventListener("popstate", () => {
-      const lang = detectLanguage();
-      if (i18n.language !== lang) {
-        i18n.changeLanguage(lang);
-      }
-    });
+
   });
 
 export default i18n;
