@@ -5,6 +5,7 @@
 import { useEffect, useRef } from "react";
 
 export default function ProjectorBeam() {
+  if (typeof window === 'undefined') return null;
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {

@@ -968,3 +968,25 @@
 - [x] Corriger la détection de langue : i18n.changeLanguage() appelé après init pour forcer la langue correcte
 - [x] Ajouter un listener popstate pour re-détecter la langue lors de la navigation SPA
 - [ ] Tester ?lang=en et domaine hallucinecran.com (à valider après déploiement)
+
+## SSG Multilingue (4 langues)
+- [ ] Modifier prerender.mjs pour générer 4 versions par page (fr/en/de/es)
+- [ ] Adapter server/vite.ts pour servir la bonne langue selon le domaine
+- [ ] Injecter window.__INITIAL_LOCALE__ dans le HTML
+- [ ] Lancer le pré-rendu multilingue (27 pages × 4 langues = 108 fichiers)
+- [ ] Tester sur hallucinecran.com (EN) et hallucinecran.fr (FR)
+
+## Fix i18n — Traductions multilingues
+- [x] Diagnostic : imports JSON depuis client/public/ interdits par Vite 5+ → bundledResources vide
+- [x] Déplacer les 128 fichiers JSON de client/public/locales/ vers client/src/locales/
+- [x] Réécrire locales-bundled.ts avec import.meta.glob('../locales/**/*.json', { eager: true })
+- [x] Valider : window.i18next.t('hero.badge', { ns: 'home' }) → "Fabricant français depuis 1995" ✓
+
+## Fix i18n multilingue — Injection serveur (2026-04-10)
+
+- [x] Déplacer JSON locales de client/public/locales/ vers client/src/locales/
+- [x] Réécrire locales-bundled.ts avec import.meta.glob (plus de 128 imports manuels)
+- [x] Corriger safeLocalStorage dans useAuth.ts et ThemeContext.tsx
+- [x] Supprimer tout le code SSG/Puppeteer (prerender.mjs, entry-server.tsx, AppSSR.tsx, etc.)
+- [x] Simplifier vite.ts : injection window.__INITIAL_LOCALE__ selon le domaine (Host header)
+- [x] Validé : hallucinecran.com → "en", .de → "de", .es → "es", .fr → "fr"

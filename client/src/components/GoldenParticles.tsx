@@ -13,6 +13,7 @@ interface GoldenParticlesProps {
 }
 
 export default function GoldenParticles({ count = 35, id = "golden-particles" }: GoldenParticlesProps) {
+  if (typeof window === "undefined") return null;
   const [init, setInit] = useState(false);
 
   useEffect(() => {

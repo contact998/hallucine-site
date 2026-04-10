@@ -8,6 +8,7 @@ import { loadSlim } from "@tsparticles/slim";
 import type { ISourceOptions } from "@tsparticles/engine";
 
 export default function BokehEffect() {
+  if (typeof window === 'undefined') return null;
   const [init, setInit] = useState(false);
 
   useEffect(() => {

@@ -14,6 +14,7 @@ interface WeatherEffectProps {
 }
 
 export default function WeatherEffect({ intensity = "moderate", showMessage = true }: WeatherEffectProps) {
+  if (typeof window === "undefined") return null;
   const [init, setInit] = useState(false);
   const [messageVisible, setMessageVisible] = useState(false);
 
