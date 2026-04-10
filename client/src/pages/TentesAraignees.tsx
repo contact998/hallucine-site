@@ -10,6 +10,7 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { useRoutes } from "@/i18n/useRoutes";
 
 const tailles = [
   { dim: "4m × 4m", poids: "~50 kg", montage: "10-15 min" },
@@ -26,6 +27,7 @@ const images = [
 ];
 
 export default function TentesAraignees() {
+  const route = useRoutes();
   const { t } = useTranslation("tente-araignee");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp");
 
@@ -217,10 +219,10 @@ export default function TentesAraignees() {
           <h2 className="text-3xl font-bold text-ivory mb-4">{t("cta_title")}</h2>
           <p className="text-white/60 mb-8">{t("cta_desc")}</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               {t("cta_devis")}
             </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               {t("cta_tarifs")}
             </Link>
           </div>

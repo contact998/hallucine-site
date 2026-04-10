@@ -9,6 +9,7 @@ import { Construction } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
+import { useRoutes } from "@/i18n/useRoutes";
 
 const ledImages = [
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/cNgCebtnqSvVUvmF.webp", alt: "Écran LED gonflable Hallucine de 5m pour projection de jour comme de nuit" },
@@ -17,6 +18,7 @@ const ledImages = [
 ];
 
 export default function EcransLED() {
+  const route = useRoutes();
   const { t } = useTranslation("ecrans-led");
 
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
@@ -79,10 +81,10 @@ export default function EcransLED() {
             {t("wip_desc")}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               {t("btn_contact")}
             </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               {t("btn_devis")}
             </Link>
           </div>

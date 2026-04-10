@@ -11,6 +11,7 @@ import { Video } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
+import { useRoutes } from "@/i18n/useRoutes";
 
 const photos = [
   { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/pasted_file_lj0vsC_onepongeapreslapluiePlaceaujeune_0787bac5.jpg", alt: "Une ponge apres la pluie Place au jeune", cat: "events" },
@@ -88,6 +89,7 @@ const photos = [
 ];
 
 export default function Galerie() {
+  const route = useRoutes();
   const { t } = useTranslation("galerie");
 
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IDghLbPxebJUfXVC.webp");
@@ -151,7 +153,7 @@ export default function Galerie() {
               {t("page_title")}
             </h1>
             <Link
-              href="/galerie-video"
+              href={route('galerie-video')}
               className="shrink-0 ml-3 flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-full bg-warm/20 text-warm border border-warm/30 hover:bg-warm/30 transition-colors z-30 pointer-events-auto"
             >
               <Video className="w-4 h-4" />

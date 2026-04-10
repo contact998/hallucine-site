@@ -10,6 +10,7 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { useRoutes } from "@/i18n/useRoutes";
 
 const archesData = [
   { ref: "CA-4/2.6/0.45", taille: "400×260(H)×45cm" },
@@ -33,6 +34,7 @@ const galleryImages = [
 ];
 
 export default function ArchesGonflables() {
+  const route = useRoutes();
   const { t } = useTranslation("arches-gonflables");
   useDocumentMeta(t("meta_title"), t("meta_desc"));
 
@@ -271,7 +273,7 @@ export default function ArchesGonflables() {
         <div className="container text-center">
           <h2 className="text-3xl font-bold text-ivory mb-4">{t("cta_title")}</h2>
           <p className="text-white/70 max-w-2xl mx-auto mb-8">{t("cta_desc")}</p>
-          <Link href="/contactez-nous" className="inline-block bg-warm text-charcoal-dark font-semibold py-3 px-8 rounded-lg hover:bg-warm/90 transition-colors">
+          <Link href={route('contact')} className="inline-block bg-warm text-charcoal-dark font-semibold py-3 px-8 rounded-lg hover:bg-warm/90 transition-colors">
             {t("cta_devis")}
           </Link>
         </div>

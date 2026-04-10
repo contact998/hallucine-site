@@ -11,6 +11,7 @@ import { Check, ChevronRight, ChevronDown, Feather, Clock, Shield, Palette, Arro
 import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { useRoutes } from "@/i18n/useRoutes";
 
 const MOBILIER_SUPPORT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/efvnhrOKvRVMyuHr.webp";
 const MOBILIER_FAUTEUIL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VUhsCVHmnpGqweWv.webp";
@@ -29,6 +30,7 @@ const fadeIn = {
 };
 
 export default function Mobilier() {
+  const route = useRoutes();
   const { t } = useTranslation("mobilier");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
@@ -287,7 +289,7 @@ export default function Mobilier() {
             <h2 className="text-3xl md:text-4xl font-bold text-white">{t("cta_title")}</h2>
             <p className="text-white/60 mt-4 text-lg max-w-2xl mx-auto">{t("cta_desc")}</p>
             <div className="mt-8 flex justify-center gap-4">
-              <Link href="/contactez-nous" className="px-6 py-3 bg-gold text-background font-semibold rounded-md hover:bg-gold/90 transition-colors">{t("cta_devis")}</Link>
+              <Link href={route('contact')} className="px-6 py-3 bg-gold text-background font-semibold rounded-md hover:bg-gold/90 transition-colors">{t("cta_devis")}</Link>
               <Link href="/realisations" className="px-6 py-3 bg-white/10 text-white font-semibold rounded-md hover:bg-white/20 transition-colors">{t("cta_realisations")}</Link>
             </div>
           </motion.div>

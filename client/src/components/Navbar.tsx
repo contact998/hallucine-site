@@ -13,6 +13,7 @@ import { getLoginUrl } from "@/const";
 import { AvailabilityBadge } from "@/components/AvailabilityIndicator";
 import { useTranslation } from "react-i18next";
 import { LANGUAGE_DOMAINS, detectLanguage } from "@/i18n/config";
+import { ROUTES } from "@/i18n/routes";
 
 const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tWSEvNLkFkmjxAXj.png";
 
@@ -145,42 +146,44 @@ export default function Navbar() {
   const { isAuthenticated, user } = useAuth();
   const { t } = useTranslation("nav");
 
+  // Routes localisées selon la langue active
+  const r = ROUTES[currentLang] ?? ROUTES["fr"];
   // Menu de navigation traduit dynamiquement
   const navItems: NavItem[] = [
-    { label: t("accueil"), href: "/" },
+    { label: t("accueil"), href: r["home"] },
     {
       label: t("ecran_gonflable"),
       dropdown: [
-        { label: t("ecran_geant"), href: "/ecran-gonflable-geant-soufflerie" },
-        { label: t("comparaison"), href: "/comparaison-ecran-gonflable" },
-        { label: t("ecran_etanche"), href: "/ecran-gonflable-etanche-air" },
-        { label: t("ecran_economique"), href: "/ecran-gonflable-economique" },
-        { label: t("mode_emploi"), href: "/mode-emploi" },
-        { label: t("ecrans_led"), href: "/ecrans-led" },
+        { label: t("ecran_geant"), href: r["ecran-geant"] },
+        { label: t("comparaison"), href: r["comparaison"] },
+        { label: t("ecran_etanche"), href: r["ecran-etanche"] },
+        { label: t("ecran_economique"), href: r["ecran-economique"] },
+        { label: t("mode_emploi"), href: r["mode-emploi"] },
+        { label: t("ecrans_led"), href: r["ecrans-led"] },
       ],
     },
     {
       label: t("tente_arche_meuble"),
       dropdown: [
-        { label: t("tentes_x"), href: "/tente-gonflable-x" },
-        { label: t("tentes_n"), href: "/tente-gonflable-n" },
-        { label: t("tentes_v"), href: "/tente-gonflable-v" },
-        { label: t("tentes_araignees"), href: "/tente-gonflable-araignee" },
-        { label: t("arches"), href: "/arche-gonflable" },
-        { label: t("mobilier"), href: "/mobilier-gonflable" },
+        { label: t("tentes_x"), href: r["tente-x"] },
+        { label: t("tentes_n"), href: r["tente-n"] },
+        { label: t("tentes_v"), href: r["tente-v"] },
+        { label: t("tentes_araignees"), href: r["tente-araignee"] },
+        { label: t("arches"), href: r["arches"] },
+        { label: t("mobilier"), href: r["mobilier"] },
       ],
     },
-    { label: t("accessoires"), href: "/accessoire-cinema-plein-air" },
-    { label: t("galerie"), href: "/galerie-evenements" },
-    { label: t("contactez_nous"), href: "/contactez-nous" },
+    { label: t("accessoires"), href: r["accessoires"] },
+    { label: t("galerie"), href: r["galerie"] },
+    { label: t("contactez_nous"), href: r["contact"] },
     {
       label: t("plus"),
       dropdown: [
-        { label: t("a_propos"), href: "/a-propos-hallucine" },
-        { label: t("devis_gratuit"), href: "/devis" },
-        { label: t("mode_emploi"), href: "/mode-emploi" },
-        { label: t("galerie_video"), href: "/galerie-video" },
-        { label: t("blog"), href: "/blog" },
+        { label: t("a_propos"), href: r["a-propos"] },
+        { label: t("devis_gratuit"), href: r["contact"] },
+        { label: t("mode_emploi"), href: r["mode-emploi"] },
+        { label: t("galerie_video"), href: r["galerie-video"] },
+        { label: t("blog"), href: r["blog"] },
       ],
     },
   ];

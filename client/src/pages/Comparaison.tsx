@@ -11,8 +11,10 @@ import { useState } from "react";
 import { Check, X, Trophy, Feather, Clock, Shield, Wind, Truck, Wrench, Leaf, Users, Mountain, Package, Ruler, Star } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { useRoutes } from "@/i18n/useRoutes";
 
 export default function Comparaison() {
+  const route = useRoutes();
   const { t } = useTranslation("comparaison");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
@@ -177,13 +179,13 @@ export default function Comparaison() {
           <h2 className="text-3xl font-bold text-ivory mb-4">{t("cta_title")}</h2>
           <p className="text-white/65 mb-8 max-w-xl mx-auto">{t("cta_desc")}</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/ecran-gonflable" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href={route('ecrans')} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               {t("cta_screens")}
             </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               {t("cta_devis")}
             </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-white/20 text-white/70 font-semibold rounded hover:bg-white/5 transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 border border-white/20 text-white/70 font-semibold rounded hover:bg-white/5 transition-colors">
               {t("cta_contact")}
             </Link>
           </div>

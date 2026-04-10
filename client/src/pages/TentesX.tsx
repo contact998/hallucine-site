@@ -11,6 +11,7 @@ import { ChevronLeft, ChevronRight, X as XIcon } from "lucide-react";
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { useRoutes } from "@/i18n/useRoutes";
 
 const heroImages = [
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fHOHtmjSEZCdfvZR.webp", alt: "Tentes gonflables X Meguiar's noires et jaunes de nuit" },
@@ -62,6 +63,7 @@ function ImageLightbox({ src, alt, isOpen, onClose }: { src: string; alt: string
 }
 
 export default function TentesX() {
+  const route = useRoutes();
   const { t } = useTranslation("tente-x");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp");
 
@@ -269,10 +271,10 @@ export default function TentesX() {
           <h2 className="text-3xl font-bold text-ivory mb-4">{t("cta_title")}</h2>
           <p className="text-white/60 mb-8 max-w-xl mx-auto">{t("cta_desc")}</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               {t("cta_contact")}
             </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               {t("cta_devis")}
             </Link>
             <BrochureDownloadButton productSlug="tente-x" productName="Tente X" variant="compact" />

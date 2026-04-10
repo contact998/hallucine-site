@@ -9,8 +9,10 @@ import { MapPin, Phone, Mail } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
+import { useRoutes } from "@/i18n/useRoutes";
 
 export default function TrouverDistributeur() {
+  const route = useRoutes();
   const { t } = useTranslation("trouver-distributeur");
 
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
@@ -85,7 +87,7 @@ export default function TrouverDistributeur() {
           {/* CTA */}
           <div className="mt-12 text-center">
             <p className="text-white/60 mb-6">{t("cta_text")}</p>
-            <Link href="/devenir-distributeur" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href={route('devenir-distributeur')} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               {t("cta_btn")}
             </Link>
           </div>

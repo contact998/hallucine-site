@@ -10,6 +10,7 @@ import { trpc } from "@/lib/trpc";
 import { getLoginUrl } from "@/const";
 import { useState, useMemo } from "react";
 import { Link } from "wouter";
+import { useRoutes } from "@/i18n/useRoutes";
 import {
   User,
   FileText,
@@ -80,6 +81,7 @@ function SortHeader({
 }
 
 export default function Profil() {
+  const route = useRoutes();
   useDocumentMeta("Mon Profil | Mes Demandes", "Consultez votre profil et suivez l'état de vos demandes de devis Hallucine.");
   useNoIndex();
 
@@ -299,7 +301,7 @@ export default function Profil() {
                 Vous n'avez pas encore fait de demande de devis ou de contact.
               </p>
               <Link
-                href="/contactez-nous"
+                href={route('contact')}
                 className="inline-flex items-center gap-2 px-6 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors"
               >
                 Demander un devis
@@ -390,13 +392,13 @@ export default function Profil() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              href="/contactez-nous"
+              href={route('contact')}
               className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors"
             >
               Demander un devis
             </Link>
             <Link
-              href="/contactez-nous"
+              href={route('contact')}
               className="px-8 py-3 border border-warm/30 text-warm font-semibold rounded hover:bg-warm/10 transition-colors"
             >
               Nous contacter

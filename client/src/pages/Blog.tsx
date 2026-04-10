@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
+import { useRoutes } from "@/i18n/useRoutes";
 
 interface Commentaire {
   auteur: string;
@@ -26,6 +27,7 @@ interface Article {
 }
 
 export default function Blog() {
+  const route = useRoutes();
   const { t } = useTranslation("blog");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
@@ -422,7 +424,7 @@ export default function Blog() {
                 <p className="text-sm opacity-80 mb-4">
                   {t("cta_desc")}
                 </p>
-                <Link href="/contactez-nous" className="inline-block w-full text-center bg-[#DAA520] text-white px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#B8860B] transition-colors">
+                <Link href={route('contact')} className="inline-block w-full text-center bg-[#DAA520] text-white px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#B8860B] transition-colors">
                   {t("cta_btn")}
                 </Link>
               </div>

@@ -9,19 +9,21 @@ import { ArrowRight } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
+import { useRoutes } from "@/i18n/useRoutes";
 
 export default function Tentes() {
+  const route = useRoutes();
   const { t } = useTranslation("tentes");
 
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp");
 
   const categories = [
-    { title: t("c1_title"), desc: t("c1_desc"), href: "/tente-gonflable-x" },
-    { title: t("c2_title"), desc: t("c2_desc"), href: "/tente-gonflable-n" },
-    { title: t("c3_title"), desc: t("c3_desc"), href: "/tente-gonflable-v" },
-    { title: t("c4_title"), desc: t("c4_desc"), href: "/tente-gonflable-araignee" },
-    { title: t("c5_title"), desc: t("c5_desc"), href: "/arche-gonflable" },
-    { title: t("c6_title"), desc: t("c6_desc"), href: "/mobilier-gonflable" },
+    { title: t("c1_title"), desc: t("c1_desc"), href: route("tente-x") },
+    { title: t("c2_title"), desc: t("c2_desc"), href: route("tente-n") },
+    { title: t("c3_title"), desc: t("c3_desc"), href: route("tente-v") },
+    { title: t("c4_title"), desc: t("c4_desc"), href: route("tente-araignee") },
+    { title: t("c5_title"), desc: t("c5_desc"), href: route("arches") },
+    { title: t("c6_title"), desc: t("c6_desc"), href: route("mobilier") },
   ];
 
   const avantages = [
@@ -107,10 +109,10 @@ export default function Tentes() {
             {t("cta_desc")}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               {t("cta_contact")}
             </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               {t("cta_prix")}
             </Link>
           </div>

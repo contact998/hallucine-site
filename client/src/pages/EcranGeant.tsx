@@ -14,6 +14,7 @@ import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
+import { useRoutes } from "@/i18n/useRoutes";
 
 const specsData = [
   { taille: "8m × 6m", toile: "7m × 5m", poids: "35 kg", montage: "30 min", personnes: "1" },
@@ -41,6 +42,7 @@ const galleryImages = [
 ];
 
 export default function EcranGeant() {
+  const route = useRoutes();
   const { t } = useTranslation("ecran-geant");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
@@ -102,7 +104,7 @@ export default function EcranGeant() {
             <strong className="text-warm"> {t("hero_p2_w1")}</strong>, <strong className="text-warm">{t("hero_p2_w2")}</strong> {t("hero_p2_w3") ? <span>et <strong className="text-warm">{t("hero_p2_w3")}</strong></span> : null}.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Link href="/contactez-nous" className="inline-flex items-center gap-2 px-6 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-all">
+            <Link href={route('contact')} className="inline-flex items-center gap-2 px-6 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-all">
               {t("hero_cta_devis")} <ArrowRight className="w-4 h-4" />
             </Link>
             <BrochureDownloadButton productSlug="ecran-soufflerie" productName="Écran Soufflerie" />
@@ -327,7 +329,7 @@ export default function EcranGeant() {
                   </div>
                 </div>
               </div>
-              <Link href="/mode-emploi" className="text-warm hover:underline font-medium inline-flex items-center gap-2">
+              <Link href={route('mode-emploi')} className="text-warm hover:underline font-medium inline-flex items-center gap-2">
                 {t("install_link")} <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -341,13 +343,13 @@ export default function EcranGeant() {
           <h2 className="text-3xl md:text-4xl font-bold text-ivory mb-4">{t("cta_title")}</h2>
           <p className="text-white/60 text-lg mb-8 max-w-2xl mx-auto">{t("cta_desc")}</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               {t("cta_contact")}
             </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               {t("cta_devis")}
             </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-white/20 text-ivory font-semibold rounded hover:bg-white/5 transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 border border-white/20 text-ivory font-semibold rounded hover:bg-white/5 transition-colors">
               {t("cta_tarifs")}
             </Link>
           </div>

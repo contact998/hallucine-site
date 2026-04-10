@@ -10,6 +10,7 @@ import { Link } from "wouter";
 import { X as XIcon } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { useRoutes } from "@/i18n/useRoutes";
 
 const heroImages = [
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp", alt: "Tente gonflable N Hallucine blanche dans la neige" },
@@ -23,6 +24,7 @@ const contentImages = {
 };
 
 export default function TentesN() {
+  const route = useRoutes();
   const { t } = useTranslation("tente-n");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp");
 
@@ -188,10 +190,10 @@ export default function TentesN() {
           <p className="text-white/70 text-lg leading-relaxed mb-8">{t("conclusion_p1")}</p>
           <p className="text-white/60 leading-relaxed mb-10">{t("conclusion_p2")}</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               {t("cta_contact")}
             </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               {t("cta_devis")}
             </Link>
           </div>

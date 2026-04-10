@@ -11,18 +11,20 @@ import { useState } from "react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
+import { useRoutes } from "@/i18n/useRoutes";
 
 export default function Ecrans() {
+  const route = useRoutes();
   const { t } = useTranslation("ecrans");
 
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   const gammes = [
-    { title: t("g1_title"), desc: t("g1_desc"), href: "/ecran-gonflable-geant-soufflerie", highlight: t("g1_highlight") },
-    { title: t("g2_title"), desc: t("g2_desc"), href: "/ecran-gonflable-etanche-air", highlight: t("g2_highlight") },
-    { title: t("g3_title"), desc: t("g3_desc"), href: "/ecran-gonflable-economique", highlight: t("g3_highlight") },
-    { title: t("g4_title"), desc: t("g4_desc"), href: "/comparaison-ecran-gonflable", highlight: t("g4_highlight") },
-    { title: t("g5_title"), desc: t("g5_desc"), href: "/ecrans-led", highlight: t("g5_highlight") },
+    { title: t("g1_title"), desc: t("g1_desc"), href: route("ecran-geant"), highlight: t("g1_highlight") },
+    { title: t("g2_title"), desc: t("g2_desc"), href: route("ecran-etanche"), highlight: t("g2_highlight") },
+    { title: t("g3_title"), desc: t("g3_desc"), href: route("ecran-economique"), highlight: t("g3_highlight") },
+    { title: t("g4_title"), desc: t("g4_desc"), href: route("comparaison"), highlight: t("g4_highlight") },
+    { title: t("g5_title"), desc: t("g5_desc"), href: route("ecrans-led"), highlight: t("g5_highlight") },
   ];
 
   const avantages = [
@@ -152,10 +154,10 @@ export default function Ecrans() {
           <h2 className="text-3xl font-bold text-ivory mb-4">{t("cta_title")}</h2>
           <p className="text-white/60 mb-8">{t("cta_desc")}</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               {t("cta_contact")}
             </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               {t("cta_prix")}
             </Link>
           </div>

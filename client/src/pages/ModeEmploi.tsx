@@ -8,6 +8,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { Link } from "wouter";
+import { useRoutes } from "@/i18n/useRoutes";
 
 /* ── CDN URLs des images ── */
 const IMG = {
@@ -26,6 +27,7 @@ const IMG = {
 };
 
 export default function ModeEmploi() {
+  const route = useRoutes();
   const { t } = useTranslation("mode-emploi");
 
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
@@ -295,7 +297,7 @@ export default function ModeEmploi() {
             {t("cta_desc")}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               {t("cta_contact")}
             </Link>
             <a

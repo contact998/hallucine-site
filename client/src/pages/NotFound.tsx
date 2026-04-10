@@ -9,8 +9,10 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useTranslation } from "react-i18next";
+import { useRoutes } from "@/i18n/useRoutes";
 
 export default function NotFound() {
+  const route = useRoutes();
   const { t } = useTranslation("not-found");
   useDocumentMeta(t("meta_title"), t("meta_desc"));
 
@@ -83,7 +85,7 @@ export default function NotFound() {
               {t("btn_home")}
             </Link>
             <Link
-              href="/contactez-nous"
+              href={route('contact')}
               className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-white/20 text-white/70 rounded hover:text-warm hover:border-warm/30 transition-colors"
             >
               <Search className="w-4 h-4" />
@@ -96,10 +98,10 @@ export default function NotFound() {
             <p className="text-white/40 text-sm mb-4">{t("popular_pages")}</p>
             <div className="flex flex-wrap justify-center gap-3">
               {[
-                { label: t("link_ecrans"), href: "/ecran-gonflable" },
-                { label: t("link_tentes"), href: "/tente-gonflable" },
-                { label: t("link_galerie"), href: "/galerie-evenements" },
-                { label: t("link_devis"), href: "/contactez-nous" },
+                { label: t("link_ecrans"), href: route("ecrans") },
+                { label: t("link_tentes"), href: route("tentes") },
+                { label: t("link_galerie"), href: route("galerie") },
+                { label: t("link_devis"), href: route("contact") },
               ].map((link) => (
                 <Link
                   key={link.href}

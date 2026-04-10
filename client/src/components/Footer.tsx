@@ -6,10 +6,12 @@ import { Mail, Phone, MessageCircle } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useRoutes } from "@/i18n/useRoutes";
 
 const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tWSEvNLkFkmjxAXj.png";
 
 export default function Footer() {
+  const route = useRoutes();
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const { t } = useTranslation("common");
@@ -21,19 +23,19 @@ export default function Footer() {
   };
 
   const menuLinks = [
-    { labelKey: "footer.menu.contact", href: "/contactez-nous" },
-    { labelKey: "footer.menu.devis", href: "/devis" },
-    { labelKey: "footer.menu.a_propos", href: "/a-propos-hallucine" },
-    { labelKey: "footer.menu.galerie", href: "/galerie-evenements" },
-    { labelKey: "footer.menu.accessoires", href: "/accessoire-cinema-plein-air" },
-    { labelKey: "footer.menu.mode_emploi", href: "/mode-emploi" },
-    { labelKey: "footer.menu.galerie_video", href: "/galerie-video" },
-    { labelKey: "footer.menu.blog", href: "/blog" },
-    { labelKey: "footer.menu.trouver_distributeur", href: "/trouver-distributeur" },
-    { labelKey: "footer.menu.devenir_distributeur", href: "/devenir-distributeur" },
-    { labelKey: "footer.menu.confidentialite", href: "/politique-confidentialite" },
-    { labelKey: "footer.menu.mentions_legales", href: "/mentions-legales" },
-    { labelKey: "footer.menu.cookies", href: "/politique-cookies" },
+    { labelKey: "footer.menu.contact", href: route("contact") },
+    { labelKey: "footer.menu.devis", href: route("contact") },
+    { labelKey: "footer.menu.a_propos", href: route("a-propos") },
+    { labelKey: "footer.menu.galerie", href: route("galerie") },
+    { labelKey: "footer.menu.accessoires", href: route("accessoires") },
+    { labelKey: "footer.menu.mode_emploi", href: route("mode-emploi") },
+    { labelKey: "footer.menu.galerie_video", href: route("galerie-video") },
+    { labelKey: "footer.menu.blog", href: route("blog") },
+    { labelKey: "footer.menu.trouver_distributeur", href: route("trouver-distributeur") },
+    { labelKey: "footer.menu.devenir_distributeur", href: route("devenir-distributeur") },
+    { labelKey: "footer.menu.confidentialite", href: route("confidentialite") },
+    { labelKey: "footer.menu.mentions_legales", href: route("mentions-legales") },
+    { labelKey: "footer.menu.cookies", href: route("cookies") },
   ];
 
   return (
@@ -141,9 +143,9 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Hallucine. {t("footer.copyright")}
           </p>
           <div className="flex gap-6">
-            <Link href="/mentions-legales" className="text-white/50 text-xs hover:text-warm transition-colors">{t("footer.menu.mentions_legales")}</Link>
-            <Link href="/politique-confidentialite" className="text-white/50 text-xs hover:text-warm transition-colors">{t("footer.menu.confidentialite")}</Link>
-            <Link href="/politique-cookies" className="text-white/50 text-xs hover:text-warm transition-colors">{t("footer.menu.cookies")}</Link>
+            <Link href={route('mentions-legales')} className="text-white/50 text-xs hover:text-warm transition-colors">{t("footer.menu.mentions_legales")}</Link>
+            <Link href={route('confidentialite')} className="text-white/50 text-xs hover:text-warm transition-colors">{t("footer.menu.confidentialite")}</Link>
+            <Link href={route('cookies')} className="text-white/50 text-xs hover:text-warm transition-colors">{t("footer.menu.cookies")}</Link>
           </div>
         </div>
       </div>

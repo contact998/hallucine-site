@@ -13,6 +13,7 @@ import { VolumeX, Droplets, Clock, Feather, ChevronDown, Shield, Wind, Zap } fro
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { useRoutes } from "@/i18n/useRoutes";
 
 const specsData = [
   { taille: "245 × 200 cm", toile: "218 × 122 cm", poids: "7 kg", hauteur: "50 cm", personnes: "1" },
@@ -34,6 +35,7 @@ const galleryImages = [
 ];
 
 export default function EcranEtanche() {
+  const route = useRoutes();
   const { t } = useTranslation("ecran-etanche");
 
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
@@ -107,10 +109,10 @@ export default function EcranEtanche() {
             {t("hero_p2_before")} <strong className="text-ivory">{t("hero_p2_bold1")}</strong> {t("hero_p2_mid")} <strong className="text-ivory">{t("hero_p2_bold2")}</strong> {t("hero_p2_end")} <strong className="text-warm">{t("hero_p2_guarantee")}</strong> {t("hero_p2_end2")}
           </p>
           <div className="flex flex-wrap gap-4">
-            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               {t("hero_cta_devis")}
             </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               {t("hero_cta_contact")}
             </Link>
             <BrochureDownloadButton productSlug="ecran-etanche" productName="Écran Étanche" variant="compact" />
@@ -262,13 +264,13 @@ export default function EcranEtanche() {
           <h2 className="text-3xl font-bold text-ivory mb-4">{t("cta_title")}</h2>
           <p className="text-white/60 mb-8 max-w-xl mx-auto">{t("cta_desc")}</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               {t("cta_contact")}
             </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               {t("cta_devis")}
             </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-white/20 text-white/70 font-semibold rounded hover:bg-white/5 transition-colors">
+            <Link href={route('contact')} className="px-8 py-3 border border-white/20 text-white/70 font-semibold rounded hover:bg-white/5 transition-colors">
               {t("cta_tarifs")}
             </Link>
           </div>

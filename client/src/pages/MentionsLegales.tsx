@@ -9,8 +9,10 @@ import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
+import { useRoutes } from "@/i18n/useRoutes";
 
 export default function MentionsLegales() {
+  const route = useRoutes();
   const { t } = useTranslation("mentions-legales");
 
   useDocumentMeta(t("meta_title"), t("meta_desc"));
@@ -82,7 +84,7 @@ export default function MentionsLegales() {
               <h2 className="text-xl font-bold text-white mb-4">{t("s5_title")}</h2>
               <p>
                 {t("s5_text")}{" "}
-                <Link href="/politique-confidentialite" className="text-gold hover:underline">
+                <Link href={route('confidentialite')} className="text-gold hover:underline">
                   {t("s5_link")}
                 </Link>
               </p>
@@ -102,7 +104,7 @@ export default function MentionsLegales() {
               <h2 className="text-xl font-bold text-white mb-4">{t("s8_title")}</h2>
               <p>
                 {t("s8_text")}{" "}
-                <Link href="/politique-cookies" className="text-gold hover:underline">
+                <Link href={route('cookies')} className="text-gold hover:underline">
                   {t("s8_link")}
                 </Link>
               </p>

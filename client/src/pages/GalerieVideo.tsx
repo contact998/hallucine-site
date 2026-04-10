@@ -7,8 +7,10 @@ import VideoLightbox from "@/components/VideoLightbox";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
+import { useRoutes } from "@/i18n/useRoutes";
 
 export default function GalerieVideo() {
+  const route = useRoutes();
   const { t } = useTranslation("galerie-video");
 
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IDghLbPxebJUfXVC.webp");
@@ -119,7 +121,7 @@ export default function GalerieVideo() {
           <p className="text-lg opacity-90 mb-8">
             {t("cta_desc")}
           </p>
-          <Link href="/mode-emploi" className="inline-block bg-white text-[#8B7500] px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+          <Link href={route('mode-emploi')} className="inline-block bg-white text-[#8B7500] px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
             {t("cta_btn")}
           </Link>
         </div>

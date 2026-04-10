@@ -10,6 +10,7 @@ import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
+import { useRoutes } from "@/i18n/useRoutes";
 
 const ETANCHE_3M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hIDMieDLnUJYNHGY.webp";
 const ETANCHE_5M_RITZ = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IzUUAouVxqDCjGMh.webp";
@@ -25,6 +26,7 @@ const fadeIn = {
 };
 
 export default function Histoire() {
+  const route = useRoutes();
   const { t } = useTranslation("histoire");
 
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
@@ -246,7 +248,7 @@ export default function Histoire() {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">{t("cta_title")}</h2>
             <p className="text-white/50 mb-8 max-w-xl mx-auto">{t("cta_desc")}</p>
-            <Link href="/contactez-nous" className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-lg hover:bg-gold-light transition-all glow-gold">
+            <Link href={route('contact')} className="inline-flex items-center gap-2 px-8 py-4 bg-gold text-navy-deep font-semibold rounded-lg hover:bg-gold-light transition-all glow-gold">
               {t("cta_btn")} <ChevronRight className="w-5 h-5" />
             </Link>
           </motion.div>
