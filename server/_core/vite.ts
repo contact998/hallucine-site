@@ -60,6 +60,8 @@ const DOMAIN_LOCALE_MAP: Record<string, string> = {
   "www.hallucinecran.de": "de",
   "hallucinecran.es": "es",
   "www.hallucinecran.es": "es",
+  "hallucinecran.it": "it",
+  "www.hallucinecran.it": "it",
 };
 
 function getLocaleFromHost(hostname: string): string {

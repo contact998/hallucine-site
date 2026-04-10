@@ -11,6 +11,7 @@
  * 2. window.__INITIAL_LOCALE__ (injecté par le serveur selon le domaine)
  * 3. Domaine (hallucinecran.fr → fr, .com → en, .de → de, .es → es)
  * 4. Défaut : fr
+ * Langues : fr, en, de, es, it
  */
 import i18n, { type Resource } from "i18next";
 import { initReactI18next } from "react-i18next";
@@ -33,9 +34,11 @@ const DOMAIN_LANG_MAP: Record<string, string> = {
   "www.hallucinecran.de": "de",
   "hallucinecran.es": "es",
   "www.hallucinecran.es": "es",
+  "hallucinecran.it": "it",
+  "www.hallucinecran.it": "it",
 };
 
-const VALID_LANGS = ["fr", "en", "de", "es"];
+const VALID_LANGS = ["fr", "en", "de", "es", "it"];
 
 /**
  * Détecte la langue selon la priorité définie ci-dessus.
@@ -65,7 +68,7 @@ export function detectLanguage(): string {
   return "fr";
 }
 
-export const SUPPORTED_LANGUAGES = ["fr", "en", "de", "es"] as const;
+export const SUPPORTED_LANGUAGES = ["fr", "en", "de", "es", "it"] as const;
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 
 export const LANGUAGE_NAMES: Record<SupportedLanguage, string> = {
@@ -73,6 +76,7 @@ export const LANGUAGE_NAMES: Record<SupportedLanguage, string> = {
   en: "English",
   de: "Deutsch",
   es: "Español",
+  it: "Italiano",
 };
 
 export const LANGUAGE_FLAGS: Record<SupportedLanguage, string> = {
@@ -80,6 +84,7 @@ export const LANGUAGE_FLAGS: Record<SupportedLanguage, string> = {
   en: "🇬🇧",
   de: "🇩🇪",
   es: "🇪🇸",
+  it: "🇮🇹",
 };
 
 export const LANGUAGE_DOMAINS: Record<SupportedLanguage, string> = {
@@ -87,6 +92,7 @@ export const LANGUAGE_DOMAINS: Record<SupportedLanguage, string> = {
   en: "https://hallucinecran.com",
   de: "https://hallucinecran.de",
   es: "https://hallucinecran.es",
+  it: "https://hallucinecran.it",
 };
 
 // Langue détectée UNE SEULE FOIS avant init
@@ -103,7 +109,7 @@ i18n
   .init({
     lng: detectedLang,
     fallbackLng: "fr",
-    supportedLngs: ["fr", "en", "de", "es"],
+    supportedLngs: ["fr", "en", "de", "es", "it"],
     resources,
     ns: [
       "common", "home", "products", "contact", "legal", "nav",

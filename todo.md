@@ -990,3 +990,12 @@
 - [x] Supprimer tout le code SSG/Puppeteer (prerender.mjs, entry-server.tsx, AppSSR.tsx, etc.)
 - [x] Simplifier vite.ts : injection window.__INITIAL_LOCALE__ selon le domaine (Host header)
 - [x] Validé : hallucinecran.com → "en", .de → "de", .es → "es", .fr → "fr"
+
+## Ajout de l'italien (IT) — 5ème langue (2026-04-10)
+- [x] Traduire les 32 fichiers JSON FR → IT via DeepL API (client/src/locales/it/)
+- [x] Ajouter "it" dans VALID_LANGS, SUPPORTED_LANGUAGES, LANGUAGE_NAMES, LANGUAGE_FLAGS, LANGUAGE_DOMAINS, DOMAIN_LANG_MAP dans config.ts
+- [x] Ajouter les routes IT dans routes.ts (ROUTES["it"] avec slugs italiens + getHreflangUrls)
+- [x] Ajouter "hallucinecran.it": "it" dans DOMAIN_LOCALE_MAP de server/_core/vite.ts
+- [x] Ajouter <link rel="alternate" hreflang="it" href="https://hallucinecran.it/"> dans client/index.html
+- [x] Validé : ?lang=it affiche le site en italien (Produttore francese dal 1995, Schermi cinematografici gonfiabili...)
+- [ ] Acheter et configurer le domaine hallucinecran.it dans Manus (Settings → Domains)

@@ -156,6 +156,35 @@ export const ROUTES: Record<string, LangRoutes> = {
     confidentialite: "/politica-privacidad",
     cookies: "/politica-cookies",
   },
+  it: {
+    home: "/",
+    ecrans: "/schermo-gonfiabile",
+    "ecran-geant": "/schermo-gonfiabile-gigante",
+    "ecran-etanche": "/schermo-gonfiabile-impermeabile",
+    "ecran-economique": "/schermo-gonfiabile-economico",
+    comparaison: "/confronto-schermo-gonfiabile",
+    "ecrans-led": "/schermi-led",
+    tentes: "/tenda-gonfiabile",
+    "tente-x": "/tenda-gonfiabile-x",
+    "tente-n": "/tenda-gonfiabile-n",
+    "tente-v": "/tenda-gonfiabile-v",
+    "tente-araignee": "/tenda-gonfiabile-ragno",
+    arches: "/arco-gonfiabile",
+    mobilier: "/mobili-gonfiabili",
+    accessoires: "/accessori-cinema-all-aperto",
+    galerie: "/galleria-eventi",
+    "galerie-video": "/galleria-video",
+    contact: "/contattaci",
+    "a-propos": "/chi-siamo-hallucine",
+    histoire: "/storia-hallucine",
+    blog: "/blog",
+    "mode-emploi": "/manuale-utente",
+    "devenir-distributeur": "/diventare-distributore",
+    "trouver-distributeur": "/trovare-distributore",
+    "mentions-legales": "/note-legali",
+    confidentialite: "/politica-privacy",
+    cookies: "/politica-cookie",
+  },
 };
 
 /**
@@ -184,6 +213,7 @@ export function getHreflangUrls(routeKey: RouteKey): Record<string, string> {
     en: "https://hallucinecran.com",
     de: "https://hallucinecran.de",
     es: "https://hallucinecran.es",
+    it: "https://hallucinecran.it",
   };
   return Object.fromEntries(
     Object.entries(domains).map(([lang, domain]) => [
