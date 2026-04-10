@@ -5,6 +5,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { detectLanguage } from "@/i18n/config";
+import { getRoute } from "@/i18n/routes";
 
 interface Commentaire {
   auteur: string;
@@ -25,6 +27,7 @@ interface Article {
 }
 
 export default function Blog() {
+  const lang = detectLanguage();
   useDocumentMeta("Blog | Actualités Cinéma en Plein Air", "Actualités, conseils et tendances du cinéma en plein air. Articles sur les écrans gonflables, événements et innovations.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   const [categorieActive, setCategorieActive] = useState("Toutes");
@@ -421,7 +424,7 @@ export default function Blog() {
                 <p className="text-sm opacity-80 mb-4">
                   Contactez notre équipe pour un devis personnalisé adapté à votre événement.
                 </p>
-                <Link href="/contactez-nous" className="inline-block w-full text-center bg-[#DAA520] text-white px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#B8860B] transition-colors">
+                <Link href={getRoute("contact", lang)} className="inline-block w-full text-center bg-[#DAA520] text-white px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#B8860B] transition-colors">
                   Demander un devis
                 </Link>
               </div>

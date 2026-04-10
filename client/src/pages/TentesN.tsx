@@ -11,6 +11,8 @@ import { Link } from "wouter";
 import { X as XIcon } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { detectLanguage } from "@/i18n/config";
+import { getRoute } from "@/i18n/routes";
 
 /* ─── Images hero (grille identique à l'ancien site) ─── */
 const heroImages = [
@@ -27,6 +29,7 @@ const contentImages = {
 };
 
 export default function TentesN() {
+  const lang = detectLanguage();
   useDocumentMeta("Tente Gonflable N | Tente Humanitaire et Événementielle", "Tente gonflable N polyvalente. Utilisée par la Croix-Rouge et pour événements. Grande surface couverte, montage rapide, résistante.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp");
 
   /* ─── Lightbox ─── */
@@ -234,10 +237,10 @@ export default function TentesN() {
             Forte de nombreuses années d'expérience, notre équipe possède une expertise reconnue dans le domaine des structures gonflables. Nous comprenons les défis auxquels nos clients peuvent être confrontés, et c'est pourquoi nous offrons des solutions adaptées et innovantes. De la conception à la livraison, en passant par l'installation, nous sommes à vos côtés pour vous garantir un produit qui répond parfaitement à vos besoins.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href={getRoute("contact", lang)} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Nous Contacter
             </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href={getRoute("contact", lang)} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               Demande de prix
             </Link>
           </div>

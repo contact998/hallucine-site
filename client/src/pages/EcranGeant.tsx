@@ -14,6 +14,8 @@ import { Wind, Clock, Shield, Feather, Users, ArrowRight, Film, Trophy, Music, P
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { detectLanguage } from "@/i18n/config";
+import { getRoute } from "@/i18n/routes";
 
 const specsData = [
   { taille: "8m × 6m", toile: "7m × 5m", poids: "35 kg", montage: "30 min", personnes: "1" },
@@ -49,6 +51,7 @@ const galleryImages = [
 ];
 
 export default function EcranGeant() {
+  const lang = detectLanguage();
   useDocumentMeta("Écran Gonflable Géant à Soufflerie | De 5m à 24m", "Écran de cinéma gonflable géant à soufflerie continue. Tailles de 5m à 24m, installation rapide, qualité professionnelle. Idéal pour cinéma en plein air.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   const [showCountdown, setShowCountdown] = useState(true);
@@ -95,7 +98,7 @@ export default function EcranGeant() {
             <strong className="text-warm"> légèreté</strong>, <strong className="text-warm">durabilité</strong> et <strong className="text-warm">facilité d'installation</strong>.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Link href="/contactez-nous" className="inline-flex items-center gap-2 px-6 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-all">
+            <Link href={getRoute("contact", lang)} className="inline-flex items-center gap-2 px-6 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-all">
               Demander un devis <ArrowRight className="w-4 h-4" />
             </Link>
             <BrochureDownloadButton productSlug="ecran-soufflerie" productName="Écran Soufflerie" />
@@ -305,7 +308,7 @@ export default function EcranGeant() {
                 Nos écrans sont conçus pour être déployés facilement, même dans les conditions 
                 les plus exigeantes.
               </p>
-              <Link href="/mode-emploi" className="text-warm hover:underline font-medium inline-flex items-center gap-2">
+              <Link href={getRoute("mode-emploi", lang)} className="text-warm hover:underline font-medium inline-flex items-center gap-2">
                 Voir le mode d'emploi complet <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -322,13 +325,13 @@ export default function EcranGeant() {
             Contactez-nous, demandez un devis rapide ou découvrez nos tarifs compétitifs.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href={getRoute("contact", lang)} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Nous Contacter
             </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href={getRoute("contact", lang)} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               Demander un Devis
             </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-white/20 text-ivory font-semibold rounded hover:bg-white/5 transition-colors">
+            <Link href={getRoute("contact", lang)} className="px-8 py-3 border border-white/20 text-ivory font-semibold rounded hover:bg-white/5 transition-colors">
               Voir Nos Tarifs
             </Link>
           </div>

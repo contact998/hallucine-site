@@ -17,6 +17,8 @@ import {
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { detectLanguage } from "@/i18n/config";
+import { getRoute } from "@/i18n/routes";
 
 /* ─── Images (identiques à l'ancien site) ─── */
 
@@ -78,6 +80,7 @@ function ImageLightbox({ src, alt, isOpen, onClose }: { src: string; alt: string
 
 /* ─── Page principale ─── */
 export default function TentesX() {
+  const lang = detectLanguage();
   useDocumentMeta("Tente Gonflable X | Tente Événementielle", "Tente gonflable X pour événements. Structure robuste, montage en 10 minutes, personnalisation complète. Idéale pour salons, festivals et promotions.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp");
 
   const [lightboxImg, setLightboxImg] = useState<{ src: string; alt: string } | null>(null);
@@ -348,10 +351,10 @@ export default function TentesX() {
             Contactez-nous pour un devis personnalisé. Notre équipe est à votre disposition pour répondre à toutes vos questions.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href={getRoute("contact", lang)} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Nous Contacter
             </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href={getRoute("contact", lang)} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               Demande de prix
             </Link>
             <BrochureDownloadButton productSlug="tente-x" productName="Tente X" variant="compact" />

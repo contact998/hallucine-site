@@ -8,8 +8,11 @@ import { Home, Search, Film, ArrowLeft } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import { detectLanguage } from "@/i18n/config";
+import { getRoute } from "@/i18n/routes";
 
 export default function NotFound() {
+  const lang = detectLanguage();
   useDocumentMeta("Page non trouvée | Hallucine", "La page que vous recherchez n'existe pas ou a été déplacée.");
 
   const [, setLocation] = useLocation();
@@ -79,7 +82,7 @@ export default function NotFound() {
               Retour à l'accueil
             </Link>
             <Link
-              href="/contactez-nous"
+              href={getRoute("contact", lang)}
               className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-white/20 text-white/70 rounded hover:text-warm hover:border-warm/30 transition-colors"
             >
               <Search className="w-4 h-4" />

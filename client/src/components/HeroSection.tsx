@@ -7,10 +7,13 @@ import { ChevronDown, ArrowRight, Play } from "lucide-react";
 import { Link } from "wouter";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { detectLanguage } from "@/i18n/config";
+import { getRoute } from "@/i18n/routes";
 
 const HERO_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp";
 
 export default function HeroSection() {
+  const lang = detectLanguage();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
@@ -93,14 +96,14 @@ export default function HeroSection() {
             className="flex flex-wrap gap-5"
           >
             <Link
-              href="/contactez-nous"
+              href={getRoute("contact", lang)}
               className="group flex items-center gap-3 px-8 py-4 bg-gold text-navy-deep font-semibold text-base hover:bg-gold-light transition-all duration-500 glow-gold"
             >
               {t("hero.cta_devis")}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
-              href="/ecran-gonflable"
+              href={getRoute("ecrans", lang)}
               className="group flex items-center gap-3 px-8 py-4 border border-white/15 text-white/90 font-medium text-base hover:border-gold/40 hover:text-gold transition-all duration-500"
             >
               <Play className="w-4 h-4" />

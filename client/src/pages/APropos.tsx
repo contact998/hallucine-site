@@ -8,6 +8,8 @@ import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { detectLanguage } from "@/i18n/config";
+import { getRoute } from "@/i18n/routes";
 
 const chiffres = [
   { value: "25+", label: "Années d'expérience" },
@@ -17,6 +19,7 @@ const chiffres = [
 ];
 
 export default function APropos() {
+  const lang = detectLanguage();
   useDocumentMeta("À Propos | L'Histoire d'Hallucine", "Découvrez l'histoire d'Hallucine, fabricant français d'écrans de cinéma gonflables depuis 1995. Notre passion, notre savoir-faire, notre équipe.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   return (
@@ -190,10 +193,10 @@ export default function APropos() {
           <h2 className="text-3xl font-bold text-ivory mb-4">Travaillons ensemble</h2>
           <p className="text-white/60 mb-8">Contactez-nous pour discuter de votre projet.</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href={getRoute("contact", lang)} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Nous Contacter
             </Link>
-            <Link href="/devis" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href={getRoute("contact", lang)} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               Demander un devis gratuit
             </Link>
           </div>

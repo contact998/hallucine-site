@@ -12,6 +12,8 @@ import { VolumeX, Droplets, Clock, Feather, ChevronDown, Shield, Wind, Zap } fro
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { detectLanguage } from "@/i18n/config";
+import { getRoute } from "@/i18n/routes";
 
 const specsData = [
   { taille: "245 × 200 cm", toile: "218 × 122 cm", poids: "7 kg", hauteur: "50 cm", personnes: "1" },
@@ -68,6 +70,7 @@ const galleryImages = [
 ];
 
 export default function EcranEtanche() {
+  const lang = detectLanguage();
   useDocumentMeta("Écran Gonflable Étanche à l'Air | Technologie TPU", "Écran de cinéma gonflable étanche à l'air avec technologie TPU. Silencieux, sans soufflerie, résistant au vent. De 3m à 12m.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   const [showCountdown, setShowCountdown] = useState(true);
@@ -115,10 +118,10 @@ export default function EcranEtanche() {
             avec une <strong className="text-warm">garantie de 3 ans</strong> pour une durabilité exceptionnelle.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href={getRoute("contact", lang)} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Demander un Devis
             </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href={getRoute("contact", lang)} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               Nous Contacter
             </Link>
             <BrochureDownloadButton productSlug="ecran-etanche" productName="Écran Étanche" variant="compact" />
@@ -296,13 +299,13 @@ export default function EcranEtanche() {
             Notre équipe vous accompagne dans le choix de la taille idéale.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href={getRoute("contact", lang)} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Nous Contacter
             </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href={getRoute("contact", lang)} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               Demander un Devis
             </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-white/20 text-white/70 font-semibold rounded hover:bg-white/5 transition-colors">
+            <Link href={getRoute("contact", lang)} className="px-8 py-3 border border-white/20 text-white/70 font-semibold rounded hover:bg-white/5 transition-colors">
               Voir Nos Tarifs
             </Link>
           </div>

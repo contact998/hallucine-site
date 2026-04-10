@@ -12,6 +12,8 @@ import { Link } from "wouter";
 import { Play, X as XIcon } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { detectLanguage } from "@/i18n/config";
+import { getRoute } from "@/i18n/routes";
 
 /* ─── Images hero (grille identique à l'ancien site) ─── */
 const heroImages = [
@@ -25,6 +27,7 @@ const heroImages = [
 const schemaEclate = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qSTOOwNPJJIAFgwe.webp";
 
 export default function TentesV() {
+  const lang = detectLanguage();
   useDocumentMeta("Tente Gonflable V | Design Élégant", "Tente gonflable V au design élégant et moderne. Idéale pour événements haut de gamme, mariages et réceptions. Personnalisation complète.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp");
 
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
@@ -344,10 +347,10 @@ export default function TentesV() {
             La <strong className="text-ivory">tente gonflable Hallucine V</strong> est l'option idéale pour vos événements en extérieur. Son <strong className="text-ivory">design en V unique</strong>, sa <strong className="text-ivory">résistance exceptionnelle</strong>, et ses multiples options de <strong className="text-ivory">personnalisation</strong> en font un choix incontournable pour les entreprises et les organisateurs d'événements.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contactez-nous" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href={getRoute("contact", lang)} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Nous Contacter
             </Link>
-            <Link href="/contactez-nous" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
+            <Link href={getRoute("contact", lang)} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
               Demande de prix
             </Link>
           </div>

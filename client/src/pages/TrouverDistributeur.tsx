@@ -9,8 +9,11 @@ import { Link } from "wouter";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { detectLanguage } from "@/i18n/config";
+import { getRoute } from "@/i18n/routes";
 
 export default function TrouverDistributeur() {
+  const lang = detectLanguage();
   useDocumentMeta("Trouvez un Distributeur | Réseau Mondial", "Trouvez un distributeur Hallucine près de chez vous. Réseau mondial de revendeurs d'écrans de cinéma gonflables et produits événementiels.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
 
   return (
@@ -92,7 +95,7 @@ export default function TrouverDistributeur() {
           {/* CTA */}
           <div className="mt-12 text-center">
             <p className="text-white/60 mb-6">Vous souhaitez devenir distributeur Hallucine ?</p>
-            <Link href="/devenir-distributeur" className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
+            <Link href={getRoute("devenir-distributeur", lang)} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               Devenir Distributeur
             </Link>
           </div>

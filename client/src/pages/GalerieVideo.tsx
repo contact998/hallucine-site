@@ -6,8 +6,11 @@ import Footer from "@/components/Footer";
 import VideoLightbox from "@/components/VideoLightbox";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import { detectLanguage } from "@/i18n/config";
+import { getRoute } from "@/i18n/routes";
 
 export default function GalerieVideo() {
+  const lang = detectLanguage();
   useDocumentMeta("Galerie Vidéo | Nos Produits en Action", "Vidéos de nos écrans de cinéma gonflables, tentes et mobilier événementiel en action. Montage, installation et événements filmés.", "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IDghLbPxebJUfXVC.webp");
 
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
@@ -141,7 +144,7 @@ export default function GalerieVideo() {
           <p className="text-lg opacity-90 mb-8">
             Consultez notre guide d'installation étape par étape avec vidéos et instructions écrites.
           </p>
-          <Link href="/mode-emploi" className="inline-block bg-white text-[#8B7500] px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+          <Link href={getRoute("mode-emploi", lang)} className="inline-block bg-white text-[#8B7500] px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
             Voir le mode d'emploi
           </Link>
         </div>
