@@ -7,7 +7,7 @@
  * - hallucinecran.de  → de
  * - hallucinecran.es  → es
  *
- * En développement (localhost), la langue est déterminée par le paramètre
+ * En développement (localhost / manus.space), la langue est déterminée par le paramètre
  * URL ?lang=fr|en|de|es ou par défaut "fr".
  */
 import i18n from "i18next";
@@ -34,22 +34,16 @@ export function detectLanguage(): string {
 
   const hostname = window.location.hostname;
 
-  // Détection par domaine (production)
+  // Détection par domaine (production) — priorité absolue
   if (DOMAIN_LANG_MAP[hostname]) {
     return DOMAIN_LANG_MAP[hostname];
   }
 
-  // Détection par paramètre URL (développement)
+  // Détection par paramètre URL (développement + test)
   const urlParams = new URLSearchParams(window.location.search);
   const langParam = urlParams.get("lang");
   if (langParam && ["fr", "en", "de", "es"].includes(langParam)) {
     return langParam;
-  }
-
-  // Détection par sous-domaine Manus (ex: hallucineweb.manus.space)
-  // On regarde si le hostname contient des indices de langue
-  if (hostname.includes(".manus.space") || hostname.includes("localhost")) {
-    return "fr"; // Défaut en dev
   }
 
   return "fr";
@@ -94,11 +88,29 @@ i18n
       loadPath: "/locales/{{lng}}/{{ns}}.json",
     },
     interpolation: {
-      escapeValue: false, // React gère déjà l'échappement XSS
+      escapeValue: false,
     },
     react: {
       useSuspense: true,
     },
+  })
+  .then(() => {
+    // Après init, forcer la langue correcte (au cas où le cache aurait une valeur différente)
+    const lang = detectLanguage();
+    if (i18n.language !== lang) {
+      i18n.changeLanguage(lang);
+    }
+
+    // Écouter les changements de paramètre URL (navigation SPA)
+    // Utile pour les tests en dev avec ?lang=xx
+    const applyLangFromUrl = () => {
+      const lang = detectLanguage();
+      if (i18n.language !== lang) {
+        i18n.changeLanguage(lang);
+      }
+    };
+
+    window.addEventListener("popstate", applyLangFromUrl);
   });
 
 export default i18n;

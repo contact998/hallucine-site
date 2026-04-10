@@ -963,3 +963,8 @@
 - [x] Refactoriser Blog.tsx avec useTranslation (UI uniquement)
 - [x] Refactoriser les autres pages communes (ModeEmploi, Galerie, GalerieVideo, Ecrans, Tentes, Accessoires, MentionsLegales, PolitiqueCookies, Confidentialite, DevenirDistributeur, TrouverDistributeur, EcransLED, Histoire, NotFound)
 - [x] 28 pages publiques utilisent useTranslation — 32 fichiers JSON × 4 langues = 128 fichiers de traduction
+
+## Bug critique i18n — langue non appliquée
+- [x] Corriger la détection de langue : i18n.changeLanguage() appelé après init pour forcer la langue correcte
+- [x] Ajouter un listener popstate pour re-détecter la langue lors de la navigation SPA
+- [ ] Tester ?lang=en et domaine hallucinecran.com (à valider après déploiement)
