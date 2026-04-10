@@ -1006,3 +1006,8 @@
 ## Sitemap et robots.txt — mise à jour multilingue
 - [x] Réécrire sitemap.xml : 5 langues × 27 pages avec balises xhtml:link hreflang (format sitemap multilingue Google)
 - [x] Mettre à jour robots.txt : ajouter les 5 sitemaps (un par domaine)
+
+## Correction erreurs Google Search Console — sitemap.xml
+- [x] Diagnostiquer les 45 erreurs GSC (URLs non indexables, redirections, erreurs 404, hreflang mal formés)
+- [x] Corriger le sitemap.xml : 135 URLs (27 routes × 5 langues), généré programmatiquement depuis routes.ts
+- [x] Corriger l'erreur sur hallucinecran.it — sitemap.xml mis à jour avec toutes les routes IT correctes
