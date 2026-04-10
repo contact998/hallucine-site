@@ -17,9 +17,11 @@ import Footer from "@/components/Footer";
 import CinemaRideau from "@/components/CinemaRideau";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 export default function Home() {
   const { t } = useTranslation("home");
+  useDocumentMeta(t("meta_title"), t("meta_desc"));
 
   const HOME_FAQS = [
     { question: t("faq.q1"), answer: t("faq.a1") },

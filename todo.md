@@ -1011,3 +1011,15 @@
 - [x] Diagnostiquer les 45 erreurs GSC (URLs non indexables, redirections, erreurs 404, hreflang mal formés)
 - [x] Corriger le sitemap.xml : 135 URLs (27 routes × 5 langues), généré programmatiquement depuis routes.ts
 - [x] Corriger l'erreur sur hallucinecran.it — sitemap.xml mis à jour avec toutes les routes IT correctes
+
+## Pré-rendu SSG — indexation Google
+- [ ] Installer Puppeteer (dev dependency)
+- [ ] Créer scripts/prerender.mjs avec les 27 routes FR
+- [ ] Builder le site et exécuter le pré-rendu
+- [ ] Modifier server/_core/vite.ts pour injecter les fragments HTML
+- [ ] Vérifier que curl retourne du HTML avec contenu réel
+
+## SEO — Balises meta dynamiques (title, description, canonical)
+- [x] Ajouter meta_title/meta_desc dans home.json pour les 5 langues (FR/EN/DE/ES/IT)
+- [x] Ajouter useDocumentMeta dans Home.tsx (title + description dynamiques selon la langue)
+- [x] Corriger useCanonical pour utiliser le bon domaine selon la langue active (LANGUAGE_DOMAINS)

@@ -1,19 +1,24 @@
 import { useEffect } from "react";
 import { useLocation } from "wouter";
-
-const BASE_URL = "https://hallucinecran.fr";
+import { useTranslation } from "react-i18next";
+import { LANGUAGE_DOMAINS, SupportedLanguage } from "@/i18n/config";
 
 /**
  * Hook qui met à jour dynamiquement les balises <link rel="canonical"> et <meta property="og:url">
- * selon la route active. Indispensable pour le SEO : chaque page doit avoir sa propre URL canonique.
+ * selon la route active et le domaine correspondant à la langue courante.
+ * Indispensable pour le SEO : chaque page doit avoir sa propre URL canonique sur le bon domaine.
  */
 export function useCanonical() {
   const [location] = useLocation();
+  const { i18n } = useTranslation();
 
   useEffect(() => {
+    const lang = i18n.language as SupportedLanguage;
+    const baseUrl = LANGUAGE_DOMAINS[lang] ?? LANGUAGE_DOMAINS["fr"];
+
     // Construire l'URL canonique (sans trailing slash sauf pour la racine)
     const canonicalUrl =
-      location === "/" ? BASE_URL + "/" : BASE_URL + location.replace(/\/$/, "");
+      location === "/" ? baseUrl + "/" : baseUrl + location.replace(/\/$/, "");
 
     // Mettre à jour ou créer la balise <link rel="canonical">
     let canonicalLink = document.querySelector(
@@ -48,5 +53,5 @@ export function useCanonical() {
       document.head.appendChild(robotsMeta);
     }
     robotsMeta.setAttribute("content", isAdminOrProfil ? "noindex, nofollow" : "index, follow");
-  }, [location]);
+  }, [location, i18n.language]);
 }
