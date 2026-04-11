@@ -65,7 +65,7 @@ function ImageLightbox({ src, alt, isOpen, onClose }: { src: string; alt: string
 export default function TentesX() {
   const route = useRoutes();
   const { t } = useTranslation("tente-x");
-  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-tente-x-AET6EuZJEbKcpbEmxnmWTB.png");
 
   const [lightboxImg, setLightboxImg] = useState<{ src: string; alt: string } | null>(null);
   const openLightbox = useCallback((src: string, alt: string) => { setLightboxImg({ src, alt }); }, []);

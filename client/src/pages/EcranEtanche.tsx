@@ -38,7 +38,7 @@ export default function EcranEtanche() {
   const route = useRoutes();
   const { t } = useTranslation("ecran-etanche");
 
-  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-ecran-etanche-k4ys7FMgpDwS9DpudndmpB.png");
 
   const [showCountdown, setShowCountdown] = useState(true);
   const [openFaq, setOpenFaq] = useState<number | null>(null);

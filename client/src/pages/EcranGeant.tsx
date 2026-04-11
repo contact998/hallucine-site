@@ -44,7 +44,7 @@ const galleryImages = [
 export default function EcranGeant() {
   const route = useRoutes();
   const { t } = useTranslation("ecran-geant");
-  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-ecran-geant-7MA2E4Zp6zEeYzcaWGEV5o.png");
 
   const [showCountdown, setShowCountdown] = useState(true);
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);

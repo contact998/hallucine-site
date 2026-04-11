@@ -21,7 +21,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 export default function Home() {
   const { t } = useTranslation("home");
-  useDocumentMeta(t("meta_title"), t("meta_desc"));
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-accueil-KjTW2K29SHyinVRpsNcnQC.png");
 
   const HOME_FAQS = [
     { question: t("faq.q1"), answer: t("faq.a1") },

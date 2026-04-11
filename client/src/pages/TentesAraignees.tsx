@@ -29,7 +29,7 @@ const images = [
 export default function TentesAraignees() {
   const route = useRoutes();
   const { t } = useTranslation("tente-araignee");
-  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-tente-araignee-R3y9ti6qL9e3JFNFGvHjoG.png");
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 

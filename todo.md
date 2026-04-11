@@ -1023,3 +1023,13 @@
 - [x] Ajouter meta_title/meta_desc dans home.json pour les 5 langues (FR/EN/DE/ES/IT)
 - [x] Ajouter useDocumentMeta dans Home.tsx (title + description dynamiques selon la langue)
 - [x] Corriger useCanonical pour utiliser le bon domaine selon la langue active (LANGUAGE_DOMAINS)
+
+## SEO — Schema.org JSON-LD + Images Open Graph
+- [ ] Créer/améliorer le composant PageStructuredData avec JSON-LD Product (prix, description, marque) pour les pages écrans et tentes
+- [ ] Ajouter JSON-LD LocalBusiness sur la page d'accueil et contact
+- [ ] Générer 5 images Open Graph 1200×630px (écran géant, écran étanche, tente X, tente araignée, accueil)
+- [ ] Uploader les images OG sur CDN et les intégrer dans useDocumentMeta par page
+
+## Images Open Graph — complétées
+- [x] Générer 5 images OG 1200×630px (accueil, écran géant, écran étanche, tente X, tente araignée)
+- [x] Intégrer les URLs CDN dans useDocumentMeta : Home, EcranGeant, EcranEtanche, TentesX, TentesAraignees
