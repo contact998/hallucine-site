@@ -1033,3 +1033,11 @@
 ## Images Open Graph — complétées
 - [x] Générer 5 images OG 1200×630px (accueil, écran géant, écran étanche, tente X, tente araignée)
 - [x] Intégrer les URLs CDN dans useDocumentMeta : Home, EcranGeant, EcranEtanche, TentesX, TentesAraignees
+
+## Images Open Graph — pages restantes
+- [x] Image OG réelle déjà présente dans EcranEconomique.tsx
+- [x] Image OG réelle déjà présente dans TentesN.tsx
+- [x] Image OG réelle déjà présente dans TentesV.tsx
+- [x] Image OG par défaut ajoutée dans ArchesGonflables.tsx (à remplacer par vraie photo)
+- [x] Image OG réelle déjà présente dans Contact.tsx
+- [x] Intégrer les URLs CDN dans EcranEconomique, TentesN, TentesV, ArchesGonflables, Contact

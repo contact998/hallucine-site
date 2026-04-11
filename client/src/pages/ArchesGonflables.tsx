@@ -36,7 +36,7 @@ const galleryImages = [
 export default function ArchesGonflables() {
   const route = useRoutes();
   const { t } = useTranslation("arches-gonflables");
-  useDocumentMeta(t("meta_title"), t("meta_desc"));
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-accueil-KjTW2K29SHyinVRpsNcnQC.png");
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
