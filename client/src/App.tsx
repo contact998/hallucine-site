@@ -9,7 +9,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { usePageTracking } from "./hooks/useAnalytics";
 import { useCanonical } from "./hooks/useCanonical";
 import GlobalStructuredData from "./components/GlobalStructuredData";
-import { detectLanguage } from "./i18n/config";
+import { detectLanguage } from "./i18n/domains";
 import { ROUTES } from "./i18n/routes";
 
 // Lazy-loaded pages (code splitting)

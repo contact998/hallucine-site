@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "wouter";
 import { useTranslation } from "react-i18next";
-import { LANGUAGE_DOMAINS, SupportedLanguage } from "@/i18n/config";
+import { LANGUAGE_DOMAINS, SupportedLanguage } from "@/i18n/domains";
 
 /**
  * Hook qui met à jour dynamiquement les balises <link rel="canonical"> et <meta property="og:url">

@@ -43,10 +43,6 @@ export function useAuth(options?: UseAuthOptions) {
   }, [logoutMutation, utils]);
 
   const state = useMemo(() => {
-    safeLocalStorage.setItem(
-      "manus-runtime-user-info",
-      JSON.stringify(meQuery.data)
-    );
     return {
       user: meQuery.data ?? null,
       loading: meQuery.isLoading || logoutMutation.isPending,
@@ -60,6 +56,14 @@ export function useAuth(options?: UseAuthOptions) {
     logoutMutation.error,
     logoutMutation.isPending,
   ]);
+
+  // Persister les infos utilisateur dans localStorage (client-only, side effect)
+  useEffect(() => {
+    safeLocalStorage.setItem(
+      "manus-runtime-user-info",
+      JSON.stringify(meQuery.data)
+    );
+  }, [meQuery.data]);
 
   useEffect(() => {
     if (!redirectOnUnauthenticated) return;

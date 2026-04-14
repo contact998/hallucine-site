@@ -87,10 +87,25 @@ export function serveStatic(app: Express) {
   // Servir les fichiers statiques (JS, CSS, images, etc.)
   app.use(express.static(distPath, { index: false }));
 
-  // Fallback SPA : toutes les routes → index.html avec la locale du domaine injectée
+  // SSG + Fallback SPA : priorité aux pages pré-rendues, sinon index.html générique
   app.use("*", (req, res) => {
     const locale = getLocaleFromHost(req.hostname);
-    // Remplacer __LOCALE__ par la langue du domaine → window.__INITIAL_LOCALE__ correct dès le premier render
+
+    // 1. Chercher la page pré-rendue : /chemin/index.html
+    const urlPath = req.path === "/" ? "" : req.path;
+    const prerenderedPath = path.join(distPath, urlPath, "index.html");
+
+    if (fs.existsSync(prerenderedPath)) {
+      // Servir la page pré-rendue (contenu SEO déjà injecté)
+      res.status(200).set({
+        "Content-Type": "text/html",
+        "Vary": "Host",
+        "Cache-Control": "public, max-age=3600",
+      }).end(fs.readFileSync(prerenderedPath, "utf-8"));
+      return;
+    }
+
+    // 2. Fallback SPA : injecter la locale dans le template générique
     const html = baseIndexHtml.replace(/__LOCALE__/g, locale);
     res.status(200).set({
       "Content-Type": "text/html",

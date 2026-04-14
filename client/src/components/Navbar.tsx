@@ -12,8 +12,8 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { AvailabilityBadge } from "@/components/AvailabilityIndicator";
 import { useTranslation } from "react-i18next";
-import i18n from "@/i18n/config";
-import { LANGUAGE_DOMAINS, detectLanguage } from "@/i18n/config";
+import { i18n } from "@/i18n/instance"; // instance partagée — initialisée par config.ts (client) ou config.node.ts (SSR)
+import { LANGUAGE_DOMAINS, detectLanguage } from "@/i18n/domains";
 import { ROUTES } from "@/i18n/routes";
 
 const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tWSEvNLkFkmjxAXj.png";

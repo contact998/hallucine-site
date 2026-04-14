@@ -5,7 +5,7 @@
  * Après quelques échanges, propose un bouton "Demander un devis" pré-rempli
  */
 import { useState, useRef, useEffect, useCallback } from "react";
-import { detectLanguage } from "@/i18n/config";
+import { detectLanguage } from "@/i18n/domains";
 import { trpc } from "@/lib/trpc";
 import { MessageCircle, X, Send, Loader2, Sparkles, User, ChevronDown, FileText, Monitor, Mail } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";

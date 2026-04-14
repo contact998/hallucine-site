@@ -1,185 +1,193 @@
-#!/usr/bin/env node
 /**
- * SSG Pre-render Script — Hallucinecran
+ * prerender.mjs — Script de pre-rendering SSG (renderToString)
  *
- * Renders public SPA routes to static HTML using Puppeteer + Chromium.
- * Extracts div#root inner content and saves as .content.html fragments.
- * These fragments are injected into the fresh index.html at server startup.
+ * Génère des fichiers HTML statiques pour chaque page × langue.
+ * Utilisé dans le build Railway : pnpm build:client && npx tsx --tsconfig tsconfig.ssr.json scripts/prerender.mjs
  *
- * Usage: node scripts/prerender.mjs
- * Requires: puppeteer (devDependency), pnpm build run first
+ * Architecture :
+ *   1. Lire dist/index.html (template Vite après build client)
+ *   2. Pour chaque page × langue : render(url, lang) → HTML statique
+ *   3. Injecter dans le template (root, lang, canonical, hreflang)
+ *   4. Écrire dist/{url}/index.html
+ *
+ * ✅ Pas de Puppeteer — Node.js pur (compatible Railway)
+ * ✅ Instance i18n par render (pas de race conditions)
+ * ✅ 27 pages × 5 langues = 135 fichiers HTML
  */
 
-import { launch } from 'puppeteer';
-import { createServer } from 'http';
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
-import { resolve, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { readFileSync, mkdirSync, writeFileSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DIST_DIR = resolve(__dirname, '..', 'dist', 'public');
-const OUTPUT_DIR = resolve(__dirname, '..', 'client', 'public', 'prerendered');
-const PORT = 4173;
+const ROOT = join(__dirname, "..");
+const DIST = join(ROOT, "dist", "public");
 
-// === Routes publiques FR à pré-rendre (27 pages) ===
-const ROUTES = [
-  '/',
-  '/ecran-gonflable',
-  '/ecran-gonflable-geant-soufflerie',
-  '/ecran-gonflable-etanche-air',
-  '/ecran-gonflable-economique',
-  '/comparaison-ecran-gonflable',
-  '/ecrans-led',
-  '/tente-gonflable',
-  '/tente-gonflable-x',
-  '/tente-gonflable-n',
-  '/tente-gonflable-v',
-  '/tente-gonflable-araignee',
-  '/arche-gonflable',
-  '/mobilier-gonflable',
-  '/accessoire-cinema-plein-air',
-  '/galerie-evenements',
-  '/galerie-video',
-  '/contactez-nous',
-  '/a-propos-hallucine',
-  '/histoire-hallucine',
-  '/blog',
-  '/mode-emploi',
-  '/devenir-distributeur',
-  '/trouver-distributeur',
-  '/mentions-legales',
-  '/politique-confidentialite',
-  '/politique-cookies',
-];
+// ─── Configuration ─────────────────────────────────────────────────────────
 
-function startStaticServer() {
-  return new Promise((resolvePromise) => {
-    const indexHtml = readFileSync(resolve(DIST_DIR, 'index.html'), 'utf-8');
-    const server = createServer((req, res) => {
-      const url = req.url.split('?')[0];
-      const filePath = resolve(DIST_DIR, url.slice(1));
-      try {
-        if (url !== '/' && existsSync(filePath) && !filePath.endsWith('/')) {
-          const content = readFileSync(filePath);
-          const ext = filePath.split('.').pop();
-          const mimeTypes = {
-            'html': 'text/html', 'js': 'application/javascript',
-            'css': 'text/css', 'json': 'application/json',
-            'png': 'image/png', 'jpg': 'image/jpeg', 'svg': 'image/svg+xml',
-            'ico': 'image/x-icon', 'woff2': 'font/woff2', 'webp': 'image/webp',
-          };
-          res.writeHead(200, { 'Content-Type': mimeTypes[ext] || 'application/octet-stream' });
-          res.end(content);
-          return;
-        }
-      } catch (e) { /* fallback to SPA */ }
-      res.writeHead(200, { 'Content-Type': 'text/html' });
-      res.end(indexHtml);
-    });
-    server.listen(PORT, () => {
-      console.log(`[prerender] Static server on http://localhost:${PORT}`);
-      resolvePromise(server);
-    });
-  });
+const VALID_LANGS = ["fr", "en", "de", "es", "it"];
+
+/** Domaine de production par langue */
+const DOMAINS = {
+  fr: "https://hallucinecran.fr",
+  en: "https://hallucinecran.com",
+  de: "https://hallucinecran.de",
+  es: "https://hallucinecran.es",
+  it: "https://hallucinecran.it",
+};
+
+// ─── Import de l'entrypoint SSR ────────────────────────────────────────────
+
+const { render } = await import("../client/src/entry-server.tsx");
+const { ROUTES } = await import("../client/src/i18n/routes.ts");
+
+// ─── Lecture du template HTML ──────────────────────────────────────────────
+
+const templatePath = join(DIST, "index.html");
+let template;
+try {
+  template = readFileSync(templatePath, "utf-8");
+} catch {
+  console.error(`❌ dist/index.html introuvable. Lance d'abord : pnpm build:client`);
+  process.exit(1);
 }
 
-async function prerenderPage(browser, route) {
-  const page = await browser.newPage();
-  await page.setRequestInterception(true);
-  page.on('request', (req) => {
-    const url = req.url();
-    if (
-      url.includes('/api/trpc') ||
-      url.includes('/api/oauth') ||
-      url.includes('googletagmanager') ||
-      url.includes('google-analytics') ||
-      url.includes('umami') ||
-      url.includes('analytics')
-    ) {
-      req.abort();
-    } else {
-      req.continue();
-    }
-  });
+// ─── Fonctions utilitaires ─────────────────────────────────────────────────
 
-  try {
-    await page.goto(`http://localhost:${PORT}${route}`, {
-      waitUntil: 'networkidle0', timeout: 30000,
-    });
-    await page.waitForFunction(
-      () => document.getElementById('root')?.children.length > 0,
-      { timeout: 15000 }
+/**
+ * Génère les balises hreflang pour une route donnée (toutes les langues)
+ */
+function buildHreflangTags(routeKey, allRoutes) {
+  const tags = VALID_LANGS.map((lang) => {
+    const url = allRoutes[lang]?.[routeKey] ?? "/";
+    const domain = DOMAINS[lang];
+    return `  <link rel="alternate" hreflang="${lang}" href="${domain}${url}" />`;
+  });
+  // x-default pointe vers EN
+  const defaultUrl = allRoutes["en"]?.[routeKey] ?? "/";
+  tags.push(
+    `  <link rel="alternate" hreflang="x-default" href="${DOMAINS["en"]}${defaultUrl}" />`
+  );
+  return tags.join("\n");
+}
+
+/**
+ * Injecte le HTML pré-rendu dans le template index.html
+ */
+function injectIntoTemplate(tmpl, { html, lang, canonicalUrl, hreflangTags, locale }) {
+  let result = tmpl;
+
+  // 1. Langue HTML
+  result = result.replace(/lang="[^"]*"/, `lang="${lang}"`);
+
+  // 2. Locale dans window.__INITIAL_LOCALE__
+  result = result.replace(/__LOCALE__/g, locale);
+
+  // 3. Contenu pré-rendu dans #root
+  result = result.replace(
+    '<div id="root"></div>',
+    `<div id="root">${html}</div>`
+  );
+
+  // 4. Canonical (remplacer ou ajouter avant </head>)
+  const canonicalTag = `  <link rel="canonical" href="${canonicalUrl}" />`;
+  if (result.includes('rel="canonical"')) {
+    result = result.replace(/<link rel="canonical"[^>]*\/>/, canonicalTag);
+  } else {
+    result = result.replace("</head>", `${canonicalTag}\n</head>`);
+  }
+
+  // 5. Hreflang (remplacer le bloc existant)
+  const hreflangComment = "<!-- Hreflang : versions linguistiques du site -->";
+  const hreflangBlock = `${hreflangComment}\n${hreflangTags}`;
+  if (result.includes(hreflangComment)) {
+    result = result.replace(
+      /<!-- Hreflang[^>]*-->\n(  <link rel="alternate"[^\n]*\n)*/,
+      hreflangBlock + "\n"
     );
-    await new Promise(r => setTimeout(r, 1500));
-    const html = await page.content();
-    await page.close();
-    return html;
-  } catch (error) {
-    console.error(`[prerender] Error on ${route}:`, error.message);
-    await page.close();
-    return null;
   }
+
+  return result;
 }
 
-function extractRootContent(html) {
-  const marker = '<div id="root">';
-  const start = html.indexOf(marker);
-  if (start === -1) return null;
-  const contentStart = start + marker.length;
-  let depth = 1, pos = contentStart;
-  while (depth > 0 && pos < html.length) {
-    const nextOpen = html.indexOf('<div', pos);
-    const nextClose = html.indexOf('</div>', pos);
-    if (nextClose === -1) break;
-    if (nextOpen !== -1 && nextOpen < nextClose) {
-      depth++; pos = nextOpen + 4;
-    } else {
-      depth--;
-      if (depth === 0) return html.substring(contentStart, nextClose);
-      pos = nextClose + 6;
-    }
-  }
-  return null;
-}
+// ─── Pipeline de pre-rendering ─────────────────────────────────────────────
 
-async function main() {
-  console.log(`[prerender] Pre-rendering ${ROUTES.length} pages...`);
-  if (!existsSync(resolve(DIST_DIR, 'index.html'))) {
-    console.error('[prerender] ERROR: dist/public/index.html not found. Run "pnpm build" first.');
-    process.exit(1);
+let total = 0;
+let errors = 0;
+const startTime = Date.now();
+
+console.log("🚀 Démarrage du pre-rendering SSG (renderToString)...\n");
+console.log(`   ${VALID_LANGS.length} langues × 27 pages = ~135 fichiers HTML\n`);
+
+for (const lang of VALID_LANGS) {
+  const langRoutes = ROUTES[lang];
+  if (!langRoutes) {
+    console.warn(`⚠️  Langue inconnue : ${lang}`);
+    continue;
   }
 
-  const server = await startStaticServer();
-  const browser = await launch({
-    headless: true,
-    executablePath: '/usr/bin/chromium-browser',
-    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
-  });
+  const domain = DOMAINS[lang];
 
-  mkdirSync(OUTPUT_DIR, { recursive: true });
-  let success = 0;
+  for (const [routeKey, url] of Object.entries(langRoutes)) {
+    try {
+      // Rendre la page
+      const { html } = await render(url, lang);
 
-  for (const route of ROUTES) {
-    const t = Date.now();
-    const html = await prerenderPage(browser, route);
-    if (html) {
-      const content = extractRootContent(html);
-      if (content) {
-        const name = route === '/' ? 'home' : route.slice(1);
-        writeFileSync(resolve(OUTPUT_DIR, `${name}.content.html`), content);
-        console.log(`[prerender] ✓ ${route} → ${name}.content.html (${Date.now() - t}ms, ${content.length} chars)`);
-        success++;
+      // URL canonique
+      const canonicalUrl = `${domain}${url}`;
+
+      // Balises hreflang
+      const hreflangTags = buildHreflangTags(routeKey, ROUTES);
+
+      // Injecter dans le template
+      const finalHtml = injectIntoTemplate(template, {
+        html,
+        lang,
+        canonicalUrl,
+        hreflangTags,
+        locale: lang,
+      });
+
+      // Chemin de sortie : dist/{url}/index.html
+      let outputPath;
+      if (url === "/") {
+        // Home page : dist/index.html (FR) ou dist/_lang_{lang}/index.html (autres)
+        if (lang === "fr") {
+          outputPath = join(DIST, "index.html");
+        } else {
+          const langDir = join(DIST, `_lang_${lang}`);
+          mkdirSync(langDir, { recursive: true });
+          outputPath = join(langDir, "index.html");
+        }
       } else {
-        console.warn(`[prerender] ✗ ${route} — could not extract div#root content`);
+        // Autres pages : dist/{url-sans-slash}/index.html
+        const urlPath = url.startsWith("/") ? url.slice(1) : url;
+        const outputDir = join(DIST, urlPath);
+        mkdirSync(outputDir, { recursive: true });
+        outputPath = join(outputDir, "index.html");
       }
-    } else {
-      console.warn(`[prerender] ✗ ${route} — page render failed`);
+
+      writeFileSync(outputPath, finalHtml, "utf-8");
+      total++;
+
+      const shortPath = outputPath.replace(DIST + "/", "dist/");
+      console.log(`  ✅ [${lang}] ${url} → ${shortPath}`);
+    } catch (err) {
+      errors++;
+      console.error(`  ❌ [${lang}] ${url} → ERREUR: ${err.message}`);
+      if (process.env.DEBUG_SSR) {
+        console.error(err.stack);
+      }
     }
   }
-
-  await browser.close();
-  server.close();
-  console.log(`\n[prerender] Done! ${success}/${ROUTES.length} pages pre-rendered to ${OUTPUT_DIR}`);
+  console.log(`\n📦 Langue ${lang.toUpperCase()} terminée\n`);
 }
 
-main().catch((err) => { console.error('[prerender] Fatal:', err); process.exit(1); });
+const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+console.log(`✨ Pre-rendering terminé en ${elapsed}s`);
+console.log(`   ${total} pages générées, ${errors} erreurs\n`);
+
+if (errors > 0) {
+  console.error(`⚠️  ${errors} page(s) ont échoué. Relancer avec DEBUG_SSR=1 pour les détails.`);
+  process.exit(1);
+}

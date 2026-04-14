@@ -1,9 +1,11 @@
 import { trpc } from "@/lib/trpc";
 import "./i18n/config"; // Initialisation i18n — doit être importé avant App
+import { i18n } from "./i18n/instance"; // Instance partagée (initialisée par config.ts ci-dessus)
 import { UNAUTHED_ERR_MSG } from '@shared/const';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, retryLink, TRPCClientError } from "@trpc/client";
 import { createRoot } from "react-dom/client";
+import { I18nextProvider } from "react-i18next";
 import superjson from "superjson";
 import App from "./App";
 import { getLoginUrl } from "./const";
@@ -104,11 +106,13 @@ const trpcClient = trpc.createClient({
 });
 
 createRoot(document.getElementById("root")!).render(
-  <trpc.Provider client={trpcClient} queryClient={queryClient}>
-    <QueryClientProvider client={queryClient}>
-      <Suspense fallback={<div className="min-h-screen bg-background" />}>
-        <App />
-      </Suspense>
-    </QueryClientProvider>
-  </trpc.Provider>
+  <I18nextProvider i18n={i18n}>
+    <trpc.Provider client={trpcClient} queryClient={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <Suspense fallback={<div className="min-h-screen bg-background" />}>
+          <App />
+        </Suspense>
+      </QueryClientProvider>
+    </trpc.Provider>
+  </I18nextProvider>
 );
