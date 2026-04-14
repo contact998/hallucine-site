@@ -1041,3 +1041,6 @@
 - [x] Image OG par défaut ajoutée dans ArchesGonflables.tsx (à remplacer par vraie photo)
 - [x] Image OG réelle déjà présente dans Contact.tsx
 - [x] Intégrer les URLs CDN dans EcranEconomique, TentesN, TentesV, ArchesGonflables, Contact
+
+## SEO — Canonical statique
+- [x] Supprimer la balise canonical statique de index.html (pointait vers hallucinecran.fr/ pour toutes les pages)
