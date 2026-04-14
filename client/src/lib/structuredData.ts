@@ -35,7 +35,7 @@ export function organizationSchema() {
     sameAs: [
       "https://www.facebook.com/Hallucinecran",
       "https://www.instagram.com/hallucine_ecrans/",
-      "https://www.youtube.com/@hallucine",
+      "https://www.youtube.com/@Hallucineecrantentestructure",
       "https://www.linkedin.com/company/hallucinecran/",
     ],
     contactPoint: {
