@@ -36,7 +36,7 @@ export function organizationSchema() {
       "https://www.facebook.com/hallucine.ecrans",
       "https://www.instagram.com/hallucine_ecrans/",
       "https://www.youtube.com/@hallucine",
-      "https://www.linkedin.com/company/hallucine/",
+      "https://www.linkedin.com/company/hallucinecran/",
     ],
     contactPoint: {
       "@type": "ContactPoint",
