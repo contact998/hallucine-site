@@ -33,7 +33,7 @@ export function organizationSchema() {
       addressCountry: "FR",
     },
     sameAs: [
-      "https://www.facebook.com/hallucine.ecrans",
+      "https://www.facebook.com/Hallucinecran",
       "https://www.instagram.com/hallucine_ecrans/",
       "https://www.youtube.com/@hallucine",
       "https://www.linkedin.com/company/hallucinecran/",
