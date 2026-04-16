@@ -33,6 +33,18 @@ async function startServer() {
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
+
+  // Redirection 301 www → non-www (SEO : évite les pages en double)
+  app.use((req, res, next) => {
+    const host = req.hostname;
+    if (host.startsWith("www.")) {
+      const nonWwwHost = host.slice(4);
+      const protocol = req.headers["x-forwarded-proto"] || "https";
+      return res.redirect(301, `${protocol}://${nonWwwHost}${req.originalUrl}`);
+    }
+    next();
+  });
+
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
 

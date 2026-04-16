@@ -6,8 +6,8 @@
  *
  * Architecture :
  *   1. Lire dist/index.html (template Vite après build client)
- *   2. Pour chaque page × langue : render(url, lang) → HTML statique
- *   3. Injecter dans le template (root, lang, canonical, hreflang)
+ *   2. Pour chaque page × langue : render(url, lang) → HTML statique + metas
+ *   3. Injecter dans le template (root, lang, canonical, hreflang, metas SEO)
  *   4. Écrire dist/{url}/index.html
  *
  * ✅ Pas de Puppeteer — Node.js pur (compatible Railway)
@@ -55,6 +55,17 @@ try {
 // ─── Fonctions utilitaires ─────────────────────────────────────────────────
 
 /**
+ * Échappe les caractères spéciaux HTML pour injection sûre dans les attributs
+ */
+function escapeHtml(str = "") {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+/**
  * Génère les balises hreflang pour une route donnée (toutes les langues)
  */
 function buildHreflangTags(routeKey, allRoutes) {
@@ -72,9 +83,9 @@ function buildHreflangTags(routeKey, allRoutes) {
 }
 
 /**
- * Injecte le HTML pré-rendu dans le template index.html
+ * Injecte le HTML pré-rendu et les metas dans le template index.html
  */
-function injectIntoTemplate(tmpl, { html, lang, canonicalUrl, hreflangTags, locale }) {
+function injectIntoTemplate(tmpl, { html, lang, canonicalUrl, hreflangTags, locale, meta }) {
   let result = tmpl;
 
   // 1. Langue HTML
@@ -83,13 +94,19 @@ function injectIntoTemplate(tmpl, { html, lang, canonicalUrl, hreflangTags, loca
   // 2. Locale dans window.__INITIAL_LOCALE__
   result = result.replace(/__LOCALE__/g, locale);
 
-  // 3. Contenu pré-rendu dans #root
+  // 3. Metas SEO spécifiques à la page
+  result = result.replace(/__PAGE_TITLE__/g, escapeHtml(meta.title));
+  result = result.replace(/__PAGE_DESCRIPTION__/g, escapeHtml(meta.description));
+  result = result.replace(/__PAGE_IMAGE__/g, escapeHtml(meta.image));
+  result = result.replace(/__PAGE_URL__/g, escapeHtml(canonicalUrl));
+
+  // 4. Contenu pré-rendu dans #root
   result = result.replace(
     '<div id="root"></div>',
     `<div id="root">${html}</div>`
   );
 
-  // 4. Canonical (remplacer ou ajouter avant </head>)
+  // 5. Canonical (remplacer ou ajouter avant </head>)
   const canonicalTag = `  <link rel="canonical" href="${canonicalUrl}" />`;
   if (result.includes('rel="canonical"')) {
     result = result.replace(/<link rel="canonical"[^>]*\/>/, canonicalTag);
@@ -97,7 +114,7 @@ function injectIntoTemplate(tmpl, { html, lang, canonicalUrl, hreflangTags, loca
     result = result.replace("</head>", `${canonicalTag}\n</head>`);
   }
 
-  // 5. Hreflang (remplacer le bloc existant)
+  // 6. Hreflang (remplacer le bloc existant)
   const hreflangComment = "<!-- Hreflang : versions linguistiques du site -->";
   const hreflangBlock = `${hreflangComment}\n${hreflangTags}`;
   if (result.includes(hreflangComment)) {
@@ -130,11 +147,19 @@ for (const lang of VALID_LANGS) {
 
   for (const [routeKey, url] of Object.entries(langRoutes)) {
     try {
-      // Rendre la page
-      const { html } = await render(url, lang);
+      // Rendre la page (récupère aussi les metas collectées en SSR)
+      const { html, meta } = await render(url, lang);
+
+      // Log debug pour diagnostiquer les metas
+      if (process.env.DEBUG_META) {
+        console.log(`  [META] [${lang}] ${url} → title="${meta.title.substring(0, 60)}"`);
+      }
 
       // URL canonique
       const canonicalUrl = `${domain}${url}`;
+
+      // Mettre à jour l'URL dans les metas (on connaît le domaine ici)
+      meta.url = canonicalUrl;
 
       // Balises hreflang
       const hreflangTags = buildHreflangTags(routeKey, ROUTES);
@@ -146,15 +171,24 @@ for (const lang of VALID_LANGS) {
         canonicalUrl,
         hreflangTags,
         locale: lang,
+        meta,
       });
 
       // Chemin de sortie : dist/{url}/index.html
+      let pageHtml = finalHtml;
       let outputPath;
       if (url === "/") {
         // Home page : dist/index.html (FR) ou dist/_lang_{lang}/index.html (autres)
         if (lang === "fr") {
           outputPath = join(DIST, "index.html");
         } else {
+          // Les pages _lang_XX sont des pages de transition SPA servies sur hallucinecran.fr.
+          // Elles ont une canonique vers le bon domaine (ex: hallucinecran.com)
+          // mais Google les voit sur hallucinecran.fr → noindex pour éviter les doublons.
+          pageHtml = pageHtml.replace(
+            /<link rel="canonical"/,
+            '<meta name="robots" content="noindex, nofollow" />\n  <link rel="canonical"'
+          );
           const langDir = join(DIST, `_lang_${lang}`);
           mkdirSync(langDir, { recursive: true });
           outputPath = join(langDir, "index.html");
@@ -167,7 +201,7 @@ for (const lang of VALID_LANGS) {
         outputPath = join(outputDir, "index.html");
       }
 
-      writeFileSync(outputPath, finalHtml, "utf-8");
+      writeFileSync(outputPath, pageHtml, "utf-8");
       total++;
 
       const shortPath = outputPath.replace(DIST + "/", "dist/");

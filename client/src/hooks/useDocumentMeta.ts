@@ -1,10 +1,13 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { SSRMetaContext } from "../context/SSRMetaContext";
 
 const DEFAULT_TITLE = "Hallucine — Écrans de Cinéma Gonflables | Fabricant depuis 1995";
 const DEFAULT_DESCRIPTION =
   "Hallucine, fabricant français d'écrans de cinéma gonflables depuis 1995. Écrans géants, tentes gonflables, arches, mobilier événementiel. Livraison mondiale.";
 const DEFAULT_IMAGE =
   "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp";
+
+const SITE_NAME = "Hallucine";
 
 function setMeta(selector: string, attr: string, value: string | undefined, prev: { value: string; el: Element | null }) {
   const el = document.querySelector(selector);
@@ -19,12 +22,27 @@ function restoreMeta(prev: { value: string; el: Element | null }, attr: string) 
 
 /**
  * Met à jour le titre, la description meta, et les balises Open Graph / Twitter de la page.
- * Se réinitialise au démontage du composant.
+ *
+ * En SSR (prerender) : collecte les metas via SSRMetaContext pour injection dans le HTML.
+ * En client : met à jour le DOM directement, se réinitialise au démontage.
  */
 export function useDocumentMeta(title?: string, description?: string, image?: string) {
+  // ─── SSR : collecte des metas pendant renderToString ───────────────────────
+  const ssrMeta = useContext(SSRMetaContext);
+
+  if (ssrMeta !== null) {
+    // On est en SSR — pousser les metas dans le contexte
+    ssrMeta.setMeta({
+      title: title ? `${title} | ${SITE_NAME}` : DEFAULT_TITLE,
+      description: description ?? DEFAULT_DESCRIPTION,
+      image: image ?? DEFAULT_IMAGE,
+    });
+  }
+
+  // ─── Client : mise à jour DOM ───────────────────────────────────────────────
   useEffect(() => {
     const prevTitle = document.title;
-    const fullTitle = title ? `${title} | Hallucine` : undefined;
+    const fullTitle = title ? `${title} | ${SITE_NAME}` : undefined;
 
     if (fullTitle) {
       document.title = fullTitle;

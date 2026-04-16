@@ -53,6 +53,7 @@ import Confidentialite from "./pages/Confidentialite.tsx";
 import PolitiqueCookies from "./pages/PolitiqueCookies.tsx";
 
 import { ROUTES } from "./i18n/routes.ts";
+import { SSRMetaContext, type SSRMeta } from "./context/SSRMetaContext.ts";
 import type { Resource } from "i18next";
 
 // Simuler window pour les composants qui en ont besoin
@@ -139,8 +140,11 @@ function getPageComponent(url: string, lang: string): React.ComponentType {
   const entry = Object.entries(langRoutes).find(([, routeUrl]) => routeUrl === url);
   if (entry) {
     const [routeKey] = entry;
+    // Debug log — à retirer une fois validé
+    console.log(`  SSR route: [${lang}] ${url} → ${routeKey}`);
     return PAGE_MAP[routeKey] ?? Home;
   }
+  console.warn(`  SSR route: [${lang}] ${url} → NOT FOUND, fallback Home`);
   return Home;
 }
 
@@ -149,9 +153,9 @@ function getPageComponent(url: string, lang: string): React.ComponentType {
  *
  * @param url - URL de la page (ex: "/ecran-gonflable")
  * @param lang - Code langue (ex: "fr", "en", "de", "es", "it")
- * @returns HTML statique de la page
+ * @returns HTML statique + metas collectées pendant le rendu
  */
-export async function render(url: string, lang: string): Promise<{ html: string }> {
+export async function render(url: string, lang: string): Promise<{ html: string; meta: SSRMeta }> {
   // ✅ Instance i18n créée par render() — pas de race conditions entre langues
   const i18n = createInstance();
   await i18n.use(initReactI18next).init({
@@ -170,6 +174,20 @@ export async function render(url: string, lang: string): Promise<{ html: string 
     (window.location as unknown as Record<string, unknown>).pathname = url;
     (window.location as unknown as Record<string, unknown>).href = `http://localhost:3000${url}`;
   }
+
+  // Contexte SSR pour collecter les metas pendant renderToString
+  const ssrMeta: SSRMeta = {
+    title: "Hallucine — Écrans de Cinéma Gonflables | Fabricant depuis 1995",
+    description: "Hallucine, fabricant français d'écrans de cinéma gonflables depuis 1995. Écrans géants, tentes gonflables, arches, mobilier événementiel. Livraison mondiale.",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp",
+    url: `https://hallucinecran.fr${url}`,
+    setMeta(data) {
+      if (data.title) this.title = data.title;
+      if (data.description) this.description = data.description;
+      if (data.image) this.image = data.image;
+      if (data.url) this.url = data.url;
+    },
+  };
 
   const Page = getPageComponent(url, lang);
 
@@ -194,14 +212,16 @@ export async function render(url: string, lang: string): Promise<{ html: string 
     <I18nextProvider i18n={i18n}>
       <trpc.Provider client={trpcClient} queryClient={queryClient}>
         <QueryClientProvider client={queryClient}>
-          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-          <Router hook={ssrLocationHook as any}>
-            <Page />
-          </Router>
+          <SSRMetaContext.Provider value={ssrMeta}>
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+            <Router hook={ssrLocationHook as any}>
+              <Page />
+            </Router>
+          </SSRMetaContext.Provider>
         </QueryClientProvider>
       </trpc.Provider>
     </I18nextProvider>
   );
 
-  return { html };
+  return { html, meta: ssrMeta };
 }
