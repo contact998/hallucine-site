@@ -169,7 +169,7 @@ export default function ModeEmploi() {
           </div>
           <div className="text-center mt-8">
             <a
-              href="https://www.youtube.com/channel/UCqIaNSl1_6_I3ABfzFIJ2Ow"
+              href="https://www.youtube.com/@Hallucinecran"
               target="_blank"
               rel="noopener noreferrer"
               className="text-warm hover:underline font-medium inline-flex items-center gap-2"
@@ -301,7 +301,7 @@ export default function ModeEmploi() {
               {t("cta_contact")}
             </Link>
             <a
-              href="https://www.youtube.com/channel/UCqIaNSl1_6_I3ABfzFIJ2Ow"
+              href="https://www.youtube.com/@Hallucinecran"
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors"

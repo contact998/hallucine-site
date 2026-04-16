@@ -100,7 +100,7 @@ export default function GalerieVideo() {
               {t("youtube_desc")}
             </p>
             <a
-              href="https://www.youtube.com/channel/UCqIaNSl1_6_I3ABfzFIJ2Ow"
+              href="https://www.youtube.com/@Hallucinecran"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors"
