@@ -5,27 +5,33 @@ import { InsertUser, users, contactSubmissions, InsertContactSubmission, auditHi
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let _pool: any = null;
 
-// Lazily create the drizzle instance with a connection pool to handle ECONNRESET.
-export async function getDb() {
-  if (!_db && process.env.DATABASE_URL) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function createDb(): ReturnType<typeof drizzle> {
+  if (!process.env.DATABASE_URL) {
+    throw new Error('DATABASE_URL is not set');
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const pool = createPool({
+    uri: process.env.DATABASE_URL,
+    waitForConnections: true,
+    connectionLimit: 5,
+    queueLimit: 0,
+    enableKeepAlive: true,
+    keepAliveInitialDelay: 10000,
+  });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return drizzle(pool.promise()) as any;
+}
+
+// Retente la connexion à chaque appel si _db === null (évite de bloquer définitivement après un échec au démarrage).
+export function getDb(): ReturnType<typeof drizzle> {
+  if (!_db) {
     try {
-      _pool = createPool({
-        uri: process.env.DATABASE_URL,
-        waitForConnections: true,
-        connectionLimit: 5,
-        queueLimit: 0,
-        enableKeepAlive: true,
-        keepAliveInitialDelay: 10000,
-      });
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      _db = drizzle(_pool.promise()) as any;
-    } catch (error) {
-      console.warn("[Database] Failed to connect:", error);
-      _db = null;
-      _pool = null;
+      _db = createDb();
+    } catch (err) {
+      console.error('[Database] Connection retry failed:', err);
+      throw new Error('Database not available');
     }
   }
   return _db;
@@ -36,7 +42,7 @@ export async function upsertUser(user: InsertUser): Promise<void> {
     throw new Error("User openId is required for upsert");
   }
 
-  const db = await getDb();
+  const db = getDb();
   if (!db) {
     console.warn("[Database] Cannot upsert user: database not available");
     return;
@@ -91,7 +97,7 @@ export async function upsertUser(user: InsertUser): Promise<void> {
 }
 
 export async function getUserByOpenId(openId: string) {
-  const db = await getDb();
+  const db = getDb();
   if (!db) {
     console.warn("[Database] Cannot get user: database not available");
     return undefined;
@@ -103,7 +109,7 @@ export async function getUserByOpenId(openId: string) {
 }
 
 export async function insertContactSubmission(data: InsertContactSubmission) {
-  const db = await getDb();
+  const db = getDb();
   if (!db) {
     throw new Error("Database not available");
   }
@@ -112,7 +118,7 @@ export async function insertContactSubmission(data: InsertContactSubmission) {
 }
 
 export async function getContactSubmissions() {
-  const db = await getDb();
+  const db = getDb();
   if (!db) {
     return [];
   }
@@ -121,7 +127,7 @@ export async function getContactSubmissions() {
 
 /** Récupérer les soumissions d'un utilisateur par userId */
 export async function getSubmissionsByUserId(userId: number) {
-  const db = await getDb();
+  const db = getDb();
   if (!db) {
     return [];
   }
@@ -133,7 +139,7 @@ export async function getSubmissionsByUserId(userId: number) {
 
 /** Récupérer les soumissions d'un utilisateur par email */
 export async function getSubmissionsByEmail(email: string) {
-  const db = await getDb();
+  const db = getDb();
   if (!db) {
     return [];
   }
@@ -145,7 +151,7 @@ export async function getSubmissionsByEmail(email: string) {
 
 /** Récupérer toutes les soumissions (admin) avec pagination */
 export async function getAllSubmissions(limit = 200) {
-  const db = await getDb();
+  const db = getDb();
   if (!db) return [];
   return db.select({
     id: contactSubmissions.id,
@@ -170,7 +176,7 @@ export async function getAllSubmissions(limit = 200) {
 
 /** Mettre à jour le statut d'une soumission (admin) */
 export async function updateSubmissionStatus(submissionId: number, status: "en_attente" | "en_cours" | "traite" | "annule") {
-  const db = await getDb();
+  const db = getDb();
   if (!db) throw new Error("Database not available");
   await db.update(contactSubmissions)
     .set({ status })
@@ -180,7 +186,7 @@ export async function updateSubmissionStatus(submissionId: number, status: "en_a
 
 /** Mettre à jour la note admin d'une soumission */
 export async function updateAdminNote(submissionId: number, note: string) {
-  const db = await getDb();
+  const db = getDb();
   if (!db) throw new Error("Database not available");
   await db.update(contactSubmissions)
     .set({ adminNote: note })
@@ -190,7 +196,7 @@ export async function updateAdminNote(submissionId: number, note: string) {
 
 /** Supprimer une soumission (admin) */
 export async function deleteSubmission(submissionId: number) {
-  const db = await getDb();
+  const db = getDb();
   if (!db) throw new Error("Database not available");
   await db.delete(contactSubmissions)
     .where(eq(contactSubmissions.id, submissionId));
@@ -199,7 +205,7 @@ export async function deleteSubmission(submissionId: number) {
 
 /** Obtenir les statistiques des soumissions (admin) */
 export async function getSubmissionStats() {
-  const db = await getDb();
+  const db = getDb();
   if (!db) return { total: 0, en_attente: 0, en_cours: 0, traite: 0, annule: 0, contact: 0, devis: 0, distributeur: 0 };
   
   const [totalResult] = await db.select({ count: sql<number>`count(*)` }).from(contactSubmissions);
@@ -229,7 +235,7 @@ export async function getSubmissionStats() {
 
 /** Sauvegarder un rapport d'audit en base de données */
 export async function insertAuditHistory(data: InsertAuditHistoryEntry) {
-  const db = await getDb();
+  const db = getDb();
   if (!db) throw new Error("Database not available");
   const result = await db.insert(auditHistory).values(data);
   return result;
@@ -237,7 +243,7 @@ export async function insertAuditHistory(data: InsertAuditHistoryEntry) {
 
 /** Récupérer tous les audits (triés du plus récent au plus ancien) */
 export async function getAuditHistoryList(limit = 52) {
-  const db = await getDb();
+  const db = getDb();
   if (!db) return [];
   return db.select({
     id: auditHistory.id,
@@ -258,7 +264,7 @@ export async function getAuditHistoryList(limit = 52) {
 
 /** Récupérer un audit complet par ID */
 export async function getAuditHistoryById(auditId: number) {
-  const db = await getDb();
+  const db = getDb();
   if (!db) return null;
   const [result] = await db.select().from(auditHistory)
     .where(eq(auditHistory.id, auditId))
@@ -268,7 +274,7 @@ export async function getAuditHistoryById(auditId: number) {
 
 /** Récupérer les 2 derniers audits pour comparaison */
 export async function getLastTwoAudits() {
-  const db = await getDb();
+  const db = getDb();
   if (!db) return [];
   return db.select({
     id: auditHistory.id,
@@ -287,7 +293,7 @@ export async function getLastTwoAudits() {
 
 /** Mettre à jour le statut d'envoi email d'un audit */
 export async function updateAuditEmailStatus(auditId: number, status: "pending" | "sent" | "failed") {
-  const db = await getDb();
+  const db = getDb();
   if (!db) throw new Error("Database not available");
   await db.update(auditHistory)
     .set({ emailSent: status })
@@ -297,7 +303,7 @@ export async function updateAuditEmailStatus(auditId: number, status: "pending" 
 
 /** Mettre à jour le fuseau horaire d'un utilisateur */
 export async function updateUserTimezone(userId: number, timezone: string) {
-  const db = await getDb();
+  const db = getDb();
   if (!db) throw new Error("Database not available");
   await db.update(users)
     .set({ timezone })
@@ -307,7 +313,7 @@ export async function updateUserTimezone(userId: number, timezone: string) {
 
 /** Récupérer le fuseau horaire d'un utilisateur */
 export async function getUserTimezone(userId: number): Promise<string | null> {
-  const db = await getDb();
+  const db = getDb();
   if (!db) return null;
   const [result] = await db.select({ timezone: users.timezone }).from(users).where(eq(users.id, userId)).limit(1);
   return result?.timezone ?? null;
@@ -315,7 +321,7 @@ export async function getUserTimezone(userId: number): Promise<string | null> {
 
 /** Annuler une soumission (seul le propriétaire ou un admin peut le faire) */
 export async function cancelSubmission(submissionId: number, userId: number) {
-  const db = await getDb();
+  const db = getDb();
   if (!db) {
     throw new Error("Database not available");
   }
