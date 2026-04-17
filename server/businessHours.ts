@@ -5,7 +5,7 @@
  */
 
 import { eq } from "drizzle-orm";
-import { getDb } from "./db";
+import { db } from "./db";
 import { siteSettings } from "../drizzle/schema";
 
 export interface BusinessHoursConfig {
@@ -24,8 +24,7 @@ const DEFAULT_CONFIG: BusinessHoursConfig = {
 
 /** Récupérer la configuration des heures de présence depuis la DB */
 export async function getBusinessHoursConfig(): Promise<BusinessHoursConfig> {
-  const db = await getDb();
-  if (!db) return DEFAULT_CONFIG;
+  
 
   try {
     const rows = await db.select().from(siteSettings);
@@ -48,8 +47,7 @@ export async function getBusinessHoursConfig(): Promise<BusinessHoursConfig> {
 
 /** Mettre à jour un paramètre des heures de présence */
 export async function updateBusinessHoursSetting(key: string, value: string): Promise<boolean> {
-  const db = await getDb();
-  if (!db) return false;
+  
 
   try {
     const existing = await db.select().from(siteSettings).where(eq(siteSettings.settingKey, key)).limit(1);

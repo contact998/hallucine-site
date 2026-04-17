@@ -103,15 +103,20 @@ async function startServer() {
   });
   // Endpoint de diagnostic temporaire (à supprimer après résolution)
   app.get("/api/debug-db", async (_req, res) => {
-    const dbUrl = process.env.DATABASE_URL || "";
-    const masked = dbUrl ? dbUrl.replace(/:([^:@]+)@/, ":***@").substring(0, 60) : "NOT SET";
+    const info = {
+      MYSQLHOST: process.env.MYSQLHOST || "NOT SET",
+      MYSQLPORT: process.env.MYSQLPORT || "NOT SET",
+      MYSQLDATABASE: process.env.MYSQLDATABASE || "NOT SET",
+      MYSQLUSER: process.env.MYSQLUSER || "NOT SET",
+      MYSQLPASSWORD: process.env.MYSQLPASSWORD ? "***SET***" : "NOT SET",
+      DATABASE_URL: process.env.DATABASE_URL ? process.env.DATABASE_URL.replace(/:([^:@]+)@/, ":***@").substring(0, 60) : "NOT SET",
+    };
     try {
-      const { getDb } = await import("../db");
-      const db = getDb();
+      const { db } = await import("../db");
       const result = await (db as any).execute("SELECT 1 as ok");
-      res.json({ status: "ok", dbUrl: masked, result: result[0] });
+      res.json({ status: "ok", env: info, result: result[0] });
     } catch (err: any) {
-      res.status(500).json({ status: "error", dbUrl: masked, error: err.message });
+      res.status(500).json({ status: "error", env: info, error: err.message });
     }
   });
   // tRPC API

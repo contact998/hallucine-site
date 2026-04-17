@@ -5,7 +5,7 @@
  */
 
 import { eq, desc, sql, and, gte, lte, count } from "drizzle-orm";
-import { getDb } from "./db";
+import { db } from "./db";
 import { pageViews, analyticsEvents, InsertPageView, InsertAnalyticsEvent } from "../drizzle/schema";
 
 // ─── Catégorisation du trafic ───────────────────────────────────────
@@ -66,8 +66,7 @@ export async function trackPageView(data: {
   utmMedium?: string;
   utmCampaign?: string;
 }): Promise<boolean> {
-  const db = await getDb();
-  if (!db) return false;
+  
 
   try {
     const trafficSource = categorizeTrafficSource(data.referrer);
@@ -101,8 +100,7 @@ export async function trackEvent(data: {
   sessionId?: string;
   userId?: number;
 }): Promise<boolean> {
-  const db = await getDb();
-  if (!db) return false;
+  
 
   try {
     await db.insert(analyticsEvents).values({
@@ -123,8 +121,7 @@ export async function trackEvent(data: {
 
 /** Statistiques globales sur une période */
 export async function getAnalyticsOverview(daysBack: number = 30) {
-  const db = await getDb();
-  if (!db) return null;
+  
 
   const since = new Date();
   since.setDate(since.getDate() - daysBack);
@@ -159,8 +156,7 @@ export async function getAnalyticsOverview(daysBack: number = 30) {
 
 /** Pages les plus visitées */
 export async function getTopPages(daysBack: number = 30, limit: number = 20) {
-  const db = await getDb();
-  if (!db) return [];
+  
 
   const since = new Date();
   since.setDate(since.getDate() - daysBack);
@@ -180,8 +176,7 @@ export async function getTopPages(daysBack: number = 30, limit: number = 20) {
 
 /** Sources de trafic */
 export async function getTrafficSources(daysBack: number = 30) {
-  const db = await getDb();
-  if (!db) return [];
+  
 
   const since = new Date();
   since.setDate(since.getDate() - daysBack);
@@ -199,8 +194,7 @@ export async function getTrafficSources(daysBack: number = 30) {
 
 /** Répartition par type d'appareil */
 export async function getDeviceBreakdown(daysBack: number = 30) {
-  const db = await getDb();
-  if (!db) return [];
+  
 
   const since = new Date();
   since.setDate(since.getDate() - daysBack);
@@ -217,8 +211,7 @@ export async function getDeviceBreakdown(daysBack: number = 30) {
 
 /** Visites par jour (pour graphique en courbe) */
 export async function getDailyPageViews(daysBack: number = 30) {
-  const db = await getDb();
-  if (!db) return [];
+  
 
   const since = new Date();
   since.setDate(since.getDate() - daysBack);
@@ -236,8 +229,7 @@ export async function getDailyPageViews(daysBack: number = 30) {
 
 /** Événements les plus fréquents */
 export async function getTopEvents(daysBack: number = 30, limit: number = 20) {
-  const db = await getDb();
-  if (!db) return [];
+  
 
   const since = new Date();
   since.setDate(since.getDate() - daysBack);
@@ -255,8 +247,7 @@ export async function getTopEvents(daysBack: number = 30, limit: number = 20) {
 
 /** Referrers externes les plus fréquents */
 export async function getTopReferrers(daysBack: number = 30, limit: number = 15) {
-  const db = await getDb();
-  if (!db) return [];
+  
 
   const since = new Date();
   since.setDate(since.getDate() - daysBack);
