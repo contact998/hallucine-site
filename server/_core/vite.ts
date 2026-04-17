@@ -97,12 +97,13 @@ export function serveStatic(app: Express) {
     const prerenderedPath = path.join(distPath, langPrefix, urlPath, "index.html");
 
     if (fs.existsSync(prerenderedPath)) {
-      // Servir la page pré-rendue (contenu SEO déjà injecté)
+      // Servir la page pré-rendue avec la bonne locale injectée
+      const prerenderedHtml = fs.readFileSync(prerenderedPath, "utf-8").replace(/__LOCALE__/g, locale);
       res.status(200).set({
         "Content-Type": "text/html",
         "Vary": "Host",
         "Cache-Control": "public, max-age=3600",
-      }).end(fs.readFileSync(prerenderedPath, "utf-8"));
+      }).end(prerenderedHtml);
       return;
     }
 
