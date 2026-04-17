@@ -5,20 +5,8 @@ import { InsertUser, users, contactSubmissions, InsertContactSubmission, auditHi
 import * as schema from "../drizzle/schema";
 import { ENV } from './_core/env';
 
-// Log de diagnostic au démarrage (sans le password)
-console.log("[db] connecting to", {
-  host: process.env.MYSQLHOST,
-  port: process.env.MYSQLPORT,
-  database: process.env.MYSQLDATABASE,
-  user: process.env.MYSQLUSER,
-});
-
 const pool = mysql.createPool({
-  host: process.env.MYSQLHOST,
-  port: Number(process.env.MYSQLPORT || 3306),
-  user: process.env.MYSQLUSER,
-  password: process.env.MYSQLPASSWORD,
-  database: process.env.MYSQLDATABASE,
+  uri: process.env.DATABASE_URL,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
@@ -26,6 +14,8 @@ const pool = mysql.createPool({
   keepAliveInitialDelay: 0,
   connectTimeout: 10_000,
 });
+
+console.log("[db] connecting with DATABASE_URL:", process.env.DATABASE_URL ? "set" : "MISSING");
 
 export const db = drizzle(pool, { schema, mode: "default" });
 export { pool };
