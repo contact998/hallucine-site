@@ -149,6 +149,7 @@ for (const lang of VALID_LANGS) {
     try {
       // Rendre la page (récupère aussi les metas collectées en SSR)
       const { html, meta } = await render(url, lang);
+      console.log(`[META] [${lang}] ${url} → "${meta.title}"`);
 
       // URL canonique
       const canonicalUrl = `${domain}${url}`;
