@@ -190,10 +190,24 @@ for (const lang of VALID_LANGS) {
         }
       } else {
         // Autres pages : dist/{url-sans-slash}/index.html
+        // Seul FR écrit dans dist/ directement (hallucinecran.fr).
+        // Les autres langues écrivent dans dist/_lang_{lang}/ pour ne pas
+        // écraser les fichiers FR (les routes IT/EN/DE/ES partagent les mêmes URLs).
         const urlPath = url.startsWith("/") ? url.slice(1) : url;
-        const outputDir = join(DIST, urlPath);
-        mkdirSync(outputDir, { recursive: true });
-        outputPath = join(outputDir, "index.html");
+        if (lang === "fr") {
+          const outputDir = join(DIST, urlPath);
+          mkdirSync(outputDir, { recursive: true });
+          outputPath = join(outputDir, "index.html");
+        } else {
+          const langDir = join(DIST, `_lang_${lang}`, urlPath);
+          mkdirSync(langDir, { recursive: true });
+          outputPath = join(langDir, "index.html");
+          // noindex : ces fichiers ne sont pas servis sur hallucinecran.fr
+          pageHtml = pageHtml.replace(
+            /<link rel="canonical"/,
+            '<meta name="robots" content="noindex, nofollow" />\n  <link rel="canonical"'
+          );
+        }
       }
 
       writeFileSync(outputPath, pageHtml, "utf-8");
