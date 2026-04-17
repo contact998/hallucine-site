@@ -28,10 +28,12 @@ function restoreMeta(prev: { value: string; el: Element | null }, attr: string) 
  */
 export function useDocumentMeta(title?: string, description?: string, image?: string) {
   // ─── SSR : collecte des metas pendant renderToString ───────────────────────
+  // Principe : first-write-wins — seul le premier appelant (la page) définit les metas.
+  // Les composants enfants (PageStructuredData, etc.) n'écrasent pas.
   const ssrMeta = useContext(SSRMetaContext);
 
-  if (ssrMeta !== null) {
-    // On est en SSR — pousser les metas dans le contexte
+  if (ssrMeta !== null && !ssrMeta.locked) {
+    ssrMeta.locked = true;
     ssrMeta.setMeta({
       title: title ? `${title} | ${SITE_NAME}` : DEFAULT_TITLE,
       description: description ?? DEFAULT_DESCRIPTION,

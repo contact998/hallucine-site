@@ -43,12 +43,12 @@ const { ROUTES } = await import("../client/src/i18n/routes.ts");
 
 // ─── Lecture du template HTML ──────────────────────────────────────────────
 
-const templatePath = join(DIST, "index.html");
+const templatePath = join(DIST, "_template.html");
 let template;
 try {
   template = readFileSync(templatePath, "utf-8");
 } catch {
-  console.error(`❌ dist/index.html introuvable. Lance d'abord : pnpm build:client`);
+  console.error(`❌ dist/public/_template.html introuvable. Lance d'abord : pnpm build:client`);
   process.exit(1);
 }
 
@@ -149,11 +149,6 @@ for (const lang of VALID_LANGS) {
     try {
       // Rendre la page (récupère aussi les metas collectées en SSR)
       const { html, meta } = await render(url, lang);
-
-      // Log debug pour diagnostiquer les metas
-      if (process.env.DEBUG_META) {
-        console.log(`  [META] [${lang}] ${url} → title="${meta.title.substring(0, 60)}"`);
-      }
 
       // URL canonique
       const canonicalUrl = `${domain}${url}`;

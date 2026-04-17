@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development tsx watch server/_core/index.ts",
-    "build:client": "vite build",
+    "build:client": "vite build && cp dist/public/index.html dist/public/_template.html",
     "build:server": "esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
     "build:ssr": "npx tsx --tsconfig tsconfig.ssr.json scripts/prerender.mjs",
     "build": "pnpm build:client && pnpm build:server && pnpm build:ssr",

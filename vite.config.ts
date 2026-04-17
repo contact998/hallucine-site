@@ -150,7 +150,37 @@ function vitePluginManusDebugCollector(): Plugin {
   };
 }
 
-const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
+
+/**
+ * Plugin qui restaure les placeholders SSR dans index.html après le build.
+ * vitePluginManusRuntime() les remplace par les valeurs par défaut via transformIndexHtml —
+ * ce plugin tourne après lui (enforce: "post") et les remet en place pour que
+ * prerender.mjs puisse les substituer page par page.
+ */
+function vitePluginRestoreSsrPlaceholders(): Plugin {
+  return {
+    name: "restore-ssr-placeholders",
+    enforce: "post",
+    transformIndexHtml(html) {
+      // Uniquement au build — le dev n'utilise pas prerender.mjs
+      if (process.env.NODE_ENV !== "production") {
+        return html;
+      }
+      return html
+        .replace(/<title>[^<]*<\/title>/, "<title>__PAGE_TITLE__<\/title>")
+        .replace(/(<meta name="description" content=")[^"]*(")/,        '$1__PAGE_DESCRIPTION__$2')
+        .replace(/(<meta property="og:title" content=")[^"]*(")/,       '$1__PAGE_TITLE__$2')
+        .replace(/(<meta property="og:description" content=")[^"]*(")/,  '$1__PAGE_DESCRIPTION__$2')
+        .replace(/(<meta property="og:image" content=")[^"]*(")/,       '$1__PAGE_IMAGE__$2')
+        .replace(/(<meta property="og:url" content=")[^"]*(")/,         '$1__PAGE_URL__$2')
+        .replace(/(<meta name="twitter:title" content=")[^"]*(")/,      '$1__PAGE_TITLE__$2')
+        .replace(/(<meta name="twitter:description" content=")[^"]*(")/,'$1__PAGE_DESCRIPTION__$2')
+        .replace(/(<meta name="twitter:image" content=")[^"]*(")/,      '$1__PAGE_IMAGE__$2');
+    },
+  };
+}
+
+const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector(), vitePluginRestoreSsrPlaceholders()];
 
 export default defineConfig({
   plugins,

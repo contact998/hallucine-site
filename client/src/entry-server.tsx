@@ -181,6 +181,7 @@ export async function render(url: string, lang: string): Promise<{ html: string;
     description: "Hallucine, fabricant français d'écrans de cinéma gonflables depuis 1995. Écrans géants, tentes gonflables, arches, mobilier événementiel. Livraison mondiale.",
     image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp",
     url: `https://hallucinecran.fr${url}`,
+    locked: false,
     setMeta(data) {
       if (data.title) this.title = data.title;
       if (data.description) this.description = data.description;
