@@ -101,6 +101,19 @@ async function startServer() {
       res.status(500).json({ error: "Erreur interne" });
     }
   });
+  // Endpoint de diagnostic temporaire (à supprimer après résolution)
+  app.get("/api/debug-db", async (_req, res) => {
+    const dbUrl = process.env.DATABASE_URL || "";
+    const masked = dbUrl ? dbUrl.replace(/:([^:@]+)@/, ":***@").substring(0, 60) : "NOT SET";
+    try {
+      const { getDb } = await import("../db");
+      const db = getDb();
+      const result = await (db as any).execute("SELECT 1 as ok");
+      res.json({ status: "ok", dbUrl: masked, result: result[0] });
+    } catch (err: any) {
+      res.status(500).json({ status: "error", dbUrl: masked, error: err.message });
+    }
+  });
   // tRPC API
   app.use(
     "/api/trpc",
