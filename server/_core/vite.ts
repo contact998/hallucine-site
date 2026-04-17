@@ -93,7 +93,8 @@ export function serveStatic(app: Express) {
 
     // 1. Chercher la page pré-rendue : /chemin/index.html
     const urlPath = req.path === "/" ? "" : req.path;
-    const prerenderedPath = path.join(distPath, urlPath, "index.html");
+    const langPrefix = locale !== "fr" ? `_lang_${locale}` : "";
+    const prerenderedPath = path.join(distPath, langPrefix, urlPath, "index.html");
 
     if (fs.existsSync(prerenderedPath)) {
       // Servir la page pré-rendue (contenu SEO déjà injecté)
