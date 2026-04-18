@@ -4,6 +4,7 @@ import { MessageSquare, ThumbsUp, User } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { trpc } from "@/lib/trpc";
+import { detectLanguage } from "@/i18n/domains";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
@@ -36,7 +37,8 @@ export default function Blog() {
   const [expandedComments, setExpandedComments] = useState<Record<string, boolean>>({});
 
   // Charger les articles depuis la DB
-  const { data: dbData } = trpc.blog.list.useQuery({ lang: "fr", limit: 50 });
+  const lang = detectLanguage();
+  const { data: dbData } = trpc.blog.list.useQuery({ lang, limit: 50 });
   const dbArticles = dbData?.posts ?? [];
 
   const toggleComments = (id: string) => {
