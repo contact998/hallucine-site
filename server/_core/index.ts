@@ -127,6 +127,34 @@ async function startServer() {
       createContext,
     })
   );
+
+  // ─── Upload image blog vers R2 ───────────────────────────────
+  app.post("/api/upload-blog-image", express.raw({ type: "image/*", limit: "10mb" }), async (req, res) => {
+    try {
+      const apiKey = req.headers["x-api-key"] ?? req.query.apiKey;
+      if (apiKey !== process.env.BLOG_API_KEY) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+      const { uploadImageToR2 } = await import("../r2Upload.js");
+      let buffer: Buffer;
+      let ext = "jpg";
+      if (req.is("image/*")) {
+        buffer = req.body as Buffer;
+        const ct = req.headers["content-type"] ?? "";
+        ext = ct.includes("png") ? "png" : "jpg";
+      } else if ((req.body as any)?.base64) {
+        buffer = Buffer.from((req.body as any).base64, "base64");
+        ext = (req.body as any).ext ?? "jpg";
+      } else {
+        return res.status(400).json({ error: "No image data" });
+      }
+      const url = await uploadImageToR2(buffer, ext);
+      return res.json({ url });
+    } catch (err) {
+      console.error("[R2 Upload] Error:", err);
+      return res.status(500).json({ error: String(err) });
+    }
+  });
   // development mode uses Vite, production mode uses static files
   if (process.env.NODE_ENV === "development") {
     await setupVite(app, server);
