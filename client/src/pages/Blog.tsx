@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { MessageSquare, ThumbsUp, User } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { trpc } from "@/lib/trpc";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
@@ -34,185 +35,62 @@ export default function Blog() {
   const [categorieActive, setCategorieActive] = useState("Toutes");
   const [expandedComments, setExpandedComments] = useState<Record<string, boolean>>({});
 
+  // Charger les articles depuis la DB
+  const { data: dbData } = trpc.blog.list.useQuery({ lang: "fr", limit: 50 });
+  const dbArticles = dbData?.posts ?? [];
+
   const toggleComments = (id: string) => {
     setExpandedComments(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const articles: Article[] = [
-    {
-      id: "1",
-      titre: "Des projections grandioses avec nos écrans géants à soufflerie permanente !",
-      extrait: "Découvrez comment nos écrans géants à soufflerie permanente transforment vos événements en plein air en expériences cinématographiques inoubliables. De la technologie de pointe à l'installation simplifiée, explorez les avantages de nos solutions d'écrans gonflables pour des projections spectaculaires.",
-      categorie: "Écrans Gonflables",
-      date: "2024-12-15",
-      slug: "projections-grandioses-ecrans-geants-soufflerie-permanente",
-      commentaires: [
-        {
-          auteur: "Marie Dupont",
-          avatar: "MD",
-          date: "2025-01-03",
-          texte: "Nous avons utilisé l'écran 12m pour notre festival de cinéma en plein air à Bordeaux cet été. La qualité de projection était incroyable, même avec la lumière résiduelle du crépuscule. Le montage a pris moins de 20 minutes avec 2 personnes. Je recommande vivement !",
-          likes: 14
-        },
-        {
-          auteur: "Thomas Lefèvre",
-          avatar: "TL",
-          date: "2025-01-10",
-          texte: "Article très complet. J'organise des événements corporate et la soufflerie permanente est un vrai plus — pas de risque de dégonflement pendant la projection. Est-ce que vous proposez aussi la location pour des événements ponctuels ?",
-          likes: 8
-        },
-        {
-          auteur: "Sophie Martin",
-          avatar: "SM",
-          date: "2025-01-18",
-          texte: "Merci pour ces explications détaillées. La comparaison entre soufflerie et étanche à l'air m'a aidée à faire mon choix. Pour un usage régulier en camping, l'étanche semble plus adapté.",
-          likes: 6
-        }
-      ]
-    },
-    {
-      id: "2",
-      titre: "Écrans géants gonflables installés en un temps record : La solution idéale pour vos événements en plein air",
-      extrait: "L'installation d'un écran géant gonflable n'a jamais été aussi rapide. Grâce à notre technologie de soufflerie intégrée, votre écran est opérationnel en quelques minutes. Découvrez pourquoi de plus en plus d'organisateurs d'événements choisissent nos solutions gonflables pour leurs projections extérieures.",
-      categorie: "Guides de Produits",
-      date: "2024-11-20",
-      slug: "ecrans-geants-gonflables-installes-temps-record-solution-ideale-evenements-plein-air",
-      commentaires: [
-        {
-          auteur: "Jean-Pierre Moreau",
-          avatar: "JM",
-          date: "2024-12-05",
-          texte: "En tant que responsable technique d'une mairie, j'ai testé l'installation de l'écran 8m lors de notre fête du village. Chrono en main : 12 minutes du déballage à l'écran gonflé. C'est bluffant de simplicité.",
-          likes: 22
-        },
-        {
-          auteur: "Claire Beaumont",
-          avatar: "CB",
-          date: "2024-12-12",
-          texte: "Super article ! Petite question : est-ce que le vent pose problème ? Nous organisons des projections en bord de mer et j'ai peur que l'écran ne tienne pas avec les rafales.",
-          likes: 5
-        },
-        {
-          auteur: "Hallucine",
-          avatar: "H",
-          date: "2024-12-13",
-          texte: "Bonjour Claire, nos écrans sont conçus pour résister à des vents modérés (jusqu'à 30 km/h). Pour les zones très ventées, nous recommandons le modèle étanche à l'air avec des haubans renforcés. N'hésitez pas à nous contacter pour un conseil personnalisé !",
-          likes: 11
-        }
-      ]
-    },
-    {
-      id: "3",
-      titre: "Écrans Gonflables pour Festivals : Pourquoi Sont-Ils Indispensables ? Un Guide Complet pour les Organisateurs d'Événements",
-      extrait: "Les festivals en plein air nécessitent des solutions visuelles à la hauteur de l'événement. Les écrans gonflables offrent une visibilité exceptionnelle, une installation rapide et une portabilité inégalée. Ce guide complet vous explique pourquoi ils sont devenus indispensables pour les organisateurs de festivals.",
-      categorie: "Festivals et Événements",
-      date: "2024-10-08",
-      slug: "ecrans-gonflables-festivals-guide-complet-organisateurs-evenements",
-      commentaires: [
-        {
-          auteur: "Lucas Fernandez",
-          avatar: "LF",
-          date: "2024-10-22",
-          texte: "Nous utilisons les écrans Hallucine depuis 3 ans pour notre festival de musique dans le sud de la France. L'écran 16m est parfait pour retransmettre les concerts en direct. Le public adore, et le montage/démontage est rapide entre les sets.",
-          likes: 31
-        },
-        {
-          auteur: "Nathalie Girard",
-          avatar: "NG",
-          date: "2024-11-01",
-          texte: "Guide très utile pour les organisateurs. J'ajouterais qu'il faut aussi penser à l'alimentation électrique — un groupe électrogène silencieux est indispensable pour ne pas gêner la projection. Quel est le besoin en watts pour un écran 10m ?",
-          likes: 9
-        },
-        {
-          auteur: "Marc Dubois",
-          avatar: "MDu",
-          date: "2024-11-15",
-          texte: "Excellent retour d'expérience. Nous avons comparé plusieurs fournisseurs et Hallucine offre le meilleur rapport qualité/poids. Le fait que l'écran 10m ne pèse que 25 kg est un argument décisif pour nos équipes itinérantes.",
-          likes: 17
-        },
-        {
-          auteur: "Émilie Rousseau",
-          avatar: "ER",
-          date: "2024-11-28",
-          texte: "Merci pour ce guide complet ! Nous organisons un festival de cinéma documentaire en plein air et nous hésitons entre le 12m et le 16m. Pour un public de 500 personnes, quelle taille recommandez-vous ?",
-          likes: 4
-        }
-      ]
-    },
-    {
-      id: "4",
-      titre: "Guide Ultime : Organiser un Cinéma en Plein Air Inoubliable - Équipement, Astuces & Études de Cas",
-      extrait: "Organiser un cinéma en plein air est une aventure passionnante qui demande une préparation minutieuse. De la sélection de l'écran gonflable idéal au choix du projecteur, en passant par la gestion du son et de l'éclairage, ce guide ultime vous accompagne à chaque étape pour créer une soirée cinéma mémorable.",
-      categorie: "Cinéma en Plein Air",
-      date: "2024-09-12",
-      slug: "guide-ultime-organiser-cinema-plein-air-equipement-astuces-etudes-cas",
-      commentaires: [
-        {
-          auteur: "Antoine Perrin",
-          avatar: "AP",
-          date: "2024-09-28",
-          texte: "Ce guide m'a été très utile pour organiser notre première soirée cinéma en plein air dans notre copropriété. On a loué un écran 6m et un vidéoprojecteur 5000 lumens. Résultat : 80 voisins ravis et une demande unanime pour recommencer l'été prochain !",
-          likes: 26
-        },
-        {
-          auteur: "Isabelle Chevalier",
-          avatar: "IC",
-          date: "2024-10-05",
-          texte: "Très bon article. Un conseil que j'ajouterais : prévoyez toujours un plan B en cas de pluie. Nous avons combiné l'écran gonflable avec une tente Hallucine et c'était parfait — projection maintenue malgré l'averse !",
-          likes: 19
-        },
-        {
-          auteur: "David Laurent",
-          avatar: "DL",
-          date: "2024-10-20",
-          texte: "Pour le son, nous avons testé les casques sans fil mentionnés dans la section accessoires. C'est génial pour les projections en zone résidentielle — aucune nuisance sonore pour les voisins et une immersion totale pour les spectateurs.",
-          likes: 12
-        }
-      ]
-    },
-    {
-      id: "5",
-      titre: "Guide Complet pour Choisir et Installer un Écran Gonflable pour un Cinéma en Plein Air : L'Expérience Ultime Sous les Étoiles",
-      extrait: "Choisir le bon écran gonflable pour votre cinéma en plein air est essentiel pour garantir une expérience visuelle de qualité. Ce guide complet vous aide à comparer les différentes options disponibles, à comprendre les spécifications techniques et à réaliser une installation parfaite pour vos projections sous les étoiles.",
-      categorie: "Cinéma en Plein Air",
-      date: "2024-08-25",
-      slug: "guide-complet-installer-ecran-gonflable-cinema-plein-air",
-      commentaires: [
-        {
-          auteur: "François Blanc",
-          avatar: "FB",
-          date: "2024-09-08",
-          texte: "Après avoir lu cet article, j'ai opté pour l'écran étanche 5m pour notre gîte rural. Les clients adorent les soirées cinéma sous les étoiles. C'est devenu notre argument de vente numéro un sur Booking !",
-          likes: 33
-        },
-        {
-          auteur: "Camille Roux",
-          avatar: "CR",
-          date: "2024-09-15",
-          texte: "Comparaison très claire entre les différents modèles. Pour les campings, je confirme que l'étanche à l'air est le meilleur choix — pas de bruit de soufflerie et une installation ultra rapide. On l'utilise 4 soirs par semaine en haute saison.",
-          likes: 15
-        },
-        {
-          auteur: "Patrick Mercier",
-          avatar: "PM",
-          date: "2024-09-22",
-          texte: "Excellent guide technique. J'apprécie particulièrement la section sur le ratio de projection et la distance optimale. Ça m'a évité de faire une erreur de dimensionnement pour notre salle des fêtes en extérieur.",
-          likes: 8
-        }
-      ]
-    }
-  ];
-
-  const categories = ["Toutes", ...Array.from(new Set(articles.map(a => a.categorie)))];
-
-  const articlesFiltres = categorieActive === "Toutes"
-    ? articles
-    : articles.filter(a => a.categorie === categorieActive);
-
-  const formatDate = (dateStr: string) => {
+  const formatDate = (dateStr: string | Date | null) => {
+    if (!dateStr) return "";
     const date = new Date(dateStr);
     return date.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
   };
+
+  // Articles DB + articles statiques en fallback
+  const staticArticles: Article[] = [
+    {
+      id: "1",
+      titre: "Des projections grandioses avec nos écrans géants à soufflerie permanente !",
+      extrait: "Découvrez comment nos écrans géants à soufflerie permanente transforment vos événements en plein air en expériences cinématographiques inoubliables.",
+      categorie: "Écrans Gonflables",
+      date: "2024-12-15",
+      slug: "projections-grandioses-ecrans-geants-soufflerie-permanente",
+      commentaires: [],
+    },
+    {
+      id: "2",
+      titre: "Écrans géants gonflables installés en un temps record",
+      extrait: "L'installation d'un écran géant gonflable n'a jamais été aussi rapide. Découvrez pourquoi de plus en plus d'organisateurs choisissent nos solutions.",
+      categorie: "Guides de Produits",
+      date: "2024-11-20",
+      slug: "ecrans-geants-gonflables-installes-temps-record-solution-ideale-evenements-plein-air",
+      commentaires: [],
+    },
+  ];
+
+  // Combiner articles DB + statiques
+  const allArticles = [
+    ...dbArticles.map(p => ({
+      id: String(p.id),
+      titre: p.title,
+      extrait: p.excerpt ?? "",
+      categorie: p.category ?? "Blog",
+      date: p.publishedAt ? new Date(p.publishedAt).toISOString().split("T")[0] : "",
+      slug: p.slug,
+      commentaires: [],
+      fromDb: true,
+    })),
+    ...staticArticles.map(a => ({ ...a, fromDb: false })),
+  ];
+
+  const categories = ["Toutes", ...Array.from(new Set(allArticles.map(a => a.categorie)))];
+
+  const articlesFiltres = categorieActive === "Toutes"
+    ? allArticles
+    : allArticles.filter(a => a.categorie === categorieActive);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -270,15 +148,13 @@ export default function Blog() {
                         {article.extrait}
                       </p>
                       <div className="flex items-center justify-between">
-                        <a
-                          href={`/blog#${article.slug}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                        <Link
+                          href={`/blog/${article.slug}`}
                           className="inline-flex items-center gap-2 text-[#DAA520] font-medium hover:underline"
                         >
                           {t("read_more")}
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                        </a>
+                        </Link>
                         <button
                           onClick={() => toggleComments(article.id)}
                           className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
