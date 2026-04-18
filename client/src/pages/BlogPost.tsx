@@ -106,6 +106,17 @@ export default function BlogPost() {
       {/* Contenu */}
       <section className="py-16">
         <div className="container max-w-3xl">
+          {/* Image principale */}
+          {post.imageUrl && (
+            <div className="mb-8 rounded-xl overflow-hidden">
+              <img
+                src={post.imageUrl}
+                alt={post.title}
+                className="w-full h-64 md:h-96 object-cover"
+              />
+            </div>
+          )}
+
           {post.excerpt && (
             <p className="text-lg text-muted-foreground leading-relaxed mb-8 pb-8 border-b border-border font-medium">
               {post.excerpt}
