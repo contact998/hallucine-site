@@ -1,0 +1,20 @@
+CREATE TABLE `blog_posts` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`title` varchar(500) NOT NULL,
+	`slug` varchar(500) NOT NULL,
+	`excerpt` text,
+	`content` text NOT NULL,
+	`imageUrl` varchar(1000),
+	`lang` varchar(10) NOT NULL DEFAULT 'fr',
+	`parentId` int,
+	`status` enum('draft','published','scheduled') NOT NULL DEFAULT 'draft',
+	`publishedAt` timestamp,
+	`metaKeywords` varchar(500),
+	`metaDescription` varchar(500),
+	`author` varchar(100) DEFAULT 'OpenClaw',
+	`category` varchar(100),
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `blog_posts_id` PRIMARY KEY(`id`),
+	CONSTRAINT `blog_posts_slug_unique` UNIQUE(`slug`)
+);

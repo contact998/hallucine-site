@@ -47,6 +47,17 @@ import {
 import { getAvailability } from "./availabilityService";
 import { submitToIndexNow, submitSingleUrl } from "./indexnow";
 import { computeSpamScore } from "./antispam";
+import {
+  createBlogPost,
+  updateBlogPost,
+  deleteBlogPost,
+  getBlogPostBySlug,
+  getBlogPostById,
+  getPublishedPosts,
+  getAllBlogPosts,
+  publishBlogPost,
+  countPublishedPosts,
+} from "./blog";
 
 // ─── Anti-spam : Rate limiting en mémoire ───
 const rateLimitMap = new Map<string, number[]>();
@@ -711,9 +722,116 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
     }),
   }),
 
+  // ===== Blog =====
+  blog: router({
+    /** Lister les articles publiés (public) */
+    list: publicProcedure
+      .input(z.object({
+        lang: z.string().default("fr"),
+        limit: z.number().min(1).max(100).default(20),
+        offset: z.number().default(0),
+      }).optional())
+      .query(async ({ input }) => {
+        const lang = input?.lang ?? "fr";
+        const limit = input?.limit ?? 20;
+        const offset = input?.offset ?? 0;
+        const [posts, total] = await Promise.all([
+          getPublishedPosts(lang, limit, offset),
+          countPublishedPosts(lang),
+        ]);
+        return { posts, total };
+      }),
+
+    /** Récupérer un article par slug (public) */
+    bySlug: publicProcedure
+      .input(z.object({ slug: z.string() }))
+      .query(async ({ input }) => {
+        const post = await getBlogPostBySlug(input.slug);
+        if (!post || post.status !== "published") return null;
+        return post;
+      }),
+
+    /** Créer un article — accessible via clé API (OpenClaw) ou admin connecté */
+    create: publicProcedure
+      .input(z.object({
+        apiKey: z.string().optional(),
+        title: z.string().min(1),
+        content: z.string().min(1),
+        excerpt: z.string().optional(),
+        imageUrl: z.string().optional(),
+        lang: z.string().default("fr"),
+        status: z.enum(["draft", "published", "scheduled"]).default("draft"),
+        metaKeywords: z.string().optional(),
+        metaDescription: z.string().optional(),
+        author: z.string().optional(),
+        category: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        // Authentification : clé API ou admin connecté
+        const validApiKey = process.env.BLOG_API_KEY;
+        const isApiKey = validApiKey && input.apiKey === validApiKey;
+        const isAdmin = ctx.user?.role === "admin";
+        if (!isApiKey && !isAdmin) {
+          throw new Error("Non autorisé");
+        }
+        const post = await createBlogPost({
+          title: input.title,
+          content: input.content,
+          excerpt: input.excerpt,
+          imageUrl: input.imageUrl,
+          lang: input.lang,
+          status: input.status,
+          publishedAt: input.status === "published" ? new Date() : undefined,
+          metaKeywords: input.metaKeywords,
+          metaDescription: input.metaDescription,
+          author: input.author ?? "OpenClaw",
+          category: input.category,
+        });
+        return { success: true, post };
+      }),
+
+    /** Lister tous les articles (admin) */
+    adminList: adminProcedure
+      .query(async () => getAllBlogPosts(200)),
+
+    /** Publier un article (admin) */
+    publish: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await publishBlogPost(input.id);
+        return { success: true };
+      }),
+
+    /** Mettre à jour un article (admin) */
+    update: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        title: z.string().optional(),
+        content: z.string().optional(),
+        excerpt: z.string().optional(),
+        imageUrl: z.string().optional(),
+        status: z.enum(["draft", "published", "scheduled"]).optional(),
+        metaKeywords: z.string().optional(),
+        metaDescription: z.string().optional(),
+        category: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, ...data } = input;
+        await updateBlogPost(id, data as any);
+        return { success: true };
+      }),
+
+    /** Supprimer un article (admin) */
+    delete: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await deleteBlogPost(input.id);
+        return { success: true };
+      }),
+  }),
+
   // ===== IndexNow SEO =====
-  indexnow: router({
-    /** Soumet toutes les pages publiques à IndexNow (Bing, Yandex, DuckDuckGo) */
+  indexnow: router({    /** Soumet toutes les pages publiques à IndexNow (Bing, Yandex, DuckDuckGo) */
     submitAll: adminProcedure.mutation(async () => {
       return submitToIndexNow();
     }),

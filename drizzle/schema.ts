@@ -153,3 +153,39 @@ export const auditHistory = mysqlTable("audit_history", {
 
 export type AuditHistoryEntry = typeof auditHistory.$inferSelect;
 export type InsertAuditHistoryEntry = typeof auditHistory.$inferInsert;
+
+// Table pour les articles de blog créés par OpenClaw
+export const blogPosts = mysqlTable("blog_posts", {
+  id: int("id").autoincrement().primaryKey(),
+  /** Titre de l'article */
+  title: varchar("title", { length: 500 }).notNull(),
+  /** Slug URL (ex: mon-article-de-blog) */
+  slug: varchar("slug", { length: 500 }).notNull().unique(),
+  /** Résumé court pour les listes et SEO */
+  excerpt: text("excerpt"),
+  /** Contenu complet en HTML ou Markdown */
+  content: text("content").notNull(),
+  /** URL de l'image principale */
+  imageUrl: varchar("imageUrl", { length: 1000 }),
+  /** Langue de l'article (fr, en, de, es, it) */
+  lang: varchar("lang", { length: 10 }).notNull().default("fr"),
+  /** ID de l'article parent si c'est une traduction */
+  parentId: int("parentId"),
+  /** Statut : brouillon, publié, programmé */
+  status: mysqlEnum("status", ["draft", "published", "scheduled"]).default("draft").notNull(),
+  /** Date de publication prévue */
+  publishedAt: timestamp("publishedAt"),
+  /** Mots-clés SEO */
+  metaKeywords: varchar("metaKeywords", { length: 500 }),
+  /** Description SEO */
+  metaDescription: varchar("metaDescription", { length: 500 }),
+  /** Auteur (par défaut: OpenClaw) */
+  author: varchar("author", { length: 100 }).default("OpenClaw"),
+  /** Catégorie */
+  category: varchar("category", { length: 100 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type BlogPost = typeof blogPosts.$inferSelect;
+export type InsertBlogPost = typeof blogPosts.$inferInsert;
