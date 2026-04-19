@@ -2,6 +2,11 @@
  * Page d'accueil complète du site Hallucine
  * Contenu texte enrichi, sections complètes
  * Focus sur le contenu, pas sur les images
+ *
+ * Narration vocale :
+ * - Contrôlée par VITE_NARRATION_ENABLED (voir client/src/narration/config.ts)
+ * - Chaque section est wrappée dans un <NarrationAnchor> qui déclenche un MP3
+ * - Le bouton mute apparaît en bas à droite quand la narration est active
  */
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
@@ -18,6 +23,10 @@ import CinemaRideau from "@/components/CinemaRideau";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+// --- Narration vocale (tout retirable en 3 lignes) ---
+import NarrationAnchor from "@/narration/NarrationAnchor";
+import NarrationToggle from "@/narration/NarrationToggle";
+// -----------------------------------------------------
 
 export default function Home() {
   const { t } = useTranslation("home");
@@ -46,16 +55,31 @@ export default function Home() {
       />
       <CinemaRideau />
       <Navbar />
-      <HeroSection />
-      <ProductsSection />
-      <TechnologySection />
+      <NarrationAnchor id="accueil-hero">
+        <HeroSection />
+      </NarrationAnchor>
+      <NarrationAnchor id="gamme-etanche">
+        <ProductsSection />
+      </NarrationAnchor>
+      <NarrationAnchor id="technologie-leger">
+        <TechnologySection />
+      </NarrationAnchor>
       <UseCasesSection />
-      <StorySection />
-      <RealisationsSection />
-      <TestimonialsSection />
+      <NarrationAnchor id="histoire-forains">
+        <StorySection />
+      </NarrationAnchor>
+      <NarrationAnchor id="realisations">
+        <RealisationsSection />
+      </NarrationAnchor>
+      <NarrationAnchor id="temoignages">
+        <TestimonialsSection />
+      </NarrationAnchor>
       <FaqSection />
-      <ContactSection />
+      <NarrationAnchor id="contact">
+        <ContactSection />
+      </NarrationAnchor>
       <Footer />
+      <NarrationToggle />
     </div>
   );
 }
