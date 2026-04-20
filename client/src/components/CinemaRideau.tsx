@@ -4,9 +4,6 @@
  * Le logo s'efface progressivement (fade-out) pendant l'ouverture.
  * Le clic initial contourne la politique autoplay des navigateurs.
  * Détection des bots (Lighthouse/Googlebot) → pas de rideau pour eux
- *
- * Version corrigée : useRideauVoice retiré — le rideau attend le clic
- * indéfiniment, comme avant.
  */
 import { useState, useEffect, useRef, useCallback } from "react";
 
@@ -21,6 +18,7 @@ const REMOVE_DELAY = 3800;        // Retrait du DOM
 
 type Phase = "waiting" | "opening" | "done";
 
+// Détecte si c'est un bot (Lighthouse, Googlebot, HeadlessChrome, etc.)
 function isBot(): boolean {
   if (typeof navigator === "undefined") return false;
   const ua = navigator.userAgent.toLowerCase();
@@ -35,6 +33,7 @@ function isBot(): boolean {
   );
 }
 
+// Vérifie si le rideau a déjà été vu dans cette session
 function hasSeenCurtain(): boolean {
   try {
     return sessionStorage.getItem("curtain_seen") === "1";
@@ -50,6 +49,7 @@ function markCurtainSeen(): void {
 }
 
 export default function CinemaRideau() {
+  // Skip le rideau pour les bots et les revisites dans la même session
   const [phase, setPhase] = useState<Phase>(() => {
     if (typeof window !== "undefined" && (isBot() || hasSeenCurtain())) {
       return "done";
@@ -66,7 +66,7 @@ export default function CinemaRideau() {
     window.scrollTo(0, 0);
   }, [phase]);
 
-  // Précharger le son du rideau dès le montage
+  // Précharger le son dès le montage (sans le jouer)
   useEffect(() => {
     if (phase === "done") return;
 
@@ -81,15 +81,18 @@ export default function CinemaRideau() {
       audio.pause();
       audio.src = "";
     };
-  }, []);
+  }, []); // PAS de dépendance sur phase — on charge le son une seule fois au montage
 
-  // Clic utilisateur → lance l'ouverture du rideau
+  // Clic utilisateur → ouvrir le rideau directement avec le son
   const handleClick = useCallback(() => {
     if (phase !== "waiting") return;
     setPhase("opening");
     markCurtainSeen();
+
+    // Forcer le scroll en haut de page à l'ouverture
     window.scrollTo({ top: 0, behavior: "instant" });
 
+    // Jouer le son du rideau (le clic autorise l'autoplay)
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
       audioRef.current.play().catch(() => {});
@@ -100,6 +103,7 @@ export default function CinemaRideau() {
   useEffect(() => {
     if (phase !== "opening") return;
 
+    // Fade-out du son vers la fin de l'ouverture
     const t1 = setTimeout(() => {
       if (audioRef.current) {
         fadeRef.current = setInterval(() => {
@@ -116,6 +120,7 @@ export default function CinemaRideau() {
       }
     }, FADE_OUT_START);
 
+    // Retirer du DOM
     const t2 = setTimeout(() => setPhase("done"), REMOVE_DELAY);
 
     return () => {
