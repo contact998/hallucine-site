@@ -3,6 +3,77 @@ import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
 import { blogPosts, InsertBlogPost, BlogPost } from "../drizzle/schema";
 
+// ─── DeepL ───────────────────────────────────────────────────────
+
+const DEEPL_LANGS: Record<string, string> = {
+  en: "EN-GB",
+  de: "DE",
+  es: "ES",
+  it: "IT",
+};
+
+async function translateWithDeepL(text: string, targetLang: string): Promise<string> {
+  const apiKey = process.env.DEEPL_API_KEY;
+  if (!apiKey) throw new Error("DEEPL_API_KEY not configured");
+
+  const res = await fetch("https://api-free.deepl.com/v2/translate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Authorization": `DeepL-Auth-Key ${apiKey}` },
+    body: JSON.stringify({
+      text: [text],
+      target_lang: targetLang,
+      source_lang: "FR",
+      tag_handling: "html",
+    }),
+  });
+
+  if (!res.ok) throw new Error(`DeepL error: ${res.status}`);
+  const data = await res.json() as { translations: { text: string }[] };
+  return data.translations[0].text;
+}
+
+/** Traduit et publie un article dans toutes les langues via DeepL */
+export async function translateAndPublishPost(originalPost: BlogPost): Promise<void> {
+  const apiKey = process.env.DEEPL_API_KEY;
+  if (!apiKey) {
+    console.warn("[Blog] DEEPL_API_KEY absent — traduction ignorée");
+    return;
+  }
+
+  for (const [lang, deeplLang] of Object.entries(DEEPL_LANGS)) {
+    try {
+      const [translatedTitle, translatedContent, translatedExcerpt, translatedMeta] = await Promise.all([
+        translateWithDeepL(originalPost.title, deeplLang),
+        translateWithDeepL(originalPost.content, deeplLang),
+        originalPost.excerpt ? translateWithDeepL(originalPost.excerpt, deeplLang) : Promise.resolve(null),
+        originalPost.metaDescription ? translateWithDeepL(originalPost.metaDescription, deeplLang) : Promise.resolve(null),
+      ]);
+
+      const slug = await uniqueSlug(slugify(translatedTitle));
+
+      await db.insert(blogPosts).values({
+        title: translatedTitle,
+        slug,
+        content: translatedContent,
+        excerpt: translatedExcerpt ?? null,
+        imageUrl: originalPost.imageUrl ?? null,
+        lang,
+        parentId: originalPost.id,
+        status: "published",
+        publishedAt: new Date(),
+        metaKeywords: originalPost.metaKeywords ?? null,
+        metaDescription: translatedMeta ?? null,
+        author: originalPost.author ?? "Hallucine",
+        category: originalPost.category ?? null,
+      });
+
+      console.log(`[Blog] Traduction ${lang} publiée : ${slug}`);
+    } catch (err) {
+      console.error(`[Blog] Erreur traduction ${lang}:`, err);
+    }
+  }
+}
+
 // Connexion dédiée à la base blog (MySQL-4O8O sur Railway)
 const blogPool = mysql.createPool({
   uri: process.env.BLOG_DATABASE_URL,
