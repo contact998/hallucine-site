@@ -5,14 +5,10 @@
  * Le clic initial contourne la politique autoplay des navigateurs.
  * Détection des bots (Lighthouse/Googlebot) → pas de rideau pour eux
  *
- * Narration vocale (VITE_NARRATION_ENABLED=true) :
- * Au clic, la voix "rideau.mp3" (Daniel, Jonathan, "Entrez...") est jouée
- * AVANT le son du rideau et l'animation d'ouverture. Quand la voix finit,
- * le rideau s'ouvre normalement avec son bruit existant.
- * Si VITE_NARRATION_ENABLED != true, comportement d'origine inchangé.
+ * Version corrigée : useRideauVoice retiré — le rideau attend le clic
+ * indéfiniment, comme avant.
  */
 import { useState, useEffect, useRef, useCallback } from "react";
-import { useRideauVoice } from "@/narration/useRideauVoice";
 
 const CURTAIN_SOUND_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/iwEWTRdKZwhOWzcW.mp3";
 const LOGO_TRANSPARENT_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tWSEvNLkFkmjxAXj.png";
@@ -23,7 +19,7 @@ const LOGO_FADE_DURATION = 1500;  // Durée du fade-out du logo
 const FADE_OUT_START = 2600;      // Début du fade-out du son
 const REMOVE_DELAY = 3800;        // Retrait du DOM
 
-type Phase = "waiting" | "voice" | "opening" | "done";
+type Phase = "waiting" | "opening" | "done";
 
 function isBot(): boolean {
   if (typeof navigator === "undefined") return false;
@@ -64,22 +60,6 @@ export default function CinemaRideau() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const fadeRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // Fonction qui déclenche l'ouverture réelle du rideau (son + animation)
-  const startCurtainOpening = useCallback(() => {
-    setPhase("opening");
-    markCurtainSeen();
-    window.scrollTo({ top: 0, behavior: "instant" });
-
-    if (audioRef.current) {
-      audioRef.current.currentTime = 0;
-      audioRef.current.play().catch(() => {});
-    }
-  }, []);
-
-  // Hook de narration : joue rideau.mp3, puis appelle startCurtainOpening()
-  // Si VITE_NARRATION_ENABLED != true, appelle directement startCurtainOpening() (comportement d'origine)
-  const playVoiceThenOpen = useRideauVoice(startCurtainOpening);
-
   // Forcer le scroll en haut de page dès l'affichage du rideau
   useEffect(() => {
     if (phase === "done") return;
@@ -103,12 +83,18 @@ export default function CinemaRideau() {
     };
   }, []);
 
-  // Clic utilisateur → lance la voix (ou ouverture directe si narration désactivée)
+  // Clic utilisateur → lance l'ouverture du rideau
   const handleClick = useCallback(() => {
     if (phase !== "waiting") return;
-    setPhase("voice");
-    playVoiceThenOpen();
-  }, [phase, playVoiceThenOpen]);
+    setPhase("opening");
+    markCurtainSeen();
+    window.scrollTo({ top: 0, behavior: "instant" });
+
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(() => {});
+    }
+  }, [phase]);
 
   // Ouverture du rideau : fade-out du son + retrait du DOM
   useEffect(() => {
@@ -142,7 +128,6 @@ export default function CinemaRideau() {
   if (phase === "done") return null;
 
   const isOpening = phase === "opening";
-  const isVoicePlaying = phase === "voice";
   const openTransition = `transform ${OPEN_DURATION}ms cubic-bezier(0.25, 0.1, 0.25, 1)`;
 
   return (
@@ -225,7 +210,7 @@ export default function CinemaRideau() {
           />
           <p className="text-white/60 text-sm tracking-[0.3em] mt-4 uppercase">Écrans de cinéma gonflables</p>
           <p className="text-amber-400/80 text-xs tracking-[0.2em] mt-6 uppercase animate-pulse">
-            {isVoicePlaying ? "..." : "Cliquez pour entrer"}
+            Cliquez pour entrer
           </p>
         </div>
       </div>
