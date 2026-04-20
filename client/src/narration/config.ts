@@ -17,3 +17,4 @@
 export const NARRATION_ENABLED =
   typeof import.meta !== 'undefined' &&
   import.meta.env?.VITE_NARRATION_ENABLED === 'true';
+// narration build trigger Sun Apr 19 20:13:04 EDT 2026
