@@ -57,7 +57,6 @@ import {
   getAllBlogPosts,
   publishBlogPost,
   countPublishedPosts,
-  translateAndPublishPost,
 } from "./blog";
 
 // ─── Anti-spam : Rate limiting en mémoire ───
@@ -788,14 +787,6 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
           author: input.author ?? "OpenClaw",
           category: input.category,
         });
-
-        // Traduction automatique DeepL si l'article est publié en français
-        if (input.status === "published" && input.lang === "fr") {
-          translateAndPublishPost(post).catch(err =>
-            console.error("[Blog] Erreur traduction automatique:", err)
-          );
-        }
-
         return { success: true, post };
       }),
 
@@ -808,13 +799,6 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         await publishBlogPost(input.id);
-        // Traduction automatique si article français
-        const published = await getBlogPostById(input.id);
-        if (published && published.lang === "fr") {
-          translateAndPublishPost(published).catch(err =>
-            console.error("[Blog] Erreur traduction:", err)
-          );
-        }
         return { success: true };
       }),
 

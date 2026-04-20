@@ -40,7 +40,6 @@ const TrouverDistributeur = lazy(() => import("./pages/TrouverDistributeur"));
 const ModeEmploi = lazy(() => import("./pages/ModeEmploi"));
 const GalerieVideo = lazy(() => import("./pages/GalerieVideo"));
 const Blog = lazy(() => import("./pages/Blog"));
-const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Profil = lazy(() => import("./pages/Profil"));
 const Admin = lazy(() => import("./pages/Admin"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
@@ -99,7 +98,6 @@ function Router() {
         <Route path={r["mode-emploi"]} component={ModeEmploi} />
         {/* Blog */}
         <Route path={r["blog"]} component={Blog} />
-        <Route path="/blog/:slug" component={BlogPost} />
         {/* Distributeurs */}
         <Route path={r["devenir-distributeur"]} component={DevenirDistributeur} />
         <Route path={r["trouver-distributeur"]} component={TrouverDistributeur} />
