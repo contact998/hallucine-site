@@ -132,7 +132,9 @@ async function startServer() {
   app.post("/api/upload-blog-image", express.raw({ type: "image/*", limit: "10mb" }), async (req, res) => {
     try {
       const apiKey = req.headers["x-api-key"] ?? req.query.apiKey;
-      if (apiKey !== process.env.BLOG_API_KEY) {
+      const validKey1 = process.env.BLOG_API_KEY;
+      const validKey2 = process.env.BLOG_API_KEY_2;
+      if (apiKey !== validKey1 && apiKey !== validKey2) {
         return res.status(401).json({ error: "Unauthorized" });
       }
       const { uploadImageToR2 } = await import("../r2Upload.js");

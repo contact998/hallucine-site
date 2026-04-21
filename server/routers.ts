@@ -768,9 +768,10 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
         category: z.string().optional(),
       }))
       .mutation(async ({ input, ctx }) => {
-        // Authentification : clé API ou admin connecté
-        const validApiKey = process.env.BLOG_API_KEY;
-        const isApiKey = validApiKey && input.apiKey === validApiKey;
+        // Authentification : clé API (BLOG_API_KEY ou BLOG_API_KEY_2) ou admin connecté
+        const validApiKey1 = process.env.BLOG_API_KEY;
+        const validApiKey2 = process.env.BLOG_API_KEY_2;
+        const isApiKey = (validApiKey1 && input.apiKey === validApiKey1) || (validApiKey2 && input.apiKey === validApiKey2);
         const isAdmin = ctx.user?.role === "admin";
         if (!isApiKey && !isAdmin) {
           throw new Error("Non autorisé");
