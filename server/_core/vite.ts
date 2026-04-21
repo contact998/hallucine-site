@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import viteConfig from "../../vite.config";
+import { sdk } from "./sdk";
 
 export async function setupVite(app: Express, server: Server) {
   const serverOptions = {
@@ -88,8 +89,24 @@ export function serveStatic(app: Express) {
   app.use(express.static(distPath, { index: false }));
 
   // SSG + Fallback SPA : priorité aux pages pré-rendues, sinon index.html générique
-  app.use("*", (req, res) => {
+  app.use("*", async (req, res) => {
     const locale = getLocaleFromHost(req.hostname);
+
+    // Vérifier si l'utilisateur est admin pour injecter le nav-widget
+    let isAdmin = false;
+    try {
+      const user = await sdk.authenticateRequest(req);
+      isAdmin = user?.role === "admin";
+    } catch {
+      isAdmin = false;
+    }
+
+    const navWidget = isAdmin
+      ? `<script src="https://hallucine.manus.space/api/nav-widget" defer></script>`
+      : "";
+
+    const injectNavWidget = (html: string) =>
+      navWidget ? html.replace("</body>", `${navWidget}</body>`) : html;
 
     // 1. Chercher la page pré-rendue : /chemin/index.html
     const urlPath = req.path === "/" ? "" : req.path;
@@ -98,17 +115,19 @@ export function serveStatic(app: Express) {
 
     if (fs.existsSync(prerenderedPath)) {
       // Servir la page pré-rendue avec la bonne locale injectée
-      const prerenderedHtml = fs.readFileSync(prerenderedPath, "utf-8").replace(/__LOCALE__/g, locale);
+      const prerenderedHtml = injectNavWidget(
+        fs.readFileSync(prerenderedPath, "utf-8").replace(/__LOCALE__/g, locale)
+      );
       res.status(200).set({
         "Content-Type": "text/html",
         "Vary": "Host",
-        "Cache-Control": "public, max-age=3600",
+        "Cache-Control": "no-store",
       }).end(prerenderedHtml);
       return;
     }
 
     // 2. Fallback SPA : injecter la locale dans le template générique
-    const html = baseIndexHtml.replace(/__LOCALE__/g, locale);
+    const html = injectNavWidget(baseIndexHtml.replace(/__LOCALE__/g, locale));
     res.status(200).set({
       "Content-Type": "text/html",
       "Vary": "Host",
