@@ -25,6 +25,7 @@ interface Article {
   categorie: string;
   date: string;
   slug: string;
+  imageUrl?: string;
   commentaires: Commentaire[];
 }
 
@@ -60,6 +61,7 @@ export default function Blog() {
       categorie: "Écrans Gonflables",
       date: "2024-12-15",
       slug: "projections-grandioses-ecrans-geants-soufflerie-permanente",
+      imageUrl: "",
       commentaires: [],
     },
     {
@@ -69,6 +71,7 @@ export default function Blog() {
       categorie: "Guides de Produits",
       date: "2024-11-20",
       slug: "ecrans-geants-gonflables-installes-temps-record-solution-ideale-evenements-plein-air",
+      imageUrl: "",
       commentaires: [],
     },
   ];
@@ -82,6 +85,7 @@ export default function Blog() {
       categorie: p.category ?? "Blog",
       date: p.publishedAt ? new Date(p.publishedAt).toISOString().split("T")[0] : "",
       slug: p.slug,
+      imageUrl: p.imageUrl ?? "",
       commentaires: [],
       fromDb: true,
     })),
@@ -134,6 +138,16 @@ export default function Blog() {
               <div className="space-y-8">
                 {articlesFiltres.map((article) => (
                   <article key={article.id} className="bg-card rounded-lg border border-border overflow-hidden">
+                    {article.imageUrl ? (
+                      <div className="aspect-[16/9] w-full overflow-hidden bg-muted">
+                        <img
+                          src={article.imageUrl}
+                          alt={article.titre}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
+                    ) : null}
                     <div className="p-6 md:p-8">
                       <div className="flex items-center gap-3 mb-4">
                         <span className="inline-block text-xs font-medium bg-[#DAA520]/10 text-[#DAA520] px-3 py-1 rounded-full">
