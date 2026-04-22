@@ -85,6 +85,24 @@ export function serveStatic(app: Express) {
   const indexHtmlPath = path.resolve(distPath, "index.html");
   const baseIndexHtml = fs.readFileSync(indexHtmlPath, "utf-8");
 
+  // Charger le template "propre" avec placeholders pour les pages dynamiques (blog)
+  const cleanTemplatePath = path.resolve(distPath, "_template.html");
+  const cleanTemplate = fs.existsSync(cleanTemplatePath)
+    ? fs.readFileSync(cleanTemplatePath, "utf-8")
+    : baseIndexHtml;
+
+  // Échappe les caractères spéciaux HTML pour injection sûre dans les attributs
+  const escapeHtml = (str: string = "") =>
+    str
+      .replace(/&/g, "&amp;")
+      .replace(/"/g, "&quot;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+
+  // Image par défaut pour les articles sans imageUrl
+  const DEFAULT_OG_IMAGE =
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-accueil-KjTW2K29SHyinVRpsNcnQC.png";
+
   // Servir les fichiers statiques (JS, CSS, images, etc.)
   app.use(express.static(distPath, { index: false }));
 
@@ -126,7 +144,41 @@ export function serveStatic(app: Express) {
       return;
     }
 
-    // 2. Fallback SPA : injecter la locale dans le template générique
+    // 2. Articles de blog : /blog/:slug — injecter les metas depuis la DB
+    const blogMatch = req.path.match(/^\/blog\/([^\/]+)\/?$/);
+    if (blogMatch) {
+      const slug = decodeURIComponent(blogMatch[1]);
+      try {
+        const { getBlogPostBySlug } = await import("../blog");
+        const post = await getBlogPostBySlug(slug);
+        if (post && post.status === "published") {
+          const title = post.title;
+          const description = post.metaDescription || post.excerpt || "";
+          const image = post.imageUrl || DEFAULT_OG_IMAGE;
+          const domain = `${req.protocol}://${req.hostname}`;
+          const canonicalUrl = `${domain}${req.originalUrl.split("?")[0]}`;
+
+          const html = injectNavWidget(
+            cleanTemplate
+              .replace(/__LOCALE__/g, locale)
+              .replace(/__PAGE_TITLE__/g, escapeHtml(`${title} | Hallucine`))
+              .replace(/__PAGE_DESCRIPTION__/g, escapeHtml(description))
+              .replace(/__PAGE_IMAGE__/g, escapeHtml(image))
+              .replace(/__PAGE_URL__/g, escapeHtml(canonicalUrl))
+          );
+          res.status(200).set({
+            "Content-Type": "text/html",
+            "Vary": "Host",
+            "Cache-Control": "no-store",
+          }).end(html);
+          return;
+        }
+      } catch (err) {
+        console.warn("[blog-og] Erreur récupération article:", err);
+      }
+    }
+
+    // 3. Fallback SPA : injecter la locale dans le template générique
     const html = injectNavWidget(baseIndexHtml.replace(/__LOCALE__/g, locale));
     res.status(200).set({
       "Content-Type": "text/html",
