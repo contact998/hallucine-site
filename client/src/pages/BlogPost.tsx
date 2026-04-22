@@ -18,7 +18,7 @@ export default function BlogPost() {
   useDocumentMeta(
     post?.title ?? "Article | Hallucine",
     post?.metaDescription ?? post?.excerpt ?? "",
-    undefined
+    post?.imageUrl ?? undefined
   );
 
   const formatDate = (dateStr: string | Date | null) => {
