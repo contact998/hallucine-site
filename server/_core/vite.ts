@@ -157,7 +157,17 @@ export function serveStatic(app: Express) {
         if (post && post.status === "published") {
           const title = post.title;
           const description = post.metaDescription || post.excerpt || "";
-          const image = post.imageUrl || DEFAULT_OG_IMAGE;
+
+          // Image d'en-tête / og:image fixe de l'article.
+          // Priorité à headerImageUrl si ce champ est ajouté au modèle,
+          // sinon fallback sur imageUrl puis sur l'image par défaut.
+          const postRecord = post as Record<string, unknown>;
+          const headerImageUrl =
+            typeof postRecord.headerImageUrl === "string"
+              ? postRecord.headerImageUrl
+              : undefined;
+          const headerImage = headerImageUrl || post.imageUrl || DEFAULT_OG_IMAGE;
+
           const domain = `${req.protocol}://${req.hostname}`;
           const canonicalUrl = `${domain}${reqPath}`;
 
@@ -166,7 +176,7 @@ export function serveStatic(app: Express) {
               .replace(/__LOCALE__/g, locale)
               .replace(/__PAGE_TITLE__/g, escapeHtml(`${title} | Hallucine`))
               .replace(/__PAGE_DESCRIPTION__/g, escapeHtml(description))
-              .replace(/__PAGE_IMAGE__/g, escapeHtml(image))
+              .replace(/__PAGE_IMAGE__/g, escapeHtml(headerImage))
               .replace(/__PAGE_URL__/g, escapeHtml(canonicalUrl))
           );
           res.status(200).set({
