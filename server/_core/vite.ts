@@ -112,7 +112,6 @@ export function serveStatic(app: Express) {
 
     // Utiliser originalUrl pour éviter les soucis de Express avec "*"
     const reqPath = req.originalUrl.split("?")[0];
-    console.log(`[serveStatic] ${req.method} ${reqPath} (host=${req.hostname})`);
 
     // Vérifier si l'utilisateur est admin pour injecter le nav-widget
     let isAdmin = false;
@@ -136,7 +135,6 @@ export function serveStatic(app: Express) {
     const prerenderedPath = path.join(distPath, langPrefix, urlPath, "index.html");
 
     if (fs.existsSync(prerenderedPath)) {
-      console.log(`[serveStatic] → pre-rendu: ${prerenderedPath}`);
       // Servir la page pré-rendue avec la bonne locale injectée
       const prerenderedHtml = injectNavWidget(
         fs.readFileSync(prerenderedPath, "utf-8").replace(/__LOCALE__/g, locale)
@@ -153,18 +151,15 @@ export function serveStatic(app: Express) {
     const blogMatch = reqPath.match(/^\/blog\/([^\/]+)\/?$/);
     if (blogMatch) {
       const slug = decodeURIComponent(blogMatch[1]);
-      console.log(`[blog-og] → slug détecté: ${slug}`);
       try {
         const { getBlogPostBySlug } = await import("../blog");
         const post = await getBlogPostBySlug(slug);
-        console.log(`[blog-og] → post trouvé: ${post ? `${post.title} (status=${post.status})` : "NULL"}`);
         if (post && post.status === "published") {
           const title = post.title;
           const description = post.metaDescription || post.excerpt || "";
           const image = post.imageUrl || DEFAULT_OG_IMAGE;
           const domain = `${req.protocol}://${req.hostname}`;
           const canonicalUrl = `${domain}${reqPath}`;
-          console.log(`[blog-og] → og:image = ${image}`);
 
           const html = injectNavWidget(
             cleanTemplate
@@ -187,7 +182,6 @@ export function serveStatic(app: Express) {
     }
 
     // 3. Fallback SPA : injecter la locale dans le template générique
-    console.log(`[serveStatic] → fallback SPA (baseIndexHtml)`);
     const html = injectNavWidget(baseIndexHtml.replace(/__LOCALE__/g, locale));
     res.status(200).set({
       "Content-Type": "text/html",
