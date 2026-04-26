@@ -275,15 +275,15 @@ export default function EcranEconomique() {
         <div className="container">
           <div className="flex flex-wrap justify-center items-center gap-8">
             <div className="flex flex-col items-center gap-2">
-              <img src="/manus-storage/wXQjDSVfzojKfGxl_800w_6ec179b3.webp" alt="Ancre marine" className="w-16 h-16 object-contain" loading="lazy" decoding="async" srcSet="/manus-storage/wXQjDSVfzojKfGxl_400w_50993baa.webp 400w, /manus-storage/wXQjDSVfzojKfGxl_800w_6ec179b3.webp 800w, /manus-storage/wXQjDSVfzojKfGxl_1200w_1c9c17e1.webp 1200w" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 800px" />
+              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wXQjDSVfzojKfGxl.webp" alt="Ancre marine" className="w-16 h-16 object-contain" loading="lazy" decoding="async" />
               <p className="text-white/60 text-xs text-center">{t("icon1_label")}</p>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <img src="/manus-storage/YplQWxdVdPyLKIiY_800w_d07b822c.webp" alt="Garantie 1 an" className="w-16 h-16 object-contain" loading="lazy" decoding="async" srcSet="/manus-storage/YplQWxdVdPyLKIiY_400w_c050c98a.webp 400w, /manus-storage/YplQWxdVdPyLKIiY_800w_d07b822c.webp 800w, /manus-storage/YplQWxdVdPyLKIiY_1200w_3b552fff.webp 1200w" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 800px" />
+              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YplQWxdVdPyLKIiY.webp" alt="Garantie 1 an" className="w-16 h-16 object-contain" loading="lazy" decoding="async" />
               <p className="text-white/60 text-xs text-center">{t("icon2_label")}</p>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <img src="/manus-storage/ZUADZwnRzRLzkrrt_800w_83a0d551.webp" alt="Souffleur" className="w-16 h-16 object-contain" loading="lazy" decoding="async" srcSet="/manus-storage/ZUADZwnRzRLzkrrt_400w_caf9fed2.webp 400w, /manus-storage/ZUADZwnRzRLzkrrt_800w_83a0d551.webp 800w, /manus-storage/ZUADZwnRzRLzkrrt_1200w_b10cd4bb.webp 1200w" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 800px" />
+              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZUADZwnRzRLzkrrt.webp" alt="Souffleur" className="w-16 h-16 object-contain" loading="lazy" decoding="async" />
               <p className="text-white/60 text-xs text-center">{t("icon3_label")}</p>
             </div>
           </div>

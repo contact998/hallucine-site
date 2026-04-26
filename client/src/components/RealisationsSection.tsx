@@ -7,18 +7,15 @@ import { useRef, useState } from "react";
 import { X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-const CDN = "";
 const photos = [
   {
-    src: `${CDN}/manus-storage/eEXwXGCYYCdjehRy_750w_2fcfdd0a.webp`,
-    srcSet: `${CDN}/manus-storage/eEXwXGCYYCdjehRy_400w_f66b51b5.webp 400w, ${CDN}/manus-storage/eEXwXGCYYCdjehRy_750w_2fcfdd0a.webp 750w`,
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eEXwXGCYYCdjehRy.webp",
     alt: "Spectaculaire projection nocturne sur un écran de cinéma gonflable de 24m par Hallucine",
     caption: "Écran 24m — Soufflerie",
     span: "col-span-2 row-span-2",
   },
   {
-    src: `${CDN}/manus-storage/IzUUAouVxqDCjGMh_400w_fdd9abd9.webp`,
-    srcSet: `${CDN}/manus-storage/IzUUAouVxqDCjGMh_400w_fdd9abd9.webp 400w, ${CDN}/manus-storage/IzUUAouVxqDCjGMh_583w_9b482064.webp 583w`,
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IzUUAouVxqDCjGMh.webp",
     alt: "Écran de cinéma étanche de 5m par Hallucine, installé au prestigieux hôtel Ritz pour un événement privé",
     caption: "Écran étanche 5m — Ritz",
     span: "col-span-1 row-span-1",
@@ -30,15 +27,13 @@ const photos = [
     span: "col-span-2 row-span-1",
   },
   {
-    src: `${CDN}/manus-storage/oWJlmXMcJLDivNJi_400w_ba111ac1.webp`,
-    srcSet: `${CDN}/manus-storage/oWJlmXMcJLDivNJi_400w_ba111ac1.webp 400w, ${CDN}/manus-storage/oWJlmXMcJLDivNJi_800w_b9dd28d8.webp 800w, ${CDN}/manus-storage/oWJlmXMcJLDivNJi_1200w_1063eff1.webp 1200w`,
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/oWJlmXMcJLDivNJi.webp",
     alt: "Écran de cinéma étanche de 8m par Hallucine, pour une projection en plein air au bord d'une piscine",
     caption: "Écran étanche 8m — Piscine",
     span: "col-span-1 row-span-1",
   },
   {
-    src: `${CDN}/manus-storage/QrzDmlUFMVVVZvMK_400w_a2cb21df.webp`,
-    srcSet: `${CDN}/manus-storage/QrzDmlUFMVVVZvMK_400w_a2cb21df.webp 400w, ${CDN}/manus-storage/QrzDmlUFMVVVZvMK_800w_7669ed4f.webp 800w, ${CDN}/manus-storage/QrzDmlUFMVVVZvMK_1000w_12114450.webp 1000w`,
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QrzDmlUFMVVVZvMK.webp",
     alt: "Fauteuil gonflable design et confortable par Hallucine, mobilier événementiel moderne et personnalisable",
     caption: "Mobilier gonflable",
     span: "col-span-1 row-span-1",
@@ -50,36 +45,31 @@ const photos = [
     span: "col-span-2 row-span-2",
   },
   {
-    src: `${CDN}/manus-storage/fJeTTYibNfXyTkKj_400w_d5eaf2df.webp`,
-    srcSet: `${CDN}/manus-storage/fJeTTYibNfXyTkKj_400w_d5eaf2df.webp 400w, ${CDN}/manus-storage/fJeTTYibNfXyTkKj_800w_85b58189.webp 800w, ${CDN}/manus-storage/fJeTTYibNfXyTkKj_1000w_4c479221.webp 1000w`,
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fJeTTYibNfXyTkKj.webp",
     alt: "Petit écran de cinéma étanche de 4m par Hallucine, idéal pour des projections intimistes à Paris",
     caption: "Écran étanche 4m — Paris",
     span: "col-span-1 row-span-1",
   },
   {
-    src: `${CDN}/manus-storage/WQZRfvSatJJIbSob_400w_4e9e4863.webp`,
-    srcSet: `${CDN}/manus-storage/WQZRfvSatJJIbSob_400w_4e9e4863.webp 400w, ${CDN}/manus-storage/WQZRfvSatJJIbSob_800w_9d995c83.webp 800w, ${CDN}/manus-storage/WQZRfvSatJJIbSob_1000w_16f69fd3.webp 1000w`,
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WQZRfvSatJJIbSob.webp",
     alt: "Écran de cinéma gonflable de 10m par Hallucine pour un événement de cinéma drive-in",
     caption: "Écran 10m — Drive-in",
     span: "col-span-1 row-span-1",
   },
   {
-    src: `${CDN}/manus-storage/rdxDXYKJQikGkftN_400w_96c235cf.webp`,
-    srcSet: `${CDN}/manus-storage/rdxDXYKJQikGkftN_400w_96c235cf.webp 400w, ${CDN}/manus-storage/rdxDXYKJQikGkftN_800w_5db01a16.webp 800w, ${CDN}/manus-storage/rdxDXYKJQikGkftN_1200w_8fe1946e.webp 1200w`,
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/rdxDXYKJQikGkftN.webp",
     alt: "Écran de cinéma gonflable noir de 17m par Hallucine, pour un contraste d'image optimal en projection",
     caption: "Écran 17m — Grand format",
     span: "col-span-1 row-span-1",
   },
   {
-    src: `${CDN}/manus-storage/yuLqkYzSuwxDVzhu_400w_e737519c.webp`,
-    srcSet: `${CDN}/manus-storage/yuLqkYzSuwxDVzhu_400w_e737519c.webp 400w, ${CDN}/manus-storage/yuLqkYzSuwxDVzhu_800w_26b5ffc2.webp 800w, ${CDN}/manus-storage/yuLqkYzSuwxDVzhu_1000w_19c0670b.webp 1000w`,
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yuLqkYzSuwxDVzhu.webp",
     alt: "Arche gonflable Hallucine servant d'entrée immersive pour une projection de film en plein air",
     caption: "Arche — Entrée projection",
     span: "col-span-1 row-span-1",
   },
   {
-    src: `${CDN}/manus-storage/vbfbnQBVCUGrWUOw_400w_ef8de5f2.webp`,
-    srcSet: `${CDN}/manus-storage/vbfbnQBVCUGrWUOw_400w_ef8de5f2.webp 400w, ${CDN}/manus-storage/vbfbnQBVCUGrWUOw_800w_9dc64352.webp 800w, ${CDN}/manus-storage/vbfbnQBVCUGrWUOw_1000w_58888e85.webp 1000w`,
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vbfbnQBVCUGrWUOw.webp",
     alt: "Arche gonflable 'Cinéma sous les étoiles' par Hallucine, pour une expérience cinématographique en plein air",
     caption: "Arche — Cinéma sous les étoiles",
     span: "col-span-1 row-span-1",
@@ -97,8 +87,7 @@ const photos = [
     span: "col-span-1 row-span-1",
   },
   {
-    src: `${CDN}/manus-storage/IDOBtJWEzrtZapWQ_400w_fa5d6b5a.webp`,
-    srcSet: `${CDN}/manus-storage/IDOBtJWEzrtZapWQ_400w_fa5d6b5a.webp 400w, ${CDN}/manus-storage/IDOBtJWEzrtZapWQ_800w_37e2bce7.webp 800w, ${CDN}/manus-storage/IDOBtJWEzrtZapWQ_1000w_0cd95b8a.webp 1000w`,
+    src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IDOBtJWEzrtZapWQ.webp",
     alt: "Livraison d'un écran Hallucine au Tchad, aventure logistique avec des chameaux",
     caption: "Aventure logistique — Tchad",
     span: "col-span-1 row-span-1",
@@ -153,13 +142,11 @@ export default function RealisationsSection() {
             >
               <img
                 src={photo.src}
-                srcSet={photo.srcSet}
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 300px"
                 alt={photo.alt}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 loading="lazy"
                 width={600} height={400}
-                decoding="async" />
+              decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
                 <span className="text-white text-sm font-medium">{photo.caption}</span>
