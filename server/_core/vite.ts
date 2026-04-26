@@ -195,7 +195,28 @@ export function serveStatic(app: Express) {
           const domain = `${req.protocol}://${req.hostname}`;
           const canonicalUrl = `${domain}${reqPath}`;
 
-          const html = injectNavWidget(
+          // JSON-LD BlogPosting
+          const jsonLd = JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": title,
+            "description": description,
+            "image": headerImage,
+            "datePublished": post.publishedAt ?? post.createdAt,
+            "dateModified": post.updatedAt ?? post.publishedAt ?? post.createdAt,
+            "author": {
+              "@type": "Person",
+              "name": post.author ?? "Hallucine"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Hallucine",
+              "url": "https://hallucinecran.fr"
+            },
+            "mainEntityOfPage": canonicalUrl,
+          }).replace(/</g, "\\u003c");
+
+          let html = injectNavWidget(
             cleanTemplate
               .replace(/__LOCALE__/g, locale)
               .replace(/__PAGE_TITLE__/g, escapeHtml(`${title} | Hallucine`))
@@ -203,10 +224,17 @@ export function serveStatic(app: Express) {
               .replace(/__PAGE_IMAGE__/g, escapeHtml(headerImage))
               .replace(/__PAGE_URL__/g, escapeHtml(canonicalUrl))
           );
+          // Injecter canonical + JSON-LD dans le <head>
+          html = html.replace(
+            "</head>",
+            `  <link rel="canonical" href="${canonicalUrl}" />\n` +
+            `  <script type="application/ld+json">${jsonLd}</script>\n` +
+            `</head>`
+          );
           res.status(200).set({
             "Content-Type": "text/html",
             "Vary": "Host",
-            "Cache-Control": "no-store",
+            "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
           }).end(html);
           return;
         }

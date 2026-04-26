@@ -369,6 +369,12 @@ if (!existsSync(robotsPath)) {
   }
 }
 
+// ─── 6. Pages blog pré-rendues ─────────────────────────────────────────────────────
+
+section("6. Pages blog pré-rendues");
+info("Vérification des metas blog non implémentée en statique — tester manuellement avec curl.");
+info("Commande : curl -s https://hallucinecran.fr/blog/<slug>/ | grep -E '<title>|<meta name=\\\"description\\\"|application\\/ld\\\\+json'");
+
 // ─── Résumé final ─────────────────────────────────────────────────────────
 
 console.log(`

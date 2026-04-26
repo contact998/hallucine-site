@@ -205,6 +205,33 @@ async function startServer() {
       }
     });
   }
+  // GET /api/blog/meta/:slug — metas publiques d'un article pour le SSR
+  app.get("/api/blog/meta/:slug", async (req, res) => {
+    try {
+      const { slug } = req.params;
+      const { db } = await import("../db");
+      const { blogPosts } = await import("../../drizzle/schema");
+      const { eq, and } = await import("drizzle-orm");
+      const post = await db
+        .select({
+          title: blogPosts.title,
+          excerpt: blogPosts.excerpt,
+          imageUrl: blogPosts.imageUrl,
+          publishedAt: blogPosts.publishedAt,
+          updatedAt: blogPosts.updatedAt,
+          author: blogPosts.author,
+        })
+        .from(blogPosts)
+        .where(and(eq(blogPosts.slug, slug), eq(blogPosts.status, "published")))
+        .limit(1);
+
+      if (!post[0]) return res.status(404).json({ error: "Not found" });
+      res.json(post[0]);
+    } catch {
+      res.status(500).json({ error: "Server error" });
+    }
+  });
+
   // Redirection 301 : /devis → /contactez-nous (filet de sécurité pour liens externes)
   app.get("/devis", (_req, res) => {
     res.redirect(301, "/contactez-nous");
