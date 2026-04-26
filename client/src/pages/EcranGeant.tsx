@@ -204,15 +204,15 @@ export default function EcranGeant() {
         <div className="container">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl mx-auto text-center">
             <div>
-              <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wXQjDSVfzojKfGxl.webp" alt="Icône écran gonflable le plus léger du monde par Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" decoding="async" />
+              <img loading="lazy" src="https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/wXQjDSVfzojKfGxl_800w_6ec179b3.webp" alt="Icône écran gonflable le plus léger du monde par Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" decoding="async" srcSet="https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/wXQjDSVfzojKfGxl_400w_50993baa.webp 400w, https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/wXQjDSVfzojKfGxl_800w_6ec179b3.webp 800w, https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/wXQjDSVfzojKfGxl_1200w_1c9c17e1.webp 1200w" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 800px" />
               <p className="text-ivory font-semibold">Les plus légers du monde</p>
             </div>
             <div>
-              <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YplQWxdVdPyLKIiY.webp" alt="Icône garantie 10 ans sur les écrans gonflables Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" decoding="async" />
+              <img loading="lazy" src="https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/YplQWxdVdPyLKIiY_800w_d07b822c.webp" alt="Icône garantie 10 ans sur les écrans gonflables Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" decoding="async" srcSet="https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/YplQWxdVdPyLKIiY_400w_c050c98a.webp 400w, https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/YplQWxdVdPyLKIiY_800w_d07b822c.webp 800w, https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/YplQWxdVdPyLKIiY_1200w_3b552fff.webp 1200w" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 800px" />
               <p className="text-ivory font-semibold">Avec 10 ans de garantie</p>
             </div>
             <div>
-              <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZUADZwnRzRLzkrrt.webp" alt="Icône souffleur permanent pour écrans gonflables Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" decoding="async" />
+              <img loading="lazy" src="https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/ZUADZwnRzRLzkrrt_800w_83a0d551.webp" alt="Icône souffleur permanent pour écrans gonflables Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" decoding="async" srcSet="https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/ZUADZwnRzRLzkrrt_400w_caf9fed2.webp 400w, https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/ZUADZwnRzRLzkrrt_800w_83a0d551.webp 800w, https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/ZUADZwnRzRLzkrrt_1200w_b10cd4bb.webp 1200w" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 800px" />
               <p className="text-ivory font-semibold">(avec souffleur permanent)</p>
             </div>
           </div>

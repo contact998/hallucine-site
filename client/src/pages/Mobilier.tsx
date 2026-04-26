@@ -143,7 +143,7 @@ export default function Mobilier() {
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jCghaPHMczbtTjIn.webp" alt="Mobilier gonflable Hallucine en plein air" className="w-full h-full object-cover" style={{ objectPosition: 'center 20%' }} decoding="async" />
+          <img loading="lazy" src="https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/jCghaPHMczbtTjIn_800w_e88b9440.webp" alt="Mobilier gonflable Hallucine en plein air" className="w-full h-full object-cover" style={{ objectPosition: 'center 20%' }} decoding="async" srcSet="https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/jCghaPHMczbtTjIn_400w_e4f184dc.webp 400w, https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/jCghaPHMczbtTjIn_800w_e88b9440.webp 800w, https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/jCghaPHMczbtTjIn_1200w_e218a3ef.webp 1200w" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px" />
           <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.10_0.03_260_/_0.5)] via-[oklch(0.12_0.03_260_/_0.3)] to-[oklch(0.10_0.03_260_/_0.05)]" />
           <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260_/_0.6)] via-transparent to-transparent" />
         </div>

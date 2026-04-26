@@ -1069,9 +1069,16 @@
 - [x] Vérifier que le build vendor.js < 1 Mo (résultat : 611 Ko, -95%)
 
 ## Images responsives (srcset + sizes)
-- [ ] Télécharger et redimensionner les 20 images en 3 variantes WebP (400/800/1200px)
-- [ ] Uploader les variantes sur le CDN Manus
-- [ ] Mettre à jour ProductsSection.tsx avec srcset+sizes
-- [ ] Mettre à jour TechnologySection.tsx avec srcset+sizes
-- [ ] Mettre à jour StorySection.tsx avec srcset+sizes
-- [ ] Mettre à jour les pages EcranEtanche, EcranGeant, ArchesGonflables avec srcset+sizes
+- [x] Télécharger et redimensionner les 20 images en 3 variantes WebP (400/800/1200px)
+- [x] Uploader les variantes sur le CDN Manus
+- [x] Mettre à jour ProductsSection.tsx avec srcset+sizes
+- [x] Mettre à jour TechnologySection.tsx avec srcset+sizes
+- [x] Mettre à jour StorySection.tsx avec srcset+sizes
+- [x] Mettre à jour les pages EcranEtanche, EcranGeant, ArchesGonflables avec srcset+sizes
+- [x] Mettre à jour RealisationsSection.tsx avec srcset+sizes
+- [x] Mettre à jour Histoire.tsx avec srcset+sizes
+
+## Automatisation images responsives (nouvelles images)
+- [x] Script scripts/optimize-images.mjs : détecte les images manuscdn sans srcset, redimensionne, uploade, met à jour le code
+- [x] Cache JSON scripts/image-cache.json pour éviter les re-uploads
+- [x] Intégration dans le pipeline de build Railway (pnpm optimize-images + pnpm build:full)

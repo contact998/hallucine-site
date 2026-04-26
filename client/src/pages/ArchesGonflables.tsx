@@ -271,7 +271,7 @@ export default function ArchesGonflables() {
               </ul>
             </div>
             <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
-              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eqdRLmacrGAlLxMw.webp" alt="Détails techniques d'une arche gonflable" className="w-full h-full object-cover" loading="lazy" decoding="async" width={800} height={500} />
+              <img src="https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/eqdRLmacrGAlLxMw_800w_5b3623ae.webp" alt="Détails techniques d'une arche gonflable" className="w-full h-full object-cover" loading="lazy" decoding="async" width={800} height={500} srcSet="https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/eqdRLmacrGAlLxMw_400w_5c25e4b5.webp 400w, https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/eqdRLmacrGAlLxMw_800w_5b3623ae.webp 800w, https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/eqdRLmacrGAlLxMw_1200w_81be9894.webp 1200w" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px" />
             </div>
           </div>
         </div>
