@@ -761,7 +761,6 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
           .max(48, "Titre trop long (max 48 car. — le titre HTML final sera '${title} | Hallucine' soit 60 car. max)"),
         content: z.string().min(1, "Le contenu est requis"),
         excerpt: z.string()
-          .min(50, "L'excerpt doit faire au moins 50 caractères (utilisé comme meta description SEO)")
           .max(160, "L'excerpt ne peut pas dépasser 160 caractères (meta description SEO)")
           .optional(),
         imageUrl: z.string().url("URL d'image invalide").optional().or(z.literal("")),
