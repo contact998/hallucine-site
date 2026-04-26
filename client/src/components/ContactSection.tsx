@@ -26,10 +26,10 @@ export default function ContactSection() {
               transition={{ duration: 0.7 }}
             >
               <span className="text-gold text-sm font-semibold tracking-widest uppercase">{t("label")}</span>
-              <h1 className="text-3xl md:text-4xl font-bold text-white mt-3 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mt-3 leading-tight">
                 {t("title_before")}<br />
                 <span className="text-gradient-gold text-glow-gold-intense">{t("title_highlight")}</span>
-              </h1>
+              </h2>
               <p className="text-white/75 text-base mt-4 leading-relaxed">
                 {t("subtitle")}
               </p>

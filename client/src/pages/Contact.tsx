@@ -55,6 +55,7 @@ export default function Contact() {
         faqs={faqContact.map(f => ({ question: f.q, answer: f.a }))}
       />
       <Navbar />
+      <h1 className="sr-only">{t("meta_title")}</h1>
       <div className="pt-24">
         <ContactSection />
       </div>
