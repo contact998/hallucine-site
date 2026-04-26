@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import compression from "compression";
 import helmet from "helmet";
 import { createServer } from "http";
 import net from "net";
@@ -31,6 +32,8 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 async function startServer() {
   const app = express();
   const server = createServer(app);
+  // ─── Compression gzip/deflate ─────────────────────────────────────────────────
+  app.use(compression());
   // ─── Headers de sécurité ─────────────────────────────────────────────────────
   const isDev = process.env.NODE_ENV === "development";
   app.use(helmet({

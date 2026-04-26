@@ -8,7 +8,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
 const CURTAIN_SOUND_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/iwEWTRdKZwhOWzcW.mp3";
-const LOGO_TRANSPARENT_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tWSEvNLkFkmjxAXj.png";
+const LOGO_TRANSPARENT_URL = "https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/logo_752w_47b39ab4.webp";
 
 // Timings (en ms)
 const OPEN_DURATION = 3000;       // Durée de l'animation d'ouverture (lente)
@@ -66,24 +66,8 @@ export default function CinemaRideau() {
     window.scrollTo(0, 0);
   }, [phase]);
 
-  // Précharger le son dès le montage (sans le jouer)
-  useEffect(() => {
-    if (phase === "done") return;
-
-    const audio = new Audio();
-    audio.preload = "auto";
-    audio.volume = 0.6;
-    audio.src = CURTAIN_SOUND_URL;
-    audio.load();
-    audioRef.current = audio;
-
-    return () => {
-      audio.pause();
-      audio.src = "";
-    };
-  }, []); // PAS de dépendance sur phase — on charge le son une seule fois au montage
-
   // Clic utilisateur → ouvrir le rideau directement avec le son
+  // Le son est instancié UNIQUEMENT au clic (lazy) pour ne pas charger 684 Ko au démarrage
   const handleClick = useCallback(() => {
     if (phase !== "waiting") return;
     setPhase("opening");
@@ -92,11 +76,13 @@ export default function CinemaRideau() {
     // Forcer le scroll en haut de page à l'ouverture
     window.scrollTo({ top: 0, behavior: "instant" });
 
-    // Jouer le son du rideau (le clic autorise l'autoplay)
-    if (audioRef.current) {
-      audioRef.current.currentTime = 0;
-      audioRef.current.play().catch(() => {});
-    }
+    // Instancier et jouer le son uniquement au clic (le clic autorise l'autoplay)
+    // Lazy loading : l'Audio n'est créé qu'ici, pas au montage du composant
+    const audio = new Audio();
+    audio.volume = 0.6;
+    audio.src = CURTAIN_SOUND_URL;
+    audioRef.current = audio;
+    audio.play().catch(() => {});
   }, [phase]);
 
   // Ouverture du rideau : fade-out du son + retrait du DOM

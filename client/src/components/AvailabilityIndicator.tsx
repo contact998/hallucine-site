@@ -193,11 +193,11 @@ export function AvailabilityWidget() {
           onClick={() => setIsExpanded(true)}
           className={`
             group flex items-center gap-2 py-2.5 px-4 rounded-full shadow-xl
-            border-2 backdrop-blur-sm transition-all duration-300
+            backdrop-blur-sm transition-all duration-300
             hover:scale-105 cursor-pointer
             ${data.available
-              ? "bg-green-950/90 border-green-500/50 hover:border-green-400"
-              : "bg-orange-950/90 border-orange-500/50 hover:border-orange-400"}
+              ? "bg-green-950/90 ring-2 ring-green-500/50 hover:ring-green-400"
+              : "bg-orange-950/90 ring-2 ring-orange-500/50 hover:ring-orange-400"}
           `}
         >
           <div className="relative">

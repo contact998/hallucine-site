@@ -1082,3 +1082,9 @@
 - [x] Script scripts/optimize-images.mjs : détecte les images manuscdn sans srcset, redimensionne, uploade, met à jour le code
 - [x] Cache JSON scripts/image-cache.json pour éviter les re-uploads
 - [x] Intégration dans le pipeline de build Railway (pnpm optimize-images + pnpm build:full)
+
+## Optimisations Performance Lighthouse (4 priorités)
+- [x] P1 : Compression gzip Express (package compression + app.use(compression()) en première ligne)
+- [x] P2 : PNG logo tWSEvNLkFkmjxAXj.png 718Ko → WebP 132Ko (752w) + 52Ko (400w) = -82%
+- [x] P3 : MP3 rideau 684Ko chargé au démarrage → lazy (instancié uniquement au clic)
+- [x] P4 : Animation border dans AvailabilityIndicator → ring (Tailwind, composé GPU, pas de reflow)
