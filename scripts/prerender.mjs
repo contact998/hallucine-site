@@ -71,13 +71,15 @@ function escapeHtml(str = "") {
 function buildHreflangTags(routeKey, allRoutes) {
   const tags = VALID_LANGS.map((lang) => {
     const url = allRoutes[lang]?.[routeKey] ?? "/";
+    const urlWithSlash = url === "/" ? "/" : `${url}/`;
     const domain = DOMAINS[lang];
-    return `  <link rel="alternate" hreflang="${lang}" href="${domain}${url}" />`;
+    return `  <link rel="alternate" hreflang="${lang}" href="${domain}${urlWithSlash}" />`;
   });
   // x-default pointe vers FR (site principal)
   const defaultUrl = allRoutes["fr"]?.[routeKey] ?? "/";
+  const defaultUrlWithSlash = defaultUrl === "/" ? "/" : `${defaultUrl}/`;
   tags.push(
-    `  <link rel="alternate" hreflang="x-default" href="${DOMAINS["fr"]}${defaultUrl}" />`
+    `  <link rel="alternate" hreflang="x-default" href="${DOMAINS["fr"]}${defaultUrlWithSlash}" />`
   );
   return tags.join("\n");
 }
@@ -151,8 +153,8 @@ for (const lang of VALID_LANGS) {
       const { html, meta } = await render(url, lang);
       console.log(`[META] [${lang}] ${url} → "${meta.title}"`);
 
-      // URL canonique
-      const canonicalUrl = `${domain}${url}`;
+      // URL canonique — trailing slash pour aligner avec les redirections Express
+      const canonicalUrl = url === "/" ? `${domain}/` : `${domain}${url}/`;
 
       // Mettre à jour l'URL dans les metas (on connaît le domaine ici)
       meta.url = canonicalUrl;
@@ -276,7 +278,8 @@ function buildSitemap() {
     for (const lang of VALID_LANGS) {
       const domain = DOMAINS[lang];
       const path = ROUTES[lang]?.[routeKey] ?? ROUTES["fr"][routeKey];
-      const loc = `${domain}${path}`;
+      const pathWithSlash = path === "/" ? "/" : `${path}/`;
+      const loc = `${domain}${pathWithSlash}`;
 
       lines.push("  <url>");
       lines.push(`    <loc>${loc}</loc>`);
@@ -285,10 +288,13 @@ function buildSitemap() {
       for (const hLang of VALID_LANGS) {
         const hDomain = DOMAINS[hLang];
         const hPath = ROUTES[hLang]?.[routeKey] ?? ROUTES["fr"][routeKey];
-        lines.push(`    <xhtml:link rel="alternate" hreflang="${hLang}" href="${hDomain}${hPath}"/>`);
+        const hPathWithSlash = hPath === "/" ? "/" : `${hPath}/`;
+        lines.push(`    <xhtml:link rel="alternate" hreflang="${hLang}" href="${hDomain}${hPathWithSlash}"/>`);
       }
       // x-default → FR
-      lines.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${DOMAINS.fr}${ROUTES.fr[routeKey]}"/>`);
+      const frPath = ROUTES.fr[routeKey];
+      const frPathWithSlash = frPath === "/" ? "/" : `${frPath}/`;
+      lines.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${DOMAINS.fr}${frPathWithSlash}"/>`);
 
       lines.push(`    <changefreq>${meta.changefreq}</changefreq>`);
       lines.push(`    <priority>${meta.priority}</priority>`);
