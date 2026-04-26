@@ -204,22 +204,31 @@ export function serveStatic(app: Express) {
       }
     }
 
-    // 3. Fallback SPA : injecter la locale dans le template générique
-    // Remplacer tous les placeholders avec des valeurs par défaut
-    const defaultTitle = "Hallucine — Écrans Gonflables & Cinéma Plein Air";
-    const defaultDesc = "Fabricant français d'écrans gonflables depuis 1992. Écrans de cinéma, événementiel, structures gonflables sur mesure.";
-    const defaultUrl = `${req.protocol}://${req.hostname}${reqPath}`;
-    const html = injectNavWidget(
-      baseIndexHtml
-        .replace(/__LOCALE__/g, locale)
-        .replace(/__PAGE_TITLE__/g, escapeHtml(defaultTitle))
-        .replace(/__PAGE_DESCRIPTION__/g, escapeHtml(defaultDesc))
-        .replace(/__PAGE_IMAGE__/g, DEFAULT_OG_IMAGE)
-        .replace(/__PAGE_URL__/g, escapeHtml(defaultUrl))
-    );
-    res.status(200).set({
-      "Content-Type": "text/html",
-      "Vary": "Host",
-    }).end(html);
+    // 3. Routes SPA valides (admin, profil) — fallback avec 200
+    const SPA_ROUTES = [
+      /^\/admin(\/.*)?$/,
+      /^\/profil$/,
+    ];
+    const isSpaRoute = SPA_ROUTES.some((pattern) => pattern.test(reqPath));
+    if (isSpaRoute) {
+      const defaultTitle = "Hallucine — Écrans Gonflables & Cinéma Plein Air";
+      const defaultDesc = "Fabricant français d'écrans gonflables depuis 1992. Écrans de cinéma, événementiel, structures gonflables sur mesure.";
+      const defaultUrl = `${req.protocol}://${req.hostname}${reqPath}`;
+      const html = injectNavWidget(
+        baseIndexHtml
+          .replace(/__LOCALE__/g, locale)
+          .replace(/__PAGE_TITLE__/g, escapeHtml(defaultTitle))
+          .replace(/__PAGE_DESCRIPTION__/g, escapeHtml(defaultDesc))
+          .replace(/__PAGE_IMAGE__/g, DEFAULT_OG_IMAGE)
+          .replace(/__PAGE_URL__/g, escapeHtml(defaultUrl))
+      );
+      res.status(200).set({
+        "Content-Type": "text/html",
+        "Vary": "Host",
+      }).end(html);
+      return;
+    }
+    // 4. URL inconnue — vrai 404, pas de soft 404 dans GSC
+    res.status(404).set({ "Content-Type": "text/plain" }).end("Not Found");
   });
 }
