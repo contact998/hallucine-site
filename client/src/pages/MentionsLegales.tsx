@@ -28,7 +28,7 @@ export default function MentionsLegales() {
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
-          url: "https://hallucine.ai/mentions-legales",
+          url: "https://hallucinecran.fr/mentions-legales",
         }}
       />
       <Navbar />

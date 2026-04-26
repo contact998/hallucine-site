@@ -66,14 +66,14 @@ export default function Histoire() {
           headline: t("meta_title"),
           description: t("meta_desc"),
           image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp",
-          url: "https://hallucine.ai/histoire-hallucine",
+          url: "https://hallucinecran.fr/histoire-hallucine",
           datePublished: "2023-01-15T09:00:00+00:00",
           dateModified: "2024-05-20T14:30:00+00:00",
         }}
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
-          url: "https://hallucine.ai/histoire-hallucine",
+          url: "https://hallucinecran.fr/histoire-hallucine",
         }}
       />
       <Navbar />

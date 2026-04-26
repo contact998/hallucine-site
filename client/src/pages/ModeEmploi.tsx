@@ -121,7 +121,7 @@ export default function ModeEmploi() {
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
-          url: "https://hallucine.ai/mode-emploi",
+          url: "https://hallucinecran.fr/mode-emploi",
         }}
       />
       <Navbar />

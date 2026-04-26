@@ -62,12 +62,12 @@ export default function Accessoires() {
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
         id="accessoires-page"
-        breadcrumbs={[{ name: "Accueil", url: "https://hallucine.ai/" }, { name: t("meta_title"), url: "https://hallucine.ai/accessoire-cinema-plein-air" }]}
+        breadcrumbs={[{ name: "Accueil", url: "https://hallucinecran.fr/" }, { name: t("meta_title"), url: "https://hallucinecran.fr/accessoire-cinema-plein-air" }]}
         product={{
           name: t("meta_title"),
           description: t("hero_desc"),
           image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp",
-          url: "https://hallucine.ai/accessoire-cinema-plein-air",
+          url: "https://hallucinecran.fr/accessoire-cinema-plein-air",
           category: t("section_label"),
           minPrice: 99,
         }}
