@@ -26,13 +26,11 @@ const languages = [
   { code: "it", label: "IT", flag: "🇮🇹", url: LANGUAGE_DOMAINS.it },
 ];
 
-const currentLang = detectLanguage();
-
 function LanguageSwitcher({ mobile = false }: { mobile?: boolean }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  // Utiliser i18n.language (réactif) plutôt que la constante statique detectLanguage()
-  const activeLang = i18n.language || currentLang;
+  const { i18n: langI18n } = useTranslation("nav");
+  const activeLang = langI18n.language || detectLanguage();
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -42,7 +40,7 @@ function LanguageSwitcher({ mobile = false }: { mobile?: boolean }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const current = languages.find((l) => l.code === activeLang) ?? languages.find((l) => l.code === currentLang) ?? languages[0];
+  const current = languages.find((l) => l.code === activeLang) ?? languages[0];
   const others = languages.filter((l) => l.code !== activeLang);
 
   if (mobile) {
@@ -148,9 +146,10 @@ export default function Navbar() {
   const [location] = useLocation();
   const dropdownTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { isAuthenticated, user } = useAuth();
-  const { t } = useTranslation("nav");
+  const { t, i18n } = useTranslation("nav");
 
-  // Routes localisées selon la langue active
+  // Routes localisées selon la langue active (réactif)
+  const currentLang = (i18n.language as keyof typeof ROUTES) || detectLanguage();
   const r = ROUTES[currentLang] ?? ROUTES["fr"];
   // Menu de navigation traduit dynamiquement
   const navItems: NavItem[] = [
