@@ -135,7 +135,8 @@ export function serveStatic(app: Express) {
       isAdmin = false;
     }
 
-    const navWidget = isAdmin
+    // Ne pas injecter le nav-widget en dev (le dev server retournerait du HTML pour cette URL)
+    const navWidget = isAdmin && process.env.NODE_ENV !== "development"
       ? `<script src="https://hallucine.manus.space/api/nav-widget" defer></script>`
       : "";
 
