@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
 
-const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/logo_752w_47b39ab4.webp";
+const LOGO_URL = "/manus-storage/logo_752w_47b39ab4.webp";
 
 export default function Footer() {
   const route = useRoutes();

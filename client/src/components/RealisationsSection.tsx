@@ -7,7 +7,7 @@ import { useRef, useState } from "react";
 import { X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-const CDN = "https://d2xsxph8kpxj0f.cloudfront.net";
+const CDN = "";
 const photos = [
   {
     src: `${CDN}/manus-storage/eEXwXGCYYCdjehRy_750w_2fcfdd0a.webp`,

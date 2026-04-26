@@ -6,7 +6,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-const CDN = "https://d2xsxph8kpxj0f.cloudfront.net";
+const CDN = "";
 const ECRAN_TUBULAIRE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/JlNlzGmvIyCrQHIY.webp";
 const VOILERIE_BRETAGNE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HuaJYMAXkcNubwBZ.webp";
 const KYTEA_HK = `${CDN}/manus-storage/ihAHJqPuCbLEmeIQ_400w_8db8699a.webp`;

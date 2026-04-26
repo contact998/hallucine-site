@@ -10,7 +10,7 @@ import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { getRoute } from "@/i18n/routes";
 
-const CDN = "https://d2xsxph8kpxj0f.cloudfront.net";
+const CDN = "";
 const ECRAN_ETANCHE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tWHlxkXeLyoqBOzz.webp";
 const ECRAN_SOUFFLERIE = `${CDN}/manus-storage/HpSkkCcPrajdeXOF_800w_202cd49e.webp`;
 const ECRAN_SOUFFLERIE_SRCSET = `${CDN}/manus-storage/HpSkkCcPrajdeXOF_400w_d8721546.webp 400w, ${CDN}/manus-storage/HpSkkCcPrajdeXOF_800w_202cd49e.webp 800w, ${CDN}/manus-storage/HpSkkCcPrajdeXOF_1200w_8b3ffffd.webp 1200w`;

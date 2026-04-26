@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
 
 const ETANCHE_3M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hIDMieDLnUJYNHGY.webp";
-const CDN = "https://d2xsxph8kpxj0f.cloudfront.net";
+const CDN = "";
 const ETANCHE_5M_RITZ = `${CDN}/manus-storage/IzUUAouVxqDCjGMh_400w_fdd9abd9.webp`;
 const ETANCHE_5M_RITZ_SRCSET = `${CDN}/manus-storage/IzUUAouVxqDCjGMh_400w_fdd9abd9.webp 400w, ${CDN}/manus-storage/IzUUAouVxqDCjGMh_583w_9b482064.webp 583w`;
 const SOUFFLERIE_13M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ATgcmLVpJkJrnbvK.webp";

@@ -105,7 +105,9 @@ function generateVariants(inputPath, imageId, outputDir) {
   return variants;
 }
 
-const CDN_BASE = "https://d2xsxph8kpxj0f.cloudfront.net";
+// Les images uploadées via --webdev sont servies via le proxy Express /manus-storage/...
+// On utilise des URLs relatives pour qu'elles fonctionnent sur tous les domaines (hallucinecran.fr, .it, etc.)
+const CDN_BASE = "";
 
 function uploadVariant(filePath) {
   try {
