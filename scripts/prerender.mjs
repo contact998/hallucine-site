@@ -178,13 +178,8 @@ for (const lang of VALID_LANGS) {
         if (lang === "fr") {
           outputPath = join(DIST, "index.html");
         } else {
-          // Les pages _lang_XX sont des pages de transition SPA servies sur hallucinecran.fr.
-          // Elles ont une canonique vers le bon domaine (ex: hallucinecran.com)
-          // mais Google les voit sur hallucinecran.fr → noindex pour éviter les doublons.
-          pageHtml = pageHtml.replace(
-            /<link rel="canonical"/,
-            '<meta name="robots" content="noindex, nofollow" />\n  <link rel="canonical"'
-          );
+          // Les pages _lang_XX sont servies sur leurs domaines TLD respectifs
+          // (hallucinecran.it, .com, .de, .es) — indexation autorisée.
           const langDir = join(DIST, `_lang_${lang}`);
           mkdirSync(langDir, { recursive: true });
           outputPath = join(langDir, "index.html");
@@ -200,14 +195,11 @@ for (const lang of VALID_LANGS) {
           mkdirSync(outputDir, { recursive: true });
           outputPath = join(outputDir, "index.html");
         } else {
+          // Les pages _lang_XX sont servies sur leurs domaines TLD respectifs
+          // (hallucinecran.it, .com, .de, .es) — indexation autorisée.
           const langDir = join(DIST, `_lang_${lang}`, urlPath);
           mkdirSync(langDir, { recursive: true });
           outputPath = join(langDir, "index.html");
-          // noindex : ces fichiers ne sont pas servis sur hallucinecran.fr
-          pageHtml = pageHtml.replace(
-            /<link rel="canonical"/,
-            '<meta name="robots" content="noindex, nofollow" />\n  <link rel="canonical"'
-          );
         }
       }
 

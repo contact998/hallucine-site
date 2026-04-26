@@ -13,9 +13,3 @@ Disallow: /admin
 Disallow: /admin/
 Disallow: /profil
 Disallow: /api/
-
-# Pages pré-rendues des autres langues (noindex déjà présent, double protection)
-Disallow: /_lang_en/
-Disallow: /_lang_de/
-Disallow: /_lang_es/
-Disallow: /_lang_it/

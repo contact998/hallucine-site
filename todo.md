@@ -1044,3 +1044,7 @@
 
 ## SEO — Canonical statique
 - [x] Supprimer la balise canonical statique de index.html (pointait vers hallucinecran.fr/ pour toutes les pages)
+
+## SEO — Correction noindex pages non-FR
+- [x] Supprimer l'injection noindex dans prerender.mjs pour les pages _lang_it/_lang_en/_lang_de/_lang_es
+- [x] Retirer les Disallow /_lang_*/ dans robots.txt (cohérence avec la suppression du noindex)
