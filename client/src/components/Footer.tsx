@@ -158,7 +158,7 @@ export default function Footer() {
             "@context": "https://schema.org",
             "@type": "Organization",
             "name": "Hallucine",
-            "url": "https://hallucine.fr",
+            "url": "https://hallucinecran.fr",
             "logo": LOGO_URL,
             "description": "Fabricant d'écrans de cinéma gonflables depuis 1995. Écrans de 2 à 24 mètres, tentes, arches et mobilier gonflable.",
             "foundingDate": "1995",

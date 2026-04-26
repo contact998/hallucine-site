@@ -126,7 +126,7 @@ export default function Galerie() {
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
-          url: "https://hallucine.fr/galerie-evenements"
+          url: "https://hallucinecran.fr/galerie-evenements"
         }}
       />
       <Navbar />

@@ -25,7 +25,7 @@ export default function Confidentialite() {
         page={{
           name: t("page_title"),
           description: t("meta_desc"),
-          url: "https://hallucine.fr/politique-confidentialite",
+          url: "https://hallucinecran.fr/politique-confidentialite",
         }}
       />
       <Navbar />

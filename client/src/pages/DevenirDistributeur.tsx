@@ -34,7 +34,7 @@ export default function DevenirDistributeur() {
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
-          url: "https://hallucine.fr/devenir-distributeur",
+          url: "https://hallucinecran.fr/devenir-distributeur",
         }}
       />
       <Navbar />

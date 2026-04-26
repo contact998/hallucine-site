@@ -50,7 +50,7 @@ export default function Contact() {
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
-          url: "https://hallucine.fr/contactez-nous",
+          url: "https://hallucinecran.fr/contactez-nous",
         }}
         faqs={faqContact.map(f => ({ question: f.q, answer: f.a }))}
       />

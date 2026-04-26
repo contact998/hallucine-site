@@ -35,13 +35,13 @@ export default function APropos() {
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
-          url: "https://hallucine.com/a-propos-hallucine",
+          url: "https://hallucinecran.com/a-propos-hallucine",
         }}
         article={{
           headline: t("histoire_title"),
           description: t("hero_desc"),
           image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp",
-          url: "https://hallucine.com/a-propos-hallucine",
+          url: "https://hallucinecran.com/a-propos-hallucine",
           datePublished: "1992-01-01T00:00:00Z",
         }}
       />

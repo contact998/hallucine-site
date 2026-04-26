@@ -340,7 +340,7 @@ function generateBrochureHTML(product: ProductData): string {
     <p><strong>Hallucine EURL</strong> — Fabricant français d'écrans de cinéma gonflables depuis 1995</p>
     <div class="contact">
       <p>📧 <a href="mailto:contact@hallucine.fr">contact@hallucine.fr</a> | 📞 +33 6 80 14 76 94 | 💬 WhatsApp</p>
-      <p style="margin-top: 8px;">🌐 <a href="https://hallucine.fr">hallucine.fr</a> — Demandez votre devis personnalisé</p>
+      <p style="margin-top: 8px;">🌐 <a href="https://hallucinecran.fr">hallucinecran.fr</a> — Demandez votre devis personnalisé</p>
     </div>
   </div>
 </body>
