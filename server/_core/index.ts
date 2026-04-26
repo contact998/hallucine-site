@@ -203,6 +203,11 @@ async function startServer() {
       res.status(500).json({ status: "error", env: info, error: err.message });
     }
   });
+  // Redirection 301 : /devis → /contactez-nous (filet de sécurité pour liens externes)
+  app.get("/devis", (_req, res) => {
+    res.redirect(301, "/contactez-nous");
+  });
+
   // tRPC API
   app.use(
     "/api/trpc",

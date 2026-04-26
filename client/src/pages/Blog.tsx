@@ -52,29 +52,9 @@ export default function Blog() {
     return date.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
   };
 
-  // Articles DB + articles statiques en fallback
-  const staticArticles: Article[] = [
-    {
-      id: "1",
-      titre: "Des projections grandioses avec nos écrans géants à soufflerie permanente !",
-      extrait: "Découvrez comment nos écrans géants à soufflerie permanente transforment vos événements en plein air en expériences cinématographiques inoubliables.",
-      categorie: "Écrans Gonflables",
-      date: "2024-12-15",
-      slug: "projections-grandioses-ecrans-geants-soufflerie-permanente",
-      imageUrl: "",
-      commentaires: [],
-    },
-    {
-      id: "2",
-      titre: "Écrans géants gonflables installés en un temps record",
-      extrait: "L'installation d'un écran géant gonflable n'a jamais été aussi rapide. Découvrez pourquoi de plus en plus d'organisateurs choisissent nos solutions.",
-      categorie: "Guides de Produits",
-      date: "2024-11-20",
-      slug: "ecrans-geants-gonflables-installes-temps-record-solution-ideale-evenements-plein-air",
-      imageUrl: "",
-      commentaires: [],
-    },
-  ];
+  // Articles DB uniquement — les articles statiques de fallback ont été supprimés
+  // car leurs slugs pointaient vers des pages inexistantes (404 Semrush)
+  const staticArticles: Article[] = [];
 
   // Combiner articles DB + statiques
   const allArticles = [
