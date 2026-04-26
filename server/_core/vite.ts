@@ -103,7 +103,17 @@ export function serveStatic(app: Express) {
   const DEFAULT_OG_IMAGE =
     "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-accueil-KjTW2K29SHyinVRpsNcnQC.png";
 
-  // Servir les fichiers statiques (JS, CSS, images, etc.)
+  // Assets versionnés Vite (JS, CSS, images) — cache 1 an
+  app.use(
+    "/assets",
+    express.static(path.join(distPath, "assets"), {
+      maxAge: "1y",
+      immutable: true,
+      index: false,
+    })
+  );
+
+  // Reste des fichiers statiques — cache court
   app.use(express.static(distPath, { index: false }));
 
   // Bloquer les patterns /xx (préfixes de langue invalides testés par bots SEO)

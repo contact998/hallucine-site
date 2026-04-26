@@ -14,7 +14,7 @@ import { AvailabilityBadge } from "@/components/AvailabilityIndicator";
 import { useTranslation } from "react-i18next";
 import { i18n } from "@/i18n/instance"; // instance partagée — initialisée par config.ts (client) ou config.node.ts (SSR)
 import { LANGUAGE_DOMAINS, detectLanguage } from "@/i18n/domains";
-import { ROUTES } from "@/i18n/routes";
+import { ROUTES, getRouteKey, getHreflangUrls } from "@/i18n/routes";
 
 const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ySiqVkOsMSzWfHfu.webp";
 
@@ -31,6 +31,16 @@ function LanguageSwitcher({ mobile = false }: { mobile?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const { i18n: langI18n } = useTranslation("nav");
   const activeLang = langI18n.language || detectLanguage();
+  const [currentPath] = useLocation();
+
+  // Calcul de l'URL cible page-à-page pour chaque langue
+  const currentRouteKey = getRouteKey(currentPath, activeLang);
+  const hreflangUrls = currentRouteKey ? getHreflangUrls(currentRouteKey) : null;
+
+  const getLangUrl = (langCode: string, domainUrl: string): string => {
+    if (hreflangUrls?.[langCode]) return hreflangUrls[langCode] + "/";
+    return domainUrl + "/";
+  };
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -49,7 +59,7 @@ function LanguageSwitcher({ mobile = false }: { mobile?: boolean }) {
         {languages.map((lang) => (
           <a
             key={lang.code}
-            href={lang.url}
+            href={getLangUrl(lang.code, lang.url)}
             className={`flex items-center gap-1.5 px-3 py-2 rounded text-sm font-medium transition-colors ${
               lang.code === activeLang
                 ? "bg-warm/20 text-warm border border-warm/30"
@@ -87,7 +97,7 @@ function LanguageSwitcher({ mobile = false }: { mobile?: boolean }) {
             {others.map((lang) => (
               <a
                 key={lang.code}
-                href={lang.url}
+                href={getLangUrl(lang.code, lang.url)}
                 className="flex items-center gap-2 px-3 py-2.5 text-sm text-white/80 hover:text-warm hover:bg-white/5 transition-colors"
               >
                 <span className="text-base leading-none">{lang.flag}</span>

@@ -263,7 +263,7 @@ const ROUTE_META = {
   cookies:                { priority: "0.3", changefreq: "yearly" },
 };
 
-function buildSitemap() {
+async function buildSitemap() {
   const lines = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',
@@ -302,12 +302,46 @@ function buildSitemap() {
     }
   }
 
+  // Articles de blog publiés depuis la base de données
+  try {
+    const { db } = await import("../server/db.ts");
+    const { blogPosts } = await import("../drizzle/schema.ts");
+    const { eq } = await import("drizzle-orm");
+
+    const posts = await db
+      .select({ slug: blogPosts.slug, updatedAt: blogPosts.updatedAt })
+      .from(blogPosts)
+      .where(eq(blogPosts.status, "published"));
+
+    for (const post of posts) {
+      const loc = `https://hallucinecran.fr/blog/${post.slug}/`;
+      const lastmod = post.updatedAt
+        ? new Date(post.updatedAt).toISOString().split("T")[0]
+        : new Date().toISOString().split("T")[0];
+      lines.push("  <url>");
+      lines.push(`    <loc>${loc}</loc>`);
+      lines.push(`    <lastmod>${lastmod}</lastmod>`);
+      lines.push("    <changefreq>monthly</changefreq>");
+      lines.push("    <priority>0.6</priority>");
+      lines.push("  </url>");
+    }
+
+    if (posts.length > 0) {
+      console.log(`📝 ${posts.length} article(s) de blog ajouté(s) au sitemap`);
+    }
+  } catch (err) {
+    console.warn("⚠️  Impossible de charger les articles de blog pour le sitemap :", err.message);
+  }
+
   lines.push("</urlset>");
   return lines.join("\n");
 }
 
 const sitemapPath = join(DIST, "sitemap.xml");
-const sitemapContent = buildSitemap();
+const sitemapContent = await buildSitemap();
 writeFileSync(sitemapPath, sitemapContent, "utf-8");
 const routeCount = Object.keys(ROUTES["fr"]).length;
 console.log(`🗺️  Sitemap généré : ${sitemapPath} (${routeCount * VALID_LANGS.length} URLs)`);
+
+// Forcer la fermeture du pool MySQL (évite que le process reste bloqué)
+process.exit(0);
