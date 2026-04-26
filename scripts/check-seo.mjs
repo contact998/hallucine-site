@@ -24,7 +24,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const DIST = join(ROOT, "dist", "public");
-const LOCALES = join(ROOT, "client", "public", "locales");
+const LOCALES = join(ROOT, "client", "src", "locales");
 
 // ─── Couleurs console ─────────────────────────────────────────────────────
 const RED    = "\x1b[31m";
