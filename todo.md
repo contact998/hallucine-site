@@ -1067,3 +1067,11 @@
 - [x] Remplacer HallucineChatbot.tsx par la version sans streamdown
 - [x] Supprimer streamdown des dépendances package.json
 - [x] Vérifier que le build vendor.js < 1 Mo (résultat : 611 Ko, -95%)
+
+## Images responsives (srcset + sizes)
+- [ ] Télécharger et redimensionner les 20 images en 3 variantes WebP (400/800/1200px)
+- [ ] Uploader les variantes sur le CDN Manus
+- [ ] Mettre à jour ProductsSection.tsx avec srcset+sizes
+- [ ] Mettre à jour TechnologySection.tsx avec srcset+sizes
+- [ ] Mettre à jour StorySection.tsx avec srcset+sizes
+- [ ] Mettre à jour les pages EcranEtanche, EcranGeant, ArchesGonflables avec srcset+sizes

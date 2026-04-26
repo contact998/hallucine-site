@@ -42,21 +42,27 @@ export default function TechnologySection() {
         >
           <div className="overflow-hidden rounded-lg">
             <img loading="lazy"
-              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/zjGTWRUKMYDyOTDz.webp"
+              src="https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/zjGTWRUKMYDyOTDz_800w_50dc5107.webp"
+              srcSet="https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/zjGTWRUKMYDyOTDz_400w_e23fd0ca.webp 400w, https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/zjGTWRUKMYDyOTDz_800w_50dc5107.webp 800w, https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/zjGTWRUKMYDyOTDz_1000w_8f742ba6.webp 1000w"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 456px"
               alt="Ecran 24m gonfle au Stade Velodrome"
               className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
               width={600} height={400} decoding="async" />
           </div>
           <div className="overflow-hidden rounded-lg">
             <img loading="lazy"
-              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fVlIGWRbdtnxnbtQ.webp"
+              src="https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/fVlIGWRbdtnxnbtQ_800w_cc15f0a6.webp"
+              srcSet="https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/fVlIGWRbdtnxnbtQ_400w_948ee7e0.webp 400w, https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/fVlIGWRbdtnxnbtQ_800w_cc15f0a6.webp 800w, https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/fVlIGWRbdtnxnbtQ_1000w_9a186ba2.webp 1000w"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 527px"
               alt="Ecran 24m a plat au Stade Velodrome"
               className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
               width={600} height={400} decoding="async" />
           </div>
           <div className="overflow-hidden rounded-lg">
             <img loading="lazy"
-              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ahSYgICnXZOUogFE.webp"
+              src="https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/ahSYgICnXZOUogFE_800w_202cd49e.webp"
+              srcSet="https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/ahSYgICnXZOUogFE_400w_d8721546.webp 400w, https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/ahSYgICnXZOUogFE_800w_202cd49e.webp 800w, https://d2xsxph8kpxj0f.cloudfront.net/manus-storage/ahSYgICnXZOUogFE_1200w_8b3ffffd.webp 1200w"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 391px"
               alt="Equipe portant l ecran 24m a dos d homme"
               className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
               width={600} height={400} decoding="async" />

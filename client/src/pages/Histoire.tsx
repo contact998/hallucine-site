@@ -13,9 +13,12 @@ import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
 
 const ETANCHE_3M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hIDMieDLnUJYNHGY.webp";
-const ETANCHE_5M_RITZ = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IzUUAouVxqDCjGMh.webp";
+const CDN = "https://d2xsxph8kpxj0f.cloudfront.net";
+const ETANCHE_5M_RITZ = `${CDN}/manus-storage/IzUUAouVxqDCjGMh_400w_fdd9abd9.webp`;
+const ETANCHE_5M_RITZ_SRCSET = `${CDN}/manus-storage/IzUUAouVxqDCjGMh_400w_fdd9abd9.webp 400w, ${CDN}/manus-storage/IzUUAouVxqDCjGMh_583w_9b482064.webp 583w`;
 const SOUFFLERIE_13M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ATgcmLVpJkJrnbvK.webp";
-const SOUFFLERIE_24M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eEXwXGCYYCdjehRy.webp";
+const SOUFFLERIE_24M = `${CDN}/manus-storage/eEXwXGCYYCdjehRy_750w_2fcfdd0a.webp`;
+const SOUFFLERIE_24M_SRCSET = `${CDN}/manus-storage/eEXwXGCYYCdjehRy_400w_f66b51b5.webp 400w, ${CDN}/manus-storage/eEXwXGCYYCdjehRy_750w_2fcfdd0a.webp 750w`;
 const SOUFFLERIE_15M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VWHPufHDlQZZyhyU.webp";
 const SOUFFLERIE_12M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZsaxtYrqVuqTZtAv.webp";
 const TENTE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/sEPwifSRENrYAMaz.webp";
@@ -36,8 +39,8 @@ export default function Histoire() {
     { year: t("ch2_year"), title: t("ch2_title"), text: t("ch2_text"), image: ETANCHE_3M, quote: null },
     { year: t("ch3_year"), title: t("ch3_title"), text: t("ch3_text"), image: null, quote: t("ch3_quote") },
     { year: t("ch4_year"), title: t("ch4_title"), text: t("ch4_text"), image: SOUFFLERIE_12M, quote: null },
-    { year: t("ch5_year"), title: t("ch5_title"), text: t("ch5_text"), image: SOUFFLERIE_24M, quote: t("ch5_quote") },
-    { year: t("ch6_year"), title: t("ch6_title"), text: t("ch6_text"), image: ETANCHE_5M_RITZ, quote: null },
+    { year: t("ch5_year"), title: t("ch5_title"), text: t("ch5_text"), image: SOUFFLERIE_24M, srcSet: SOUFFLERIE_24M_SRCSET, quote: t("ch5_quote") },
+    { year: t("ch6_year"), title: t("ch6_title"), text: t("ch6_text"), image: ETANCHE_5M_RITZ, srcSet: ETANCHE_5M_RITZ_SRCSET, quote: null },
     { year: t("ch7_year"), title: t("ch7_title"), text: t("ch7_text"), image: null, quote: null },
     { year: t("ch8_year"), title: t("ch8_title"), text: t("ch8_text"), image: SOUFFLERIE_13M, quote: null },
     { year: t("ch9_year"), title: t("ch9_title"), text: t("ch9_text"), image: null, quote: t("ch9_quote") },
@@ -163,6 +166,8 @@ export default function Histoire() {
                   <div className="overflow-hidden rounded-lg border border-white/10">
                     <img
                       src={chapter.image}
+                      srcSet={(chapter as any).srcSet}
+                      sizes="(max-width: 640px) 100vw, 500px"
                       alt={chapter.title}
                       className="w-full h-64 md:h-80 object-cover hover:scale-105 transition-transform duration-700"
                       loading="lazy"

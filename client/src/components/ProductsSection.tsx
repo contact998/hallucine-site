@@ -10,10 +10,14 @@ import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { getRoute } from "@/i18n/routes";
 
+const CDN = "https://d2xsxph8kpxj0f.cloudfront.net";
 const ECRAN_ETANCHE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tWHlxkXeLyoqBOzz.webp";
-const ECRAN_SOUFFLERIE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HpSkkCcPrajdeXOF.webp";
-const TENTE_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/zisRVgFNBpzCScJO.webp";
-const MOBILIER_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yLbqpriBLKZrILqt.webp";
+const ECRAN_SOUFFLERIE = `${CDN}/manus-storage/HpSkkCcPrajdeXOF_800w_202cd49e.webp`;
+const ECRAN_SOUFFLERIE_SRCSET = `${CDN}/manus-storage/HpSkkCcPrajdeXOF_400w_d8721546.webp 400w, ${CDN}/manus-storage/HpSkkCcPrajdeXOF_800w_202cd49e.webp 800w, ${CDN}/manus-storage/HpSkkCcPrajdeXOF_1200w_8b3ffffd.webp 1200w`;
+const TENTE_IMG = `${CDN}/manus-storage/zisRVgFNBpzCScJO_400w_5b162bf2.webp`;
+const TENTE_SRCSET = `${CDN}/manus-storage/zisRVgFNBpzCScJO_400w_5b162bf2.webp 400w, ${CDN}/manus-storage/zisRVgFNBpzCScJO_800w_64e8b2f3.webp 800w, ${CDN}/manus-storage/zisRVgFNBpzCScJO_1000w_303714b8.webp 1000w`;
+const MOBILIER_IMG = `${CDN}/manus-storage/yLbqpriBLKZrILqt_400w_1df8a086.webp`;
+const MOBILIER_SRCSET = `${CDN}/manus-storage/yLbqpriBLKZrILqt_400w_1df8a086.webp 400w, ${CDN}/manus-storage/yLbqpriBLKZrILqt_800w_0b4f048e.webp 800w, ${CDN}/manus-storage/yLbqpriBLKZrILqt_1200w_a9a05f01.webp 1200w`;
 
 export default function ProductsSection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -108,10 +112,12 @@ export default function ProductsSection() {
               <div className="relative h-72 overflow-hidden">
                 <img loading="lazy"
                   src={ECRAN_SOUFFLERIE}
+                  srcSet={ECRAN_SOUFFLERIE_SRCSET}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
                   alt="Écran gonflable soufflerie Hallucine 9m en extérieur avec équipe technique"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   width={800} height={450}
-                decoding="async" />
+                  decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260)] via-transparent to-transparent" />
                 <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 text-navy-deep text-xs font-bold tracking-[0.2em] uppercase">
                   {t("products.soufflerie_label")}
@@ -154,7 +160,7 @@ export default function ProductsSection() {
           >
             <Link href={getRoute("tentes", lang)} className="group flex gap-6 p-6 border border-white/[0.06] bg-white/[0.02] hover:border-gold/30 transition-all duration-700 h-full" style={{ boxShadow: '0 0 15px rgba(212, 175, 55, 0.06), 0 0 30px rgba(212, 175, 55, 0.02)' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 0 25px rgba(212, 175, 55, 0.18), 0 0 50px rgba(212, 175, 55, 0.08), 0 0 80px rgba(212, 175, 55, 0.04)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 0 15px rgba(212, 175, 55, 0.06), 0 0 30px rgba(212, 175, 55, 0.02)'}>
               <div className="w-28 h-28 shrink-0 overflow-hidden">
-                <img loading="lazy" src={TENTE_IMG} alt="Tente gonflable Hallucine" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" width={200} height={200} decoding="async" />
+                <img loading="lazy" src={TENTE_IMG} srcSet={TENTE_SRCSET} sizes="112px" alt="Tente gonflable Hallucine" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" width={200} height={200} decoding="async" />
               </div>
               <div className="flex flex-col justify-center min-w-0">
                 <h3 className="text-lg font-bold text-white group-hover:text-gold transition-colors duration-500">
@@ -178,7 +184,7 @@ export default function ProductsSection() {
           >
             <Link href={getRoute("mobilier", lang)} className="group flex gap-6 p-6 border border-white/[0.06] bg-white/[0.02] hover:border-gold/30 transition-all duration-700 h-full" style={{ boxShadow: '0 0 15px rgba(212, 175, 55, 0.06), 0 0 30px rgba(212, 175, 55, 0.02)' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 0 25px rgba(212, 175, 55, 0.18), 0 0 50px rgba(212, 175, 55, 0.08), 0 0 80px rgba(212, 175, 55, 0.04)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 0 15px rgba(212, 175, 55, 0.06), 0 0 30px rgba(212, 175, 55, 0.02)'}>
               <div className="w-28 h-28 shrink-0 overflow-hidden">
-                <img loading="lazy" src={MOBILIER_IMG} alt="Mobilier gonflable Hallucine" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" width={200} height={200} decoding="async" />
+                <img loading="lazy" src={MOBILIER_IMG} srcSet={MOBILIER_SRCSET} sizes="112px" alt="Mobilier gonflable Hallucine" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" width={200} height={200} decoding="async" />
               </div>
               <div className="flex flex-col justify-center min-w-0">
                 <h3 className="text-lg font-bold text-white group-hover:text-gold transition-colors duration-500">

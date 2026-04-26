@@ -26,10 +26,19 @@ const archesData = [
   { ref: "CA-12/5.8/0.9", taille: "1200×580(H)×90cm" },
 ];
 
+const CDN = "https://d2xsxph8kpxj0f.cloudfront.net";
 const galleryImages = [
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vbfbnQBVCUGrWUOw.webp", alt: "Arche gonflable cinéma en plein air avec écran de projection" },
+  {
+    src: `${CDN}/manus-storage/vbfbnQBVCUGrWUOw_800w_9dc64352.webp`,
+    srcSet: `${CDN}/manus-storage/vbfbnQBVCUGrWUOw_400w_ef8de5f2.webp 400w, ${CDN}/manus-storage/vbfbnQBVCUGrWUOw_800w_9dc64352.webp 800w, ${CDN}/manus-storage/vbfbnQBVCUGrWUOw_1000w_58888e85.webp 1000w`,
+    alt: "Arche gonflable cinéma en plein air avec écran de projection",
+  },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eqdRLmacrGAlLxMw.webp", alt: "Arche gonflable colorée pour arrivée de course sportive" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yuLqkYzSuwxDVzhu.webp", alt: "Arche gonflable bleue et rouge pour entrée de projection" },
+  {
+    src: `${CDN}/manus-storage/yuLqkYzSuwxDVzhu_800w_26b5ffc2.webp`,
+    srcSet: `${CDN}/manus-storage/yuLqkYzSuwxDVzhu_400w_e737519c.webp 400w, ${CDN}/manus-storage/yuLqkYzSuwxDVzhu_800w_26b5ffc2.webp 800w, ${CDN}/manus-storage/yuLqkYzSuwxDVzhu_1000w_19c0670b.webp 1000w`,
+    alt: "Arche gonflable bleue et rouge pour entrée de projection",
+  },
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tZPYCxQHEVFUCaJD.webp", alt: "Arche gonflable blanche décorée motifs floraux" },
 ];
 
@@ -93,7 +102,7 @@ export default function ArchesGonflables() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {galleryImages.map((img, i) => (
               <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden group">
-                <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" width={800} height={500} />
+                <img src={img.src} srcSet={(img as any).srcSet} sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 300px" alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" width={800} height={500} />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-end">
                   <p className="text-white text-xs p-2 opacity-0 group-hover:opacity-100 transition-opacity">{img.alt}</p>
                 </div>
