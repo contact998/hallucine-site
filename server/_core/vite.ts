@@ -164,9 +164,9 @@ export function serveStatic(app: Express) {
         fs.readFileSync(prerenderedPath, "utf-8").replace(/__LOCALE__/g, locale)
       );
       res.status(200).set({
-        "Content-Type": "text/html",
+        "Content-Type": "text/html; charset=utf-8",
         "Vary": "Host",
-        "Cache-Control": "no-store",
+        "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
       }).end(prerenderedHtml);
       return;
     }

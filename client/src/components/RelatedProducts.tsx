@@ -1,5 +1,5 @@
 /**
- * RelatedProducts.tsx v2 — Section "Produits similaires" autonome
+ * RelatedProducts.tsx v3 — Section "Produits similaires" autonome + i18n
  *
  * Usage : <RelatedProducts currentPage="arches" />
  *
@@ -8,8 +8,9 @@
  *
  * POUR AJOUTER UNE NOUVELLE PAGE :
  *   1. Ajouter la RouteKey dans routes.ts
- *   2. Ajouter son entrée dans PRODUCTS_CONFIG ci-dessous (titre, image, alt)
- *   3. Ajouter sa ligne dans relatedProductsConfig.ts
+ *   2. Ajouter son entrée dans PRODUCTS_CONFIG ci-dessous (titleKey, descKey, image, imageAlt)
+ *   3. Ajouter les clés related_*_title et related_*_desc dans toutes les locales
+ *   4. Ajouter sa ligne dans relatedProductsConfig.ts
  *   → Rien d'autre à toucher
  */
 import { Link } from "wouter";
@@ -24,8 +25,8 @@ import { ArrowRight } from "lucide-react";
 const CDN = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825";
 
 interface ProductMeta {
-  titleFr: string;
-  descFr: string;
+  titleKey: string;
+  descKey: string;
   image: string;
   imageAlt: string;
 }
@@ -33,119 +34,120 @@ interface ProductMeta {
 /**
  * Métadonnées visuelles de chaque produit.
  * La clé = RouteKey exacte (même convention que routes.ts).
+ * titleKey/descKey = clés i18n dans common.json (related_*_title / related_*_desc)
  */
 const PRODUCTS_CONFIG: Partial<Record<RouteKey, ProductMeta>> = {
   "ecrans": {
-    titleFr: "Écrans Gonflables",
-    descFr: "Catalogue complet — du 3m au 24m",
+    titleKey: "related_ecrans_title",
+    descKey: "related_ecrans_desc",
     image: `${CDN}/vajzfoYsbBMsDfIq.webp`,
     imageAlt: "Écran gonflable de cinéma en plein air Hallucine",
   },
   "ecran-geant": {
-    titleFr: "Écran Géant à Soufflerie",
-    descFr: "De 5m à 24m — installation 45 min",
+    titleKey: "related_ecran_geant_title",
+    descKey: "related_ecran_geant_desc",
     image: `${CDN}/ibUxsSdoHUCVTWXC.webp`,
     imageAlt: "Écran de cinéma géant gonflable installé en plein air",
   },
   "ecran-etanche": {
-    titleFr: "Écran Étanche à l'Air",
-    descFr: "Silencieux, autonome — technologie TPU",
+    titleKey: "related_ecran_etanche_title",
+    descKey: "related_ecran_etanche_desc",
     image: `${CDN}/IhxDeQNxHxMYBwlG.webp`,
     imageAlt: "Écran gonflable étanche à l'air technologie TPU Hallucine",
   },
   "ecran-economique": {
-    titleFr: "Écran Économique",
-    descFr: "Le meilleur rapport qualité/prix",
+    titleKey: "related_ecran_economique_title",
+    descKey: "related_ecran_economique_desc",
     image: `${CDN}/WXsnQMOOUttRbUlr.webp`,
     imageAlt: "Écran gonflable économique prix accessible Hallucine",
   },
   "ecrans-led": {
-    titleFr: "Écrans LED Géants",
-    descFr: "Visibilité maximale en plein jour",
+    titleKey: "related_ecrans_led_title",
+    descKey: "related_ecrans_led_desc",
     image: `${CDN}/cNgCebtnqSvVUvmF.webp`,
     imageAlt: "Écran LED géant événementiel Hallucine",
   },
   "comparaison": {
-    titleFr: "Comparaison des Écrans",
-    descFr: "Trouvez le modèle adapté à votre usage",
+    titleKey: "related_comparaison_title",
+    descKey: "related_comparaison_desc",
     image: `${CDN}/vajzfoYsbBMsDfIq.webp`,
     imageAlt: "Comparaison écrans gonflables Hallucine",
   },
   "tentes": {
-    titleFr: "Tentes Gonflables",
-    descFr: "Structures événementielles — montage 5 min",
+    titleKey: "related_tentes_title",
+    descKey: "related_tentes_desc",
     image: `${CDN}/TVmrusoKmXcTvkKP.webp`,
     imageAlt: "Tente gonflable événementielle Hallucine",
   },
   "tente-x": {
-    titleFr: "Tente Gonflable X",
-    descFr: "La plus compacte et légère",
+    titleKey: "related_tente_x_title",
+    descKey: "related_tente_x_desc",
     image: `${CDN}/fHOHtmjSEZCdfvZR.webp`,
     imageAlt: "Tente gonflable X Hallucine événementielle",
   },
   "tente-n": {
-    titleFr: "Tente Gonflable N",
-    descFr: "Modulable et personnalisable",
+    titleKey: "related_tente_n_title",
+    descKey: "related_tente_n_desc",
     image: `${CDN}/TVmrusoKmXcTvkKP.webp`,
     imageAlt: "Tente gonflable N Hallucine modulable",
   },
   "tente-v": {
-    titleFr: "Tente Gonflable V",
-    descFr: "Design premium, grand volume",
+    titleKey: "related_tente_v_title",
+    descKey: "related_tente_v_desc",
     image: `${CDN}/HiOAOTLZaOhqpcQk.webp`,
     imageAlt: "Tente gonflable V Hallucine design premium",
   },
   "tente-araignee": {
-    titleFr: "Tente Araignée",
-    descFr: "360° ouvert, impact visuel maximal",
+    titleKey: "related_tente_araignee_title",
+    descKey: "related_tente_araignee_desc",
     image: `${CDN}/TVmrusoKmXcTvkKP.webp`,
     imageAlt: "Tente araignée gonflable Hallucine 360 degrés",
   },
   "arches": {
-    titleFr: "Arches Gonflables",
-    descFr: "Départ, arrivée, podiums — personnalisables",
+    titleKey: "related_arches_title",
+    descKey: "related_arches_desc",
     image: `${CDN}/vbfbnQBVCUGrWUOw.webp`,
     imageAlt: "Arche gonflable publicitaire Hallucine",
   },
   "mobilier": {
-    titleFr: "Mobilier Gonflable",
-    descFr: "Tables, chaises, bars — livrés en 24h",
+    titleKey: "related_mobilier_title",
+    descKey: "related_mobilier_desc",
     image: `${CDN}/efvnhrOKvRVMyuHr.webp`,
     imageAlt: "Mobilier gonflable événementiel Hallucine",
   },
   "accessoires": {
-    titleFr: "Accessoires",
-    descFr: "Tout pour vos projections en plein air",
+    titleKey: "related_accessoires_title",
+    descKey: "related_accessoires_desc",
     image: `${CDN}/vajzfoYsbBMsDfIq.webp`,
     imageAlt: "Accessoires écran gonflable cinéma plein air Hallucine",
   },
   "contact": {
-    titleFr: "Demander un Devis",
-    descFr: "Réponse sous 24h — conseil gratuit",
+    titleKey: "related_contact_title",
+    descKey: "related_contact_desc",
     image: `${CDN}/vajzfoYsbBMsDfIq.webp`,
     imageAlt: "Demander un devis écran gonflable Hallucine",
   },
   "a-propos": {
-    titleFr: "À Propos d'Hallucine",
-    descFr: "Fabricant français depuis 1995",
+    titleKey: "related_a_propos_title",
+    descKey: "related_a_propos_desc",
     image: `${CDN}/vajzfoYsbBMsDfIq.webp`,
     imageAlt: "L'histoire d'Hallucine fabricant écrans gonflables",
   },
   "histoire": {
-    titleFr: "Notre Histoire",
-    descFr: "30 ans d'innovation en France",
+    titleKey: "related_histoire_title",
+    descKey: "related_histoire_desc",
     image: `${CDN}/vajzfoYsbBMsDfIq.webp`,
-    imageAlt: "Histoire Hallucine fabricant écrans gonflables depuis 1995",
+    imageAlt: "Histoire Hallucine fabricant écrans gonflables depuis 1992",
   },
   "mode-emploi": {
-    titleFr: "Mode d'Emploi",
-    descFr: "Installation en 45 min — guide complet",
+    titleKey: "related_mode_emploi_title",
+    descKey: "related_mode_emploi_desc",
     image: `${CDN}/vajzfoYsbBMsDfIq.webp`,
     imageAlt: "Guide installation écran gonflable Hallucine",
   },
   "blog": {
-    titleFr: "Blog & Actualités",
-    descFr: "Conseils, guides et retours d'expérience",
+    titleKey: "related_blog_title",
+    descKey: "related_blog_desc",
     image: `${CDN}/vajzfoYsbBMsDfIq.webp`,
     imageAlt: "Blog cinéma en plein air Hallucine actualités",
   },
@@ -219,10 +221,10 @@ export function RelatedProducts({ currentPage, title }: RelatedProductsProps) {
                 {/* Texte */}
                 <div className="p-5">
                   <h3 className="text-white font-semibold text-base mb-1 group-hover:text-warm transition-colors duration-200">
-                    {product.titleFr}
+                    {t(product.titleKey)}
                   </h3>
                   <p className="text-white/50 text-sm mb-3 leading-relaxed">
-                    {product.descFr}
+                    {t(product.descKey)}
                   </p>
                   <span className="inline-flex items-center gap-1.5 text-warm text-sm font-medium">
                     {t("related_discover")}

@@ -33,7 +33,7 @@ describe("CRM Database Connection", () => {
       const [columns] = await connection.execute("DESCRIBE prospects");
       const columnNames = (columns as any[]).map((c: any) => c.Field);
       expect(columnNames).toContain("entreprise");
-      expect(columnNames).toContain("email");
+      expect(columnNames).toContain("telephone");
       expect(columnNames).toContain("column");
       expect(columnNames).toContain("status");
       expect(columnNames).toContain("createdBy");
