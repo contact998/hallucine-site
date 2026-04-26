@@ -79,11 +79,11 @@ export function AvailabilityWidget() {
         /* ─── Version étendue ─── */
         <div
           className={`
-            rounded-2xl shadow-2xl border-2 p-4 backdrop-blur-sm max-w-xs
-            transition-all duration-300
+            rounded-2xl shadow-2xl p-4 backdrop-blur-sm max-w-xs
+            transition-[box-shadow,opacity] duration-300
             ${data.available
-              ? "bg-green-950/95 border-green-500/50"
-              : "bg-orange-950/95 border-orange-500/50"}
+              ? "bg-green-950/95 ring-2 ring-green-500/50"
+              : "bg-orange-950/95 ring-2 ring-orange-500/50"}
           `}
         >
           {/* Header avec bouton fermer */}
@@ -123,7 +123,7 @@ export function AvailabilityWidget() {
                 <div
                   className={`
                     w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold
-                    transition-all duration-300
+                    transition-[box-shadow,opacity] duration-300
                     ${c.available
                       ? "bg-green-500 text-white ring-2 ring-green-300/50 shadow-lg shadow-green-500/30"
                       : "bg-gray-700 text-gray-400 opacity-60"}
@@ -193,7 +193,7 @@ export function AvailabilityWidget() {
           onClick={() => setIsExpanded(true)}
           className={`
             group flex items-center gap-2 py-2.5 px-4 rounded-full shadow-xl
-            backdrop-blur-sm transition-all duration-300
+            backdrop-blur-sm transition-[box-shadow,transform,opacity] duration-300
             hover:scale-105 cursor-pointer
             ${data.available
               ? "bg-green-950/90 ring-2 ring-green-500/50 hover:ring-green-400"
@@ -358,10 +358,10 @@ export function AvailabilityExtended() {
   return (
     <div
       className={`
-        rounded-2xl border-2 p-6 transition-all duration-300
+        rounded-2xl p-6 transition-[box-shadow,opacity] duration-300
         ${data.available
-          ? "bg-green-950/30 border-green-500/30"
-          : "bg-orange-950/30 border-orange-500/30"}
+          ? "bg-green-950/30 ring-2 ring-green-500/30"
+          : "bg-orange-950/30 ring-2 ring-orange-500/30"}
       `}
     >
       {/* Header */}
@@ -396,16 +396,17 @@ export function AvailabilityExtended() {
           <div
             key={c.initials}
             className={`
-              rounded-xl p-4 border transition-all
+              rounded-xl p-4 transition-[box-shadow,opacity] duration-300
               ${c.available
-                ? "bg-green-900/30 border-green-500/30"
-                : "bg-gray-800/30 border-gray-700/30"}
+                ? "bg-green-900/30 ring-1 ring-green-500/30"
+                : "bg-gray-800/30 ring-1 ring-gray-700/30"}
             `}
           >
             <div className="flex items-center gap-3">
               <div
                 className={`
                   w-12 h-12 rounded-full flex items-center justify-center text-sm font-bold
+                  transition-[box-shadow,opacity] duration-300
                   ${c.available
                     ? "bg-green-500 text-white ring-2 ring-green-300/50"
                     : "bg-gray-700 text-gray-400"}
