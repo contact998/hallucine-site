@@ -110,7 +110,7 @@ export function serveStatic(app: Express) {
   // Ex: /sv, /da, /nl, /pt, /pl, /ru, /zh, /ja, /ko...
   // Ces URLs n'existent pas sur le site — retourner 404 propre pour GSC
   const VALID_LANG_PREFIXES = new Set(["fr", "en", "de", "es", "it"]);
-  app.use(/^\/([a-z]{2})(\/|$)/, (req, res, next) => {
+  app.use(/^\/([a-z]{2})\/?$/, (req, res, next) => {
     const lang = req.params[0];
     if (!VALID_LANG_PREFIXES.has(lang)) {
       res.status(404).set({ "Content-Type": "text/plain" }).end("Not Found");
