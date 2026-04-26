@@ -205,7 +205,18 @@ export function serveStatic(app: Express) {
     }
 
     // 3. Fallback SPA : injecter la locale dans le template générique
-    const html = injectNavWidget(baseIndexHtml.replace(/__LOCALE__/g, locale));
+    // Remplacer tous les placeholders avec des valeurs par défaut
+    const defaultTitle = "Hallucine — Écrans Gonflables & Cinéma Plein Air";
+    const defaultDesc = "Fabricant français d'écrans gonflables depuis 1992. Écrans de cinéma, événementiel, structures gonflables sur mesure.";
+    const defaultUrl = `${req.protocol}://${req.hostname}${reqPath}`;
+    const html = injectNavWidget(
+      baseIndexHtml
+        .replace(/__LOCALE__/g, locale)
+        .replace(/__PAGE_TITLE__/g, escapeHtml(defaultTitle))
+        .replace(/__PAGE_DESCRIPTION__/g, escapeHtml(defaultDesc))
+        .replace(/__PAGE_IMAGE__/g, DEFAULT_OG_IMAGE)
+        .replace(/__PAGE_URL__/g, escapeHtml(defaultUrl))
+    );
     res.status(200).set({
       "Content-Type": "text/html",
       "Vary": "Host",
