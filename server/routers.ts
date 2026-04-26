@@ -756,16 +756,31 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
     create: publicProcedure
       .input(z.object({
         apiKey: z.string().optional(),
-        title: z.string().min(1),
-        content: z.string().min(1),
-        excerpt: z.string().optional(),
-        imageUrl: z.string().optional(),
+        title: z.string()
+          .min(1, "Le titre est requis")
+          .max(48, "Titre trop long (max 48 car. — le titre HTML final sera '${title} | Hallucine' soit 60 car. max)"),
+        content: z.string().min(1, "Le contenu est requis"),
+        excerpt: z.string()
+          .min(50, "L'excerpt doit faire au moins 50 caractères (utilisé comme meta description SEO)")
+          .max(160, "L'excerpt ne peut pas dépasser 160 caractères (meta description SEO)")
+          .optional(),
+        imageUrl: z.string().url("URL d'image invalide").optional().or(z.literal("")),
         lang: z.string().default("fr"),
         status: z.enum(["draft", "published", "scheduled"]).default("draft"),
         metaKeywords: z.string().optional(),
-        metaDescription: z.string().optional(),
+        metaDescription: z.string()
+          .max(160, "La meta description ne peut pas dépasser 160 caractères")
+          .optional(),
         author: z.string().optional(),
         category: z.string().optional(),
+      }).superRefine((data, ctx) => {
+        if (data.status === "published" && (!data.excerpt || data.excerpt.trim().length < 50)) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["excerpt"],
+            message: "L'excerpt est obligatoire pour publier un article (min 50 car.) — il sera utilisé comme meta description SEO sur Google",
+          });
+        }
       }))
       .mutation(async ({ input, ctx }) => {
         // Authentification : clé API (BLOG_API_KEY ou BLOG_API_KEY_2) ou admin connecté
@@ -808,6 +823,22 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
     publish: adminProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
+        // Vérification SEO avant publication
+        const post = await getBlogPostById(input.id);
+        if (!post) throw new Error("Article introuvable");
+        if (!post.excerpt || post.excerpt.trim().length < 50) {
+          throw new Error(
+            "Impossible de publier : l'excerpt est manquant ou trop court (min 50 car.). " +
+            "Il sera utilisé comme meta description SEO sur Google."
+          );
+        }
+        if (post.title.length > 48) {
+          throw new Error(
+            `Impossible de publier : le titre est trop long (${post.title.length}/48 car.). ` +
+            `Le titre HTML final sera '${post.title} | Hallucine' soit ${post.title.length + 12} car. ` +
+            "(max 60 car. recommandé par Google)."
+          );
+        }
         await publishBlogPost(input.id);
         // Traduction automatique si article français
         const published = await getBlogPostById(input.id);
@@ -823,14 +854,30 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
     update: adminProcedure
       .input(z.object({
         id: z.number(),
-        title: z.string().optional(),
+        title: z.string()
+          .min(1)
+          .max(48, "Titre trop long (max 48 car. — le titre HTML final sera '${title} | Hallucine' soit 60 car. max)")
+          .optional(),
         content: z.string().optional(),
-        excerpt: z.string().optional(),
-        imageUrl: z.string().optional(),
+        excerpt: z.string()
+          .min(50, "L'excerpt doit faire au moins 50 caractères")
+          .max(160, "L'excerpt ne peut pas dépasser 160 caractères")
+          .optional(),
+        imageUrl: z.string().url("URL d'image invalide").optional().or(z.literal("")),
         status: z.enum(["draft", "published", "scheduled"]).optional(),
         metaKeywords: z.string().optional(),
-        metaDescription: z.string().optional(),
+        metaDescription: z.string()
+          .max(160, "La meta description ne peut pas dépasser 160 caractères")
+          .optional(),
         category: z.string().optional(),
+      }).superRefine((data, ctx) => {
+        if (data.status === "published" && data.excerpt !== undefined && data.excerpt.trim().length < 50) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["excerpt"],
+            message: "L'excerpt doit faire au moins 50 caractères avant de publier",
+          });
+        }
       }))
       .mutation(async ({ input }) => {
         const { id, ...data } = input;
