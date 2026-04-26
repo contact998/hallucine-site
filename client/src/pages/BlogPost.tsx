@@ -113,6 +113,8 @@ export default function BlogPost() {
                 src={post.imageUrl}
                 alt={post.title}
                 className="w-full h-64 md:h-96 object-cover"
+                width={1200} height={600}
+                decoding="async"
               />
             </div>
           )}

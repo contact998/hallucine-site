@@ -145,6 +145,8 @@ export default function Blog() {
                           alt={article.titre}
                           className="w-full h-full object-cover"
                           loading="lazy"
+                          width={800} height={450}
+                          decoding="async"
                         />
                       </div>
                     ) : null}

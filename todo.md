@@ -1048,3 +1048,10 @@
 ## SEO — Correction noindex pages non-FR
 - [x] Supprimer l'injection noindex dans prerender.mjs pour les pages _lang_it/_lang_en/_lang_de/_lang_es
 - [x] Retirer les Disallow /_lang_*/ dans robots.txt (cohérence avec la suppression du noindex)
+
+## Améliorations Lighthouse (Accessibilité + Sécurité + Performance)
+- [x] aria-hidden sur les SVG sociaux de Navbar et Footer (liens ont déjà aria-label)
+- [x] htmlFor/id associés sur les labels/inputs du SmartForm (email, téléphone, code postal, prénom, nom)
+- [x] aria-label sur le textarea du chatbot HallucineChatbot
+- [x] Headers de sécurité via helmet (HSTS, X-Frame-Options, noSniff, Referrer-Policy, COOP)
+- [x] width/height sur toutes les images sans dimensions (Accessoires, Arches, EcranEconomique, EcranEtanche, EcranGeant, EcransLED, Galerie, Blog, BlogPost)

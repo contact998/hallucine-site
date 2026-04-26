@@ -139,6 +139,7 @@ export default function Galerie() {
             alt={t("img_hero_alt")}
             className="w-full h-full object-cover"
             style={{ transform: `translateY(${parallaxOffset}px)` }}
+            width={1920} height={560}
           decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
         </div>
@@ -201,7 +202,7 @@ export default function Galerie() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {filtered.map((photo, index) => (
               <div key={index} className="group relative isolate aspect-square overflow-hidden rounded-lg cursor-pointer" onClick={() => setLightbox(index)}>
-                <img loading="lazy" src={photo.src} alt={photo.alt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" decoding="async" />
+                <img loading="lazy" src={photo.src} alt={photo.alt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" decoding="async" width={600} height={400} />
                 <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                   <p className="text-white text-center text-sm font-medium">{photo.alt}</p>
                 </div>

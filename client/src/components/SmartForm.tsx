@@ -761,11 +761,12 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
             <div className="space-y-4">
               <div>
-                <label className={labelClass}>
+                <label htmlFor="sf-email" className={labelClass}>
                   <Mail className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Email <span className="text-red-500">*</span>
                 </label>
                 <div className="flex items-center gap-2">
                   <input
+                    id="sf-email"
                     type="email"
                     value={email}
                     onChange={(e) => { setEmail(e.target.value); setFieldErrors(prev => ({ ...prev, email: "" })); }}
@@ -1000,12 +1001,13 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
             <div className="space-y-4">
               <div>
-                <label className={labelClass}>
+                <label htmlFor="sf-phone" className={labelClass}>
                   <Phone className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Telephone
                   <span className="text-white/50 ml-1">(recommande)</span>
                 </label>
                 <div className="flex items-center gap-2">
                   <input
+                    id="sf-phone"
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
@@ -1112,11 +1114,12 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
             <div className="space-y-4">
               <div>
-                <label className={labelClass}>
+                <label htmlFor="sf-postal" className={labelClass}>
                   <MapPin className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Code postal <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <input
+                    id="sf-postal"
                     type="text"
                     value={postalCode}
                     onChange={(e) => { setPostalCode(e.target.value.replace(/\D/g, "").slice(0, 10)); setFieldErrors(prev => ({ ...prev, postalCode: "" })); }}

@@ -152,7 +152,7 @@ export default function EcranEtanche() {
             {galleryImages.map((img, i) => (
               <div key={i} className="relative aspect-[4/3]">
                 <div className="relative w-full h-full rounded-lg overflow-hidden">
-                  <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" />
+                  <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" width={800} height={500} />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-end">
                     <p className="text-white text-xs p-2 opacity-0 group-hover:opacity-100 transition-opacity">{img.alt}</p>
                   </div>

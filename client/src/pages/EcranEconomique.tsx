@@ -53,7 +53,7 @@ function ImageCarousel({ images }: { images: { src: string; alt: string }[] }) {
 
   return (
     <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-black/20 mb-6">
-      <img src={images[idx].src} alt={images[idx].alt} className="w-full h-full object-cover" loading="lazy" decoding="async" />
+      <img src={images[idx].src} alt={images[idx].alt} className="w-full h-full object-cover" loading="lazy" decoding="async" width={1200} height={700} />
       {images.length > 1 && (
         <>
           <button onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white transition-colors" aria-label="Image précédente">
@@ -296,7 +296,7 @@ export default function EcranEconomique() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
             {imagesFinales.map((img, i) => (
               <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden group">
-                <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" />
+                <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" width={800} height={500} />
               </div>
             ))}
           </div>

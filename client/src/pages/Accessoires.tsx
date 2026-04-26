@@ -94,7 +94,7 @@ export default function Accessoires() {
             {accessoires.map((a) => (
               <div key={a.title} className="bg-card border border-border rounded-lg overflow-hidden card-hover">
                 <div className={`aspect-[4/3] ${a.bgWhite ? 'bg-white' : 'bg-charcoal-light'}`}>
-                  <img src={a.img} alt={`Accessoire Hallucine — ${a.title}`} className="w-full h-full object-contain p-4" loading="lazy" decoding="async" />
+                  <img src={a.img} alt={`Accessoire Hallucine — ${a.title}`} className="w-full h-full object-contain p-4" loading="lazy" decoding="async" width={300} height={300} />
                 </div>
                 <div className="p-6">
                   <div className="flex items-center gap-3 mb-3">

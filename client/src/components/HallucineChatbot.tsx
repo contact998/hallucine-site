@@ -386,6 +386,7 @@ export default function HallucineChatbot() {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Posez votre question..."
+                  aria-label="Votre message au chatbot"
                   rows={1}
                   className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-warm/40 focus:outline-none resize-none max-h-20 transition-colors"
                 />
