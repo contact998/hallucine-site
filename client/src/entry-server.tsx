@@ -140,8 +140,6 @@ function getPageComponent(url: string, lang: string): React.ComponentType {
   const entry = Object.entries(langRoutes).find(([, routeUrl]) => routeUrl === url);
   if (entry) {
     const [routeKey] = entry;
-    // Debug log — à retirer une fois validé
-    console.log(`  SSR route: [${lang}] ${url} → ${routeKey}`);
     return PAGE_MAP[routeKey] ?? Home;
   }
   console.warn(`  SSR route: [${lang}] ${url} → NOT FOUND, fallback Home`);

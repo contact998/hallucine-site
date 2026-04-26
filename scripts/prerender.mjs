@@ -227,3 +227,81 @@ if (errors > 0) {
   console.error(`⚠️  ${errors} page(s) ont échoué. Relancer avec DEBUG_SSR=1 pour les détails.`);
   process.exit(1);
 }
+
+// ─── Génération automatique du sitemap ────────────────────────────────────────
+
+/** Priorité et changefreq par clé de route */
+const ROUTE_META = {
+  home:                   { priority: "1.0", changefreq: "weekly" },
+  ecrans:                 { priority: "0.9", changefreq: "monthly" },
+  "ecran-geant":          { priority: "0.9", changefreq: "monthly" },
+  "ecran-etanche":        { priority: "0.9", changefreq: "monthly" },
+  "ecran-economique":     { priority: "0.9", changefreq: "monthly" },
+  comparaison:            { priority: "0.8", changefreq: "monthly" },
+  "ecrans-led":           { priority: "0.8", changefreq: "monthly" },
+  tentes:                 { priority: "0.9", changefreq: "monthly" },
+  "tente-x":              { priority: "0.8", changefreq: "monthly" },
+  "tente-n":              { priority: "0.8", changefreq: "monthly" },
+  "tente-v":              { priority: "0.8", changefreq: "monthly" },
+  "tente-araignee":       { priority: "0.8", changefreq: "monthly" },
+  arches:                 { priority: "0.8", changefreq: "monthly" },
+  mobilier:               { priority: "0.8", changefreq: "monthly" },
+  accessoires:            { priority: "0.7", changefreq: "monthly" },
+  galerie:                { priority: "0.7", changefreq: "weekly" },
+  "galerie-video":        { priority: "0.7", changefreq: "weekly" },
+  contact:                { priority: "0.9", changefreq: "monthly" },
+  "a-propos":             { priority: "0.6", changefreq: "monthly" },
+  histoire:               { priority: "0.6", changefreq: "monthly" },
+  blog:                   { priority: "0.7", changefreq: "weekly" },
+  "mode-emploi":          { priority: "0.6", changefreq: "monthly" },
+  "devenir-distributeur": { priority: "0.7", changefreq: "monthly" },
+  "trouver-distributeur": { priority: "0.7", changefreq: "monthly" },
+  "mentions-legales":     { priority: "0.3", changefreq: "yearly" },
+  confidentialite:        { priority: "0.3", changefreq: "yearly" },
+  cookies:                { priority: "0.3", changefreq: "yearly" },
+};
+
+function buildSitemap() {
+  const lines = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',
+    '        xmlns:xhtml="http://www.w3.org/1999/xhtml">',
+  ];
+
+  const routeKeys = Object.keys(ROUTES["fr"]);
+
+  for (const routeKey of routeKeys) {
+    const meta = ROUTE_META[routeKey] ?? { priority: "0.5", changefreq: "monthly" };
+
+    for (const lang of VALID_LANGS) {
+      const domain = DOMAINS[lang];
+      const path = ROUTES[lang]?.[routeKey] ?? ROUTES["fr"][routeKey];
+      const loc = `${domain}${path}`;
+
+      lines.push("  <url>");
+      lines.push(`    <loc>${loc}</loc>`);
+
+      // hreflang pour toutes les langues
+      for (const hLang of VALID_LANGS) {
+        const hDomain = DOMAINS[hLang];
+        const hPath = ROUTES[hLang]?.[routeKey] ?? ROUTES["fr"][routeKey];
+        lines.push(`    <xhtml:link rel="alternate" hreflang="${hLang}" href="${hDomain}${hPath}"/>`);
+      }
+      // x-default → FR
+      lines.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${DOMAINS.fr}${ROUTES.fr[routeKey]}"/>`);
+
+      lines.push(`    <changefreq>${meta.changefreq}</changefreq>`);
+      lines.push(`    <priority>${meta.priority}</priority>`);
+      lines.push("  </url>");
+    }
+  }
+
+  lines.push("</urlset>");
+  return lines.join("\n");
+}
+
+const sitemapPath = join(DIST, "sitemap.xml");
+const sitemapContent = buildSitemap();
+writeFileSync(sitemapPath, sitemapContent, "utf-8");
+const routeCount = Object.keys(ROUTES["fr"]).length;
+console.log(`🗺️  Sitemap généré : ${sitemapPath} (${routeCount * VALID_LANGS.length} URLs)`);
