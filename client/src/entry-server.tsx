@@ -175,8 +175,8 @@ export async function render(url: string, lang: string): Promise<{ html: string;
 
   // Contexte SSR pour collecter les metas pendant renderToString
   const ssrMeta: SSRMeta = {
-    title: "Hallucine — Écrans de Cinéma Gonflables | Fabricant depuis 1995",
-    description: "Hallucine, fabricant français d'écrans de cinéma gonflables depuis 1995. Écrans géants, tentes gonflables, arches, mobilier événementiel. Livraison mondiale.",
+    title: "Hallucine — Écrans de Cinéma Gonflables | Fabricant depuis 1992",
+    description: "Hallucine, fabricant français d'écrans de cinéma gonflables depuis 1992. Écrans géants, tentes gonflables, arches, mobilier événementiel. Livraison mondiale.",
     image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp",
     url: `https://hallucinecran.fr${url}`,
     locked: false,

@@ -1,5 +1,4 @@
-import { useMemo } from "react";
-import { useStructuredData } from "@/hooks/useStructuredData";
+import { JsonLd } from "@/components/JsonLd";
 import {
   organizationSchema,
   websiteSchema,
@@ -13,12 +12,11 @@ import {
  * - LocalBusiness (adresse, horaires, coordonnées GPS)
  */
 export default function GlobalStructuredData() {
-  const schemas = useMemo(
-    () => [organizationSchema(), websiteSchema(), localBusinessSchema()],
-    []
+  return (
+    <>
+      <JsonLd data={organizationSchema()} />
+      <JsonLd data={websiteSchema()} />
+      <JsonLd data={localBusinessSchema()} />
+    </>
   );
-
-  useStructuredData(schemas, "global");
-
-  return null;
 }

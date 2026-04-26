@@ -180,7 +180,15 @@ function vitePluginRestoreSsrPlaceholders(): Plugin {
   };
 }
 
-const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector(), vitePluginRestoreSsrPlaceholders()];
+const isDev = process.env.NODE_ENV !== "production";
+const plugins = [
+  react(),
+  tailwindcss(),
+  isDev && jsxLocPlugin(),
+  vitePluginManusRuntime(),
+  vitePluginManusDebugCollector(),
+  vitePluginRestoreSsrPlaceholders(),
+].filter(Boolean);
 
 export default defineConfig({
   plugins,

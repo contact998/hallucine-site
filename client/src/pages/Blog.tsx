@@ -86,12 +86,12 @@ export default function Blog() {
         page={{
           name: "Blog | Actualités Cinéma en Plein Air",
           description: "Actualités, conseils et tendances du cinéma en plein air. Articles sur les écrans gonflables, événements et innovations.",
-          url: "https://hallucine.ai/blog"
+          url: "https://hallucinecran.fr/blog"
         }}
         article={{
           headline: "Blog Hallucine",
           description: "Actualités, conseils et tendances du cinéma en plein air. Articles sur les écrans gonflables, événements et innovations.",
-          url: "https://hallucine.ai/blog",
+          url: "https://hallucinecran.fr/blog",
           image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp"
         }}
       />

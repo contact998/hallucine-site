@@ -21,7 +21,7 @@ export function organizationSchema() {
     image: LOGO_URL,
     description:
       "Fabricant français d'écrans de cinéma gonflables, tentes gonflables, arches gonflables et mobilier gonflable. 30 ans d'expertise.",
-    foundingDate: "1994",
+    foundingDate: "1992",
     telephone: COMPANY_PHONE,
     email: COMPANY_EMAIL,
     address: {
