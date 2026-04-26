@@ -12,6 +12,7 @@ import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
+import { RelatedProducts } from "@/components/RelatedProducts";
 
 const heroImages = [
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fHOHtmjSEZCdfvZR.webp", alt: "Tentes gonflables X Meguiar's noires et jaunes de nuit" },
@@ -282,6 +283,7 @@ export default function TentesX() {
         </div>
       </section>
 
+      <RelatedProducts currentPage="tente-x" />
       <Footer />
       <ImageLightbox src={lightboxImg?.src ?? ""} alt={lightboxImg?.alt ?? ""} isOpen={lightboxImg !== null} onClose={() => setLightboxImg(null)} />
     </div>

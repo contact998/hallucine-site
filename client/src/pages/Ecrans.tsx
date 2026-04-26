@@ -12,6 +12,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
+import { RelatedProducts } from "@/components/RelatedProducts";
 
 export default function Ecrans() {
   const route = useRoutes();
@@ -164,6 +165,7 @@ export default function Ecrans() {
         </div>
       </section>
 
+      <RelatedProducts currentPage="ecrans" />
       <Footer />
     </div>
   );

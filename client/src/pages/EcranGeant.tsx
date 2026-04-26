@@ -15,6 +15,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
+import { RelatedProducts } from "@/components/RelatedProducts";
 
 const specsData = [
   { taille: "8m × 6m", toile: "7m × 5m", poids: "35 kg", montage: "30 min", personnes: "1" },
@@ -394,6 +395,7 @@ export default function EcranGeant() {
         </div>
       </section>
 
+      <RelatedProducts currentPage="ecran-geant" />
       <Footer />
 
       {/* Lightbox vidéo */}

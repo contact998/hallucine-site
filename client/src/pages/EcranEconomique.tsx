@@ -13,6 +13,7 @@ import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
+import { RelatedProducts } from "@/components/RelatedProducts";
 
 // ─── Données tableaux ──────────────────────────────────────────────────────────
 const avecSouffleur = [
@@ -307,6 +308,7 @@ export default function EcranEconomique() {
         </div>
       </section>
 
+      <RelatedProducts currentPage="ecran-economique" />
       <Footer />
     </div>
   );

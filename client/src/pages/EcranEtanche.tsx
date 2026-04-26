@@ -14,6 +14,7 @@ import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
+import { RelatedProducts } from "@/components/RelatedProducts";
 
 const specsData = [
   { taille: "245 × 200 cm", toile: "218 × 122 cm", poids: "7 kg", hauteur: "50 cm", personnes: "1" },
@@ -277,6 +278,7 @@ export default function EcranEtanche() {
         </div>
       </section>
 
+      <RelatedProducts currentPage="ecran-etanche" />
       <Footer />
     </div>
   );

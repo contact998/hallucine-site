@@ -10,6 +10,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
+import { RelatedProducts } from "@/components/RelatedProducts";
 
 export default function Tentes() {
   const route = useRoutes();
@@ -119,6 +120,7 @@ export default function Tentes() {
         </div>
       </section>
 
+      <RelatedProducts currentPage="tentes" />
       <Footer />
     </div>
   );
