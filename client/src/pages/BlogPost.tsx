@@ -1,4 +1,5 @@
 import { useParams, Link } from "wouter";
+import DOMPurify from "dompurify";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -134,7 +135,7 @@ export default function BlogPost() {
               prose-a:text-[#DAA520] prose-a:no-underline hover:prose-a:underline
               prose-strong:text-foreground
               prose-ul:text-muted-foreground prose-ol:text-muted-foreground"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
           />
 
           {/* CTA */}

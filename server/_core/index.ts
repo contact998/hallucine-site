@@ -115,8 +115,8 @@ async function startServer() {
   }));
 
   // Configure body parser with larger size limit for file uploads
-  app.use(express.json({ limit: "50mb" }));
-  app.use(express.urlencoded({ limit: "50mb", extended: true }));
+  app.use(express.json({ limit: "1mb" }));
+  app.use(express.urlencoded({ limit: "1mb", extended: true }));
 
   // Redirection 301 www → non-www (SEO : évite les pages en double)
   app.use((req, res, next) => {
@@ -185,24 +185,26 @@ async function startServer() {
       res.status(500).json({ error: "Erreur interne" });
     }
   });
-  // Endpoint de diagnostic temporaire (à supprimer après résolution)
-  app.get("/api/debug-db", async (_req, res) => {
-    const info = {
-      MYSQLHOST: process.env.MYSQLHOST || "NOT SET",
-      MYSQLPORT: process.env.MYSQLPORT || "NOT SET",
-      MYSQLDATABASE: process.env.MYSQLDATABASE || "NOT SET",
-      MYSQLUSER: process.env.MYSQLUSER || "NOT SET",
-      MYSQLPASSWORD: process.env.MYSQLPASSWORD ? "***SET***" : "NOT SET",
-      DATABASE_URL: process.env.DATABASE_URL ? process.env.DATABASE_URL.replace(/:([^:@]+)@/, ":***@").substring(0, 60) : "NOT SET",
-    };
-    try {
-      const { db } = await import("../db");
-      const result = await (db as any).execute("SELECT 1 as ok");
-      res.json({ status: "ok", env: info, result: result[0] });
-    } catch (err: any) {
-      res.status(500).json({ status: "error", env: info, error: err.message });
-    }
-  });
+  // Endpoint de diagnostic temporaire — désactivé en production
+  if (process.env.NODE_ENV !== "production") {
+    app.get("/api/debug-db", async (_req, res) => {
+      const info = {
+        MYSQLHOST: process.env.MYSQLHOST || "NOT SET",
+        MYSQLPORT: process.env.MYSQLPORT || "NOT SET",
+        MYSQLDATABASE: process.env.MYSQLDATABASE || "NOT SET",
+        MYSQLUSER: process.env.MYSQLUSER || "NOT SET",
+        MYSQLPASSWORD: process.env.MYSQLPASSWORD ? "***SET***" : "NOT SET",
+        DATABASE_URL: process.env.DATABASE_URL ? process.env.DATABASE_URL.replace(/:([^:@]+)@/, ":***@").substring(0, 60) : "NOT SET",
+      };
+      try {
+        const { db } = await import("../db");
+        const result = await (db as any).execute("SELECT 1 as ok");
+        res.json({ status: "ok", env: info, result: result[0] });
+      } catch (err: any) {
+        res.status(500).json({ status: "error", env: info, error: err.message });
+      }
+    });
+  }
   // Redirection 301 : /devis → /contactez-nous (filet de sécurité pour liens externes)
   app.get("/devis", (_req, res) => {
     res.redirect(301, "/contactez-nous");
@@ -220,7 +222,7 @@ async function startServer() {
   // ─── Upload image blog vers R2 ───────────────────────────────
   app.post("/api/upload-blog-image", express.raw({ type: "image/*", limit: "10mb" }), async (req, res) => {
     try {
-      const apiKey = req.headers["x-api-key"] ?? req.query.apiKey;
+      const apiKey = req.headers["x-api-key"];
       const validKey1 = process.env.BLOG_API_KEY;
       const validKey2 = process.env.BLOG_API_KEY_2;
       if (apiKey !== validKey1 && apiKey !== validKey2) {
