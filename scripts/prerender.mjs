@@ -74,10 +74,10 @@ function buildHreflangTags(routeKey, allRoutes) {
     const domain = DOMAINS[lang];
     return `  <link rel="alternate" hreflang="${lang}" href="${domain}${url}" />`;
   });
-  // x-default pointe vers EN
-  const defaultUrl = allRoutes["en"]?.[routeKey] ?? "/";
+  // x-default pointe vers FR (site principal)
+  const defaultUrl = allRoutes["fr"]?.[routeKey] ?? "/";
   tags.push(
-    `  <link rel="alternate" hreflang="x-default" href="${DOMAINS["en"]}${defaultUrl}" />`
+    `  <link rel="alternate" hreflang="x-default" href="${DOMAINS["fr"]}${defaultUrl}" />`
   );
   return tags.join("\n");
 }
