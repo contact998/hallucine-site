@@ -5,6 +5,8 @@ COPY package.json pnpm-lock.yaml ./
 COPY patches ./patches
 RUN pnpm install --frozen-lockfile
 COPY . .
+# NODE_ENV=production est requis pour que Vite minifie le JS et CSS correctement
+ENV NODE_ENV=production
 RUN pnpm build
 
 FROM node:22-bookworm-slim

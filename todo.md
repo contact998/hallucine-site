@@ -1059,3 +1059,11 @@
 - [x] Chunking manuel Vite : tsparticles, i18n, recharts, radix-ui séparés en chunks distincts
 - [x] Preconnect + DNS prefetch pour files.manuscdn.com et d2xsxph8kpxj0f.cloudfront.net
 - [x] Optimisation i18n : seule la langue active + fr (fallback) chargée au démarrage (~530 Kio économisés)
+
+## Optimisation bundle (vendor.js 12 Mo → <1 Mo)
+- [x] Installer marked + DOMPurify (~50 Ko) en remplacement de streamdown (~12 Mo via mermaid→three.js)
+- [x] Créer client/src/components/MarkdownRenderer.tsx
+- [x] Remplacer AIChatBox.tsx par la version sans streamdown
+- [x] Remplacer HallucineChatbot.tsx par la version sans streamdown
+- [x] Supprimer streamdown des dépendances package.json
+- [x] Vérifier que le build vendor.js < 1 Mo (résultat : 611 Ko, -95%)

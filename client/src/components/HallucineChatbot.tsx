@@ -3,13 +3,16 @@
  * Bulle flottante en bas à droite, ouvre un panneau de chat
  * Utilise le LLM via tRPC pour répondre aux questions produits
  * Après quelques échanges, propose un bouton "Demander un devis" pré-rempli
+ *
+ * CHANGEMENT : import Streamdown remplacé par MarkdownRenderer (marked + DOMPurify)
+ * Gain : ~12 Mo → ~50 Ko dans le bundle vendor
  */
 import { useState, useRef, useEffect, useCallback } from "react";
 import { detectLanguage } from "@/i18n/domains";
 import { trpc } from "@/lib/trpc";
 import { MessageCircle, X, Send, Loader2, Sparkles, User, ChevronDown, FileText, Monitor, Mail } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Streamdown } from "streamdown";
+import { MarkdownRenderer } from "@/components/MarkdownRenderer";
 import { useLocation } from "wouter";
 
 interface ChatMessage {
@@ -105,7 +108,6 @@ export default function HallucineChatbot() {
       }
 
       messageCountRef.current += 1;
-      // Après 3 échanges, montrer le bouton devis même sans LEAD_DATA ready
       if (messageCountRef.current >= 3 && !showDevisButton) {
         setShowDevisButton(true);
       }
@@ -127,14 +129,12 @@ export default function HallucineChatbot() {
     },
   });
 
-  // Scroll to bottom on new messages
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages, chatMutation.isPending]);
 
-  // Focus input when chat opens
   useEffect(() => {
     if (isOpen && inputRef.current) {
       setTimeout(() => inputRef.current?.focus(), 300);
@@ -167,7 +167,6 @@ export default function HallucineChatbot() {
     }
   };
 
-  /** Compter les infos collectées pour afficher le résumé */
   const collectedInfoCount = (() => {
     if (!leadData) return 0;
     let count = 0;
@@ -183,7 +182,6 @@ export default function HallucineChatbot() {
     return count;
   })();
 
-  /** Naviguer vers le formulaire avec les données pré-remplies */
   const goToDevis = useCallback(() => {
     const params = new URLSearchParams();
     if (leadData?.product) params.set("product", leadData.product);
@@ -200,7 +198,7 @@ export default function HallucineChatbot() {
     if (leadData?.date) params.set("date", leadData.date);
     if (leadData?.budget) params.set("budget", leadData.budget);
     if (leadData?.need) params.set("need", leadData.need);
-    
+
     const queryString = params.toString();
     navigate(`/contactez-nous${queryString ? `?${queryString}` : ""}`);
     setIsOpen(false);
@@ -262,9 +260,11 @@ export default function HallucineChatbot() {
                     }`}
                   >
                     {msg.role === "assistant" ? (
-                      <div className="prose prose-sm prose-invert max-w-none [&_p]:my-1 [&_ul]:my-1 [&_li]:my-0.5 [&_strong]:text-warm/90">
-                        <Streamdown>{msg.content}</Streamdown>
-                      </div>
+                      <MarkdownRenderer
+                        className="prose prose-sm prose-invert max-w-none [&_p]:my-1 [&_ul]:my-1 [&_li]:my-0.5 [&_strong]:text-warm/90"
+                      >
+                        {msg.content}
+                      </MarkdownRenderer>
                     ) : (
                       <p className="whitespace-pre-wrap">{msg.content}</p>
                     )}
@@ -277,7 +277,6 @@ export default function HallucineChatbot() {
                 </div>
               ))}
 
-              {/* Loading indicator */}
               {chatMutation.isPending && (
                 <div className="flex gap-2.5 justify-start">
                   <div className="w-7 h-7 rounded-full bg-warm/15 flex items-center justify-center shrink-0">
@@ -293,7 +292,6 @@ export default function HallucineChatbot() {
                 </div>
               )}
 
-              {/* Suggested prompts (only if just welcome message) */}
               {messages.length === 1 && (
                 <div className="flex flex-wrap gap-2 mt-2">
                   {SUGGESTED_PROMPTS.map((prompt, i) => (
@@ -309,14 +307,12 @@ export default function HallucineChatbot() {
                 </div>
               )}
 
-              {/* CTA Devis button — apparaît après quelques échanges */}
               {showDevisButton && !chatMutation.isPending && messages.length > 2 && (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="mt-3 space-y-2"
                 >
-                  {/* Résumé des infos collectées */}
                   {collectedInfoCount > 0 && (
                     <div className="bg-warm/5 border border-warm/15 rounded-xl px-3 py-2.5">
                       <p className="text-warm/70 text-[10px] font-medium uppercase tracking-wider mb-1.5">Infos collectées de notre conversation</p>
