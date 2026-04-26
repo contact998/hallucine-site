@@ -155,7 +155,7 @@ export default function Accessoires() {
         </div>
       </section>
 
-      <RelatedProducts items={["ecrans", "arches", "contact"]} />
+      <RelatedProducts currentPage="accessoires" />
       <Footer />
     </div>
   );

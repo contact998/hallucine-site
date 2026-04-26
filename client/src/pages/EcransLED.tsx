@@ -92,7 +92,7 @@ export default function EcransLED() {
         </div>
       </section>
 
-      <RelatedProducts items={["ecranGeant", "arches", "comparaison"]} />
+      <RelatedProducts currentPage="ecrans-led" />
       <Footer />
     </div>
   );

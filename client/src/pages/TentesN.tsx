@@ -201,7 +201,7 @@ export default function TentesN() {
         </div>
       </section>
 
-      <RelatedProducts items={["tentesX", "tentesV", "tentesAraignee"]} />
+      <RelatedProducts currentPage="tente-n" />
       <Footer />
 
       {lightbox && (

@@ -280,7 +280,7 @@ export default function ArchesGonflables() {
         </div>
       </section>
 
-      <RelatedProducts items={["ecranGeant", "tentes", "mobilier"]} />
+      <RelatedProducts currentPage="arches" />
       <Footer />
     </div>
   );

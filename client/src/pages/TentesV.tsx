@@ -241,7 +241,7 @@ export default function TentesV() {
         </div>
       </section>
 
-       <RelatedProducts items={["tentesX", "tentesN", "tentesAraignee"]} />
+       <RelatedProducts currentPage="tente-v" />
       <Footer />
       {lightbox && (
         <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4" onClick={closeLightbox}>

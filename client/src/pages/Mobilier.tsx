@@ -297,7 +297,7 @@ export default function Mobilier() {
         </div>
       </section>
 
-      <RelatedProducts items={["tentes", "accessoires", "contact"]} />
+      <RelatedProducts currentPage="mobilier" />
       <Footer />
     </div>
   );

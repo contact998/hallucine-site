@@ -230,7 +230,7 @@ export default function TentesAraignees() {
         </div>
       </section>
 
-      <RelatedProducts items={["tentes", "mobilier", "accessoires"]} />
+      <RelatedProducts currentPage="tente-araignee" />
       <Footer />
     </div>
   );
