@@ -12,6 +12,7 @@ import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
+import { RelatedProducts } from "@/components/RelatedProducts";
 
 const MOBILIER_SUPPORT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/efvnhrOKvRVMyuHr.webp";
 const MOBILIER_FAUTEUIL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VUhsCVHmnpGqweWv.webp";
@@ -296,6 +297,7 @@ export default function Mobilier() {
         </div>
       </section>
 
+      <RelatedProducts items={["tentes", "accessoires", "contact"]} />
       <Footer />
     </div>
   );

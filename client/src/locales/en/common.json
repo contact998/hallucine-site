@@ -61,5 +61,7 @@
       "submit": "Submit",
       "thanks": "Thank you for subscribing!"
     }
-  }
+  },
+  "related_discover_also": "Discover more",
+  "related_discover": "Discover"
 }

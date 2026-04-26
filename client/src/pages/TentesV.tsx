@@ -12,6 +12,7 @@ import { Play, X as XIcon } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
+import { RelatedProducts } from "@/components/RelatedProducts";
 
 const heroImages = [
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HiOAOTLZaOhqpcQk.webp", alt: "Tente gonflable V blanche vue de face" },
@@ -240,8 +241,8 @@ export default function TentesV() {
         </div>
       </section>
 
+       <RelatedProducts items={["tentesX", "tentesN", "tentesAraignee"]} />
       <Footer />
-
       {lightbox && (
         <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4" onClick={closeLightbox}>
           <button onClick={closeLightbox} className="absolute top-4 right-4 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors" aria-label="Fermer">

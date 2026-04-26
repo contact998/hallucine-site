@@ -11,6 +11,7 @@ import { ChevronDown } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
+import { RelatedProducts } from "@/components/RelatedProducts";
 
 const archesData = [
   { ref: "CA-4/2.6/0.45", taille: "400×260(H)×45cm" },
@@ -279,6 +280,7 @@ export default function ArchesGonflables() {
         </div>
       </section>
 
+      <RelatedProducts items={["ecranGeant", "tentes", "mobilier"]} />
       <Footer />
     </div>
   );

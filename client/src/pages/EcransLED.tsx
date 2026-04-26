@@ -10,6 +10,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
+import { RelatedProducts } from "@/components/RelatedProducts";
 
 const ledImages = [
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/cNgCebtnqSvVUvmF.webp", alt: "Écran LED gonflable Hallucine de 5m pour projection de jour comme de nuit" },
@@ -91,6 +92,7 @@ export default function EcransLED() {
         </div>
       </section>
 
+      <RelatedProducts items={["ecranGeant", "arches", "comparaison"]} />
       <Footer />
     </div>
   );

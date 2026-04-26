@@ -10,6 +10,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
+import { RelatedProducts } from "@/components/RelatedProducts";
 
 export default function Accessoires() {
   const route = useRoutes();
@@ -154,6 +155,7 @@ export default function Accessoires() {
         </div>
       </section>
 
+      <RelatedProducts items={["ecrans", "arches", "contact"]} />
       <Footer />
     </div>
   );

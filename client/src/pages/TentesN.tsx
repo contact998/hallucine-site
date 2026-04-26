@@ -11,6 +11,7 @@ import { X as XIcon } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
+import { RelatedProducts } from "@/components/RelatedProducts";
 
 const heroImages = [
   { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp", alt: "Tente gonflable N Hallucine blanche dans la neige" },
@@ -200,6 +201,7 @@ export default function TentesN() {
         </div>
       </section>
 
+      <RelatedProducts items={["tentesX", "tentesV", "tentesAraignee"]} />
       <Footer />
 
       {lightbox && (

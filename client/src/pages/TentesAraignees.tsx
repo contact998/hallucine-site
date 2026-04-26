@@ -11,6 +11,7 @@ import { ChevronDown } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
+import { RelatedProducts } from "@/components/RelatedProducts";
 
 const tailles = [
   { dim: "4m × 4m", poids: "~50 kg", montage: "10-15 min" },
@@ -229,6 +230,7 @@ export default function TentesAraignees() {
         </div>
       </section>
 
+      <RelatedProducts items={["tentes", "mobilier", "accessoires"]} />
       <Footer />
     </div>
   );
