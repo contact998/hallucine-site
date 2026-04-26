@@ -58,7 +58,7 @@ async function startServer() {
         scriptSrc: [
           "'self'",
           "'unsafe-inline'",   // inline scripts (Google Analytics, nav-widget)
-          "'unsafe-eval'",     // requis par certains bundlers en prod
+          // 'unsafe-eval' supprimé — risque XSS (surveiller les erreurs console)
           "https://www.googletagmanager.com",
           "https://www.google-analytics.com",
           "https://hallucine.manus.space",

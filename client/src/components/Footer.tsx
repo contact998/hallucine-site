@@ -150,33 +150,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Schema.org JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": "Hallucine",
-            "url": "https://hallucinecran.fr",
-            "logo": LOGO_URL,
-            "description": "Fabricant d'écrans de cinéma gonflables depuis 1995. Écrans de 2 à 24 mètres, tentes, arches et mobilier gonflable.",
-            "foundingDate": "1995",
-            "email": "contact@hallucine.fr",
-            "telephone": "+33458212010",
-            "address": {
-              "@type": "PostalAddress",
-              "addressCountry": "FR"
-            },
-            "areaServed": "Worldwide",
-            "sameAs": [
-              "https://www.linkedin.com/company/hallucinecran",
-              "https://www.facebook.com/Hallucinecran",
-              "https://www.youtube.com/@Hallucinecran"
-            ]
-          })
-        }}
-      />
     </footer>
   );
 }

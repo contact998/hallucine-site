@@ -54,6 +54,7 @@ import PolitiqueCookies from "./pages/PolitiqueCookies.tsx";
 
 import { ROUTES } from "./i18n/routes.ts";
 import { SSRMetaContext, type SSRMeta } from "./context/SSRMetaContext.ts";
+import GlobalStructuredData from "./components/GlobalStructuredData.tsx";
 import type { Resource } from "i18next";
 
 // Simuler window pour les composants qui en ont besoin
@@ -214,6 +215,7 @@ export async function render(url: string, lang: string): Promise<{ html: string;
           <SSRMetaContext.Provider value={ssrMeta}>
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             <Router hook={ssrLocationHook as any}>
+              <GlobalStructuredData />
               <Page />
             </Router>
           </SSRMetaContext.Provider>
