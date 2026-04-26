@@ -106,6 +106,19 @@ export function serveStatic(app: Express) {
   // Servir les fichiers statiques (JS, CSS, images, etc.)
   app.use(express.static(distPath, { index: false }));
 
+  // Bloquer les patterns /xx (préfixes de langue invalides testés par bots SEO)
+  // Ex: /sv, /da, /nl, /pt, /pl, /ru, /zh, /ja, /ko...
+  // Ces URLs n'existent pas sur le site — retourner 404 propre pour GSC
+  const VALID_LANG_PREFIXES = new Set(["fr", "en", "de", "es", "it"]);
+  app.use(/^\/([a-z]{2})(\/|$)/, (req, res, next) => {
+    const lang = req.params[0];
+    if (!VALID_LANG_PREFIXES.has(lang)) {
+      res.status(404).set({ "Content-Type": "text/plain" }).end("Not Found");
+      return;
+    }
+    next();
+  });
+
   // SSG + Fallback SPA : priorité aux pages pré-rendues, sinon index.html générique
   app.use("*", async (req, res) => {
     const locale = getLocaleFromHost(req.hostname);
