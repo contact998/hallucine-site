@@ -1055,3 +1055,7 @@
 - [x] aria-label sur le textarea du chatbot HallucineChatbot
 - [x] Headers de sécurité via helmet (HSTS, X-Frame-Options, noSniff, Referrer-Policy, COOP)
 - [x] width/height sur toutes les images sans dimensions (Accessoires, Arches, EcranEconomique, EcranEtanche, EcranGeant, EcransLED, Galerie, Blog, BlogPost)
+- [x] CSP (Content Security Policy) activée en production via helmet avec tous les domaines tiers
+- [x] Chunking manuel Vite : tsparticles, i18n, recharts, radix-ui séparés en chunks distincts
+- [x] Preconnect + DNS prefetch pour files.manuscdn.com et d2xsxph8kpxj0f.cloudfront.net
+- [x] Optimisation i18n : seule la langue active + fr (fallback) chargée au démarrage (~530 Kio économisés)

@@ -48,8 +48,65 @@ async function startServer() {
     referrerPolicy: { policy: "strict-origin-when-cross-origin" },
     // Cross-Origin-Opener-Policy
     crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" },
-    // Désactiver CSP pour l'instant (site utilise des ressources externes nombreuses)
-    contentSecurityPolicy: false,
+    // CSP — autoriser les ressources externes connues
+    contentSecurityPolicy: isDev ? false : {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: [
+          "'self'",
+          "'unsafe-inline'",   // inline scripts (Google Analytics, nav-widget)
+          "'unsafe-eval'",     // requis par certains bundlers en prod
+          "https://www.googletagmanager.com",
+          "https://www.google-analytics.com",
+          "https://hallucine.manus.space",
+          "https://*.manus.space",
+        ],
+        styleSrc: [
+          "'self'",
+          "'unsafe-inline'",   // Tailwind + styled-components injectent du CSS inline
+          "https://fonts.googleapis.com",
+        ],
+        fontSrc: [
+          "'self'",
+          "https://fonts.gstatic.com",
+          "data:",
+        ],
+        imgSrc: [
+          "'self'",
+          "data:",
+          "blob:",
+          "https://d2xsxph8kpxj0f.cloudfront.net",
+          "https://files.manuscdn.com",
+          "https://img.youtube.com",
+          "https://www.googletagmanager.com",
+          "https://www.google-analytics.com",
+          "https://*.manus.space",
+          "https://*.manuscdn.com",
+        ],
+        connectSrc: [
+          "'self'",
+          "https://api.zippopotam.us",
+          "https://recherche-entreprises.api.gouv.fr",
+          "https://open.er-api.com",
+          "https://www.google-analytics.com",
+          "https://www.googletagmanager.com",
+          "https://hallucinecrm.manus.space",
+          "https://*.manus.space",
+          "https://*.manuscdn.com",
+          "wss:",              // WebSocket HMR
+        ],
+        frameSrc: [
+          "'self'",
+          "https://www.youtube.com",
+          "https://youtube.com",
+        ],
+        mediaSrc: ["'self'", "https://files.manuscdn.com", "https://d2xsxph8kpxj0f.cloudfront.net"],
+        objectSrc: ["'none'"],
+        baseUri: ["'self'"],
+        formAction: ["'self'"],
+        upgradeInsecureRequests: [],
+      },
+    },
     // Désactiver X-Powered-By
     hidePoweredBy: true,
   }));

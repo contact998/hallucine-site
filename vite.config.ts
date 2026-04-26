@@ -197,6 +197,35 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    // Chunking manuel pour séparer les grosses librairies
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // Chunk séparé pour tsparticles (lourd, non-critique)
+          if (id.includes('@tsparticles') || id.includes('tsparticles')) {
+            return 'particles';
+          }
+          // Chunk séparé pour i18next
+          if (id.includes('i18next') || id.includes('react-i18next')) {
+            return 'i18n';
+          }
+          // Chunk séparé pour les librairies de charts
+          if (id.includes('recharts') || id.includes('d3-')) {
+            return 'charts';
+          }
+          // Chunk séparé pour radix-ui (composants UI)
+          if (id.includes('@radix-ui')) {
+            return 'radix';
+          }
+          // Chunk vendor pour les autres dépendances node_modules
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+        },
+      },
+    },
+    // Augmenter le seuil d'avertissement pour les chunks
+    chunkSizeWarningLimit: 1000,
   },
   server: {
     host: true,

@@ -11,7 +11,7 @@
  * 4. Défaut : fr
  */
 import { initReactI18next } from "react-i18next";
-import { bundledResources } from "./locales-bundled";
+import { bundledResources, lazyResources } from "./locales-bundled";
 import { i18n } from "./instance";
 import { detectLanguage, VALID_LANGS } from "./domains";
 import type { Resource } from "i18next";
@@ -38,10 +38,12 @@ declare global {
 // Langue détectée UNE SEULE FOIS avant init
 const detectedLang = detectLanguage();
 
-// Construire les ressources pour toutes les langues
+// Construire les ressources : langue active + fallback fr en priorité, autres langues disponibles
 const resources: Resource = {};
 for (const lang of VALID_LANGS) {
-  resources[lang] = bundledResources[lang] as Resource[string] ?? {};
+  // bundledResources contient la langue active + fr (fallback)
+  // lazyResources contient les autres langues (chargées mais séparées par Vite)
+  resources[lang] = (bundledResources[lang] ?? lazyResources[lang]) as Resource[string] ?? {};
 }
 
 i18n
