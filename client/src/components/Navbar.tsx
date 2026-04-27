@@ -30,7 +30,7 @@ function LanguageSwitcher({ mobile = false }: { mobile?: boolean }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const { i18n: langI18n } = useTranslation("nav");
-  const activeLang = langI18n.language || detectLanguage();
+  const activeLang = (langI18n.language || detectLanguage()).split("-")[0];
   const [currentPath] = useLocation();
 
   // Calcul de l'URL cible page-à-page pour chaque langue
@@ -38,8 +38,9 @@ function LanguageSwitcher({ mobile = false }: { mobile?: boolean }) {
   const hreflangUrls = currentRouteKey ? getHreflangUrls(currentRouteKey) : null;
 
   const getLangUrl = (langCode: string, domainUrl: string): string => {
-    if (hreflangUrls?.[langCode]) return hreflangUrls[langCode] + "/";
-    return domainUrl + "/";
+    const base = hreflangUrls?.[langCode] ?? domainUrl;
+    // Évite le double slash : n'ajoute "/" que si l'URL ne se termine pas déjà par "/"
+    return base.endsWith("/") ? base : base + "/";
   };
 
   useEffect(() => {
