@@ -1,6 +1,14 @@
 import { eq, desc, and, sql } from "drizzle-orm";
 import { blogPosts, InsertBlogPost, BlogPost } from "../drizzle/schema";
-import { db } from "./db";
+import { drizzle } from "drizzle-orm/mysql2";
+import mysql from "mysql2/promise";
+
+const blogPool = mysql.createPool({
+  uri: process.env.BLOG_DATABASE_URL,
+  waitForConnections: true,
+  connectionLimit: 5,
+});
+const db = drizzle(blogPool, { mode: "default" });
 
 // ─── DeepL ───────────────────────────────────────────────────────
 
