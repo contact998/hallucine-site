@@ -839,6 +839,22 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
           );
         }
         await publishBlogPost(input.id);
+        // Purge du cache Cloudflare si configuré (optionnel — no-op si variables absentes)
+        if (process.env.CLOUDFLARE_ZONE_ID && process.env.CLOUDFLARE_API_TOKEN) {
+          fetch(
+            `https://api.cloudflare.com/client/v4/zones/${process.env.CLOUDFLARE_ZONE_ID}/purge_cache`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${process.env.CLOUDFLARE_API_TOKEN}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ purge_everything: true }),
+            }
+          ).catch((err) =>
+            console.error("[Cache] Erreur purge Cloudflare:", err)
+          );
+        }
         // Traduction automatique si article français
         const published = await getBlogPostById(input.id);
         if (published && published.lang === "fr") {
