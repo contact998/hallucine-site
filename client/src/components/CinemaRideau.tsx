@@ -50,13 +50,15 @@ function markCurtainSeen(): void {
 }
 
 export default function CinemaRideau() {
-  // Skip le rideau pour les bots et les revisites dans la même session
-  const [phase, setPhase] = useState<Phase>(() => {
-    if (typeof window !== "undefined" && (isBot() || hasSeenCurtain())) {
-      return "done";
+  // SSR-safe : toujours "waiting" au premier rendu (SSR + client)
+  // Le useEffect s'exécute uniquement côté client après hydratation
+  const [phase, setPhase] = useState<Phase>("waiting");
+
+  useEffect(() => {
+    if (isBot() || hasSeenCurtain()) {
+      setPhase("done");
     }
-    return "waiting";
-  });
+  }, []);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const fadeRef = useRef<ReturnType<typeof setInterval> | null>(null);
