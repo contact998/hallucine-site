@@ -8,8 +8,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
 const CURTAIN_SOUND_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/iwEWTRdKZwhOWzcW.mp3";
-const LOGO_TRANSPARENT_URL_WEBP = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ySiqVkOsMSzWfHfu.webp";
-const LOGO_TRANSPARENT_URL_PNG  = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tWSEvNLkFkmjxAXj.png";
+const LOGO_TRANSPARENT_URL_WEBP = "/logo-hallucine.webp";
+const LOGO_TRANSPARENT_URL_PNG  = "/logo-hallucine.png";
 
 // Timings (en ms)
 const OPEN_DURATION = 3000;       // Durée de l'animation d'ouverture (lente)

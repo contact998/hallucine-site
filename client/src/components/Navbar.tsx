@@ -16,7 +16,7 @@ import { i18n } from "@/i18n/instance"; // instance partagée — initialisée p
 import { LANGUAGE_DOMAINS, detectLanguage } from "@/i18n/domains";
 import { ROUTES, getRouteKey, getHreflangUrls } from "@/i18n/routes";
 
-const LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ySiqVkOsMSzWfHfu.webp";
+const LOGO_URL = "/logo-hallucine.webp";
 
 const languages = [
   { code: "fr", label: "FR", flag: "🇫🇷", url: LANGUAGE_DOMAINS.fr },
