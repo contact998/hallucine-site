@@ -1,7 +1,6 @@
 import { eq, desc, and, sql } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
-import mysql from "mysql2/promise";
 import { blogPosts, InsertBlogPost, BlogPost } from "../drizzle/schema";
+import { db } from "./db";
 
 // ─── DeepL ───────────────────────────────────────────────────────
 
@@ -74,15 +73,7 @@ export async function translateAndPublishPost(originalPost: BlogPost): Promise<v
   }
 }
 
-// Connexion dédiée à la base blog (MySQL-4O8O sur Railway)
-const blogPool = mysql.createPool({
-  uri: process.env.BLOG_DATABASE_URL,
-  waitForConnections: true,
-  connectionLimit: 5,
-  connectTimeout: 10_000,
-});
 
-const db = drizzle(blogPool, { mode: "default" });
 
 // ─── Helpers ────────────────────────────────────────────────────
 
