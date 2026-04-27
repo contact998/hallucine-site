@@ -12,25 +12,25 @@ import { useRoutes } from "@/i18n/useRoutes";
 
 /* ── CDN URLs des images ── */
 const IMG = {
-  schema1: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/mFJdqwHyuGSCOGql.webp",
-  schema2: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hrqKmxfHNvgXMiOR.webp",
-  schema3: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/SfMhjnmMPXmhTnCY.webp",
-  schema4: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/DWWkArXVCSsUOgpF.webp",
-  schema5: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ACzhHDDdRqtMviLu.webp",
-  schema6: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ozHATmEmVSUnLoJf.webp",
-  schema7: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eZAZdCzUqjLNowGy.webp",
-  masse: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/padxqxWNBzlFMRNx.webp",
-  piquet: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/SJRhdXcYkpvRGhjf.webp",
-  bache: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/SMGpaxEIHhmFEQHN.webp",
-  metre: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/MniFNdyEykjxHKpc.webp",
-  souffleur: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/othGWDTuMAfyXByS.webp",
+  schema1: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/mFJdqwHyuGSCOGql.webp",
+  schema2: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/hrqKmxfHNvgXMiOR.webp",
+  schema3: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/SfMhjnmMPXmhTnCY.webp",
+  schema4: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/DWWkArXVCSsUOgpF.webp",
+  schema5: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ACzhHDDdRqtMviLu.webp",
+  schema6: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ozHATmEmVSUnLoJf.webp",
+  schema7: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/eZAZdCzUqjLNowGy.webp",
+  masse: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/padxqxWNBzlFMRNx.webp",
+  piquet: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/SJRhdXcYkpvRGhjf.webp",
+  bache: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/SMGpaxEIHhmFEQHN.webp",
+  metre: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/MniFNdyEykjxHKpc.webp",
+  souffleur: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/othGWDTuMAfyXByS.webp",
 };
 
 export default function ModeEmploi() {
   const route = useRoutes();
   const { t } = useTranslation("mode-emploi");
 
-  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
 
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
   const [lightboxImg, setLightboxImg] = useState<{ src: string; alt: string } | null>(null);

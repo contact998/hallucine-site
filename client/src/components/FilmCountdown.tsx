@@ -9,7 +9,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
 // Son de projecteur vintage authentique (Mixkit "Vintage film projector working", libre de droits)
-const PROJECTOR_SOUND_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/NSvXTGcyBANIYpcE.mp3";
+const PROJECTOR_SOUND_URL = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/NSvXTGcyBANIYpcE.mp3";
 
 // Durée de chaque chiffre en ms (~1 seconde par chiffre)
 const STEP_DURATION = 900;

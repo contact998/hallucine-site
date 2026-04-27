@@ -79,12 +79,12 @@ async function startServer() {
           "data:",
           "blob:",
           "https://d2xsxph8kpxj0f.cloudfront.net",
-          "https://files.manuscdn.com",
+          "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev",
           "https://img.youtube.com",
           "https://www.googletagmanager.com",
           "https://www.google-analytics.com",
           "https://*.manus.space",
-          "https://*.manuscdn.com",
+          "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev",
         ],
         connectSrc: [
           "'self'",
@@ -95,7 +95,7 @@ async function startServer() {
           "https://www.googletagmanager.com",
           "https://hallucinecrm.manus.space",
           "https://*.manus.space",
-          "https://*.manuscdn.com",
+          "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev",
           "wss:",              // WebSocket HMR
         ],
         frameSrc: [
@@ -103,7 +103,7 @@ async function startServer() {
           "https://www.youtube.com",
           "https://youtube.com",
         ],
-        mediaSrc: ["'self'", "https://files.manuscdn.com", "https://d2xsxph8kpxj0f.cloudfront.net"],
+        mediaSrc: ["'self'", "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev", "https://d2xsxph8kpxj0f.cloudfront.net"],
         objectSrc: ["'none'"],
         baseUri: ["'self'"],
         formAction: ["'self'"],

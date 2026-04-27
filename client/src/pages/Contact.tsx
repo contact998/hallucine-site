@@ -20,7 +20,7 @@ const fadeIn = {
 export default function Contact() {
   const { t } = useTranslation("contact");
 
-  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 

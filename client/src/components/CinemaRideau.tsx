@@ -7,9 +7,9 @@
  */
 import { useState, useEffect, useRef, useCallback } from "react";
 
-const CURTAIN_SOUND_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/iwEWTRdKZwhOWzcW.mp3";
-const LOGO_TRANSPARENT_URL_WEBP = "/logo-hallucine.webp";
-const LOGO_TRANSPARENT_URL_PNG  = "/logo-hallucine.png";
+const CURTAIN_SOUND_URL = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/iwEWTRdKZwhOWzcW.mp3";
+const LOGO_TRANSPARENT_URL_WEBP = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ySiqVkOsMSzWfHfu.webp";
+const LOGO_TRANSPARENT_URL_PNG  = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/tWSEvNLkFkmjxAXj.png";
 
 // Timings (en ms)
 const OPEN_DURATION = 3000;       // Durée de l'animation d'ouverture (lente)

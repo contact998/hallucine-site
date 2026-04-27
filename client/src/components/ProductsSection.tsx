@@ -10,10 +10,10 @@ import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { getRoute } from "@/i18n/routes";
 
-const ECRAN_ETANCHE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tWHlxkXeLyoqBOzz.webp";
-const ECRAN_SOUFFLERIE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HpSkkCcPrajdeXOF.webp";
-const TENTE_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/zisRVgFNBpzCScJO.webp";
-const MOBILIER_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yLbqpriBLKZrILqt.webp";
+const ECRAN_ETANCHE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/tWHlxkXeLyoqBOzz.webp";
+const ECRAN_SOUFFLERIE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/HpSkkCcPrajdeXOF.webp";
+const TENTE_IMG = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/zisRVgFNBpzCScJO.webp";
+const MOBILIER_IMG = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/yLbqpriBLKZrILqt.webp";
 
 export default function ProductsSection() {
   const ref = useRef<HTMLDivElement>(null);

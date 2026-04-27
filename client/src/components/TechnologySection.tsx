@@ -42,21 +42,21 @@ export default function TechnologySection() {
         >
           <div className="overflow-hidden rounded-lg">
             <img loading="lazy"
-              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/zjGTWRUKMYDyOTDz.webp"
+              src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/zjGTWRUKMYDyOTDz.webp"
               alt="Ecran 24m gonfle au Stade Velodrome"
               className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
               width={600} height={400} decoding="async" />
           </div>
           <div className="overflow-hidden rounded-lg">
             <img loading="lazy"
-              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fVlIGWRbdtnxnbtQ.webp"
+              src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/fVlIGWRbdtnxnbtQ.webp"
               alt="Ecran 24m a plat au Stade Velodrome"
               className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
               width={600} height={400} decoding="async" />
           </div>
           <div className="overflow-hidden rounded-lg">
             <img loading="lazy"
-              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ahSYgICnXZOUogFE.webp"
+              src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ahSYgICnXZOUogFE.webp"
               alt="Equipe portant l ecran 24m a dos d homme"
               className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
               width={600} height={400} decoding="async" />

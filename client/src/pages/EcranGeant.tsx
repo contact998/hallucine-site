@@ -28,18 +28,18 @@ const specsData = [
 ];
 
 const galleryImages = [
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ibUxsSdoHUCVTWXC.webp", alt: "Écran de cinéma géant gonflable installé en plein centre-ville de Paris" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ceZNJOsztxIyhJFR.webp", alt: "Écran de cinéma géant gonflable de 17m sur 12m installé au Château de Vincennes" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/nRCfDZHKAKZaVovJ.webp", alt: "Écran de cinéma géant gonflable de 24m sur 15m au Stade Vélodrome de Marseille" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/mgzHsmFHRhiLXkxe.webp", alt: "Écran géant gonflable publicitaire pour la compagnie aérienne Air Tahiti Nui" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yOODHxsfnoySvIeF.webp", alt: "Écran de cinéma géant gonflable sur la pelouse du stade Orange Vélodrome à Marseille" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/noESUDgrqVMksAfK.webp", alt: "Écran géant gonflable utilisé lors d'un concert de musique classique en plein air" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tCqNKBPDItjYphtU.webp", alt: "Projection de film sur un écran géant gonflable installé sur le pont d'un bateau de croisière" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/KyGcSMszotGbnaDR.webp", alt: "Spectacle nocturne avec trois écrans géants gonflables et feu d'artifice en arrière-plan" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/bvlWRXzIugTjAUFz.webp", alt: "Trois écrans de cinéma géants gonflables installés en plein air au coucher du soleil" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/oXeHaZJFwXJhRXdM.webp", alt: "Démonstration du montage facile d'un écran géant gonflable par une équipe de trois personnes" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/OWMdZNnUOoKKIQbm.webp", alt: "Vue depuis les gradins de l'écran géant gonflable au stade Vélodrome Orange de Marseille" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/lEBTacTZinecXqKx.webp", alt: "Écran géant gonflable lors d'un événement en plein air organisé par Canal+" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ibUxsSdoHUCVTWXC.webp", alt: "Écran de cinéma géant gonflable installé en plein centre-ville de Paris" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ceZNJOsztxIyhJFR.webp", alt: "Écran de cinéma géant gonflable de 17m sur 12m installé au Château de Vincennes" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/nRCfDZHKAKZaVovJ.webp", alt: "Écran de cinéma géant gonflable de 24m sur 15m au Stade Vélodrome de Marseille" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/mgzHsmFHRhiLXkxe.webp", alt: "Écran géant gonflable publicitaire pour la compagnie aérienne Air Tahiti Nui" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/yOODHxsfnoySvIeF.webp", alt: "Écran de cinéma géant gonflable sur la pelouse du stade Orange Vélodrome à Marseille" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/noESUDgrqVMksAfK.webp", alt: "Écran géant gonflable utilisé lors d'un concert de musique classique en plein air" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/tCqNKBPDItjYphtU.webp", alt: "Projection de film sur un écran géant gonflable installé sur le pont d'un bateau de croisière" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/KyGcSMszotGbnaDR.webp", alt: "Spectacle nocturne avec trois écrans géants gonflables et feu d'artifice en arrière-plan" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/bvlWRXzIugTjAUFz.webp", alt: "Trois écrans de cinéma géants gonflables installés en plein air au coucher du soleil" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/oXeHaZJFwXJhRXdM.webp", alt: "Démonstration du montage facile d'un écran géant gonflable par une équipe de trois personnes" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/OWMdZNnUOoKKIQbm.webp", alt: "Vue depuis les gradins de l'écran géant gonflable au stade Vélodrome Orange de Marseille" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/lEBTacTZinecXqKx.webp", alt: "Écran géant gonflable lors d'un événement en plein air organisé par Canal+" },
 ];
 
 export default function EcranGeant() {
@@ -205,15 +205,15 @@ export default function EcranGeant() {
         <div className="container">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl mx-auto text-center">
             <div>
-              <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wXQjDSVfzojKfGxl.webp" alt="Icône écran gonflable le plus léger du monde par Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" decoding="async" />
+              <img loading="lazy" src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/wXQjDSVfzojKfGxl.webp" alt="Icône écran gonflable le plus léger du monde par Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" decoding="async" />
               <p className="text-ivory font-semibold">Les plus légers du monde</p>
             </div>
             <div>
-              <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YplQWxdVdPyLKIiY.webp" alt="Icône garantie 10 ans sur les écrans gonflables Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" decoding="async" />
+              <img loading="lazy" src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/YplQWxdVdPyLKIiY.webp" alt="Icône garantie 10 ans sur les écrans gonflables Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" decoding="async" />
               <p className="text-ivory font-semibold">Avec 10 ans de garantie</p>
             </div>
             <div>
-              <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZUADZwnRzRLzkrrt.webp" alt="Icône souffleur permanent pour écrans gonflables Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" decoding="async" />
+              <img loading="lazy" src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ZUADZwnRzRLzkrrt.webp" alt="Icône souffleur permanent pour écrans gonflables Hallucine" className="w-20 h-20 object-contain mx-auto mb-3" decoding="async" />
               <p className="text-ivory font-semibold">(avec souffleur permanent)</p>
             </div>
           </div>

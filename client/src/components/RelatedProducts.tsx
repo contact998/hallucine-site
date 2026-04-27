@@ -22,7 +22,7 @@ import { ArrowRight } from "lucide-react";
 
 // ─── Config produits ────────────────────────────────────────────────────────
 
-const CDN = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825";
+const CDN = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets";
 
 interface ProductMeta {
   titleKey: string;

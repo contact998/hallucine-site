@@ -16,8 +16,8 @@ import { motion } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
 
 // CDN assets
-const LOGO_URL = "/logo-hallucine.webp";
-const LION_ROAR_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yuhDGjetZRdDdWwT.mp3";
+const LOGO_URL = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ySiqVkOsMSzWfHfu.webp";
+const LION_ROAR_URL = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/yuhDGjetZRdDdWwT.mp3";
 
 interface CinemaSuccessAnimationProps {
   prenom?: string;

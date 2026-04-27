@@ -15,7 +15,7 @@ export default function DevenirDistributeur() {
   const route = useRoutes();
   const { t } = useTranslation("devenir-distributeur");
 
-  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
 
   const avantages = [
     { icon: Award, title: t("av1_title"), desc: t("av1_desc") },

@@ -16,7 +16,7 @@ export default function Tentes() {
   const route = useRoutes();
   const { t } = useTranslation("tentes");
 
-  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/TVmrusoKmXcTvkKP.webp");
 
   const categories = [
     { title: t("c1_title"), desc: t("c1_desc"), href: route("tente-x") },

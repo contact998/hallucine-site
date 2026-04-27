@@ -15,18 +15,18 @@ import { useRoutes } from "@/i18n/useRoutes";
 import { RelatedProducts } from "@/components/RelatedProducts";
 
 const heroImages = [
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HiOAOTLZaOhqpcQk.webp", alt: "Tente gonflable V blanche vue de face" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/nvpNhKQWdZSYGIgR.webp", alt: "Tente gonflable V blanche vue d'ensemble" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/EpaIyWYtXIFowiQT.webp", alt: "Tente gonflable V personnalisée avec logo" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/deVDPczivrfxEEVT.webp", alt: "Tente gonflable V stand événement extérieur" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/HiOAOTLZaOhqpcQk.webp", alt: "Tente gonflable V blanche vue de face" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/nvpNhKQWdZSYGIgR.webp", alt: "Tente gonflable V blanche vue d'ensemble" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/EpaIyWYtXIFowiQT.webp", alt: "Tente gonflable V personnalisée avec logo" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/deVDPczivrfxEEVT.webp", alt: "Tente gonflable V stand événement extérieur" },
 ];
 
-const schemaEclate = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qSTOOwNPJJIAFgwe.webp";
+const schemaEclate = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/qSTOOwNPJJIAFgwe.webp";
 
 export default function TentesV() {
   const route = useRoutes();
   const { t } = useTranslation("tente-v");
-  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/TVmrusoKmXcTvkKP.webp");
 
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);

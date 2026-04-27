@@ -31,19 +31,19 @@ const sansSouffleur = [
 ];
 
 const imagesAvecSouffleur = [
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WXsnQMOOUttRbUlr.webp", alt: "Écran économique avec souffleur installé dans la cour d'un bâtiment" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qoINhxiIteIjBXYG.webp", alt: "Écran économique avec souffleur pour un petit public" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/WXsnQMOOUttRbUlr.webp", alt: "Écran économique avec souffleur installé dans la cour d'un bâtiment" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/qoINhxiIteIjBXYG.webp", alt: "Écran économique avec souffleur pour un petit public" },
 ];
 
 const imagesSansSouffleur = [
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BBvWfAFjPlbvBnAE.webp", alt: "Écran économique sans souffleur installé dans un parc" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IhxDeQNxHxMYBwlG.webp", alt: "Écran économique sans souffleur sur la plage" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/BBvWfAFjPlbvBnAE.webp", alt: "Écran économique sans souffleur installé dans un parc" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/IhxDeQNxHxMYBwlG.webp", alt: "Écran économique sans souffleur sur la plage" },
 ];
 
 const imagesFinales = [
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QClDxPadLVEYKlxM.webp", alt: "Écran économique comparaison de taille humaine" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hzkcpmfnpyIExDbf.webp", alt: "Écran économique vue de derrière" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WXsnQMOOUttRbUlr.webp", alt: "Écran économique installé en extérieur" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/QClDxPadLVEYKlxM.webp", alt: "Écran économique comparaison de taille humaine" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/hzkcpmfnpyIExDbf.webp", alt: "Écran économique vue de derrière" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/WXsnQMOOUttRbUlr.webp", alt: "Écran économique installé en extérieur" },
 ];
 
 // ─── Mini carousel ─────────────────────────────────────────────────────────────
@@ -78,7 +78,7 @@ function ImageCarousel({ images }: { images: { src: string; alt: string }[] }) {
 export default function EcranEconomique() {
   const route = useRoutes();
   const { t } = useTranslation("ecran-economique");
-  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
 
   const [showCountdown, setShowCountdown] = useState(true);
 
@@ -95,12 +95,12 @@ export default function EcranEconomique() {
           name: "Écrans Gonflables Économiques",
           description: "Nos écrans gonflables économiques sont la solution idéale pour des événements à petit budget sans compromis sur la qualité.",
           image: [
-            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WXsnQMOOUttRbUlr.webp",
-            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/qoINhxiIteIjBXYG.webp",
-            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BBvWfAFjPlbvBnAE.webp",
-            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IhxDeQNxHxMYBwlG.webp",
-            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/QClDxPadLVEYKlxM.webp",
-            "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hzkcpmfnpyIExDbf.webp",
+            "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/WXsnQMOOUttRbUlr.webp",
+            "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/qoINhxiIteIjBXYG.webp",
+            "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/BBvWfAFjPlbvBnAE.webp",
+            "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/IhxDeQNxHxMYBwlG.webp",
+            "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/QClDxPadLVEYKlxM.webp",
+            "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/hzkcpmfnpyIExDbf.webp",
           ],
           url: "https://hallucinecran.fr/ecran-economique",
           category: "Ecrans Gonflables",
@@ -276,15 +276,15 @@ export default function EcranEconomique() {
         <div className="container">
           <div className="flex flex-wrap justify-center items-center gap-8">
             <div className="flex flex-col items-center gap-2">
-              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wXQjDSVfzojKfGxl.webp" alt="Ancre marine" className="w-16 h-16 object-contain" loading="lazy" decoding="async" />
+              <img src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/wXQjDSVfzojKfGxl.webp" alt="Ancre marine" className="w-16 h-16 object-contain" loading="lazy" decoding="async" />
               <p className="text-white/60 text-xs text-center">{t("icon1_label")}</p>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YplQWxdVdPyLKIiY.webp" alt="Garantie 1 an" className="w-16 h-16 object-contain" loading="lazy" decoding="async" />
+              <img src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/YplQWxdVdPyLKIiY.webp" alt="Garantie 1 an" className="w-16 h-16 object-contain" loading="lazy" decoding="async" />
               <p className="text-white/60 text-xs text-center">{t("icon2_label")}</p>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZUADZwnRzRLzkrrt.webp" alt="Souffleur" className="w-16 h-16 object-contain" loading="lazy" decoding="async" />
+              <img src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ZUADZwnRzRLzkrrt.webp" alt="Souffleur" className="w-16 h-16 object-contain" loading="lazy" decoding="async" />
               <p className="text-white/60 text-xs text-center">{t("icon3_label")}</p>
             </div>
           </div>

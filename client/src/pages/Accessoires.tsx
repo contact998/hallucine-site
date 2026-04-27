@@ -16,43 +16,43 @@ export default function Accessoires() {
   const route = useRoutes();
   const { t } = useTranslation("accessoires");
 
-  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
 
   const accessoires = [
     {
       icon: Headphones,
       title: t("a1_title"),
-      img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wNIxhZRwHKCxifIM.webp",
+      img: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/wNIxhZRwHKCxifIM.webp",
       desc: t("a1_desc"),
     },
     {
       icon: Armchair,
       title: t("a2_title"),
-      img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/EuKdMCwdXBJSlNeL.webp",
+      img: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/EuKdMCwdXBJSlNeL.webp",
       desc: t("a2_desc"),
     },
     {
       icon: Radio,
       title: t("a3_title"),
-      img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/iVwKLqZcDAZHqcQS.webp",
+      img: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/iVwKLqZcDAZHqcQS.webp",
       desc: t("a3_desc"),
     },
     {
       icon: Sofa,
       title: t("a4_title"),
-      img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/gvHeJxbdjQzzfoZe.webp",
+      img: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/gvHeJxbdjQzzfoZe.webp",
       desc: t("a4_desc"),
     },
     {
       icon: Monitor,
       title: t("a5_title"),
-      img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/wpkWdAtohcYNVAzC.webp",
+      img: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/wpkWdAtohcYNVAzC.webp",
       desc: t("a5_desc"),
     },
     {
       icon: Package,
       title: t("a6_title"),
-      img: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/DWwZRSyIwFxpRLoR.webp",
+      img: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/DWwZRSyIwFxpRLoR.webp",
       desc: t("a6_desc"),
       bgWhite: true,
     },
@@ -66,7 +66,7 @@ export default function Accessoires() {
         product={{
           name: t("meta_title"),
           description: t("hero_desc"),
-          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp",
+          image: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp",
           url: "https://hallucinecran.fr/accessoire-cinema-plein-air",
           category: t("section_label"),
           minPrice: 99,

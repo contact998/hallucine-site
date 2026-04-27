@@ -21,10 +21,10 @@ const tailles = [
 ];
 
 const images = [
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/KGkXbQCcXEGqyaSz.webp", alt: "Tente araignée gonflable bleue installée sur l'herbe pour un événement en plein air" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/zlXEEbFQipJgezJx.webp", alt: "Tente araignée gonflable avec des parois latérales jaunes, créant un espace abrité" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/NNxCkFqPVeqmFjFC.webp", alt: "Tente araignée gonflable de couleur verte, se fondant dans un décor naturel" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/uOKkoMGgvsDEguJm.webp", alt: "Tente araignée gonflable noire personnalisée avec le logo 'Ealing Eagles'" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/KGkXbQCcXEGqyaSz.webp", alt: "Tente araignée gonflable bleue installée sur l'herbe pour un événement en plein air" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/zlXEEbFQipJgezJx.webp", alt: "Tente araignée gonflable avec des parois latérales jaunes, créant un espace abrité" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/NNxCkFqPVeqmFjFC.webp", alt: "Tente araignée gonflable de couleur verte, se fondant dans un décor naturel" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/uOKkoMGgvsDEguJm.webp", alt: "Tente araignée gonflable noire personnalisée avec le logo 'Ealing Eagles'" },
 ];
 
 export default function TentesAraignees() {

@@ -15,7 +15,7 @@ export default function APropos() {
   const route = useRoutes();
   const { t } = useTranslation("a-propos");
 
-  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
 
   const chiffres = [
     { value: "25+", label: t("stat1_label") },
@@ -40,7 +40,7 @@ export default function APropos() {
         article={{
           headline: t("histoire_title"),
           description: t("hero_desc"),
-          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp",
+          image: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp",
           url: "https://hallucinecran.com/a-propos-hallucine",
           datePublished: "1992-01-01T00:00:00Z",
         }}

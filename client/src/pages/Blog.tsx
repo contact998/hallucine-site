@@ -32,7 +32,7 @@ interface Article {
 export default function Blog() {
   const route = useRoutes();
   const { t } = useTranslation("blog");
-  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
 
   const [categorieActive, setCategorieActive] = useState("Toutes");
   const [expandedComments, setExpandedComments] = useState<Record<string, boolean>>({});
@@ -92,7 +92,7 @@ export default function Blog() {
           headline: "Blog Hallucine",
           description: "Actualités, conseils et tendances du cinéma en plein air. Articles sur les écrans gonflables, événements et innovations.",
           url: "https://hallucinecran.fr/blog",
-          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp"
+          image: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp"
         }}
       />
       <Navbar />

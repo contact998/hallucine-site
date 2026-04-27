@@ -14,13 +14,13 @@ import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
 import { RelatedProducts } from "@/components/RelatedProducts";
 
-const MOBILIER_SUPPORT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/efvnhrOKvRVMyuHr.webp";
-const MOBILIER_FAUTEUIL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VUhsCVHmnpGqweWv.webp";
-const MOBILIER_CANAPE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CYlbsneVJDOkGOhF.webp";
-const MOBILIER_BAR = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ufvprHQgVPbbyBlI.webp";
-const MOBILIER_MANGE_DEBOUT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yUqGwSVTzsTRviNh.webp";
-const ACCESSOIRE_CHARIOT = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/efvnhrOKvRVMyuHr.webp";
-const ACCESSOIRE_FLYCASE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/CYlbsneVJDOkGOhF.webp";
+const MOBILIER_SUPPORT = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/efvnhrOKvRVMyuHr.webp";
+const MOBILIER_FAUTEUIL = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/VUhsCVHmnpGqweWv.webp";
+const MOBILIER_CANAPE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/CYlbsneVJDOkGOhF.webp";
+const MOBILIER_BAR = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ufvprHQgVPbbyBlI.webp";
+const MOBILIER_MANGE_DEBOUT = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/yUqGwSVTzsTRviNh.webp";
+const ACCESSOIRE_CHARIOT = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/efvnhrOKvRVMyuHr.webp";
+const ACCESSOIRE_FLYCASE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/CYlbsneVJDOkGOhF.webp";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -33,7 +33,7 @@ const fadeIn = {
 export default function Mobilier() {
   const route = useRoutes();
   const { t } = useTranslation("mobilier");
-  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
@@ -132,7 +132,7 @@ export default function Mobilier() {
         product={{
           name: "Mobilier Gonflable Événementiel",
           description: "Notre gamme complète de mobilier gonflable pour tous vos événements.",
-          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jCghaPHMczbtTjIn.webp",
+          image: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/jCghaPHMczbtTjIn.webp",
           url: "https://hallucinecran.fr/mobilier",
           category: "Mobilier Gonflable",
           minPrice: 490,
@@ -144,7 +144,7 @@ export default function Mobilier() {
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <img loading="lazy" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/jCghaPHMczbtTjIn.webp" alt="Mobilier gonflable Hallucine en plein air" className="w-full h-full object-cover" style={{ objectPosition: 'center 20%' }} decoding="async" />
+          <img loading="lazy" src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/jCghaPHMczbtTjIn.webp" alt="Mobilier gonflable Hallucine en plein air" className="w-full h-full object-cover" style={{ objectPosition: 'center 20%' }} decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.10_0.03_260_/_0.5)] via-[oklch(0.12_0.03_260_/_0.3)] to-[oklch(0.10_0.03_260_/_0.05)]" />
           <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260_/_0.6)] via-transparent to-transparent" />
         </div>

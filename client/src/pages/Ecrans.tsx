@@ -18,7 +18,7 @@ export default function Ecrans() {
   const route = useRoutes();
   const { t } = useTranslation("ecrans");
 
-  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
 
   const gammes = [
     { title: t("g1_title"), desc: t("g1_desc"), href: route("ecran-geant"), highlight: t("g1_highlight") },
@@ -60,7 +60,7 @@ export default function Ecrans() {
         product={{
           name: "Écrans de Cinéma Gonflables Hallucine",
           description: t("meta_desc"),
-          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp",
+          image: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp",
           url: "/ecran-gonflable",
           category: t("section_label"),
           minPrice: 990,

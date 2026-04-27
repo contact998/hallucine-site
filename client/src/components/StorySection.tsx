@@ -6,13 +6,13 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-const ECRAN_TUBULAIRE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/JlNlzGmvIyCrQHIY.webp";
-const VOILERIE_BRETAGNE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/HuaJYMAXkcNubwBZ.webp";
-const KYTEA_HK = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ihAHJqPuCbLEmeIQ.webp";
-const ECLATE_ETANCHE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ORYwRnlcyusmCmpC.webp";
-const ECRANS_ETANCHE_5_6 = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VDWrGjsVLLnZNbTR.webp";
-const REPAS_CHINOIS = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VGMyogZBklEVINLW.webp";
-const TROIS_ECRANS = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fGEhAORVzMgloRQI.webp";
+const ECRAN_TUBULAIRE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/JlNlzGmvIyCrQHIY.webp";
+const VOILERIE_BRETAGNE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/HuaJYMAXkcNubwBZ.webp";
+const KYTEA_HK = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ihAHJqPuCbLEmeIQ.webp";
+const ECLATE_ETANCHE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ORYwRnlcyusmCmpC.webp";
+const ECRANS_ETANCHE_5_6 = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/VDWrGjsVLLnZNbTR.webp";
+const REPAS_CHINOIS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/VGMyogZBklEVINLW.webp";
+const TROIS_ECRANS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/fGEhAORVzMgloRQI.webp";
 
 const CHAPTER_IMAGES: { image: string | null; smallImage?: boolean; extraSmall?: boolean }[] = [
   { image: ECRAN_TUBULAIRE, smallImage: true },

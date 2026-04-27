@@ -15,14 +15,14 @@ import { useRoutes } from "@/i18n/useRoutes";
 import { RelatedProducts } from "@/components/RelatedProducts";
 
 const heroImages = [
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/fHOHtmjSEZCdfvZR.webp", alt: "Tentes gonflables X Meguiar's noires et jaunes de nuit" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/upTjWnEqwNFkSAuN.webp", alt: "Tente gonflable X Hallucine noire avec logo" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/snASjOxpYmvdMRXE.webp", alt: "Tentes gonflables X personnalisées multiples" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZgESYNaQchclOBaW.webp", alt: "Tente gonflable X Ealing Eagles personnalisée" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/fHOHtmjSEZCdfvZR.webp", alt: "Tentes gonflables X Meguiar's noires et jaunes de nuit" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/upTjWnEqwNFkSAuN.webp", alt: "Tente gonflable X Hallucine noire avec logo" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/snASjOxpYmvdMRXE.webp", alt: "Tentes gonflables X personnalisées multiples" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ZgESYNaQchclOBaW.webp", alt: "Tente gonflable X Ealing Eagles personnalisée" },
 ];
 
 const contentImages = {
-  tentePerso: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/YDVeZvrXTWvHTZKL.webp",
+  tentePerso: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/YDVeZvrXTWvHTZKL.webp",
 };
 
 function ImageCarousel({ images }: { images: { src: string; alt: string }[] }) {

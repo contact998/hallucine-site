@@ -28,10 +28,10 @@ const archesData = [
 ];
 
 const galleryImages = [
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vbfbnQBVCUGrWUOw.webp", alt: "Arche gonflable cinéma en plein air avec écran de projection" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eqdRLmacrGAlLxMw.webp", alt: "Arche gonflable colorée pour arrivée de course sportive" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/yuLqkYzSuwxDVzhu.webp", alt: "Arche gonflable bleue et rouge pour entrée de projection" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/tZPYCxQHEVFUCaJD.webp", alt: "Arche gonflable blanche décorée motifs floraux" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vbfbnQBVCUGrWUOw.webp", alt: "Arche gonflable cinéma en plein air avec écran de projection" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/eqdRLmacrGAlLxMw.webp", alt: "Arche gonflable colorée pour arrivée de course sportive" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/yuLqkYzSuwxDVzhu.webp", alt: "Arche gonflable bleue et rouge pour entrée de projection" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/tZPYCxQHEVFUCaJD.webp", alt: "Arche gonflable blanche décorée motifs floraux" },
 ];
 
 export default function ArchesGonflables() {
@@ -263,7 +263,7 @@ export default function ArchesGonflables() {
               </ul>
             </div>
             <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
-              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eqdRLmacrGAlLxMw.webp" alt="Détails techniques d'une arche gonflable" className="w-full h-full object-cover" loading="lazy" decoding="async" width={800} height={500} />
+              <img src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/eqdRLmacrGAlLxMw.webp" alt="Détails techniques d'une arche gonflable" className="w-full h-full object-cover" loading="lazy" decoding="async" width={800} height={500} />
             </div>
           </div>
         </div>

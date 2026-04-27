@@ -14,20 +14,20 @@ import { useRoutes } from "@/i18n/useRoutes";
 import { RelatedProducts } from "@/components/RelatedProducts";
 
 const heroImages = [
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp", alt: "Tente gonflable N Hallucine blanche dans la neige" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/apmHySbtINxVnjYV.webp", alt: "Tente gonflable N Volvo Discover dans la neige" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/erdtrTEYYaBaTrbE.webp", alt: "Tente gonflable N blanche grande vue latérale" },
-  { src: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/WMxgFPZnUaijiyGz.webp", alt: "Tente gonflable N Croix-Rouge verte" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/TVmrusoKmXcTvkKP.webp", alt: "Tente gonflable N Hallucine blanche dans la neige" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/apmHySbtINxVnjYV.webp", alt: "Tente gonflable N Volvo Discover dans la neige" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/erdtrTEYYaBaTrbE.webp", alt: "Tente gonflable N blanche grande vue latérale" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/WMxgFPZnUaijiyGz.webp", alt: "Tente gonflable N Croix-Rouge verte" },
 ];
 
 const contentImages = {
-  schemaEclate: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/BhBEducothOIuNNg.webp",
+  schemaEclate: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/BhBEducothOIuNNg.webp",
 };
 
 export default function TentesN() {
   const route = useRoutes();
   const { t } = useTranslation("tente-n");
-  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/TVmrusoKmXcTvkKP.webp");
 
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
   const openLightbox = useCallback((src: string, alt: string) => setLightbox({ src, alt }), []);
@@ -45,7 +45,7 @@ export default function TentesN() {
         product={{
           name: "Tentes en forme de N",
           description: "Tente gonflable N polyvalente. Utilisée par la Croix-Rouge et pour événements.",
-          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/TVmrusoKmXcTvkKP.webp",
+          image: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/TVmrusoKmXcTvkKP.webp",
           url: "https://hallucinecran.fr/tentes-gonflables-n",
           category: "Tentes gonflables",
           minPrice: 1990,

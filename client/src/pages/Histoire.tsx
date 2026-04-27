@@ -12,13 +12,13 @@ import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
 
-const ETANCHE_3M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/hIDMieDLnUJYNHGY.webp";
-const ETANCHE_5M_RITZ = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/IzUUAouVxqDCjGMh.webp";
-const SOUFFLERIE_13M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ATgcmLVpJkJrnbvK.webp";
-const SOUFFLERIE_24M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/eEXwXGCYYCdjehRy.webp";
-const SOUFFLERIE_15M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/VWHPufHDlQZZyhyU.webp";
-const SOUFFLERIE_12M = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/ZsaxtYrqVuqTZtAv.webp";
-const TENTE = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/sEPwifSRENrYAMaz.webp";
+const ETANCHE_3M = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/hIDMieDLnUJYNHGY.webp";
+const ETANCHE_5M_RITZ = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/IzUUAouVxqDCjGMh.webp";
+const SOUFFLERIE_13M = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ATgcmLVpJkJrnbvK.webp";
+const SOUFFLERIE_24M = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/eEXwXGCYYCdjehRy.webp";
+const SOUFFLERIE_15M = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/VWHPufHDlQZZyhyU.webp";
+const SOUFFLERIE_12M = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ZsaxtYrqVuqTZtAv.webp";
+const TENTE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/sEPwifSRENrYAMaz.webp";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -29,7 +29,7 @@ export default function Histoire() {
   const route = useRoutes();
   const { t } = useTranslation("histoire");
 
-  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
 
   const chapters = [
     { year: t("ch1_year"), title: t("ch1_title"), text: t("ch1_text"), image: null, quote: null },
@@ -65,7 +65,7 @@ export default function Histoire() {
         article={{
           headline: t("meta_title"),
           description: t("meta_desc"),
-          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663291384825/vajzfoYsbBMsDfIq.webp",
+          image: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp",
           url: "https://hallucinecran.fr/histoire-hallucine",
           datePublished: "2023-01-15T09:00:00+00:00",
           dateModified: "2024-05-20T14:30:00+00:00",
