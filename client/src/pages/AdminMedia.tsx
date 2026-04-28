@@ -384,6 +384,8 @@ function EditInline({
         value={subcategory}
         onChange={e => setSubcategory(e.target.value)}
         placeholder="Sous-catégorie"
+        onMouseDown={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
         className="w-full text-xs bg-white/10 border border-white/20 rounded px-2 py-1.5 text-white placeholder-white/30 focus:outline-none focus:border-amber-500/50"
       />
       <label className="flex items-center gap-2 text-xs text-white/70 cursor-pointer">
