@@ -1,13 +1,18 @@
 /*
  * Section Réalisations — Galerie masonry premium
- * Photos variées de toutes les catégories
+ * Images chargées depuis media_library (category: "realisations")
+ * Fallback automatique sur les URLs hardcodées si la DB ne répond pas
  */
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { X } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { trpc } from "@/lib/trpc";
 
-const photos = [
+// ─── Fallback hardcodé — affiché si la DB est indisponible ───────────────────
+// Ne jamais supprimer ce tableau : c'est le filet de sécurité.
+
+const FALLBACK_PHOTOS = [
   {
     src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/eEXwXGCYYCdjehRy.webp",
     alt: "Spectaculaire projection nocturne sur un écran de cinéma gonflable de 24m par Hallucine",
@@ -100,11 +105,53 @@ const photos = [
   },
 ];
 
+// ─── Spans par défaut pour les images venant de la DB (sans span stocké) ─────
+// Reproduit le pattern visuel original : grande / petite / large / petite...
+const DEFAULT_SPANS = [
+  "col-span-2 row-span-2",
+  "col-span-1 row-span-1",
+  "col-span-2 row-span-1",
+  "col-span-1 row-span-1",
+  "col-span-1 row-span-1",
+  "col-span-2 row-span-2",
+  "col-span-1 row-span-1",
+  "col-span-1 row-span-1",
+  "col-span-1 row-span-1",
+  "col-span-1 row-span-1",
+  "col-span-1 row-span-1",
+  "col-span-2 row-span-1",
+  "col-span-1 row-span-1",
+  "col-span-1 row-span-1",
+  "col-span-2 row-span-1",
+];
+
+// ─── Composant ────────────────────────────────────────────────────────────────
+
 export default function RealisationsSection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const [lightbox, setLightbox] = useState<number | null>(null);
   const { t } = useTranslation("home");
+
+  // Charger les images depuis la DB
+  const { data: dbImages, isError } = trpc.media.byCategory.useQuery(
+    { category: "realisations" },
+    {
+      staleTime: 5 * 60 * 1000, // 5 min de cache — pas besoin de refetch à chaque render
+      retry: 1,                  // 1 seul retry — si ça échoue, on bascule sur le fallback
+    }
+  );
+
+  // Fallback automatique : DB vide ou erreur → photos hardcodées
+  const photos =
+    !isError && dbImages && dbImages.length > 0
+      ? dbImages.map((img, i) => ({
+          src:     img.url,
+          alt:     img.alt ?? img.title ?? "",
+          caption: img.title ?? "",
+          span:    DEFAULT_SPANS[i % DEFAULT_SPANS.length],
+        }))
+      : FALLBACK_PHOTOS;
 
   return (
     <section id="realisations" className="relative py-32 overflow-hidden">
@@ -133,7 +180,7 @@ export default function RealisationsSection() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 auto-rows-[140px] md:auto-rows-[200px]">
           {photos.map((photo, i) => (
             <motion.div
-              key={i}
+              key={photo.src}
               initial={{ opacity: 0, scale: 0.95 }}
               animate={inView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.5, delay: 0.1 + i * 0.05 }}
@@ -145,8 +192,10 @@ export default function RealisationsSection() {
                 alt={photo.alt}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 loading="lazy"
-                width={600} height={400}
-              decoding="async" />
+                width={600}
+                height={400}
+                decoding="async"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
                 <span className="text-white text-sm font-medium">{photo.caption}</span>
@@ -176,8 +225,11 @@ export default function RealisationsSection() {
             src={photos[lightbox].src}
             alt={photos[lightbox].alt}
             className="max-w-full max-h-[85vh] object-contain"
-            width={1200} height={800}
-          decoding="async" loading="lazy" />
+            width={1200}
+            height={800}
+            decoding="async"
+            loading="lazy"
+          />
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
             <p className="text-white/70 text-sm font-medium">{photos[lightbox].caption}</p>
           </div>

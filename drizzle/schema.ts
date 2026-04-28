@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { boolean, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -189,3 +189,62 @@ export const blogPosts = mysqlTable("blog_posts", {
 
 export type BlogPost = typeof blogPosts.$inferSelect;
 export type InsertBlogPost = typeof blogPosts.$inferInsert;
+
+// ─── Médiathèque centrale ─────────────────────────────────────────────────────
+export const mediaLibrary = mysqlTable("media_library", {
+  id:          int("id").autoincrement().primaryKey(),
+  // ─── Fichier ─────────────────────────────────────────────────────────────
+  /** URL publique R2 — clé unique, jamais modifiée après upload */
+  url:         varchar("url", { length: 1000 }).notNull().unique(),
+  /** Nom de fichier original (ex: "ecran-geant-paris.webp") */
+  filename:    varchar("filename", { length: 500 }).notNull(),
+  /** Taille en octets */
+  filesize:    int("filesize"),
+  /** Dimensions en pixels */
+  width:       int("width"),
+  height:      int("height"),
+  /** MIME type (image/webp, image/jpeg, image/png) */
+  mimeType:    varchar("mimeType", { length: 50 }),
+  // ─── Métadonnées éditoriales ──────────────────────────────────────────────
+  /** Texte alternatif pour l'accessibilité et le SEO */
+  alt:         varchar("alt", { length: 500 }),
+  /** Nom lisible affiché dans l'admin */
+  title:       varchar("title", { length: 500 }),
+  /** Tags JSON array — ex: '["cinema","exterieur","nuit"]' */
+  tags:        varchar("tags", { length: 1000 }),
+  // ─── Catégorie ────────────────────────────────────────────────────────────
+  category:    mysqlEnum("category", [
+                 "blog",         // images articles blog
+                 "realisations", // galerie réalisations
+                 "galerie",      // page galerie publique
+                 "produits",     // pages produits (écrans, tentes...)
+                 "ui",           // logos, icônes, images d'interface
+                 "og",           // Open Graph / réseaux sociaux
+                 "autre",        // tout le reste
+               ]).notNull().default("autre"),
+  /** Sous-catégorie libre — ex: "ecran-geant", "tente-x", "events" */
+  subcategory: varchar("subcategory", { length: 100 }),
+  // ─── Tri et visibilité ────────────────────────────────────────────────────
+  /** Ordre d'affichage dans les galeries (plus petit = premier) */
+  sortOrder:   int("sortOrder").default(0).notNull(),
+  /** false = masqué dans le site mais conservé en DB et sur R2 */
+  active:      boolean("active").default(true).notNull(),
+  // ─── Traçabilité ──────────────────────────────────────────────────────────
+  source:      mysqlEnum("source", [
+                 "upload_web",  // uploadé via l'interface admin
+                 "upload_cli",  // uploadé via le script CLI local
+                 "migration",   // importé depuis le code (Phase 2)
+                 "external",    // URL externe, non hébergée sur R2
+               ]).notNull().default("upload_web"),
+  /** ID admin qui a uploadé — null si migration ou CLI sans auth */
+  uploadedBy:  int("uploadedBy"),
+  /** Nombre de fois que cette image est référencée en DB */
+  usageCount:  int("usageCount").default(0).notNull(),
+  createdAt:   timestamp("createdAt").defaultNow().notNull(),
+  updatedAt:   timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type MediaItem = typeof mediaLibrary.$inferSelect;
+export type InsertMediaItem = typeof mediaLibrary.$inferInsert;
+export type MediaCategory = "blog" | "realisations" | "galerie" | "produits" | "ui" | "og" | "autre";
+export type MediaSource = "upload_web" | "upload_cli" | "migration" | "external";

@@ -59,6 +59,7 @@ import {
   countPublishedPosts,
   translateAndPublishPost,
 } from "./blog";
+import { adminMediaRouter } from "./routers/adminMedia";
 
 // ─── Anti-spam : Rate limiting en mémoire ───
 const rateLimitMap = new Map<string, number[]>();
@@ -922,6 +923,8 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
         return { success, url: input.url };
       }),
   }),
+  // ===== Médiathèque =====
+  media: adminMediaRouter,
 });
 
 export type AppRouter = typeof appRouter;
