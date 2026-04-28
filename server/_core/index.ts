@@ -129,6 +129,27 @@ async function startServer() {
     next();
   });
 
+
+  // Servir robots.txt explicitement — nécessaire pour que Cloudflare détecte
+  // le fichier et fusionne son contenu géré avec nos directives Sitemap.
+  app.get("/robots.txt", async (req, res) => {
+    try {
+      const { readFileSync, existsSync } = await import("fs");
+      const { resolve, dirname } = await import("path");
+      const { fileURLToPath } = await import("url");
+      const dir = dirname(fileURLToPath(import.meta.url));
+      const robotsPath = resolve(dir, "../../client/public/robots.txt");
+      if (existsSync(robotsPath)) {
+        res.setHeader("Content-Type", "text/plain");
+        res.send(readFileSync(robotsPath, "utf-8"));
+      } else {
+        res.status(404).send("Not found");
+      }
+    } catch {
+      res.status(500).send("Error");
+    }
+  });
+
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
 
@@ -235,14 +256,6 @@ async function startServer() {
   // Redirection 301 : /devis → /contactez-nous (filet de sécurité pour liens externes)
   app.get("/devis", (_req, res) => {
     res.redirect(301, "/contactez-nous");
-  });
-
-  // Config publique — expose les variables OAuth au client (solution provisoire avant migration JWT)
-  app.get("/api/config", (_req, res) => {
-    res.json({
-      appId: process.env.VITE_APP_ID ?? "",
-      oauthPortalUrl: process.env.VITE_OAUTH_PORTAL_URL ?? "",
-    });
   });
 
   // tRPC API
