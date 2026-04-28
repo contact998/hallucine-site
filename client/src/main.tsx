@@ -8,9 +8,12 @@ import { createRoot } from "react-dom/client";
 import { I18nextProvider } from "react-i18next";
 import superjson from "superjson";
 import App from "./App";
-import { getLoginUrl } from "./const";
+import { getLoginUrl, initLoginUrl } from "./const";
 import "./index.css";
 import { Suspense } from "react";
+
+// Pré-charger la config OAuth depuis /api/config au démarrage
+initLoginUrl();
 
 /**
  * Détecte si une erreur tRPC est causée par une réponse HTML (502/503 du proxy)

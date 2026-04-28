@@ -237,6 +237,14 @@ async function startServer() {
     res.redirect(301, "/contactez-nous");
   });
 
+  // Config publique — expose les variables OAuth au client (solution provisoire avant migration JWT)
+  app.get("/api/config", (_req, res) => {
+    res.json({
+      appId: process.env.VITE_APP_ID ?? "",
+      oauthPortalUrl: process.env.VITE_OAUTH_PORTAL_URL ?? "",
+    });
+  });
+
   // tRPC API
   app.use(
     "/api/trpc",

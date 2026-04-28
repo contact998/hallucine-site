@@ -1,22 +1,32 @@
 export { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 
-// Generate login URL at runtime so redirect URI reflects the current origin.
-export const getLoginUrl = () => {
-  // SSR-safe : import.meta.env peut être undefined en Node.js
-  const env = (import.meta as any).env ?? {};
-  const oauthPortalUrl = env.VITE_OAUTH_PORTAL_URL;
-  const appId = env.VITE_APP_ID;
+// Cache de la config OAuth récupérée depuis le serveur
+let _configCache: { appId: string; oauthPortalUrl: string } | null = null;
 
-  // Si les variables OAuth ne sont pas configurées, retourner '#' pour éviter TypeError
-  if (!oauthPortalUrl || !appId) {
-    return "#";
+async function fetchOAuthConfig() {
+  if (_configCache) return _configCache;
+  try {
+    const res = await fetch("/api/config");
+    const data = await res.json();
+    _configCache = { appId: data.appId ?? "", oauthPortalUrl: data.oauthPortalUrl ?? "" };
+  } catch {
+    _configCache = { appId: "", oauthPortalUrl: "" };
   }
+  return _configCache;
+}
 
-  // SSR-safe : window peut être undefined en Node.js
+// Version synchrone — utilise le cache si disponible, sinon retourne "#"
+// Appeler initLoginUrl() au démarrage de l'app pour pré-charger la config
+export const getLoginUrl = (returnPath?: string): string => {
+  if (!_configCache) return "#";
+  const { appId, oauthPortalUrl } = _configCache;
+  if (!appId || !oauthPortalUrl) return "#";
   if (typeof window === "undefined") return "#";
 
   const redirectUri = `${window.location.origin}/api/oauth/callback`;
-  const state = btoa(redirectUri);
+  const state = btoa(
+    JSON.stringify({ redirectUri, returnPath: returnPath ?? window.location.pathname })
+  );
 
   const url = new URL(`${oauthPortalUrl}/app-auth`);
   url.searchParams.set("appId", appId);
@@ -26,3 +36,6 @@ export const getLoginUrl = () => {
 
   return url.toString();
 };
+
+// À appeler une seule fois au démarrage (dans main.tsx) pour pré-charger la config
+export const initLoginUrl = () => fetchOAuthConfig();
