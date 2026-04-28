@@ -16,6 +16,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
 import { RelatedProducts } from "@/components/RelatedProducts";
 import { useProductImages } from "@/hooks/useProductImages";
+import EmailLink from "@/components/EmailLink";
 
 const specsData = [
   { taille: "245 × 200 cm", toile: "218 × 122 cm", poids: "7 kg", hauteur: "50 cm", personnes: "1" },
@@ -230,7 +231,7 @@ export default function EcranEtanche() {
             </table>
           </div>
           <p className="text-white/40 text-xs mt-4">
-            Contact : contact@hallucine.fr · Tél : +33 6 80 14 76 94 · WhatsApp : +33 6 80 14 76 94
+            Contact : <EmailLink asText /> · Tél : +33 6 80 14 76 94 · WhatsApp : +33 6 80 14 76 94
           </p>
         </div>
       </section>

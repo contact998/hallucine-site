@@ -123,7 +123,7 @@ export default function HallucineChatbot() {
         {
           role: "assistant",
           content:
-            "Désolé, une erreur est survenue. Vous pouvez nous contacter directement au +33 6 80 14 76 94 ou via contact@hallucine.fr.",
+            "Désolé, une erreur est survenue. Vous pouvez nous contacter directement au +33 6 80 14 76 94 ou via contact [at] hallucine.fr.",
         },
       ]);
     },

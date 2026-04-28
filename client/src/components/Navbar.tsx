@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { i18n } from "@/i18n/instance"; // instance partagée — initialisée par config.ts (client) ou config.node.ts (SSR)
 import { LANGUAGE_DOMAINS, detectLanguage } from "@/i18n/domains";
 import { ROUTES, getRouteKey, getHreflangUrls } from "@/i18n/routes";
+import EmailLink from "@/components/EmailLink";
 
 const LOGO_URL = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ySiqVkOsMSzWfHfu.webp";
 
@@ -229,10 +230,7 @@ export default function Navbar() {
       <div className="fixed top-0 left-0 right-0 z-50 bg-[oklch(0.10_0.015_260)] border-b border-white/5 text-xs text-white/70 overflow-visible">
         <div className="container flex items-center justify-between py-1.5">
           <div className="flex items-center gap-4">
-            <a href="mailto:contact@hallucine.fr" className="flex items-center gap-1.5 hover:text-warm transition-colors py-1.5">
-              <Mail className="w-3 h-3" />
-              contact@hallucine.fr
-            </a>
+            <EmailLink className="flex items-center gap-1.5 hover:text-warm transition-colors py-1.5" />
             <a href="tel:+33680147694" className="flex items-center gap-1.5 hover:text-warm transition-colors py-1.5">
               <Phone className="w-3 h-3" />
               +33 6 80 14 76 94

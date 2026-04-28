@@ -10,6 +10,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
+import EmailLink from "@/components/EmailLink";
 
 export default function TrouverDistributeur() {
   const route = useRoutes();
@@ -78,9 +79,7 @@ export default function TrouverDistributeur() {
               <p className="text-white/60 text-sm mb-4">
                 {t("email_desc")}
               </p>
-              <a href="mailto:contact@hallucine.fr" className="text-gold hover:underline text-sm">
-                contact@hallucine.fr
-              </a>
+              <EmailLink className="text-gold hover:underline text-sm" />
             </div>
           </div>
 

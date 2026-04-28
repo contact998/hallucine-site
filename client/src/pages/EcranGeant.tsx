@@ -17,6 +17,7 @@ import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
 import { RelatedProducts } from "@/components/RelatedProducts";
 import { useProductImages } from "@/hooks/useProductImages";
+import EmailLink from "@/components/EmailLink";
 
 const specsData = [
   { taille: "8m × 6m", toile: "7m × 5m", poids: "35 kg", montage: "30 min", personnes: "1" },
@@ -270,10 +271,7 @@ export default function EcranGeant() {
 
           <div className="mt-8 p-6 bg-card border border-warm/20 rounded-lg flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8">
             <p className="text-ivory font-medium">{t("specs_note")}</p>
-            <a href="mailto:contact@hallucine.fr" className="flex items-center gap-2 text-warm hover:text-warm-light transition-colors">
-              <Mail className="w-4 h-4" />
-              contact@hallucine.fr
-            </a>
+            <EmailLink className="flex items-center gap-2 text-warm hover:text-warm-light transition-colors" />
             <a href="tel:+33458212010" className="flex items-center gap-2 text-warm hover:text-warm-light transition-colors">
               <Phone className="w-4 h-4" />
               +33 4 58 21 20 10

@@ -8,6 +8,7 @@ import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
+import EmailLink from "@/components/EmailLink";
 
 export default function Confidentialite() {
   const { t } = useTranslation("confidentialite");
@@ -103,7 +104,7 @@ export default function Confidentialite() {
                 <strong className="text-white/80">Hallucine EURL</strong><br />
                 {t("s4_contact_adresse")}<br />
                 {t("s4_contact_ville")}<br />
-                Email : <a href="mailto:contact@hallucine.fr" className="text-gold hover:underline">contact@hallucine.fr</a>
+                Email : <EmailLink className="text-gold hover:underline" />
               </p>
               <p className="mt-3">{t("s4_delai")}</p>
             </div>
@@ -122,7 +123,7 @@ export default function Confidentialite() {
               <h2 className="text-xl font-bold text-white mb-4">{t("s7_title")}</h2>
               <p>{t("s7_intro")}</p>
               <p className="mt-3">
-                <strong className="text-white/80">{t("s7_email_label")}</strong> {t("s7_email_value")}<br />
+                <strong className="text-white/80">{t("s7_email_label")}</strong> <EmailLink className="text-gold hover:underline" /><br />
                 <strong className="text-white/80">{t("s7_objet_label")}</strong> {t("s7_objet_value")}
               </p>
             </div>

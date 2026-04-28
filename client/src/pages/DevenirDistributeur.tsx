@@ -10,6 +10,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
+import EmailLink from "@/components/EmailLink";
 
 export default function DevenirDistributeur() {
   const route = useRoutes();
@@ -102,9 +103,7 @@ export default function DevenirDistributeur() {
             <Link href={route('contact')} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
               {t("cta_contact")}
             </Link>
-            <a href="mailto:contact@hallucine.fr" className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
-              contact@hallucine.fr
-            </a>
+            <EmailLink className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors" />
           </div>
         </div>
       </section>

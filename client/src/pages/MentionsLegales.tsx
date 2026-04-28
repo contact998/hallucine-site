@@ -10,6 +10,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
+import EmailLink from "@/components/EmailLink";
 
 export default function MentionsLegales() {
   const route = useRoutes();
@@ -115,7 +116,7 @@ export default function MentionsLegales() {
               <p>{t("s9_text")}</p>
               <p className="mt-2">
                 <strong className="text-white/80">{t("s9_email")}</strong>{" "}
-                <a href="mailto:contact@hallucine.fr" className="text-gold hover:underline">contact@hallucine.fr</a>
+                <EmailLink className="text-gold hover:underline" />
               </p>
               <p className="mt-2">
                 <strong className="text-white/80">{t("s9_tel")}</strong> +33 4 58 21 20 10

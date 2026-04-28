@@ -7,6 +7,7 @@ import { Link } from "wouter";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
+import EmailLink from "@/components/EmailLink";
 
 const LOGO_URL = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ySiqVkOsMSzWfHfu.webp";
 
@@ -87,9 +88,7 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <Mail className="w-4 h-4 text-warm mt-0.5 shrink-0" />
                 <div>
-                  <a href="mailto:contact@hallucine.fr" className="text-white/75 hover:text-warm transition-colors">
-                    contact@hallucine.fr
-                  </a>
+                  <EmailLink className="text-white/75 hover:text-warm transition-colors" />
                 </div>
               </li>
             </ul>

@@ -14,6 +14,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
 import { RelatedProducts } from "@/components/RelatedProducts";
 import { useProductImages } from "@/hooks/useProductImages";
+import EmailLink from "@/components/EmailLink";
 
 const FALLBACK_IMAGES_TENTE_X = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/fHOHtmjSEZCdfvZR.webp", alt: "Tentes gonflables X Meguiar's noires et jaunes de nuit" },
@@ -259,7 +260,7 @@ export default function TentesX() {
       <section className="py-8 bg-background">
         <div className="container text-center">
           <p className="text-white/60 text-sm">
-            Mail : <a href="mailto:contact@hallucine.fr" className="text-warm hover:underline">contact@hallucine.fr</a>
+            Mail : <EmailLink className="text-warm hover:underline" />
             {" / "}Mobile : <a href="tel:+33680147694" className="text-warm hover:underline">+33 6 80 14 76 94</a>
             {" / "}Tel : <a href="tel:+33458212010" className="text-warm hover:underline">+33 4 58 21 20 10</a>
             {" / "}WhatsApp : <a href="https://wa.me/33680147694" className="text-warm hover:underline">+33 6 80 14 76 94</a>

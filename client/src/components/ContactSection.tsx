@@ -8,6 +8,7 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import SmartForm from "./SmartForm";
 import { AvailabilityExtended } from "./AvailabilityIndicator";
 import { useTranslation } from "react-i18next";
+import EmailLink from "@/components/EmailLink";
 
 export default function ContactSection() {
   const { t } = useTranslation("contact");
@@ -40,7 +41,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <div className="text-white font-medium text-base">{t("email_label")}</div>
-                    <div className="text-white/70 text-base">contact@hallucine.fr</div>
+                    <EmailLink asText className="text-white/70 text-base" />
                   </div>
                 </div>
                 <div className="flex items-start gap-4">

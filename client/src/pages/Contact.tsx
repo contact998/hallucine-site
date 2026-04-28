@@ -11,6 +11,7 @@ import { ChevronDown, Clock, Globe, Shield, Truck, HelpCircle } from "lucide-rea
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
+import EmailLink from "@/components/EmailLink";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -104,7 +105,7 @@ export default function Contact() {
                 </p>
                 <p>
                   <strong className="text-white/80">{t("email_label_long")}</strong>{" "}
-                  <a href="mailto:contact@hallucine.fr" className="text-gold hover:underline">contact@hallucine.fr</a>
+                  <EmailLink className="text-gold hover:underline" />
                 </p>
                 <p>
                   <strong className="text-white/80">{t("langues_label")}</strong> {t("langues_value")}
