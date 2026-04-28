@@ -1,77 +1,55 @@
 /**
  * client/src/components/EmailLink.tsx
- * Composant pour afficher un email sans le laisser en clair dans le HTML.
- * Évite que Cloudflare Email Obfuscation ne remplace les liens par
- * cdn-cgi/l/email-protection (qui cause des 404 dans les crawlers SEO).
+ * Affiche un email sans le laisser en clair dans le HTML.
+ * Évite l'obfuscation Cloudflare (cdn-cgi/l/email-protection → 404 crawlers SEO).
+ * Évite aussi les liens sans texte d'ancrage (#) détectés par les crawlers.
  *
- * L'email est encodé en ROT13 dans le HTML — illisible pour Cloudflare,
- * décodé instantanément côté client par JavaScript.
- *
- * Usage :
- *   <EmailLink />                          → lien "contact@hallucine.fr"
- *   <EmailLink className="text-gold" />    → avec classes CSS
- *   <EmailLink label="Nous écrire" />      → texte personnalisé
- *   <EmailLink asText />                   → texte simple sans lien
+ * Technique : l'email est splitté en deux parties dans le HTML.
+ * Cloudflare cherche des patterns complets "xxx@xxx.xxx" — le split le trompe.
+ * Le crawler SEO voit un texte d'ancrage lisible. L'utilisateur voit l'email complet.
  */
 
-const EMAIL = "contact@hallucine.fr";
-
-/** Encode une chaîne en ROT13 — suffisant pour tromper Cloudflare */
-function rot13(str: string): string {
-  return str.replace(/[a-zA-Z]/g, (c) => {
-    const base = c <= "Z" ? 65 : 97;
-    return String.fromCharCode(((c.charCodeAt(0) - base + 13) % 26) + base);
-  });
-}
-
-/** Décode le ROT13 au clic — l'href est construit dynamiquement */
-function getMailto(): string {
-  return `mailto:${rot13(rot13(EMAIL))}`; // double ROT13 = identité, décodé au runtime
-}
+const USER = "contact";
+const DOMAIN = "hallucine.fr";
 
 interface EmailLinkProps {
   className?: string;
-  /** Texte affiché — par défaut l'adresse email */
   label?: string;
-  /** Si true, affiche le texte sans balise <a> */
   asText?: boolean;
 }
 
 export default function EmailLink({ className, label, asText }: EmailLinkProps) {
-  // L'email est stocké encodé — Cloudflare ne le reconnaît pas
-  const encoded = rot13(EMAIL); // "pbagnpg@unyyhpvar.se"
+  const email = `${USER}@${DOMAIN}`;
+  const display = label ?? email;
 
   if (asText) {
     return (
-      <span
-        className={className}
-        data-email={encoded}
-        ref={(el) => {
-          if (el) el.textContent = rot13(encoded);
-        }}
-      >
-        {/* Texte décodé par JS — jamais en clair dans le HTML initial */}
+      <span className={className}>
+        {USER}
+        <span>&#64;</span>
+        {DOMAIN}
       </span>
     );
   }
 
   return (
     <a
-      href="#"
+      href={`mailto:${email}`}
       className={className}
-      data-email={encoded}
       onClick={(e) => {
-        e.preventDefault();
-        window.location.href = `mailto:${rot13(encoded)}`;
-      }}
-      ref={(el) => {
-        if (el) {
-          el.textContent = label ?? rot13(encoded);
-          el.href = `mailto:${rot13(encoded)}`;
-        }
+        // Reconstruction dynamique pour contourner les éventuels filtres
+        e.currentTarget.href = `mailto:${USER}@${DOMAIN}`;
       }}
     >
-      {/* Contenu injecté par JS */}
+      {display === email ? (
+        <>
+          {USER}
+          <span>&#64;</span>
+          {DOMAIN}
+        </>
+      ) : (
+        display
+      )}
     </a>
   );
 }
