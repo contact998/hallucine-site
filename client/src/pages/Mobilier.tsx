@@ -310,7 +310,7 @@ export default function Mobilier() {
             <p className="text-white/60 mt-4 text-lg max-w-2xl mx-auto">{t("cta_desc")}</p>
             <div className="mt-8 flex justify-center gap-4">
               <Link href={route('contact')} className="px-6 py-3 bg-gold text-background font-semibold rounded-md hover:bg-gold/90 transition-colors">{t("cta_devis")}</Link>
-              <Link href="/realisations" className="px-6 py-3 bg-white/10 text-white font-semibold rounded-md hover:bg-white/20 transition-colors">{t("cta_realisations")}</Link>
+              <Link href={route('galerie')} className="px-6 py-3 bg-white/10 text-white font-semibold rounded-md hover:bg-white/20 transition-colors">{t("cta_realisations")}</Link>
             </div>
           </motion.div>
         </div>
