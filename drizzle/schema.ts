@@ -195,7 +195,7 @@ export const mediaLibrary = mysqlTable("media_library", {
   id:          int("id").autoincrement().primaryKey(),
   // ─── Fichier ─────────────────────────────────────────────────────────────
   /** URL publique R2 — clé unique, jamais modifiée après upload */
-  url:         varchar("url", { length: 1000 }).notNull().unique(),
+  url:         varchar("url", { length: 512 }).notNull().unique(),
   /** Nom de fichier original (ex: "ecran-geant-paris.webp") */
   filename:    varchar("filename", { length: 500 }).notNull(),
   /** Taille en octets */
