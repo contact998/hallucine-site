@@ -130,26 +130,6 @@ async function startServer() {
   });
 
 
-  // Servir robots.txt explicitement — nécessaire pour que Cloudflare détecte
-  // le fichier et fusionne son contenu géré avec nos directives Sitemap.
-  app.get("/robots.txt", async (req, res) => {
-    try {
-      const { readFileSync, existsSync } = await import("fs");
-      const { resolve, dirname } = await import("path");
-      const { fileURLToPath } = await import("url");
-      const dir = dirname(fileURLToPath(import.meta.url));
-      const robotsPath = resolve(dir, "../../client/public/robots.txt");
-      if (existsSync(robotsPath)) {
-        res.setHeader("Content-Type", "text/plain");
-        res.send(readFileSync(robotsPath, "utf-8"));
-      } else {
-        res.status(404).send("Not found");
-      }
-    } catch {
-      res.status(500).send("Error");
-    }
-  });
-
 
   app.get("/robots.txt", (_req, res) => {
     res.setHeader("Content-Type", "text/plain");
