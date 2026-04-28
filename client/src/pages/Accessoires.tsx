@@ -1,6 +1,7 @@
 /*
  * Page Accessoires
- * Casques, Transats, Transmetteur FM, Canapé, Cabine de projection, Forfaits AV
+ * Images chargées depuis media_library (category: "produits", subcategory: "accessoires")
+ * Fallback automatique sur les URLs hardcodées si la DB ne répond pas
  */
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -11,6 +12,18 @@ import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
 import { RelatedProducts } from "@/components/RelatedProducts";
+import { useProductImages } from "@/hooks/useProductImages";
+
+// ─── Fallback hardcodé — ne jamais supprimer ──────────────────────────────────
+
+const FALLBACK_ACCESSOIRES = [
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/wNIxhZRwHKCxifIM.webp", alt: "Casques audio sans fil pour cinéma en plein air" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/EuKdMCwdXBJSlNeL.webp", alt: "Transats gonflables pour événement cinéma" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/iVwKLqZcDAZHqcQS.webp", alt: "Transmetteur FM pour cinéma drive-in" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/gvHeJxbdjQzzfoZe.webp", alt: "Canapé gonflable pour événement" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/wpkWdAtohcYNVAzC.webp", alt: "Cabine de projection mobile" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/DWwZRSyIwFxpRLoR.webp", alt: "Forfait AV complet pour événement" },
+];
 
 export default function Accessoires() {
   const route = useRoutes();
@@ -18,41 +31,50 @@ export default function Accessoires() {
 
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
 
+  // Charger les images depuis la DB
+  const images = useProductImages("accessoires", FALLBACK_ACCESSOIRES);
+
   const accessoires = [
     {
       icon: Headphones,
       title: t("a1_title"),
-      img: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/wNIxhZRwHKCxifIM.webp",
+      img: images[0]?.src ?? FALLBACK_ACCESSOIRES[0].src,
+      alt: images[0]?.alt ?? FALLBACK_ACCESSOIRES[0].alt,
       desc: t("a1_desc"),
     },
     {
       icon: Armchair,
       title: t("a2_title"),
-      img: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/EuKdMCwdXBJSlNeL.webp",
+      img: images[1]?.src ?? FALLBACK_ACCESSOIRES[1].src,
+      alt: images[1]?.alt ?? FALLBACK_ACCESSOIRES[1].alt,
       desc: t("a2_desc"),
     },
     {
       icon: Radio,
       title: t("a3_title"),
-      img: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/iVwKLqZcDAZHqcQS.webp",
+      img: images[2]?.src ?? FALLBACK_ACCESSOIRES[2].src,
+      alt: images[2]?.alt ?? FALLBACK_ACCESSOIRES[2].alt,
       desc: t("a3_desc"),
     },
     {
       icon: Sofa,
       title: t("a4_title"),
-      img: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/gvHeJxbdjQzzfoZe.webp",
+      img: images[3]?.src ?? FALLBACK_ACCESSOIRES[3].src,
+      alt: images[3]?.alt ?? FALLBACK_ACCESSOIRES[3].alt,
       desc: t("a4_desc"),
     },
     {
       icon: Monitor,
       title: t("a5_title"),
-      img: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/wpkWdAtohcYNVAzC.webp",
+      img: images[4]?.src ?? FALLBACK_ACCESSOIRES[4].src,
+      alt: images[4]?.alt ?? FALLBACK_ACCESSOIRES[4].alt,
       desc: t("a5_desc"),
     },
     {
       icon: Package,
       title: t("a6_title"),
-      img: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/DWwZRSyIwFxpRLoR.webp",
+      img: images[5]?.src ?? FALLBACK_ACCESSOIRES[5].src,
+      alt: images[5]?.alt ?? FALLBACK_ACCESSOIRES[5].alt,
       desc: t("a6_desc"),
       bgWhite: true,
     },
@@ -95,7 +117,7 @@ export default function Accessoires() {
             {accessoires.map((a) => (
               <div key={a.title} className="bg-card border border-border rounded-lg overflow-hidden card-hover">
                 <div className={`aspect-[4/3] ${a.bgWhite ? 'bg-white' : 'bg-charcoal-light'}`}>
-                  <img src={a.img} alt={`Accessoire Hallucine — ${a.title}`} className="w-full h-full object-contain p-4" loading="lazy" decoding="async" width={300} height={300} />
+                  <img src={a.img} alt={a.alt} className="w-full h-full object-contain p-4" loading="lazy" decoding="async" width={300} height={300} />
                 </div>
                 <div className="p-6">
                   <div className="flex items-center gap-3 mb-3">
