@@ -7,7 +7,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { X } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { trpc } from "@/lib/trpc";
+import { useMediaByCategory } from "@/hooks/useMediaByCategory";
 
 // ─── Fallback hardcodé — affiché si la DB est indisponible ───────────────────
 // Ne jamais supprimer ce tableau : c'est le filet de sécurité.
@@ -133,25 +133,15 @@ export default function RealisationsSection() {
   const [lightbox, setLightbox] = useState<number | null>(null);
   const { t } = useTranslation("home");
 
-  // Charger les images depuis la DB
-  const { data: dbImages, isError } = trpc.media.byCategory.useQuery(
-    { category: "realisations" },
-    {
-      staleTime: 5 * 60 * 1000, // 5 min de cache — pas besoin de refetch à chaque render
-      retry: 1,                  // 1 seul retry — si ça échoue, on bascule sur le fallback
-    }
-  );
+  // Charger les images depuis la DB avec fallback intégré
+  const dbImages = useMediaByCategory("realisations", FALLBACK_PHOTOS);
 
-  // Fallback automatique : DB vide ou erreur → photos hardcodées
-  const photos =
-    !isError && dbImages && dbImages.length > 0
-      ? dbImages.map((img, i) => ({
-          src:     img.url,
-          alt:     img.alt ?? img.title ?? "",
-          caption: img.title ?? "",
-          span:    DEFAULT_SPANS[i % DEFAULT_SPANS.length],
-        }))
-      : FALLBACK_PHOTOS;
+  const photos = dbImages.map((img, i) => ({
+    src:     img.src,
+    alt:     img.alt,
+    caption: img.title ?? "",
+    span:    FALLBACK_PHOTOS[i]?.span ?? DEFAULT_SPANS[i % DEFAULT_SPANS.length],
+  }));
 
   return (
     <section id="realisations" className="relative py-32 overflow-hidden">

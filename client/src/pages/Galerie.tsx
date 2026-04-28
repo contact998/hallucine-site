@@ -14,7 +14,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
-import { trpc } from "@/lib/trpc";
+import { useMediaByCategory } from "@/hooks/useMediaByCategory";
 
 // ─── Fallback hardcodé — ne jamais supprimer ──────────────────────────────────
 
@@ -134,21 +134,14 @@ export default function Galerie() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Charger depuis la DB
-  const { data: dbImages, isError } = trpc.media.byCategory.useQuery(
-    { category: "galerie" },
-    { staleTime: 5 * 60 * 1000, retry: 1 }
-  );
+  // Charger depuis la DB avec fallback intégré
+  const dbImages = useMediaByCategory("galerie", FALLBACK_PHOTOS);
 
-  // Fallback si DB vide ou erreur
-  const photos =
-    !isError && dbImages && dbImages.length > 0
-      ? dbImages.map((img) => ({
-          src: img.url,
-          alt: img.alt ?? img.title ?? "",
-          cat: mapSubcatToFilter(img.subcategory ?? null),
-        }))
-      : FALLBACK_PHOTOS;
+  const photos = dbImages.map((img) => ({
+    src: img.src,
+    alt: img.alt,
+    cat: mapSubcatToFilter(img.subcategory ?? null),
+  }));
 
   const filtered = filter === "all" ? photos : photos.filter((p) => p.cat === filter);
 
