@@ -115,6 +115,7 @@ function Router() {
         {/* Profil */}
         <Route path={"/profil"} component={Profil} />
         {/* Admin */}
+        <Route path={"/login"} component={Login} />
         <Route path={"/admin"} component={Admin} />
         <Route path={"/admin/analytics"} component={AdminDashboard} />
         <Route path={"/admin/audits"} component={AdminAuditHistory} />

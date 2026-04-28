@@ -137,6 +137,7 @@ async function startServer() {
   });
 
   // OAuth callback under /api/oauth/callback
+  registerLocalAuthRoutes(app);
   registerOAuthRoutes(app);
 
   // Route sendBeacon pour la detection d'abandon (ne passe pas par tRPC)
