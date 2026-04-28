@@ -12,8 +12,9 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
 import { RelatedProducts } from "@/components/RelatedProducts";
+import { useProductImages } from "@/hooks/useProductImages";
 
-const heroImages = [
+const FALLBACK_IMAGES_TENTE_N = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/TVmrusoKmXcTvkKP.webp", alt: "Tente gonflable N Hallucine blanche dans la neige" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/apmHySbtINxVnjYV.webp", alt: "Tente gonflable N Volvo Discover dans la neige" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/erdtrTEYYaBaTrbE.webp", alt: "Tente gonflable N blanche grande vue latérale" },
@@ -28,7 +29,7 @@ export default function TentesN() {
   const route = useRoutes();
   const { t } = useTranslation("tente-n");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/TVmrusoKmXcTvkKP.webp");
-
+  const heroImages = useProductImages("tente-n", FALLBACK_IMAGES_TENTE_N);
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
   const openLightbox = useCallback((src: string, alt: string) => setLightbox({ src, alt }), []);
   const closeLightbox = useCallback(() => setLightbox(null), []);

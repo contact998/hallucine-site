@@ -13,8 +13,9 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
 import { RelatedProducts } from "@/components/RelatedProducts";
+import { useProductImages } from "@/hooks/useProductImages";
 
-const heroImages = [
+const FALLBACK_IMAGES_TENTE_X = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/fHOHtmjSEZCdfvZR.webp", alt: "Tentes gonflables X Meguiar's noires et jaunes de nuit" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/upTjWnEqwNFkSAuN.webp", alt: "Tente gonflable X Hallucine noire avec logo" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/snASjOxpYmvdMRXE.webp", alt: "Tentes gonflables X personnalisées multiples" },
@@ -67,7 +68,7 @@ export default function TentesX() {
   const route = useRoutes();
   const { t } = useTranslation("tente-x");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-tente-x-AET6EuZJEbKcpbEmxnmWTB.png");
-
+  const heroImages = useProductImages("tente-x", FALLBACK_IMAGES_TENTE_X);
   const [lightboxImg, setLightboxImg] = useState<{ src: string; alt: string } | null>(null);
   const openLightbox = useCallback((src: string, alt: string) => { setLightboxImg({ src, alt }); }, []);
 

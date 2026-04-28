@@ -12,6 +12,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
 import { RelatedProducts } from "@/components/RelatedProducts";
+import { useProductImages } from "@/hooks/useProductImages";
 
 const tailles = [
   { dim: "4m × 4m", poids: "~50 kg", montage: "10-15 min" },
@@ -20,7 +21,7 @@ const tailles = [
   { dim: "10m × 10m", poids: "~80 kg", montage: "15 min" },
 ];
 
-const images = [
+const FALLBACK_IMAGES_TENTE_ARAIGNEE = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/KGkXbQCcXEGqyaSz.webp", alt: "Tente araignée gonflable bleue installée sur l'herbe pour un événement en plein air" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/zlXEEbFQipJgezJx.webp", alt: "Tente araignée gonflable avec des parois latérales jaunes, créant un espace abrité" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/NNxCkFqPVeqmFjFC.webp", alt: "Tente araignée gonflable de couleur verte, se fondant dans un décor naturel" },
@@ -31,7 +32,7 @@ export default function TentesAraignees() {
   const route = useRoutes();
   const { t } = useTranslation("tente-araignee");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-tente-araignee-R3y9ti6qL9e3JFNFGvHjoG.png");
-
+  const images = useProductImages("tente-araignee", FALLBACK_IMAGES_TENTE_ARAIGNEE);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const faqItems = [

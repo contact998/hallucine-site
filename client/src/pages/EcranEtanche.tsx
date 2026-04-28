@@ -15,6 +15,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
 import { RelatedProducts } from "@/components/RelatedProducts";
+import { useProductImages } from "@/hooks/useProductImages";
 
 const specsData = [
   { taille: "245 × 200 cm", toile: "218 × 122 cm", poids: "7 kg", hauteur: "50 cm", personnes: "1" },
@@ -28,7 +29,7 @@ const specsData = [
   { taille: "1024 × 753 cm", toile: "1000 × 570 cm", poids: "73 kg", hauteur: "160 cm", personnes: "2 ou 3" },
 ];
 
-const galleryImages = [
+const FALLBACK_IMAGES_ECRAN_ETANCHE = [
   { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/Ecran6mpartenvacances_264eeb1d.png", alt: "Écran gonflable étanche de 6m en sac de transport" },
   { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/ecran5mRitz_e1a4b8d3.jpg", alt: "Écran gonflable étanche de 5m au Ritz avec chaises longues" },
   { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/5MPROFILS_3db17625.jpg", alt: "Profil latéral d'un écran gonflable étanche de 5m" },
@@ -40,7 +41,7 @@ export default function EcranEtanche() {
   const { t } = useTranslation("ecran-etanche");
 
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-ecran-etanche-k4ys7FMgpDwS9DpudndmpB.png");
-
+  const galleryImages = useProductImages("ecran-etanche", FALLBACK_IMAGES_ECRAN_ETANCHE);
   const [showCountdown, setShowCountdown] = useState(true);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 

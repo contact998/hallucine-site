@@ -16,6 +16,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
 import { RelatedProducts } from "@/components/RelatedProducts";
+import { useProductImages } from "@/hooks/useProductImages";
 
 const specsData = [
   { taille: "8m × 6m", toile: "7m × 5m", poids: "35 kg", montage: "30 min", personnes: "1" },
@@ -27,7 +28,7 @@ const specsData = [
   { taille: "24m × 14m", toile: "22m × 12m", poids: "280 kg", montage: "1h", personnes: "4" },
 ];
 
-const galleryImages = [
+const FALLBACK_IMAGES_ECRAN_GEANT = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ibUxsSdoHUCVTWXC.webp", alt: "Écran de cinéma géant gonflable installé en plein centre-ville de Paris" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ceZNJOsztxIyhJFR.webp", alt: "Écran de cinéma géant gonflable de 17m sur 12m installé au Château de Vincennes" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/nRCfDZHKAKZaVovJ.webp", alt: "Écran de cinéma géant gonflable de 24m sur 15m au Stade Vélodrome de Marseille" },
@@ -46,7 +47,7 @@ export default function EcranGeant() {
   const route = useRoutes();
   const { t } = useTranslation("ecran-geant");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-ecran-geant-7MA2E4Zp6zEeYzcaWGEV5o.png");
-
+  const galleryImages = useProductImages("ecran-geant", FALLBACK_IMAGES_ECRAN_GEANT);
   const [showCountdown, setShowCountdown] = useState(true);
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
 

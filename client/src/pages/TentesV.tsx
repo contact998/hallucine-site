@@ -13,8 +13,9 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
 import { RelatedProducts } from "@/components/RelatedProducts";
+import { useProductImages } from "@/hooks/useProductImages";
 
-const heroImages = [
+const FALLBACK_IMAGES_TENTE_V = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/HiOAOTLZaOhqpcQk.webp", alt: "Tente gonflable V blanche vue de face" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/nvpNhKQWdZSYGIgR.webp", alt: "Tente gonflable V blanche vue d'ensemble" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/EpaIyWYtXIFowiQT.webp", alt: "Tente gonflable V personnalisée avec logo" },
@@ -27,7 +28,7 @@ export default function TentesV() {
   const route = useRoutes();
   const { t } = useTranslation("tente-v");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/TVmrusoKmXcTvkKP.webp");
-
+  const heroImages = useProductImages("tente-v", FALLBACK_IMAGES_TENTE_V);
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
   const openLightbox = useCallback((src: string, alt: string) => setLightbox({ src, alt }), []);

@@ -14,6 +14,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
 import { RelatedProducts } from "@/components/RelatedProducts";
+import { useProductImages } from "@/hooks/useProductImages";
 
 // ─── Données tableaux ──────────────────────────────────────────────────────────
 const avecSouffleur = [
@@ -30,17 +31,17 @@ const sansSouffleur = [
   { taille: "7.5 × 5.5 m", toile: "600 × 340 cm", poids: "85 kg", hauteur: "100 cm", personnes: "2" },
 ];
 
-const imagesAvecSouffleur = [
+const FALLBACK_AVEC_SOUFFLEUR = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/WXsnQMOOUttRbUlr.webp", alt: "Écran économique avec souffleur installé dans la cour d'un bâtiment" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/qoINhxiIteIjBXYG.webp", alt: "Écran économique avec souffleur pour un petit public" },
 ];
 
-const imagesSansSouffleur = [
+const FALLBACK_SANS_SOUFFLEUR = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/BBvWfAFjPlbvBnAE.webp", alt: "Écran économique sans souffleur installé dans un parc" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/IhxDeQNxHxMYBwlG.webp", alt: "Écran économique sans souffleur sur la plage" },
 ];
 
-const imagesFinales = [
+const FALLBACK_FINALES = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/QClDxPadLVEYKlxM.webp", alt: "Écran économique comparaison de taille humaine" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/hzkcpmfnpyIExDbf.webp", alt: "Écran économique vue de derrière" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/WXsnQMOOUttRbUlr.webp", alt: "Écran économique installé en extérieur" },
@@ -79,6 +80,14 @@ export default function EcranEconomique() {
   const route = useRoutes();
   const { t } = useTranslation("ecran-economique");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
+  const allDbImages = useProductImages("ecran-economique", [
+    ...FALLBACK_AVEC_SOUFFLEUR,
+    ...FALLBACK_SANS_SOUFFLEUR,
+    ...FALLBACK_FINALES,
+  ]);
+  const imagesAvecSouffleur = allDbImages.length > 0 ? allDbImages.slice(0, 2) : FALLBACK_AVEC_SOUFFLEUR;
+  const imagesSansSouffleur = allDbImages.length > 0 ? allDbImages.slice(2, 4) : FALLBACK_SANS_SOUFFLEUR;
+  const imagesFinales = allDbImages.length > 0 ? allDbImages.slice(4) : FALLBACK_FINALES;
 
   const [showCountdown, setShowCountdown] = useState(true);
 

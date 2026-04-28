@@ -12,6 +12,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
 import { RelatedProducts } from "@/components/RelatedProducts";
+import { useProductImages } from "@/hooks/useProductImages";
 
 const archesData = [
   { ref: "CA-4/2.6/0.45", taille: "400×260(H)×45cm" },
@@ -27,7 +28,7 @@ const archesData = [
   { ref: "CA-12/5.8/0.9", taille: "1200×580(H)×90cm" },
 ];
 
-const galleryImages = [
+const FALLBACK_IMAGES_ARCHES = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vbfbnQBVCUGrWUOw.webp", alt: "Arche gonflable cinéma en plein air avec écran de projection" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/eqdRLmacrGAlLxMw.webp", alt: "Arche gonflable colorée pour arrivée de course sportive" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/yuLqkYzSuwxDVzhu.webp", alt: "Arche gonflable bleue et rouge pour entrée de projection" },
@@ -38,7 +39,7 @@ export default function ArchesGonflables() {
   const route = useRoutes();
   const { t } = useTranslation("arches-gonflables");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-accueil-KjTW2K29SHyinVRpsNcnQC.png");
-
+  const galleryImages = useProductImages("arches-gonflables", FALLBACK_IMAGES_ARCHES);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const faqItems = [
