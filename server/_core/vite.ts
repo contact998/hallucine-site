@@ -247,6 +247,7 @@ export function serveStatic(app: Express) {
     const SPA_ROUTES = [
       /^\/admin(\/.*)?$/,
       /^\/profil$/,
+      /^\/login$/
     ];
     const isSpaRoute = SPA_ROUTES.some((pattern) => pattern.test(reqPath));
     if (isSpaRoute) {
