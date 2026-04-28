@@ -559,15 +559,18 @@ function UploadPanel() {
         </div>
 
         {/* Sous-catégorie */}
-        <div>
+        <div className="relative z-50 pointer-events-auto">
           <label className="text-xs font-medium text-white/60 mb-1.5 block">
             Sous-catégorie <span className="text-white/30">(optionnel)</span>
           </label>
           <input
+            type="text"
             value={subcategory}
+            onMouseDown={(e) => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
             onChange={e => setSubcategory(e.target.value)}
             placeholder="ex: ecran-geant, tente-x, home..."
-            className="w-full bg-white/5 border border-white/20 rounded-lg px-3 py-2 text-sm text-white placeholder-white/30 focus:outline-none focus:border-amber-500/50"
+            className="relative z-50 pointer-events-auto w-full bg-white/5 border border-white/20 rounded-lg px-3 py-2 text-sm text-white placeholder-white/30 focus:outline-none focus:border-amber-500/50"
           />
           <p className="text-xs text-white/30 mt-1">
             La sous-catégorie détermine quelle page du site utilisera ces images.
