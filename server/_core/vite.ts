@@ -272,3 +272,4 @@ export function serveStatic(app: Express) {
     res.status(404).set({ "Content-Type": "text/plain" }).end("Not Found");
   });
 }
+// login route added
