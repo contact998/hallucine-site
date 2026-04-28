@@ -1,6 +1,8 @@
 /*
  * Page Galerie
  * Grille de photos d'événements avec filtrage par catégorie
+ * Images chargées depuis media_library (category: "galerie")
+ * Fallback automatique sur les URLs hardcodées si la DB ne répond pas
  */
 import { useState } from "react";
 import React from "react";
@@ -12,8 +14,11 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
+import { trpc } from "@/lib/trpc";
 
-const photos = [
+// ─── Fallback hardcodé — ne jamais supprimer ──────────────────────────────────
+
+const FALLBACK_PHOTOS = [
   { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/pasted_file_lj0vsC_onepongeapreslapluiePlaceaujeune_0787bac5.jpg", alt: "Une ponge apres la pluie Place au jeune", cat: "events" },
   { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/pasted_file_sCzDrf_Ecrande20malatelier_b865e38c.jpg", alt: "Ecran de 20m a l'atelier", cat: "screens" },
   { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/pasted_file_GfjC2j_ProjecteurBuisseUnpeudenostalgie_286e537c.jpg", alt: "Projecteur Buisse un peu de nostalgie", cat: "equipment" },
@@ -88,6 +93,21 @@ const photos = [
   { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/Vincennesfaisceaulumineux_1458c920.jpg", alt: "Vincennes faisceau lumineux", cat: "events" },
 ];
 
+// ─── Mapping subcategory DB → cat filtre ──────────────────────────────────────
+// Les images en DB ont un subcategory libre — on le mappe vers les cats du filtre
+
+function mapSubcatToFilter(subcategory: string | null): string {
+  if (!subcategory) return "events";
+  if (subcategory.includes("screen") || subcategory.includes("ecran")) return "screens";
+  if (subcategory.includes("tent"))    return "tents";
+  if (subcategory.includes("arch"))    return "arches";
+  if (subcategory.includes("furni") || subcategory.includes("mobil")) return "furniture";
+  if (subcategory.includes("equip"))   return "equipment";
+  return "events";
+}
+
+// ─── Composant ────────────────────────────────────────────────────────────────
+
 export default function Galerie() {
   const route = useRoutes();
   const { t } = useTranslation("galerie");
@@ -95,26 +115,40 @@ export default function Galerie() {
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/IDghLbPxebJUfXVC.webp");
 
   const categories = [
-    { key: "all", label: t("cat_tous") },
-    { key: "screens", label: t("cat_ecrans") },
-    { key: "events", label: t("cat_evenements") },
+    { key: "all",       label: t("cat_tous") },
+    { key: "screens",   label: t("cat_ecrans") },
+    { key: "events",    label: t("cat_evenements") },
     { key: "equipment", label: t("cat_equipement") },
-    { key: "tents", label: t("cat_tentes") },
-    { key: "arches", label: t("cat_arches") },
+    { key: "tents",     label: t("cat_tentes") },
+    { key: "arches",    label: t("cat_arches") },
     { key: "furniture", label: t("cat_mobilier") },
   ];
 
-  const [filter, setFilter] = useState("all");
-  const [lightbox, setLightbox] = useState<number | null>(null);
+  const [filter, setFilter]           = useState("all");
+  const [lightbox, setLightbox]       = useState<number | null>(null);
   const [parallaxOffset, setParallaxOffset] = useState(0);
 
   React.useEffect(() => {
-    const handleScroll = () => {
-      setParallaxOffset(window.scrollY * 0.3);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const handleScroll = () => setParallaxOffset(window.scrollY * 0.3);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Charger depuis la DB
+  const { data: dbImages, isError } = trpc.media.byCategory.useQuery(
+    { category: "galerie" },
+    { staleTime: 5 * 60 * 1000, retry: 1 }
+  );
+
+  // Fallback si DB vide ou erreur
+  const photos =
+    !isError && dbImages && dbImages.length > 0
+      ? dbImages.map((img) => ({
+          src: img.url,
+          alt: img.alt ?? img.title ?? "",
+          cat: mapSubcatToFilter(img.subcategory ?? null),
+        }))
+      : FALLBACK_PHOTOS;
 
   const filtered = filter === "all" ? photos : photos.filter((p) => p.cat === filter);
 
@@ -131,21 +165,22 @@ export default function Galerie() {
       />
       <Navbar />
 
-      {/* Hero image section */}
+      {/* Hero */}
       <section className="relative overflow-hidden bg-black">
-        <div className="relative w-full" style={{ aspectRatio: '16/7' }}>
-          <img loading="lazy"
+        <div className="relative w-full" style={{ aspectRatio: "16/7" }}>
+          <img
+            loading="lazy"
             src="https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/new_0e670248.jpg"
             alt={t("img_hero_alt")}
             className="w-full h-full object-cover"
             style={{ transform: `translateY(${parallaxOffset}px)` }}
             width={1920} height={560}
-          decoding="async" />
+            decoding="async"
+          />
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
         </div>
       </section>
 
-      {/* Unified container: menu, text, and gallery overlapping hero */}
       <div className="relative -mt-64 md:-mt-96 z-30">
         {/* Barre filtres */}
         <div className="bg-black/60 backdrop-blur-sm py-3 mb-8 md:mb-12">
@@ -154,7 +189,7 @@ export default function Galerie() {
               {t("page_title")}
             </h1>
             <Link
-              href={route('galerie-video')}
+              href={route("galerie-video")}
               className="shrink-0 ml-3 flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-full bg-warm/20 text-warm border border-warm/30 hover:bg-warm/30 transition-colors z-30 pointer-events-auto"
             >
               <Video className="w-4 h-4" />
@@ -168,13 +203,12 @@ export default function Galerie() {
                     onClick={() => setFilter(cat.key)}
                     className={`px-4 py-2 text-sm font-semibold rounded-full transition-colors duration-200 pointer-events-auto ${
                       filter === cat.key ? "bg-accent text-white" : "bg-gray-700/50 text-gray-300 hover:bg-gray-600/70"
-                    }`}>
+                    }`}
+                  >
                     {cat.label}
                   </button>
                 ))}
               </div>
-
-              {/* Dropdown pour mobile/tablette */}
               <div className="relative xl:hidden">
                 <select
                   onChange={(e) => setFilter(e.target.value)}
@@ -190,19 +224,30 @@ export default function Galerie() {
           </div>
         </div>
 
-        {/* Texte descriptif */}
+        {/* Texte */}
         <div className="px-6 mb-8 md:mb-12">
           <p className="text-white/80 text-sm md:text-base text-center max-w-3xl mx-auto leading-relaxed">
             {t("meta_desc")}
           </p>
         </div>
 
-        {/* Grille photos */}
+        {/* Grille */}
         <main className="container py-12 md:py-16">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {filtered.map((photo, index) => (
-              <div key={index} className="group relative isolate aspect-square overflow-hidden rounded-lg cursor-pointer" onClick={() => setLightbox(index)}>
-                <img loading="lazy" src={photo.src} alt={photo.alt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" decoding="async" width={600} height={400} />
+              <div
+                key={photo.src}
+                className="group relative isolate aspect-square overflow-hidden rounded-lg cursor-pointer"
+                onClick={() => setLightbox(index)}
+              >
+                <img
+                  loading="lazy"
+                  src={photo.src}
+                  alt={photo.alt}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  decoding="async"
+                  width={600} height={400}
+                />
                 <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                   <p className="text-white text-center text-sm font-medium">{photo.alt}</p>
                 </div>
@@ -217,15 +262,30 @@ export default function Galerie() {
 
       {/* Lightbox */}
       {lightbox !== null && (
-        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center" onClick={() => setLightbox(null)}>
+        <div
+          className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center"
+          onClick={() => setLightbox(null)}
+        >
           <div className="relative max-w-4xl max-h-[90vh] p-4">
-            <img src={filtered[lightbox].src} alt={filtered[lightbox].alt} className="max-w-full max-h-full object-contain rounded-lg" loading="lazy" decoding="async" />
+            <img
+              src={filtered[lightbox].src}
+              alt={filtered[lightbox].alt}
+              className="max-w-full max-h-full object-contain rounded-lg"
+              loading="lazy"
+              decoding="async"
+            />
             <button onClick={() => setLightbox(null)} className="absolute top-4 right-4 text-white text-3xl font-bold">&times;</button>
             {lightbox > 0 && (
-              <button onClick={(e) => { e.stopPropagation(); setLightbox(lightbox - 1); }} className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-4xl font-bold">‹</button>
+              <button
+                onClick={(e) => { e.stopPropagation(); setLightbox(lightbox - 1); }}
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-4xl font-bold"
+              >‹</button>
             )}
             {lightbox < filtered.length - 1 && (
-              <button onClick={(e) => { e.stopPropagation(); setLightbox(lightbox + 1); }} className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-4xl font-bold">›</button>
+              <button
+                onClick={(e) => { e.stopPropagation(); setLightbox(lightbox + 1); }}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-4xl font-bold"
+              >›</button>
             )}
           </div>
         </div>
