@@ -44,6 +44,7 @@ const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Profil = lazy(() => import("./pages/Profil"));
 const Admin = lazy(() => import("./pages/Admin"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const Login = lazy(() => import("./pages/Login"));
 const AdminAuditHistory = lazy(() => import("./pages/AdminAuditHistory"));
 const AdminCalculateurs = lazy(() => import("./pages/AdminCalculateurs"));
 const AdminMedia = lazy(() => import("./pages/AdminMedia"));
