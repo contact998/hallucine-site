@@ -57,6 +57,35 @@
   </head>
 
   <body>
-</body>
+    <script>window.__INITIAL_LOCALE__ = "__LOCALE__";</script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JKHPG2Q6GK"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-JKHPG2Q6GK');
+    </script>
+    <script>
+      // Widget navigation Hallucine : visible uniquement pour les admins connectés
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          fetch('/api/trpc/auth.me', { credentials: 'include' })
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+              var json = data && data.result && data.result.data && data.result.data.json;
+              if (json && json.role === 'admin') {
+                var s = document.createElement('script');
+                s.src = 'https://hallucine.manus.space/api/nav-widget';
+                document.body.appendChild(s);
+              }
+            })
+            .catch(function() {});
+        }, 3000);
+      });
+    </script>
+  </body>
 
 </html>
