@@ -628,10 +628,18 @@ function UploadPanel() {
             ["mobilier",         "Page Mobilier"],
             ["accessoires",      "Page Accessoires"],
           ].map(([sub, label]) => (
-            <div key={sub} className="flex justify-between">
-              <code className="text-amber-400/60">{sub}</code>
+            <button
+              key={sub}
+              type="button"
+              onClick={() => {
+                setCategory("produits");
+                setSubcategory(sub);
+              }}
+              className="w-full flex justify-between rounded px-2 py-1 text-left hover:bg-white/10 transition-colors"
+            >
+              <code className="text-amber-400/80">{sub}</code>
               <span>{label}</span>
-            </div>
+            </button>
           ))}
         </div>
       </div>
