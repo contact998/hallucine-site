@@ -838,7 +838,7 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
     /** Publier un article (admin ou apiKey write) */
     publish: publicProcedure
       .input(z.object({ id: z.number(), apiKey: z.string().optional() }))
-      .mutation(async ({ input }) => {
+      .mutation(async ({ input, ctx }) => {
         // Vérification SEO avant publication
         const post = await getBlogPostById(input.id);
         if (!post) throw new Error("Article introuvable");
@@ -915,7 +915,7 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
           });
         }
       }))
-      .mutation(async ({ input }) => {
+      .mutation(async ({ input, ctx }) => {
         const isAdminU = (ctx as any).user?.role === "admin";
         const isApiKeyU = isValidBlogWriteKey(input.apiKey);
         if (!isAdminU && !isApiKeyU) throw new Error("Non autorise");
