@@ -100,22 +100,6 @@ export function slugify(title: string): string {
 
 
 
-/** Parse la bibliothèque d'images d'en-tête depuis les variables d'environnement */
-function getBlogHeaderImageLibrary(): string[] {
-  const raw = [
-    process.env.BLOG_HEADER_IMAGE_URLS,
-    process.env.BLOG_IMAGE_LIBRARY_URLS,
-    process.env.BLOG_OG_IMAGE_URLS,
-  ]
-    .filter(Boolean)
-    .join("\n");
-
-  return raw
-    .split(/[\n,;]/)
-    .map((url) => url.trim())
-    .filter((url) => /^https?:\/\//i.test(url));
-}
-
 /** Hash simple et stable pour répartir les articles sur la bibliothèque d'images */
 function stableStringHash(value: string): number {
   let hash = 0;
@@ -125,12 +109,20 @@ function stableStringHash(value: string): number {
   return hash;
 }
 
-/** Choisit une image fixe pour un article à partir de son titre/slug */
-function pickDeterministicHeaderImage(seed: string): string | null {
-  const library = getBlogHeaderImageLibrary();
-  if (library.length === 0) return null;
-  const index = stableStringHash(seed) % library.length;
-  return library[index] ?? null;
+async function pickDeterministicHeaderImage(seed: string): Promise<string | null> {
+  try {
+    const { getMediaByCategory } = await import("./mediaLibrary");
+    const items = await getMediaByCategory("blog");
+    if (items.length > 0) {
+      const index = stableStringHash(seed) % items.length;
+      return items[index]?.url ?? null;
+    }
+  } catch (err) {
+    console.warn("[Blog] Impossible de lire la médiathèque :", err);
+  }
+  const raw = (process.env.BLOG_IMAGE_URLS ?? "").split(/[\n,;]/).map(u => u.trim()).filter(u => /^https?:\/\//i.test(u));
+  if (raw.length === 0) return null;
+  return raw[stableStringHash(seed) % raw.length] ?? null;
 }
 
 /** Génère un slug unique (ajoute -2, -3... si conflit) */
@@ -167,7 +159,7 @@ export async function createBlogPost(data: {
 }): Promise<BlogPost> {
   const slug = await uniqueSlug(slugify(data.title));
   const resolvedImageUrl =
-    data.imageUrl?.trim() || pickDeterministicHeaderImage(`${data.lang ?? "fr"}:${slug}`);
+    data.imageUrl?.trim() || await pickDeterministicHeaderImage(`${data.lang ?? "fr"}:${slug}`);
 
   await db.insert(blogPosts).values({
     title: data.title,
