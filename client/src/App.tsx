@@ -48,6 +48,7 @@ const Login = lazy(() => import("./pages/Login"));
 const AdminAuditHistory = lazy(() => import("./pages/AdminAuditHistory"));
 const AdminCalculateurs = lazy(() => import("./pages/AdminCalculateurs"));
 const AdminMedia = lazy(() => import("./pages/AdminMedia"));
+const AdminBlog = lazy(() => import("./pages/AdminBlog"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 function PageLoader() {
@@ -122,6 +123,7 @@ function Router() {
         <Route path={"/admin/audits"} component={AdminAuditHistory} />
         <Route path={"/admin/calculateurs"} component={AdminCalculateurs} />
         <Route path={"/admin/media"} component={AdminMedia} />
+        <Route path={"/admin/blog"} component={AdminBlog} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>
