@@ -372,6 +372,12 @@ export default function Admin() {
                 <button onClick={() => setSearchQuery("")} className="absolute right-3 top-1/2 -translate-y-1/2">
                   <X className="w-4 h-4 text-white/40 hover:text-white" />
                 </button>
+              <button
+                onClick={() => window.location.href = "/admin/media"}
+                className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+              >
+                <FileText className="w-4 h-4" /> Médias
+              </button>
               )}
             </div>
             <div className="flex gap-3">
