@@ -355,6 +355,7 @@ function EditInline({
 }) {
   const [title,       setTitle]       = useState(item.title ?? "");
   const [alt,         setAlt]         = useState(item.alt ?? "");
+  const [category,    setCategory]    = useState(item.category as Category);
   const [subcategory, setSubcategory] = useState(item.subcategory ?? "");
   const [active,      setActive]      = useState(item.active);
 
@@ -380,6 +381,20 @@ function EditInline({
         placeholder="Alt text"
         className="w-full text-xs bg-white/10 border border-white/20 rounded px-2 py-1.5 text-white placeholder-white/30 focus:outline-none focus:border-amber-500/50"
       />
+      <select
+        value={category}
+        onChange={e => setCategory(e.target.value as Category)}
+        onClick={e => e.stopPropagation()}
+        className="w-full text-xs bg-white/10 border border-white/20 rounded px-2 py-1.5 text-white focus:outline-none focus:border-amber-500/50"
+      >
+        <option value="blog">Blog</option>
+        <option value="produits">Produits</option>
+        <option value="galerie">Galerie</option>
+        <option value="realisations">Réalisations</option>
+        <option value="ui">UI</option>
+        <option value="og">OG</option>
+        <option value="autre">Autre</option>
+      </select>
       <input
         value={subcategory}
         onChange={e => setSubcategory(e.target.value)}
@@ -399,7 +414,7 @@ function EditInline({
       </label>
       <div className="flex gap-2 mt-auto">
         <button
-          onClick={() => update.mutate({ id: item.id, title, alt, subcategory: subcategory || undefined, active })}
+          onClick={() => update.mutate({ id: item.id, title, alt, category, subcategory: subcategory || undefined, active })}
           disabled={update.isPending}
           className="flex-1 flex items-center justify-center gap-1 bg-amber-500/80 hover:bg-amber-500 rounded py-1.5 text-xs font-semibold text-black transition-colors disabled:opacity-50"
         >
