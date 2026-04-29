@@ -2,6 +2,16 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, adminProcedure, router } from "./_core/trpc";
+// ─── Helpers API Key Blog ─────────────────────────────────────────────────────
+/** Cle de publication (BLOG_API_KEY) */
+function isValidBlogApiKey(apiKey?: string | null): boolean {
+  return Boolean(apiKey && apiKey === process.env.BLOG_API_KEY);
+}
+/** Cle read/write : update, delete, adminList, publish (BLOG_API_KEY_2) */
+function isValidBlogWriteKey(apiKey?: string | null): boolean {
+  return Boolean(apiKey && apiKey === process.env.BLOG_API_KEY_2);
+}
+
 import { z } from "zod";
 import {
   insertContactSubmission,
@@ -815,13 +825,19 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
         return { success: true, post };
       }),
 
-    /** Lister tous les articles (admin) */
-    adminList: adminProcedure
-      .query(async () => getAllBlogPosts(200)),
+    /** Lister tous les articles (admin ou apiKey write) */
+    adminList: publicProcedure
+      .input(z.object({ apiKey: z.string().optional() }).optional())
+      .query(async ({ input, ctx }) => {
+        const isAdmin = (ctx as any).user?.role === "admin";
+        const isApiKey = isValidBlogWriteKey(input?.apiKey);
+        if (!isAdmin && !isApiKey) throw new Error("Non autorise");
+        return getAllBlogPosts(200);
+      }),
 
-    /** Publier un article (admin) */
-    publish: adminProcedure
-      .input(z.object({ id: z.number() }))
+    /** Publier un article (admin ou apiKey write) */
+    publish: publicProcedure
+      .input(z.object({ id: z.number(), apiKey: z.string().optional() }))
       .mutation(async ({ input }) => {
         // Vérification SEO avant publication
         const post = await getBlogPostById(input.id);
@@ -839,6 +855,9 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
             "(max 60 car. recommandé par Google)."
           );
         }
+        const isAdmin2 = (ctx as any).user?.role === "admin";
+        const isApiKey2 = isValidBlogWriteKey((input as any).apiKey);
+        if (!isAdmin2 && !isApiKey2) throw new Error("Non autorise");
         await publishBlogPost(input.id);
         // Purge du cache Cloudflare si configuré (optionnel — no-op si variables absentes)
         if (process.env.CLOUDFLARE_ZONE_ID && process.env.CLOUDFLARE_API_TOKEN) {
@@ -866,9 +885,10 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
         return { success: true };
       }),
 
-    /** Mettre à jour un article (admin) */
-    update: adminProcedure
+    /** Mettre a jour un article (admin ou apiKey write) */
+    update: publicProcedure
       .input(z.object({
+        apiKey: z.string().optional(),
         id: z.number(),
         title: z.string()
           .min(1)
@@ -896,15 +916,21 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
         }
       }))
       .mutation(async ({ input }) => {
-        const { id, ...data } = input;
+        const isAdminU = (ctx as any).user?.role === "admin";
+        const isApiKeyU = isValidBlogWriteKey(input.apiKey);
+        if (!isAdminU && !isApiKeyU) throw new Error("Non autorise");
+        const { id, apiKey: _apiKey, ...data } = input;
         await updateBlogPost(id, data as any);
         return { success: true };
       }),
 
-    /** Supprimer un article (admin) */
-    delete: adminProcedure
-      .input(z.object({ id: z.number() }))
-      .mutation(async ({ input }) => {
+    /** Supprimer un article (admin ou apiKey write) */
+    delete: publicProcedure
+      .input(z.object({ id: z.number(), apiKey: z.string().optional() }))
+      .mutation(async ({ input, ctx }) => {
+        const isAdminD = (ctx as any).user?.role === "admin";
+        const isApiKeyD = isValidBlogWriteKey(input.apiKey);
+        if (!isAdminD && !isApiKeyD) throw new Error("Non autorise");
         await deleteBlogPost(input.id);
         return { success: true };
       }),
