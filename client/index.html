@@ -71,6 +71,13 @@
     <script>
       // Widget navigation Hallucine : visible uniquement pour les admins connectés
       window.addEventListener('load', function() {
+        var path = window.location.pathname;
+        if (
+          path.startsWith('/admin') ||
+          path.startsWith('/profil') ||
+          path.startsWith('/login')
+        ) return;
+
         setTimeout(function() {
           fetch('/api/trpc/auth.me', { credentials: 'include' })
             .then(function(r) { return r.json(); })
