@@ -1,0 +1,1 @@
+ALTER TABLE `media_library` MODIFY COLUMN `url` varchar(768) NOT NULL;
