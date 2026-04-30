@@ -60,7 +60,7 @@ export function useAuth(options?: UseAuthOptions) {
   // Persister les infos utilisateur dans localStorage (client-only, side effect)
   useEffect(() => {
     safeLocalStorage.setItem(
-      "manus-runtime-user-info",
+      "hallucine-user-info",
       JSON.stringify(meQuery.data)
     );
   }, [meQuery.data]);

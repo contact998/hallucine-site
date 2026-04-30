@@ -210,9 +210,7 @@ const normalizeToolChoice = (
 };
 
 const resolveApiUrl = () =>
-  ENV.forgeApiUrl && ENV.forgeApiUrl.trim().length > 0
-    ? `${ENV.forgeApiUrl.replace(/\/$/, "")}/v1/chat/completions`
-    : "https://api.anthropic.com/v1/messages";
+  `${(ENV.forgeApiUrl || "https://api.anthropic.com").replace(/\/$/, "")}/v1/messages`;
 
 const assertApiKey = () => {
   if (!ENV.forgeApiKey) {
@@ -280,7 +278,7 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
   } = params;
 
   const payload: Record<string, unknown> = {
-    model: "gemini-2.5-flash",
+    model: "claude-sonnet-4-20250514",
     messages: messages.map(normalizeMessage),
   };
 
@@ -316,7 +314,8 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      authorization: `Bearer ${ENV.forgeApiKey}`,
+      "x-api-key": ENV.forgeApiKey,
+      "anthropic-version": "2023-06-01",
     },
     body: JSON.stringify(payload),
   });
