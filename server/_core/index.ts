@@ -63,9 +63,7 @@ async function startServer() {
           // 'unsafe-eval' supprimé — risque XSS (surveiller les erreurs console)
           "https://www.googletagmanager.com",
           "https://www.google-analytics.com",
-          "https://hallucine.manus.space",
-          "https://*.manus.space",
-        ],
+                            ],
         styleSrc: [
           "'self'",
           "'unsafe-inline'",   // Tailwind + styled-components injectent du CSS inline
@@ -85,8 +83,7 @@ async function startServer() {
           "https://img.youtube.com",
           "https://www.googletagmanager.com",
           "https://www.google-analytics.com",
-          "https://*.manus.space",
-          "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev",
+                    "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev",
         ],
         connectSrc: [
           "'self'",
@@ -95,9 +92,7 @@ async function startServer() {
           "https://open.er-api.com",
           "https://www.google-analytics.com",
           "https://www.googletagmanager.com",
-          "https://hallucinecrm.manus.space",
-          "https://*.manus.space",
-          "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev",
+                              "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev",
           "wss:",              // WebSocket HMR
         ],
         frameSrc: [

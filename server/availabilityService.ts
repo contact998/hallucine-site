@@ -38,7 +38,7 @@ export interface AvailabilityResult {
 // ─── Configuration ────────────────────────────────────────────────
 
 // URL du CRM — route tRPC publique, pas de token nécessaire
-const CRM_BASE_URL = "https://hallucinecrm.manus.space";
+const CRM_BASE_URL = "https://hallucine-crm-production.up.railway.app";
 const CRM_TIMEZONES_URL = `${CRM_BASE_URL}/api/trpc/commercials.timezones`;
 
 // Fallback si le CRM est inaccessible (DC et JB sont en Chine)
