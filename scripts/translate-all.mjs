@@ -6,7 +6,7 @@ import { readFileSync, writeFileSync, existsSync } from "fs";
 import { resolve } from "path";
 
 const LOCALES_DIR = resolve("client/src/locales");
-const FORGE_API_URL = process.env.BUILT_IN_FORGE_API_URL || "https://forge.manus.im";
+const FORGE_API_URL = process.env.FORGE_API_URL || "https://api.anthropic.com";
 const API_KEY = process.env.BUILT_IN_FORGE_API_KEY;
 const API_URL = `${FORGE_API_URL.replace(/\/$/, "")}/v1/chat/completions`;
 

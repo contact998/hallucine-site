@@ -9,7 +9,7 @@ import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const LOCALES_DIR = resolve(__dirname, "../client/src/locales");
-const FORGE_API_URL = process.env.BUILT_IN_FORGE_API_URL || "https://forge.manus.im";
+const FORGE_API_URL = process.env.FORGE_API_URL || "https://api.anthropic.com";
 const API_KEY = process.env.BUILT_IN_FORGE_API_KEY;
 const API_URL = `${FORGE_API_URL.replace(/\/$/, "")}/v1/chat/completions`;
 
