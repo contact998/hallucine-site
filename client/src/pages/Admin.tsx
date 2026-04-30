@@ -307,6 +307,12 @@ export default function Admin() {
               >
                 <ExternalLink className="w-4 h-4" /> Ouvrir CRM
               </a>
+              
+                href="/admin/media"
+                className="flex items-center gap-2 px-4 py-2 border border-purple-500/30 text-purple-400 rounded hover:bg-purple-500/10 text-sm transition-colors"
+              >
+                <FileText className="w-4 h-4" /> Médiathèque
+              </a>
               <IndexNowButton />
             </div>
           </div>
