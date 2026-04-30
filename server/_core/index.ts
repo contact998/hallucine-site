@@ -6,7 +6,7 @@ import { createServer } from "http";
 import net from "net";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { registerOAuthRoutes } from "./oauth";
-import { registerLocalAuthRoutes } from "../localAuth";
+import { registerGoogleAuthRoutes } from "../googleAuth";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
@@ -139,7 +139,7 @@ async function startServer() {
   });
 
   // OAuth callback under /api/oauth/callback
-  registerLocalAuthRoutes(app);
+  registerGoogleAuthRoutes(app);
   registerOAuthRoutes(app);
 
   // Route sendBeacon pour la detection d'abandon (ne passe pas par tRPC)

@@ -1,35 +1,24 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { useNoIndex } from "@/hooks/useNoIndex";
 
 export default function Login() {
   useNoIndex();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
-    try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.error ?? "Erreur de connexion.");
-        return;
-      }
-      window.location.href = data.redirect ?? "/admin";
-    } catch {
-      setError("Erreur reseau. Verifiez votre connexion.");
-    } finally {
-      setLoading(false);
-    }
+  // Afficher l'erreur éventuelle depuis l'URL (?error=...)
+  const params = new URLSearchParams(window.location.search);
+  const error = params.get("error");
+
+  const errorMessages: Record<string, string> = {
+    cancelled: "Connexion annulée.",
+    token: "Erreur lors de l'échange du token Google.",
+    userinfo: "Impossible de récupérer les infos Google.",
+    no_email: "Aucune adresse email reçue de Google.",
+    unauthorized: "Accès refusé — email non autorisé.",
+    server: "Erreur serveur. Réessayez.",
+  };
+
+  function handleGoogleLogin() {
+    window.location.href = "/api/auth/google";
   }
 
   return (
@@ -39,49 +28,27 @@ export default function Login() {
           <h1 className="text-2xl font-bold text-white">Connexion Admin</h1>
           <p className="text-white/50 text-sm mt-1">hallucinecran.fr</p>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-white/70 mb-1.5">
-              Email
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              autoComplete="email"
-              placeholder="contact at hallucine.fr"
-              className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-amber-500/60 transition-colors"
-            />
+
+        {error && (
+          <div className="bg-red-500/10 border border-red-500/30 rounded-lg px-4 py-3 text-red-400 text-sm mb-4">
+            {errorMessages[error] ?? "Erreur inconnue."}
           </div>
-          <div>
-            <label className="block text-sm font-medium text-white/70 mb-1.5">
-              Mot de passe
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              autoComplete="current-password"
-              placeholder="mot de passe"
-              className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-amber-500/60 transition-colors"
-            />
-          </div>
-          {error && (
-            <div className="bg-red-500/10 border border-red-500/30 rounded-lg px-4 py-3 text-red-400 text-sm">
-              {error}
-            </div>
-          )}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-amber-500 hover:bg-amber-400 disabled:opacity-50 disabled:cursor-not-allowed text-black font-semibold py-3 rounded-lg transition-colors"
-          >
-            {loading ? "Connexion..." : "Se connecter"}
-          </button>
-        </form>
+        )}
+
+        <button
+          onClick={handleGoogleLogin}
+          className="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-3 rounded-lg transition-colors"
+        >
+          <svg width="20" height="20" viewBox="0 0 48 48">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.35-8.16 2.35-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+          </svg>
+          Se connecter avec Google
+        </button>
       </div>
     </div>
   );
 }
+
