@@ -5,8 +5,8 @@ import helmet from "helmet";
 import { createServer } from "http";
 import net from "net";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { registerOAuthRoutes } from "./oauth";
 import { registerGoogleAuthRoutes } from "../googleAuth";
+import { registerLocalAuthRoutes } from "../localAuth";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
@@ -133,9 +133,9 @@ async function startServer() {
     res.send("User-agent: *\nAllow: /\n\nSitemap: https://hallucinecran.fr/sitemap.xml\nSitemap: https://hallucinecran.com/sitemap.xml\nSitemap: https://hallucinecran.de/sitemap.xml\nSitemap: https://hallucinecran.es/sitemap.xml\nSitemap: https://hallucinecran.it/sitemap.xml\n\nDisallow: /admin\nDisallow: /profil\nDisallow: /api/\n");
   });
 
-  // OAuth callback under /api/oauth/callback
+  // Authentification : Google OAuth (admin standard) + local (fallback admin)
   registerGoogleAuthRoutes(app);
-  registerOAuthRoutes(app);
+  registerLocalAuthRoutes(app);
 
   // Route sendBeacon pour la detection d'abandon (ne passe pas par tRPC)
   app.post("/api/abandon-partial", async (req, res) => {
