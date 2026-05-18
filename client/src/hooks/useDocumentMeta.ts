@@ -1,9 +1,9 @@
 import { useContext, useEffect } from "react";
 import { SSRMetaContext } from "../context/SSRMetaContext";
 
-const DEFAULT_TITLE = "Hallucine — Écrans de Cinéma Gonflables | Fabricant depuis 1995";
+const DEFAULT_TITLE = "Hallucine — Écrans de Cinéma Gonflables | Fabricant depuis 1992";
 const DEFAULT_DESCRIPTION =
-  "Hallucine, fabricant français d'écrans de cinéma gonflables depuis 1995. Écrans géants, tentes gonflables, arches, mobilier événementiel. Livraison mondiale.";
+  "Hallucine, fabricant français d'écrans de cinéma gonflables depuis 1992. Écrans géants, tentes gonflables, arches, mobilier événementiel. Livraison mondiale.";
 const DEFAULT_IMAGE =
   "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp";
 

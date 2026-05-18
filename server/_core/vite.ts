@@ -191,7 +191,8 @@ export function serveStatic(app: Express) {
           const headerImage = headerImageUrl || post.imageUrl || DEFAULT_OG_IMAGE;
 
           const domain = `${req.protocol}://${req.hostname}`;
-          const canonicalUrl = `${domain}${reqPath}`;
+          const canonicalPath = reqPath.endsWith("/") ? reqPath : `${reqPath}/`;
+          const canonicalUrl = `${domain}${canonicalPath}`;
 
           // JSON-LD BlogPosting
           const jsonLd = JSON.stringify({
