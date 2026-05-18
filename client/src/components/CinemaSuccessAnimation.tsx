@@ -242,6 +242,7 @@ export default function CinemaSuccessAnimation({ prenom, onClose }: CinemaSucces
             }}
           />
           <img
+            loading="lazy"
             src={LOGO_URL}
             alt="Halluciné"
             className="block"

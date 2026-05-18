@@ -19,7 +19,10 @@ import {
 
 // ─── Validation ───────────────────────────────────────────────────────────────
 
-const ALLOWED_MIME = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/svg+xml"] as const;
+// SVG retiré : risque XSS (un SVG peut contenir <script> et s'exécuter
+// sur l'origine où il est servi). Les uploads sont restreints aux formats
+// raster, validés par signature binaire dans r2Upload.uploadToR2().
+const ALLOWED_MIME = ["image/jpeg", "image/png", "image/webp", "image/gif"] as const;
 const MAX_SIZE_BYTES = 10 * 1024 * 1024; // 10 Mo
 
 const categoryEnum = z.enum(["blog", "realisations", "galerie", "produits", "ui", "og", "autre"]);
@@ -71,7 +74,7 @@ export const adminMediaRouter = router({
       fileData:    z.string().min(1),           // Base64
       mimeType:    z.string().refine(
                      (v) => (ALLOWED_MIME as readonly string[]).includes(v),
-                     { message: "Format non supporté (JPEG, PNG, WebP, GIF, SVG)" }
+                     { message: "Format non supporté (JPEG, PNG, WebP, GIF)" }
                    ),
       alt:         z.string().max(500).optional(),
       title:       z.string().max(500).optional(),

@@ -332,6 +332,7 @@ function GaleriePanel() {
             <X className="w-8 h-8" />
           </button>
           <img
+            loading="lazy"
             src={lightbox}
             alt=""
             className="max-w-full max-h-[85vh] object-contain rounded-lg"
@@ -549,7 +550,7 @@ function UploadPanel() {
           <div className="grid grid-cols-3 gap-2">
             {previews.map((url, i) => (
               <div key={i} className="relative aspect-square rounded-lg overflow-hidden bg-white/5">
-                <img src={url} alt="" className="w-full h-full object-cover" />
+                <img loading="lazy" src={url} alt="" className="w-full h-full object-cover" />
                 <button
                   className="absolute top-1 right-1 p-1 bg-black/60 hover:bg-red-500/80 rounded transition-colors"
                   onClick={() => removeFile(i)}

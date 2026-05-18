@@ -124,7 +124,7 @@ export async function generateAuditReport(metrics: AuditMetrics): Promise<AuditR
     messages: [
       {
         role: "system",
-        content: `Tu es le consultant digital senior d'Hallucine, fabricant français d'écrans de cinéma gonflables depuis 1995. 
+        content: `Tu es le consultant digital senior d'Hallucine, fabricant français d'écrans de cinéma gonflables depuis 1992. 
 Tu réalises un audit hebdomadaire du site web et de son workflow commercial.
 
 Le site Hallucine est un site vitrine avec :

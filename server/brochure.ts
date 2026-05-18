@@ -20,7 +20,7 @@ const PRODUCTS: Record<string, ProductData> = {
     name: "Écran Gonflable Géant (Soufflerie)",
     subtitle: "L'écran de cinéma le plus léger au monde",
     description:
-      "L'écran gonflable géant Hallucine à soufflerie est la référence mondiale pour les projections en plein air. Gonflé en continu par un ventilateur silencieux, il offre une surface de projection parfaitement tendue et stable, même par vent modéré. Fabriqué en France depuis 1995, c'est l'écran le plus léger de sa catégorie.",
+      "L'écran gonflable géant Hallucine à soufflerie est la référence mondiale pour les projections en plein air. Gonflé en continu par un ventilateur silencieux, il offre une surface de projection parfaitement tendue et stable, même par vent modéré. Fabriqué en France depuis 1992, c'est l'écran le plus léger de sa catégorie.",
     specs: [
       { label: "Technologie", value: "Soufflerie continue (ventilateur)" },
       { label: "Matériau", value: "Tissu airbag haute résistance" },
@@ -337,7 +337,7 @@ function generateBrochureHTML(product: ProductData): string {
   </div>
   
   <div class="footer">
-    <p><strong>Hallucine EURL</strong> — Fabricant français d'écrans de cinéma gonflables depuis 1995</p>
+    <p><strong>Hallucine EURL</strong> — Fabricant français d'écrans de cinéma gonflables depuis 1992</p>
     <div class="contact">
       <p>📧 <a href="mailto:contact@hallucine.fr">contact@hallucine.fr</a> | 📞 +33 6 80 14 76 94 | 💬 WhatsApp</p>
       <p style="margin-top: 8px;">🌐 <a href="https://hallucinecran.fr">hallucinecran.fr</a> — Demandez votre devis personnalisé</p>

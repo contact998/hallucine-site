@@ -36,6 +36,27 @@ const DOMAINS = {
   it: "https://hallucinecran.it",
 };
 
+/** Mapping langue → og:locale (BCP-47 → OG format) */
+const OG_LOCALES = {
+  fr: "fr_FR",
+  en: "en_US",
+  de: "de_DE",
+  es: "es_ES",
+  it: "it_IT",
+};
+
+/** Construit le bloc <meta og:locale> + alternates pour la langue courante */
+function buildOgLocaleTags(lang) {
+  const current = OG_LOCALES[lang] ?? "fr_FR";
+  const alternates = Object.entries(OG_LOCALES)
+    .filter(([l]) => l !== lang)
+    .map(([, ogl]) => `<meta property="og:locale:alternate" content="${ogl}" />`);
+  return [
+    `<meta property="og:locale" content="${current}" />`,
+    ...alternates,
+  ].join("\n    ");
+}
+
 // ─── Import de l'entrypoint SSR ────────────────────────────────────────────
 
 const { render } = await import("../client/src/entry-server.tsx");
@@ -101,6 +122,7 @@ function injectIntoTemplate(tmpl, { html, lang, canonicalUrl, hreflangTags, loca
   result = result.replace(/__PAGE_DESCRIPTION__/g, escapeHtml(meta.description));
   result = result.replace(/__PAGE_IMAGE__/g, escapeHtml(meta.image));
   result = result.replace(/__PAGE_URL__/g, escapeHtml(canonicalUrl));
+  result = result.replace(/<!--__OG_LOCALE_TAGS__-->/g, buildOgLocaleTags(lang));
 
   // 4. Contenu pré-rendu dans #root
   result = result.replace(

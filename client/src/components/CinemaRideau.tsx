@@ -197,6 +197,7 @@ export default function CinemaRideau() {
           <picture>
             <source srcSet={LOGO_TRANSPARENT_URL_WEBP} type="image/webp" />
             <img
+              loading="lazy"
               src={LOGO_TRANSPARENT_URL_PNG}
               alt="Hallucine"
               width={192}

@@ -42,6 +42,7 @@ export async function setupVite(app: Express, server: Server) {
       // En dev, injecter la locale selon le domaine (ou "fr" par défaut)
       const locale = getLocaleFromHost(req.hostname);
       template = template.replace(/__LOCALE__/g, locale);
+      template = template.replace(/<!--__OG_LOCALE_TAGS__-->/g, buildOgLocaleTags(locale));
       const page = await vite.transformIndexHtml(url, template);
       res.status(200).set({ "Content-Type": "text/html" }).end(page);
     } catch (e) {
@@ -67,6 +68,25 @@ const DOMAIN_LOCALE_MAP: Record<string, string> = {
 
 function getLocaleFromHost(hostname: string): string {
   return DOMAIN_LOCALE_MAP[hostname] || "fr";
+}
+
+const OG_LOCALES: Record<string, string> = {
+  fr: "fr_FR",
+  en: "en_US",
+  de: "de_DE",
+  es: "es_ES",
+  it: "it_IT",
+};
+
+function buildOgLocaleTags(lang: string): string {
+  const current = OG_LOCALES[lang] ?? "fr_FR";
+  const alternates = Object.entries(OG_LOCALES)
+    .filter(([l]) => l !== lang)
+    .map(([, ogl]) => `<meta property="og:locale:alternate" content="${ogl}" />`);
+  return [
+    `<meta property="og:locale" content="${current}" />`,
+    ...alternates,
+  ].join("\n    ");
 }
 
 export function serveStatic(app: Express) {
@@ -218,6 +238,7 @@ export function serveStatic(app: Express) {
           let html = injectNavWidget(
             cleanTemplate
               .replace(/__LOCALE__/g, locale)
+              .replace(/<!--__OG_LOCALE_TAGS__-->/g, buildOgLocaleTags(locale))
               .replace(/__PAGE_TITLE__/g, escapeHtml(`${title} | Hallucine`))
               .replace(/__PAGE_DESCRIPTION__/g, escapeHtml(description))
               .replace(/__PAGE_IMAGE__/g, escapeHtml(headerImage))
@@ -256,6 +277,7 @@ export function serveStatic(app: Express) {
       const html = injectNavWidget(
         baseIndexHtml
           .replace(/__LOCALE__/g, locale)
+          .replace(/<!--__OG_LOCALE_TAGS__-->/g, buildOgLocaleTags(locale))
           .replace(/__PAGE_TITLE__/g, escapeHtml(defaultTitle))
           .replace(/__PAGE_DESCRIPTION__/g, escapeHtml(defaultDesc))
           .replace(/__PAGE_IMAGE__/g, DEFAULT_OG_IMAGE)

@@ -326,6 +326,7 @@ export default function AdminBlog() {
                           <td className="px-4 py-3">
                             {post.imageUrl ? (
                               <img
+                                loading="lazy"
                                 src={post.imageUrl}
                                 alt=""
                                 className="w-10 h-10 rounded object-cover border border-white/10"
@@ -511,6 +512,7 @@ export default function AdminBlog() {
                 {form.imageUrl ? (
                   <div className="relative mb-3 rounded-lg overflow-hidden">
                     <img
+                      loading="lazy"
                       src={form.imageUrl}
                       alt="Aperçu"
                       className="w-full h-32 object-cover"
