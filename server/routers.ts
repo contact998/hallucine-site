@@ -905,6 +905,7 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
         metaDescription: z.string()
           .max(160, "La meta description ne peut pas dépasser 160 caractères")
           .optional(),
+        author: z.string().max(100).optional(),
         category: z.string().optional(),
       }).superRefine((data, ctx) => {
         if (data.status === "published" && data.excerpt !== undefined && data.excerpt.trim().length < 50) {
