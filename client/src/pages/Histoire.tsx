@@ -92,7 +92,7 @@ export default function Histoire() {
           <motion.div initial="hidden" animate="visible" variants={fadeIn}>
             <span className="text-gold text-sm font-semibold tracking-widest uppercase">{t("badge")}</span>
             <h1 className="text-4xl md:text-6xl font-bold text-white mt-3 leading-tight max-w-3xl">
-              {t("hero_title")}<br />
+              {t("hero_title")}{" "}<br />
               <span className="text-gradient-gold">{t("hero_title2")}</span>
             </h1>
             <p className="text-white/70 mt-6 text-xl max-w-2xl leading-relaxed font-serif italic">

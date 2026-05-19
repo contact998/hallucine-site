@@ -174,7 +174,7 @@ export default function Mobilier() {
           <motion.div initial="hidden" animate="visible" variants={fadeIn} custom={0}>
             <span className="text-gold text-sm font-semibold tracking-widest uppercase">{t("section_label")}</span>
             <h1 className="text-4xl md:text-6xl font-bold text-white mt-3 leading-tight max-w-3xl">
-              {t("hero_title")}<br />
+              {t("hero_title")}{" "}<br />
               <span className="text-gradient-gold">{t("hero_colored")}</span>
             </h1>
             <p className="text-white/70 mt-6 text-lg max-w-2xl leading-relaxed">{t("hero_desc")}</p>

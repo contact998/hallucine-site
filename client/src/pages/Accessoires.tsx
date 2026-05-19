@@ -101,7 +101,7 @@ export default function Accessoires() {
         <div className="container">
           <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">{t("section_label")}</p>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight mb-6">
-            {t("hero_title")}<br />
+            {t("hero_title")}{" "}<br />
             <span className="text-warm">{t("hero_colored")}</span>
           </h1>
           <p className="text-white/70 text-lg max-w-3xl leading-relaxed">
