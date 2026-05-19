@@ -2,13 +2,9 @@ import { describe, expect, it, vi } from "vitest";
 import { appRouter } from "./routers";
 import type { TrpcContext } from "./_core/context";
 
-// Mock the database, notification, and CRM sync functions
+// Mock the database and CRM sync functions
 vi.mock("./db", () => ({
   insertContactSubmission: vi.fn().mockResolvedValue(true),
-}));
-
-vi.mock("./_core/notification", () => ({
-  notifyOwner: vi.fn().mockResolvedValue(true),
 }));
 
 vi.mock("./crmWebhook", () => ({

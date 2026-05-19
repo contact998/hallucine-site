@@ -4,8 +4,8 @@ export const ENV = {
   databaseUrl: process.env.DATABASE_URL ?? "",
   ownerOpenId: process.env.OWNER_OPEN_ID ?? "",
   isProduction: process.env.NODE_ENV === "production",
-  forgeApiUrl: process.env.ANTHROPIC_BASE_URL ?? "https://api.anthropic.com",
-  forgeApiKey: process.env.ANTHROPIC_API_KEY ?? "",
+  anthropicBaseUrl: process.env.ANTHROPIC_BASE_URL ?? "https://api.anthropic.com",
+  anthropicApiKey: process.env.ANTHROPIC_API_KEY ?? "",
   // Google OAuth
   googleClientId: process.env.GOOGLE_CLIENT_ID ?? "",
   googleClientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",

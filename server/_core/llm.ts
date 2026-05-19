@@ -210,11 +210,11 @@ const normalizeToolChoice = (
 };
 
 const resolveApiUrl = () =>
-  `${(ENV.forgeApiUrl || "https://api.anthropic.com").replace(/\/$/, "")}/v1/messages`;
+  `${(ENV.anthropicBaseUrl || "https://api.anthropic.com").replace(/\/$/, "")}/v1/messages`;
 
 const assertApiKey = () => {
-  if (!ENV.forgeApiKey) {
-    throw new Error("OPENAI_API_KEY is not configured");
+  if (!ENV.anthropicApiKey) {
+    throw new Error("ANTHROPIC_API_KEY is not configured");
   }
 };
 
@@ -314,7 +314,7 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      "x-api-key": ENV.forgeApiKey,
+      "x-api-key": ENV.anthropicApiKey,
       "anthropic-version": "2023-06-01",
     },
     body: JSON.stringify(payload),
