@@ -29,7 +29,7 @@ export default function Accessoires() {
   const route = useRoutes();
   const { t } = useTranslation("accessoires");
 
-  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/wNIxhZRwHKCxifIM.webp");
 
   // Charger les images depuis la DB
   const images = useProductImages("accessoires", FALLBACK_ACCESSOIRES);
@@ -88,7 +88,7 @@ export default function Accessoires() {
         product={{
           name: t("meta_title"),
           description: t("hero_desc"),
-          image: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp",
+          image: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/wNIxhZRwHKCxifIM.webp",
           url: "https://hallucinecran.fr/accessoire-cinema-plein-air",
           category: t("section_label"),
           minPrice: 99,

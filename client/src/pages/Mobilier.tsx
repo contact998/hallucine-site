@@ -39,7 +39,7 @@ const fadeIn = {
 export default function Mobilier() {
   const route = useRoutes();
   const { t } = useTranslation("mobilier");
-  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/CYlbsneVJDOkGOhF.webp");
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 

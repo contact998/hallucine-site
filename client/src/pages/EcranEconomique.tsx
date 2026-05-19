@@ -80,7 +80,7 @@ function ImageCarousel({ images }: { images: { src: string; alt: string }[] }) {
 export default function EcranEconomique() {
   const route = useRoutes();
   const { t } = useTranslation("ecran-economique");
-  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/WXsnQMOOUttRbUlr.webp");
   const allDbImages = useProductImages("ecran-economique", [
     ...FALLBACK_AVEC_SOUFFLEUR,
     ...FALLBACK_SANS_SOUFFLEUR,

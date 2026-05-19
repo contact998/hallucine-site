@@ -27,7 +27,7 @@ const schemaEclate = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets
 export default function TentesV() {
   const route = useRoutes();
   const { t } = useTranslation("tente-v");
-  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/TVmrusoKmXcTvkKP.webp");
+  useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/HiOAOTLZaOhqpcQk.webp");
   const heroImages = useProductImages("tente-v", FALLBACK_IMAGES_TENTE_V);
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
