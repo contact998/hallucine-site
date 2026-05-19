@@ -116,7 +116,21 @@ export default function Blog() {
             {/* Articles */}
             <div className="flex-1">
               <div className="space-y-8">
-                {articlesFiltres.map((article) => (
+                {dbData === undefined ? (
+                  // Skeletons pendant le chargement tRPC — réserve la hauteur
+                  // pour éviter le layout shift (CLS) qui poussait l'aside.
+                  Array.from({ length: 3 }).map((_, i) => (
+                    <div key={`skeleton-${i}`} className="bg-card rounded-lg border border-border overflow-hidden">
+                      <div className="aspect-[16/9] w-full bg-muted animate-pulse" />
+                      <div className="p-6 md:p-8 space-y-4">
+                        <div className="h-5 w-40 bg-muted rounded animate-pulse" />
+                        <div className="h-7 w-3/4 bg-muted rounded animate-pulse" />
+                        <div className="h-4 w-full bg-muted rounded animate-pulse" />
+                        <div className="h-4 w-2/3 bg-muted rounded animate-pulse" />
+                      </div>
+                    </div>
+                  ))
+                ) : articlesFiltres.map((article) => (
                   <article key={article.id} className="bg-card rounded-lg border border-border overflow-hidden">
                     {article.imageUrl ? (
                       <div className="aspect-[16/9] w-full overflow-hidden bg-muted">
