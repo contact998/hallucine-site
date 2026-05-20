@@ -7,7 +7,8 @@
  */
 import { useState, useEffect, useRef, useCallback } from "react";
 
-const CURTAIN_SOUND_URL = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/iwEWTRdKZwhOWzcW.mp3";
+// Son du rideau : 6 s mono 64 kbps (~47 Ko) — couvre l'ouverture de ~3,8 s.
+const CURTAIN_SOUND_URL = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/curtain-1779259189993.mp3";
 const LOGO_TRANSPARENT_URL_WEBP = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ySiqVkOsMSzWfHfu.webp";
 const LOGO_TRANSPARENT_URL_PNG  = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/tWSEvNLkFkmjxAXj.png";
 
@@ -80,7 +81,7 @@ export default function CinemaRideau() {
     window.scrollTo({ top: 0, behavior: "instant" });
 
     // Instancier et jouer le son uniquement au clic (le clic autorise l'autoplay)
-    // Lazy loading : l'Audio n'est créé qu'ici, pas au montage du composant
+    // Lazy loading : l'Audio n'est créé qu'ici (~47 Ko), pas au montage du composant
     const audio = new Audio();
     audio.volume = 0.6;
     audio.src = CURTAIN_SOUND_URL;
