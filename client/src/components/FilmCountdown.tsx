@@ -17,8 +17,8 @@ const PROJECTOR_SOUND_URL = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev
 const STEP_DURATION = 900;
 // Fade-out final
 const FADE_DURATION = 500;
-// Disparition du voile noir d'intro — rapide pour ne pas masquer le contenu
-const BG_FADE = 900;
+// Fondu du voile noir d'intro — progressif, le voile reste présent sur tout le 3-2-1
+const BG_FADE = 4000;
 
 // Vérifie si le countdown a déjà été vu dans cette session
 function hasSeenCountdown(): boolean {
