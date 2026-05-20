@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useState, useEffect } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch, Redirect } from "wouter";
@@ -142,19 +142,33 @@ function CanonicalUpdater() {
 }
 
 function App() {
+  // Les widgets purement client (Toaster, WhatsApp, chatbot) ne sont PAS dans
+  // le HTML pré-rendu. On les monte après l'hydratation pour que le 1er rendu
+  // client corresponde exactement au rendu serveur (GlobalStructuredData + page).
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
-          <Toaster />
+          {/* Contenu hydraté — identique au SSR */}
           <AnalyticsTracker />
           <CanonicalUpdater />
           <GlobalStructuredData />
           <Router />
-          <WhatsAppButton />
-          <Suspense fallback={null}>
-            <HallucineChatbot />
-          </Suspense>
+          {/* Widgets client-only — montés après hydratation */}
+          {mounted && (
+            <>
+              <Toaster />
+              <WhatsAppButton />
+              <Suspense fallback={null}>
+                <HallucineChatbot />
+              </Suspense>
+            </>
+          )}
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
