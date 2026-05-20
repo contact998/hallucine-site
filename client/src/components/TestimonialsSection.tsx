@@ -87,9 +87,20 @@ export default function TestimonialsSection() {
   const [current, setCurrent] = useState(0);
   const [autoplay, setAutoplay] = useState(true);
 
-  // Show 1 on mobile, 2 on md, 3 on lg
-  const visibleCount = typeof window !== "undefined" && window.innerWidth >= 1024 ? 3 : typeof window !== "undefined" && window.innerWidth >= 768 ? 2 : 1;
+  // Cartes visibles : 1 (mobile) / 2 (md) / 3 (lg).
+  // Démarre à 1 — identique au rendu serveur — puis ajusté après hydratation.
+  // La largeur ne doit JAMAIS être lue pendant le rendu (sinon mismatch SSR).
+  const [visibleCount, setVisibleCount] = useState(1);
   const maxIndex = Math.max(0, testimonials.length - visibleCount);
+
+  useEffect(() => {
+    const compute = () =>
+      window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1;
+    setVisibleCount(compute());
+    const onResize = () => setVisibleCount(compute());
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   useEffect(() => {
     if (!autoplay) return;

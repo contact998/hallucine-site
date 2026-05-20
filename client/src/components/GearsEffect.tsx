@@ -3,6 +3,10 @@
  * Ambiance technique, montage, mécanique
  */
 export default function GearsEffect() {
+  // Arrondi à 3 décimales : Math.sin/cos ne sont pas bit-identiques entre le
+  // V8 de Node (prerender SSR) et celui du navigateur — l'arrondi rend les
+  // coordonnées SVG déterministes et évite un mismatch d'hydratation.
+  const r = (n: number) => Math.round(n * 1000) / 1000;
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 1 }}>
       {/* Grand engrenage — coin supérieur droit */}
@@ -17,10 +21,10 @@ export default function GearsEffect() {
         {/* Dents */}
         {Array.from({ length: 12 }).map((_, i) => {
           const angle = (i * 30 * Math.PI) / 180;
-          const x1 = 50 + 28 * Math.cos(angle);
-          const y1 = 50 + 28 * Math.sin(angle);
-          const x2 = 50 + 38 * Math.cos(angle);
-          const y2 = 50 + 38 * Math.sin(angle);
+          const x1 = r(50 + 28 * Math.cos(angle));
+          const y1 = r(50 + 28 * Math.sin(angle));
+          const x2 = r(50 + 38 * Math.cos(angle));
+          const y2 = r(50 + 38 * Math.sin(angle));
           return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="6" strokeLinecap="round" />;
         })}
       </svg>
@@ -35,10 +39,10 @@ export default function GearsEffect() {
         <circle cx="50" cy="50" r="8" />
         {Array.from({ length: 8 }).map((_, i) => {
           const angle = (i * 45 * Math.PI) / 180;
-          const x1 = 50 + 22 * Math.cos(angle);
-          const y1 = 50 + 22 * Math.sin(angle);
-          const x2 = 50 + 32 * Math.cos(angle);
-          const y2 = 50 + 32 * Math.sin(angle);
+          const x1 = r(50 + 22 * Math.cos(angle));
+          const y1 = r(50 + 22 * Math.sin(angle));
+          const x2 = r(50 + 32 * Math.cos(angle));
+          const y2 = r(50 + 32 * Math.sin(angle));
           return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="5" strokeLinecap="round" />;
         })}
       </svg>

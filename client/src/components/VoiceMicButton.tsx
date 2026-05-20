@@ -36,10 +36,14 @@ export default function VoiceMicButton({
   const [interimText, setInterimText] = useState("");
   const [error, setError] = useState<string | null>(null);
   const recognitionRef = useRef<any>(null);
-  const isSupported = isSpeechRecognitionSupported();
+  // Détecté après montage : `window.SpeechRecognition` n'existe pas en SSR —
+  // le lire pendant le rendu casserait l'hydratation. Démarre à false
+  // (= rendu serveur), puis passe à true côté client si supporté.
+  const [isSupported, setIsSupported] = useState(false);
 
-  // Cleanup
+  // Détection du support + cleanup
   useEffect(() => {
+    setIsSupported(isSpeechRecognitionSupported());
     return () => {
       if (recognitionRef.current) {
         try { recognitionRef.current.abort(); } catch { /* ignore */ }

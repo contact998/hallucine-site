@@ -9,7 +9,7 @@
  *   render(url, lang) → createInstance() → init(bundledResources, lang)
  *   → renderToString(<I18nextProvider><Router><Page /></Router></I18nextProvider>)
  */
-import React from "react";
+import React, { Suspense } from "react";
 import { renderToString } from "react-dom/server";
 import { Router } from "wouter";
 import { I18nextProvider } from "react-i18next";
@@ -219,6 +219,11 @@ export async function render(
     ],
   });
 
+  // ⚠️ Les deux <Suspense> reproduisent EXACTEMENT l'arbre client
+  // (main.tsx → <Suspense><App>, App.tsx → <Suspense><Router>). renderToString
+  // émet alors les marqueurs <!--$--> / <!--/$--> que hydrateRoot attend pour
+  // raccrocher ses propres boundaries Suspense. Sans eux → mismatch #418.
+  const fallback = <div className="min-h-screen bg-background" />;
   const html = renderToString(
     <I18nextProvider i18n={i18n}>
       <trpc.Provider client={trpcClient} queryClient={queryClient}>
@@ -226,8 +231,12 @@ export async function render(
           <SSRMetaContext.Provider value={ssrMeta}>
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             <Router hook={ssrLocationHook as any}>
-              <GlobalStructuredData />
-              <Page />
+              <Suspense fallback={fallback}>
+                <GlobalStructuredData />
+                <Suspense fallback={fallback}>
+                  <Page />
+                </Suspense>
+              </Suspense>
             </Router>
           </SSRMetaContext.Provider>
         </QueryClientProvider>

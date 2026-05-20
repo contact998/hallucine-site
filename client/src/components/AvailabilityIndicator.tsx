@@ -340,10 +340,15 @@ export function AvailabilityBadge() {
 // ─── Version Étendue (page contact) ────────────────────────────────
 
 export function AvailabilityExtended() {
-  const { data, isLoading } = useAvailability();
+  const { data, error } = useAvailability();
   const { isAuthenticated } = useAuth();
 
-  if (isLoading) {
+  // Requête échouée → masquer la section.
+  if (error) return null;
+
+  // Pas encore de données : squelette. Rendu IDENTIQUE en SSR (requête
+  // désactivée côté serveur) et au 1er rendu client → hydratation sans mismatch.
+  if (!data) {
     return (
       <div className="rounded-2xl border border-gray-700 bg-gray-900/50 p-6 animate-pulse">
         <div className="h-4 bg-gray-700 rounded w-48 mb-4" />
@@ -352,8 +357,6 @@ export function AvailabilityExtended() {
       </div>
     );
   }
-
-  if (!data) return null;
 
   return (
     <div
