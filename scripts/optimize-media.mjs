@@ -99,8 +99,12 @@ async function main() {
         .toBuffer();
       const outMeta = await sharp(out).metadata();
 
-      // WebP déjà sur R2, bon format/taille, mais ré-encodage sans gain → on garde
-      const mustUpload = notWebp || isCloudfront || oversized || out.length < buf.length;
+      // WebP déjà sur R2 et bien dimensionnée : on ne ré-uploade QUE si le
+      // ré-encodage fait gagner significativement (>40 Ko ET >30 %). Recompresser
+      // pour 2-3 Ko ne ferait qu'ajouter rotation d'URL et objet orphelin.
+      const gainSignificatif =
+        (buf.length - out.length) > 40 * 1024 && out.length < buf.length * 0.7;
+      const mustUpload = notWebp || isCloudfront || oversized || gainSignificatif;
       if (!mustUpload) {
         bytesAfter += buf.length;
         if (item.width !== w || item.height !== h || item.filesize !== buf.length) {
