@@ -85,7 +85,7 @@ export default function GalerieVideo() {
                   <span className="inline-block text-xs font-medium bg-[#DAA520]/10 text-[#DAA520] px-2 py-1 rounded mb-2">
                     {video.category}
                   </span>
-                  <h3 className="font-semibold text-base">{video.title}</h3>
+                  <h2 className="font-semibold text-base">{video.title}</h2>
                 </div>
               </div>
             ))}
@@ -93,9 +93,9 @@ export default function GalerieVideo() {
 
           {/* Lien chaîne YouTube */}
           <div className="text-center mt-12 p-8 bg-muted/30 rounded-lg border border-border">
-            <h3 className="font-display text-2xl font-bold mb-3">
+            <h2 className="font-display text-2xl font-bold mb-3">
               {t("youtube_title")}
-            </h3>
+            </h2>
             <p className="text-muted-foreground mb-6">
               {t("youtube_desc")}
             </p>

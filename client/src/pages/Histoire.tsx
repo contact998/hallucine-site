@@ -149,7 +149,7 @@ export default function Histoire() {
                 <div className="inline-block px-3 py-1 bg-gold/10 border border-gold/20 rounded-lg mb-4">
                   <span className="text-gold text-sm font-bold">{chapter.year}</span>
                 </div>
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 leading-tight">{chapter.title}</h3>
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 leading-tight">{chapter.title}</h2>
                 <p className="text-white/60 leading-relaxed text-base">{chapter.text}</p>
                 {chapter.quote && (
                   <blockquote className="mt-6 pl-4 border-l-2 border-gold/40">
