@@ -181,8 +181,8 @@ export default function Galerie() {
       </section>
 
       <div className="relative -mt-64 md:-mt-96 z-30">
-        {/* Barre filtres */}
-        <div className="bg-black/60 backdrop-blur-sm py-3 mb-8 md:mb-12">
+        {/* Barre filtres — collante sous la navbar fixe (110 px) */}
+        <div className="sticky top-[110px] z-40 bg-black/60 backdrop-blur-sm py-3 mb-8 md:mb-12">
           <div className="container relative flex items-center">
             <h1 className="text-2xl md:text-3xl font-bold text-ivory shrink-0">
               {t("page_title")}
