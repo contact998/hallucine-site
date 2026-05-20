@@ -198,13 +198,13 @@ export default function CinemaRideau() {
           <picture>
             <source srcSet={LOGO_TRANSPARENT_URL_WEBP} type="image/webp" />
             <img
-              loading="lazy"
+              loading="eager"
               src={LOGO_TRANSPARENT_URL_PNG}
               alt="Hallucine"
               width={192}
               height={192}
               className="w-32 sm:w-40 md:w-48 lg:w-56 xl:w-64 h-auto mx-auto drop-shadow-[0_4px_30px_rgba(232,184,74,0.4)]"
-              decoding="async"
+              decoding="sync"
               fetchPriority="high"
             />
           </picture>
