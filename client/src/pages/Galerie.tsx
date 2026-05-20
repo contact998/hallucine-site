@@ -93,16 +93,21 @@ const FALLBACK_PHOTOS = [
   { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/Vincennesfaisceaulumineux_1458c920.jpg", alt: "Vincennes faisceau lumineux", cat: "events" },
 ];
 
-// ─── Mapping subcategory DB → cat filtre ──────────────────────────────────────
-// Les images en DB ont un subcategory libre — on le mappe vers les cats du filtre
+// ─── Classement automatique par description ───────────────────────────────────
+// Les images en base n'ont pas de sous-catégorie fiable. On déduit la catégorie
+// du filtre depuis le texte alt (description) de chaque image, par mots-clés —
+// fonctionne aussi pour les photos ajoutées plus tard via l'admin.
 
-function mapSubcatToFilter(subcategory: string | null): string {
-  if (!subcategory) return "events";
-  if (subcategory.includes("screen") || subcategory.includes("ecran")) return "screens";
-  if (subcategory.includes("tent"))    return "tents";
-  if (subcategory.includes("arch"))    return "arches";
-  if (subcategory.includes("furni") || subcategory.includes("mobil")) return "furniture";
-  if (subcategory.includes("equip"))   return "equipment";
+function classifyPhoto(alt: string): string {
+  const a = (alt ?? "").trim().toLowerCase();
+  if (a.includes("tente")) return "tents";
+  if (a.includes("arche")) return "arches";
+  if (/canap|fauteuil|comptoir|mange-debout|tabouret|lounge|\bbar\b/.test(a)) return "furniture";
+  if (/projecteur|cabine|setup technique|installation technique|r[ée]gie/.test(a)) return "equipment";
+  // Une photo « produit » d'écran commence en général par « Écran … »
+  if (/^[ée]cran\b/.test(a)) return "screens";
+  if (/projection|[ée]v[ée]nement|drive-in|s[ée]ance|festival|spectacle|concert|foule|\bpublic\b|avant-premi/.test(a)) return "events";
+  if (/[ée]cran/.test(a)) return "screens";
   return "events";
 }
 
@@ -140,7 +145,7 @@ export default function Galerie() {
   const photos = dbImages.map((img) => ({
     src: img.src,
     alt: img.alt,
-    cat: mapSubcatToFilter(img.subcategory ?? null),
+    cat: classifyPhoto(img.alt),
   }));
 
   const filtered = filter === "all" ? photos : photos.filter((p) => p.cat === filter);
