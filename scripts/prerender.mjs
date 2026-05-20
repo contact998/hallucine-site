@@ -69,42 +69,28 @@ function buildOgLocaleTags(lang) {
 const { render } = await import("../client/src/entry-server.tsx");
 const { ROUTES } = await import("../client/src/i18n/routes.ts");
 
-// ─── Bake build-time : images figées depuis la DB ──────────────────────────
+// ─── Bake build-time : images figées depuis scripts/media-cache.json ───────
 //
-// On lit les images depuis media_library au moment du build et on les injecte
-// dans chaque HTML (window.__SSR_MEDIA__). Les pages produit/galerie affichent
-// alors les vraies images dès le HTML pré-rendu → aucun flash à l'hydratation.
-//
-// Si la DB est injoignable, on retombe silencieusement sur le fallback hardcodé.
+// Le build Railway n'a pas accès à la base (réseau privé indisponible au
+// build). Les images sont donc figées dans scripts/media-cache.json par
+// `node --env-file=.env.local --import tsx scripts/dump-media.mjs` (à
+// relancer + commit après toute modif d'images), et injectées dans chaque
+// HTML (window.__SSR_MEDIA__) → aucun flash à l'hydratation.
 
-/** Charge les images des catégories utilisées par les pages publiques */
-async function loadMediaCache() {
-  const cache = {};
+/** Charge les images bakées depuis le fichier commité */
+function loadMediaCache() {
   try {
-    const { getMediaByCategory } = await import("../server/mediaLibrary.ts");
-    for (const cat of ["produits", "galerie", "realisations"]) {
-      const rows = await getMediaByCategory(cat);
-      for (const row of rows) {
-        // produits : indexé par sous-catégorie ; galerie/realisations : groupe unique
-        const sub = cat === "produits" ? (row.subcategory ?? "") : "";
-        const key = `${cat}|${sub}`;
-        (cache[key] ??= []).push({
-          url:         row.url,
-          alt:         row.alt ?? null,
-          title:       row.title ?? null,
-          subcategory: row.subcategory ?? null,
-        });
-      }
-    }
+    const cache = JSON.parse(readFileSync(join(__dirname, "media-cache.json"), "utf-8"));
     const count = Object.values(cache).reduce((s, a) => s + a.length, 0);
-    console.log(`🖼️  ${count} image(s) bakée(s) depuis la DB → window.__SSR_MEDIA__\n`);
+    console.log(`🖼️  ${count} image(s) bakée(s) depuis scripts/media-cache.json\n`);
+    return cache;
   } catch (err) {
-    console.warn(`⚠️  Bake images impossible (fallback hardcodé conservé) : ${err.message}\n`);
+    console.warn(`⚠️  media-cache.json illisible (fallback hardcodé conservé) : ${err.message}\n`);
+    return {};
   }
-  return cache;
 }
 
-const mediaCache = await loadMediaCache();
+const mediaCache = loadMediaCache();
 
 /** JSON sûr pour injection dans un <script> inline */
 const mediaCacheJson = JSON.stringify(mediaCache)
