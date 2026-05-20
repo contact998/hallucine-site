@@ -62,6 +62,50 @@ function buildOgLocaleTags(lang) {
 const { render } = await import("../client/src/entry-server.tsx");
 const { ROUTES } = await import("../client/src/i18n/routes.ts");
 
+// ─── Bake build-time : images figées depuis la DB ──────────────────────────
+//
+// On lit les images depuis media_library au moment du build et on les injecte
+// dans chaque HTML (window.__SSR_MEDIA__). Les pages produit/galerie affichent
+// alors les vraies images dès le HTML pré-rendu → aucun flash à l'hydratation.
+//
+// Si la DB est injoignable, on retombe silencieusement sur le fallback hardcodé.
+
+/** Charge les images des catégories utilisées par les pages publiques */
+async function loadMediaCache() {
+  const cache = {};
+  try {
+    const { getMediaByCategory } = await import("../server/mediaLibrary.ts");
+    for (const cat of ["produits", "galerie", "realisations"]) {
+      const rows = await getMediaByCategory(cat);
+      for (const row of rows) {
+        // produits : indexé par sous-catégorie ; galerie/realisations : groupe unique
+        const sub = cat === "produits" ? (row.subcategory ?? "") : "";
+        const key = `${cat}|${sub}`;
+        (cache[key] ??= []).push({
+          url:         row.url,
+          alt:         row.alt ?? null,
+          title:       row.title ?? null,
+          subcategory: row.subcategory ?? null,
+        });
+      }
+    }
+    const count = Object.values(cache).reduce((s, a) => s + a.length, 0);
+    console.log(`🖼️  ${count} image(s) bakée(s) depuis la DB → window.__SSR_MEDIA__\n`);
+  } catch (err) {
+    console.warn(`⚠️  Bake images impossible (fallback hardcodé conservé) : ${err.message}\n`);
+  }
+  return cache;
+}
+
+const mediaCache = await loadMediaCache();
+
+/** JSON sûr pour injection dans un <script> inline */
+const mediaCacheJson = JSON.stringify(mediaCache)
+  .replace(/</g, "\\u003c")
+  .replace(/\u2028/g, "\\u2028")
+  .replace(/\u2029/g, "\\u2029");
+const mediaScriptTag = `  <script>window.__SSR_MEDIA__=${mediaCacheJson}</script>`;
+
 // ─── Lecture du template HTML ──────────────────────────────────────────────
 
 const templatePath = join(DIST, "_template.html");
@@ -108,7 +152,7 @@ function buildHreflangTags(routeKey, allRoutes) {
 /**
  * Injecte le HTML pré-rendu et les metas dans le template index.html
  */
-function injectIntoTemplate(tmpl, { html, lang, canonicalUrl, hreflangTags, locale, meta }) {
+function injectIntoTemplate(tmpl, { html, lang, canonicalUrl, hreflangTags, locale, meta, mediaScript }) {
   let result = tmpl;
 
   // 1. Langue HTML
@@ -148,6 +192,12 @@ function injectIntoTemplate(tmpl, { html, lang, canonicalUrl, hreflangTags, loca
     );
   }
 
+  // 7. Images bakées depuis la DB → window.__SSR_MEDIA__
+  //    (script classique en <head> : exécuté avant le bundle JS différé)
+  if (mediaScript) {
+    result = result.replace("</head>", `${mediaScript}\n</head>`);
+  }
+
   return result;
 }
 
@@ -172,7 +222,7 @@ for (const lang of VALID_LANGS) {
   for (const [routeKey, url] of Object.entries(langRoutes)) {
     try {
       // Rendre la page (récupère aussi les metas collectées en SSR)
-      const { html, meta } = await render(url, lang);
+      const { html, meta } = await render(url, lang, mediaCache);
       console.log(`[META] [${lang}] ${url} → "${meta.title}"`);
 
       // URL canonique — trailing slash pour aligner avec les redirections Express
@@ -192,6 +242,7 @@ for (const lang of VALID_LANGS) {
         hreflangTags,
         locale: lang,
         meta,
+        mediaScript: mediaScriptTag,
       });
 
       // Chemin de sortie : dist/{url}/index.html

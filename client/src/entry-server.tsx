@@ -152,9 +152,20 @@ function getPageComponent(url: string, lang: string): React.ComponentType {
  *
  * @param url - URL de la page (ex: "/ecran-gonflable")
  * @param lang - Code langue (ex: "fr", "en", "de", "es", "it")
+ * @param mediaCache - Images bakées depuis la DB (clé "categorie|souscategorie")
  * @returns HTML statique + metas collectées pendant le rendu
  */
-export async function render(url: string, lang: string): Promise<{ html: string; meta: SSRMeta }> {
+export async function render(
+  url: string,
+  lang: string,
+  mediaCache?: Record<string, unknown>
+): Promise<{ html: string; meta: SSRMeta }> {
+  // Images bakées au build → lues par useProductImages/useMediaByCategory
+  // pour que le HTML pré-rendu contienne directement les vraies images.
+  if (mediaCache) {
+    (globalThis as unknown as Record<string, unknown>).__SSR_MEDIA__ = mediaCache;
+  }
+
   // ✅ Instance i18n créée par render() — pas de race conditions entre langues
   const i18n = createInstance();
   await i18n.use(initReactI18next).init({
