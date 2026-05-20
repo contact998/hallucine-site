@@ -38,21 +38,30 @@ export default function FilmCountdown({
 }: {
   onComplete?: () => void;
 }) {
-  // Skip si déjà vu dans cette session
-  const alreadySeen = hasSeenCountdown();
+  // `visible` démarre TOUJOURS à true — identique au rendu serveur → hydratation
+  // propre. La décision « déjà vu » (lecture sessionStorage) se prend dans un
+  // effet, jamais pendant le rendu.
   const [count, setCount] = useState(3);
-  const [visible, setVisible] = useState(!alreadySeen);
+  const [visible, setVisible] = useState(true);
+  const [started, setStarted] = useState(false);
   const [fading, setFading] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
 
-  // Si déjà vu, passer la main immédiatement
+  // Au montage (client) : déjà vu cette session → on saute ; sinon → on démarre.
   useEffect(() => {
-    if (alreadySeen) onComplete?.();
-  }, [alreadySeen, onComplete]);
+    if (hasSeenCountdown()) {
+      setVisible(false);
+      onCompleteRef.current?.();
+    } else {
+      setStarted(true);
+    }
+  }, []);
 
   // Son de projecteur — best-effort, ne bloque pas le countdown
   useEffect(() => {
-    if (alreadySeen) return;
+    if (!started) return;
     const audio = new Audio(PROJECTOR_SOUND_URL);
     audio.volume = 0.5;
     audio.loop = true;
@@ -64,7 +73,7 @@ export default function FilmCountdown({
       audio.pause();
       audio.src = "";
     };
-  }, [alreadySeen]);
+  }, [started]);
 
   const finish = useCallback(() => {
     setFading(true);
@@ -91,15 +100,15 @@ export default function FilmCountdown({
     }, FADE_DURATION);
   }, [onComplete]);
 
-  // Compte à rebours — démarre immédiatement (plus d'attente de préchargement)
+  // Compte à rebours — démarre une fois `started` vrai (jamais si déjà vu)
   useEffect(() => {
-    if (alreadySeen) return;
+    if (!started) return;
     if (count > 0) {
       const timer = setTimeout(() => setCount((c) => c - 1), STEP_DURATION);
       return () => clearTimeout(timer);
     }
     finish();
-  }, [count, finish, alreadySeen]);
+  }, [count, finish, started]);
 
   if (!visible) return null;
 
