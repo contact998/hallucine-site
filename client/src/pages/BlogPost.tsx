@@ -140,9 +140,9 @@ export default function BlogPost() {
 
           {/* CTA */}
           <div className="mt-16 p-8 bg-[#1a1a2e] rounded-xl text-white text-center">
-            <h3 className="font-display text-2xl font-bold mb-3">
+            <h2 className="font-display text-2xl font-bold mb-3">
               Vous avez un projet ?
-            </h3>
+            </h2>
             <p className="text-white/70 mb-6">
               Demandez un devis gratuit — réponse sous 24h.
             </p>
