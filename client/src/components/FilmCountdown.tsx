@@ -2,10 +2,10 @@
  * FilmCountdown — Compteur de pellicule de film vintage (3, 2, 1)
  * 100% CSS/SVG pur + son de projecteur 35mm.
  *
- * Overlay TRANSPARENT : la page reste visible derrière dès le chargement.
- * Le countdown est un calque décoratif qui ne masque plus le contenu —
- * il ne bloque donc pas le LCP (Core Web Vitals). S'affiche une fois par
- * session (sessionStorage).
+ * Intro cinéma : un voile noir apparaît au lancement puis s'efface vite
+ * (fondu accéléré). Le voile n'est monté qu'après le premier paint (effet
+ * `started`) → le contenu peint d'abord, le LCP reste mesuré tôt. S'affiche
+ * une fois par session (sessionStorage).
  */
 import { useState, useEffect, useCallback, useRef } from "react";
 
@@ -17,6 +17,8 @@ const PROJECTOR_SOUND_URL = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev
 const STEP_DURATION = 900;
 // Fade-out final
 const FADE_DURATION = 500;
+// Disparition du voile noir d'intro — rapide pour ne pas masquer le contenu
+const BG_FADE = 900;
 
 // Vérifie si le countdown a déjà été vu dans cette session
 function hasSeenCountdown(): boolean {
@@ -122,7 +124,18 @@ export default function FilmCountdown({
       }}
       aria-hidden="true"
     >
-      {/* Contenu du countdown — fond transparent, la page reste visible derrière */}
+      {/* Voile noir d'intro — monté seulement après le 1er paint, s'efface vite */}
+      {started && (
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundColor: "#000",
+            animation: `countdown-bg ${BG_FADE}ms ease-in forwards`,
+          }}
+        />
+      )}
+
+      {/* Contenu du countdown — au-dessus du voile */}
       <div className="relative z-10 flex items-center justify-center w-full h-full">
         {/* Cercle de visée style pellicule */}
         <svg
@@ -204,6 +217,10 @@ export default function FilmCountdown({
         @keyframes countdown-arc {
           0% { stroke-dashoffset: 553; }
           100% { stroke-dashoffset: 0; }
+        }
+        @keyframes countdown-bg {
+          0% { opacity: 1; }
+          100% { opacity: 0; }
         }
       `}</style>
     </div>
