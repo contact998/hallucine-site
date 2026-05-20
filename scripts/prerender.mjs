@@ -23,6 +23,13 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const DIST = join(ROOT, "dist", "public");
 
+// Le build Railway n'a pas accès au réseau privé (mysql.railway.internal).
+// On bascule sur l'URL publique de la base pour que le bake des images et le
+// sitemap puissent la lire pendant le build. Sans effet au runtime (process séparé).
+if (process.env.DATABASE_PUBLIC_URL) {
+  process.env.DATABASE_URL = process.env.DATABASE_PUBLIC_URL;
+}
+
 // ─── Configuration ─────────────────────────────────────────────────────────
 
 const VALID_LANGS = ["fr", "en", "de", "es", "it"];
