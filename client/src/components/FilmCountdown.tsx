@@ -10,7 +10,8 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
 // Son de projecteur vintage (Mixkit "Vintage film projector working", libre de droits)
-const PROJECTOR_SOUND_URL = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/NSvXTGcyBANIYpcE.mp3";
+// Version allégée : 6 s mono 64 kbps (~47 Ko) — couvre largement le countdown de 3 s.
+const PROJECTOR_SOUND_URL = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/projector-countdown-1779258515882.mp3";
 
 // Durée de chaque chiffre en ms (~1 seconde par chiffre)
 const STEP_DURATION = 900;
