@@ -12,44 +12,16 @@ import GlobalStructuredData from "./components/GlobalStructuredData";
 import { detectLanguage } from "./i18n/domains";
 import { ROUTES } from "./i18n/routes";
 
-// Lazy-loaded pages (code splitting)
-const Home = lazy(() => import("./pages/Home"));
-const Ecrans = lazy(() => import("./pages/Ecrans"));
-const EcranGeant = lazy(() => import("./pages/EcranGeant"));
-const EcranEtanche = lazy(() => import("./pages/EcranEtanche"));
-const EcranEconomique = lazy(() => import("./pages/EcranEconomique"));
-const Comparaison = lazy(() => import("./pages/Comparaison"));
-const EcransLED = lazy(() => import("./pages/EcransLED"));
-const Tentes = lazy(() => import("./pages/Tentes"));
-const TentesX = lazy(() => import("./pages/TentesX"));
-const TentesN = lazy(() => import("./pages/TentesN"));
-const TentesV = lazy(() => import("./pages/TentesV"));
-const TentesAraignees = lazy(() => import("./pages/TentesAraignees"));
-const ArchesGonflables = lazy(() => import("./pages/ArchesGonflables"));
-const Mobilier = lazy(() => import("./pages/Mobilier"));
-const Accessoires = lazy(() => import("./pages/Accessoires"));
-const Galerie = lazy(() => import("./pages/Galerie"));
-const Contact = lazy(() => import("./pages/Contact"));
-const APropos = lazy(() => import("./pages/APropos"));
-const Histoire = lazy(() => import("./pages/Histoire"));
-const MentionsLegales = lazy(() => import("./pages/MentionsLegales"));
-const Confidentialite = lazy(() => import("./pages/Confidentialite"));
-const PolitiqueCookies = lazy(() => import("./pages/PolitiqueCookies"));
-const DevenirDistributeur = lazy(() => import("./pages/DevenirDistributeur"));
-const TrouverDistributeur = lazy(() => import("./pages/TrouverDistributeur"));
-const ModeEmploi = lazy(() => import("./pages/ModeEmploi"));
-const GalerieVideo = lazy(() => import("./pages/GalerieVideo"));
-const Blog = lazy(() => import("./pages/Blog"));
-const BlogPost = lazy(() => import("./pages/BlogPost"));
-const Profil = lazy(() => import("./pages/Profil"));
-const Admin = lazy(() => import("./pages/Admin"));
-const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
-const Login = lazy(() => import("./pages/Login"));
-const AdminAuditHistory = lazy(() => import("./pages/AdminAuditHistory"));
-const AdminCalculateurs = lazy(() => import("./pages/AdminCalculateurs"));
-const AdminMedia = lazy(() => import("./pages/AdminMedia"));
-const AdminBlog = lazy(() => import("./pages/AdminBlog"));
-const NotFound = lazy(() => import("./pages/NotFound"));
+// Pages — composants lazy via le registre (source unique partagée avec main.tsx)
+import {
+  Home, Ecrans, EcranGeant, EcranEtanche, EcranEconomique, Comparaison,
+  EcransLED, Tentes, TentesX, TentesN, TentesV, TentesAraignees,
+  ArchesGonflables, Mobilier, Accessoires, Galerie, GalerieVideo, Contact,
+  APropos, Histoire, ModeEmploi, Blog, BlogPost, DevenirDistributeur,
+  TrouverDistributeur, MentionsLegales, Confidentialite, PolitiqueCookies,
+  Profil, Admin, AdminDashboard, AdminAuditHistory, AdminCalculateurs,
+  AdminMedia, AdminBlog, Login, NotFound,
+} from "./pages/registry";
 
 function PageLoader() {
   return (

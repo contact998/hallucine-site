@@ -4,10 +4,11 @@ import { i18n } from "./i18n/instance"; // Instance partagée (initialisée par 
 import { UNAUTHED_ERR_MSG } from '@shared/const';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, retryLink, TRPCClientError } from "@trpc/client";
-import { createRoot } from "react-dom/client";
+import { hydrateRoot } from "react-dom/client";
 import { I18nextProvider } from "react-i18next";
 import superjson from "superjson";
 import App from "./App";
+import { preloadCurrentPage } from "./pages/registry";
 import { getLoginUrl, initLoginUrl } from "./const";
 import "./index.css";
 import { Suspense } from "react";
@@ -108,14 +109,20 @@ const trpcClient = trpc.createClient({
   ],
 });
 
-createRoot(document.getElementById("root")!).render(
-  <I18nextProvider i18n={i18n}>
-    <trpc.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>
-        <Suspense fallback={<div className="min-h-screen bg-background" />}>
-          <App />
-        </Suspense>
-      </QueryClientProvider>
-    </trpc.Provider>
-  </I18nextProvider>
-);
+// Précharge le chunk de la page courante PUIS hydrate le HTML pré-rendu.
+// Sans ce préchargement, la page (lazy) suspendrait pendant l'hydratation
+// → React afficherait le spinner ≠ HTML serveur → pré-rendu jeté (flash).
+preloadCurrentPage().finally(() => {
+  hydrateRoot(
+    document.getElementById("root")!,
+    <I18nextProvider i18n={i18n}>
+      <trpc.Provider client={trpcClient} queryClient={queryClient}>
+        <QueryClientProvider client={queryClient}>
+          <Suspense fallback={<div className="min-h-screen bg-background" />}>
+            <App />
+          </Suspense>
+        </QueryClientProvider>
+      </trpc.Provider>
+    </I18nextProvider>
+  );
+});
