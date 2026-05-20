@@ -133,8 +133,11 @@ export function serveStatic(app: Express) {
     })
   );
 
-  // Reste des fichiers statiques — cache court
-  app.use(express.static(distPath, { index: false }));
+  // Reste des fichiers statiques — cache court.
+  // redirect:false → pas de 301 /chemin → /chemin/ sur les répertoires :
+  // le handler SSG ci-dessous sert la page pré-rendue directement sur l'URL
+  // canonique sans slash (évite un saut de redirection sur les liens internes).
+  app.use(express.static(distPath, { index: false, redirect: false }));
 
   // Bloquer les patterns /xx (préfixes de langue invalides testés par bots SEO)
   // Ex: /sv, /da, /nl, /pt, /pl, /ru, /zh, /ja, /ko...
