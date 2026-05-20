@@ -227,6 +227,7 @@ export default function Galerie() {
 
         {/* Grille */}
         <main className="container py-12 md:py-16">
+          <h2 className="sr-only">{t("meta_title")}</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {filtered.map((photo, index) => (
               <div
