@@ -103,9 +103,10 @@ function checkHtmlPage(filePath, label) {
     pageOk = false;
   } else {
     const canonicalUrl = canonicalMatch[1];
-    // Vérifier trailing slash (sauf home)
-    if (!canonicalUrl.endsWith("/")) {
-      warn(`${label} — canonical sans trailing slash : ${canonicalUrl}`);
+    // Convention : pas de trailing slash (sauf la home, dont le path est "/")
+    const canonicalPath = new URL(canonicalUrl).pathname;
+    if (canonicalPath !== "/" && canonicalPath.endsWith("/")) {
+      warn(`${label} — canonical avec trailing slash : ${canonicalUrl}`);
     }
   }
 
@@ -287,21 +288,21 @@ if (!existsSync(sitemapPath)) {
   const locUrls = sitemap.match(/<loc>([^<]+)<\/loc>/g) || [];
   info(`${locUrls.length} URLs dans le sitemap`);
 
-  // Vérifier trailing slash
-  const withoutSlash = locUrls.filter(u => {
+  // Vérifier l'absence de trailing slash (convention : URL canonique sans slash,
+  // sauf les homes dont le path est "/")
+  const withSlash = locUrls.filter(u => {
     const url = u.replace(/<\/?loc>/g, "");
-    // Les homes ont un slash, les autres aussi
-    return !url.endsWith("/");
+    return new URL(url).pathname !== "/" && url.endsWith("/");
   });
 
-  if (withoutSlash.length === 0) {
-    ok(`Toutes les URLs du sitemap ont un trailing slash`);
+  if (withSlash.length === 0) {
+    ok(`Aucune URL du sitemap n'a de trailing slash superflu`);
   } else {
-    for (const u of withoutSlash.slice(0, 5)) {
-      fail(`URL sans trailing slash : ${u}`);
+    for (const u of withSlash.slice(0, 5)) {
+      fail(`URL avec trailing slash : ${u}`);
     }
-    if (withoutSlash.length > 5) {
-      fail(`... et ${withoutSlash.length - 5} autres URLs sans trailing slash`);
+    if (withSlash.length > 5) {
+      fail(`... et ${withSlash.length - 5} autres URLs avec trailing slash`);
     }
   }
 

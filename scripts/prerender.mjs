@@ -127,17 +127,17 @@ function escapeHtml(str = "") {
  * Génère les balises hreflang pour une route donnée (toutes les langues)
  */
 function buildHreflangTags(routeKey, allRoutes) {
+  // URLs sans trailing slash — alignées sur le canonical et les liens internes
+  // (le serveur sert l'URL sans slash directement en 200).
   const tags = VALID_LANGS.map((lang) => {
     const url = allRoutes[lang]?.[routeKey] ?? "/";
-    const urlWithSlash = url === "/" ? "/" : `${url}/`;
     const domain = DOMAINS[lang];
-    return `  <link rel="alternate" hreflang="${lang}" href="${domain}${urlWithSlash}" />`;
+    return `  <link rel="alternate" hreflang="${lang}" href="${domain}${url}" />`;
   });
   // x-default pointe vers FR (site principal)
   const defaultUrl = allRoutes["fr"]?.[routeKey] ?? "/";
-  const defaultUrlWithSlash = defaultUrl === "/" ? "/" : `${defaultUrl}/`;
   tags.push(
-    `  <link rel="alternate" hreflang="x-default" href="${DOMAINS["fr"]}${defaultUrlWithSlash}" />`
+    `  <link rel="alternate" hreflang="x-default" href="${DOMAINS["fr"]}${defaultUrl}" />`
   );
   return tags.join("\n");
 }
@@ -220,8 +220,9 @@ for (const lang of VALID_LANGS) {
       const { html, meta } = await render(url, lang, mediaCache);
       console.log(`[META] [${lang}] ${url} → "${meta.title}"`);
 
-      // URL canonique — trailing slash pour aligner avec les redirections Express
-      const canonicalUrl = url === "/" ? `${domain}/` : `${domain}${url}/`;
+      // URL canonique — sans trailing slash : le serveur sert l'URL canonique
+      // directement en 200 (plus de redirection /chemin → /chemin/).
+      const canonicalUrl = `${domain}${url}`;
 
       // Mettre à jour l'URL dans les metas (on connaît le domaine ici)
       meta.url = canonicalUrl;
@@ -346,8 +347,7 @@ async function buildSitemap() {
     for (const lang of VALID_LANGS) {
       const domain = DOMAINS[lang];
       const path = ROUTES[lang]?.[routeKey] ?? ROUTES["fr"][routeKey];
-      const pathWithSlash = path === "/" ? "/" : `${path}/`;
-      const loc = `${domain}${pathWithSlash}`;
+      const loc = `${domain}${path}`;
 
       lines.push("  <url>");
       lines.push(`    <loc>${loc}</loc>`);
@@ -356,13 +356,11 @@ async function buildSitemap() {
       for (const hLang of VALID_LANGS) {
         const hDomain = DOMAINS[hLang];
         const hPath = ROUTES[hLang]?.[routeKey] ?? ROUTES["fr"][routeKey];
-        const hPathWithSlash = hPath === "/" ? "/" : `${hPath}/`;
-        lines.push(`    <xhtml:link rel="alternate" hreflang="${hLang}" href="${hDomain}${hPathWithSlash}"/>`);
+        lines.push(`    <xhtml:link rel="alternate" hreflang="${hLang}" href="${hDomain}${hPath}"/>`);
       }
       // x-default → FR
       const frPath = ROUTES.fr[routeKey];
-      const frPathWithSlash = frPath === "/" ? "/" : `${frPath}/`;
-      lines.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${DOMAINS.fr}${frPathWithSlash}"/>`);
+      lines.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${DOMAINS.fr}${frPath}"/>`);
 
       lines.push(`    <changefreq>${meta.changefreq}</changefreq>`);
       lines.push(`    <priority>${meta.priority}</priority>`);
@@ -382,7 +380,7 @@ async function buildSitemap() {
       .where(eq(blogPosts.status, "published"));
 
     for (const post of posts) {
-      const loc = `https://hallucinecran.fr/blog/${post.slug}/`;
+      const loc = `https://hallucinecran.fr/blog/${post.slug}`;
       const lastmod = post.updatedAt
         ? new Date(post.updatedAt).toISOString().split("T")[0]
         : new Date().toISOString().split("T")[0];

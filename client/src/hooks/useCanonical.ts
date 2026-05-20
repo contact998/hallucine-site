@@ -16,8 +16,9 @@ export function useCanonical() {
     const lang = i18n.language as SupportedLanguage;
     const baseUrl = LANGUAGE_DOMAINS[lang] ?? LANGUAGE_DOMAINS["fr"];
 
-    // Construire l'URL canonique (avec trailing slash systématique)
-    const normalizedPath = location === "/" ? "/" : location.replace(/\/?$/, "/");
+    // URL canonique sans trailing slash — alignée sur le prerender, le sitemap
+    // et le serveur (qui sert l'URL sans slash directement en 200).
+    const normalizedPath = location === "/" ? "/" : location.replace(/\/+$/, "");
     const canonicalUrl = `${baseUrl}${normalizedPath}`;
 
     // Mettre à jour ou créer la balise <link rel="canonical">
