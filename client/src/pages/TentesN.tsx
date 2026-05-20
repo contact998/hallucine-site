@@ -64,7 +64,7 @@ export default function TentesN() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {heroImages.map((img, i) => (
               <div key={i} className="cursor-pointer rounded-lg overflow-hidden aspect-[4/3]" onClick={() => openLightbox(img.src, img.alt)}>
-                <img src={img.src} alt={img.alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
+                <img width={img.width ?? undefined} height={img.height ?? undefined} src={img.src} alt={img.alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
               </div>
             ))}
           </div>
@@ -85,7 +85,7 @@ export default function TentesN() {
         <div className="container">
           <div className="grid md:grid-cols-2 gap-10 items-center">
             <div className="cursor-pointer" onClick={() => openLightbox(heroImages[0].src, heroImages[0].alt)}>
-              <img src={heroImages[0].src} alt={heroImages[0].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
+              <img width={heroImages[0].width ?? undefined} height={heroImages[0].height ?? undefined} src={heroImages[0].src} alt={heroImages[0].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
             </div>
             <div>
               <h2 className="text-3xl font-bold text-ivory mb-4">
@@ -116,7 +116,7 @@ export default function TentesN() {
               <p className="text-white/70 leading-relaxed mb-6">{t("quality_desc")}</p>
             </div>
             <div className="cursor-pointer" onClick={() => openLightbox(heroImages[1].src, heroImages[1].alt)}>
-              <img src={heroImages[1].src} alt={heroImages[1].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
+              <img width={heroImages[1].width ?? undefined} height={heroImages[1].height ?? undefined} src={heroImages[1].src} alt={heroImages[1].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
             </div>
           </div>
         </div>
@@ -127,7 +127,7 @@ export default function TentesN() {
         <div className="container">
           <div className="grid md:grid-cols-2 gap-10 items-center">
             <div className="cursor-pointer" onClick={() => openLightbox(heroImages[2].src, heroImages[2].alt)}>
-              <img src={heroImages[2].src} alt={heroImages[2].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
+              <img width={heroImages[2].width ?? undefined} height={heroImages[2].height ?? undefined} src={heroImages[2].src} alt={heroImages[2].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
             </div>
             <div>
               <h2 className="text-3xl font-bold text-ivory mb-4">
@@ -162,7 +162,7 @@ export default function TentesN() {
               </ul>
             </div>
             <div className="cursor-pointer" onClick={() => openLightbox(heroImages[3].src, heroImages[3].alt)}>
-              <img src={heroImages[3].src} alt={heroImages[3].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
+              <img width={heroImages[3].width ?? undefined} height={heroImages[3].height ?? undefined} src={heroImages[3].src} alt={heroImages[3].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
             </div>
           </div>
         </div>

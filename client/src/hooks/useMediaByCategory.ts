@@ -20,6 +20,8 @@ export interface MediaImage {
   alt: string;
   title?: string;
   subcategory?: string | null;
+  width?: number | null;
+  height?: number | null;
 }
 
 export function useMediaByCategory(
@@ -69,6 +71,8 @@ export function useMediaByCategory(
       alt:         img.alt ?? "",
       title:       img.title ?? "",
       subcategory: img.subcategory,
+      width:       img.width,
+      height:      img.height,
     }));
   }
 
@@ -77,5 +81,7 @@ export function useMediaByCategory(
     alt:         img.alt ?? "",
     title:       img.title ?? "",
     subcategory: "subcategory" in img ? img.subcategory : undefined,
+    width:       img.width ?? null,
+    height:      img.height ?? null,
   }));
 }

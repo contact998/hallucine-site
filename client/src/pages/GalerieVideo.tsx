@@ -67,6 +67,8 @@ export default function GalerieVideo() {
                 {/* Miniature YouTube avec bouton play */}
                 <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
                   <img
+                    width={480}
+                    height={360}
                     src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
                     alt={video.title}
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"

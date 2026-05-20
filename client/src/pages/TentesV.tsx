@@ -65,7 +65,7 @@ export default function TentesV() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {heroImages.map((img, i) => (
               <div key={i} className="cursor-pointer rounded-lg overflow-hidden aspect-[4/3]" onClick={() => openLightbox(img.src, img.alt)}>
-                <img src={img.src} alt={img.alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
+                <img width={img.width ?? undefined} height={img.height ?? undefined} src={img.src} alt={img.alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
               </div>
             ))}
           </div>
@@ -82,7 +82,7 @@ export default function TentesV() {
       {/* Pourquoi choisir */}
       <section className="py-20 bg-charcoal-light relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <img loading="lazy" src={heroImages[0].src} alt="" className="w-full h-full object-cover" decoding="async" />
+          <img width={heroImages[0].width ?? undefined} height={heroImages[0].height ?? undefined} loading="lazy" src={heroImages[0].src} alt="" className="w-full h-full object-cover" decoding="async" />
         </div>
         <div className="container relative z-10">
           <div className="grid lg:grid-cols-3 gap-10 items-start">
@@ -143,7 +143,7 @@ export default function TentesV() {
             {/* Vidéo YouTube */}
             <div className="bg-card border border-border rounded-lg overflow-hidden cursor-pointer group" onClick={() => setActiveVideo({ id: '-cga1EVZQtg', title: t("video_title") })}>
               <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                <img src="https://img.youtube.com/vi/-cga1EVZQtg/hqdefault.jpg" alt={t("video_title")} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" decoding="async" />
+                <img width={480} height={360} src="https://img.youtube.com/vi/-cga1EVZQtg/hqdefault.jpg" alt={t("video_title")} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">

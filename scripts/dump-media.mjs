@@ -32,6 +32,8 @@ for (const r of rows) {
     alt:         r.alt ?? null,
     title:       r.title ?? null,
     subcategory: r.subcategory ?? null,
+    width:       r.width ?? null,
+    height:      r.height ?? null,
   });
 }
 

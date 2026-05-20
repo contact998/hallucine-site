@@ -20,6 +20,8 @@ export interface BakedMedia {
   alt: string | null;
   title: string | null;
   subcategory: string | null;
+  width: number | null;
+  height: number | null;
 }
 
 declare global {

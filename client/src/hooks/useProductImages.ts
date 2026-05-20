@@ -15,6 +15,8 @@ import { getBakedMedia } from "./ssrMedia";
 export interface ProductImage {
   src: string;
   alt: string;
+  width?: number | null;
+  height?: number | null;
 }
 
 export function useProductImages(
@@ -58,13 +60,18 @@ export function useProductImages(
   );
 
   if (baked) {
-    return baked.map(img => ({ src: img.url, alt: img.alt ?? img.title ?? "" }));
+    return baked.map(img => ({
+      src: img.url, alt: img.alt ?? img.title ?? "",
+      width: img.width, height: img.height,
+    }));
   }
 
   if (data && data.length > 0) {
     return data.map((img) => ({
       src: img.url,
       alt: img.alt ?? img.title ?? "",
+      width: img.width ?? null,
+      height: img.height ?? null,
     }));
   }
 

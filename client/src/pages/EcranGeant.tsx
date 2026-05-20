@@ -185,7 +185,7 @@ export default function EcranGeant() {
             {/* Vidéo montage 10m — miniature cliquable */}
             <div className="bg-card border border-border rounded-lg overflow-hidden cursor-pointer group" onClick={() => setActiveVideo({ id: 'bAxDUrxFUXw', title: 'Montage écran soufflerie 10m' })}>
               <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                <img loading="lazy" src="https://img.youtube.com/vi/bAxDUrxFUXw/hqdefault.jpg" alt="Tutoriel montage écran soufflerie 10m Hallucine" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" decoding="async" />
+                <img width={480} height={360} loading="lazy" src="https://img.youtube.com/vi/bAxDUrxFUXw/hqdefault.jpg" alt="Tutoriel montage écran soufflerie 10m Hallucine" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" decoding="async" />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
@@ -287,7 +287,7 @@ export default function EcranGeant() {
             {/* Vidéo démontage — miniature cliquable */}
             <div className="bg-card border border-border rounded-lg overflow-hidden cursor-pointer group" onClick={() => setActiveVideo({ id: 'sHeVec7oZfQ', title: 'Démontage écran soufflerie' })}>
               <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                <img loading="lazy" src="https://img.youtube.com/vi/sHeVec7oZfQ/hqdefault.jpg" alt="Tutoriel démontage écran soufflerie Hallucine" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" decoding="async" />
+                <img width={480} height={360} loading="lazy" src="https://img.youtube.com/vi/sHeVec7oZfQ/hqdefault.jpg" alt="Tutoriel démontage écran soufflerie Hallucine" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" decoding="async" />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
