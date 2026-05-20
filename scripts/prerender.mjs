@@ -186,8 +186,10 @@ function injectIntoTemplate(tmpl, { html, lang, canonicalUrl, hreflangTags, loca
   const hreflangComment = "<!-- Hreflang : versions linguistiques du site -->";
   const hreflangBlock = `${hreflangComment}\n${hreflangTags}`;
   if (result.includes(hreflangComment)) {
+    // [ \t]* : tolère n'importe quelle indentation des <link> du template
+    // (sinon l'ancien bloc n'est pas capturé → balises hreflang en double)
     result = result.replace(
-      /<!-- Hreflang[^>]*-->\n(  <link rel="alternate"[^\n]*\n)*/,
+      /<!-- Hreflang[^>]*-->\n([ \t]*<link rel="alternate"[^\n]*\n)*/,
       hreflangBlock + "\n"
     );
   }
