@@ -36,6 +36,11 @@ const plugins = [
 
 export default defineConfig({
   plugins,
+  // Année du build, injectée comme littéral dans le bundle client → le Footer
+  // affiche la même année qu'au prerender (hydratation déterministe).
+  define: {
+    __BUILD_YEAR__: JSON.stringify(new Date().getFullYear()),
+  },
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),

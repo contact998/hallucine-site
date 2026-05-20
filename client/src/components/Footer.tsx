@@ -11,6 +11,14 @@ import EmailLink from "@/components/EmailLink";
 
 const LOGO_URL = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ySiqVkOsMSzWfHfu.webp";
 
+// Année de copyright figée au build. `new Date()` lu pendant le rendu donnerait
+// une année différente entre le prerender et l'affichage (mismatch d'hydratation
+// au passage à la nouvelle année). __BUILD_YEAR__ est injecté par Vite ; en SSR
+// (tsx, hors Vite) on retombe sur new Date(), évalué au moment du build.
+declare const __BUILD_YEAR__: number | undefined;
+const COPYRIGHT_YEAR =
+  typeof __BUILD_YEAR__ !== "undefined" ? __BUILD_YEAR__ : new Date().getFullYear();
+
 export default function Footer() {
   const route = useRoutes();
   const [email, setEmail] = useState("");
@@ -139,7 +147,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-white/50 text-xs">
-            &copy; {new Date().getFullYear()} Hallucine. {t("footer.copyright")}
+            &copy; {COPYRIGHT_YEAR} Hallucine. {t("footer.copyright")}
           </p>
           <div className="flex gap-6">
             <Link href={route('mentions-legales')} className="text-white/50 text-xs hover:text-warm transition-colors">{t("footer.menu.mentions_legales")}</Link>
