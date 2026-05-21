@@ -45,17 +45,17 @@ export default function ModeEmploi() {
   ];
 
   const contenuLivraison = [
-    { nom: t("cl1_nom"), description: t("cl1_desc"), img: IMG.metre },
-    { nom: t("cl2_nom"), description: t("cl2_desc"), img: IMG.souffleur },
-    { nom: t("cl3_nom"), description: t("cl3_desc") },
-    { nom: t("cl4_nom"), description: t("cl4_desc") },
+    { nom: t("l1_nom"), description: t("l1_desc"), img: IMG.metre },
+    { nom: t("l2_nom"), description: t("l2_desc"), img: IMG.souffleur },
+    { nom: t("l3_nom"), description: t("l3_desc") },
+    { nom: t("l4_nom"), description: t("l4_desc") },
   ];
 
   const materielNonInclus = [
-    { nom: t("mn1_nom"), img: IMG.piquet },
-    { nom: t("mn2_nom"), img: IMG.metre },
-    { nom: t("mn3_nom"), img: IMG.masse },
-    { nom: t("mn4_nom"), img: IMG.bache },
+    { nom: t("m1_nom"), img: IMG.piquet },
+    { nom: t("m2_nom"), img: IMG.metre },
+    { nom: t("m3_nom"), img: IMG.masse },
+    { nom: t("m4_nom"), img: IMG.bache },
   ];
 
   const etapes = [
