@@ -45,6 +45,11 @@ const F = {
   EcranEtanche:        () => import("./EcranEtanche"),
   EcranEconomique:     () => import("./EcranEconomique"),
   Comparaison:         () => import("./Comparaison"),
+  Configurateur:       () => import("./Configurateur"),
+  DriveIn:             () => import("./DriveIn"),
+  Packs:               () => import("./Packs"),
+  Location:            () => import("./Location"),
+  EtudesCas:           () => import("./EtudesCas"),
   EcransLED:           () => import("./EcransLED"),
   Tentes:              () => import("./Tentes"),
   TentesX:             () => import("./TentesX"),
@@ -85,6 +90,11 @@ export const EcranGeant = lazyPage(F.EcranGeant);
 export const EcranEtanche = lazyPage(F.EcranEtanche);
 export const EcranEconomique = lazyPage(F.EcranEconomique);
 export const Comparaison = lazyPage(F.Comparaison);
+export const Configurateur = lazyPage(F.Configurateur);
+export const DriveIn = lazyPage(F.DriveIn);
+export const Packs = lazyPage(F.Packs);
+export const Location = lazyPage(F.Location);
+export const EtudesCas = lazyPage(F.EtudesCas);
 export const EcransLED = lazyPage(F.EcransLED);
 export const Tentes = lazyPage(F.Tentes);
 export const TentesX = lazyPage(F.TentesX);
@@ -127,6 +137,11 @@ const ROUTE_KEY_TO_PAGE: Record<string, PageComponent> = {
   "ecran-etanche":        EcranEtanche,
   "ecran-economique":     EcranEconomique,
   comparaison:            Comparaison,
+  configurateur:          Configurateur,
+  "drive-in":             DriveIn,
+  packs:                  Packs,
+  location:               Location,
+  "etudes-cas":           EtudesCas,
   "ecrans-led":           EcransLED,
   tentes:                 Tentes,
   "tente-x":              TentesX,

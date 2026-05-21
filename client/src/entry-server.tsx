@@ -30,6 +30,11 @@ import EcranGeant from "./pages/EcranGeant.tsx";
 import EcranEtanche from "./pages/EcranEtanche.tsx";
 import EcranEconomique from "./pages/EcranEconomique.tsx";
 import Comparaison from "./pages/Comparaison.tsx";
+import Configurateur from "./pages/Configurateur.tsx";
+import DriveIn from "./pages/DriveIn.tsx";
+import Packs from "./pages/Packs.tsx";
+import Location from "./pages/Location.tsx";
+import EtudesCas from "./pages/EtudesCas.tsx";
 import EcransLED from "./pages/EcransLED.tsx";
 import Tentes from "./pages/Tentes.tsx";
 import TentesX from "./pages/TentesX.tsx";
@@ -87,7 +92,7 @@ const VALID_LANGS = ["fr", "en", "de", "es", "it"] as const;
 const NS = [
   "common", "home", "products", "contact", "legal", "nav",
   "ecran-geant", "ecran-etanche", "ecran-economique", "comparaison",
-  "ecrans-led", "ecrans", "tentes", "tente-x", "tente-n", "tente-v",
+  "configurateur", "drive-in", "packs", "location", "etudes-cas", "ecrans-led", "ecrans", "tentes", "tente-x", "tente-n", "tente-v",
   "tente-araignee", "arches-gonflables", "mobilier", "accessoires",
   "a-propos", "mode-emploi", "mentions-legales", "devenir-distributeur",
   "trouver-distributeur", "galerie", "galerie-video", "politique-cookies",
@@ -110,6 +115,11 @@ const PAGE_MAP: Record<string, React.ComponentType> = {
   "ecran-etanche": EcranEtanche,
   "ecran-economique": EcranEconomique,
   comparaison: Comparaison,
+  configurateur: Configurateur,
+  "drive-in": DriveIn,
+  packs: Packs,
+  location: Location,
+  "etudes-cas": EtudesCas,
   "ecrans-led": EcransLED,
   tentes: Tentes,
   "tente-x": TentesX,

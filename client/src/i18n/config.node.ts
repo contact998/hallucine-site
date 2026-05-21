@@ -32,7 +32,7 @@ for (const lang of VALID_LANGS_ARRAY) {
 const NS = [
   "common", "home", "products", "contact", "legal", "nav",
   "ecran-geant", "ecran-etanche", "ecran-economique", "comparaison",
-  "ecrans-led", "ecrans", "tentes", "tente-x", "tente-n", "tente-v",
+  "configurateur", "drive-in", "packs", "location", "etudes-cas", "ecrans-led", "ecrans", "tentes", "tente-x", "tente-n", "tente-v",
   "tente-araignee", "arches-gonflables", "mobilier", "accessoires",
   "a-propos", "mode-emploi", "mentions-legales", "devenir-distributeur",
   "trouver-distributeur", "galerie", "galerie-video", "politique-cookies",

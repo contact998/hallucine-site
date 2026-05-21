@@ -171,6 +171,8 @@ export default function Navbar() {
       dropdown: [
         { label: t("ecran_geant"), href: r["ecran-geant"] },
         { label: t("comparaison"), href: r["comparaison"] },
+        { label: t("configurateur"), href: r["configurateur"] },
+        { label: t("drive_in"), href: r["drive-in"] },
         { label: t("ecran_etanche"), href: r["ecran-etanche"] },
         { label: t("ecran_economique"), href: r["ecran-economique"] },
         { label: t("mode_emploi"), href: r["mode-emploi"] },
@@ -195,6 +197,9 @@ export default function Navbar() {
       label: t("plus"),
       dropdown: [
         { label: t("a_propos"), href: r["a-propos"] },
+        { label: t("packs"), href: r["packs"] },
+        { label: t("location"), href: r["location"] },
+        { label: t("etudes_cas"), href: r["etudes-cas"] },
         { label: t("devis_gratuit"), href: r["contact"] },
         { label: t("mode_emploi"), href: r["mode-emploi"] },
         { label: t("galerie_video"), href: r["galerie-video"] },

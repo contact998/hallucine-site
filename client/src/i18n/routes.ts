@@ -15,6 +15,11 @@ export type RouteKey =
   | "ecran-etanche"
   | "ecran-economique"
   | "comparaison"
+  | "configurateur"
+  | "drive-in"
+  | "packs"
+  | "location"
+  | "etudes-cas"
   | "ecrans-led"
   | "tentes"
   | "tente-x"
@@ -47,6 +52,11 @@ export const ROUTES: Record<string, LangRoutes> = {
     "ecran-etanche": "/ecran-gonflable-etanche-air",
     "ecran-economique": "/ecran-gonflable-economique",
     comparaison: "/comparaison-ecran-gonflable",
+    configurateur: "/configurateur-ecran-gonflable",
+    "drive-in": "/ecran-gonflable-drive-in",
+    packs: "/pack-cinema-plein-air",
+    location: "/location-ecran-gonflable",
+    "etudes-cas": "/etudes-de-cas",
     "ecrans-led": "/ecrans-led",
     tentes: "/tente-gonflable",
     "tente-x": "/tente-gonflable-x",
@@ -76,6 +86,11 @@ export const ROUTES: Record<string, LangRoutes> = {
     "ecran-etanche": "/waterproof-inflatable-screen",
     "ecran-economique": "/budget-inflatable-screen",
     comparaison: "/inflatable-screen-comparison",
+    configurateur: "/inflatable-screen-configurator",
+    "drive-in": "/inflatable-drive-in-screen",
+    packs: "/outdoor-cinema-package",
+    location: "/inflatable-screen-rental",
+    "etudes-cas": "/case-studies",
     "ecrans-led": "/led-screens",
     tentes: "/inflatable-tent",
     "tente-x": "/inflatable-tent-x",
@@ -105,6 +120,11 @@ export const ROUTES: Record<string, LangRoutes> = {
     "ecran-etanche": "/wasserdichter-aufblasbarer-bildschirm",
     "ecran-economique": "/guenstiger-aufblasbarer-bildschirm",
     comparaison: "/aufblasbarer-bildschirm-vergleich",
+    configurateur: "/aufblasbarer-bildschirm-konfigurator",
+    "drive-in": "/aufblasbarer-drive-in-bildschirm",
+    packs: "/freiluftkino-paket",
+    location: "/aufblasbarer-bildschirm-mieten",
+    "etudes-cas": "/fallstudien",
     "ecrans-led": "/led-bildschirme",
     tentes: "/aufblasbares-zelt",
     "tente-x": "/aufblasbares-zelt-x",
@@ -134,6 +154,11 @@ export const ROUTES: Record<string, LangRoutes> = {
     "ecran-etanche": "/pantalla-inflable-impermeable",
     "ecran-economique": "/pantalla-inflable-economica",
     comparaison: "/comparacion-pantalla-inflable",
+    configurateur: "/configurador-pantalla-inflable",
+    "drive-in": "/pantalla-inflable-autocine",
+    packs: "/paquete-cine-aire-libre",
+    location: "/alquiler-pantalla-inflable",
+    "etudes-cas": "/casos-de-exito",
     "ecrans-led": "/pantallas-led",
     tentes: "/tienda-inflable",
     "tente-x": "/tienda-inflable-x",
@@ -163,6 +188,11 @@ export const ROUTES: Record<string, LangRoutes> = {
     "ecran-etanche": "/schermo-gonfiabile-impermeabile",
     "ecran-economique": "/schermo-gonfiabile-economico",
     comparaison: "/confronto-schermo-gonfiabile",
+    configurateur: "/configuratore-schermo-gonfiabile",
+    "drive-in": "/schermo-gonfiabile-drive-in",
+    packs: "/pacchetto-cinema-all-aperto",
+    location: "/noleggio-schermo-gonfiabile",
+    "etudes-cas": "/casi-studio",
     "ecrans-led": "/schermi-led",
     tentes: "/tenda-gonfiabile",
     "tente-x": "/tenda-gonfiabile-x",
