@@ -131,6 +131,30 @@ export default function Comparaison() {
         </div>
       </section>
 
+      {/* Visuels comparatifs */}
+      <section className="py-16 bg-background">
+        <div className="container">
+          <h2 className="text-3xl font-bold text-ivory mb-4">{t("visuels_title")}</h2>
+          <p className="text-white/60 mb-10 max-w-3xl">{t("visuels_desc")}</p>
+          <div className="grid md:grid-cols-2 gap-6">
+            <img
+              src="/img/comparaison-transport.jpg"
+              alt={t("visuel1_alt")}
+              className="w-full rounded-lg border border-border"
+              loading="lazy"
+              decoding="async"
+            />
+            <img
+              src="/img/comparaison-poids.jpg"
+              alt={t("visuel2_alt")}
+              className="w-full rounded-lg border border-border"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* 7 arguments détaillés */}
       <section className="py-20 bg-charcoal-light">
         <div className="container">

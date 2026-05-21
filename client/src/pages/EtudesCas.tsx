@@ -1,17 +1,17 @@
 /*
- * Page Études de cas — mises en situation des écrans gonflables Hallucine.
- * Format défi / solution / résultat. Contenu i18n via le namespace « etudes-cas ».
+ * Page Témoignages — retours clients réels sur les écrans Hallucine.
+ * Contenu i18n via le namespace « etudes-cas ».
  */
 import { Link } from "wouter";
 import { useTranslation } from "react-i18next";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Quote } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useRoutes } from "@/i18n/useRoutes";
 
-const CAS = ["c1", "c2", "c3"];
+const TEMOIGNAGES = ["t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8"];
 
 export default function EtudesCas() {
   const { t } = useTranslation("etudes-cas");
@@ -35,7 +35,7 @@ export default function EtudesCas() {
       <Navbar />
 
       {/* Hero */}
-      <section className="pt-32 pb-16 bg-charcoal-light">
+      <section className="pt-32 pb-10 bg-charcoal-light">
         <div className="container">
           <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">
             {t("section_label")}
@@ -47,51 +47,38 @@ export default function EtudesCas() {
         </div>
       </section>
 
-      {/* Études de cas */}
+      {/* Photo */}
+      <section className="bg-charcoal-light pb-12">
+        <div className="container">
+          <img
+            src="/img/ecran-etanche.jpg"
+            alt={t("photo_alt")}
+            className="w-full h-56 md:h-80 object-cover rounded-xl"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </section>
+
+      {/* Témoignages */}
       <section className="py-16 bg-background">
         <div className="container">
-          <p className="text-white/60 mb-12 max-w-2xl">{t("intro_desc")}</p>
-          <div className="flex flex-col gap-8">
-            {CAS.map((c) => (
-              <article
-                key={c}
-                className="bg-card border border-border rounded-xl p-6 md:p-8"
+          <p className="text-white/60 mb-10 max-w-2xl leading-relaxed">{t("intro")}</p>
+          <div className="grid md:grid-cols-2 gap-6">
+            {TEMOIGNAGES.map((id) => (
+              <figure
+                key={id}
+                className="flex flex-col bg-card border border-border rounded-xl p-6"
               >
-                <span className="inline-block px-3 py-1 rounded-full bg-warm/15 text-warm text-xs font-semibold uppercase tracking-wider mb-3">
-                  {t(`${c}_tag`)}
-                </span>
-                <h2 className="text-2xl md:text-3xl font-bold text-ivory mb-6">
-                  {t(`${c}_title`)}
-                </h2>
-
-                {/* Chiffres clés */}
-                <div className="grid grid-cols-3 gap-px bg-white/5 rounded-lg overflow-hidden mb-6">
-                  {["1", "2", "3"].map((n) => (
-                    <div key={n} className="bg-card p-4 text-center">
-                      <p className="text-warm text-xl md:text-2xl font-bold">
-                        {t(`${c}_s${n}v`)}
-                      </p>
-                      <p className="text-white/50 text-xs mt-1">{t(`${c}_s${n}l`)}</p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Défi / Solution / Résultat */}
-                <div className="grid md:grid-cols-3 gap-6">
-                  {[
-                    { label: t("defi_label"), text: t(`${c}_defi`) },
-                    { label: t("solution_label"), text: t(`${c}_solution`) },
-                    { label: t("resultat_label"), text: t(`${c}_resultat`) },
-                  ].map((part) => (
-                    <div key={part.label}>
-                      <p className="text-warm text-sm font-semibold uppercase tracking-wider mb-2">
-                        {part.label}
-                      </p>
-                      <p className="text-white/70 text-sm leading-relaxed">{part.text}</p>
-                    </div>
-                  ))}
-                </div>
-              </article>
+                <Quote className="w-8 h-8 text-warm/40 mb-3 shrink-0" />
+                <blockquote className="text-white/80 leading-relaxed flex-1">
+                  « {t(`${id}_quote`)} »
+                </blockquote>
+                <figcaption className="mt-5 pt-4 border-t border-white/10 text-sm">
+                  <span className="text-ivory font-semibold">{t(`${id}_author`)}</span>
+                  <span className="text-white/50"> — {t(`${id}_role`)}</span>
+                </figcaption>
+              </figure>
             ))}
           </div>
         </div>
