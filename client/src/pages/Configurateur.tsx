@@ -11,6 +11,7 @@ import { Home, Sun, Car, ArrowRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageStructuredData from "@/components/PageStructuredData";
+import PagePhoto from "@/components/PagePhoto";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useRoutes } from "@/i18n/useRoutes";
 import {
@@ -78,6 +79,8 @@ export default function Configurateur() {
           <p className="text-white/70 text-lg max-w-2xl leading-relaxed">{t("hero_desc")}</p>
         </div>
       </section>
+
+      <PagePhoto src="/img/ecran-vincennes.jpg" alt={t("photo_alt")} />
 
       {/* Configurateur */}
       <section className="py-16 bg-background">

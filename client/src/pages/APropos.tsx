@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import PagePhoto from "@/components/PagePhoto";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
 
@@ -60,6 +61,8 @@ export default function APropos() {
           </p>
         </div>
       </section>
+
+      <PagePhoto src="/img/a-propos-projection.jpg" alt={t("photo_alt")} />
 
       {/* Chiffres clés */}
       <section className="py-16 bg-background">

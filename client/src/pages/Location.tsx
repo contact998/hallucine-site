@@ -9,6 +9,7 @@ import { ArrowRight, CalendarClock, Package, Feather } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageStructuredData from "@/components/PageStructuredData";
+import PagePhoto from "@/components/PagePhoto";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useRoutes } from "@/i18n/useRoutes";
 import { formatNombre } from "@/lib/ecranFormat";
@@ -69,6 +70,8 @@ export default function Location() {
           </Link>
         </div>
       </section>
+
+      <PagePhoto src="/img/location-evenement.jpg" alt={t("photo_alt")} />
 
       {/* Louer ou acheter */}
       <section className="py-20 bg-background">

@@ -8,6 +8,7 @@ import { ArrowRight, Eye, Wind, Anchor, Clock, Radio } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageStructuredData from "@/components/PageStructuredData";
+import PagePhoto from "@/components/PagePhoto";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useRoutes } from "@/i18n/useRoutes";
 import { ECRAN_DRIVE_IN } from "@/data/ecransConfigurateur";
@@ -81,17 +82,7 @@ export default function DriveIn() {
       </section>
 
       {/* Photo */}
-      <section className="bg-charcoal-light pb-12">
-        <div className="container">
-          <img
-            src="/img/ecran-soufflerie.jpg"
-            alt={t("photo_alt")}
-            className="w-full h-56 md:h-80 object-cover rounded-xl"
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
-      </section>
+      <PagePhoto src="/img/ecran-drive-in.jpg" alt={t("photo_alt")} />
 
       {/* Pourquoi un écran spécifique */}
       <section className="py-20 bg-background">

@@ -8,6 +8,7 @@ import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import PagePhoto from "@/components/PagePhoto";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
 import { RelatedProducts } from "@/components/RelatedProducts";
@@ -40,12 +41,12 @@ export default function Tentes() {
         id="tentes-hub-page"
         breadcrumbs={[
           { name: "Accueil", url: "https://hallucinecran.fr" },
-          { name: t("meta_title"), url: "https://hallucinecran.fr/tentes-gonflables" },
+          { name: t("meta_title"), url: "https://hallucinecran.fr/tente-gonflable" },
         ]}
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
-          url: "https://hallucinecran.fr/tentes-gonflables",
+          url: "https://hallucinecran.fr/tente-gonflable",
         }}
       />
       <Navbar />
@@ -63,6 +64,8 @@ export default function Tentes() {
           </p>
         </div>
       </section>
+
+      <PagePhoto src="/img/tente-salon.jpg" alt={t("photo_alt")} />
 
       {/* Grille des catégories */}
       <section className="py-20 bg-background">

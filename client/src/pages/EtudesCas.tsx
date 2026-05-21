@@ -8,6 +8,7 @@ import { ArrowRight, Quote } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageStructuredData from "@/components/PageStructuredData";
+import PagePhoto from "@/components/PagePhoto";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useRoutes } from "@/i18n/useRoutes";
 
@@ -48,17 +49,7 @@ export default function EtudesCas() {
       </section>
 
       {/* Photo */}
-      <section className="bg-charcoal-light pb-12">
-        <div className="container">
-          <img
-            src="/img/ecran-etanche.jpg"
-            alt={t("photo_alt")}
-            className="w-full h-56 md:h-80 object-cover rounded-xl"
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
-      </section>
+      <PagePhoto src="/img/etudes-cas-projection.jpg" alt={t("photo_alt")} />
 
       {/* Témoignages */}
       <section className="py-16 bg-background">

@@ -9,6 +9,7 @@ import { ArrowRight, Check } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageStructuredData from "@/components/PageStructuredData";
+import PagePhoto from "@/components/PagePhoto";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useRoutes } from "@/i18n/useRoutes";
 import { formatNombre } from "@/lib/ecranFormat";
@@ -54,6 +55,8 @@ export default function Packs() {
           <p className="text-white/70 text-lg max-w-2xl leading-relaxed">{t("hero_desc")}</p>
         </div>
       </section>
+
+      <PagePhoto src="/img/pack-cinema-plein-air.jpg" alt={t("photo_alt")} />
 
       {/* Intro */}
       <section className="py-16 bg-background">

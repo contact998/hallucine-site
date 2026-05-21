@@ -10,6 +10,7 @@ import { ArrowRight, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import PagePhoto from "@/components/PagePhoto";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
 import { RelatedProducts } from "@/components/RelatedProducts";
@@ -83,6 +84,8 @@ export default function Ecrans() {
           </p>
         </div>
       </section>
+
+      <PagePhoto src="/img/ecrans-seance.jpg" alt={t("photo_alt")} />
 
       {/* Les gammes */}
       <section className="py-20 bg-background">
