@@ -7,6 +7,10 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 # NODE_ENV=production est requis pour que Vite minifie le JS et CSS correctement
 ENV NODE_ENV=production
+# Clé DeepL — traduction automatique des locales pendant le build (optionnelle :
+# si absente, le build se poursuit et les pages non traduites retombent sur le FR)
+ARG DEEPL_API_KEY
+ENV DEEPL_API_KEY=${DEEPL_API_KEY}
 RUN pnpm build
 
 FROM node:22-bookworm-slim
