@@ -24,6 +24,14 @@ import {
 } from "./pages/registry";
 
 function PageLoader() {
+  // N'affiche l'indicateur que si le chargement dépasse 200 ms. Les chargements
+  // rapides ne montrent rien → plus de flash furtif du spinner à la navigation.
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setShow(true), 200);
+    return () => clearTimeout(t);
+  }, []);
+  if (!show) return null;
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="flex flex-col items-center gap-4">

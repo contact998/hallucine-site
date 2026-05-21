@@ -40,23 +40,26 @@ export default function FilmCountdown({
 }: {
   onComplete?: () => void;
 }) {
-  // `visible` démarre TOUJOURS à true — identique au rendu serveur → hydratation
-  // propre. La décision « déjà vu » (lecture sessionStorage) se prend dans un
-  // effet, jamais pendant le rendu.
+  // `visible` démarre à false — rendu serveur ET premier rendu client identiques
+  // (rien affiché) → hydratation propre, et AUCUN flash du countdown sur les
+  // pages déjà vues. L'affichage se décide dans un effet (lecture sessionStorage).
   const [count, setCount] = useState(3);
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const [started, setStarted] = useState(false);
   const [fading, setFading] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const onCompleteRef = useRef(onComplete);
   onCompleteRef.current = onComplete;
 
-  // Au montage (client) : déjà vu cette session → on saute ; sinon → on démarre.
+  // Au montage (client) : déjà vu cette session → on passe la main sans rien
+  // afficher ; sinon → on marque « vu » DÈS LE DÉMARRAGE (et pas à la fin), pour
+  // qu'une navigation rapide vers une autre page ne relance pas le countdown.
   useEffect(() => {
     if (hasSeenCountdown()) {
-      setVisible(false);
       onCompleteRef.current?.();
     } else {
+      markCountdownSeen();
+      setVisible(true);
       setStarted(true);
     }
   }, []);
@@ -97,7 +100,6 @@ export default function FilmCountdown({
     }
     setTimeout(() => {
       setVisible(false);
-      markCountdownSeen();
       onComplete?.();
     }, FADE_DURATION);
   }, [onComplete]);
