@@ -12,7 +12,7 @@ export default function PagePhoto({ src, alt }: PagePhotoProps) {
         <img
           src={src}
           alt={alt}
-          className="w-full h-56 md:h-80 object-cover rounded-xl"
+          className="w-full aspect-[16/9] object-cover object-center rounded-xl"
           loading="lazy"
           decoding="async"
         />

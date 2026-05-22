@@ -80,7 +80,7 @@ export default function Configurateur() {
         </div>
       </section>
 
-      <PagePhoto src="/img/ecran-vincennes.jpg" alt={t("photo_alt")} />
+      <PagePhoto src="/img/configurateur-ecran.jpg" alt={t("photo_alt")} />
 
       {/* Configurateur */}
       <section className="py-16 bg-background">
