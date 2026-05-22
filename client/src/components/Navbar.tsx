@@ -227,8 +227,9 @@ export default function Navbar() {
     "px-4 py-2.5 text-base font-medium text-white/80 hover:text-warm transition-colors";
   const triggerLink =
     "flex items-center gap-1.5 px-4 py-2.5 text-base font-medium text-white/80 group-hover:text-warm transition-colors";
-  // Bleu ardoise commun — barre (dense, lisible partout) et fenêtres de menu (translucides)
-  const barBg = "bg-[oklch(0.40_0.10_250_/_0.9)] backdrop-blur-xl";
+  // Bleu ardoise commun — barre (dense, sans flou pour ne pas casser
+  // l'effet verre des sous-menus imbriqués) et fenêtres de menu (translucides)
+  const barBg = "bg-[oklch(0.40_0.10_250_/_0.9)]";
   const glassBg = "bg-[oklch(0.40_0.10_250_/_0.5)] backdrop-blur-xl";
   const panelBox = `${glassBg} border border-white/15 rounded-xl shadow-2xl shadow-black/50`;
   const megaWrap =
