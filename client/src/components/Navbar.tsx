@@ -189,7 +189,7 @@ export default function Navbar() {
   const triggerLink =
     "flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium text-white/80 group-hover:text-warm transition-colors";
   const panelBox =
-    "bg-[oklch(0.14_0.022_260_/_0.72)] backdrop-blur-2xl border border-white/10 rounded-xl shadow-2xl shadow-black/50";
+    "bg-[oklch(0.17_0.024_260_/_0.4)] backdrop-blur-xl border border-white/15 rounded-xl shadow-2xl shadow-black/50";
   const megaWrap =
     "absolute left-0 top-full pt-3 invisible opacity-0 translate-y-2 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 z-50";
 
@@ -240,7 +240,7 @@ export default function Navbar() {
                       <Link
                         key={it.label}
                         href={it.href}
-                        className="block px-3 py-2.5 rounded-lg text-sm text-white/85 hover:bg-white/5 hover:text-warm transition-colors"
+                        className="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10 hover:text-warm transition-colors"
                       >
                         {it.label}
                       </Link>
@@ -291,7 +291,7 @@ export default function Navbar() {
                   <Link
                     key={it.label}
                     href={it.href}
-                    className="block px-3 py-2.5 rounded-lg text-sm text-white/85 hover:bg-white/5 hover:text-warm transition-colors"
+                    className="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10 hover:text-warm transition-colors"
                   >
                     {it.label}
                   </Link>
@@ -315,7 +315,7 @@ export default function Navbar() {
                   <Link
                     key={it.label}
                     href={it.href}
-                    className="block px-3 py-2.5 rounded-lg text-sm text-white/85 hover:bg-white/5 hover:text-warm transition-colors"
+                    className="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10 hover:text-warm transition-colors"
                   >
                     {it.label}
                   </Link>
