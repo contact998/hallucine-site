@@ -25,13 +25,13 @@ export default function WhatsAppButton() {
   // Récupérer le statut de disponibilité (utilisé par tous)
   const { data: businessStatus } = trpc.businessHours.getSmartMessage.useQuery(
     { visitorTimezone },
-    { staleTime: 60_000, refetchInterval: 60_000 }
+    { staleTime: 2 * 60_000, refetchInterval: 5 * 60_000 }
   );
 
   // Récupérer les données des commerciaux via availability.check (public)
   const { data: availData } = trpc.availability.check.useQuery(
     { visitorTimezone },
-    { staleTime: 60_000, refetchInterval: 60_000 }
+    { staleTime: 2 * 60_000, refetchInterval: 5 * 60_000 }
   );
 
   const isAvailable = businessStatus?.isAvailable ?? false;
