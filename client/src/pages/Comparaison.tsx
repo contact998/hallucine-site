@@ -54,13 +54,12 @@ export default function Comparaison() {
       <PageStructuredData
         id="comparaison-page"
         breadcrumbs={[
-          { name: "Accueil", url: "https://hallucinecran.fr" },
-          { name: "Comparaison", url: "https://hallucinecran.fr/comparaison" },
+          { name: "Accueil", routeKey: "home" },
+          { name: "Comparaison", routeKey: "comparaison" },
         ]}
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
-          url: "https://hallucinecran.fr/comparaison",
         }}
         faqs={arguments7.map((arg) => ({ question: arg.title, answer: arg.text }))}
       />

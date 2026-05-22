@@ -20,13 +20,12 @@ export default function Confidentialite() {
       <PageStructuredData
         id="politique-de-confidentialite"
         breadcrumbs={[
-          { name: "Accueil", url: "/" },
-          { name: t("meta_title"), url: "/politique-confidentialite" },
+          { name: "Accueil", routeKey: "home" },
+          { name: t("meta_title"), routeKey: "confidentialite" },
         ]}
         page={{
           name: t("page_title"),
           description: t("meta_desc"),
-          url: "https://hallucinecran.fr/politique-confidentialite",
         }}
       />
       <Navbar />

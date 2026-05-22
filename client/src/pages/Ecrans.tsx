@@ -55,14 +55,13 @@ export default function Ecrans() {
       <PageStructuredData
         id="ecrans"
         breadcrumbs={[
-          { name: "Accueil", url: "/" },
-          { name: t("meta_title"), url: "/ecran-gonflable" },
+          { name: "Accueil", routeKey: "home" },
+          { name: t("meta_title"), routeKey: "ecrans" },
         ]}
         product={{
           name: "Écrans de Cinéma Gonflables Hallucine",
           description: t("meta_desc"),
           image: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp",
-          url: "/ecran-gonflable",
           category: t("section_label"),
           minPrice: 990,
         }}

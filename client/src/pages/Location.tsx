@@ -41,13 +41,12 @@ export default function Location() {
       <PageStructuredData
         id="location-page"
         breadcrumbs={[
-          { name: "Accueil", url: "https://hallucinecran.fr" },
-          { name: t("breadcrumb"), url: "https://hallucinecran.fr/location-ecran-gonflable" },
+          { name: "Accueil", routeKey: "home" },
+          { name: t("breadcrumb"), routeKey: "location" },
         ]}
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
-          url: "https://hallucinecran.fr/location-ecran-gonflable",
         }}
       />
       <Navbar />

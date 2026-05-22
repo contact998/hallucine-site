@@ -3,20 +3,19 @@
  * Chaque fonction retourne un objet conforme au format Schema.org
  */
 
-const SITE_URL = "https://hallucinecran.fr";
 const LOGO_URL = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp";
 const COMPANY_PHONE = "+33 6 63 91 72 50";
 const COMPANY_EMAIL = "contact@hallucine.fr";
 
 // ─── Organization ────────────────────────────────────────────────────────────
 
-export function organizationSchema() {
+export function organizationSchema(siteUrl: string) {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Hallucine",
     alternateName: "Halluciné",
-    url: SITE_URL,
+    url: siteUrl,
     logo: LOGO_URL,
     image: LOGO_URL,
     description:
@@ -49,12 +48,12 @@ export function organizationSchema() {
 
 // ─── WebSite ─────────────────────────────────────────────────────────────────
 
-export function websiteSchema() {
+export function websiteSchema(siteUrl: string, inLanguage: string) {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Hallucine — Écrans de Cinéma Gonflables",
-    url: SITE_URL,
+    url: siteUrl,
     description:
       "Fabricant français d'écrans de cinéma gonflables ultra-légers. De 2m à 24m, technologie étanche et soufflerie. Garantie 10 ans.",
     publisher: {
@@ -62,20 +61,20 @@ export function websiteSchema() {
       name: "Hallucine",
       logo: { "@type": "ImageObject", url: LOGO_URL },
     },
-    inLanguage: "fr-FR",
+    inLanguage,
   };
 }
 
 // ─── LocalBusiness ───────────────────────────────────────────────────────────
 
-export function localBusinessSchema() {
+export function localBusinessSchema(siteUrl: string) {
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "@id": `${SITE_URL}/#localbusiness`,
+    "@id": `${siteUrl}/#localbusiness`,
     name: "Hallucine",
     image: LOGO_URL,
-    url: SITE_URL,
+    url: siteUrl,
     telephone: COMPANY_PHONE,
     email: COMPANY_EMAIL,
     priceRange: "€€€",
@@ -120,7 +119,7 @@ export function breadcrumbSchema(
       "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: item.url.startsWith("http") ? item.url : `${SITE_URL}${item.url}`,
+      item: item.url,
     })),
   };
 }
@@ -138,7 +137,12 @@ interface ProductData {
   name: string;
   description: string;
   image: string | string[];
+  /** URL canonique absolue de la page produit (domaine + locale courants). */
   url: string;
+  /** Racine du domaine courant — pour l'entité manufacturer. */
+  siteUrl: string;
+  /** URL absolue localisée de la page contact — pour offers.url. */
+  contactUrl: string;
   brand?: string;
   category?: string;
   sku?: string;
@@ -154,7 +158,7 @@ export function productSchema(product: ProductData) {
     name: product.name,
     description: product.description,
     image: product.image,
-    url: product.url.startsWith("http") ? product.url : `${SITE_URL}${product.url}`,
+    url: product.url,
     brand: {
       "@type": "Brand",
       name: product.brand || "Hallucine",
@@ -164,7 +168,7 @@ export function productSchema(product: ProductData) {
     manufacturer: {
       "@type": "Organization",
       name: "Hallucine",
-      url: SITE_URL,
+      url: product.siteUrl,
     },
     offers: {
       "@type": "Offer",
@@ -176,7 +180,7 @@ export function productSchema(product: ProductData) {
         "@type": "Organization",
         name: "Hallucine",
       },
-      url: `${SITE_URL}/contactez-nous`,
+      url: product.contactUrl,
       shippingDetails: {
         "@type": "OfferShippingDetails",
         shippingRate: {
@@ -266,7 +270,12 @@ interface ArticleData {
   headline: string;
   description: string;
   image?: string;
+  /** URL canonique absolue de l'article (domaine + locale courants). */
   url: string;
+  /** Racine du domaine courant — pour l'entité author. */
+  siteUrl: string;
+  /** Code locale BCP-47 de la langue courante (ex. "fr-FR"). */
+  inLanguage: string;
   datePublished?: string;
   dateModified?: string;
 }
@@ -278,20 +287,20 @@ export function articleSchema(article: ArticleData) {
     headline: article.headline,
     description: article.description,
     image: article.image || LOGO_URL,
-    url: article.url.startsWith("http") ? article.url : `${SITE_URL}${article.url}`,
+    url: article.url,
     datePublished: article.datePublished || "2024-01-01",
     dateModified: article.dateModified || new Date().toISOString().split("T")[0],
     author: {
       "@type": "Organization",
       name: "Hallucine",
-      url: SITE_URL,
+      url: article.siteUrl,
     },
     publisher: {
       "@type": "Organization",
       name: "Hallucine",
       logo: { "@type": "ImageObject", url: LOGO_URL },
     },
-    inLanguage: "fr-FR",
+    inLanguage: article.inLanguage,
   };
 }
 
@@ -300,7 +309,12 @@ export function articleSchema(article: ArticleData) {
 interface WebPageData {
   name: string;
   description: string;
+  /** URL canonique absolue de la page (domaine + locale courants). */
   url: string;
+  /** Racine du domaine courant — pour l'entité isPartOf (WebSite). */
+  siteUrl: string;
+  /** Code locale BCP-47 de la langue courante (ex. "fr-FR"). */
+  inLanguage: string;
 }
 
 export function webPageSchema(page: WebPageData) {
@@ -309,18 +323,18 @@ export function webPageSchema(page: WebPageData) {
     "@type": "WebPage",
     name: page.name,
     description: page.description,
-    url: page.url.startsWith("http") ? page.url : `${SITE_URL}${page.url}`,
+    url: page.url,
     isPartOf: {
       "@type": "WebSite",
       name: "Hallucine",
-      url: SITE_URL,
+      url: page.siteUrl,
     },
     publisher: {
       "@type": "Organization",
       name: "Hallucine",
       logo: { "@type": "ImageObject", url: LOGO_URL },
     },
-    inLanguage: "fr-FR",
+    inLanguage: page.inLanguage,
   };
 }
 

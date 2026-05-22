@@ -31,13 +31,12 @@ export default function GalerieVideo() {
       <PageStructuredData
         id="galerie-video-page"
         breadcrumbs={[
-          { name: "Accueil", url: "/" },
-          { name: t("hero_title"), url: "/galerie-video" },
+          { name: "Accueil", routeKey: "home" },
+          { name: t("hero_title"), routeKey: "galerie-video" },
         ]}
         page={{
           name: t("hero_title"),
           description: t("meta_desc"),
-          url: "/galerie-video",
         }}
       />
       <Navbar />

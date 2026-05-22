@@ -23,13 +23,12 @@ export default function TrouverDistributeur() {
       <PageStructuredData
         id="trouver-distributeur"
         breadcrumbs={[
-          { name: "Accueil", url: "/" },
-          { name: t("breadcrumb_page"), url: "/trouver-distributeur" },
+          { name: "Accueil", routeKey: "home" },
+          { name: t("breadcrumb_page"), routeKey: "trouver-distributeur" },
         ]}
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
-          url: "https://hallucinecran.fr/trouver-distributeur",
         }}
       />
       <Navbar />

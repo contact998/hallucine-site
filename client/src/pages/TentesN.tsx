@@ -39,15 +39,14 @@ export default function TentesN() {
       <PageStructuredData
         id="tentes-n-page"
         breadcrumbs={[
-          { name: "Accueil", url: "https://hallucinecran.fr" },
-          { name: "Tentes gonflables", url: "https://hallucinecran.fr/tentes-gonflables" },
-          { name: "Tentes en forme de N", url: "https://hallucinecran.fr/tentes-gonflables-n" },
+          { name: "Accueil", routeKey: "home" },
+          { name: "Tentes gonflables", routeKey: "tentes" },
+          { name: "Tentes en forme de N", routeKey: "tente-n" },
         ]}
         product={{
           name: "Tentes en forme de N",
           description: "Tente gonflable N polyvalente. Utilisée par la Croix-Rouge et pour événements.",
           image: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/TVmrusoKmXcTvkKP.webp",
-          url: "https://hallucinecran.fr/tentes-gonflables-n",
           category: "Tentes gonflables",
           minPrice: 1990,
         }}

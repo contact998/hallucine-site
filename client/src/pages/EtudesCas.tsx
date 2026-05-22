@@ -24,13 +24,12 @@ export default function EtudesCas() {
       <PageStructuredData
         id="etudes-cas-page"
         breadcrumbs={[
-          { name: "Accueil", url: "https://hallucinecran.fr" },
-          { name: t("breadcrumb"), url: "https://hallucinecran.fr/etudes-de-cas" },
+          { name: "Accueil", routeKey: "home" },
+          { name: t("breadcrumb"), routeKey: "etudes-cas" },
         ]}
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
-          url: "https://hallucinecran.fr/etudes-de-cas",
         }}
       />
       <Navbar />

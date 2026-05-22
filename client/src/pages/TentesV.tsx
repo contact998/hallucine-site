@@ -39,15 +39,14 @@ export default function TentesV() {
       <PageStructuredData
         id="tentes-v"
         breadcrumbs={[
-          { name: "Accueil", url: "https://hallucinecran.fr/" },
-          { name: "Tentes Gonflables", url: "https://hallucinecran.fr/tente-gonflable" },
-          { name: "Tentes en Forme de V", url: "https://hallucinecran.fr/tentes-gonflables-v" },
+          { name: "Accueil", routeKey: "home" },
+          { name: "Tentes Gonflables", routeKey: "tentes" },
+          { name: "Tentes en Forme de V", routeKey: "tente-v" },
         ]}
         product={{
           name: "Tente Gonflable en Forme de V",
           description: "Tente gonflable V au design élégant et moderne. Idéale pour événements haut de gamme, mariages et réceptions. Personnalisation complète.",
           image: heroImages.map(img => img.src),
-          url: "https://hallucinecran.fr/tentes-gonflables-v",
           category: "Tentes gonflables",
           minPrice: 1490,
         }}

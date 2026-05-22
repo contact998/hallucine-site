@@ -154,11 +154,10 @@ export default function Galerie() {
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
         id="galerie-evenements"
-        breadcrumbs={[{ name: "Accueil", url: "/" }, { name: t("page_title"), url: "/galerie-evenements" }]}
+        breadcrumbs={[{ name: "Accueil", routeKey: "home" }, { name: t("page_title"), routeKey: "galerie" }]}
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
-          url: "https://hallucinecran.fr/galerie-evenements"
         }}
       />
       <Navbar />

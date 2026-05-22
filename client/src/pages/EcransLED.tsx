@@ -29,14 +29,13 @@ export default function EcransLED() {
       <PageStructuredData
         id="ecrans-led"
         breadcrumbs={[
-          { name: "Accueil", url: "https://hallucinecran.fr" },
-          { name: t("breadcrumb"), url: "https://hallucinecran.fr/ecrans-led" }
+          { name: "Accueil", routeKey: "home" },
+          { name: t("breadcrumb"), routeKey: "ecrans-led" }
         ]}
         product={{
           name: t("meta_title"),
           description: t("hero_desc"),
           image: ledImages.map(img => img.src),
-          url: "https://hallucinecran.fr/ecrans-led",
           category: "Écrans LED",
           minPrice: 4990,
         }}

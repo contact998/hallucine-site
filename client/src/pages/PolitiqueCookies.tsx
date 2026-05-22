@@ -21,11 +21,10 @@ export default function PolitiqueCookies() {
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
-          url: "/politique-cookies",
         }}
         breadcrumbs={[
-          { name: "Accueil", url: "/" },
-          { name: t("meta_title"), url: "/politique-cookies" },
+          { name: "Accueil", routeKey: "home" },
+          { name: t("meta_title"), routeKey: "cookies" },
         ]}
       />
       <Navbar />
