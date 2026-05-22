@@ -29,6 +29,15 @@ export const LANGUAGE_FLAGS: Record<SupportedLanguage, string> = {
   it: "🇮🇹",
 };
 
+// Code locale BCP-47 par langue — pour le champ inLanguage des données structurées
+export const LANGUAGE_LOCALES: Record<SupportedLanguage, string> = {
+  fr: "fr-FR",
+  en: "en-GB",
+  de: "de-DE",
+  es: "es-ES",
+  it: "it-IT",
+};
+
 export const LANGUAGE_DOMAINS: Record<SupportedLanguage, string> = {
   fr: "https://hallucinecran.fr",
   en: "https://hallucinecran.com",
@@ -52,6 +61,17 @@ export const DOMAIN_LANG_MAP: Record<string, string> = {
 };
 
 export const VALID_LANGS = ["fr", "en", "de", "es", "it"] as const;
+
+/**
+ * Construit l'URL canonique absolue : domaine de la langue + chemin normalisé
+ * (sans slash final, hors racine). Partagé entre useCanonical et les données
+ * structurées (PageStructuredData) pour garantir des URLs cohérentes.
+ */
+export function buildCanonicalUrl(lang: string, pathname: string): string {
+  const baseUrl = LANGUAGE_DOMAINS[lang as SupportedLanguage] ?? LANGUAGE_DOMAINS.fr;
+  const normalizedPath = pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
+  return `${baseUrl}${normalizedPath}`;
+}
 
 /**
  * Détecte la langue selon la priorité définie.

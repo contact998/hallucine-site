@@ -44,17 +44,15 @@ export default function TentesAraignees() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="tentes-araignees"
         breadcrumbs={[
-          { name: "Accueil", url: "https://hallucinecran.fr" },
-          { name: "Tentes gonflables", url: "https://hallucinecran.fr/tentes-gonflables" },
-          { name: "Tente Araignée Gonflable", url: "https://hallucinecran.fr/tentes-araignees" },
+          { name: "Accueil", routeKey: "home" },
+          { name: "Tentes gonflables", routeKey: "tentes" },
+          { name: "Tente Araignée Gonflable", routeKey: "tente-araignee" },
         ]}
         product={{
           name: "Tente Araignée Gonflable",
           description: "Tente gonflable araignée (spider) pour événements. Design unique, montage ultra-rapide, résistante au vent.",
           image: images.map(img => img.src),
-          url: "https://hallucinecran.fr/tentes-araignees",
           category: "Tentes gonflables",
           minPrice: 990,
         }}

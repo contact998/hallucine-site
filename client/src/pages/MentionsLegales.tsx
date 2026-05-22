@@ -21,15 +21,13 @@ export default function MentionsLegales() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="mentions-legales"
         breadcrumbs={[
-          { name: "Accueil", url: "/" },
-          { name: t("meta_title"), url: "/mentions-legales" },
+          { name: "Accueil", routeKey: "home" },
+          { name: t("meta_title"), routeKey: "mentions-legales" },
         ]}
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
-          url: "https://hallucinecran.fr/mentions-legales",
         }}
       />
       <Navbar />

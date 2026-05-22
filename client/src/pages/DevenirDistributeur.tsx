@@ -27,15 +27,13 @@ export default function DevenirDistributeur() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="devenir-distributeur"
         breadcrumbs={[
-          { name: "Accueil", url: "/" },
-          { name: t("breadcrumb_page"), url: "/devenir-distributeur" },
+          { name: "Accueil", routeKey: "home" },
+          { name: t("breadcrumb_page"), routeKey: "devenir-distributeur" },
         ]}
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
-          url: "https://hallucinecran.fr/devenir-distributeur",
         }}
       />
       <Navbar />

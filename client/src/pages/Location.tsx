@@ -39,15 +39,13 @@ export default function Location() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="location-page"
         breadcrumbs={[
-          { name: "Accueil", url: "https://hallucinecran.fr" },
-          { name: t("breadcrumb"), url: "https://hallucinecran.fr/location-ecran-gonflable" },
+          { name: "Accueil", routeKey: "home" },
+          { name: t("breadcrumb"), routeKey: "location" },
         ]}
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
-          url: "https://hallucinecran.fr/location-ecran-gonflable",
         }}
       />
       <Navbar />

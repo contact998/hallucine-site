@@ -54,15 +54,13 @@ export default function Configurateur() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="configurateur-page"
         breadcrumbs={[
-          { name: "Accueil", url: "https://hallucinecran.fr" },
-          { name: t("breadcrumb"), url: "https://hallucinecran.fr/configurateur-ecran-gonflable" },
+          { name: "Accueil", routeKey: "home" },
+          { name: t("breadcrumb"), routeKey: "configurateur" },
         ]}
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
-          url: "https://hallucinecran.fr/configurateur-ecran-gonflable",
         }}
       />
       <Navbar />

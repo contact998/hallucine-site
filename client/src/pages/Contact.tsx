@@ -43,15 +43,13 @@ export default function Contact() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="contact"
         breadcrumbs={[
-          { name: "Accueil", url: "/" },
-          { name: "Contact", url: "/contactez-nous" },
+          { name: "Accueil", routeKey: "home" },
+          { name: "Contact", routeKey: "contact" },
         ]}
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
-          url: "https://hallucinecran.fr/contactez-nous",
         }}
         faqs={faqContact.map(f => ({ question: f.q, answer: f.a }))}
       />

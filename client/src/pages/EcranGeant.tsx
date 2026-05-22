@@ -70,17 +70,15 @@ export default function EcranGeant() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="ecran-geant-soufflerie"
         breadcrumbs={[
-          { name: "Accueil", url: "https://hallucinecran.fr" },
-          { name: t("section_label"), url: "https://hallucinecran.fr/ecran-gonflable" },
-          { name: t("hero_title"), url: "https://hallucinecran.fr/ecran-gonflable-geant-soufflerie" },
+          { name: "Accueil", routeKey: "home" },
+          { name: t("section_label"), routeKey: "ecrans" },
+          { name: t("hero_title"), routeKey: "ecran-geant" },
         ]}
         product={{
           name: t("hero_title"),
           description: t("meta_desc"),
           image: galleryImages.map(img => img.src),
-          url: "https://hallucinecran.fr/ecran-gonflable-geant-soufflerie",
           category: t("section_label"),
           minPrice: 2490,
         }}
