@@ -36,7 +36,7 @@ const NS = [
   "tente-araignee", "arches-gonflables", "mobilier", "accessoires",
   "a-propos", "mode-emploi", "mentions-legales", "devenir-distributeur",
   "trouver-distributeur", "galerie", "galerie-video", "politique-cookies",
-  "confidentialite", "blog", "histoire", "not-found"
+  "confidentialite", "blog", "histoire", "not-found", "smartform"
 ];
 
 // Initialiser i18n une seule fois pour le SSR

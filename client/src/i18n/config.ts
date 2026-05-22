@@ -60,7 +60,7 @@ i18n
       "tente-araignee", "arches-gonflables", "mobilier", "accessoires",
       "a-propos", "mode-emploi", "mentions-legales", "devenir-distributeur",
       "trouver-distributeur", "galerie", "galerie-video", "politique-cookies",
-      "confidentialite", "blog", "histoire", "not-found"
+      "confidentialite", "blog", "histoire", "not-found", "smartform"
     ],
     defaultNS: "common",
     interpolation: {

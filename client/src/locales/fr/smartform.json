@@ -1,0 +1,184 @@
+{
+  "trust": {
+    "time": "2 min pour obtenir votre devis",
+    "response": "Réponse sous 24h"
+  },
+  "steps": {
+    "email": "Email",
+    "product": "Produit",
+    "options": "Options",
+    "objective": "Objectif",
+    "phone": "Téléphone",
+    "location": "Localisation",
+    "send": "Envoi"
+  },
+  "encouragements": {
+    "2": "C'est parti !",
+    "3": "Excellent choix !",
+    "4": "On avance bien !",
+    "5": "Plus que 2 étapes !",
+    "6": "Presque terminé !",
+    "7": "Dernière ligne droite !"
+  },
+  "products": {
+    "ecran": { "label": "Écran de cinéma", "desc": "De 5 m à 24 m, étanche ou soufflerie" },
+    "tente": { "label": "Tente gonflable", "desc": "Tentes X, N, V et Araignées" },
+    "mobilier": { "label": "Mobilier gonflable", "desc": "Canapés, fauteuils, tables design" },
+    "arche": { "label": "Arche gonflable", "desc": "Course, sport, événement, publicité" }
+  },
+  "screenSizes": {
+    "5-8m": { "label": "5 à 8 m", "audience": "30 à 200 spectateurs" },
+    "9-10m": { "label": "9 à 10 m", "audience": "50 à 300 spectateurs" },
+    "11-12m": { "label": "11 à 12 m", "audience": "100 à 600 spectateurs" },
+    "13-14m": { "label": "13 à 14 m", "audience": "150 à 1 000 spectateurs" },
+    "15-24m": { "label": "15 à 24 m", "audience": "200 à 5 000 spectateurs" }
+  },
+  "tech": {
+    "etanche": "Étanche",
+    "soufflerie": "Soufflerie"
+  },
+  "tentTypes": {
+    "tente_x": "Tentes X",
+    "tente_n": "Tentes N",
+    "tente_v": "Tentes V",
+    "tente_araignee": "Tentes Araignées"
+  },
+  "mobilierTypes": {
+    "canape": "Canapé",
+    "fauteuil": "Fauteuil",
+    "table": "Table",
+    "autre_mobilier": "Autre"
+  },
+  "archeUsages": {
+    "course_sport": "Course / Sport",
+    "evenement": "Événement",
+    "publicitaire": "Publicitaire",
+    "autre_arche": "Autre"
+  },
+  "objectives": {
+    "achat": { "label": "Achat", "desc": "Je souhaite acheter" },
+    "location": { "label": "Location", "desc": "Je souhaite louer" },
+    "information": { "label": "Information", "desc": "Je souhaite me renseigner" }
+  },
+  "resumeBanner": {
+    "text": "Vous avez une demande en cours. Reprendre ?",
+    "resume": "Reprendre",
+    "dismiss": "Non merci"
+  },
+  "chatbotBanner": {
+    "title": "Formulaire pré-rempli par le chatbot IA",
+    "text": "Les informations de votre conversation ont été reportées. Vérifiez et complétez si nécessaire."
+  },
+  "common": {
+    "continue": "Continuer",
+    "back": "Retour"
+  },
+  "step1": {
+    "title": "Commencez votre devis gratuit",
+    "subtitle": "Votre email suffit pour démarrer. Nous vous répondrons sous 24h.",
+    "emailLabel": "Email",
+    "emailPlaceholder": "votre@email.com",
+    "privacy": "Vos données sont protégées et ne seront jamais partagées."
+  },
+  "step2": {
+    "title": "Quel produit vous intéresse ?",
+    "subtitle": "Sélectionnez pour personnaliser votre devis."
+  },
+  "step3": {
+    "ecranTitle": "Pour combien de spectateurs ?",
+    "ecranSubtitle": "La taille d'écran s'adapte à votre audience.",
+    "tenteTitle": "Quel type de tente ?",
+    "tenteSubtitle": "Sélectionnez le modèle souhaité.",
+    "mobilierTitle": "Quel type de mobilier ?",
+    "mobilierSubtitle": "Sélectionnez le type de mobilier souhaité.",
+    "archeTitle": "Quel usage pour l'arche ?",
+    "archeSubtitle": "Sélectionnez l'usage principal."
+  },
+  "step4": {
+    "title": "Quel est votre objectif ?",
+    "subtitle": "Cela nous aide à adapter notre proposition."
+  },
+  "step5": {
+    "title": "Souhaitez-vous être rappelé ?",
+    "subtitle": "Optionnel mais recommandé pour un devis plus rapide.",
+    "phoneLabel": "Téléphone",
+    "phoneRecommended": "(recommandé)",
+    "phonePlaceholder": "+33 6 12 34 56 78",
+    "callbackQuestion": "Quand souhaitez-vous être rappelé ?"
+  },
+  "step6": {
+    "title": "Où êtes-vous basé ?",
+    "subtitle": "Pour adapter notre offre à votre région.",
+    "postalLabel": "Code postal",
+    "postalPlaceholder": "75001",
+    "postalNotFound": "Code postal non reconnu — vous pouvez saisir ville et pays manuellement ci-dessous.",
+    "cityLabel": "Ville",
+    "cityPlaceholder": "Votre ville",
+    "countryLabel": "Pays",
+    "countryPlaceholder": "Votre pays"
+  },
+  "step7": {
+    "title": "Dernière étape !",
+    "subtitle": "Votre prénom et un message optionnel pour finaliser.",
+    "prenomLabel": "Prénom",
+    "prenomPlaceholder": "Jean",
+    "nomLabel": "Nom",
+    "nomPlaceholder": "Dupont",
+    "entrepriseLabel": "Entreprise",
+    "optional": "(optionnel)",
+    "messageLabel": "Message",
+    "messagePlaceholder": {
+      "ecran": "Date de l'événement, lieu, nombre de spectateurs, budget estimé...",
+      "tente": "Dimensions souhaitées, personnalisation, date d'utilisation...",
+      "mobilier": "Quantité, couleurs, événement prévu...",
+      "arche": "Dimensions, personnalisation, type d'événement...",
+      "default": "Décrivez votre projet..."
+    },
+    "submit": "Recevoir mon devis gratuit",
+    "submitting": "Envoi en cours..."
+  },
+  "callback": {
+    "days": {
+      "lundi": "Lundi",
+      "mardi": "Mardi",
+      "mercredi": "Mercredi",
+      "jeudi": "Jeudi",
+      "vendredi": "Vendredi"
+    },
+    "morning": "Matin (9h-12h)",
+    "afternoon": "Après-midi (14h-18h)"
+  },
+  "recap": {
+    "title": "Récapitulatif",
+    "email": "Email",
+    "product": "Produit",
+    "detail": "Détail",
+    "objective": "Objectif",
+    "phone": "Tél",
+    "name": "Nom",
+    "company": "Entreprise",
+    "location": "Lieu",
+    "callback": "Rappel"
+  },
+  "validation": {
+    "emailRequired": "L'email est obligatoire",
+    "emailInvalid": "Format d'email invalide (ex : nom@domaine.fr)",
+    "objectifRequired": "Veuillez sélectionner votre objectif",
+    "postalRequired": "Le code postal est obligatoire (min. 3 chiffres)",
+    "prenomRequired": "Le prénom est obligatoire (min. 2 caractères)",
+    "phoneShort": "Le numéro semble trop court (minimum 8 chiffres)"
+  },
+  "toasts": {
+    "success": "Votre demande a bien été envoyée !",
+    "error": "Erreur lors de l'envoi. Veuillez réessayer.",
+    "emailInvalid": "Veuillez renseigner un email valide.",
+    "prenomInvalid": "Veuillez renseigner votre prénom (min. 2 caractères)."
+  },
+  "voice": {
+    "email": "Dicter votre email",
+    "phone": "Dicter votre numéro",
+    "prenom": "Dicter votre prénom",
+    "nom": "Dicter votre nom",
+    "message": "Dicter votre message"
+  }
+}

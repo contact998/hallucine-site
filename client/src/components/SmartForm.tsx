@@ -9,6 +9,10 @@
  * Détection d'abandon : si le visiteur quitte après avoir saisi son email,
  * les données partielles sont envoyées au backend (CRM + notification admin)
  *
+ * i18n : tous les textes affichés passent par useTranslation("smartform").
+ * Les données transmises au CRM (libellés produit, message, jour de rappel)
+ * restent en français — l'équipe commerciale travaille en français.
+ *
  * Props :
  *  - preselectedProduct : pré-sélectionne le produit (sur les pages produits)
  *  - preselectedSize : pré-sélectionne la taille d'écran
@@ -16,6 +20,7 @@
  *  - onSubmitSuccess : callback après soumission réussie
  */
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { generateChallenge, solveProofOfWork } from "@/lib/proofOfWork";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -39,70 +44,44 @@ interface SmartFormProps {
   onSubmitSuccess?: () => void;
 }
 
-// ─── Données statiques ─────────────────────────────────────────────────────────
+// ─── Données statiques (clés stables — libellés affichés via i18n) ──────────────
 const products = [
-  { type: "ecran" as const, icon: Monitor, label: "Ecran de cinema", desc: "De 5m a 24m, etanche ou soufflerie", color: "text-gold" },
-  { type: "tente" as const, icon: Tent, label: "Tente gonflable", desc: "Tentes X, N, V et Araignées", color: "text-blue-400" },
-  { type: "mobilier" as const, icon: Armchair, label: "Mobilier gonflable", desc: "Canapes, fauteuils, tables design", color: "text-emerald-400" },
-  { type: "arche" as const, icon: Trophy, label: "Arche gonflable", desc: "Course, sport, evenement, publicite", color: "text-purple-400" },
+  { type: "ecran" as const, icon: Monitor, color: "text-gold" },
+  { type: "tente" as const, icon: Tent, color: "text-blue-400" },
+  { type: "mobilier" as const, icon: Armchair, color: "text-emerald-400" },
+  { type: "arche" as const, icon: Trophy, color: "text-purple-400" },
 ];
 
 const screenCategories = [
-  { value: "5-8m", label: "5 a 8m", audience: "30 a 200 spectateurs", tech: "Etanche", icon: "screen_5" },
-  { value: "9-10m", label: "9 a 10m", audience: "50 a 300 spectateurs", tech: "Soufflerie", icon: "screen_9" },
-  { value: "11-12m", label: "11 a 12m", audience: "100 a 600 spectateurs", tech: "Soufflerie", icon: "screen_11" },
-  { value: "13-14m", label: "13 a 14m", audience: "150 a 1 000 spectateurs", tech: "Soufflerie", icon: "screen_13" },
-  { value: "15-24m", label: "15 a 24m", audience: "200 a 5 000 spectateurs", tech: "Soufflerie", icon: "screen_15" },
+  { value: "5-8m", tech: "etanche" },
+  { value: "9-10m", tech: "soufflerie" },
+  { value: "11-12m", tech: "soufflerie" },
+  { value: "13-14m", tech: "soufflerie" },
+  { value: "15-24m", tech: "soufflerie" },
 ];
 
-const tentTypes = [
-  { value: "tente_x", label: "Tentes X" },
-  { value: "tente_n", label: "Tentes N" },
-  { value: "tente_v", label: "Tentes V" },
-  { value: "tente_araignee", label: "Tentes Araignées" },
+const tentTypes = ["tente_x", "tente_n", "tente_v", "tente_araignee"];
+const mobilierTypes = ["canape", "fauteuil", "table", "autre_mobilier"];
+const archeUsages = ["course_sport", "evenement", "publicitaire", "autre_arche"];
+const objectiveKeys = ["achat", "location", "information"];
+
+// Clés des 7 étapes pour la barre de progression
+const stepKeys = ["email", "product", "options", "objective", "phone", "location", "send"];
+
+// Jours de rappel : clé i18n + valeur française stockée (transmise au CRM)
+const callbackDays = [
+  { key: "lundi", value: "Lundi" },
+  { key: "mardi", value: "Mardi" },
+  { key: "mercredi", value: "Mercredi" },
+  { key: "jeudi", value: "Jeudi" },
+  { key: "vendredi", value: "Vendredi" },
 ];
 
-const mobilierTypes = [
-  { value: "canape", label: "Canape" },
-  { value: "fauteuil", label: "Fauteuil" },
-  { value: "table", label: "Table" },
-  { value: "autre_mobilier", label: "Autre" },
+// Créneaux de rappel : clé i18n + valeur stockée (transmise au CRM)
+const callbackSlots = [
+  { key: "morning", value: "matin" },
+  { key: "afternoon", value: "apres-midi" },
 ];
-
-const archeUsages = [
-  { value: "course_sport", label: "Course / Sport" },
-  { value: "evenement", label: "Evenement" },
-  { value: "publicitaire", label: "Publicitaire" },
-  { value: "autre_arche", label: "Autre" },
-];
-
-const popularCountries = [
-  "France", "Belgique", "Suisse", "Canada", "Maroc", "Tunisie", "Algerie",
-  "Senegal", "Cote d'Ivoire", "Cameroun", "Madagascar", "Allemagne",
-  "Espagne", "Italie", "Royaume-Uni", "Etats-Unis", "Chine", "Japon",
-  "Emirats arabes unis", "Arabie saoudite", "Bresil", "Mexique", "Australie",
-];
-
-// Labels des étapes pour la barre de progression
-const stepLabels = [
-  "Email",
-  "Produit",
-  "Options",
-  "Objectif",
-  "Telephone",
-  "Localisation",
-  "Envoi",
-];
-
-// Messages d'encouragement par étape
-const encouragements: Record<number, string> = {
-  2: "C'est parti !",
-  3: "Excellent choix !",
-  4: "On avance bien !",
-  5: "Plus que 2 etapes !",
-  6: "Presque termine !",
-  7: "Derniere ligne droite !",
-};
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -112,13 +91,10 @@ function isValidEmail(email: string): boolean {
   return re.test(email.trim());
 }
 
-/** Validation téléphone — au moins 8 chiffres (hors préfixe +) */
-function isPhoneWarning(phone: string): string | null {
+/** Téléphone trop court — au moins 8 chiffres (hors préfixe +) */
+function phoneTooShort(phone: string): boolean {
   const digits = phone.replace(/[^0-9]/g, "");
-  if (phone.trim().length > 0 && digits.length < 8) {
-    return "Le numero semble trop court (minimum 8 chiffres)";
-  }
-  return null;
+  return phone.trim().length > 0 && digits.length < 8;
 }
 
 function detectCountryFromTimezone(): string {
@@ -151,16 +127,10 @@ function getPhonePrefix(country: string): string {
   return prefixes[country] || "";
 }
 
-/** Label objectif lisible */
-function objectifLabel(val: string): string {
-  if (val === "achat") return "Achat";
-  if (val === "location") return "Location";
-  if (val === "information") return "Information";
-  return val;
-}
-
 // ─── Composant SmartForm ───────────────────────────────────────────────────────
 export default function SmartForm({ preselectedProduct, preselectedSize, mode = "full", onSubmitSuccess }: SmartFormProps) {
+  const { t } = useTranslation("smartform");
+
   // Lire les query params (pre-remplissage depuis le chatbot IA)
   const urlParams = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
   const qProduct = (urlParams?.get("product") as ProductType) || preselectedProduct || null;
@@ -205,7 +175,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   const [country, setCountry] = useState(qCountry);
   const [city, setCity] = useState(qCity);
   const [postalCode, setPostalCode] = useState("");
-  // Construire le message initial depuis les infos chatbot
+  // Construire le message initial depuis les infos chatbot (texte transmis au CRM → français)
   const buildChatbotMessage = () => {
     if (!isFromChatbot) return "";
     const parts: string[] = [];
@@ -253,6 +223,14 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
   const STORAGE_KEY = "hallucine_smartform_progress";
   const EXPIRY_DAYS = 7;
+
+  // Libellés produit transmis au CRM — toujours en français
+  const crmProductLabels: Record<string, string> = {
+    ecran: "Ecran de cinema",
+    tente: "Tente gonflable",
+    mobilier: "Mobilier gonflable",
+    arche: "Arche gonflable",
+  };
 
   // ─── Restaurer la progression sauvegardee au montage ──────────────────
   useEffect(() => {
@@ -483,11 +461,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     onSuccess: () => {
       setSubmitted(true);
       setAbandonSent(true);
-      toast.success("Votre demande a bien ete envoyee !");
+      toast.success(t("toasts.success"));
       onSubmitSuccess?.();
     },
     onError: (err) => {
-      toast.error(err.message || "Erreur lors de l'envoi. Veuillez reessayer.");
+      toast.error(err.message || t("toasts.error"));
     },
   });
 
@@ -503,21 +481,15 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     const trimmedMessage = message.trim();
 
     if (!trimmedEmail || !isValidEmail(trimmedEmail)) {
-      toast.error("Veuillez renseigner un email valide.");
+      toast.error(t("toasts.emailInvalid"));
       return;
     }
     if (trimmedPrenom.length < 2) {
-      toast.error("Veuillez renseigner votre prénom (min. 2 caractères).");
+      toast.error(t("toasts.prenomInvalid"));
       return;
     }
 
-    const productLabels: Record<string, string> = {
-      ecran: "Ecran de cinema",
-      tente: "Tente gonflable",
-      mobilier: "Mobilier gonflable",
-      arche: "Arche gonflable",
-    };
-    const productLabel = product ? `${productLabels[product]} -- ${productDetail}` : "Non precise";
+    const productLabel = product ? `${crmProductLabels[product]} -- ${productDetail}` : "Non precise";
     const fullName = [trimmedPrenom, trimmedNom].filter(Boolean).join(" ") || "Non renseigne";
     const location = [city, postalCode, country].filter(Boolean).join(", ");
 
@@ -584,17 +556,17 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     const errors: Record<string, string> = {};
     switch (currentStep) {
       case 1:
-        if (!email.trim()) errors.email = "L'email est obligatoire";
-        else if (!isValidEmail(email)) errors.email = "Format d'email invalide (ex: nom@domaine.fr)";
+        if (!email.trim()) errors.email = t("validation.emailRequired");
+        else if (!isValidEmail(email)) errors.email = t("validation.emailInvalid");
         break;
       case 4:
-        if (!objectif) errors.objectif = "Veuillez sélectionner votre objectif";
+        if (!objectif) errors.objectif = t("validation.objectifRequired");
         break;
       case 6:
-        if (postalCode.trim().length < 3) errors.postalCode = "Le code postal est obligatoire (min. 3 chiffres)";
+        if (postalCode.trim().length < 3) errors.postalCode = t("validation.postalRequired");
         break;
       case 7:
-        if (prenom.trim().length < 2) errors.prenom = "Le prénom est obligatoire (min. 2 caractères)";
+        if (prenom.trim().length < 2) errors.prenom = t("validation.prenomRequired");
         break;
     }
     setFieldErrors(errors);
@@ -630,6 +602,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   const inputOptionalClass = "w-full p-3 bg-white/[0.10] border border-white/15 rounded-lg text-white text-base placeholder:text-white/40 focus:border-gold focus:outline-none transition-colors";
   const labelClass = "text-white text-sm font-medium mb-1.5 block";
 
+  const encouragement = t(`encouragements.${currentStep}`, "");
+
   // ─── Rendu ────────────────────────────────────────────────────────────
   if (submitted) {
     return (
@@ -644,19 +618,19 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
       {/* Bandeau de reprise de progression */}
       {showResumeBanner && (
         <div className="mb-4 p-3 bg-gold/10 border border-gold/30 rounded-lg flex items-center justify-between gap-3">
-          <p className="text-white/80 text-sm">Vous avez une demande en cours. Reprendre ?</p>
+          <p className="text-white/80 text-sm">{t("resumeBanner.text")}</p>
           <div className="flex gap-2 shrink-0">
             <button
               onClick={restoreProgress}
               className="px-3 py-1.5 bg-gold text-navy-deep text-xs font-semibold rounded-lg hover:bg-gold-light transition-colors"
             >
-              Reprendre
+              {t("resumeBanner.resume")}
             </button>
             <button
               onClick={dismissProgress}
               className="px-3 py-1.5 border border-white/20 text-white/65 text-xs rounded-lg hover:border-white/50 transition-colors"
             >
-              Non merci
+              {t("resumeBanner.dismiss")}
             </button>
           </div>
         </div>
@@ -667,8 +641,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         <div className="mb-4 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg flex items-center gap-3">
           <Sparkles className="w-5 h-5 text-emerald-400 shrink-0" />
           <div>
-            <p className="text-emerald-300 text-sm font-medium">Formulaire pre-rempli par le chatbot IA</p>
-            <p className="text-white/65 text-xs mt-0.5">Les informations de votre conversation ont ete reportees. Verifiez et completez si necessaire.</p>
+            <p className="text-emerald-300 text-sm font-medium">{t("chatbotBanner.title")}</p>
+            <p className="text-white/65 text-xs mt-0.5">{t("chatbotBanner.text")}</p>
           </div>
         </div>
       )}
@@ -692,11 +666,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         <div className="flex items-center justify-between mb-4 text-white/50 text-xs">
           <div className="flex items-center gap-1.5">
             <Clock className="w-3.5 h-3.5" />
-            <span>2 min pour obtenir votre devis</span>
+            <span>{t("trust.time")}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <ShieldCheck className="w-3.5 h-3.5 text-gold/60" />
-            <span>Reponse sous 24h</span>
+            <span>{t("trust.response")}</span>
           </div>
         </div>
       )}
@@ -726,11 +700,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         </div>
         {/* Labels sous la barre */}
         <div className="flex items-center gap-1">
-          {stepLabels.map((label, i) => (
-            <div key={label} className={`flex-1 text-center text-[9px] leading-tight ${
+          {stepKeys.map((key, i) => (
+            <div key={key} className={`flex-1 text-center text-[9px] leading-tight ${
               i + 1 < currentStep ? "text-gold/70" : i + 1 === currentStep ? "text-white/80 font-medium" : "text-white/25"
             }`}>
-              {label}
+              {t(`steps.${key}`)}
             </div>
           ))}
         </div>
@@ -738,7 +712,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
       {/* Message d'encouragement */}
       <AnimatePresence mode="wait">
-        {encouragements[currentStep] && (
+        {encouragement && (
           <motion.div
             key={`enc-${currentStep}`}
             initial={{ opacity: 0, y: -10 }}
@@ -747,7 +721,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             transition={{ duration: 0.3 }}
             className="mb-3 text-center"
           >
-            <span className="text-gold/80 text-xs font-medium">{encouragements[currentStep]}</span>
+            <span className="text-gold/80 text-xs font-medium">{encouragement}</span>
           </motion.div>
         )}
       </AnimatePresence>
@@ -756,13 +730,13 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         {/* ─── ETAPE 1 : Email (capture immediate) ─────────────────────── */}
         {currentStep === 1 && (
           <motion.div key="step1" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">Commencez votre devis gratuit</h3>
-            <p className="text-white/70 text-sm mb-5">Votre email suffit pour demarrer. Nous vous repondrons sous 24h.</p>
+            <h3 className="text-xl font-bold text-white mb-1">{t("step1.title")}</h3>
+            <p className="text-white/70 text-sm mb-5">{t("step1.subtitle")}</p>
 
             <div className="space-y-4">
               <div>
                 <label htmlFor="sf-email" className={labelClass}>
-                  <Mail className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Email <span className="text-red-500">*</span>
+                  <Mail className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />{t("step1.emailLabel")} <span className="text-red-500">*</span>
                 </label>
                 <div className="flex items-center gap-2">
                   <input
@@ -770,7 +744,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                     type="email"
                     value={email}
                     onChange={(e) => { setEmail(e.target.value); setFieldErrors(prev => ({ ...prev, email: "" })); }}
-                    placeholder="votre@email.com"
+                    placeholder={t("step1.emailPlaceholder")}
                     className={`${inputRequiredClass} flex-1 ${fieldErrors.email ? "border-red-500" : ""}`}
                     autoFocus
                     onKeyDown={handleKeyDown}
@@ -787,7 +761,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                         .trim();
                       setEmail(cleaned);
                     }}
-                    tooltip="Dicter votre email"
+                    tooltip={t("voice.email")}
                   />
                 </div>
               </div>
@@ -799,11 +773,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
               disabled={!canProceed()}
               className="w-full mt-6 flex items-center justify-center gap-2 px-6 py-3 bg-gold text-navy-deep font-semibold text-sm rounded-lg hover:bg-gold-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              Continuer <ArrowRight className="w-4 h-4" />
+              {t("common.continue")} <ArrowRight className="w-4 h-4" />
             </button>
 
             <p className="text-white/20 text-[10px] text-center mt-3">
-              Vos donnees sont protegees et ne seront jamais partagees.
+              {t("step1.privacy")}
             </p>
           </motion.div>
         )}
@@ -811,8 +785,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         {/* ─── ETAPE 2 : Choix du produit ──────────────────────────────── */}
         {currentStep === 2 && (
           <motion.div key="step2" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">Quel produit vous interesse ? <span className="text-red-500">*</span></h3>
-            <p className="text-white/70 text-sm mb-5">Selectionnez pour personnaliser votre devis.</p>
+            <h3 className="text-xl font-bold text-white mb-1">{t("step2.title")} <span className="text-red-500">*</span></h3>
+            <p className="text-white/70 text-sm mb-5">{t("step2.subtitle")}</p>
             <div className="grid grid-cols-2 gap-3">
               {products.map((p) => (
                 <button
@@ -825,14 +799,14 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   <div className={`w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center ${p.color}`}>
                     <p.icon className="w-5 h-5" />
                   </div>
-                  <div className="text-white font-semibold text-sm">{p.label}</div>
-                  <div className="text-white/65 text-xs leading-tight">{p.desc}</div>
+                  <div className="text-white font-semibold text-sm">{t(`products.${p.type}.label`)}</div>
+                  <div className="text-white/65 text-xs leading-tight">{t(`products.${p.type}.desc`)}</div>
                 </button>
               ))}
             </div>
             <div className="flex gap-3 mt-6">
               <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-lg hover:border-white/30 transition-colors">
-                <ArrowLeft className="w-4 h-4" /> Retour
+                <ArrowLeft className="w-4 h-4" /> {t("common.back")}
               </button>
             </div>
           </motion.div>
@@ -843,49 +817,52 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
           <motion.div key="step3" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
             {product === "ecran" && (
               <>
-                <h3 className="text-xl font-bold text-white mb-1">Pour combien de spectateurs ?</h3>
-                <p className="text-white/70 text-sm mb-5">La taille d'ecran s'adapte a votre audience.</p>
+                <h3 className="text-xl font-bold text-white mb-1">{t("step3.ecranTitle")}</h3>
+                <p className="text-white/70 text-sm mb-5">{t("step3.ecranSubtitle")}</p>
                 <div className="space-y-2">
-                  {screenCategories.map((cat) => (
-                    <button
-                      key={cat.value}
-                      onClick={() => { setProductDetail(cat.value); }}
-                      className={`w-full flex items-center gap-4 p-3.5 border rounded-lg transition-all duration-300 text-left ${
-                        productDetail === cat.value ? "border-gold bg-gold/10" : "border-white/10 hover:border-gold/30 bg-white/[0.02]"
-                      }`}
-                    >
-                      <div className="w-8 h-8 rounded bg-white/5 flex items-center justify-center text-gold text-sm font-bold">
-                        {cat.label.split(" ")[0]}
-                      </div>
-                      <div className="flex-1">
-                        <div className="text-white font-semibold text-sm">{cat.label}</div>
-                        <div className="text-white/65 text-xs">{cat.audience}</div>
-                      </div>
-                      <span className={`text-xs px-2 py-0.5 rounded-full ${
-                        cat.tech === "Etanche" ? "bg-gold/10 text-gold" : "bg-blue-400/10 text-blue-400"
-                      }`}>
-                        {cat.tech}
-                      </span>
-                    </button>
-                  ))}
+                  {screenCategories.map((cat) => {
+                    const catLabel = t(`screenSizes.${cat.value}.label`);
+                    return (
+                      <button
+                        key={cat.value}
+                        onClick={() => { setProductDetail(cat.value); }}
+                        className={`w-full flex items-center gap-4 p-3.5 border rounded-lg transition-all duration-300 text-left ${
+                          productDetail === cat.value ? "border-gold bg-gold/10" : "border-white/10 hover:border-gold/30 bg-white/[0.02]"
+                        }`}
+                      >
+                        <div className="w-8 h-8 rounded bg-white/5 flex items-center justify-center text-gold text-sm font-bold">
+                          {catLabel.split(" ")[0]}
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-white font-semibold text-sm">{catLabel}</div>
+                          <div className="text-white/65 text-xs">{t(`screenSizes.${cat.value}.audience`)}</div>
+                        </div>
+                        <span className={`text-xs px-2 py-0.5 rounded-full ${
+                          cat.tech === "etanche" ? "bg-gold/10 text-gold" : "bg-blue-400/10 text-blue-400"
+                        }`}>
+                          {t(`tech.${cat.tech}`)}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
               </>
             )}
 
             {product === "tente" && (
               <>
-                <h3 className="text-xl font-bold text-white mb-1">Quel type de tente ?</h3>
-                <p className="text-white/70 text-sm mb-5">Sélectionnez le modèle souhaité.</p>
+                <h3 className="text-xl font-bold text-white mb-1">{t("step3.tenteTitle")}</h3>
+                <p className="text-white/70 text-sm mb-5">{t("step3.tenteSubtitle")}</p>
                 <div className="grid grid-cols-2 gap-2">
-                  {tentTypes.map((t) => (
+                  {tentTypes.map((tt) => (
                     <button
-                      key={t.value}
-                      onClick={() => setProductDetail(t.value)}
+                      key={tt}
+                      onClick={() => setProductDetail(tt)}
                       className={`p-3.5 border rounded-lg text-center transition-all duration-300 ${
-                        productDetail === t.value ? "border-gold bg-gold/10" : "border-white/10 hover:border-gold/30 bg-white/[0.02]"
+                        productDetail === tt ? "border-gold bg-gold/10" : "border-white/10 hover:border-gold/30 bg-white/[0.02]"
                       }`}
                     >
-                      <div className="text-white font-semibold text-sm">{t.label}</div>
+                      <div className="text-white font-semibold text-sm">{t(`tentTypes.${tt}`)}</div>
                     </button>
                   ))}
                 </div>
@@ -894,18 +871,18 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
             {product === "mobilier" && (
               <>
-                <h3 className="text-xl font-bold text-white mb-1">Quel type de mobilier ?</h3>
-                <p className="text-white/70 text-sm mb-5">Selectionnez le type de mobilier souhaite.</p>
+                <h3 className="text-xl font-bold text-white mb-1">{t("step3.mobilierTitle")}</h3>
+                <p className="text-white/70 text-sm mb-5">{t("step3.mobilierSubtitle")}</p>
                 <div className="grid grid-cols-2 gap-2">
                   {mobilierTypes.map((m) => (
                     <button
-                      key={m.value}
-                      onClick={() => setProductDetail(m.value)}
+                      key={m}
+                      onClick={() => setProductDetail(m)}
                       className={`p-3.5 border rounded-lg text-center transition-all duration-300 ${
-                        productDetail === m.value ? "border-gold bg-gold/10" : "border-white/10 hover:border-gold/30 bg-white/[0.02]"
+                        productDetail === m ? "border-gold bg-gold/10" : "border-white/10 hover:border-gold/30 bg-white/[0.02]"
                       }`}
                     >
-                      <div className="text-white font-semibold text-sm">{m.label}</div>
+                      <div className="text-white font-semibold text-sm">{t(`mobilierTypes.${m}`)}</div>
                     </button>
                   ))}
                 </div>
@@ -914,18 +891,18 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
             {product === "arche" && (
               <>
-                <h3 className="text-xl font-bold text-white mb-1">Quel usage pour l'arche ?</h3>
-                <p className="text-white/70 text-sm mb-5">Selectionnez l'usage principal.</p>
+                <h3 className="text-xl font-bold text-white mb-1">{t("step3.archeTitle")}</h3>
+                <p className="text-white/70 text-sm mb-5">{t("step3.archeSubtitle")}</p>
                 <div className="grid grid-cols-2 gap-2">
                   {archeUsages.map((a) => (
                     <button
-                      key={a.value}
-                      onClick={() => setProductDetail(a.value)}
+                      key={a}
+                      onClick={() => setProductDetail(a)}
                       className={`p-3.5 border rounded-lg text-center transition-all duration-300 ${
-                        productDetail === a.value ? "border-gold bg-gold/10" : "border-white/10 hover:border-gold/30 bg-white/[0.02]"
+                        productDetail === a ? "border-gold bg-gold/10" : "border-white/10 hover:border-gold/30 bg-white/[0.02]"
                       }`}
                     >
-                      <div className="text-white font-semibold text-sm">{a.label}</div>
+                      <div className="text-white font-semibold text-sm">{t(`archeUsages.${a}`)}</div>
                     </button>
                   ))}
                 </div>
@@ -934,14 +911,14 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
             <div className="flex gap-3 mt-6">
               <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-lg hover:border-white/30 transition-colors">
-                <ArrowLeft className="w-4 h-4" /> Retour
+                <ArrowLeft className="w-4 h-4" /> {t("common.back")}
               </button>
               <button
                 onClick={goNextValidated}
                 disabled={!canProceed()}
                 className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-gold text-navy-deep font-semibold text-sm rounded-lg hover:bg-gold-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
-                Continuer <ArrowRight className="w-4 h-4" />
+                {t("common.continue")} <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </motion.div>
@@ -950,29 +927,25 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         {/* ─── ETAPE 4 : Objectif (Achat / Location / Information) ────── */}
         {currentStep === 4 && (
           <motion.div key="step4" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">Quel est votre objectif ? <span className="text-red-500">*</span></h3>
-            <p className="text-white/70 text-sm mb-5">Cela nous aide a adapter notre proposition.</p>
+            <h3 className="text-xl font-bold text-white mb-1">{t("step4.title")} <span className="text-red-500">*</span></h3>
+            <p className="text-white/70 text-sm mb-5">{t("step4.subtitle")}</p>
             <div className="space-y-2">
-              {[
-                { value: "achat", label: "Achat", desc: "Je souhaite acheter" },
-                { value: "location", label: "Location", desc: "Je souhaite louer" },
-                { value: "information", label: "Information", desc: "Je souhaite me renseigner" },
-              ].map((opt) => (
+              {objectiveKeys.map((opt) => (
                 <button
-                  key={opt.value}
-                  onClick={() => setObjectif(opt.value)}
+                  key={opt}
+                  onClick={() => setObjectif(opt)}
                   className={`w-full flex items-center gap-4 p-3.5 border rounded-lg transition-all duration-300 text-left ${
-                    objectif === opt.value ? "border-gold bg-gold/10" : "border-white/10 hover:border-gold/30 bg-white/[0.02]"
+                    objectif === opt ? "border-gold bg-gold/10" : "border-white/10 hover:border-gold/30 bg-white/[0.02]"
                   }`}
                 >
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                    objectif === opt.value ? "bg-gold text-navy-deep" : "bg-white/5 text-white/50"
+                    objectif === opt ? "bg-gold text-navy-deep" : "bg-white/5 text-white/50"
                   }`}>
-                    {opt.value === "achat" ? "A" : opt.value === "location" ? "L" : "I"}
+                    {opt === "achat" ? "A" : opt === "location" ? "L" : "I"}
                   </div>
                   <div className="flex-1">
-                    <div className="text-white font-semibold text-sm">{opt.label}</div>
-                    <div className="text-white/65 text-xs">{opt.desc}</div>
+                    <div className="text-white font-semibold text-sm">{t(`objectives.${opt}.label`)}</div>
+                    <div className="text-white/65 text-xs">{t(`objectives.${opt}.desc`)}</div>
                   </div>
                 </button>
               ))}
@@ -980,14 +953,14 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             {fieldErrors.objectif && <p className="text-red-400 text-xs mt-2">{fieldErrors.objectif}</p>}
             <div className="flex gap-3 mt-6">
               <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-lg hover:border-white/30 transition-colors">
-                <ArrowLeft className="w-4 h-4" /> Retour
+                <ArrowLeft className="w-4 h-4" /> {t("common.back")}
               </button>
               <button
                 onClick={goNextValidated}
                 disabled={!canProceed()}
                 className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-gold text-navy-deep font-semibold text-sm rounded-lg hover:bg-gold-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
-                Continuer <ArrowRight className="w-4 h-4" />
+                {t("common.continue")} <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </motion.div>
@@ -996,14 +969,14 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         {/* ─── ETAPE 5 : Telephone + Preference de rappel ─────────────── */}
         {currentStep === 5 && (
           <motion.div key="step5" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">Souhaitez-vous etre rappele ?</h3>
-            <p className="text-white/70 text-sm mb-5">Optionnel mais recommande pour un devis plus rapide.</p>
+            <h3 className="text-xl font-bold text-white mb-1">{t("step5.title")}</h3>
+            <p className="text-white/70 text-sm mb-5">{t("step5.subtitle")}</p>
 
             <div className="space-y-4">
               <div>
                 <label htmlFor="sf-phone" className={labelClass}>
-                  <Phone className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Telephone
-                  <span className="text-white/50 ml-1">(recommande)</span>
+                  <Phone className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />{t("step5.phoneLabel")}
+                  <span className="text-white/50 ml-1">{t("step5.phoneRecommended")}</span>
                 </label>
                 <div className="flex items-center gap-2">
                   <input
@@ -1011,7 +984,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    placeholder="+33 6 12 34 56 78"
+                    placeholder={t("step5.phonePlaceholder")}
                     className={`${inputOptionalClass} flex-1`}
                     autoFocus
                     onKeyDown={handleKeyDown}
@@ -1040,12 +1013,12 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                         return cleaned;
                       });
                     }}
-                    tooltip="Dicter votre numero"
+                    tooltip={t("voice.phone")}
                   />
                 </div>
               </div>
-              {isPhoneWarning(phone) && (
-                <p className="text-amber-400 text-xs mt-1">{isPhoneWarning(phone)}</p>
+              {phoneTooShort(phone) && (
+                <p className="text-amber-400 text-xs mt-1">{t("validation.phoneShort")}</p>
               )}
 
               {/* Preference de rappel - visible uniquement si telephone renseigne */}
@@ -1055,25 +1028,25 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   animate={{ opacity: 1, height: "auto" }}
                   className="bg-white/5 border border-white/10 rounded-lg p-4 space-y-3"
                 >
-                  <p className="text-white/70 text-sm font-medium">Quand souhaitez-vous etre rappele ?</p>
+                  <p className="text-white/70 text-sm font-medium">{t("step5.callbackQuestion")}</p>
                   <div className="flex flex-wrap gap-2">
-                    {["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"].map((day) => (
+                    {callbackDays.map((d) => (
                       <button
-                        key={day}
+                        key={d.key}
                         type="button"
-                        onClick={() => setCallbackDay(callbackDay === day ? "" : day)}
+                        onClick={() => setCallbackDay(callbackDay === d.value ? "" : d.value)}
                         className={`px-3 py-1.5 text-xs rounded-lg border transition-colors ${
-                          callbackDay === day
+                          callbackDay === d.value
                             ? "bg-gold/20 border-gold text-gold"
                             : "border-white/10 text-white/50 hover:border-white/30"
                         }`}
                       >
-                        {day}
+                        {t(`callback.days.${d.key}`)}
                       </button>
                     ))}
                   </div>
                   <div className="flex gap-2">
-                    {[{label: "Matin (9h-12h)", value: "matin"}, {label: "Apres-midi (14h-18h)", value: "apres-midi"}].map((slot) => (
+                    {callbackSlots.map((slot) => (
                       <button
                         key={slot.value}
                         type="button"
@@ -1084,7 +1057,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                             : "border-white/10 text-white/50 hover:border-white/30"
                         }`}
                       >
-                        {slot.label}
+                        {t(`callback.${slot.key}`)}
                       </button>
                     ))}
                   </div>
@@ -1094,13 +1067,13 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
             <div className="flex gap-3 mt-6">
               <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-lg hover:border-white/30 transition-colors">
-                <ArrowLeft className="w-4 h-4" /> Retour
+                <ArrowLeft className="w-4 h-4" /> {t("common.back")}
               </button>
               <button
                 onClick={goNextValidated}
                 className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-gold text-navy-deep font-semibold text-sm rounded-lg hover:bg-gold-light transition-colors"
               >
-                Continuer <ArrowRight className="w-4 h-4" />
+                {t("common.continue")} <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </motion.div>
@@ -1109,13 +1082,13 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         {/* ─── ETAPE 6 : Code postal + Ville/Pays (lecture seule) ─────── */}
         {currentStep === 6 && (
           <motion.div key="step6" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">Ou etes-vous base ?</h3>
-            <p className="text-white/70 text-sm mb-5">Pour adapter notre offre a votre region.</p>
+            <h3 className="text-xl font-bold text-white mb-1">{t("step6.title")}</h3>
+            <p className="text-white/70 text-sm mb-5">{t("step6.subtitle")}</p>
 
             <div className="space-y-4">
               <div>
                 <label htmlFor="sf-postal" className={labelClass}>
-                  <MapPin className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Code postal <span className="text-red-500">*</span>
+                  <MapPin className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />{t("step6.postalLabel")} <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <input
@@ -1123,7 +1096,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                     type="text"
                     value={postalCode}
                     onChange={(e) => { setPostalCode(e.target.value.replace(/\D/g, "").slice(0, 10)); setFieldErrors(prev => ({ ...prev, postalCode: "" })); }}
-                    placeholder="75001"
+                    placeholder={t("step6.postalPlaceholder")}
                     maxLength={10}
                     className={`${inputRequiredClass} ${fieldErrors.postalCode ? "border-red-500" : ""}`}
                     autoFocus
@@ -1140,13 +1113,13 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
               {/* Message code postal non reconnu */}
               {postalCodeNotFound && postalCode.length >= 3 && !loadingCities && (
-                <p className="text-amber-400 text-xs mt-1">Code postal non reconnu — vous pouvez saisir ville et pays manuellement ci-dessous.</p>
+                <p className="text-amber-400 text-xs mt-1">{t("step6.postalNotFound")}</p>
               )}
 
               {/* Ville et Pays */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={labelClass}>Ville</label>
+                  <label className={labelClass}>{t("step6.cityLabel")}</label>
                   {citySuggestions.length > 1 ? (
                     <select
                       value={city}
@@ -1163,7 +1136,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                       type="text"
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
-                      placeholder="Votre ville"
+                      placeholder={t("step6.cityPlaceholder")}
                       className={inputOptionalClass}
                     />
                   ) : (
@@ -1174,14 +1147,14 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                 </div>
                 <div>
                   <label className={labelClass}>
-                    <Globe className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Pays
+                    <Globe className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />{t("step6.countryLabel")}
                   </label>
                   {postalCodeManualMode ? (
                     <input
                       type="text"
                       value={country}
                       onChange={(e) => setCountry(e.target.value)}
-                      placeholder="Votre pays"
+                      placeholder={t("step6.countryPlaceholder")}
                       className={inputOptionalClass}
                     />
                   ) : (
@@ -1195,14 +1168,14 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
             <div className="flex gap-3 mt-6">
               <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-lg hover:border-white/30 transition-colors">
-                <ArrowLeft className="w-4 h-4" /> Retour
+                <ArrowLeft className="w-4 h-4" /> {t("common.back")}
               </button>
               <button
                 onClick={goNextValidated}
                 disabled={!canProceed()}
                 className={`flex-1 flex items-center justify-center gap-2 px-6 py-2.5 font-semibold text-sm rounded-lg transition-colors ${canProceed() ? 'bg-gold text-navy-deep hover:bg-gold-light' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}
               >
-                Continuer <ArrowRight className="w-4 h-4" />
+                {t("common.continue")} <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </motion.div>
@@ -1211,44 +1184,44 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         {/* ─── ETAPE 7 : Contact + Entreprise + Message + Envoi ────────── */}
         {currentStep === 7 && (
           <motion.div key="step7" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">Derniere etape !</h3>
-            <p className="text-white/70 text-sm mb-5">Votre prenom et un message optionnel pour finaliser.</p>
+            <h3 className="text-xl font-bold text-white mb-1">{t("step7.title")}</h3>
+            <p className="text-white/70 text-sm mb-5">{t("step7.subtitle")}</p>
 
             <div className="space-y-4">
               {/* Prénom + Nom */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className={labelClass}>
-                    <User className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Prenom <span className="text-red-500">*</span>
+                    <User className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />{t("step7.prenomLabel")} <span className="text-red-500">*</span>
                   </label>
                   <div className="flex items-center gap-2">
                     <input
                       type="text"
                       value={prenom}
                       onChange={(e) => { setPrenom(e.target.value); setFieldErrors(prev => ({ ...prev, prenom: "" })); }}
-                      placeholder="Jean"
+                      placeholder={t("step7.prenomPlaceholder")}
                       className={`${inputRequiredClass} flex-1 ${fieldErrors.prenom ? "border-red-500" : ""}`}
                       autoFocus
                     />
                     <VoiceMicButton
                       onResult={(text) => setPrenom(text.trim())}
-                      tooltip="Dicter votre prenom"
+                      tooltip={t("voice.prenom")}
                     />
                   </div>
                 </div>
                 <div>
-                  <label className={labelClass}>Nom</label>
+                  <label className={labelClass}>{t("step7.nomLabel")}</label>
                   <div className="flex items-center gap-2">
                     <input
                       type="text"
                       value={nom}
                       onChange={(e) => setNom(e.target.value)}
-                      placeholder="Dupont"
+                      placeholder={t("step7.nomPlaceholder")}
                       className={`${inputOptionalClass} flex-1`}
                     />
                     <VoiceMicButton
                       onResult={(text) => setNom(text.trim())}
-                      tooltip="Dicter votre nom"
+                      tooltip={t("voice.nom")}
                     />
                   </div>
                 </div>
@@ -1258,8 +1231,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
               {/* Entreprise (optionnel, avec auto-complétion SIRET) */}
               <div>
                 <label className={labelClass}>
-                  <Building2 className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Entreprise
-                  <span className="text-white/50 ml-1">(optionnel)</span>
+                  <Building2 className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />{t("step7.entrepriseLabel")}
+                  <span className="text-white/50 ml-1">{t("step7.optional")}</span>
                 </label>
                 <SiretLookupField
                   initialValue={entreprise}
@@ -1280,12 +1253,12 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <label className="text-white/60 text-sm">
-                    <MessageSquare className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />Message
-                    <span className="text-white/50 ml-1">(optionnel)</span>
+                    <MessageSquare className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />{t("step7.messageLabel")}
+                    <span className="text-white/50 ml-1">{t("step7.optional")}</span>
                   </label>
                   <VoiceMicButton
                     onResult={(text) => setMessage(prev => prev ? `${prev} ${text}` : text)}
-                    tooltip="Dicter votre message"
+                    tooltip={t("voice.message")}
                     size="md"
                   />
                 </div>
@@ -1293,13 +1266,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   rows={3}
-                  placeholder={
-                    product === "ecran" ? "Date de l'evenement, lieu, nombre de spectateurs, budget estime..."
-                    : product === "tente" ? "Dimensions souhaitees, personnalisation, date d'utilisation..."
-                    : product === "mobilier" ? "Quantite, couleurs, evenement prevu..."
-                    : product === "arche" ? "Dimensions, personnalisation, type d'evenement..."
-                    : "Decrivez votre projet..."
-                  }
+                  placeholder={t(`step7.messagePlaceholder.${product || "default"}`)}
                   className={`${inputOptionalClass} resize-none`}
                 />
               </div>
@@ -1307,23 +1274,23 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
             {/* Recapitulatif compact */}
             <div className="mt-4 p-3 bg-white/[0.03] border border-white/5 rounded-lg">
-              <div className="text-white/65 text-xs uppercase tracking-wider mb-2">Recapitulatif</div>
+              <div className="text-white/65 text-xs uppercase tracking-wider mb-2">{t("recap.title")}</div>
               <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
-                {email && <div className="text-white/60">Email : <span className="text-white">{email}</span></div>}
-                {product && <div className="text-white/60">Produit : <span className="text-white">{products.find(p => p.type === product)?.label}</span></div>}
-                {productDetail && <div className="text-white/60">Detail : <span className="text-white">{productDetail}</span></div>}
-                {objectif && <div className="text-white/60">Objectif : <span className="text-white">{objectifLabel(objectif)}</span></div>}
-                {phone?.trim() && <div className="text-white/60">Tel : <span className="text-white">{phone}</span></div>}
-                {(prenom || nom) && <div className="text-white/60">Nom : <span className="text-white">{[prenom, nom].filter(Boolean).join(" ")}</span></div>}
-                {entreprise && <div className="text-white/60">Entreprise : <span className="text-white">{entreprise}</span></div>}
-                {country && <div className="text-white/60">Lieu : <span className="text-white">{[city, country].filter(Boolean).join(", ")}</span></div>}
-                {(callbackDay || callbackTime) && <div className="text-white/60">Rappel : <span className="text-white">{[callbackDay, callbackTime === "matin" ? "Matin (9h-12h)" : callbackTime === "apres-midi" ? "Apres-midi (14h-18h)" : ""].filter(Boolean).join(" - ")}</span></div>}
+                {email && <div className="text-white/60">{t("recap.email")} : <span className="text-white">{email}</span></div>}
+                {product && <div className="text-white/60">{t("recap.product")} : <span className="text-white">{t(`products.${product}.label`)}</span></div>}
+                {productDetail && <div className="text-white/60">{t("recap.detail")} : <span className="text-white">{productDetail}</span></div>}
+                {objectif && <div className="text-white/60">{t("recap.objective")} : <span className="text-white">{t(`objectives.${objectif}.label`)}</span></div>}
+                {phone?.trim() && <div className="text-white/60">{t("recap.phone")} : <span className="text-white">{phone}</span></div>}
+                {(prenom || nom) && <div className="text-white/60">{t("recap.name")} : <span className="text-white">{[prenom, nom].filter(Boolean).join(" ")}</span></div>}
+                {entreprise && <div className="text-white/60">{t("recap.company")} : <span className="text-white">{entreprise}</span></div>}
+                {country && <div className="text-white/60">{t("recap.location")} : <span className="text-white">{[city, country].filter(Boolean).join(", ")}</span></div>}
+                {(callbackDay || callbackTime) && <div className="text-white/60">{t("recap.callback")} : <span className="text-white">{[callbackDay ? t(`callback.days.${callbackDay.toLowerCase()}`) : "", callbackTime === "matin" ? t("callback.morning") : callbackTime === "apres-midi" ? t("callback.afternoon") : ""].filter(Boolean).join(" - ")}</span></div>}
               </div>
             </div>
 
             <div className="flex gap-3 mt-6">
               <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-lg hover:border-white/30 transition-colors">
-                <ArrowLeft className="w-4 h-4" /> Retour
+                <ArrowLeft className="w-4 h-4" /> {t("common.back")}
               </button>
               <button
                 onClick={handleSubmit}
@@ -1331,9 +1298,9 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                 className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gold text-navy-deep font-bold text-sm rounded-lg hover:bg-gold-light transition-colors glow-gold disabled:opacity-70"
               >
                 {submitMutation.isPending ? (
-                  <><Loader2 className="w-4 h-4 animate-spin" /> Envoi en cours...</>
+                  <><Loader2 className="w-4 h-4 animate-spin" /> {t("step7.submitting")}</>
                 ) : (
-                  <><Send className="w-4 h-4" /> Recevoir mon devis gratuit</>
+                  <><Send className="w-4 h-4" /> {t("step7.submit")}</>
                 )}
               </button>
             </div>
