@@ -50,5 +50,17 @@
   "mon_profil": "Mon Profil",
   "langue": "Langue",
   "fermer_menu": "Fermer le menu",
-  "ouvrir_menu": "Ouvrir le menu"
+  "ouvrir_menu": "Ouvrir le menu",
+  "produits": "Produits",
+  "realisations": "Réalisations",
+  "entreprise": "L'entreprise",
+  "col_ecrans": "Écrans",
+  "col_tentes": "Tentes & structures",
+  "col_outils": "Accessoires & outils",
+  "col_decouvrir": "Découvrir",
+  "col_hallucine": "Hallucine",
+  "outils": "Outils",
+  "configurateur_ecran": "Configurateur Écran",
+  "configurateur_tente": "Configurateur Tente",
+  "configurateur_card_desc": "Trouve le modèle idéal en 1 minute."
 }
