@@ -311,7 +311,7 @@ export default function Navbar() {
             <LanguageSwitcher />
             <div className="w-px h-5 bg-white/20" />
             <Link
-              href="/contactez-nous"
+              href={r["contact"]}
               className="flex items-center gap-2 px-5 py-2 bg-warm text-charcoal font-semibold text-sm rounded hover:bg-warm-light transition-all duration-300"
             >
               {t("devis_gratuit")}
@@ -410,7 +410,7 @@ export default function Navbar() {
                   </div>
                 ))}
                 <Link
-                  href="/contactez-nous"
+                  href={r["contact"]}
                   onClick={() => setMobileOpen(false)}
                   className="mt-3 flex items-center justify-center gap-2 px-6 py-3 bg-warm text-charcoal font-semibold rounded"
                 >
