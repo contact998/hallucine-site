@@ -230,9 +230,10 @@ export default function Navbar() {
               <ChevronDown className="w-3.5 h-3.5 transition-transform group-hover:rotate-180" />
             </button>
             <div className={megaWrap}>
-              <div className={`${panelBox} w-[880px] p-5 flex gap-3`}>
+              <div className="flex gap-3 items-start">
+                {/* 3 fenêtres indépendantes — une par famille */}
                 {produitsCols.map((col) => (
-                  <div key={col.title} className="min-w-[212px]">
+                  <div key={col.title} className={`${panelBox} w-[220px] p-3`}>
                     <p className="px-3 pb-1.5 mb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-warm">
                       {col.title}
                     </p>
@@ -247,15 +248,17 @@ export default function Navbar() {
                     ))}
                   </div>
                 ))}
-                {/* Fenêtre « Configurateur » — discrète */}
-                <div className="w-[228px] shrink-0 rounded-xl bg-white/[0.04] border border-white/10 p-4 flex flex-col justify-center">
-                  <p className="text-[15px] font-bold text-white">{t("configurateur")}</p>
-                  <p className="mt-1 mb-3 text-xs text-white/55 leading-relaxed">
+                {/* 4e fenêtre indépendante — Configurateur */}
+                <div className={`${panelBox} w-[220px] p-3`}>
+                  <p className="px-3 pb-1.5 mb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-warm">
+                    {t("configurateur")}
+                  </p>
+                  <p className="px-3 mb-2.5 text-xs text-white/60 leading-relaxed">
                     {t("configurateur_card_desc")}
                   </p>
                   <Link
                     href={r["configurateur"]}
-                    className="block mt-1.5 px-3 py-2 rounded-lg text-[13px] font-semibold text-white bg-white/5 border border-white/10 hover:bg-warm/15 hover:text-warm transition-colors"
+                    className="block mt-1 px-3 py-2 rounded-lg text-[13px] font-semibold text-white bg-white/5 border border-white/10 hover:bg-warm/15 hover:text-warm transition-colors"
                   >
                     {t("configurateur_ecran")} →
                   </Link>
