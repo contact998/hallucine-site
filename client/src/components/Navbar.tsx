@@ -227,7 +227,8 @@ export default function Navbar() {
     "px-4 py-2.5 text-base font-medium text-white/80 hover:text-warm transition-colors";
   const triggerLink =
     "flex items-center gap-1.5 px-4 py-2.5 text-base font-medium text-white/80 group-hover:text-warm transition-colors";
-  // Couleur « verre bleu ardoise » partagée — barre + fenêtres de menu
+  // Bleu ardoise commun — barre (dense, lisible partout) et fenêtres de menu (translucides)
+  const barBg = "bg-[oklch(0.40_0.10_250_/_0.9)] backdrop-blur-xl";
   const glassBg = "bg-[oklch(0.40_0.10_250_/_0.5)] backdrop-blur-xl";
   const panelBox = `${glassBg} border border-white/15 rounded-xl shadow-2xl shadow-black/50`;
   const megaWrap =
@@ -235,7 +236,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 ${glassBg} border-b border-white/10 transition-[height] duration-300 ${
+      className={`fixed top-0 inset-x-0 z-50 ${barBg} border-b border-white/10 transition-[height] duration-300 ${
         scrolled ? "h-16" : "h-20"
       }`}
     >
