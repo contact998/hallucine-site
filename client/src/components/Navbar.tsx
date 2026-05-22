@@ -7,7 +7,7 @@
  */
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown, User } from "lucide-react";
+import { Menu, X, ChevronDown, User, Linkedin, Facebook, Youtube } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { useTranslation } from "react-i18next";
@@ -108,6 +108,31 @@ function LanguageSwitcher({ mobile = false }: { mobile?: boolean }) {
   );
 }
 
+const socials = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/hallucinecran", Icon: Linkedin },
+  { label: "Facebook", href: "https://www.facebook.com/Hallucinecran", Icon: Facebook },
+  { label: "YouTube", href: "https://www.youtube.com/@Hallucinecran", Icon: Youtube },
+];
+
+function SocialLinks() {
+  return (
+    <div className="flex items-center gap-0.5">
+      {socials.map(({ label, href, Icon }) => (
+        <a
+          key={label}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={label}
+          className="p-1.5 text-white/55 hover:text-warm transition-colors"
+        >
+          <Icon className="w-[17px] h-[17px]" />
+        </a>
+      ))}
+    </div>
+  );
+}
+
 interface MenuLink {
   label: string;
   href: string;
@@ -188,8 +213,9 @@ export default function Navbar() {
     "px-4 py-2.5 text-base font-medium text-white/80 hover:text-warm transition-colors";
   const triggerLink =
     "flex items-center gap-1.5 px-4 py-2.5 text-base font-medium text-white/80 group-hover:text-warm transition-colors";
-  const panelBox =
-    "bg-[oklch(0.40_0.10_250_/_0.5)] backdrop-blur-xl border border-white/15 rounded-xl shadow-2xl shadow-black/50";
+  // Couleur « verre bleu ardoise » partagée — barre + fenêtres de menu
+  const glassBg = "bg-[oklch(0.40_0.10_250_/_0.5)] backdrop-blur-xl";
+  const panelBox = `${glassBg} border border-white/15 rounded-xl shadow-2xl shadow-black/50`;
   const megaWrap =
     "absolute left-0 top-full pt-3 invisible opacity-0 translate-y-2 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 z-50";
 
@@ -197,7 +223,7 @@ export default function Navbar() {
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-[height,background-color,border-color] duration-300 ${
         scrolled
-          ? "h-16 bg-[oklch(0.11_0.02_260_/_0.62)] backdrop-blur-xl border-b border-white/10"
+          ? `h-16 ${glassBg} border-b border-white/10`
           : "h-20 bg-transparent border-b border-transparent"
       }`}
     >
@@ -336,6 +362,8 @@ export default function Navbar() {
 
         {/* ─── Actions desktop ────────────────────────────────────────────── */}
         <div className="hidden xl:flex items-center gap-4 shrink-0">
+          <SocialLinks />
+          <div className="w-px h-5 bg-white/10" />
           <LanguageSwitcher />
           {isAuthenticated && user?.role === "admin" && (
             <Link
@@ -507,6 +535,7 @@ export default function Navbar() {
               <div className="mt-4 border-t border-white/10 pt-3">
                 <p className="text-xs text-white/50 px-2 mb-1">{t("langue")}</p>
                 <LanguageSwitcher mobile />
+                <div className="mt-3 px-2"><SocialLinks /></div>
               </div>
             </div>
           </motion.div>
