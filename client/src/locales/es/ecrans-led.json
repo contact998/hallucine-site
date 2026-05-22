@@ -1,12 +1,13 @@
 {
   "meta_title": "Pantallas LED de eventos",
   "meta_desc": "Pantallas LED para eventos en exteriores e interiores. Soluciones de visualización de alto brillo para conciertos, festivales y eventos corporativos.",
-  "section_label": "Nueva gama",
+  "badge": "Nueva gama",
   "hero_title": "Pantallas LED",
-  "hero_title_colored": "Proyecciones diurnas y nocturnas",
+  "hero_subtitle": "Proyecciones diurnas y nocturnas",
   "hero_desc": "Descubra nuestra nueva gama de pantallas LED para proyecciones visibles incluso a plena luz del día. Alto brillo, instalación rápida, calidad de imagen excepcional.",
+  "breadcrumb": "Pantallas LED",
   "wip_title": "Página en construcción",
   "wip_desc": "Esta página está en desarrollo. Póngase en contacto con nosotros para obtener más información sobre nuestra gama de pantallas LED o para solicitar un presupuesto personalizado.",
-  "cta_contact": "Póngase en contacto con nosotros",
-  "cta_devis": "Solicitar un presupuesto"
+  "btn_contact": "Contáctanos",
+  "btn_devis": "Solicitar un presupuesto"
 }

@@ -35,6 +35,10 @@ if (!apiKey) {
   process.exit(0);
 }
 
+// Les clés DeepL API Free se terminent par ":fx" et utilisent api-free.deepl.com ;
+// les clés Pro utilisent api.deepl.com. Détection automatique selon le suffixe.
+const DEEPL_HOST = apiKey.endsWith(":fx") ? "api-free.deepl.com" : "api.deepl.com";
+
 const LOCALES = join(ROOT, "client/src/locales");
 const FR_DIR = join(LOCALES, "fr");
 const DEEPL_LANGS = { en: "EN-GB", de: "DE", es: "ES", it: "IT" };
@@ -60,7 +64,7 @@ function restore(text, tokens) {
 }
 
 async function deepl(texts, targetLang) {
-  const res = await fetch("https://api-free.deepl.com/v2/translate", {
+  const res = await fetch(`https://${DEEPL_HOST}/v2/translate`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
