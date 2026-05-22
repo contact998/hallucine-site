@@ -132,6 +132,18 @@ async function startServer() {
     res.send("User-agent: *\nAllow: /\n\nSitemap: https://hallucinecran.fr/sitemap.xml\nSitemap: https://hallucinecran.com/sitemap.xml\nSitemap: https://hallucinecran.de/sitemap.xml\nSitemap: https://hallucinecran.es/sitemap.xml\nSitemap: https://hallucinecran.it/sitemap.xml\n\nDisallow: /admin\nDisallow: /profil\nDisallow: /api/\n");
   });
 
+  // security.txt (RFC 9116) — contact pour le signalement de failles.
+  // Expires calculé dynamiquement (~1 an) pour ne jamais devenir périmé.
+  app.get("/.well-known/security.txt", (_req, res) => {
+    const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString();
+    res.setHeader("Content-Type", "text/plain");
+    res.send(
+      `Contact: mailto:contact@hallucine.fr\n` +
+      `Expires: ${expires}\n` +
+      `Preferred-Languages: fr, en\n`
+    );
+  });
+
   // Authentification : Google OAuth (admin uniquement)
   registerGoogleAuthRoutes(app);
 
