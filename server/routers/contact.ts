@@ -77,7 +77,12 @@ export const contactRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      const clientIp = ctx.req.ip || ctx.req.headers["x-forwarded-for"] as string || "unknown";
+      // Derrière Cloudflare, req.ip = IP du proxy CF. cf-connecting-ip porte la vraie IP visiteur.
+      const clientIp =
+        (ctx.req.headers["cf-connecting-ip"] as string) ||
+        (ctx.req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() ||
+        ctx.req.ip ||
+        "unknown";
       const spamResult = await computeSpamScore({
         honeypot: input._hp,
         timestamp: input._ts,
