@@ -41,7 +41,6 @@ export default function DriveIn() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="drive-in-page"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: t("breadcrumb"), routeKey: "drive-in" },

@@ -27,7 +27,6 @@ interface ProductInfo {
   description: string;
   image: string | string[];
   category?: string;
-  sku?: string;
   minPrice?: number;
 }
 
@@ -55,7 +54,6 @@ interface Props {
   faqs?: FaqItem[];
   article?: ArticleInfo;
   page?: PageInfo;
-  id: string;
 }
 
 /**

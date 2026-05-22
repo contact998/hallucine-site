@@ -143,7 +143,6 @@ export default function Mobilier() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="mobilier"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: "Mobilier", routeKey: "mobilier" },

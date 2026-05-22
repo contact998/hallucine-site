@@ -52,7 +52,6 @@ export default function Comparaison() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="comparaison-page"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: "Comparaison", routeKey: "comparaison" },

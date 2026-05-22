@@ -38,7 +38,6 @@ export default function Tentes() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="tentes-hub-page"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: t("meta_title"), routeKey: "tentes" },

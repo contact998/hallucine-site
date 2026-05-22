@@ -43,7 +43,6 @@ export default function Contact() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="contact"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: "Contact", routeKey: "contact" },

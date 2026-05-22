@@ -28,7 +28,6 @@ export default function APropos() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="a-propos-hallucine"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: t("meta_title"), routeKey: "a-propos" },

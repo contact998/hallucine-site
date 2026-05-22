@@ -18,7 +18,6 @@ export default function Confidentialite() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="politique-de-confidentialite"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: t("meta_title"), routeKey: "confidentialite" },

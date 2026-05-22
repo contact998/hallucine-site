@@ -153,7 +153,6 @@ export default function Galerie() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="galerie-evenements"
         breadcrumbs={[{ name: "Accueil", routeKey: "home" }, { name: t("page_title"), routeKey: "galerie" }]}
         page={{
           name: t("meta_title"),

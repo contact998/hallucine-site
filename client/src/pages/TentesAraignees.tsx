@@ -44,7 +44,6 @@ export default function TentesAraignees() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="tentes-araignees"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: "Tentes gonflables", routeKey: "tentes" },

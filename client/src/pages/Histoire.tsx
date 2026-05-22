@@ -60,7 +60,6 @@ export default function Histoire() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="histoire"
         breadcrumbs={[{ name: "Accueil", routeKey: "home" }, { name: t("breadcrumb"), routeKey: "histoire" }]}
         article={{
           headline: t("meta_title"),

@@ -35,7 +35,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="home"
         breadcrumbs={[{ name: "Accueil", routeKey: "home" }]}
         faqs={HOME_FAQS}
         page={{

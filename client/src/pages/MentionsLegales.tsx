@@ -21,7 +21,6 @@ export default function MentionsLegales() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="mentions-legales"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: t("meta_title"), routeKey: "mentions-legales" },

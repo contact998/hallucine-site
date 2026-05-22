@@ -95,7 +95,6 @@ export default function EcranEconomique() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="ecran-economique"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: "Ecrans Gonflables", routeKey: "ecrans" },

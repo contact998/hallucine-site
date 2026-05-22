@@ -27,7 +27,6 @@ export default function EcransLED() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="ecrans-led"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: t("breadcrumb"), routeKey: "ecrans-led" }

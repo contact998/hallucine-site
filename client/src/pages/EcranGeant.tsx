@@ -70,7 +70,6 @@ export default function EcranGeant() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="ecran-geant-soufflerie"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: t("section_label"), routeKey: "ecrans" },

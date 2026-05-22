@@ -29,7 +29,6 @@ export default function GalerieVideo() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="galerie-video-page"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: t("hero_title"), routeKey: "galerie-video" },

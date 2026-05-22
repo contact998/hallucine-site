@@ -126,13 +126,6 @@ export function breadcrumbSchema(
 
 // ─── Product ─────────────────────────────────────────────────────────────────
 
-interface ReviewData {
-  author: string;
-  reviewBody: string;
-  ratingValue: number;
-  datePublished: string;
-}
-
 interface ProductData {
   name: string;
   description: string;
@@ -143,12 +136,8 @@ interface ProductData {
   siteUrl: string;
   /** URL absolue localisée de la page contact — pour offers.url. */
   contactUrl: string;
-  brand?: string;
   category?: string;
-  sku?: string;
   minPrice?: number;
-  maxPrice?: number;
-  reviews?: ReviewData[];
 }
 
 export function productSchema(product: ProductData) {
@@ -161,10 +150,9 @@ export function productSchema(product: ProductData) {
     url: product.url,
     brand: {
       "@type": "Brand",
-      name: product.brand || "Hallucine",
+      name: "Hallucine",
     },
     category: product.category,
-    sku: product.sku,
     manufacturer: {
       "@type": "Organization",
       name: "Hallucine",
@@ -225,20 +213,6 @@ export function productSchema(product: ProductData) {
       bestRating: "5",
       worstRating: "1",
     },
-    ...(product.reviews && product.reviews.length > 0 ? {
-      review: product.reviews.map((r) => ({
-        "@type": "Review",
-        author: { "@type": "Person", name: r.author },
-        reviewBody: r.reviewBody,
-        reviewRating: {
-          "@type": "Rating",
-          ratingValue: r.ratingValue,
-          bestRating: 5,
-          worstRating: 1,
-        },
-        datePublished: r.datePublished,
-      }))
-    } : {}),
   };
 }
 
@@ -335,34 +309,5 @@ export function webPageSchema(page: WebPageData) {
       logo: { "@type": "ImageObject", url: LOGO_URL },
     },
     inLanguage: page.inLanguage,
-  };
-}
-
-// ─── VideoObject ─────────────────────────────────────────────────────────────
-
-interface VideoData {
-  name: string;
-  description: string;
-  thumbnailUrl: string;
-  uploadDate: string;
-  contentUrl?: string;
-  embedUrl?: string;
-}
-
-export function videoSchema(video: VideoData) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "VideoObject",
-    name: video.name,
-    description: video.description,
-    thumbnailUrl: video.thumbnailUrl,
-    uploadDate: video.uploadDate,
-    contentUrl: video.contentUrl,
-    embedUrl: video.embedUrl,
-    publisher: {
-      "@type": "Organization",
-      name: "Hallucine",
-      logo: { "@type": "ImageObject", url: LOGO_URL },
-    },
   };
 }

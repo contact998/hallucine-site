@@ -39,7 +39,6 @@ export default function Location() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="location-page"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: t("breadcrumb"), routeKey: "location" },

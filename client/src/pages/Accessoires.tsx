@@ -83,7 +83,6 @@ export default function Accessoires() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="accessoires-page"
         breadcrumbs={[{ name: "Accueil", routeKey: "home" }, { name: t("meta_title"), routeKey: "accessoires" }]}
         product={{
           name: t("meta_title"),

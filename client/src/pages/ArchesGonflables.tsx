@@ -58,7 +58,6 @@ export default function ArchesGonflables() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="arches-gonflables"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: "Structures gonflables", routeKey: "home" },

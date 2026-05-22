@@ -53,7 +53,6 @@ export default function Ecrans() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="ecrans"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: t("meta_title"), routeKey: "ecrans" },

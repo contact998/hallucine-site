@@ -54,7 +54,6 @@ export default function Configurateur() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="configurateur-page"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: t("breadcrumb"), routeKey: "configurateur" },

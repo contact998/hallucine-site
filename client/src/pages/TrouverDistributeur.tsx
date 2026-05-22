@@ -21,7 +21,6 @@ export default function TrouverDistributeur() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="trouver-distributeur"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: t("breadcrumb_page"), routeKey: "trouver-distributeur" },

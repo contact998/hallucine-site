@@ -27,7 +27,6 @@ export default function DevenirDistributeur() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="devenir-distributeur"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: t("breadcrumb_page"), routeKey: "devenir-distributeur" },

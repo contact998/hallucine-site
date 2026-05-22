@@ -76,7 +76,6 @@ export default function TentesX() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="tentes-x"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: "Tentes gonflables", routeKey: "tentes" },

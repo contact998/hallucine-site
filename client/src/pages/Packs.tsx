@@ -30,7 +30,6 @@ export default function Packs() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="packs-page"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: t("breadcrumb"), routeKey: "packs" },

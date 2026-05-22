@@ -22,7 +22,6 @@ export default function EtudesCas() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="etudes-cas-page"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: t("breadcrumb"), routeKey: "etudes-cas" },

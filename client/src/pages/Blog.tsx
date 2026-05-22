@@ -81,7 +81,6 @@ export default function Blog() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="blog"
         breadcrumbs={[{ name: "Accueil", routeKey: "home" }, { name: "Blog", routeKey: "blog" }]}
         page={{
           name: "Blog | Actualités Cinéma en Plein Air",

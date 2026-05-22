@@ -78,7 +78,6 @@ export default function EcranEtanche() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        id="ecran-etanche"
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
           { name: "Écrans gonflables", routeKey: "ecrans" },
