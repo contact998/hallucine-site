@@ -208,7 +208,6 @@ export default function Navbar() {
     { label: t("histoire"), href: r["histoire"] },
     { label: t("blog"), href: r["blog"] },
     { label: t("devenir_distributeur"), href: r["devenir-distributeur"] },
-    { label: t("trouver_distributeur"), href: r["trouver-distributeur"] },
   ];
 
   useEffect(() => {
