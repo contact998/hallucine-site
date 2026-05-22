@@ -42,14 +42,21 @@ const DEEPL_LANGS = { en: "EN-GB", de: "DE", es: "ES", it: "IT" };
 // ── Protection des placeholders {{...}} : DeepL ne doit pas les traduire ──
 function protect(text) {
   const tokens = [];
-  const out = text.replace(/\{\{.*?\}\}/g, (m) => {
+  // Échappe &, <, > : sinon le tag_handling XML de DeepL rejette tout le lot
+  // (ex. "Blog & Actualités" → "invalid token"). Déséchappé dans restore().
+  const escaped = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const out = escaped.replace(/\{\{.*?\}\}/g, (m) => {
     tokens.push(m);
     return `<x id="${tokens.length - 1}"/>`;
   });
   return { out, tokens };
 }
 function restore(text, tokens) {
-  return text.replace(/<x id="(\d+)"\s*\/?>(?:<\/x>)?/g, (_, i) => tokens[Number(i)] ?? "");
+  return text
+    .replace(/<x id="(\d+)"\s*\/?>(?:<\/x>)?/g, (_, i) => tokens[Number(i)] ?? "")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
 }
 
 async function deepl(texts, targetLang) {
