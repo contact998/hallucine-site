@@ -14,6 +14,7 @@ import { MessageCircle, X, Send, Loader2, Sparkles, User, ChevronDown, FileText,
 import { motion, AnimatePresence } from "framer-motion";
 import { MarkdownRenderer } from "@/components/MarkdownRenderer";
 import { useLocation } from "wouter";
+import { useRoutes } from "@/i18n/useRoutes";
 
 interface ChatMessage {
   role: "user" | "assistant";
@@ -76,6 +77,7 @@ export default function HallucineChatbot() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [, navigate] = useLocation();
+  const route = useRoutes();
   const messageCountRef = useRef(0);
 
   const chatMutation = trpc.chatbot.chat.useMutation({
@@ -200,7 +202,7 @@ export default function HallucineChatbot() {
     if (leadData?.need) params.set("need", leadData.need);
 
     const queryString = params.toString();
-    navigate(`/contactez-nous${queryString ? `?${queryString}` : ""}`);
+    navigate(`${route("contact")}${queryString ? `?${queryString}` : ""}`);
     setIsOpen(false);
   }, [leadData, navigate]);
 
