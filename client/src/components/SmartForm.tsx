@@ -10,8 +10,9 @@
  * les données partielles sont envoyées au backend (CRM + notification admin)
  *
  * i18n : tous les textes affichés passent par useTranslation("smartform").
- * Les données transmises au CRM (libellés produit, message, jour de rappel)
- * restent en français — l'équipe commerciale travaille en français.
+ * Le namespace utilise des clés plates (translate-locales.mjs ne traduit que
+ * les clés string de premier niveau). Les données transmises au CRM (libellés
+ * produit, message, jour de rappel) restent en français.
  *
  * Props :
  *  - preselectedProduct : pré-sélectionne le produit (sur les pages produits)
@@ -461,11 +462,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     onSuccess: () => {
       setSubmitted(true);
       setAbandonSent(true);
-      toast.success(t("toasts.success"));
+      toast.success(t("toasts_success"));
       onSubmitSuccess?.();
     },
     onError: (err) => {
-      toast.error(err.message || t("toasts.error"));
+      toast.error(err.message || t("toasts_error"));
     },
   });
 
@@ -481,11 +482,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     const trimmedMessage = message.trim();
 
     if (!trimmedEmail || !isValidEmail(trimmedEmail)) {
-      toast.error(t("toasts.emailInvalid"));
+      toast.error(t("toasts_emailInvalid"));
       return;
     }
     if (trimmedPrenom.length < 2) {
-      toast.error(t("toasts.prenomInvalid"));
+      toast.error(t("toasts_prenomInvalid"));
       return;
     }
 
@@ -556,17 +557,17 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     const errors: Record<string, string> = {};
     switch (currentStep) {
       case 1:
-        if (!email.trim()) errors.email = t("validation.emailRequired");
-        else if (!isValidEmail(email)) errors.email = t("validation.emailInvalid");
+        if (!email.trim()) errors.email = t("validation_emailRequired");
+        else if (!isValidEmail(email)) errors.email = t("validation_emailInvalid");
         break;
       case 4:
-        if (!objectif) errors.objectif = t("validation.objectifRequired");
+        if (!objectif) errors.objectif = t("validation_objectifRequired");
         break;
       case 6:
-        if (postalCode.trim().length < 3) errors.postalCode = t("validation.postalRequired");
+        if (postalCode.trim().length < 3) errors.postalCode = t("validation_postalRequired");
         break;
       case 7:
-        if (prenom.trim().length < 2) errors.prenom = t("validation.prenomRequired");
+        if (prenom.trim().length < 2) errors.prenom = t("validation_prenomRequired");
         break;
     }
     setFieldErrors(errors);
@@ -602,7 +603,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
   const inputOptionalClass = "w-full p-3 bg-white/[0.10] border border-white/15 rounded-lg text-white text-base placeholder:text-white/40 focus:border-gold focus:outline-none transition-colors";
   const labelClass = "text-white text-sm font-medium mb-1.5 block";
 
-  const encouragement = t(`encouragements.${currentStep}`, "");
+  const encouragement = t(`encouragements_${currentStep}`, "");
 
   // ─── Rendu ────────────────────────────────────────────────────────────
   if (submitted) {
@@ -618,19 +619,19 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
       {/* Bandeau de reprise de progression */}
       {showResumeBanner && (
         <div className="mb-4 p-3 bg-gold/10 border border-gold/30 rounded-lg flex items-center justify-between gap-3">
-          <p className="text-white/80 text-sm">{t("resumeBanner.text")}</p>
+          <p className="text-white/80 text-sm">{t("resumeBanner_text")}</p>
           <div className="flex gap-2 shrink-0">
             <button
               onClick={restoreProgress}
               className="px-3 py-1.5 bg-gold text-navy-deep text-xs font-semibold rounded-lg hover:bg-gold-light transition-colors"
             >
-              {t("resumeBanner.resume")}
+              {t("resumeBanner_resume")}
             </button>
             <button
               onClick={dismissProgress}
               className="px-3 py-1.5 border border-white/20 text-white/65 text-xs rounded-lg hover:border-white/50 transition-colors"
             >
-              {t("resumeBanner.dismiss")}
+              {t("resumeBanner_dismiss")}
             </button>
           </div>
         </div>
@@ -641,8 +642,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         <div className="mb-4 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg flex items-center gap-3">
           <Sparkles className="w-5 h-5 text-emerald-400 shrink-0" />
           <div>
-            <p className="text-emerald-300 text-sm font-medium">{t("chatbotBanner.title")}</p>
-            <p className="text-white/65 text-xs mt-0.5">{t("chatbotBanner.text")}</p>
+            <p className="text-emerald-300 text-sm font-medium">{t("chatbotBanner_title")}</p>
+            <p className="text-white/65 text-xs mt-0.5">{t("chatbotBanner_text")}</p>
           </div>
         </div>
       )}
@@ -666,11 +667,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         <div className="flex items-center justify-between mb-4 text-white/50 text-xs">
           <div className="flex items-center gap-1.5">
             <Clock className="w-3.5 h-3.5" />
-            <span>{t("trust.time")}</span>
+            <span>{t("trust_time")}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <ShieldCheck className="w-3.5 h-3.5 text-gold/60" />
-            <span>{t("trust.response")}</span>
+            <span>{t("trust_response")}</span>
           </div>
         </div>
       )}
@@ -704,7 +705,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             <div key={key} className={`flex-1 text-center text-[9px] leading-tight ${
               i + 1 < currentStep ? "text-gold/70" : i + 1 === currentStep ? "text-white/80 font-medium" : "text-white/25"
             }`}>
-              {t(`steps.${key}`)}
+              {t(`steps_${key}`)}
             </div>
           ))}
         </div>
@@ -730,13 +731,13 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         {/* ─── ETAPE 1 : Email (capture immediate) ─────────────────────── */}
         {currentStep === 1 && (
           <motion.div key="step1" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">{t("step1.title")}</h3>
-            <p className="text-white/70 text-sm mb-5">{t("step1.subtitle")}</p>
+            <h3 className="text-xl font-bold text-white mb-1">{t("step1_title")}</h3>
+            <p className="text-white/70 text-sm mb-5">{t("step1_subtitle")}</p>
 
             <div className="space-y-4">
               <div>
                 <label htmlFor="sf-email" className={labelClass}>
-                  <Mail className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />{t("step1.emailLabel")} <span className="text-red-500">*</span>
+                  <Mail className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />{t("step1_emailLabel")} <span className="text-red-500">*</span>
                 </label>
                 <div className="flex items-center gap-2">
                   <input
@@ -744,7 +745,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                     type="email"
                     value={email}
                     onChange={(e) => { setEmail(e.target.value); setFieldErrors(prev => ({ ...prev, email: "" })); }}
-                    placeholder={t("step1.emailPlaceholder")}
+                    placeholder={t("step1_emailPlaceholder")}
                     className={`${inputRequiredClass} flex-1 ${fieldErrors.email ? "border-red-500" : ""}`}
                     autoFocus
                     onKeyDown={handleKeyDown}
@@ -761,7 +762,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                         .trim();
                       setEmail(cleaned);
                     }}
-                    tooltip={t("voice.email")}
+                    tooltip={t("voice_email")}
                   />
                 </div>
               </div>
@@ -773,11 +774,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
               disabled={!canProceed()}
               className="w-full mt-6 flex items-center justify-center gap-2 px-6 py-3 bg-gold text-navy-deep font-semibold text-sm rounded-lg hover:bg-gold-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              {t("common.continue")} <ArrowRight className="w-4 h-4" />
+              {t("common_continue")} <ArrowRight className="w-4 h-4" />
             </button>
 
             <p className="text-white/20 text-[10px] text-center mt-3">
-              {t("step1.privacy")}
+              {t("step1_privacy")}
             </p>
           </motion.div>
         )}
@@ -785,8 +786,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         {/* ─── ETAPE 2 : Choix du produit ──────────────────────────────── */}
         {currentStep === 2 && (
           <motion.div key="step2" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">{t("step2.title")} <span className="text-red-500">*</span></h3>
-            <p className="text-white/70 text-sm mb-5">{t("step2.subtitle")}</p>
+            <h3 className="text-xl font-bold text-white mb-1">{t("step2_title")} <span className="text-red-500">*</span></h3>
+            <p className="text-white/70 text-sm mb-5">{t("step2_subtitle")}</p>
             <div className="grid grid-cols-2 gap-3">
               {products.map((p) => (
                 <button
@@ -799,14 +800,14 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   <div className={`w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center ${p.color}`}>
                     <p.icon className="w-5 h-5" />
                   </div>
-                  <div className="text-white font-semibold text-sm">{t(`products.${p.type}.label`)}</div>
-                  <div className="text-white/65 text-xs leading-tight">{t(`products.${p.type}.desc`)}</div>
+                  <div className="text-white font-semibold text-sm">{t(`products_${p.type}_label`)}</div>
+                  <div className="text-white/65 text-xs leading-tight">{t(`products_${p.type}_desc`)}</div>
                 </button>
               ))}
             </div>
             <div className="flex gap-3 mt-6">
               <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-lg hover:border-white/30 transition-colors">
-                <ArrowLeft className="w-4 h-4" /> {t("common.back")}
+                <ArrowLeft className="w-4 h-4" /> {t("common_back")}
               </button>
             </div>
           </motion.div>
@@ -817,11 +818,11 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
           <motion.div key="step3" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
             {product === "ecran" && (
               <>
-                <h3 className="text-xl font-bold text-white mb-1">{t("step3.ecranTitle")}</h3>
-                <p className="text-white/70 text-sm mb-5">{t("step3.ecranSubtitle")}</p>
+                <h3 className="text-xl font-bold text-white mb-1">{t("step3_ecranTitle")}</h3>
+                <p className="text-white/70 text-sm mb-5">{t("step3_ecranSubtitle")}</p>
                 <div className="space-y-2">
                   {screenCategories.map((cat) => {
-                    const catLabel = t(`screenSizes.${cat.value}.label`);
+                    const catLabel = t(`screenSizes_${cat.value}_label`);
                     return (
                       <button
                         key={cat.value}
@@ -835,12 +836,12 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                         </div>
                         <div className="flex-1">
                           <div className="text-white font-semibold text-sm">{catLabel}</div>
-                          <div className="text-white/65 text-xs">{t(`screenSizes.${cat.value}.audience`)}</div>
+                          <div className="text-white/65 text-xs">{t(`screenSizes_${cat.value}_audience`)}</div>
                         </div>
                         <span className={`text-xs px-2 py-0.5 rounded-full ${
                           cat.tech === "etanche" ? "bg-gold/10 text-gold" : "bg-blue-400/10 text-blue-400"
                         }`}>
-                          {t(`tech.${cat.tech}`)}
+                          {t(`tech_${cat.tech}`)}
                         </span>
                       </button>
                     );
@@ -851,8 +852,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
             {product === "tente" && (
               <>
-                <h3 className="text-xl font-bold text-white mb-1">{t("step3.tenteTitle")}</h3>
-                <p className="text-white/70 text-sm mb-5">{t("step3.tenteSubtitle")}</p>
+                <h3 className="text-xl font-bold text-white mb-1">{t("step3_tenteTitle")}</h3>
+                <p className="text-white/70 text-sm mb-5">{t("step3_tenteSubtitle")}</p>
                 <div className="grid grid-cols-2 gap-2">
                   {tentTypes.map((tt) => (
                     <button
@@ -862,7 +863,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                         productDetail === tt ? "border-gold bg-gold/10" : "border-white/10 hover:border-gold/30 bg-white/[0.02]"
                       }`}
                     >
-                      <div className="text-white font-semibold text-sm">{t(`tentTypes.${tt}`)}</div>
+                      <div className="text-white font-semibold text-sm">{t(`tentTypes_${tt}`)}</div>
                     </button>
                   ))}
                 </div>
@@ -871,8 +872,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
             {product === "mobilier" && (
               <>
-                <h3 className="text-xl font-bold text-white mb-1">{t("step3.mobilierTitle")}</h3>
-                <p className="text-white/70 text-sm mb-5">{t("step3.mobilierSubtitle")}</p>
+                <h3 className="text-xl font-bold text-white mb-1">{t("step3_mobilierTitle")}</h3>
+                <p className="text-white/70 text-sm mb-5">{t("step3_mobilierSubtitle")}</p>
                 <div className="grid grid-cols-2 gap-2">
                   {mobilierTypes.map((m) => (
                     <button
@@ -882,7 +883,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                         productDetail === m ? "border-gold bg-gold/10" : "border-white/10 hover:border-gold/30 bg-white/[0.02]"
                       }`}
                     >
-                      <div className="text-white font-semibold text-sm">{t(`mobilierTypes.${m}`)}</div>
+                      <div className="text-white font-semibold text-sm">{t(`mobilierTypes_${m}`)}</div>
                     </button>
                   ))}
                 </div>
@@ -891,8 +892,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
             {product === "arche" && (
               <>
-                <h3 className="text-xl font-bold text-white mb-1">{t("step3.archeTitle")}</h3>
-                <p className="text-white/70 text-sm mb-5">{t("step3.archeSubtitle")}</p>
+                <h3 className="text-xl font-bold text-white mb-1">{t("step3_archeTitle")}</h3>
+                <p className="text-white/70 text-sm mb-5">{t("step3_archeSubtitle")}</p>
                 <div className="grid grid-cols-2 gap-2">
                   {archeUsages.map((a) => (
                     <button
@@ -902,7 +903,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                         productDetail === a ? "border-gold bg-gold/10" : "border-white/10 hover:border-gold/30 bg-white/[0.02]"
                       }`}
                     >
-                      <div className="text-white font-semibold text-sm">{t(`archeUsages.${a}`)}</div>
+                      <div className="text-white font-semibold text-sm">{t(`archeUsages_${a}`)}</div>
                     </button>
                   ))}
                 </div>
@@ -911,14 +912,14 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
             <div className="flex gap-3 mt-6">
               <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-lg hover:border-white/30 transition-colors">
-                <ArrowLeft className="w-4 h-4" /> {t("common.back")}
+                <ArrowLeft className="w-4 h-4" /> {t("common_back")}
               </button>
               <button
                 onClick={goNextValidated}
                 disabled={!canProceed()}
                 className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-gold text-navy-deep font-semibold text-sm rounded-lg hover:bg-gold-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
-                {t("common.continue")} <ArrowRight className="w-4 h-4" />
+                {t("common_continue")} <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </motion.div>
@@ -927,8 +928,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         {/* ─── ETAPE 4 : Objectif (Achat / Location / Information) ────── */}
         {currentStep === 4 && (
           <motion.div key="step4" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">{t("step4.title")} <span className="text-red-500">*</span></h3>
-            <p className="text-white/70 text-sm mb-5">{t("step4.subtitle")}</p>
+            <h3 className="text-xl font-bold text-white mb-1">{t("step4_title")} <span className="text-red-500">*</span></h3>
+            <p className="text-white/70 text-sm mb-5">{t("step4_subtitle")}</p>
             <div className="space-y-2">
               {objectiveKeys.map((opt) => (
                 <button
@@ -944,8 +945,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                     {opt === "achat" ? "A" : opt === "location" ? "L" : "I"}
                   </div>
                   <div className="flex-1">
-                    <div className="text-white font-semibold text-sm">{t(`objectives.${opt}.label`)}</div>
-                    <div className="text-white/65 text-xs">{t(`objectives.${opt}.desc`)}</div>
+                    <div className="text-white font-semibold text-sm">{t(`objectives_${opt}_label`)}</div>
+                    <div className="text-white/65 text-xs">{t(`objectives_${opt}_desc`)}</div>
                   </div>
                 </button>
               ))}
@@ -953,14 +954,14 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
             {fieldErrors.objectif && <p className="text-red-400 text-xs mt-2">{fieldErrors.objectif}</p>}
             <div className="flex gap-3 mt-6">
               <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-lg hover:border-white/30 transition-colors">
-                <ArrowLeft className="w-4 h-4" /> {t("common.back")}
+                <ArrowLeft className="w-4 h-4" /> {t("common_back")}
               </button>
               <button
                 onClick={goNextValidated}
                 disabled={!canProceed()}
                 className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-gold text-navy-deep font-semibold text-sm rounded-lg hover:bg-gold-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
-                {t("common.continue")} <ArrowRight className="w-4 h-4" />
+                {t("common_continue")} <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </motion.div>
@@ -969,14 +970,14 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         {/* ─── ETAPE 5 : Telephone + Preference de rappel ─────────────── */}
         {currentStep === 5 && (
           <motion.div key="step5" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">{t("step5.title")}</h3>
-            <p className="text-white/70 text-sm mb-5">{t("step5.subtitle")}</p>
+            <h3 className="text-xl font-bold text-white mb-1">{t("step5_title")}</h3>
+            <p className="text-white/70 text-sm mb-5">{t("step5_subtitle")}</p>
 
             <div className="space-y-4">
               <div>
                 <label htmlFor="sf-phone" className={labelClass}>
-                  <Phone className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />{t("step5.phoneLabel")}
-                  <span className="text-white/50 ml-1">{t("step5.phoneRecommended")}</span>
+                  <Phone className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />{t("step5_phoneLabel")}
+                  <span className="text-white/50 ml-1">{t("step5_phoneRecommended")}</span>
                 </label>
                 <div className="flex items-center gap-2">
                   <input
@@ -984,7 +985,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    placeholder={t("step5.phonePlaceholder")}
+                    placeholder={t("step5_phonePlaceholder")}
                     className={`${inputOptionalClass} flex-1`}
                     autoFocus
                     onKeyDown={handleKeyDown}
@@ -1013,12 +1014,12 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                         return cleaned;
                       });
                     }}
-                    tooltip={t("voice.phone")}
+                    tooltip={t("voice_phone")}
                   />
                 </div>
               </div>
               {phoneTooShort(phone) && (
-                <p className="text-amber-400 text-xs mt-1">{t("validation.phoneShort")}</p>
+                <p className="text-amber-400 text-xs mt-1">{t("validation_phoneShort")}</p>
               )}
 
               {/* Preference de rappel - visible uniquement si telephone renseigne */}
@@ -1028,7 +1029,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   animate={{ opacity: 1, height: "auto" }}
                   className="bg-white/5 border border-white/10 rounded-lg p-4 space-y-3"
                 >
-                  <p className="text-white/70 text-sm font-medium">{t("step5.callbackQuestion")}</p>
+                  <p className="text-white/70 text-sm font-medium">{t("step5_callbackQuestion")}</p>
                   <div className="flex flex-wrap gap-2">
                     {callbackDays.map((d) => (
                       <button
@@ -1041,7 +1042,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                             : "border-white/10 text-white/50 hover:border-white/30"
                         }`}
                       >
-                        {t(`callback.days.${d.key}`)}
+                        {t(`callback_days_${d.key}`)}
                       </button>
                     ))}
                   </div>
@@ -1057,7 +1058,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                             : "border-white/10 text-white/50 hover:border-white/30"
                         }`}
                       >
-                        {t(`callback.${slot.key}`)}
+                        {t(`callback_${slot.key}`)}
                       </button>
                     ))}
                   </div>
@@ -1067,13 +1068,13 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
             <div className="flex gap-3 mt-6">
               <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-lg hover:border-white/30 transition-colors">
-                <ArrowLeft className="w-4 h-4" /> {t("common.back")}
+                <ArrowLeft className="w-4 h-4" /> {t("common_back")}
               </button>
               <button
                 onClick={goNextValidated}
                 className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 bg-gold text-navy-deep font-semibold text-sm rounded-lg hover:bg-gold-light transition-colors"
               >
-                {t("common.continue")} <ArrowRight className="w-4 h-4" />
+                {t("common_continue")} <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </motion.div>
@@ -1082,13 +1083,13 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         {/* ─── ETAPE 6 : Code postal + Ville/Pays (lecture seule) ─────── */}
         {currentStep === 6 && (
           <motion.div key="step6" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">{t("step6.title")}</h3>
-            <p className="text-white/70 text-sm mb-5">{t("step6.subtitle")}</p>
+            <h3 className="text-xl font-bold text-white mb-1">{t("step6_title")}</h3>
+            <p className="text-white/70 text-sm mb-5">{t("step6_subtitle")}</p>
 
             <div className="space-y-4">
               <div>
                 <label htmlFor="sf-postal" className={labelClass}>
-                  <MapPin className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />{t("step6.postalLabel")} <span className="text-red-500">*</span>
+                  <MapPin className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />{t("step6_postalLabel")} <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <input
@@ -1096,7 +1097,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                     type="text"
                     value={postalCode}
                     onChange={(e) => { setPostalCode(e.target.value.replace(/\D/g, "").slice(0, 10)); setFieldErrors(prev => ({ ...prev, postalCode: "" })); }}
-                    placeholder={t("step6.postalPlaceholder")}
+                    placeholder={t("step6_postalPlaceholder")}
                     maxLength={10}
                     className={`${inputRequiredClass} ${fieldErrors.postalCode ? "border-red-500" : ""}`}
                     autoFocus
@@ -1113,13 +1114,13 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
               {/* Message code postal non reconnu */}
               {postalCodeNotFound && postalCode.length >= 3 && !loadingCities && (
-                <p className="text-amber-400 text-xs mt-1">{t("step6.postalNotFound")}</p>
+                <p className="text-amber-400 text-xs mt-1">{t("step6_postalNotFound")}</p>
               )}
 
               {/* Ville et Pays */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={labelClass}>{t("step6.cityLabel")}</label>
+                  <label className={labelClass}>{t("step6_cityLabel")}</label>
                   {citySuggestions.length > 1 ? (
                     <select
                       value={city}
@@ -1136,7 +1137,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                       type="text"
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
-                      placeholder={t("step6.cityPlaceholder")}
+                      placeholder={t("step6_cityPlaceholder")}
                       className={inputOptionalClass}
                     />
                   ) : (
@@ -1147,14 +1148,14 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                 </div>
                 <div>
                   <label className={labelClass}>
-                    <Globe className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />{t("step6.countryLabel")}
+                    <Globe className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />{t("step6_countryLabel")}
                   </label>
                   {postalCodeManualMode ? (
                     <input
                       type="text"
                       value={country}
                       onChange={(e) => setCountry(e.target.value)}
-                      placeholder={t("step6.countryPlaceholder")}
+                      placeholder={t("step6_countryPlaceholder")}
                       className={inputOptionalClass}
                     />
                   ) : (
@@ -1168,14 +1169,14 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
             <div className="flex gap-3 mt-6">
               <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-lg hover:border-white/30 transition-colors">
-                <ArrowLeft className="w-4 h-4" /> {t("common.back")}
+                <ArrowLeft className="w-4 h-4" /> {t("common_back")}
               </button>
               <button
                 onClick={goNextValidated}
                 disabled={!canProceed()}
                 className={`flex-1 flex items-center justify-center gap-2 px-6 py-2.5 font-semibold text-sm rounded-lg transition-colors ${canProceed() ? 'bg-gold text-navy-deep hover:bg-gold-light' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}
               >
-                {t("common.continue")} <ArrowRight className="w-4 h-4" />
+                {t("common_continue")} <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </motion.div>
@@ -1184,44 +1185,44 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
         {/* ─── ETAPE 7 : Contact + Entreprise + Message + Envoi ────────── */}
         {currentStep === 7 && (
           <motion.div key="step7" variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-            <h3 className="text-xl font-bold text-white mb-1">{t("step7.title")}</h3>
-            <p className="text-white/70 text-sm mb-5">{t("step7.subtitle")}</p>
+            <h3 className="text-xl font-bold text-white mb-1">{t("step7_title")}</h3>
+            <p className="text-white/70 text-sm mb-5">{t("step7_subtitle")}</p>
 
             <div className="space-y-4">
               {/* Prénom + Nom */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className={labelClass}>
-                    <User className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />{t("step7.prenomLabel")} <span className="text-red-500">*</span>
+                    <User className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />{t("step7_prenomLabel")} <span className="text-red-500">*</span>
                   </label>
                   <div className="flex items-center gap-2">
                     <input
                       type="text"
                       value={prenom}
                       onChange={(e) => { setPrenom(e.target.value); setFieldErrors(prev => ({ ...prev, prenom: "" })); }}
-                      placeholder={t("step7.prenomPlaceholder")}
+                      placeholder={t("step7_prenomPlaceholder")}
                       className={`${inputRequiredClass} flex-1 ${fieldErrors.prenom ? "border-red-500" : ""}`}
                       autoFocus
                     />
                     <VoiceMicButton
                       onResult={(text) => setPrenom(text.trim())}
-                      tooltip={t("voice.prenom")}
+                      tooltip={t("voice_prenom")}
                     />
                   </div>
                 </div>
                 <div>
-                  <label className={labelClass}>{t("step7.nomLabel")}</label>
+                  <label className={labelClass}>{t("step7_nomLabel")}</label>
                   <div className="flex items-center gap-2">
                     <input
                       type="text"
                       value={nom}
                       onChange={(e) => setNom(e.target.value)}
-                      placeholder={t("step7.nomPlaceholder")}
+                      placeholder={t("step7_nomPlaceholder")}
                       className={`${inputOptionalClass} flex-1`}
                     />
                     <VoiceMicButton
                       onResult={(text) => setNom(text.trim())}
-                      tooltip={t("voice.nom")}
+                      tooltip={t("voice_nom")}
                     />
                   </div>
                 </div>
@@ -1231,8 +1232,8 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
               {/* Entreprise (optionnel, avec auto-complétion SIRET) */}
               <div>
                 <label className={labelClass}>
-                  <Building2 className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />{t("step7.entrepriseLabel")}
-                  <span className="text-white/50 ml-1">{t("step7.optional")}</span>
+                  <Building2 className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />{t("step7_entrepriseLabel")}
+                  <span className="text-white/50 ml-1">{t("step7_optional")}</span>
                 </label>
                 <SiretLookupField
                   initialValue={entreprise}
@@ -1253,12 +1254,12 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <label className="text-white/60 text-sm">
-                    <MessageSquare className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />{t("step7.messageLabel")}
-                    <span className="text-white/50 ml-1">{t("step7.optional")}</span>
+                    <MessageSquare className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />{t("step7_messageLabel")}
+                    <span className="text-white/50 ml-1">{t("step7_optional")}</span>
                   </label>
                   <VoiceMicButton
                     onResult={(text) => setMessage(prev => prev ? `${prev} ${text}` : text)}
-                    tooltip={t("voice.message")}
+                    tooltip={t("voice_message")}
                     size="md"
                   />
                 </div>
@@ -1266,7 +1267,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   rows={3}
-                  placeholder={t(`step7.messagePlaceholder.${product || "default"}`)}
+                  placeholder={t(`step7_messagePlaceholder_${product || "default"}`)}
                   className={`${inputOptionalClass} resize-none`}
                 />
               </div>
@@ -1274,23 +1275,23 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
 
             {/* Recapitulatif compact */}
             <div className="mt-4 p-3 bg-white/[0.03] border border-white/5 rounded-lg">
-              <div className="text-white/65 text-xs uppercase tracking-wider mb-2">{t("recap.title")}</div>
+              <div className="text-white/65 text-xs uppercase tracking-wider mb-2">{t("recap_title")}</div>
               <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
-                {email && <div className="text-white/60">{t("recap.email")} : <span className="text-white">{email}</span></div>}
-                {product && <div className="text-white/60">{t("recap.product")} : <span className="text-white">{t(`products.${product}.label`)}</span></div>}
-                {productDetail && <div className="text-white/60">{t("recap.detail")} : <span className="text-white">{productDetail}</span></div>}
-                {objectif && <div className="text-white/60">{t("recap.objective")} : <span className="text-white">{t(`objectives.${objectif}.label`)}</span></div>}
-                {phone?.trim() && <div className="text-white/60">{t("recap.phone")} : <span className="text-white">{phone}</span></div>}
-                {(prenom || nom) && <div className="text-white/60">{t("recap.name")} : <span className="text-white">{[prenom, nom].filter(Boolean).join(" ")}</span></div>}
-                {entreprise && <div className="text-white/60">{t("recap.company")} : <span className="text-white">{entreprise}</span></div>}
-                {country && <div className="text-white/60">{t("recap.location")} : <span className="text-white">{[city, country].filter(Boolean).join(", ")}</span></div>}
-                {(callbackDay || callbackTime) && <div className="text-white/60">{t("recap.callback")} : <span className="text-white">{[callbackDay ? t(`callback.days.${callbackDay.toLowerCase()}`) : "", callbackTime === "matin" ? t("callback.morning") : callbackTime === "apres-midi" ? t("callback.afternoon") : ""].filter(Boolean).join(" - ")}</span></div>}
+                {email && <div className="text-white/60">{t("recap_email")} : <span className="text-white">{email}</span></div>}
+                {product && <div className="text-white/60">{t("recap_product")} : <span className="text-white">{t(`products_${product}_label`)}</span></div>}
+                {productDetail && <div className="text-white/60">{t("recap_detail")} : <span className="text-white">{productDetail}</span></div>}
+                {objectif && <div className="text-white/60">{t("recap_objective")} : <span className="text-white">{t(`objectives_${objectif}_label`)}</span></div>}
+                {phone?.trim() && <div className="text-white/60">{t("recap_phone")} : <span className="text-white">{phone}</span></div>}
+                {(prenom || nom) && <div className="text-white/60">{t("recap_name")} : <span className="text-white">{[prenom, nom].filter(Boolean).join(" ")}</span></div>}
+                {entreprise && <div className="text-white/60">{t("recap_company")} : <span className="text-white">{entreprise}</span></div>}
+                {country && <div className="text-white/60">{t("recap_location")} : <span className="text-white">{[city, country].filter(Boolean).join(", ")}</span></div>}
+                {(callbackDay || callbackTime) && <div className="text-white/60">{t("recap_callback")} : <span className="text-white">{[callbackDay ? t(`callback_days_${callbackDay.toLowerCase()}`) : "", callbackTime === "matin" ? t("callback_morning") : callbackTime === "apres-midi" ? t("callback_afternoon") : ""].filter(Boolean).join(" - ")}</span></div>}
               </div>
             </div>
 
             <div className="flex gap-3 mt-6">
               <button onClick={goBack} className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-white/70 text-sm rounded-lg hover:border-white/30 transition-colors">
-                <ArrowLeft className="w-4 h-4" /> {t("common.back")}
+                <ArrowLeft className="w-4 h-4" /> {t("common_back")}
               </button>
               <button
                 onClick={handleSubmit}
@@ -1298,9 +1299,9 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                 className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gold text-navy-deep font-bold text-sm rounded-lg hover:bg-gold-light transition-colors glow-gold disabled:opacity-70"
               >
                 {submitMutation.isPending ? (
-                  <><Loader2 className="w-4 h-4 animate-spin" /> {t("step7.submitting")}</>
+                  <><Loader2 className="w-4 h-4 animate-spin" /> {t("step7_submitting")}</>
                 ) : (
-                  <><Send className="w-4 h-4" /> {t("step7.submit")}</>
+                  <><Send className="w-4 h-4" /> {t("step7_submit")}</>
                 )}
               </button>
             </div>
