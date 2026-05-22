@@ -1,0 +1,54 @@
+name: Traduction i18n (DeepL)
+
+# Traduit automatiquement les locales EN/DE/ES/IT via DeepL dès qu'un
+# fichier de langue FR change sur main, puis committe le résultat.
+#
+# Sécurité anti-boucle :
+#  - le déclencheur ne surveille que client/src/locales/fr/** ;
+#  - le commit produit ici ne modifie que en/de/es/it/** → il ne
+#    correspond pas au filtre et ne relance donc pas le workflow ;
+#  - le marqueur [skip ci] dans le message est une sécurité de plus.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "client/src/locales/fr/**"
+
+concurrency:
+  group: translate-locales
+  cancel-in-progress: false
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Traduire les clés manquantes via DeepL
+        run: node scripts/translate-locales.mjs
+        env:
+          DEEPL_API_KEY: ${{ secrets.DEEPL_API_KEY }}
+
+      - name: Committer les traductions générées
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add client/src/locales
+          if git diff --cached --quiet; then
+            echo "Aucune nouvelle traduction — rien à committer."
+            exit 0
+          fi
+          git commit -m "chore(i18n): traductions EN/DE/ES/IT via DeepL [skip ci]"
+          git pull --rebase origin main
+          git push
