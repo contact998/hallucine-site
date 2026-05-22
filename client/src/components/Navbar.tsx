@@ -185,11 +185,11 @@ export default function Navbar() {
 
   // ─── Styles partagés ───────────────────────────────────────────────────────
   const topLink =
-    "px-4 py-2.5 text-sm font-medium text-white/80 hover:text-warm transition-colors";
+    "px-4 py-2.5 text-base font-medium text-white/80 hover:text-warm transition-colors";
   const triggerLink =
-    "flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium text-white/80 group-hover:text-warm transition-colors";
+    "flex items-center gap-1.5 px-4 py-2.5 text-base font-medium text-white/80 group-hover:text-warm transition-colors";
   const panelBox =
-    "bg-[oklch(0.17_0.024_260_/_0.4)] backdrop-blur-xl border border-white/15 rounded-xl shadow-2xl shadow-black/50";
+    "bg-[oklch(0.17_0.024_260_/_0.32)] backdrop-blur-xl border border-white/15 rounded-xl shadow-2xl shadow-black/50";
   const megaWrap =
     "absolute left-0 top-full pt-3 invisible opacity-0 translate-y-2 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 z-50";
 
@@ -247,30 +247,24 @@ export default function Navbar() {
                     ))}
                   </div>
                 ))}
-                {/* Fenêtre « Configurateur » */}
-                <div className="w-[228px] shrink-0 rounded-xl overflow-hidden bg-[oklch(0.17_0.025_260)] border border-white/10 flex flex-col">
-                  <div className="h-28 bg-[radial-gradient(120%_100%_at_70%_20%,oklch(0.72_0.12_70_/_0.55),transparent_70%)] bg-[oklch(0.13_0.02_260)]" />
-                  <div className="p-4">
-                    <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-warm">
-                      {t("outils")}
-                    </p>
-                    <p className="mt-1.5 text-[15px] font-bold text-white">{t("configurateur")}</p>
-                    <p className="mt-1 mb-3 text-xs text-white/55 leading-relaxed">
-                      {t("configurateur_card_desc")}
-                    </p>
-                    <Link
-                      href={r["configurateur"]}
-                      className="block mt-1.5 px-3 py-2 rounded-lg text-[13px] font-semibold text-white bg-white/5 border border-white/10 hover:bg-warm/15 hover:text-warm transition-colors"
-                    >
-                      {t("configurateur_ecran")} →
-                    </Link>
-                    <Link
-                      href={r["configurateur"]}
-                      className="block mt-1.5 px-3 py-2 rounded-lg text-[13px] font-semibold text-white bg-white/5 border border-white/10 hover:bg-warm/15 hover:text-warm transition-colors"
-                    >
-                      {t("configurateur_tente")} →
-                    </Link>
-                  </div>
+                {/* Fenêtre « Configurateur » — discrète */}
+                <div className="w-[228px] shrink-0 rounded-xl bg-white/[0.04] border border-white/10 p-4 flex flex-col justify-center">
+                  <p className="text-[15px] font-bold text-white">{t("configurateur")}</p>
+                  <p className="mt-1 mb-3 text-xs text-white/55 leading-relaxed">
+                    {t("configurateur_card_desc")}
+                  </p>
+                  <Link
+                    href={r["configurateur"]}
+                    className="block mt-1.5 px-3 py-2 rounded-lg text-[13px] font-semibold text-white bg-white/5 border border-white/10 hover:bg-warm/15 hover:text-warm transition-colors"
+                  >
+                    {t("configurateur_ecran")} →
+                  </Link>
+                  <Link
+                    href={r["configurateur"]}
+                    className="block mt-1.5 px-3 py-2 rounded-lg text-[13px] font-semibold text-white bg-white/5 border border-white/10 hover:bg-warm/15 hover:text-warm transition-colors"
+                  >
+                    {t("configurateur_tente")} →
+                  </Link>
                 </div>
               </div>
             </div>
