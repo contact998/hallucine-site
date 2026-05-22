@@ -38,13 +38,15 @@ export default function Tentes() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
+        id="tentes-hub-page"
         breadcrumbs={[
-          { name: "Accueil", routeKey: "home" },
-          { name: t("meta_title"), routeKey: "tentes" },
+          { name: "Accueil", url: "https://hallucinecran.fr" },
+          { name: t("meta_title"), url: "https://hallucinecran.fr/tente-gonflable" },
         ]}
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
+          url: "https://hallucinecran.fr/tente-gonflable",
         }}
       />
       <Navbar />

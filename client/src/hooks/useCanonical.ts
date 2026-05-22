@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "wouter";
 import { useTranslation } from "react-i18next";
-import { buildCanonicalUrl } from "@/i18n/domains";
+import { LANGUAGE_DOMAINS, SupportedLanguage } from "@/i18n/domains";
 
 /**
  * Hook qui met à jour dynamiquement les balises <link rel="canonical"> et <meta property="og:url">
@@ -13,9 +13,13 @@ export function useCanonical() {
   const { i18n } = useTranslation();
 
   useEffect(() => {
+    const lang = i18n.language as SupportedLanguage;
+    const baseUrl = LANGUAGE_DOMAINS[lang] ?? LANGUAGE_DOMAINS["fr"];
+
     // URL canonique sans trailing slash — alignée sur le prerender, le sitemap
     // et le serveur (qui sert l'URL sans slash directement en 200).
-    const canonicalUrl = buildCanonicalUrl(i18n.language, location);
+    const normalizedPath = location === "/" ? "/" : location.replace(/\/+$/, "");
+    const canonicalUrl = `${baseUrl}${normalizedPath}`;
 
     // Mettre à jour ou créer la balise <link rel="canonical">
     let canonicalLink = document.querySelector(

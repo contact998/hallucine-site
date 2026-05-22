@@ -41,13 +41,15 @@ export default function DriveIn() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
+        id="drive-in-page"
         breadcrumbs={[
-          { name: "Accueil", routeKey: "home" },
-          { name: t("breadcrumb"), routeKey: "drive-in" },
+          { name: "Accueil", url: "https://hallucinecran.fr" },
+          { name: t("breadcrumb"), url: "https://hallucinecran.fr/ecran-gonflable-drive-in" },
         ]}
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
+          url: "https://hallucinecran.fr/ecran-gonflable-drive-in",
         }}
       />
       <Navbar />

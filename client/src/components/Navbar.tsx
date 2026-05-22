@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone, Mail, ChevronDown, User } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
+import { getLoginUrl } from "@/const";
 import { AvailabilityBadge } from "@/components/AvailabilityIndicator";
 import { useTranslation } from "react-i18next";
 import { i18n } from "@/i18n/instance"; // instance partagée — initialisée par config.ts (client) ou config.node.ts (SSR)
@@ -323,7 +324,7 @@ export default function Navbar() {
                 Admin
               </Link>
             )}
-            {isAuthenticated && (
+            {isAuthenticated ? (
               <Link
                 href="/profil"
                 className="flex items-center gap-1.5 px-3 py-2 border border-white/20 text-white/80 text-sm rounded hover:border-warm/50 hover:text-warm transition-colors"
@@ -331,6 +332,14 @@ export default function Navbar() {
                 <User className="w-4 h-4" />
                 {t("profil")}
               </Link>
+            ) : (
+              <a
+                href={getLoginUrl()}
+                className="flex items-center gap-1.5 px-3 py-2 border border-white/20 text-white/80 text-sm rounded hover:border-warm/50 hover:text-warm transition-colors"
+              >
+                <User className="w-4 h-4" />
+                {t("connexion")}
+              </a>
             )}
           </div>
 
@@ -416,7 +425,7 @@ export default function Navbar() {
                     {t("panneau_admin")}
                   </Link>
                 )}
-                {isAuthenticated && (
+                {isAuthenticated ? (
                   <Link
                     href="/profil"
                     onClick={() => setMobileOpen(false)}
@@ -425,6 +434,14 @@ export default function Navbar() {
                     <User className="w-4 h-4" />
                     {t("mon_profil")}
                   </Link>
+                ) : (
+                  <a
+                    href={getLoginUrl()}
+                    className="mt-2 flex items-center justify-center gap-2 px-6 py-3 border border-white/20 text-white/80 font-semibold rounded hover:border-warm/50 hover:text-warm"
+                  >
+                    <User className="w-4 h-4" />
+                    {t("connexion")}
+                  </a>
                 )}
                 <div className="mt-3 border-t border-white/10 pt-3">
                   <p className="text-xs text-white/50 px-2 mb-2">{t("langue")}</p>

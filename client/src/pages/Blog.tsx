@@ -81,14 +81,17 @@ export default function Blog() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        breadcrumbs={[{ name: "Accueil", routeKey: "home" }, { name: "Blog", routeKey: "blog" }]}
+        id="blog"
+        breadcrumbs={[{ name: "Accueil", url: "/" }, { name: "Blog", url: "/blog" }]}
         page={{
           name: "Blog | Actualités Cinéma en Plein Air",
           description: "Actualités, conseils et tendances du cinéma en plein air. Articles sur les écrans gonflables, événements et innovations.",
+          url: "https://hallucinecran.fr/blog"
         }}
         article={{
           headline: "Blog Hallucine",
           description: "Actualités, conseils et tendances du cinéma en plein air. Articles sur les écrans gonflables, événements et innovations.",
+          url: "https://hallucinecran.fr/blog",
           image: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp"
         }}
       />

@@ -76,15 +76,17 @@ export default function TentesX() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
+        id="tentes-x"
         breadcrumbs={[
-          { name: "Accueil", routeKey: "home" },
-          { name: "Tentes gonflables", routeKey: "tentes" },
-          { name: "Tentes X", routeKey: "tente-x" },
+          { name: "Accueil", url: "https://hallucinecran.fr" },
+          { name: "Tentes gonflables", url: "https://hallucinecran.fr/tentes-gonflables" },
+          { name: "Tentes X", url: "https://hallucinecran.fr/tentes-gonflables-x" },
         ]}
         product={{
           name: "Tente Gonflable X",
           description: "La tente gonflable Hallucine X est la solution parfaite pour vos événements extérieurs.",
           image: heroImages.map(img => img.src),
+          url: "https://hallucinecran.fr/tentes-gonflables-x",
           category: "Tentes gonflables",
           minPrice: 1490,
         }}

@@ -30,13 +30,15 @@ export default function Packs() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
+        id="packs-page"
         breadcrumbs={[
-          { name: "Accueil", routeKey: "home" },
-          { name: t("breadcrumb"), routeKey: "packs" },
+          { name: "Accueil", url: "https://hallucinecran.fr" },
+          { name: t("breadcrumb"), url: "https://hallucinecran.fr/pack-cinema-plein-air" },
         ]}
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
+          url: "https://hallucinecran.fr/pack-cinema-plein-air",
         }}
       />
       <Navbar />

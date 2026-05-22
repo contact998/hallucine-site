@@ -60,17 +60,20 @@ export default function Histoire() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        breadcrumbs={[{ name: "Accueil", routeKey: "home" }, { name: t("breadcrumb"), routeKey: "histoire" }]}
+        id="histoire"
+        breadcrumbs={[{ name: "Accueil", url: "/" }, { name: t("breadcrumb"), url: "/histoire-hallucine" }]}
         article={{
           headline: t("meta_title"),
           description: t("meta_desc"),
           image: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp",
+          url: "https://hallucinecran.fr/histoire-hallucine",
           datePublished: "2023-01-15T09:00:00+00:00",
           dateModified: "2024-05-20T14:30:00+00:00",
         }}
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
+          url: "https://hallucinecran.fr/histoire-hallucine",
         }}
       />
       <Navbar />

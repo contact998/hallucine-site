@@ -17,13 +17,15 @@ export default function PolitiqueCookies() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
+        id="politique-cookies"
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
+          url: "/politique-cookies",
         }}
         breadcrumbs={[
-          { name: "Accueil", routeKey: "home" },
-          { name: t("meta_title"), routeKey: "cookies" },
+          { name: "Accueil", url: "/" },
+          { name: t("meta_title"), url: "/politique-cookies" },
         ]}
       />
       <Navbar />

@@ -113,13 +113,15 @@ export default function ModeEmploi() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
+        id="mode-emploi"
         breadcrumbs={[
-          { name: "Accueil", routeKey: "home" },
-          { name: t("breadcrumb_page"), routeKey: "mode-emploi" },
+          { name: "Accueil", url: "/" },
+          { name: t("breadcrumb_page"), url: "/mode-emploi" },
         ]}
         page={{
           name: t("meta_title"),
           description: t("meta_desc"),
+          url: "https://hallucinecran.fr/mode-emploi",
         }}
       />
       <Navbar />

@@ -35,11 +35,13 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
-        breadcrumbs={[{ name: "Accueil", routeKey: "home" }]}
+        id="home"
+        breadcrumbs={[{ name: "Accueil", url: "/" }]}
         faqs={HOME_FAQS}
         page={{
           name: "Hallucine — Écrans de Cinéma Gonflables",
           description: "Fabricant français d'écrans de cinéma gonflables ultra-légers. De 2m à 24m, technologie étanche et soufflerie. Garantie 10 ans.",
+          url: "/",
         }}
       />
       <CinemaRideau />

@@ -58,15 +58,17 @@ export default function ArchesGonflables() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
+        id="arches-gonflables"
         breadcrumbs={[
-          { name: "Accueil", routeKey: "home" },
-          { name: "Structures gonflables", routeKey: "home" },
-          { name: "Arches Gonflables", routeKey: "arches" },
+          { name: "Accueil", url: "https://hallucinecran.fr" },
+          { name: "Structures gonflables", url: "https://hallucinecran.fr/" },
+          { name: "Arches Gonflables", url: "https://hallucinecran.fr/arches-gonflables" },
         ]}
         product={{
           name: "Arches Gonflables Personnalisées pour Événements",
           description: "Les arches gonflables sont des éléments incontournables pour vos événements sportifs, expositions, et campagnes promotionnelles.",
           image: galleryImages.map(img => img.src),
+          url: "https://hallucinecran.fr/arches-gonflables",
           category: "Structures gonflables",
           minPrice: 790,
         }}

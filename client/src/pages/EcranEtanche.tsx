@@ -78,15 +78,17 @@ export default function EcranEtanche() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
+        id="ecran-etanche"
         breadcrumbs={[
-          { name: "Accueil", routeKey: "home" },
-          { name: "Écrans gonflables", routeKey: "ecrans" },
-          { name: "Écran gonflable étanche à l'air", routeKey: "ecran-etanche" },
+          { name: "Accueil", url: "https://hallucinecran.fr" },
+          { name: "Écrans gonflables", url: "https://hallucinecran.fr/ecrans-gonflables" },
+          { name: "Écran gonflable étanche à l'air", url: "https://hallucinecran.fr/ecran-gonflable-etanche" },
         ]}
         product={{
           name: "Écran gonflable étanche à l'air",
           description: "Les écrans gonflables étanches à l'air offrent une solution pratique et esthétique pour vos événements en intérieur et en extérieur. Disponibles en tailles allant de 2 à 10 mètres, ils s'adaptent parfaitement aux projections de films, soirées sportives ou tout autre événement nécessitant une toile grand format.",
           image: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/IhxDeQNxHxMYBwlG.webp",
+          url: "https://hallucinecran.fr/ecran-gonflable-etanche",
           category: "Écrans gonflables",
           minPrice: 990,
         }}

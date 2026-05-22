@@ -143,14 +143,16 @@ export default function Mobilier() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
+        id="mobilier"
         breadcrumbs={[
-          { name: "Accueil", routeKey: "home" },
-          { name: "Mobilier", routeKey: "mobilier" },
+          { name: "Accueil", url: "https://hallucinecran.fr" },
+          { name: "Mobilier", url: "https://hallucinecran.fr/mobilier" },
         ]}
         product={{
           name: "Mobilier Gonflable Événementiel",
           description: "Notre gamme complète de mobilier gonflable pour tous vos événements.",
           image: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/jCghaPHMczbtTjIn.webp",
+          url: "https://hallucinecran.fr/mobilier",
           category: "Mobilier Gonflable",
           minPrice: 490,
         }}

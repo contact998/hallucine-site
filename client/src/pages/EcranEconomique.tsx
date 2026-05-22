@@ -95,10 +95,11 @@ export default function EcranEconomique() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <PageStructuredData
+        id="ecran-economique"
         breadcrumbs={[
-          { name: "Accueil", routeKey: "home" },
-          { name: "Ecrans Gonflables", routeKey: "ecrans" },
-          { name: "Écran Économique", routeKey: "ecran-economique" },
+          { name: "Accueil", url: "https://hallucinecran.fr" },
+          { name: "Ecrans Gonflables", url: "https://hallucinecran.fr/ecrans-gonflables" },
+          { name: "Écran Économique", url: "https://hallucinecran.fr/ecran-economique" },
         ]}
         product={{
           name: "Écrans Gonflables Économiques",
@@ -111,6 +112,7 @@ export default function EcranEconomique() {
             "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/QClDxPadLVEYKlxM.webp",
             "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/hzkcpmfnpyIExDbf.webp",
           ],
+          url: "https://hallucinecran.fr/ecran-economique",
           category: "Ecrans Gonflables",
         }}
       />
