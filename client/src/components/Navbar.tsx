@@ -230,10 +230,15 @@ export default function Navbar() {
               <ChevronDown className="w-3.5 h-3.5 transition-transform group-hover:rotate-180" />
             </button>
             <div className={megaWrap}>
-              <div className="flex gap-3 items-start">
-                {/* 3 fenêtres indépendantes — une par famille */}
-                {produitsCols.map((col) => (
-                  <div key={col.title} className={`${panelBox} w-[220px] p-3`}>
+              <div className="flex items-start">
+                {/* 3 fenêtres — en chevauchement, les 2 dernières décalées */}
+                {produitsCols.map((col, i) => (
+                  <div
+                    key={col.title}
+                    className={`${panelBox} w-[220px] p-3 relative z-10 transition-transform duration-200 hover:z-30 hover:-translate-y-2 hover:scale-[1.02] ${
+                      i === 0 ? "" : i === 1 ? "-ml-6" : "-ml-6 mt-10"
+                    }`}
+                  >
                     <p className="px-3 pb-1.5 mb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-warm">
                       {col.title}
                     </p>
@@ -248,8 +253,8 @@ export default function Navbar() {
                     ))}
                   </div>
                 ))}
-                {/* 4e fenêtre indépendante — Configurateur */}
-                <div className={`${panelBox} w-[220px] p-3`}>
+                {/* 4e fenêtre — Configurateur, décalée de 2 lignes */}
+                <div className={`${panelBox} w-[220px] p-3 relative z-10 -ml-6 mt-20 transition-transform duration-200 hover:z-30 hover:-translate-y-2 hover:scale-[1.02]`}>
                   <p className="px-3 pb-1.5 mb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-warm">
                     {t("configurateur")}
                   </p>
