@@ -14,6 +14,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 // CDN assets
 const LOGO_URL = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ySiqVkOsMSzWfHfu.webp";
@@ -83,6 +84,7 @@ function GoldParticle({ x, y, delay }: { x: string; y: string; delay: number }) 
 
 // ─── Composant principal ────────────────────────────────────────────────
 export default function CinemaSuccessAnimation({ prenom, onClose }: CinemaSuccessAnimationProps) {
+  const { t } = useTranslation("common");
   const [phase, setPhase] = useState<"glow" | "rings" | "logo" | "text" | "done">("glow");
   const [showButton, setShowButton] = useState(false);
   const [muted, setMuted] = useState(false);
@@ -289,7 +291,7 @@ export default function CinemaSuccessAnimation({ prenom, onClose }: CinemaSucces
             textShadow: "0 0 30px rgba(201, 169, 110, 0.3)",
           }}
         >
-          {prenom ? `Merci ${prenom}` : "Nous avons bien reçu votre demande"}
+          {prenom ? t("success_thanks_named", { name: prenom }) : t("success_thanks_default")}
         </h2>
         <p
           style={{
@@ -301,7 +303,7 @@ export default function CinemaSuccessAnimation({ prenom, onClose }: CinemaSucces
             fontFamily: "'Cormorant Garamond', serif",
           }}
         >
-          Notre équipe vous répondra dans les 24 heures.
+          {t("success_reply_24h")}
         </p>
         <p
           style={{
@@ -314,7 +316,7 @@ export default function CinemaSuccessAnimation({ prenom, onClose }: CinemaSucces
             fontFamily: "'Cormorant Garamond', serif",
           }}
         >
-          Vos données sont en sécurité et ne seront jamais partagées.
+          {t("success_privacy")}
         </p>
       </motion.div>
 
@@ -347,7 +349,7 @@ export default function CinemaSuccessAnimation({ prenom, onClose }: CinemaSucces
             e.currentTarget.style.background = "rgba(201, 169, 110, 0.05)";
           }}
         >
-          Retour à l'accueil
+          {t("success_back_home")}
         </motion.button>
       )}
 
