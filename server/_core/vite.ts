@@ -266,7 +266,12 @@ export function serveStatic(app: Express) {
       }
     }
 
-    // 3. Routes SPA valides (admin, profil) — fallback avec 200
+    // 3. Routes SPA valides (admin, profil, login) — rendu 100% client.
+    // ⚠️ On utilise `cleanTemplate` (= dist/public/_template.html, root vide)
+    // PAS `baseIndexHtml` (= dist/public/index.html = home prérendu).
+    // Servir le HTML du home pour /admin ferait planter hydrateRoot avec
+    // un mismatch massif. Avec un root vide, main.tsx détecte l'absence de
+    // contenu SSR et bascule sur createRoot (CSR propre).
     const SPA_ROUTES = [
       /^\/admin(\/.*)?$/,
       /^\/profil$/,
@@ -278,7 +283,7 @@ export function serveStatic(app: Express) {
       const defaultDesc = "Fabricant français d'écrans gonflables depuis 1992. Écrans de cinéma, événementiel, structures gonflables sur mesure.";
       const defaultUrl = `${req.protocol}://${req.hostname}${reqPath}`;
       const html = injectNavWidget(
-        baseIndexHtml
+        cleanTemplate
           .replace(/__LOCALE__/g, locale)
           .replace(/<!--__OG_LOCALE_TAGS__-->/g, buildOgLocaleTags(locale))
           .replace(/__PAGE_TITLE__/g, escapeHtml(defaultTitle))
@@ -286,9 +291,11 @@ export function serveStatic(app: Express) {
           .replace(/__PAGE_IMAGE__/g, DEFAULT_OG_IMAGE)
           .replace(/__PAGE_URL__/g, escapeHtml(defaultUrl))
       );
+      // X-Robots-Tag : ces routes ne doivent jamais être indexées
       res.status(200).set({
         "Content-Type": "text/html",
         "Vary": "Host",
+        "X-Robots-Tag": "noindex, nofollow",
       }).end(html);
       return;
     }
