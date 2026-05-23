@@ -49,5 +49,17 @@
   "mon_profil": "My Profile",
   "langue": "Language",
   "fermer_menu": "Close menu",
-  "ouvrir_menu": "Open the menu"
+  "ouvrir_menu": "Open the menu",
+  "produits": "Products",
+  "realisations": "Achievements",
+  "entreprise": "The company",
+  "col_ecrans": "Screens",
+  "col_tentes": "Tents & structures",
+  "col_outils": "Accessories & tools",
+  "col_decouvrir": "Discover",
+  "col_hallucine": "Can you believe it?",
+  "outils": "Tools",
+  "configurateur_ecran": "Screen Configurator",
+  "configurateur_tente": "Tent Configurator",
+  "configurateur_card_desc": "Find the perfect model in just one minute."
 }

@@ -49,5 +49,17 @@
   "mon_profil": "Mi perfil",
   "langue": "Idioma",
   "fermer_menu": "Cerrar menú",
-  "ouvrir_menu": "Abrir el menú"
+  "ouvrir_menu": "Abrir el menú",
+  "produits": "Productos",
+  "realisations": "Logros",
+  "entreprise": "La empresa",
+  "col_ecrans": "Pantallas",
+  "col_tentes": "Tiendas y estructuras",
+  "col_outils": "Accesorios y herramientas",
+  "col_decouvrir": "Descubrir",
+  "col_hallucine": "No me lo puedo creer",
+  "outils": "Herramientas",
+  "configurateur_ecran": "Configurador de pantalla",
+  "configurateur_tente": "Configurador de tiendas de campaña",
+  "configurateur_card_desc": "Encuentra el modelo ideal en un minuto."
 }

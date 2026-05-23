@@ -49,5 +49,17 @@
   "mon_profil": "Mein Profil",
   "langue": "Sprache",
   "fermer_menu": "Menü schließen",
-  "ouvrir_menu": "Menü öffnen"
+  "ouvrir_menu": "Menü öffnen",
+  "produits": "Produkte",
+  "realisations": "Erfolge",
+  "entreprise": "Das Unternehmen",
+  "col_ecrans": "Bildschirme",
+  "col_tentes": "Zelte & Überdachungen",
+  "col_outils": "Zubehör & Werkzeuge",
+  "col_decouvrir": "Entdecken",
+  "col_hallucine": "Halluzinieren",
+  "outils": "Werkzeuge",
+  "configurateur_ecran": "Bildschirmkonfigurator",
+  "configurateur_tente": "Zeltkonfigurator",
+  "configurateur_card_desc": "Finde in nur einer Minute das perfekte Modell."
 }

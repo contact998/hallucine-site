@@ -49,5 +49,17 @@
   "mon_profil": "Il mio profilo",
   "langue": "Lingua",
   "fermer_menu": "Chiudere il menu",
-  "ouvrir_menu": "Aprire il menu"
+  "ouvrir_menu": "Aprire il menu",
+  "produits": "Prodotti",
+  "realisations": "Realizzazioni",
+  "entreprise": "L'azienda",
+  "col_ecrans": "Schermi",
+  "col_tentes": "Tende e strutture",
+  "col_outils": "Accessori e utensili",
+  "col_decouvrir": "Scopri",
+  "col_hallucine": "Allucina",
+  "outils": "Strumenti",
+  "configurateur_ecran": "Configuratore dello schermo",
+  "configurateur_tente": "Configuratore di tende",
+  "configurateur_card_desc": "Trova il modello perfetto in un minuto."
 }
