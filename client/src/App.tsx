@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch, Redirect } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import PageFrame from "./components/PageFrame";
+import ScrollToTop from "./components/ScrollToTop";
 import WhatsAppButton from "./components/WhatsAppButton";
 const HallucineChatbot = lazy(() => import("./components/HallucineChatbot"));
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -144,6 +145,7 @@ function App() {
           {/* Contenu hydraté — identique au SSR */}
           <AnalyticsTracker />
           <CanonicalUpdater />
+          <ScrollToTop />
           <GlobalStructuredData />
           <Router />
           <PageFrame />

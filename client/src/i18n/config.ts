@@ -68,7 +68,12 @@ i18n
     },
     detection: undefined,
     react: {
-      useSuspense: true,
+      // Doit rester aligné sur config.node.ts (SSR) : si useSuspense diffère
+      // entre serveur et client, React voit une frontière Suspense qui
+      // n'existe que d'un côté → hydration mismatch garanti.
+      // Les ressources étant bundlées de façon synchrone (locales-bundled.ts),
+      // suspendre n'est de toute façon jamais nécessaire.
+      useSuspense: false,
     },
   })
   .then(() => {
