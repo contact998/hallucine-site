@@ -30,6 +30,18 @@ import type { Resource } from "i18next";
 // Simuler window pour les composants qui en ont besoin
 // (tous les usages réels sont dans useEffect ou handlers, donc ignorés en SSR)
 if (typeof window === "undefined") {
+  // Stub DOM minimal pour les libs qui attendent un environnement navigateur
+  // (framer-motion, radix, etc.). Toutes les méthodes sont des no-ops — les
+  // vrais effets ne s'exécutent qu'en useEffect côté client.
+  const noop = () => {};
+  const nullStorage = { getItem: () => null, setItem: noop, removeItem: noop, clear: noop, length: 0, key: () => null };
+  const stubElement = {
+    addEventListener: noop, removeEventListener: noop, getBoundingClientRect: () => ({ top: 0, left: 0, right: 0, bottom: 0, width: 0, height: 0, x: 0, y: 0 }),
+    style: {}, classList: { add: noop, remove: noop, toggle: noop, contains: () => false },
+    appendChild: noop, removeChild: noop, setAttribute: noop, getAttribute: () => null,
+    querySelector: () => null, querySelectorAll: () => [],
+  };
+
   (globalThis as unknown as Record<string, unknown>).window = {
     location: {
       origin: "http://localhost:3000",
@@ -38,8 +50,31 @@ if (typeof window === "undefined") {
       search: "",
       href: "http://localhost:3000/",
     },
-    history: { replaceState: () => {} },
+    history: { replaceState: noop, pushState: noop },
+    addEventListener: noop,
+    removeEventListener: noop,
+    matchMedia: () => ({ matches: false, addListener: noop, removeListener: noop, addEventListener: noop, removeEventListener: noop }),
+    innerWidth: 1280,
+    innerHeight: 720,
+    scrollY: 0,
+    scrollX: 0,
+    scrollTo: noop,
+    requestAnimationFrame: noop,
+    cancelAnimationFrame: noop,
+    localStorage: nullStorage,
+    sessionStorage: nullStorage,
+    document: {
+      addEventListener: noop, removeEventListener: noop,
+      documentElement: stubElement, body: stubElement, head: stubElement,
+      createElement: () => stubElement, querySelector: () => null, querySelectorAll: () => [],
+      title: "", referrer: "",
+    },
   };
+
+  // Certaines libs accèdent aussi à `document` directement (pas via window.document)
+  (globalThis as unknown as Record<string, unknown>).document = (
+    (globalThis as unknown as { window: { document: unknown } }).window.document
+  );
 }
 
 // Simuler import.meta.env pour les composants qui l'utilisent (const.ts, etc.)
