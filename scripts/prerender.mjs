@@ -1,5 +1,5 @@
 /**
- * prerender.mjs — Script de pre-rendering SSG (renderToString)
+ * prerender.mjs — Script de pre-rendering SSG (renderToPipeableStream)
  *
  * Génère des fichiers HTML statiques pour chaque page × langue.
  * Utilisé dans le build Railway : pnpm build:client && npx tsx --tsconfig tsconfig.ssr.json scripts/prerender.mjs
@@ -193,6 +193,14 @@ function injectIntoTemplate(tmpl, { html, lang, canonicalUrl, hreflangTags, loca
     result = result.replace("</head>", `${mediaScript}\n</head>`);
   }
 
+  // 8. headExtra : scripts d'hydratation pour les routes dynamiques
+  //    (ex: window.__SSR_INITIAL_DATA__ pour les articles de blog → BlogPost
+  //    lit ces données comme `initialData` de son useQuery → premier rendu
+  //    client identique au SSR → hydratation sans mismatch).
+  if (meta.headExtra) {
+    result = result.replace("</head>", `${meta.headExtra}\n</head>`);
+  }
+
   return result;
 }
 
@@ -202,7 +210,7 @@ let total = 0;
 let errors = 0;
 const startTime = Date.now();
 
-console.log("🚀 Démarrage du pre-rendering SSG (renderToString)...\n");
+console.log("🚀 Démarrage du pre-rendering SSG (renderToPipeableStream)...\n");
 console.log(`   ${VALID_LANGS.length} langues × 27 pages = ~135 fichiers HTML\n`);
 
 for (const lang of VALID_LANGS) {
@@ -290,6 +298,71 @@ for (const lang of VALID_LANGS) {
     }
   }
   console.log(`\n📦 Langue ${lang.toUpperCase()} terminée\n`);
+}
+
+// ─── Pré-rendu des articles de blog ──────────────────────────────────────────
+// Chaque article publié × 5 langues → HTML statique avec le contenu complet.
+// Sans ça, /blog/:slug serait servi en CSR (template vide + metas seulement),
+// Google ne verrait pas le corps de l'article → SEO faible.
+try {
+  const { db } = await import("../server/db.ts");
+  const { blogPosts } = await import("../drizzle/schema.ts");
+  const { eq } = await import("drizzle-orm");
+
+  const posts = await db
+    .select()
+    .from(blogPosts)
+    .where(eq(blogPosts.status, "published"));
+
+  if (posts.length > 0) {
+    console.log(`\n📝 Pré-rendu de ${posts.length} article(s) de blog × ${VALID_LANGS.length} langues...`);
+  }
+
+  for (const post of posts) {
+    const slug = post.slug;
+    const url = `/blog/${slug}`;
+    for (const lang of VALID_LANGS) {
+      try {
+        const domain = DOMAINS[lang];
+        const { html, meta } = await render(url, lang, mediaCache, {
+          blogPost: { slug, data: post },
+        });
+        const canonicalUrl = `${domain}${url}`;
+        meta.url = canonicalUrl;
+
+        // hreflangTags pour blog : même URL sur tous les domaines (le slug
+        // n'est pas traduit) → toutes les versions pointent vers l'URL
+        // localisée du domaine de la langue cible.
+        const hreflangTags = VALID_LANGS.map(
+          (l) => `<link rel="alternate" hreflang="${l}" href="${DOMAINS[l]}${url}" />`
+        ).join("\n    ") + `\n    <link rel="alternate" hreflang="x-default" href="${DOMAINS.fr}${url}" />`;
+
+        const finalHtml = injectIntoTemplate(template, {
+          html,
+          lang,
+          canonicalUrl,
+          hreflangTags,
+          locale: lang,
+          meta,
+          mediaScript: mediaScriptTag,
+        });
+
+        const langPrefix = lang === "fr" ? "" : `_lang_${lang}`;
+        const outputDir = join(DIST, langPrefix, "blog", slug);
+        mkdirSync(outputDir, { recursive: true });
+        const outputPath = join(outputDir, "index.html");
+        writeFileSync(outputPath, finalHtml, "utf-8");
+        total++;
+        console.log(`  ✅ [${lang}] ${url} → ${outputPath.replace(DIST + "/", "dist/")}`);
+      } catch (err) {
+        errors++;
+        console.error(`  ❌ [${lang}] ${url} → ${err.message}`);
+        if (process.env.DEBUG_SSR) console.error(err.stack);
+      }
+    }
+  }
+} catch (err) {
+  console.warn(`⚠️  Impossible de pré-rendre les articles de blog : ${err.message}`);
 }
 
 const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);

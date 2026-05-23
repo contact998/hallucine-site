@@ -152,6 +152,27 @@ export function serveStatic(app: Express) {
     next();
   });
 
+  // Redirections 301 d'anciennes URLs publiques fusionnées dans
+  // `/devenir-distributeur` (par langue). Sans ça, ces URLs renvoient 404 si
+  // tapées directement (le redirect côté client wouter ne s'applique qu'après
+  // l'arrivée du JS).
+  const LEGACY_DISTRIBUTOR_REDIRECTS: Record<string, string> = {
+    "/trouver-distributeur":     "/devenir-distributeur",
+    "/find-distributor":         "/become-distributor",
+    "/haendler-finden":          "/haendler-werden",
+    "/encontrar-distribuidor":   "/convertirse-distribuidor",
+    "/trovare-distributore":     "/diventare-distributore",
+  };
+  app.use((req, res, next) => {
+    const path = req.originalUrl.split("?")[0].replace(/\/+$/, "");
+    const target = LEGACY_DISTRIBUTOR_REDIRECTS[path];
+    if (target) {
+      res.redirect(301, target);
+      return;
+    }
+    next();
+  });
+
   // Normalisation slash final : `/page/` → 301 → `/page` (préserve la query).
   // Évite le contenu dupliqué SEO + garantit que window.location.pathname côté
   // client correspond EXACTEMENT au path utilisé pour la route wouter (qui ne
@@ -229,7 +250,9 @@ export function serveStatic(app: Express) {
           const headerImage = headerImageUrl || post.imageUrl || DEFAULT_OG_IMAGE;
 
           const domain = `${req.protocol}://${req.hostname}`;
-          const canonicalPath = reqPath.endsWith("/") ? reqPath : `${reqPath}/`;
+          // Canonical sans slash final — cohérent avec le sitemap, les autres
+          // canonicals du site et la redirection 301 trailing slash.
+          const canonicalPath = reqPath.replace(/\/+$/, "");
           const canonicalUrl = `${domain}${canonicalPath}`;
 
           // JSON-LD BlogPosting

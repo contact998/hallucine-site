@@ -7,13 +7,29 @@ import { trpc } from "@/lib/trpc";
 import { useRoutes } from "@/i18n/useRoutes";
 import { ArrowLeft, Calendar, User, Tag } from "lucide-react";
 
+/**
+ * Lit les données SSR injectées dans le HTML par le pre-rendering blog.
+ * Cf. entry-server.tsx → meta.headExtra → prerender.mjs injectIntoTemplate.
+ * Permet à useQuery de renvoyer la donnée dès le 1er rendu client →
+ * hydratation propre, pas de mismatch avec le SSR.
+ */
+function readSsrBlogPost(slug: string): unknown | undefined {
+  if (typeof window === "undefined") return undefined;
+  const ssr = (window as unknown as { __SSR_INITIAL_DATA__?: { blogPost?: { slug: string; data: unknown } } })
+    .__SSR_INITIAL_DATA__;
+  return ssr?.blogPost?.slug === slug ? ssr.blogPost.data : undefined;
+}
+
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   const route = useRoutes();
 
   const { data: post, isLoading, error } = trpc.blog.bySlug.useQuery(
     { slug: slug ?? "" },
-    { enabled: !!slug }
+    {
+      enabled: !!slug,
+      initialData: slug ? (readSsrBlogPost(slug) as never) : undefined,
+    }
   );
 
   useDocumentMeta(

@@ -95,17 +95,29 @@ function ensurePagesPreloaded(): Promise<void> {
 }
 
 /**
+ * Données pré-chargées injectables avant le rendu SSR.
+ * Pour les routes dont le contenu vient de la DB (ex: /blog/:slug), le
+ * serveur fetch les données puis les passe à render() qui pré-popule
+ * le cache React Query → le composant rend en synchrone avec les données.
+ */
+export interface SSRInitialData {
+  blogPost?: { slug: string; data: unknown };
+}
+
+/**
  * Rend une page en HTML statique pour une URL et une langue données
  *
  * @param url - URL de la page (ex: "/ecran-gonflable")
  * @param lang - Code langue (ex: "fr", "en", "de", "es", "it")
  * @param mediaCache - Images bakées depuis la DB (clé "categorie|souscategorie")
+ * @param initialData - Données pré-chargées (ex: article de blog par slug)
  * @returns HTML statique + metas collectées pendant le rendu
  */
 export async function render(
   url: string,
   lang: string,
-  mediaCache?: Record<string, unknown>
+  mediaCache?: Record<string, unknown>,
+  initialData?: SSRInitialData
 ): Promise<{ html: string; meta: SSRMeta }> {
   // S'assurer que tous les modules de pages sont chargés avant le 1er render
   await ensurePagesPreloaded();
@@ -180,6 +192,18 @@ export async function render(
     ],
   });
 
+  // Pré-population du cache React Query pour les routes dynamiques.
+  // BlogPost.tsx fait `trpc.blog.bySlug.useQuery({ slug })` → la clé tRPC est
+  // [['blog', 'bySlug'], { input: { slug }, type: 'query' }]. En pré-injectant
+  // les données ici, le `useQuery` côté SSR retourne immédiatement le post →
+  // le contenu de l'article est rendu dans le HTML (Google le voit).
+  if (initialData?.blogPost) {
+    queryClient.setQueryData(
+      [["blog", "bySlug"], { input: { slug: initialData.blogPost.slug }, type: "query" }],
+      initialData.blogPost.data,
+    );
+  }
+
   // ✅ Arbre SSR strictement identique à l'arbre client.
   // Les widgets client-only (Toaster, WhatsApp, HallucineChatbot) sont gated
   // par `mounted` dans App.tsx → false en SSR ET au 1er rendu client (avant
@@ -201,9 +225,9 @@ export async function render(
   );
 
   try {
-    // ✅ renderToPipeableStream (recommandé React 19) au lieu de renderToPipeableStream.
+    // ✅ renderToPipeableStream (recommandé React 19) au lieu de renderToString.
     // On bufferise le flux dans une chaîne pour l'écrire sur disque (SSG).
-    const html: string = await new Promise<string>((resolve, reject) => {
+    let html: string = await new Promise<string>((resolve, reject) => {
       let buf = "";
       const sink = new Writable({
         write(chunk, _encoding, cb) {
@@ -220,6 +244,15 @@ export async function render(
         onError(err) { reject(err instanceof Error ? err : new Error(String(err))); },
       });
     });
+
+    // Exposer les données SSR pour que le client puisse hydrater avec les
+    // mêmes données (sinon refetch → tree différent → mismatch). Le
+    // template (cf. prerender.mjs injectIntoTemplate) insère ce HTML dans
+    // le <head> du template, pas dans `html` (qui est juste le body React).
+    if (initialData?.blogPost) {
+      const json = JSON.stringify(initialData).replace(/</g, "\\u003c");
+      ssrMeta.headExtra = `<script>window.__SSR_INITIAL_DATA__=${json}</script>`;
+    }
 
     return { html, meta: ssrMeta };
   } finally {
