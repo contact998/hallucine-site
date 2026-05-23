@@ -111,3 +111,5 @@ temp/
 migrate-blog-images.mjs
 migrate-images-webp.mjs
 patch-blog-routes.py
+.claude/
+navbar-mockup.html

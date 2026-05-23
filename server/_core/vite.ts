@@ -152,6 +152,21 @@ export function serveStatic(app: Express) {
     next();
   });
 
+  // Normalisation slash final : `/page/` → 301 → `/page` (préserve la query).
+  // Évite le contenu dupliqué SEO + garantit que window.location.pathname côté
+  // client correspond EXACTEMENT au path utilisé pour la route wouter (qui ne
+  // matche pas le slash final → sinon mismatch avec NotFound à l'hydratation).
+  app.use((req, res, next) => {
+    const url = req.originalUrl;
+    const [pathOnly, query] = url.split("?");
+    if (pathOnly.length > 1 && pathOnly.endsWith("/")) {
+      const target = pathOnly.replace(/\/+$/, "") + (query ? "?" + query : "");
+      res.redirect(301, target);
+      return;
+    }
+    next();
+  });
+
   // SSG + Fallback SPA : priorité aux pages pré-rendues, sinon index.html générique
   app.use("*", async (req, res) => {
     const locale = getLocaleFromHost(req.hostname);

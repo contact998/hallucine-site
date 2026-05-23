@@ -3,7 +3,7 @@
  * Lecture des images « bakées » au build par scripts/prerender.mjs.
  *
  * Le prerender interroge la DB et fige les vraies images dans :
- *   - globalThis.__SSR_MEDIA__  (pendant renderToString)
+ *   - globalThis.__SSR_MEDIA__  (pendant renderToPipeableStream)
  *   - window.__SSR_MEDIA__      (injecté dans le HTML, lu à l'hydratation)
  *
  * Conséquence : le HTML pré-rendu ET le premier rendu client contiennent

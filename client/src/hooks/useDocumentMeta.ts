@@ -27,7 +27,7 @@ function restoreMeta(prev: { value: string; el: Element | null }, attr: string) 
  * En client : met à jour le DOM directement, se réinitialise au démontage.
  */
 export function useDocumentMeta(title?: string, description?: string, image?: string) {
-  // ─── SSR : collecte des metas pendant renderToString ───────────────────────
+  // ─── SSR : collecte des metas pendant renderToPipeableStream ───────────────
   // Principe : first-write-wins — seul le premier appelant (la page) définit les metas.
   // Les composants enfants (PageStructuredData, etc.) n'écrasent pas.
   const ssrMeta = useContext(SSRMetaContext);

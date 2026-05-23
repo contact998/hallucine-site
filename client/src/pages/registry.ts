@@ -145,7 +145,7 @@ const ALL_LAZY_PAGES: readonly PageComponent[] = [
 /**
  * Précharge TOUS les modules de pages → après cet await, le champ `mod`
  * interne à chaque `lazyPage` est rempli, donc le composant rend de façon
- * SYNCHRONE pendant renderToString. À appeler une fois en SSR avant tout
+ * SYNCHRONE pendant renderToPipeableStream. À appeler une fois en SSR avant tout
  * render(). Idempotent : les appels suivants sont des no-ops (promesses
  * déjà résolues côté de chaque lazyPage).
  */

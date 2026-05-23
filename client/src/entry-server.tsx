@@ -4,7 +4,7 @@
  * ✅ Rend EXACTEMENT le même arbre React que le client (<App />)
  *    → hydratation sans mismatch (plus de "updateSuspenseComponent" warning)
  * ✅ Préchargement de toutes les pages via preloadAllPages() → les lazyPage
- *    rendent en synchrone pendant renderToString (qui est synchrone)
+ *    rendent en synchrone pendant renderToPipeableStream (qui est synchrone)
  * ✅ N'importe JAMAIS i18n/config.ts (qui utilise import.meta.glob — Vite-only)
  * ✅ Instance i18n créée par render() pour éviter les race conditions entre langues
  * ✅ Utilisé uniquement par scripts/prerender.mjs
@@ -86,7 +86,7 @@ for (const lang of VALID_LANGS) {
 }
 
 // Précharge tous les modules de pages → les lazyPage de <App /> rendent en
-// synchrone pendant renderToString. Idempotent : seul le 1er await prend du
+// synchrone pendant renderToPipeableStream. Idempotent : seul le 1er await prend du
 // temps, les suivants sont des no-ops (promesses déjà résolues).
 let pagesPreloaded: Promise<void> | null = null;
 function ensurePagesPreloaded(): Promise<void> {
@@ -148,7 +148,7 @@ export async function render(
   }
   if (w) w.__INITIAL_LOCALE__ = lang;
 
-  // Contexte SSR pour collecter les metas pendant renderToString
+  // Contexte SSR pour collecter les metas pendant renderToPipeableStream
   const ssrMeta: SSRMeta = {
     title: "Hallucine — Écrans de Cinéma Gonflables | Fabricant depuis 1992",
     description: "Hallucine, fabricant français d'écrans de cinéma gonflables depuis 1992. Écrans géants, tentes gonflables, arches, mobilier événementiel. Livraison mondiale.",
@@ -201,7 +201,7 @@ export async function render(
   );
 
   try {
-    // ✅ renderToPipeableStream (recommandé React 19) au lieu de renderToString.
+    // ✅ renderToPipeableStream (recommandé React 19) au lieu de renderToPipeableStream.
     // On bufferise le flux dans une chaîne pour l'écrire sur disque (SSG).
     const html: string = await new Promise<string>((resolve, reject) => {
       let buf = "";
