@@ -3,6 +3,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch, Redirect } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
+import PageFrame from "./components/PageFrame";
 import WhatsAppButton from "./components/WhatsAppButton";
 const HallucineChatbot = lazy(() => import("./components/HallucineChatbot"));
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -145,6 +146,7 @@ function App() {
           <CanonicalUpdater />
           <GlobalStructuredData />
           <Router />
+          <PageFrame />
           {/* Widgets client-only — montés après hydratation */}
           {mounted && (
             <>

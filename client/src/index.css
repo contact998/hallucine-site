@@ -247,6 +247,23 @@
     box-shadow: 0 8px 32px oklch(0 0 0 / 0.3), 0 0 0 1px oklch(0.72 0.10 55 / 0.1);
     transform: translateY(-2px);
   }
+
+  /* Cadre doré qui respire — overlay viewport, pages publiques uniquement.
+     Bordure 1px à opacité animée pour rester discrète. */
+  .hallucine-page-frame {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    border: 1px solid oklch(0.72 0.10 55);
+    animation: hallucine-frame-pulse 5s ease-in-out infinite;
+    will-change: opacity;
+  }
+}
+
+@keyframes hallucine-frame-pulse {
+  0%, 100% { opacity: 0.20; }
+  50%     { opacity: 0.55; }
 }
 
 /* Smooth scrolling */
