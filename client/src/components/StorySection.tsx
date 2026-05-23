@@ -19,6 +19,7 @@ const TROIS_ECRANS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets
 const CHAPTER_IMAGES: { image: string | null; smallImage?: boolean; extraSmall?: boolean }[] = [
   { image: ECRAN_8M_ALUMINIUM },
   { image: ECOLE_FORAINS },
+  { image: null }, // 1994 — Erreur fatale, photo à venir
   { image: VOILERIE_BRETAGNE },
   { image: KYTEA_HK, smallImage: true, extraSmall: true },
   { image: ECLATE_ETANCHE, smallImage: true },
@@ -27,7 +28,7 @@ const CHAPTER_IMAGES: { image: string | null; smallImage?: boolean; extraSmall?:
   { image: TROIS_ECRANS },
 ];
 
-const CHAPTER_KEYS = ["ch1992", "ch1996", "ch1998", "ch2004", "ch2005", "ch2010", "ch2020", "chToday"];
+const CHAPTER_KEYS = ["ch1992", "ch1993", "ch1994", "ch1995", "ch2004", "ch2005", "ch2010", "ch2020", "chToday"];
 
 export default function StorySection() {
   const ref = useRef<HTMLDivElement>(null);
