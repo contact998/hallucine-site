@@ -15,7 +15,8 @@ const REPAS_CHINOIS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/asset
 const TROIS_ECRANS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/fGEhAORVzMgloRQI.webp";
 
 const CHAPTER_IMAGES: { image: string | null; smallImage?: boolean; extraSmall?: boolean }[] = [
-  { image: ECRAN_TUBULAIRE, smallImage: true },
+  { image: ECRAN_TUBULAIRE },
+  { image: null },
   { image: VOILERIE_BRETAGNE },
   { image: KYTEA_HK, smallImage: true, extraSmall: true },
   { image: ECLATE_ETANCHE, smallImage: true },
@@ -24,7 +25,7 @@ const CHAPTER_IMAGES: { image: string | null; smallImage?: boolean; extraSmall?:
   { image: TROIS_ECRANS },
 ];
 
-const CHAPTER_KEYS = ["ch1996", "ch1998", "ch2004", "ch2005", "ch2010", "ch2020", "chToday"];
+const CHAPTER_KEYS = ["ch1992", "ch1996", "ch1998", "ch2004", "ch2005", "ch2010", "ch2020", "chToday"];
 
 export default function StorySection() {
   const ref = useRef<HTMLDivElement>(null);
