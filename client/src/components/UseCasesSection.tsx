@@ -3,12 +3,12 @@
  */
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { ChevronRight, Film, Music, Briefcase, Heart, Trophy, Car, Hotel } from "lucide-react";
+import { ChevronRight, Film, Music, Briefcase, Heart, Trophy, Car, Hotel, GraduationCap, Tent } from "lucide-react";
 import { Link } from "wouter";
 import { useTranslation } from "react-i18next";
 import { getRoute } from "@/i18n/routes";
 
-const ICONS = [Film, Music, Briefcase, Heart, Trophy, Car, Hotel];
+const ICONS = [Film, Music, Briefcase, Heart, Trophy, Car, Hotel, GraduationCap, Tent];
 
 export default function UseCasesSection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -44,6 +44,14 @@ export default function UseCasesSection() {
     {
       icon: Hotel,
       key: "hotel",
+    },
+    {
+      icon: GraduationCap,
+      key: "ecole",
+    },
+    {
+      icon: Tent,
+      key: "camping",
     },
   ];
 
