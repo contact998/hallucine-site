@@ -52,7 +52,6 @@ import Histoire from "./pages/Histoire.tsx";
 import Blog from "./pages/Blog.tsx";
 import ModeEmploi from "./pages/ModeEmploi.tsx";
 import DevenirDistributeur from "./pages/DevenirDistributeur.tsx";
-import TrouverDistributeur from "./pages/TrouverDistributeur.tsx";
 import MentionsLegales from "./pages/MentionsLegales.tsx";
 import Confidentialite from "./pages/Confidentialite.tsx";
 import PolitiqueCookies from "./pages/PolitiqueCookies.tsx";
@@ -95,7 +94,7 @@ const NS = [
   "configurateur", "drive-in", "packs", "location", "etudes-cas", "ecrans-led", "ecrans", "tentes", "tente-x", "tente-n", "tente-v",
   "tente-araignee", "arches-gonflables", "mobilier", "accessoires",
   "a-propos", "mode-emploi", "mentions-legales", "devenir-distributeur",
-  "trouver-distributeur", "galerie", "galerie-video", "politique-cookies",
+  "galerie", "galerie-video", "politique-cookies",
   "confidentialite", "blog", "histoire", "not-found"
 ];
 
@@ -137,7 +136,6 @@ const PAGE_MAP: Record<string, React.ComponentType> = {
   blog: Blog,
   "mode-emploi": ModeEmploi,
   "devenir-distributeur": DevenirDistributeur,
-  "trouver-distributeur": TrouverDistributeur,
   "mentions-legales": MentionsLegales,
   confidentialite: Confidentialite,
   cookies: PolitiqueCookies,

@@ -84,7 +84,6 @@ const FILE_MAPPING = {
   "Blog.tsx":            ["blog", null],
   "ModeEmploi":          ["ui", "mode-emploi"],
   "DevenirDistributeur": ["ui", "distributeur"],
-  "TrouverDistributeur": ["ui", "distributeur"],
   "structuredData":      ["og", null],
   "useDocumentMeta":     ["og", null],
   "entry-server":        ["og", null],

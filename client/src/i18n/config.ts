@@ -59,7 +59,7 @@ i18n
       "configurateur", "drive-in", "packs", "location", "etudes-cas", "ecrans-led", "ecrans", "tentes", "tente-x", "tente-n", "tente-v",
       "tente-araignee", "arches-gonflables", "mobilier", "accessoires",
       "a-propos", "mode-emploi", "mentions-legales", "devenir-distributeur",
-      "trouver-distributeur", "galerie", "galerie-video", "politique-cookies",
+      "galerie", "galerie-video", "politique-cookies",
       "confidentialite", "blog", "histoire", "not-found", "smartform"
     ],
     defaultNS: "common",
