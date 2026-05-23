@@ -7,7 +7,5 @@
  * Le CSS et l'animation sont définis dans index.css (`.hallucine-page-frame`).
  */
 export default function PageFrame() {
-  // Désactivé temporairement pour diagnostiquer un décalage côté droit
-  // signalé par l'utilisateur. À ré-activer une fois la cause identifiée.
-  return null;
+  return <div aria-hidden className="hallucine-page-frame" />;
 }
