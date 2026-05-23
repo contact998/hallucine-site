@@ -201,13 +201,25 @@ export async function preloadCurrentPage(): Promise<void> {
   const routes = (ROUTES[detectLanguage()] ?? ROUTES["fr"]) as Record<string, string>;
   const path = norm(window.location.pathname);
 
+  // Mapping URL admin → composant exact (sinon /admin/media précharge `Admin`
+  // mais le routeur rend `AdminMedia` → suspension au premier render).
+  const ADMIN_SUBROUTES: Record<string, PageComponent> = {
+    "/admin":              Admin,
+    "/admin/analytics":    AdminDashboard,
+    "/admin/audits":       AdminAuditHistory,
+    "/admin/calculateurs": AdminCalculateurs,
+    "/admin/media":        AdminMedia,
+    "/admin/blog":         AdminBlog,
+  };
+
   let page: PageComponent | undefined;
   const key = Object.keys(routes).find((k) => norm(routes[k] ?? "") === path);
   if (key) page = ROUTE_KEY_TO_PAGE[key];
   else if (path.startsWith("/blog/")) page = BlogPost;
   else if (path === "/profil") page = Profil;
   else if (path === "/login") page = Login;
-  else if (path === "/admin" || path.startsWith("/admin/")) page = Admin;
+  else if (path in ADMIN_SUBROUTES) page = ADMIN_SUBROUTES[path];
+  else if (path.startsWith("/admin/") || path === "/admin") page = Admin;
   if (!page) page = NotFound;
 
   try {

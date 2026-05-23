@@ -3,6 +3,12 @@
  * Chaque fonction retourne un objet conforme au format Schema.org
  */
 
+// Constantes injectées au build par Vite (cf. vite.config.ts → define).
+// Permettent d'avoir des dates stables identiques en SSR et au client,
+// au lieu d'un `new Date()` qui diverge à minuit ou entre jours.
+declare const __BUILD_NEXT_YEAR__: number | undefined;
+declare const __BUILD_DATE_ISO__: string | undefined;
+
 const LOGO_URL = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp";
 const COMPANY_PHONE = "+33 6 63 91 72 50";
 const COMPANY_EMAIL = "contact@hallucine.fr";
@@ -163,7 +169,9 @@ export function productSchema(product: ProductData) {
       availability: "https://schema.org/InStock",
       priceCurrency: "EUR",
       price: product.minPrice || 990,
-      priceValidUntil: `${new Date().getFullYear() + 1}-12-31`,
+      // Stable au build pour éviter une divergence SSR ↔ hydratation autour
+      // du Nouvel An (cf. __BUILD_NEXT_YEAR__ défini dans vite.config.ts).
+      priceValidUntil: `${typeof __BUILD_NEXT_YEAR__ !== "undefined" ? __BUILD_NEXT_YEAR__ : new Date().getFullYear() + 1}-12-31`,
       seller: {
         "@type": "Organization",
         name: "Hallucine",
@@ -263,7 +271,7 @@ export function articleSchema(article: ArticleData) {
     image: article.image || LOGO_URL,
     url: article.url,
     datePublished: article.datePublished || "2024-01-01",
-    dateModified: article.dateModified || new Date().toISOString().split("T")[0],
+    dateModified: article.dateModified || (typeof __BUILD_DATE_ISO__ !== "undefined" ? __BUILD_DATE_ISO__ : new Date().toISOString().split("T")[0]),
     author: {
       "@type": "Organization",
       name: "Hallucine",

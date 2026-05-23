@@ -36,10 +36,14 @@ const plugins = [
 
 export default defineConfig({
   plugins,
-  // Année du build, injectée comme littéral dans le bundle client → le Footer
-  // affiche la même année qu'au prerender (hydratation déterministe).
+  // Constantes de build injectées comme littéraux dans le bundle client.
+  // Objectif : hydratation déterministe — la même valeur en SSR et au client.
+  // Pour les dates : éviter `new Date()` à l'exécution (diverge à minuit ou
+  // entre le jour du build et le jour de l'hydratation).
   define: {
     __BUILD_YEAR__: JSON.stringify(new Date().getFullYear()),
+    __BUILD_NEXT_YEAR__: JSON.stringify(new Date().getFullYear() + 1),
+    __BUILD_DATE_ISO__: JSON.stringify(new Date().toISOString().split("T")[0]),
   },
   resolve: {
     alias: {

@@ -9,12 +9,14 @@
  * ✅ Instance i18n créée par render() pour éviter les race conditions entre langues
  * ✅ Utilisé uniquement par scripts/prerender.mjs
  */
-import { renderToString } from "react-dom/server";
+import { renderToPipeableStream } from "react-dom/server";
+import { Writable } from "node:stream";
 import { Router as WouterRouter } from "wouter";
 import { I18nextProvider } from "react-i18next";
 import { createInstance } from "i18next";
 import { initReactI18next } from "react-i18next";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Window } from "happy-dom";
 import { trpc } from "./lib/trpc.ts";
 import { httpBatchLink } from "@trpc/client";
 import superjson from "superjson";
@@ -27,54 +29,32 @@ import { preloadAllPages } from "./pages/registry.ts";
 import { SSRMetaContext, type SSRMeta } from "./context/SSRMetaContext.ts";
 import type { Resource } from "i18next";
 
-// Simuler window pour les composants qui en ont besoin
-// (tous les usages réels sont dans useEffect ou handlers, donc ignorés en SSR)
+// ─── Environnement DOM SSR via happy-dom ────────────────────────────────────
+// Vrai Window/Document conformes au standard WHATWG. Remplace le stub manuel
+// no-op qui devait être étendu à chaque nouvelle lib (framer-motion, radix...).
+// happy-dom : ~250 ko, utilisé par Vitest, parfait pour SSR/SSG sans framework.
 if (typeof window === "undefined") {
-  // Stub DOM minimal pour les libs qui attendent un environnement navigateur
-  // (framer-motion, radix, etc.). Toutes les méthodes sont des no-ops — les
-  // vrais effets ne s'exécutent qu'en useEffect côté client.
-  const noop = () => {};
-  const nullStorage = { getItem: () => null, setItem: noop, removeItem: noop, clear: noop, length: 0, key: () => null };
-  const stubElement = {
-    addEventListener: noop, removeEventListener: noop, getBoundingClientRect: () => ({ top: 0, left: 0, right: 0, bottom: 0, width: 0, height: 0, x: 0, y: 0 }),
-    style: {}, classList: { add: noop, remove: noop, toggle: noop, contains: () => false },
-    appendChild: noop, removeChild: noop, setAttribute: noop, getAttribute: () => null,
-    querySelector: () => null, querySelectorAll: () => [],
+  const happyWindow = new Window({ url: "http://localhost:3000/" });
+  // Cast `unknown` puis assignation : happy-dom expose une API très proche du
+  // DOM standard mais n'est pas typée identique à `globalThis.Window`.
+  // Définir les globaux DOM avec defineProperty pour ne pas se faire bloquer
+  // par les getters readonly de Node (ex: globalThis.navigator).
+  const defineGlobal = (name: string, value: unknown) => {
+    try {
+      Object.defineProperty(globalThis, name, { value, writable: true, configurable: true });
+    } catch {
+      // Si la propriété n'est ni writable ni configurable, on tente
+      // l'assignation directe — silencieusement ignorée si bloquée.
+      try { (globalThis as unknown as Record<string, unknown>)[name] = value; } catch { /* ignore */ }
+    }
   };
-
-  (globalThis as unknown as Record<string, unknown>).window = {
-    location: {
-      origin: "http://localhost:3000",
-      hostname: "localhost",
-      pathname: "/",
-      search: "",
-      href: "http://localhost:3000/",
-    },
-    history: { replaceState: noop, pushState: noop },
-    addEventListener: noop,
-    removeEventListener: noop,
-    matchMedia: () => ({ matches: false, addListener: noop, removeListener: noop, addEventListener: noop, removeEventListener: noop }),
-    innerWidth: 1280,
-    innerHeight: 720,
-    scrollY: 0,
-    scrollX: 0,
-    scrollTo: noop,
-    requestAnimationFrame: noop,
-    cancelAnimationFrame: noop,
-    localStorage: nullStorage,
-    sessionStorage: nullStorage,
-    document: {
-      addEventListener: noop, removeEventListener: noop,
-      documentElement: stubElement, body: stubElement, head: stubElement,
-      createElement: () => stubElement, querySelector: () => null, querySelectorAll: () => [],
-      title: "", referrer: "",
-    },
-  };
-
-  // Certaines libs accèdent aussi à `document` directement (pas via window.document)
-  (globalThis as unknown as Record<string, unknown>).document = (
-    (globalThis as unknown as { window: { document: unknown } }).window.document
-  );
+  defineGlobal("window", happyWindow);
+  defineGlobal("document", happyWindow.document);
+  defineGlobal("navigator", happyWindow.navigator);
+  defineGlobal("HTMLElement", happyWindow.HTMLElement);
+  defineGlobal("Element", happyWindow.Element);
+  defineGlobal("Node", happyWindow.Node);
+  defineGlobal("getComputedStyle", happyWindow.getComputedStyle.bind(happyWindow));
 }
 
 // Simuler import.meta.env pour les composants qui l'utilisent (const.ts, etc.)
@@ -130,13 +110,24 @@ export async function render(
   // S'assurer que tous les modules de pages sont chargés avant le 1er render
   await ensurePagesPreloaded();
 
-  // Images bakées au build → lues par useProductImages/useMediaByCategory
-  // pour que le HTML pré-rendu contienne directement les vraies images.
-  if (mediaCache) {
-    (globalThis as unknown as Record<string, unknown>).__SSR_MEDIA__ = mediaCache;
-  }
+  // ─── Sauvegarde des globaux (réentrance) ─────────────────────────────────
+  // render() est appelé séquentiellement par scripts/prerender.mjs, mais
+  // on capture les valeurs précédentes pour les restaurer en `finally`
+  // → safe si render() est appelé en parallèle ou re-entré accidentellement.
+  const g = globalThis as unknown as Record<string, unknown>;
+  const w = window as unknown as Record<string, unknown> | undefined;
+  const wLoc = w?.location as Record<string, unknown> | undefined;
+  const prev = {
+    ssrMedia: g.__SSR_MEDIA__,
+    pathname: wLoc?.pathname,
+    href: wLoc?.href,
+    initialLocale: w?.__INITIAL_LOCALE__,
+  };
 
-  // ✅ Instance i18n créée par render() — pas de race conditions entre langues
+  // Images bakées au build → lues par useProductImages/useMediaByCategory
+  if (mediaCache) g.__SSR_MEDIA__ = mediaCache;
+
+  // ✅ Instance i18n locale (pas de race conditions entre langues)
   const i18n = createInstance();
   await i18n.use(initReactI18next).init({
     resources,
@@ -146,16 +137,16 @@ export async function render(
     ns: NS,
     defaultNS: "common",
     interpolation: { escapeValue: false },
-    react: { useSuspense: false }, // false en SSR pour éviter les Suspense boundaries
+    react: { useSuspense: false }, // identique au client
   });
 
-  // Mettre à jour window.location.pathname + injecter __INITIAL_LOCALE__
-  // pour que detectLanguage() (utilisé dans App.tsx) retourne la bonne langue
-  if (typeof window !== "undefined") {
-    (window.location as unknown as Record<string, unknown>).pathname = url;
-    (window.location as unknown as Record<string, unknown>).href = `http://localhost:3000${url}`;
-    (window as unknown as Record<string, unknown>).__INITIAL_LOCALE__ = lang;
+  // window.location + __INITIAL_LOCALE__ pour que detectLanguage() (App.tsx)
+  // retourne la bonne langue côté SSR
+  if (wLoc) {
+    wLoc.pathname = url;
+    wLoc.href = `http://localhost:3000${url}`;
   }
+  if (w) w.__INITIAL_LOCALE__ = lang;
 
   // Contexte SSR pour collecter les metas pendant renderToString
   const ssrMeta: SSRMeta = {
@@ -194,7 +185,7 @@ export async function render(
   // par `mounted` dans App.tsx → false en SSR ET au 1er rendu client (avant
   // hydratation), donc invisibles des deux côtés. Le Switch fait le matching
   // d'URL via le hook ssrLocationHook → la bonne page est rendue.
-  const html = renderToString(
+  const tree = (
     <I18nextProvider i18n={i18n}>
       <trpc.Provider client={trpcClient} queryClient={queryClient}>
         <QueryClientProvider client={queryClient}>
@@ -209,5 +200,39 @@ export async function render(
     </I18nextProvider>
   );
 
-  return { html, meta: ssrMeta };
+  try {
+    // ✅ renderToPipeableStream (recommandé React 19) au lieu de renderToString.
+    // On bufferise le flux dans une chaîne pour l'écrire sur disque (SSG).
+    const html: string = await new Promise<string>((resolve, reject) => {
+      let buf = "";
+      const sink = new Writable({
+        write(chunk, _encoding, cb) {
+          buf += chunk.toString("utf-8");
+          cb();
+        },
+      });
+      sink.on("finish", () => resolve(buf));
+      sink.on("error", reject);
+
+      const { pipe } = renderToPipeableStream(tree, {
+        onAllReady() { pipe(sink); },
+        onShellError: reject,
+        onError(err) { reject(err instanceof Error ? err : new Error(String(err))); },
+      });
+    });
+
+    return { html, meta: ssrMeta };
+  } finally {
+    // Restaurer les globaux modifiés pour la réentrance/parallélisme
+    if (prev.ssrMedia === undefined) delete g.__SSR_MEDIA__;
+    else g.__SSR_MEDIA__ = prev.ssrMedia;
+    if (wLoc) {
+      if (prev.pathname !== undefined) wLoc.pathname = prev.pathname;
+      if (prev.href !== undefined) wLoc.href = prev.href;
+    }
+    if (w) {
+      if (prev.initialLocale === undefined) delete w.__INITIAL_LOCALE__;
+      else w.__INITIAL_LOCALE__ = prev.initialLocale;
+    }
+  }
 }

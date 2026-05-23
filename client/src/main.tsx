@@ -4,7 +4,7 @@ import { i18n } from "./i18n/instance"; // Instance partagée (initialisée par 
 import { UNAUTHED_ERR_MSG } from '@shared/const';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, retryLink, TRPCClientError } from "@trpc/client";
-import { hydrateRoot } from "react-dom/client";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import { I18nextProvider } from "react-i18next";
 import { Router as WouterRouter } from "wouter";
 import superjson from "superjson";
@@ -118,8 +118,8 @@ preloadCurrentPage().finally(() => {
   // Mêmes providers, même ordre, même <WouterRouter> wrapper, même
   // <SSRMetaContext.Provider> (avec value=null côté client puisque les
   // metas ne sont collectées qu'en SSR).
-  hydrateRoot(
-    document.getElementById("root")!,
+  const rootEl = document.getElementById("root")!;
+  const tree = (
     <I18nextProvider i18n={i18n}>
       <trpc.Provider client={trpcClient} queryClient={queryClient}>
         <QueryClientProvider client={queryClient}>
@@ -132,4 +132,16 @@ preloadCurrentPage().finally(() => {
       </trpc.Provider>
     </I18nextProvider>
   );
+
+  // Détection du mode : hydrateRoot UNIQUEMENT si le serveur a vraiment rendu
+  // le contenu (cas des pages prérendues). Pour les routes non prérendues
+  // (/admin/*, /profil, /login, /blog/:slug, /404), le HTML servi a un
+  // <div id="root"> vide → createRoot.render() pour éviter le mismatch
+  // d'hydratation.
+  const hasSsrContent = rootEl.firstElementChild !== null;
+  if (hasSsrContent) {
+    hydrateRoot(rootEl, tree);
+  } else {
+    createRoot(rootEl).render(tree);
+  }
 });
