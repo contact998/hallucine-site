@@ -44,7 +44,7 @@ function PageLoader() {
   );
 }
 
-function Router() {
+function RoutesSwitch() {
   // Détecte la langue selon le domaine (production) ou ?lang= (dev)
   const lang = detectLanguage();
   const r = ROUTES[lang] ?? ROUTES["fr"];
@@ -147,7 +147,7 @@ function App() {
           <CanonicalUpdater />
           <ScrollToTop />
           <GlobalStructuredData />
-          <Router />
+          <RoutesSwitch />
           <PageFrame />
           {/* Widgets client-only — montés après hydratation */}
           {mounted && (

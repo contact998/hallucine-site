@@ -1,17 +1,16 @@
 /**
  * entry-server.tsx — Entrypoint SSR dédié
  *
+ * ✅ Rend EXACTEMENT le même arbre React que le client (<App />)
+ *    → hydratation sans mismatch (plus de "updateSuspenseComponent" warning)
+ * ✅ Préchargement de toutes les pages via preloadAllPages() → les lazyPage
+ *    rendent en synchrone pendant renderToString (qui est synchrone)
  * ✅ N'importe JAMAIS i18n/config.ts (qui utilise import.meta.glob — Vite-only)
  * ✅ Instance i18n créée par render() pour éviter les race conditions entre langues
  * ✅ Utilisé uniquement par scripts/prerender.mjs
- *
- * Architecture :
- *   render(url, lang) → createInstance() → init(bundledResources, lang)
- *   → renderToString(<I18nextProvider><Router><Page /></Router></I18nextProvider>)
  */
-import React, { Suspense } from "react";
 import { renderToString } from "react-dom/server";
-import { Router } from "wouter";
+import { Router as WouterRouter } from "wouter";
 import { I18nextProvider } from "react-i18next";
 import { createInstance } from "i18next";
 import { initReactI18next } from "react-i18next";
@@ -23,42 +22,9 @@ import superjson from "superjson";
 // Ressources locales chargées via fs.readFileSync (Node-only, pas import.meta.glob)
 import { bundledResources } from "./i18n/locales-bundled.node.ts";
 
-// Import direct des pages publiques (pas App.tsx qui importe config.ts → locales-bundled.ts)
-import Home from "./pages/Home.tsx";
-import Ecrans from "./pages/Ecrans.tsx";
-import EcranGeant from "./pages/EcranGeant.tsx";
-import EcranEtanche from "./pages/EcranEtanche.tsx";
-import EcranEconomique from "./pages/EcranEconomique.tsx";
-import Comparaison from "./pages/Comparaison.tsx";
-import Configurateur from "./pages/Configurateur.tsx";
-import DriveIn from "./pages/DriveIn.tsx";
-import Packs from "./pages/Packs.tsx";
-import Location from "./pages/Location.tsx";
-import EtudesCas from "./pages/EtudesCas.tsx";
-import EcransLED from "./pages/EcransLED.tsx";
-import Tentes from "./pages/Tentes.tsx";
-import TentesX from "./pages/TentesX.tsx";
-import TentesN from "./pages/TentesN.tsx";
-import TentesV from "./pages/TentesV.tsx";
-import TentesAraignees from "./pages/TentesAraignees.tsx";
-import ArchesGonflables from "./pages/ArchesGonflables.tsx";
-import Mobilier from "./pages/Mobilier.tsx";
-import Accessoires from "./pages/Accessoires.tsx";
-import Galerie from "./pages/Galerie.tsx";
-import GalerieVideo from "./pages/GalerieVideo.tsx";
-import Contact from "./pages/Contact.tsx";
-import APropos from "./pages/APropos.tsx";
-import Histoire from "./pages/Histoire.tsx";
-import Blog from "./pages/Blog.tsx";
-import ModeEmploi from "./pages/ModeEmploi.tsx";
-import DevenirDistributeur from "./pages/DevenirDistributeur.tsx";
-import MentionsLegales from "./pages/MentionsLegales.tsx";
-import Confidentialite from "./pages/Confidentialite.tsx";
-import PolitiqueCookies from "./pages/PolitiqueCookies.tsx";
-
-import { ROUTES } from "./i18n/routes.ts";
+import App from "./App.tsx";
+import { preloadAllPages } from "./pages/registry.ts";
 import { SSRMetaContext, type SSRMeta } from "./context/SSRMetaContext.ts";
-import GlobalStructuredData from "./components/GlobalStructuredData.tsx";
 import type { Resource } from "i18next";
 
 // Simuler window pour les composants qui en ont besoin
@@ -104,55 +70,13 @@ for (const lang of VALID_LANGS) {
   resources[lang] = (bundledResources[lang] as Resource[string]) ?? {};
 }
 
-/**
- * Mapping routeKey → composant React
- */
-const PAGE_MAP: Record<string, React.ComponentType> = {
-  home: Home,
-  ecrans: Ecrans,
-  "ecran-geant": EcranGeant,
-  "ecran-etanche": EcranEtanche,
-  "ecran-economique": EcranEconomique,
-  comparaison: Comparaison,
-  configurateur: Configurateur,
-  "drive-in": DriveIn,
-  packs: Packs,
-  location: Location,
-  "etudes-cas": EtudesCas,
-  "ecrans-led": EcransLED,
-  tentes: Tentes,
-  "tente-x": TentesX,
-  "tente-n": TentesN,
-  "tente-v": TentesV,
-  "tente-araignee": TentesAraignees,
-  arches: ArchesGonflables,
-  mobilier: Mobilier,
-  accessoires: Accessoires,
-  galerie: Galerie,
-  "galerie-video": GalerieVideo,
-  contact: Contact,
-  "a-propos": APropos,
-  histoire: Histoire,
-  blog: Blog,
-  "mode-emploi": ModeEmploi,
-  "devenir-distributeur": DevenirDistributeur,
-  "mentions-legales": MentionsLegales,
-  confidentialite: Confidentialite,
-  cookies: PolitiqueCookies,
-};
-
-/**
- * Trouve le composant de page correspondant à une URL dans une langue donnée
- */
-function getPageComponent(url: string, lang: string): React.ComponentType {
-  const langRoutes = ROUTES[lang] ?? ROUTES["fr"];
-  const entry = Object.entries(langRoutes).find(([, routeUrl]) => routeUrl === url);
-  if (entry) {
-    const [routeKey] = entry;
-    return PAGE_MAP[routeKey] ?? Home;
-  }
-  console.warn(`  SSR route: [${lang}] ${url} → NOT FOUND, fallback Home`);
-  return Home;
+// Précharge tous les modules de pages → les lazyPage de <App /> rendent en
+// synchrone pendant renderToString. Idempotent : seul le 1er await prend du
+// temps, les suivants sont des no-ops (promesses déjà résolues).
+let pagesPreloaded: Promise<void> | null = null;
+function ensurePagesPreloaded(): Promise<void> {
+  if (!pagesPreloaded) pagesPreloaded = preloadAllPages();
+  return pagesPreloaded;
 }
 
 /**
@@ -168,6 +92,9 @@ export async function render(
   lang: string,
   mediaCache?: Record<string, unknown>
 ): Promise<{ html: string; meta: SSRMeta }> {
+  // S'assurer que tous les modules de pages sont chargés avant le 1er render
+  await ensurePagesPreloaded();
+
   // Images bakées au build → lues par useProductImages/useMediaByCategory
   // pour que le HTML pré-rendu contienne directement les vraies images.
   if (mediaCache) {
@@ -187,10 +114,12 @@ export async function render(
     react: { useSuspense: false }, // false en SSR pour éviter les Suspense boundaries
   });
 
-  // Mettre à jour window.location.pathname pour les composants qui l'utilisent
+  // Mettre à jour window.location.pathname + injecter __INITIAL_LOCALE__
+  // pour que detectLanguage() (utilisé dans App.tsx) retourne la bonne langue
   if (typeof window !== "undefined") {
     (window.location as unknown as Record<string, unknown>).pathname = url;
     (window.location as unknown as Record<string, unknown>).href = `http://localhost:3000${url}`;
+    (window as unknown as Record<string, unknown>).__INITIAL_LOCALE__ = lang;
   }
 
   // Contexte SSR pour collecter les metas pendant renderToString
@@ -207,8 +136,6 @@ export async function render(
       if (data.url) this.url = data.url;
     },
   };
-
-  const Page = getPageComponent(url, lang);
 
   // Hook wouter SSR : retourne directement [url, noop] sans useSyncExternalStore
   // (useSyncExternalStore de wouter/memory-location n'a pas de getServerSnapshot)
@@ -227,25 +154,20 @@ export async function render(
     ],
   });
 
-  // ⚠️ Les deux <Suspense> reproduisent EXACTEMENT l'arbre client
-  // (main.tsx → <Suspense><App>, App.tsx → <Suspense><Router>). renderToString
-  // émet alors les marqueurs <!--$--> / <!--/$--> que hydrateRoot attend pour
-  // raccrocher ses propres boundaries Suspense. Sans eux → mismatch #418.
-  const fallback = <div className="min-h-screen bg-background" />;
+  // ✅ Arbre SSR strictement identique à l'arbre client.
+  // Les widgets client-only (Toaster, WhatsApp, HallucineChatbot) sont gated
+  // par `mounted` dans App.tsx → false en SSR ET au 1er rendu client (avant
+  // hydratation), donc invisibles des deux côtés. Le Switch fait le matching
+  // d'URL via le hook ssrLocationHook → la bonne page est rendue.
   const html = renderToString(
     <I18nextProvider i18n={i18n}>
       <trpc.Provider client={trpcClient} queryClient={queryClient}>
         <QueryClientProvider client={queryClient}>
           <SSRMetaContext.Provider value={ssrMeta}>
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            <Router hook={ssrLocationHook as any}>
-              <Suspense fallback={fallback}>
-                <GlobalStructuredData />
-                <Suspense fallback={fallback}>
-                  <Page />
-                </Suspense>
-              </Suspense>
-            </Router>
+            <WouterRouter hook={ssrLocationHook as any}>
+              <App />
+            </WouterRouter>
           </SSRMetaContext.Provider>
         </QueryClientProvider>
       </trpc.Provider>

@@ -82,6 +82,10 @@ const F = {
   NotFound:            () => import("./NotFound"),
 } as const;
 
+// ─── Préchargement global (utilisé en SSR) ──────────────────────────────────
+// Doit être déclaré APRÈS les exports `lazyPage(...)` pour pouvoir les
+// référencer — voir plus bas dans le fichier.
+
 // ─── Composants de page (importés par App.tsx) ──────────────────────────────
 export const Home = lazyPage(F.Home);
 export const Ecrans = lazyPage(F.Ecrans);
@@ -124,6 +128,30 @@ export const AdminMedia = lazyPage(F.AdminMedia);
 export const AdminBlog = lazyPage(F.AdminBlog);
 export const Login = lazyPage(F.Login);
 export const NotFound = lazyPage(F.NotFound);
+
+// ─── Préchargement global (utilisé en SSR) ──────────────────────────────────
+
+const ALL_LAZY_PAGES: readonly PageComponent[] = [
+  Home, Ecrans, EcranGeant, EcranEtanche, EcranEconomique, Comparaison,
+  Configurateur, DriveIn, Packs, Location, EtudesCas, EcransLED,
+  Tentes, TentesX, TentesN, TentesV, TentesAraignees,
+  ArchesGonflables, Mobilier, Accessoires, Galerie, GalerieVideo, Contact,
+  APropos, Histoire, ModeEmploi, Blog, BlogPost, DevenirDistributeur,
+  MentionsLegales, Confidentialite, PolitiqueCookies,
+  Profil, Admin, AdminDashboard, AdminAuditHistory, AdminCalculateurs,
+  AdminMedia, AdminBlog, Login, NotFound,
+];
+
+/**
+ * Précharge TOUS les modules de pages → après cet await, le champ `mod`
+ * interne à chaque `lazyPage` est rempli, donc le composant rend de façon
+ * SYNCHRONE pendant renderToString. À appeler une fois en SSR avant tout
+ * render(). Idempotent : les appels suivants sont des no-ops (promesses
+ * déjà résolues côté de chaque lazyPage).
+ */
+export async function preloadAllPages(): Promise<void> {
+  await Promise.all(ALL_LAZY_PAGES.map((p) => p.preload()));
+}
 
 // ─── Préchargement de la page courante (avant hydrateRoot) ──────────────────
 

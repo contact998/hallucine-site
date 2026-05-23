@@ -6,12 +6,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, retryLink, TRPCClientError } from "@trpc/client";
 import { hydrateRoot } from "react-dom/client";
 import { I18nextProvider } from "react-i18next";
+import { Router as WouterRouter } from "wouter";
 import superjson from "superjson";
 import App from "./App";
 import { preloadCurrentPage } from "./pages/registry";
+import { SSRMetaContext } from "./context/SSRMetaContext";
 import { getLoginUrl, initLoginUrl } from "./const";
 import "./index.css";
-import { Suspense } from "react";
 
 // Pré-charger la config OAuth depuis /api/config au démarrage
 initLoginUrl();
@@ -113,14 +114,20 @@ const trpcClient = trpc.createClient({
 // Sans ce préchargement, la page (lazy) suspendrait pendant l'hydratation
 // → React afficherait le spinner ≠ HTML serveur → pré-rendu jeté (flash).
 preloadCurrentPage().finally(() => {
+  // ✅ Arbre client strictement identique à l'arbre SSR (entry-server.tsx).
+  // Mêmes providers, même ordre, même <WouterRouter> wrapper, même
+  // <SSRMetaContext.Provider> (avec value=null côté client puisque les
+  // metas ne sont collectées qu'en SSR).
   hydrateRoot(
     document.getElementById("root")!,
     <I18nextProvider i18n={i18n}>
       <trpc.Provider client={trpcClient} queryClient={queryClient}>
         <QueryClientProvider client={queryClient}>
-          <Suspense fallback={<div className="min-h-screen bg-background" />}>
-            <App />
-          </Suspense>
+          <SSRMetaContext.Provider value={null}>
+            <WouterRouter>
+              <App />
+            </WouterRouter>
+          </SSRMetaContext.Provider>
         </QueryClientProvider>
       </trpc.Provider>
     </I18nextProvider>
