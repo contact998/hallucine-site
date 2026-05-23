@@ -2,7 +2,7 @@
   "site_name": "Hallucine",
   "tagline": "Inflatable Cinema Screens",
   "rideau_click_enter": "Click to enter",
-  "success_thanks_named": "Thank you{{name}}",
+  "success_thanks_named": "Thank you {{name}}",
   "success_thanks_default": "We have received your request",
   "success_reply_24h": "Our team will get back to you within 24 hours.",
   "success_privacy": "Your data is secure and will never be shared.",

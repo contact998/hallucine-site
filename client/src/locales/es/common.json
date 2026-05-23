@@ -2,7 +2,7 @@
   "site_name": "Hallucine",
   "tagline": "Pantallas de Cine Hinchables",
   "rideau_click_enter": "Haz clic para entrar",
-  "success_thanks_named": "Gracias{{name}}",
+  "success_thanks_named": "Gracias {{name}}",
   "success_thanks_default": "Hemos recibido su solicitud",
   "success_reply_24h": "Nuestro equipo le responderá en un plazo de 24 horas.",
   "success_privacy": "Tus datos están a salvo y nunca se compartirán.",

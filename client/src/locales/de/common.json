@@ -2,7 +2,7 @@
   "site_name": "Hallucine",
   "tagline": "Aufblasbare Kinoleinwände",
   "rideau_click_enter": "Zum Betreten bitte hier klicken",
-  "success_thanks_named": "Vielen Dank{{name}}",
+  "success_thanks_named": "Vielen Dank {{name}}",
   "success_thanks_default": "Wir haben Ihre Anfrage erhalten",
   "success_reply_24h": "Unser Team wird sich innerhalb von 24 Stunden bei Ihnen melden.",
   "success_privacy": "Ihre Daten sind sicher und werden niemals weitergegeben.",
