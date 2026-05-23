@@ -5,7 +5,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
-import { ArrowLeft, Globe, Award, Feather, Users, ChevronRight } from "lucide-react";
+import { ArrowLeft, Globe, Award, Feather, Users, ChevronRight, Image as ImageIcon } from "lucide-react";
 import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
@@ -31,8 +31,24 @@ export default function Histoire() {
 
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
 
-  const chapters = [
+  const chapters: Array<{
+    year: string;
+    title: string;
+    text: string;
+    image: string | null;
+    imagePlaceholder?: string;
+    quote: string | null;
+  }> = [
     { year: t("ch1_year"), title: t("ch1_title"), text: t("ch1_text"), image: null, quote: null },
+    {
+      year: t("ch1b_year"),
+      title: t("ch1b_title"),
+      text: t("ch1b_text"),
+      image: null,
+      // TODO : remplacer par l'URL R2 de la photo du premier écran 8m en aluminium
+      imagePlaceholder: t("ch1b_image_placeholder"),
+      quote: null,
+    },
     { year: t("ch2_year"), title: t("ch2_title"), text: t("ch2_text"), image: ETANCHE_3M, quote: null },
     { year: t("ch3_year"), title: t("ch3_title"), text: t("ch3_text"), image: null, quote: t("ch3_quote") },
     { year: t("ch4_year"), title: t("ch4_title"), text: t("ch4_text"), image: SOUFFLERIE_12M, quote: null },
@@ -165,6 +181,17 @@ export default function Histoire() {
                       loading="lazy"
                       decoding="async"
                     />
+                  </div>
+                </div>
+              )}
+
+              {!chapter.image && chapter.imagePlaceholder && (
+                <div className="flex-1 lg:max-w-[45%] w-full">
+                  <div className="overflow-hidden rounded-lg border-2 border-dashed border-gold/30 bg-gold/[0.03] h-64 md:h-80 flex flex-col items-center justify-center text-center px-6">
+                    <ImageIcon className="w-10 h-10 text-gold/40 mb-3" />
+                    <span className="text-gold/60 text-sm font-medium tracking-wide">
+                      {chapter.imagePlaceholder}
+                    </span>
                   </div>
                 </div>
               )}
