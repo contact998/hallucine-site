@@ -266,9 +266,15 @@
   50%     { opacity: 0.55; }
 }
 
-/* Smooth scrolling */
+/* Smooth scrolling + scrollbar-gutter stable
+   `scrollbar-gutter: stable` réserve toujours l'espace de la scrollbar même
+   quand elle n'est pas affichée → la largeur du viewport (et donc du cadre
+   PageFrame en position:fixed) reste constante d'une page à l'autre.
+   Sans ça, les pages courtes (rideau bloquant le scroll, page peu remplie)
+   ont une largeur différente des pages longues → décalage visible du cadre. */
 html {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
 }
 
 /* Custom scrollbar — minimal */
