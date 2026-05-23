@@ -215,6 +215,8 @@ for (const lang of VALID_LANGS) {
   const domain = DOMAINS[lang];
 
   for (const [routeKey, url] of Object.entries(langRoutes)) {
+    // Route de redirection seule — pas de page réelle à prérendre
+    if (routeKey === "trouver-distributeur") continue;
     try {
       // Rendre la page (récupère aussi les metas collectées en SSR)
       const { html, meta } = await render(url, lang, mediaCache);
@@ -326,7 +328,6 @@ const ROUTE_META = {
   blog:                   { priority: "0.7", changefreq: "weekly" },
   "mode-emploi":          { priority: "0.6", changefreq: "monthly" },
   "devenir-distributeur": { priority: "0.7", changefreq: "monthly" },
-  "trouver-distributeur": { priority: "0.7", changefreq: "monthly" },
   "mentions-legales":     { priority: "0.3", changefreq: "yearly" },
   confidentialite:        { priority: "0.3", changefreq: "yearly" },
   cookies:                { priority: "0.3", changefreq: "yearly" },
@@ -342,6 +343,8 @@ async function buildSitemap() {
   const routeKeys = Object.keys(ROUTES["fr"]);
 
   for (const routeKey of routeKeys) {
+    // Route de redirection seule — exclue du sitemap
+    if (routeKey === "trouver-distributeur") continue;
     const meta = ROUTE_META[routeKey] ?? { priority: "0.5", changefreq: "monthly" };
 
     for (const lang of VALID_LANGS) {

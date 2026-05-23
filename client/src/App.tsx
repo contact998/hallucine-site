@@ -3,6 +3,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch, Redirect } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
+import PageFrame from "./components/PageFrame";
 import WhatsAppButton from "./components/WhatsAppButton";
 const HallucineChatbot = lazy(() => import("./components/HallucineChatbot"));
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -18,7 +19,7 @@ import {
   Configurateur, DriveIn, Packs, Location, EtudesCas, EcransLED, Tentes, TentesX, TentesN, TentesV, TentesAraignees,
   ArchesGonflables, Mobilier, Accessoires, Galerie, GalerieVideo, Contact,
   APropos, Histoire, ModeEmploi, Blog, BlogPost, DevenirDistributeur,
-  TrouverDistributeur, MentionsLegales, Confidentialite, PolitiqueCookies,
+  MentionsLegales, Confidentialite, PolitiqueCookies,
   Profil, Admin, AdminDashboard, AdminAuditHistory, AdminCalculateurs,
   AdminMedia, AdminBlog, Login, NotFound,
 } from "./pages/registry";
@@ -90,7 +91,8 @@ function Router() {
         <Route path="/blog/:slug" component={BlogPost} />
         {/* Distributeurs */}
         <Route path={r["devenir-distributeur"]} component={DevenirDistributeur} />
-        <Route path={r["trouver-distributeur"]} component={TrouverDistributeur} />
+        {/* Ancienne page « Trouver un distributeur » fusionnée → redirection */}
+        <Route path={r["trouver-distributeur"]}>{() => <Redirect to={r["devenir-distributeur"]} />}</Route>
         {/* Légal */}
         <Route path={r["mentions-legales"]} component={MentionsLegales} />
         <Route path={r["confidentialite"]} component={Confidentialite} />
@@ -144,6 +146,7 @@ function App() {
           <CanonicalUpdater />
           <GlobalStructuredData />
           <Router />
+          <PageFrame />
           {/* Widgets client-only — montés après hydratation */}
           {mounted && (
             <>

@@ -68,7 +68,6 @@ const F = {
   Blog:                () => import("./Blog"),
   BlogPost:            () => import("./BlogPost"),
   DevenirDistributeur: () => import("./DevenirDistributeur"),
-  TrouverDistributeur: () => import("./TrouverDistributeur"),
   MentionsLegales:     () => import("./MentionsLegales"),
   Confidentialite:     () => import("./Confidentialite"),
   PolitiqueCookies:    () => import("./PolitiqueCookies"),
@@ -113,7 +112,6 @@ export const ModeEmploi = lazyPage(F.ModeEmploi);
 export const Blog = lazyPage(F.Blog);
 export const BlogPost = lazyPage(F.BlogPost);
 export const DevenirDistributeur = lazyPage(F.DevenirDistributeur);
-export const TrouverDistributeur = lazyPage(F.TrouverDistributeur);
 export const MentionsLegales = lazyPage(F.MentionsLegales);
 export const Confidentialite = lazyPage(F.Confidentialite);
 export const PolitiqueCookies = lazyPage(F.PolitiqueCookies);
@@ -159,7 +157,6 @@ const ROUTE_KEY_TO_PAGE: Record<string, PageComponent> = {
   "mode-emploi":          ModeEmploi,
   blog:                   Blog,
   "devenir-distributeur": DevenirDistributeur,
-  "trouver-distributeur": TrouverDistributeur,
   "mentions-legales":     MentionsLegales,
   confidentialite:        Confidentialite,
   cookies:                PolitiqueCookies,

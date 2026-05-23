@@ -40,7 +40,6 @@ export default function Footer() {
     { labelKey: "footer.menu.mode_emploi", href: route("mode-emploi") },
     { labelKey: "footer.menu.galerie_video", href: route("galerie-video") },
     { labelKey: "footer.menu.blog", href: route("blog") },
-    { labelKey: "footer.menu.trouver_distributeur", href: route("trouver-distributeur") },
     { labelKey: "footer.menu.devenir_distributeur", href: route("devenir-distributeur") },
     { labelKey: "footer.menu.confidentialite", href: route("confidentialite") },
     { labelKey: "footer.menu.mentions_legales", href: route("mentions-legales") },

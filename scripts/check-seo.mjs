@@ -169,7 +169,7 @@ const LOCALE_FILES_TO_CHECK = [
   "ecrans-led", "comparaison", "tentes", "tente-x", "tente-n", "tente-v",
   "tente-araignee", "arches-gonflables", "mobilier", "accessoires",
   "galerie", "galerie-video", "contact", "a-propos", "histoire", "blog",
-  "mode-emploi", "devenir-distributeur", "trouver-distributeur",
+  "mode-emploi", "devenir-distributeur",
 ];
 
 // Correspondance RouteKey → nom de fichier locale
@@ -197,7 +197,6 @@ const ROUTE_TO_LOCALE = {
   "blog":               "blog",
   "mode-emploi":        "mode-emploi",
   "devenir-distributeur": "devenir-distributeur",
-  "trouver-distributeur": "trouver-distributeur",
 };
 
 let metaOk = true;
@@ -258,7 +257,7 @@ if (!existsSync(relatedConfigPath)) {
   const EXCLUDED_FROM_RELATED = [
     "home", "galerie", "galerie-video", "mentions-legales",
     "confidentialite", "cookies", "blog", "contact",
-    "devenir-distributeur", "trouver-distributeur",
+    "devenir-distributeur",
   ];
 
   const productPages = routeKeys.filter(k => !EXCLUDED_FROM_RELATED.includes(k));
