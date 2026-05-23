@@ -5,7 +5,7 @@
  * Le clic initial contourne la politique autoplay des navigateurs.
  * Détection des bots (Lighthouse/Googlebot) → pas de rideau pour eux
  */
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useLayoutEffect, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
 // Son du rideau : 6 s mono 64 kbps (~47 Ko) — couvre l'ouverture de ~3,8 s.
@@ -67,10 +67,35 @@ export default function CinemaRideau() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const fadeRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // Forcer le scroll en haut de page dès l'affichage du rideau
-  useEffect(() => {
+  // Verrouille le scroll de la page derrière le rideau et force la position
+  // en haut AVANT le paint (useLayoutEffect). Évite l'effet « page scrollée
+  // en bas qui saute en haut » quand le rideau s'ouvre.
+  useLayoutEffect(() => {
     if (phase === "done") return;
+
+    // Désactive la restauration de scroll automatique du navigateur
+    const prevScrollRestoration =
+      typeof history !== "undefined" && "scrollRestoration" in history
+        ? history.scrollRestoration
+        : "auto";
+    if (typeof history !== "undefined" && "scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+
+    // Force la position en haut + bloque tout scroll tant que le rideau est visible
+    const prevOverflow = document.documentElement.style.overflow;
+    const prevBodyOverflow = document.body.style.overflow;
     window.scrollTo(0, 0);
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.documentElement.style.overflow = prevOverflow;
+      document.body.style.overflow = prevBodyOverflow;
+      if (typeof history !== "undefined" && "scrollRestoration" in history) {
+        history.scrollRestoration = prevScrollRestoration;
+      }
+    };
   }, [phase]);
 
   // Clic utilisateur → ouvrir le rideau directement avec le son
