@@ -248,11 +248,16 @@
     transform: translateY(-2px);
   }
 
-  /* Cadre doré qui respire — overlay viewport, pages publiques uniquement.
-     Bordure 1px à opacité animée pour rester discrète. */
+  /* Cadre doré qui respire — overlay viewport plein écran.
+     ⚠️ width: 100vw (et non inset:0) pour couvrir aussi la zone de scrollbar
+     verticale. Sans ça, `position: fixed; inset: 0` s'arrête au bord intérieur
+     de la scrollbar → décalage visible de ~6px à droite. */
   .hallucine-page-frame {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: 100;
     pointer-events: none;
     border: 1px solid oklch(0.72 0.10 55);
@@ -266,15 +271,9 @@
   50%     { opacity: 0.55; }
 }
 
-/* Smooth scrolling + scrollbar-gutter stable
-   `scrollbar-gutter: stable` réserve toujours l'espace de la scrollbar même
-   quand elle n'est pas affichée → la largeur du viewport (et donc du cadre
-   PageFrame en position:fixed) reste constante d'une page à l'autre.
-   Sans ça, les pages courtes (rideau bloquant le scroll, page peu remplie)
-   ont une largeur différente des pages longues → décalage visible du cadre. */
+/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
-  scrollbar-gutter: stable;
 }
 
 /* Custom scrollbar — minimal */
