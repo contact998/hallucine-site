@@ -6,6 +6,7 @@
  * Détection des bots (Lighthouse/Googlebot) → pas de rideau pour eux
  */
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 
 // Son du rideau : 6 s mono 64 kbps (~47 Ko) — couvre l'ouverture de ~3,8 s.
 const CURTAIN_SOUND_URL = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/curtain-1779259189993.mp3";
@@ -51,6 +52,8 @@ function markCurtainSeen(): void {
 }
 
 export default function CinemaRideau() {
+  const { t } = useTranslation("common");
+
   // SSR-safe : toujours "waiting" au premier rendu (SSR + client)
   // Le useEffect s'exécute uniquement côté client après hydratation
   const [phase, setPhase] = useState<Phase>("waiting");
@@ -208,9 +211,9 @@ export default function CinemaRideau() {
               fetchPriority="high"
             />
           </picture>
-          <p className="text-white/60 text-sm tracking-[0.3em] mt-4 uppercase">Écrans de cinéma gonflables</p>
+          <p className="text-white/60 text-sm tracking-[0.3em] mt-4 uppercase">{t("tagline")}</p>
           <p className="text-amber-400/80 text-xs tracking-[0.2em] mt-6 uppercase animate-pulse">
-            Cliquez pour entrer
+            {t("rideau_click_enter")}
           </p>
         </div>
       </div>
