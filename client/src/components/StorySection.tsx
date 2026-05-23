@@ -7,6 +7,7 @@ import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 const ECRAN_8M_ALUMINIUM = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779578749911-c9425a005493-ecran-8-m-cadre-aluminium.jpg";
+const ECOLE_FORAINS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779578888369-951ff08bc2f1-ecran-structure-1-1.jpg";
 const ECRAN_TUBULAIRE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/JlNlzGmvIyCrQHIY.webp";
 const VOILERIE_BRETAGNE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/HuaJYMAXkcNubwBZ.webp";
 const KYTEA_HK = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ihAHJqPuCbLEmeIQ.webp";
@@ -17,7 +18,7 @@ const TROIS_ECRANS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets
 
 const CHAPTER_IMAGES: { image: string | null; smallImage?: boolean; extraSmall?: boolean }[] = [
   { image: ECRAN_8M_ALUMINIUM },
-  { image: ECRAN_TUBULAIRE, smallImage: true },
+  { image: ECOLE_FORAINS },
   { image: VOILERIE_BRETAGNE },
   { image: KYTEA_HK, smallImage: true, extraSmall: true },
   { image: ECLATE_ETANCHE, smallImage: true },
