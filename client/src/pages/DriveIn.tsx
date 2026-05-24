@@ -10,14 +10,24 @@ import Footer from "@/components/Footer";
 import PageStructuredData from "@/components/PageStructuredData";
 import PagePhoto from "@/components/PagePhoto";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import { useMediaByCategory } from "@/hooks/useMediaByCategory";
 import { useRoutes } from "@/i18n/useRoutes";
 import { ECRAN_DRIVE_IN } from "@/data/ecransConfigurateur";
 import { formatNombre, formatMontage, formatPersonnes } from "@/lib/ecranFormat";
+
+const DRIVE_IN_FALLBACK = [
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779589688540-cc4404c27d95-ecran-cinema-drive-in-gonflable-10m-voitures-coucher-soleil.webp",
+    alt: "Écran de cinéma gonflable Hallucine 10m installé pour drive-in, voitures stationnées au coucher du soleil" },
+];
 
 export default function DriveIn() {
   const { t } = useTranslation("drive-in");
   const route = useRoutes();
   useDocumentMeta(t("meta_title"), t("meta_desc"));
+
+  // Galerie images de la page Drive-In, pilotable depuis /admin/media (subcat=drive-in)
+  const images = useMediaByCategory("produits", DRIVE_IN_FALLBACK, "drive-in");
+  const heroImage = images[0];
 
   const ecran = ECRAN_DRIVE_IN;
   const prix = `${formatNombre(ecran.prixHT)} € ${t("ht")}`;
@@ -105,30 +115,45 @@ export default function DriveIn() {
         <div className="container">
           <h2 className="text-3xl font-bold text-ivory mb-2">{t("card_title")}</h2>
           <p className="text-white/60 mb-8 max-w-2xl">{t("card_desc")}</p>
-          <div className="bg-background border border-warm/20 rounded-xl p-6 md:p-8 max-w-3xl">
-            <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 mb-6">
-              <h3 className="text-3xl font-bold text-ivory">{ecran.tailleHorsTout}</h3>
-              <p className="text-3xl font-bold text-warm">{prix}</p>
+          <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
+            <div className="bg-background border border-warm/20 rounded-xl p-6 md:p-8">
+              <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 mb-6">
+                <h3 className="text-3xl font-bold text-ivory">{ecran.tailleHorsTout}</h3>
+                <p className="text-3xl font-bold text-warm">{prix}</p>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-px bg-white/5 rounded-lg overflow-hidden mb-4">
+                {specs.map((s) => (
+                  <div key={s.label} className="bg-background p-3">
+                    <p className="text-white/45 text-xs mb-1">{s.label}</p>
+                    <p className="text-ivory text-sm font-semibold">{s.value}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="text-white/45 text-xs mb-4">{t("prix_caption")}</p>
+              <p className="text-white/60 text-sm flex items-start gap-2 mb-6">
+                <Radio className="w-4 h-4 text-warm shrink-0 mt-0.5" />
+                {t("audio_note")}
+              </p>
+              <Link
+                href={route("contact")}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors"
+              >
+                {t("cta_devis")} <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-px bg-white/5 rounded-lg overflow-hidden mb-4">
-              {specs.map((s) => (
-                <div key={s.label} className="bg-background p-3">
-                  <p className="text-white/45 text-xs mb-1">{s.label}</p>
-                  <p className="text-ivory text-sm font-semibold">{s.value}</p>
-                </div>
-              ))}
+            <div className="relative overflow-hidden rounded-xl min-h-[300px] lg:min-h-0">
+              {heroImage && (
+                <img
+                  src={heroImage.src}
+                  alt={heroImage.alt || t("card_photo_alt")}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  loading="lazy"
+                  width={1200}
+                  height={800}
+                  decoding="async"
+                />
+              )}
             </div>
-            <p className="text-white/45 text-xs mb-4">{t("prix_caption")}</p>
-            <p className="text-white/60 text-sm flex items-start gap-2 mb-6">
-              <Radio className="w-4 h-4 text-warm shrink-0 mt-0.5" />
-              {t("audio_note")}
-            </p>
-            <Link
-              href={route("contact")}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors"
-            >
-              {t("cta_devis")} <ArrowRight className="w-4 h-4" />
-            </Link>
           </div>
         </div>
       </section>
