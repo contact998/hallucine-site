@@ -153,7 +153,7 @@ export default function EcranEtanche() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {galleryImages.map((img, i) => (
               <div key={i} className="relative aspect-[4/3]">
-                <ZoomImage src={img.src} alt={img.alt} wrapperClassName="relative w-full h-full rounded-lg" className="w-full h-full object-cover" loading={i === 0 ? "eager" : "lazy"} width={800} height={500} />
+                <ZoomImage src={img.src} alt={img.alt} gallery={galleryImages} index={i} wrapperClassName="relative w-full h-full rounded-lg" className="w-full h-full object-cover" loading={i === 0 ? "eager" : "lazy"} width={800} height={500} />
                 <div className="absolute -left-2 -top-2 w-10 h-10 rounded-full bg-warm text-charcoal flex items-center justify-center text-lg font-bold shadow-lg z-20">
                   {i + 1}
                 </div>

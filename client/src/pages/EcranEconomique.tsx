@@ -304,7 +304,7 @@ export default function EcranEconomique() {
         <div className="container">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
             {imagesFinales.map((img, i) => (
-              <ZoomImage key={i} src={img.src} alt={img.alt} wrapperClassName="relative aspect-[4/3] rounded-lg" className="w-full h-full object-cover" width={800} height={500} />
+              <ZoomImage key={i} src={img.src} alt={img.alt} gallery={imagesFinales} index={i} wrapperClassName="relative aspect-[4/3] rounded-lg" className="w-full h-full object-cover" width={800} height={500} />
             ))}
           </div>
           <div className="text-center">

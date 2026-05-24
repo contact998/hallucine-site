@@ -80,7 +80,7 @@ export default function TentesAraignees() {
           <h2 className="text-3xl font-bold text-ivory mb-8">{t("gallery_title")}</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {images.map((img, i) => (
-              <ZoomImage key={i} src={img.src} alt={img.alt} width={img.width ?? undefined} height={img.height ?? undefined} wrapperClassName="relative aspect-[4/3] rounded-lg" className="w-full h-full object-cover" />
+              <ZoomImage key={i} src={img.src} alt={img.alt} gallery={images} index={i} width={img.width ?? undefined} height={img.height ?? undefined} wrapperClassName="relative aspect-[4/3] rounded-lg" className="w-full h-full object-cover" />
             ))}
           </div>
         </div>

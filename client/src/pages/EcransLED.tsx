@@ -61,7 +61,7 @@ export default function EcransLED() {
         <div className="container">
           <div className="grid md:grid-cols-3 gap-6">
             {ledImages.map((img, i) => (
-              <ZoomImage key={i} src={img.src} alt={img.alt} wrapperClassName="relative aspect-[4/3] rounded-lg" className="w-full h-full object-cover" loading={i === 0 ? "eager" : "lazy"} width={800} height={500} />
+              <ZoomImage key={i} src={img.src} alt={img.alt} gallery={ledImages} index={i} wrapperClassName="relative aspect-[4/3] rounded-lg" className="w-full h-full object-cover" loading={i === 0 ? "eager" : "lazy"} width={800} height={500} />
             ))}
           </div>
         </div>

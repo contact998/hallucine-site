@@ -2,12 +2,13 @@
  * Page Tentes Gonflables X
  * Contenu i18n via namespace "tente-x"
  */
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ZoomImage from "@/components/ZoomImage";
 import { Link } from "wouter";
-import { ChevronLeft, ChevronRight, X as XIcon } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
@@ -53,25 +54,11 @@ function ImageCarousel({ images }: { images: { src: string; alt: string }[] }) {
   );
 }
 
-function ImageLightbox({ src, alt, isOpen, onClose }: { src: string; alt: string; isOpen: boolean; onClose: () => void }) {
-  if (!isOpen) return null;
-  return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-sm" onClick={onClose}>
-      <button onClick={onClose} className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors" aria-label="Fermer">
-        <XIcon className="w-6 h-6" />
-      </button>
-      <img loading="lazy" src={src} alt={alt} className="max-w-[92vw] max-h-[88vh] object-contain rounded-lg shadow-2xl" onClick={(e) => e.stopPropagation()} decoding="async" />
-    </div>
-  );
-}
-
 export default function TentesX() {
   const route = useRoutes();
   const { t } = useTranslation("tente-x");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-tente-x-AET6EuZJEbKcpbEmxnmWTB.png");
   const heroImages = useProductImages("tente-x", FALLBACK_IMAGES_TENTE_X);
-  const [lightboxImg, setLightboxImg] = useState<{ src: string; alt: string } | null>(null);
-  const openLightbox = useCallback((src: string, alt: string) => { setLightboxImg({ src, alt }); }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -99,9 +86,7 @@ export default function TentesX() {
           </h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
             {heroImages.map((img, i) => (
-              <div key={i} className="cursor-pointer overflow-hidden rounded-lg" onClick={() => openLightbox(img.src, img.alt)}>
-                <img width={img.width ?? undefined} height={img.height ?? undefined} src={img.src} alt={img.alt} className="w-full aspect-[4/3] object-cover hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
-              </div>
+              <ZoomImage key={i} src={img.src} alt={img.alt} gallery={heroImages} index={i} width={img.width ?? undefined} height={img.height ?? undefined} wrapperClassName="rounded-lg" className="w-full aspect-[4/3] object-cover" />
             ))}
           </div>
         </div>
@@ -111,9 +96,7 @@ export default function TentesX() {
       <section className="py-16 bg-background">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-10 items-center">
-            <div className="cursor-pointer" onClick={() => openLightbox(heroImages[0].src, heroImages[0].alt)}>
-              <img width={heroImages[0].width ?? undefined} height={heroImages[0].height ?? undefined} src={heroImages[0].src} alt={heroImages[0].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
-            </div>
+            <ZoomImage src={heroImages[0].src} alt={heroImages[0].alt} gallery={heroImages} index={0} width={heroImages[0].width ?? undefined} height={heroImages[0].height ?? undefined} wrapperClassName="rounded-lg shadow-lg" className="w-full" />
             <div>
               <h2 className="text-3xl font-bold text-ivory mb-4">
                 {t("intro_title")}<br />
@@ -138,9 +121,7 @@ export default function TentesX() {
                 <li className="text-white/70 leading-relaxed"><strong className="text-warm">{t("design_polyester_title")}</strong> : {t("design_polyester_desc")}</li>
               </ul>
             </div>
-            <div className="cursor-pointer" onClick={() => openLightbox(heroImages[1].src, heroImages[1].alt)}>
-              <img width={heroImages[1].width ?? undefined} height={heroImages[1].height ?? undefined} src={heroImages[1].src} alt={heroImages[1].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
-            </div>
+            <ZoomImage src={heroImages[1].src} alt={heroImages[1].alt} gallery={heroImages} index={1} width={heroImages[1].width ?? undefined} height={heroImages[1].height ?? undefined} wrapperClassName="rounded-lg shadow-lg" className="w-full" />
           </div>
         </div>
       </section>
@@ -149,9 +130,7 @@ export default function TentesX() {
       <section className="py-16 bg-background">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-10 items-start">
-            <div className="cursor-pointer order-2 md:order-1" onClick={() => openLightbox(heroImages[2].src, heroImages[2].alt)}>
-              <img width={heroImages[2].width ?? undefined} height={heroImages[2].height ?? undefined} src={heroImages[2].src} alt={heroImages[2].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
-            </div>
+            <ZoomImage src={heroImages[2].src} alt={heroImages[2].alt} gallery={heroImages} index={2} width={heroImages[2].width ?? undefined} height={heroImages[2].height ?? undefined} wrapperClassName="rounded-lg shadow-lg order-2 md:order-1" className="w-full" />
             <div className="order-1 md:order-2">
               <h2 className="text-3xl font-bold text-ivory mb-6">{t("reliable_title")}</h2>
               <p className="text-white/70 leading-relaxed mb-6">{t("reliable_desc")}</p>
@@ -176,9 +155,7 @@ export default function TentesX() {
                 <li className="text-white/70 leading-relaxed"><strong className="text-warm">{t("accessories_alu_title")}</strong> : {t("accessories_alu_desc")}</li>
               </ul>
             </div>
-            <div className="cursor-pointer" onClick={() => openLightbox(heroImages[3].src, heroImages[3].alt)}>
-              <img width={heroImages[3].width ?? undefined} height={heroImages[3].height ?? undefined} src={heroImages[3].src} alt={heroImages[3].alt} className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
-            </div>
+            <ZoomImage src={heroImages[3].src} alt={heroImages[3].alt} gallery={heroImages} index={3} width={heroImages[3].width ?? undefined} height={heroImages[3].height ?? undefined} wrapperClassName="rounded-lg shadow-lg" className="w-full" />
           </div>
         </div>
       </section>
@@ -187,9 +164,7 @@ export default function TentesX() {
       <section className="py-16 bg-background">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-10 items-start">
-            <div className="cursor-pointer order-2 md:order-1" onClick={() => openLightbox(contentImages.tentePerso, "Tentes gonflables X personnalisées")}>
-              <img src={contentImages.tentePerso} alt="Tentes gonflables X personnalisées avec différentes couleurs et logos" className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform" loading="lazy" decoding="async" />
-            </div>
+            <ZoomImage src={contentImages.tentePerso} alt="Tentes gonflables X personnalisées avec différentes couleurs et logos" wrapperClassName="rounded-lg shadow-lg order-2 md:order-1" className="w-full" />
             <div className="order-1 md:order-2">
               <h2 className="text-3xl font-bold text-ivory mb-6">{t("custom_title")}</h2>
               <p className="text-white/70 leading-relaxed mb-6">{t("custom_desc")}</p>
@@ -284,7 +259,6 @@ export default function TentesX() {
 
       <RelatedProducts currentPage="tente-x" />
       <Footer />
-      <ImageLightbox src={lightboxImg?.src ?? ""} alt={lightboxImg?.alt ?? ""} isOpen={lightboxImg !== null} onClose={() => setLightboxImg(null)} />
     </div>
   );
 }

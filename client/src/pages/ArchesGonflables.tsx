@@ -96,6 +96,8 @@ export default function ArchesGonflables() {
                 key={i}
                 src={img.src}
                 alt={img.alt}
+                gallery={galleryImages}
+                index={i}
                 wrapperClassName="relative aspect-[4/3] rounded-lg"
                 className="w-full h-full object-cover"
                 width={800}

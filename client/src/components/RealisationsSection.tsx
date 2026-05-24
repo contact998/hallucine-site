@@ -203,6 +203,8 @@ export default function RealisationsSection() {
           caption={photos[lightbox].caption}
           onClose={() => setLightbox(null)}
           closeLabel={t("realisations.close_photo")}
+          onPrev={lightbox > 0 ? () => setLightbox(lightbox - 1) : undefined}
+          onNext={lightbox < photos.length - 1 ? () => setLightbox(lightbox + 1) : undefined}
         />
       )}
     </section>

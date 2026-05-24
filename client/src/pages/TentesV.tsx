@@ -2,13 +2,14 @@
  * Page Tentes V — Tentes Gonflables en Forme de V
  * Contenu i18n via namespace "tente-v"
  */
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import VideoLightbox from "@/components/VideoLightbox";
+import ZoomImage from "@/components/ZoomImage";
 import { Link } from "wouter";
-import { Play, X as XIcon } from "lucide-react";
+import { Play } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
@@ -30,9 +31,6 @@ export default function TentesV() {
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/HiOAOTLZaOhqpcQk.webp");
   const heroImages = useProductImages("tente-v", FALLBACK_IMAGES_TENTE_V);
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
-  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
-  const openLightbox = useCallback((src: string, alt: string) => setLightbox({ src, alt }), []);
-  const closeLightbox = useCallback(() => setLightbox(null), []);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -62,9 +60,7 @@ export default function TentesV() {
           </h1>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {heroImages.map((img, i) => (
-              <div key={i} className="cursor-pointer rounded-lg overflow-hidden aspect-[4/3]" onClick={() => openLightbox(img.src, img.alt)}>
-                <img width={img.width ?? undefined} height={img.height ?? undefined} src={img.src} alt={img.alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
-              </div>
+              <ZoomImage key={i} src={img.src} alt={img.alt} gallery={heroImages} index={i} width={img.width ?? undefined} height={img.height ?? undefined} wrapperClassName="rounded-lg aspect-[4/3]" className="w-full h-full object-cover" />
             ))}
           </div>
         </div>
@@ -186,9 +182,7 @@ export default function TentesV() {
           <h2 className="text-3xl font-bold text-ivory mb-8 text-center">
             {t("schema_title")} <span className="text-warm">{t("schema_colored")}</span>
           </h2>
-          <div className="cursor-pointer max-w-4xl mx-auto" onClick={() => openLightbox(schemaEclate, "Schéma éclaté des composants de la Tente Gonflable V")}>
-            <img src={schemaEclate} alt="Schéma éclaté des composants de la Tente Gonflable V" className="w-full rounded-lg shadow-lg hover:scale-[1.01] transition-transform" loading="lazy" decoding="async" />
-          </div>
+          <ZoomImage src={schemaEclate} alt="Schéma éclaté des composants de la Tente Gonflable V" wrapperClassName="max-w-4xl mx-auto rounded-lg shadow-lg" className="w-full" />
           <p className="text-white/50 text-sm text-center mt-4">{t("schema_zoom")}</p>
         </div>
       </section>
@@ -242,15 +236,6 @@ export default function TentesV() {
 
        <RelatedProducts currentPage="tente-v" />
       <Footer />
-      {lightbox && (
-        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4" onClick={closeLightbox}>
-          <button onClick={closeLightbox} className="absolute top-4 right-4 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors" aria-label="Fermer">
-            <XIcon className="w-6 h-6" />
-          </button>
-          <img src={lightbox.src} alt={lightbox.alt} className="max-w-full max-h-[90vh] object-contain rounded-lg" onClick={(e) => e.stopPropagation()} decoding="async" loading="lazy" />
-        </div>
-      )}
-
       {activeVideo && (
         <VideoLightbox videoId={activeVideo.id} title={activeVideo.title} isOpen={true} onClose={() => setActiveVideo(null)} />
       )}
