@@ -50,7 +50,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <div className="text-white font-medium text-base">{t("phone_label")}</div>
-                    <div className="text-white/70 text-base">+33 6 80 14 76 94</div>
+                    <div className="text-white/70 text-base">+33 4 58 21 20 10</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">

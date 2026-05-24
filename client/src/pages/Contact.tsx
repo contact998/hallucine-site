@@ -93,7 +93,10 @@ export default function Contact() {
                   <strong className="text-white/80">{t("phone_label_long")}</strong> +33 4 58 21 20 10
                 </p>
                 <p>
-                  <strong className="text-white/80">{t("whatsapp_label")}</strong> +33 6 80 14 76 94
+                  <strong className="text-white/80">{t("whatsapp_label")}</strong>{" "}
+                  <a href="https://wa.me/33680147694" target="_blank" rel="noopener noreferrer" className="text-warm hover:underline">
+                    {t("whatsapp_link_text", { defaultValue: "Démarrer une conversation" })}
+                  </a>
                 </p>
                 <p>
                   <strong className="text-white/80">{t("wechat_label")}</strong> (+86) 13172020714

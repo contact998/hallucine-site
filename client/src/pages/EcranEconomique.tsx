@@ -256,7 +256,7 @@ export default function EcranEconomique() {
           <p className="text-white/60 text-sm">
             Mail : <EmailLink className="text-warm hover:underline" />
             {" / "}Tel : <a href="tel:+33458212010" className="text-warm hover:underline">+33 4 58 21 20 10</a>
-            {" / "}WhatsApp : <a href="https://wa.me/33680147694" className="text-warm hover:underline">+33 6 80 14 76 94</a>
+            {" / "}<a href="https://wa.me/33680147694" target="_blank" rel="noopener noreferrer" className="text-warm hover:underline">WhatsApp</a>
           </p>
         </div>
       </section>
