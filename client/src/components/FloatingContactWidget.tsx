@@ -6,13 +6,12 @@
  */
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { Home, Phone, Smartphone, Mail, MessageCircle, ChevronUp } from "lucide-react";
+import { Home, Phone, Mail, MessageCircle, ChevronUp } from "lucide-react";
 import { useRoutes } from "@/i18n/useRoutes";
 
-const TEL_FIXE   = "+33458212010";
-const TEL_MOBILE = "+33680147694";
-const WHATSAPP   = "33680147694";
-const EMAIL      = "contact@hallucine.fr";
+const TEL_FIXE = "+33458212010";
+const WHATSAPP = "33680147694";
+const EMAIL    = "contact@hallucine.fr";
 
 export default function FloatingContactWidget() {
   const route = useRoutes();
@@ -42,13 +41,6 @@ export default function FloatingContactWidget() {
         icon={<Phone className="w-4 h-4" />}
         label="Téléphone fixe"
         tooltip="+33 4 58 21 20 10"
-      />
-      <ActionItem
-        as="a"
-        href={`tel:${TEL_MOBILE}`}
-        icon={<Smartphone className="w-4 h-4" />}
-        label="Mobile"
-        tooltip="+33 6 80 14 76 94"
       />
       <ActionItem
         as="a"

@@ -93,9 +93,6 @@ export default function Contact() {
                   <strong className="text-white/80">{t("phone_label_long")}</strong> +33 4 58 21 20 10
                 </p>
                 <p>
-                  <strong className="text-white/80">{t("mobile_label")}</strong> +33 6 80 14 76 94
-                </p>
-                <p>
                   <strong className="text-white/80">{t("whatsapp_label")}</strong> +33 6 80 14 76 94
                 </p>
                 <p>

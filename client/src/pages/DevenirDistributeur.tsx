@@ -99,7 +99,6 @@ export default function DevenirDistributeur() {
               <h3 className="text-ivory font-bold text-lg mb-3">{t("tel_block_title")}</h3>
               <div className="space-y-2 text-white/60 text-sm">
                 <p><strong className="text-white/80">{t("tel_label")}</strong> +33 4 58 21 20 10</p>
-                <p><strong className="text-white/80">{t("mobile_label")}</strong> +33 6 80 14 76 94</p>
                 <p><strong className="text-white/80">{t("whatsapp_label")}</strong> +33 6 80 14 76 94</p>
                 <p><strong className="text-white/80">{t("wechat_label")}</strong> (+86) 13172020714</p>
               </div>

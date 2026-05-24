@@ -82,7 +82,6 @@ export default function Footer() {
                 <Phone className="w-4 h-4 text-warm mt-0.5 shrink-0" />
                 <div>
                   <div className="text-white/75">Tel : +33 4 58 21 20 10</div>
-                  <div className="text-white/75 mt-1">Mobile : +33 6 80 14 76 94</div>
                 </div>
               </li>
               <li className="flex items-start gap-3">

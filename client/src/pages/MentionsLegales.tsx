@@ -119,9 +119,6 @@ export default function MentionsLegales() {
               <p className="mt-2">
                 <strong className="text-white/80">{t("s9_tel")}</strong> +33 4 58 21 20 10
               </p>
-              <p className="mt-2">
-                <strong className="text-white/80">{t("s9_mobile")}</strong> +33 6 80 14 76 94
-              </p>
             </div>
           </div>
         </div>
