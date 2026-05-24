@@ -3,8 +3,9 @@
  * Refactorisé avec i18n
  */
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import Lightbox from "@/components/Lightbox";
 
 const ECRAN_8M_ALUMINIUM = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779578749911-c9425a005493-ecran-8-m-cadre-aluminium.jpg";
 const ECOLE_FORAINS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779578888369-951ff08bc2f1-ecran-structure-1-1.jpg";
@@ -34,6 +35,7 @@ const CHAPTER_KEYS = ["ch1992", "ch1993", "ch1994", "ch1995", "ch2004", "ch2005"
 export default function StorySection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
+  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
   const { t } = useTranslation("home");
 
   return (
@@ -73,7 +75,13 @@ export default function StorySection() {
                 className="grid grid-cols-1 lg:grid-cols-2"
               >
                 {/* Image (ou placeholder) */}
-                <div className={`${imageLeft ? "order-1" : "order-1 lg:order-2"} relative ${imgData.smallImage ? "min-h-[200px] lg:min-h-[280px]" : "min-h-[300px] lg:min-h-[400px]"} overflow-hidden flex items-center justify-center bg-black/20`}>
+                <div
+                  className={`${imageLeft ? "order-1" : "order-1 lg:order-2"} relative ${imgData.smallImage ? "min-h-[200px] lg:min-h-[280px]" : "min-h-[300px] lg:min-h-[400px]"} overflow-hidden flex items-center justify-center bg-black/20 ${imgData.image ? "cursor-pointer" : ""}`}
+                  onClick={imgData.image ? () => setLightbox({
+                    src: imgData.image!,
+                    alt: t(`story.${key}_alt`, { defaultValue: t(`story.${key}_title`) }),
+                  }) : undefined}
+                >
                   {imgData.image ? (
                     imgData.smallImage ? (
                       <img loading="lazy"
@@ -110,6 +118,16 @@ export default function StorySection() {
           })}
         </div>
       </div>
+
+      {/* Lightbox */}
+      {lightbox && (
+        <Lightbox
+          src={lightbox.src}
+          alt={lightbox.alt}
+          onClose={() => setLightbox(null)}
+          closeLabel={t("story.close_photo")}
+        />
+      )}
     </section>
   );
 }

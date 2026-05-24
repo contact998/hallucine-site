@@ -5,9 +5,9 @@
  */
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useMediaByCategory } from "@/hooks/useMediaByCategory";
+import Lightbox from "@/components/Lightbox";
 
 // ─── Fallback hardcodé — affiché si la DB est indisponible ───────────────────
 // Ne jamais supprimer ce tableau : c'est le filet de sécurité.
@@ -197,33 +197,13 @@ export default function RealisationsSection() {
 
       {/* Lightbox */}
       {lightbox !== null && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
-          onClick={() => setLightbox(null)}
-        >
-          <button
-            onClick={() => setLightbox(null)}
-            className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors"
-            aria-label={t("realisations.close_photo")}
-          >
-            <X className="w-8 h-8" />
-          </button>
-          <img
-            src={photos[lightbox].src}
-            alt={photos[lightbox].alt}
-            className="max-w-full max-h-[85vh] object-contain"
-            width={1200}
-            height={800}
-            decoding="async"
-            loading="lazy"
-          />
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-            <p className="text-white/70 text-sm font-medium">{photos[lightbox].caption}</p>
-          </div>
-        </motion.div>
+        <Lightbox
+          src={photos[lightbox].src}
+          alt={photos[lightbox].alt}
+          caption={photos[lightbox].caption}
+          onClose={() => setLightbox(null)}
+          closeLabel={t("realisations.close_photo")}
+        />
       )}
     </section>
   );
