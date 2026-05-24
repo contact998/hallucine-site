@@ -6,44 +6,28 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Lightbox from "@/components/Lightbox";
-import { useMediaByCategory } from "@/hooks/useMediaByCategory";
 
-// Fallback hardcodé — utilisé si la DB est vide. Les images réellement servies
-// proviennent de la médiathèque (category=produits, subcategory=accueil-histoire).
-// Pour changer une image, allez sur /admin/media et uploadez avec cette sous-cat.
-const FALLBACK = [
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779578749911-c9425a005493-ecran-8-m-cadre-aluminium.jpg",
-    alt: "1992 — Premier écran 8m aluminium" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779578888369-951ff08bc2f1-ecran-structure-1-1.jpg",
-    alt: "1993 — L'école des forains" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779584723959-a9169ab7bfc6-histoire-ecran-anglais.jpg",
-    alt: "1994 — L'erreur fatale" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587607712-ce2b14189c08-ecran-cinema-gonflable-voilerie-bretonne.webp",
-    alt: "1995 — La voilerie bretonne" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587893638-07ef453d5255-kitesurf-hong-kong-inspiration-ecran-gonflable.webp",
-    alt: "2004 — Hong Kong" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587896624-615d7348493d-vue-eclatee-ecran-cinema-gonflable-etanche-tissu-airbag.webp",
-    alt: "2005 — Le secret des airbags" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587898704-f934a4160b12-ecran-cinema-gonflable-etanche-5m-6m-hallucine.webp",
-    alt: "2010 — La gamme étanche" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587900924-b22ae92f259c-hallucine-shenzhen-covid-fabrication-ecran.webp",
-    alt: "2020 — COVID Chine" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587902974-6a126291762f-trois-ecrans-cinema-gonflables-hallucine-innovation.webp",
-    alt: "Aujourd'hui — 30 ans d'innovation" },
-];
+const ECRAN_8M_ALUMINIUM = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779578749911-c9425a005493-ecran-8-m-cadre-aluminium.jpg";
+const ECOLE_FORAINS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779578888369-951ff08bc2f1-ecran-structure-1-1.jpg";
+const ERREUR_FATALE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779584723959-a9169ab7bfc6-histoire-ecran-anglais.jpg";
+const ECRAN_TUBULAIRE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/JlNlzGmvIyCrQHIY.webp";
+const VOILERIE_BRETAGNE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587607712-ce2b14189c08-ecran-cinema-gonflable-voilerie-bretonne.webp";
+const KYTEA_HK = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587893638-07ef453d5255-kitesurf-hong-kong-inspiration-ecran-gonflable.webp";
+const ECLATE_ETANCHE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587896624-615d7348493d-vue-eclatee-ecran-cinema-gonflable-etanche-tissu-airbag.webp";
+const ECRANS_ETANCHE_5_6 = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587898704-f934a4160b12-ecran-cinema-gonflable-etanche-5m-6m-hallucine.webp";
+const REPAS_CHINOIS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587900924-b22ae92f259c-hallucine-shenzhen-covid-fabrication-ecran.webp";
+const TROIS_ECRANS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587902974-6a126291762f-trois-ecrans-cinema-gonflables-hallucine-innovation.webp";
 
-// Config de layout par chapitre (smallImage / containImage / extraSmall).
-// Reste dans le code car c'est de la mise en page, pas du contenu.
-const CHAPTER_LAYOUT: { smallImage?: boolean; extraSmall?: boolean; containImage?: boolean }[] = [
-  {},                                                  // 1992
-  {},                                                  // 1993
-  {},                                                  // 1994
-  {},                                                  // 1995 voilerie
-  { smallImage: true, extraSmall: true },              // 2004 kitesurf
-  { smallImage: true },                                // 2005 éclaté
-  {},                                                  // 2010
-  {},                                                  // 2020
-  { containImage: true },                              // chToday — image entière
+const CHAPTER_IMAGES: { image: string | null; smallImage?: boolean; extraSmall?: boolean; containImage?: boolean }[] = [
+  { image: ECRAN_8M_ALUMINIUM },
+  { image: ECOLE_FORAINS },
+  { image: ERREUR_FATALE },
+  { image: VOILERIE_BRETAGNE },
+  { image: KYTEA_HK, smallImage: true, extraSmall: true },
+  { image: ECLATE_ETANCHE, smallImage: true },
+  { image: ECRANS_ETANCHE_5_6 },
+  { image: REPAS_CHINOIS },
+  { image: TROIS_ECRANS, containImage: true },
 ];
 
 const CHAPTER_KEYS = ["ch1992", "ch1993", "ch1994", "ch1995", "ch2004", "ch2005", "ch2010", "ch2020", "chToday"];
@@ -53,10 +37,6 @@ export default function StorySection() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
   const { t } = useTranslation("home");
-
-  // Récupère les 9 images du chapitre depuis la médiathèque (subcat=accueil-histoire).
-  // Si DB vide → FALLBACK ; ordre = sortOrder en base.
-  const images = useMediaByCategory("produits", FALLBACK, "accueil-histoire");
 
   return (
     <section id="histoire" className="relative py-32 overflow-hidden">
@@ -85,14 +65,7 @@ export default function StorySection() {
         <div className="space-y-0">
           {CHAPTER_KEYS.map((key, i) => {
             const imageLeft = i % 2 === 0;
-            const layout = CHAPTER_LAYOUT[i];
-            const img = images[i];
-            const imgData = {
-              image: img?.src ?? null,
-              smallImage:   layout.smallImage,
-              extraSmall:   layout.extraSmall,
-              containImage: layout.containImage,
-            };
+            const imgData = CHAPTER_IMAGES[i];
             return (
               <motion.div
                 key={i}
