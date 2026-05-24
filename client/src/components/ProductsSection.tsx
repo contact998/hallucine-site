@@ -58,7 +58,7 @@ export default function ProductsSection() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <Link href={getRoute("ecrans", lang)} className="group block relative overflow-hidden border border-white/[0.06] bg-white/[0.02] hover:border-gold/30 transition-all duration-700 h-full" style={{ boxShadow: '0 0 20px rgba(212, 175, 55, 0.08), 0 0 40px rgba(212, 175, 55, 0.03)' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 0 30px rgba(212, 175, 55, 0.2), 0 0 60px rgba(212, 175, 55, 0.1), 0 0 90px rgba(212, 175, 55, 0.05)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 0 20px rgba(212, 175, 55, 0.08), 0 0 40px rgba(212, 175, 55, 0.03)'}>
+            <Link href={getRoute("ecran-etanche", lang)} className="group block relative overflow-hidden border border-white/[0.06] bg-white/[0.02] hover:border-gold/30 transition-all duration-700 h-full" style={{ boxShadow: '0 0 20px rgba(212, 175, 55, 0.08), 0 0 40px rgba(212, 175, 55, 0.03)' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 0 30px rgba(212, 175, 55, 0.2), 0 0 60px rgba(212, 175, 55, 0.1), 0 0 90px rgba(212, 175, 55, 0.05)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 0 20px rgba(212, 175, 55, 0.08), 0 0 40px rgba(212, 175, 55, 0.03)'}>
               <div className="relative h-72 overflow-hidden">
                 <img loading="lazy"
                   src={ECRAN_ETANCHE}
@@ -104,7 +104,7 @@ export default function ProductsSection() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.35 }}
           >
-            <Link href={getRoute("ecrans", lang)} className="group block relative overflow-hidden border border-white/[0.06] bg-white/[0.02] hover:border-gold/30 transition-all duration-700 h-full" style={{ boxShadow: '0 0 20px rgba(212, 175, 55, 0.08), 0 0 40px rgba(212, 175, 55, 0.03)' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 0 30px rgba(212, 175, 55, 0.2), 0 0 60px rgba(212, 175, 55, 0.1), 0 0 90px rgba(212, 175, 55, 0.05)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 0 20px rgba(212, 175, 55, 0.08), 0 0 40px rgba(212, 175, 55, 0.03)'}>
+            <Link href={getRoute("ecran-geant", lang)} className="group block relative overflow-hidden border border-white/[0.06] bg-white/[0.02] hover:border-gold/30 transition-all duration-700 h-full" style={{ boxShadow: '0 0 20px rgba(212, 175, 55, 0.08), 0 0 40px rgba(212, 175, 55, 0.03)' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 0 30px rgba(212, 175, 55, 0.2), 0 0 60px rgba(212, 175, 55, 0.1), 0 0 90px rgba(212, 175, 55, 0.05)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 0 20px rgba(212, 175, 55, 0.08), 0 0 40px rgba(212, 175, 55, 0.03)'}>
               <div className="relative h-72 overflow-hidden">
                 <img loading="lazy"
                   src={ECRAN_SOUFFLERIE}
