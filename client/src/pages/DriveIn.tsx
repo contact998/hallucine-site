@@ -167,6 +167,23 @@ export default function DriveIn() {
         </div>
       </section>
 
+      {/* Photo pleine largeur — drive-in en forêt */}
+      <section className="bg-background">
+        <div className="container">
+          <div className="relative w-full aspect-[16/9] overflow-hidden rounded-xl">
+            <img
+              src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779595757312-e1fe30ef9365-ecran-cinema-drive-in-foret-soir-hallucine.webp"
+              alt={t("foret_photo_alt")}
+              className="absolute inset-0 w-full h-full object-cover"
+              loading="lazy"
+              width={1600}
+              height={900}
+              decoding="async"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-20 bg-charcoal-light">
         <div className="container text-center">
