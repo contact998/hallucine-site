@@ -1,11 +1,14 @@
 /*
  * Lightbox — modal plein écran pour visualiser une image en grand.
- * Fermeture : clic sur le fond, la croix, ou touche Escape.
- * Navigation (optionnelle) : flèches gauche/droite à l'écran + clavier ←/→.
+ * Layout flex : flèches collées contre les bords gauche/droite de l'image
+ * (pas aux bords du viewport — toujours proches de l'image quelle que soit
+ * sa taille). Croix flottante en haut à droite de l'image.
+ *
+ * Fermeture : clic sur le fond, sur la croix, ou touche Escape.
+ * Navigation (optionnelle) : flèches ‹ › à l'écran + clavier ←/→.
  */
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 type LightboxProps = {
   src: string;
@@ -45,48 +48,44 @@ export default function Lightbox({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center gap-3 md:gap-5 p-3 md:p-6"
       onClick={onClose}
     >
-      <button
-        onClick={onClose}
-        className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors"
-        aria-label={closeLabel}
-      >
-        <X className="w-8 h-8" />
-      </button>
-      {onPrev && (
+      {onPrev ? (
         <button
           onClick={(e) => { stop(e); onPrev(); }}
-          className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"
+          className="shrink-0 w-11 h-11 md:w-12 md:h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white text-3xl leading-none transition-colors"
           aria-label="Image précédente"
-        >
-          <ChevronLeft className="w-7 h-7" />
-        </button>
+        >‹</button>
+      ) : (
+        <div className="shrink-0 w-11 md:w-12" aria-hidden="true" />
       )}
-      {onNext && (
+
+      <div className="relative inline-flex max-h-full" onClick={stop}>
+        <img
+          src={src}
+          alt={alt}
+          className="max-w-full max-h-[88vh] object-contain rounded-lg"
+          width={1200}
+          height={800}
+          decoding="async"
+          loading="lazy"
+        />
+        {caption && (
+          <p className="absolute -bottom-7 left-0 right-0 text-center text-white/70 text-sm font-medium">
+            {caption}
+          </p>
+        )}
+      </div>
+
+      {onNext ? (
         <button
           onClick={(e) => { stop(e); onNext(); }}
-          className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"
+          className="shrink-0 w-11 h-11 md:w-12 md:h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white text-3xl leading-none transition-colors"
           aria-label="Image suivante"
-        >
-          <ChevronRight className="w-7 h-7" />
-        </button>
-      )}
-      <img
-        src={src}
-        alt={alt}
-        onClick={stop}
-        className="max-w-full max-h-[85vh] object-contain"
-        width={1200}
-        height={800}
-        decoding="async"
-        loading="lazy"
-      />
-      {caption && (
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-          <p className="text-white/70 text-sm font-medium">{caption}</p>
-        </div>
+        >›</button>
+      ) : (
+        <div className="shrink-0 w-11 md:w-12" aria-hidden="true" />
       )}
     </motion.div>
   );

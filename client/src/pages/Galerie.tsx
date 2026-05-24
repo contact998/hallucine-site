@@ -14,6 +14,8 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
+import Lightbox from "@/components/Lightbox";
+import { AnimatePresence } from "framer-motion";
 import { useMediaByCategory } from "@/hooks/useMediaByCategory";
 
 // ─── Fallback hardcodé — ne jamais supprimer ──────────────────────────────────
@@ -259,35 +261,18 @@ export default function Galerie() {
       </div>
 
       {/* Lightbox */}
-      {lightbox !== null && (
-        <div
-          className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center"
-          onClick={() => setLightbox(null)}
-        >
-          <div className="relative max-w-4xl max-h-[90vh] p-4">
-            <img
-              src={filtered[lightbox].src}
-              alt={filtered[lightbox].alt}
-              className="max-w-full max-h-full object-contain rounded-lg"
-              loading="lazy"
-              decoding="async"
-            />
-            <button onClick={() => setLightbox(null)} className="absolute top-4 right-4 text-white text-3xl font-bold">&times;</button>
-            {lightbox > 0 && (
-              <button
-                onClick={(e) => { e.stopPropagation(); setLightbox(lightbox - 1); }}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-4xl font-bold"
-              >‹</button>
-            )}
-            {lightbox < filtered.length - 1 && (
-              <button
-                onClick={(e) => { e.stopPropagation(); setLightbox(lightbox + 1); }}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-4xl font-bold"
-              >›</button>
-            )}
-          </div>
-        </div>
-      )}
+      <AnimatePresence>
+        {lightbox !== null && (
+          <Lightbox
+            src={filtered[lightbox].src}
+            alt={filtered[lightbox].alt}
+            onClose={() => setLightbox(null)}
+            closeLabel="Fermer"
+            onPrev={lightbox > 0 ? () => setLightbox(lightbox - 1) : undefined}
+            onNext={lightbox < filtered.length - 1 ? () => setLightbox(lightbox + 1) : undefined}
+          />
+        )}
+      </AnimatePresence>
 
       <Footer />
     </div>
