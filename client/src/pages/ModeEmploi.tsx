@@ -150,7 +150,7 @@ export default function ModeEmploi() {
             {videos.map((video) => (
               <div key={video.id} className="bg-card border border-border rounded-lg overflow-hidden cursor-pointer group" onClick={() => setActiveVideo({ id: video.id, title: video.title })}>
                 <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                  <img width={480} height={360} src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`} alt={`Vidéo tutorielle Hallucine — ${video.title}`} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" decoding="async" />
+                  <img width={480} height={360} src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`} alt={`Vidéo tutorielle Hallucine — ${video.title}`} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-14 h-14 rounded-full bg-red-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">

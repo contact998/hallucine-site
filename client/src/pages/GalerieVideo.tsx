@@ -69,7 +69,7 @@ export default function GalerieVideo() {
                     height={360}
                     src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
                     alt={video.title}
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   decoding="async" />
                   {/* Overlay sombre au hover */}

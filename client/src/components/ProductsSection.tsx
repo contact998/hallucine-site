@@ -63,7 +63,7 @@ export default function ProductsSection() {
                 <img loading="lazy"
                   src={ECRAN_ETANCHE}
                   alt="Trois écrans gonflables Hallucine avec canapé gonflable rouge"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   width={800} height={450}
                 decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260)] via-[oklch(0.14_0.03_260_/_0.2)] to-transparent" style={{opacity: '0.2'}} />
@@ -109,7 +109,7 @@ export default function ProductsSection() {
                 <img loading="lazy"
                   src={ECRAN_SOUFFLERIE}
                   alt="Écran gonflable soufflerie Hallucine 9m en extérieur avec équipe technique"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   width={800} height={450}
                 decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260)] via-transparent to-transparent" />
@@ -154,7 +154,7 @@ export default function ProductsSection() {
           >
             <Link href={getRoute("tentes", lang)} className="group flex gap-6 p-6 border border-white/[0.06] bg-white/[0.02] hover:border-gold/30 transition-all duration-700 h-full" style={{ boxShadow: '0 0 15px rgba(212, 175, 55, 0.06), 0 0 30px rgba(212, 175, 55, 0.02)' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 0 25px rgba(212, 175, 55, 0.18), 0 0 50px rgba(212, 175, 55, 0.08), 0 0 80px rgba(212, 175, 55, 0.04)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 0 15px rgba(212, 175, 55, 0.06), 0 0 30px rgba(212, 175, 55, 0.02)'}>
               <div className="w-28 h-28 shrink-0 overflow-hidden">
-                <img loading="lazy" src={TENTE_IMG} alt="Tente gonflable Hallucine" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" width={200} height={200} decoding="async" />
+                <img loading="lazy" src={TENTE_IMG} alt="Tente gonflable Hallucine" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" width={200} height={200} decoding="async" />
               </div>
               <div className="flex flex-col justify-center min-w-0">
                 <h3 className="text-lg font-bold text-white group-hover:text-gold transition-colors duration-500">
@@ -178,7 +178,7 @@ export default function ProductsSection() {
           >
             <Link href={getRoute("mobilier", lang)} className="group flex gap-6 p-6 border border-white/[0.06] bg-white/[0.02] hover:border-gold/30 transition-all duration-700 h-full" style={{ boxShadow: '0 0 15px rgba(212, 175, 55, 0.06), 0 0 30px rgba(212, 175, 55, 0.02)' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 0 25px rgba(212, 175, 55, 0.18), 0 0 50px rgba(212, 175, 55, 0.08), 0 0 80px rgba(212, 175, 55, 0.04)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 0 15px rgba(212, 175, 55, 0.06), 0 0 30px rgba(212, 175, 55, 0.02)'}>
               <div className="w-28 h-28 shrink-0 overflow-hidden">
-                <img loading="lazy" src={MOBILIER_IMG} alt="Mobilier gonflable Hallucine" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" width={200} height={200} decoding="async" />
+                <img loading="lazy" src={MOBILIER_IMG} alt="Mobilier gonflable Hallucine" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" width={200} height={200} decoding="async" />
               </div>
               <div className="flex flex-col justify-center min-w-0">
                 <h3 className="text-lg font-bold text-white group-hover:text-gold transition-colors duration-500">

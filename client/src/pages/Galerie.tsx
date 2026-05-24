@@ -244,7 +244,7 @@ export default function Galerie() {
                   loading="lazy"
                   src={photo.src}
                   alt={photo.alt}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   decoding="async"
                   width={600} height={400}
                 />

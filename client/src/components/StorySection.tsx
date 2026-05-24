@@ -87,14 +87,14 @@ export default function StorySection() {
                       <img loading="lazy"
                         src={imgData.image}
                         alt={t(`story.${key}_alt`, { defaultValue: t(`story.${key}_title`) })}
-                        className={`${imgData.extraSmall ? "w-[65%] max-h-[200px]" : "w-[85%] max-h-[260px]"} h-auto object-contain hover:scale-105 transition-transform duration-700 rounded`}
+                        className={`${imgData.extraSmall ? "w-[65%] max-h-[200px]" : "w-[85%] max-h-[260px]"} h-auto object-contain hover:scale-105 transition-transform duration-500 rounded`}
                         width={400} height={300}
                         decoding="async" />
                     ) : (
                       <img loading="lazy"
                         src={imgData.image}
                         alt={t(`story.${key}_alt`, { defaultValue: t(`story.${key}_title`) })}
-                        className={`absolute inset-0 w-full h-full ${imgData.containImage ? "object-contain" : "object-cover"} hover:scale-105 transition-transform duration-700`}
+                        className={`absolute inset-0 w-full h-full ${imgData.containImage ? "object-contain" : "object-cover"} hover:scale-105 transition-transform duration-500`}
                         width={800} height={500}
                         decoding="async" />
                     )
