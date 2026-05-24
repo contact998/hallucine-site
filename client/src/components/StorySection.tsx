@@ -10,7 +10,7 @@ const ECRAN_8M_ALUMINIUM = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/
 const ECOLE_FORAINS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779578888369-951ff08bc2f1-ecran-structure-1-1.jpg";
 const ERREUR_FATALE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779584723959-a9169ab7bfc6-histoire-ecran-anglais.jpg";
 const ECRAN_TUBULAIRE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/JlNlzGmvIyCrQHIY.webp";
-const VOILERIE_BRETAGNE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/4AsgGt8I2wblrhSi.webp";
+const VOILERIE_BRETAGNE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587607712-ce2b14189c08-ecran-cinema-gonflable-voilerie-bretonne.webp";
 const KYTEA_HK = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ihAHJqPuCbLEmeIQ.webp";
 const ECLATE_ETANCHE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ORYwRnlcyusmCmpC.webp";
 const ECRANS_ETANCHE_5_6 = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/VDWrGjsVLLnZNbTR.webp";
@@ -78,14 +78,14 @@ export default function StorySection() {
                     imgData.smallImage ? (
                       <img loading="lazy"
                         src={imgData.image}
-                        alt={t(`story.${key}_title`)}
+                        alt={t(`story.${key}_alt`, { defaultValue: t(`story.${key}_title`) })}
                         className={`${imgData.extraSmall ? "w-[65%] max-h-[200px]" : "w-[85%] max-h-[260px]"} h-auto object-contain hover:scale-105 transition-transform duration-700 rounded`}
                         width={400} height={300}
                         decoding="async" />
                     ) : (
                       <img loading="lazy"
                         src={imgData.image}
-                        alt={t(`story.${key}_title`)}
+                        alt={t(`story.${key}_alt`, { defaultValue: t(`story.${key}_title`) })}
                         className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                         width={800} height={500}
                         decoding="async" />
