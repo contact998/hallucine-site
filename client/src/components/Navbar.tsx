@@ -167,6 +167,7 @@ export default function Navbar() {
     {
       title: t("col_ecrans"),
       items: [
+        { label: t("toute_la_gamme"), href: r["ecrans"] },
         { label: t("ecran_geant"), href: r["ecran-geant"] },
         { label: t("ecran_etanche"), href: r["ecran-etanche"] },
         { label: t("ecran_economique"), href: r["ecran-economique"] },
@@ -177,6 +178,7 @@ export default function Navbar() {
     {
       title: t("col_tentes"),
       items: [
+        { label: t("toute_la_gamme"), href: r["tentes"] },
         { label: t("tentes_x"), href: r["tente-x"] },
         { label: t("tentes_n"), href: r["tente-n"] },
         { label: t("tentes_v"), href: r["tente-v"] },
