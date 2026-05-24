@@ -10,7 +10,7 @@
  *   R2_BUCKET            ex: hallucine-media
  *   R2_PUBLIC_URL        ex: https://pub-xxx.r2.dev
  */
-import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, DeleteObjectCommand, CopyObjectCommand } from "@aws-sdk/client-s3";
 import { randomBytes } from "crypto";
 
 const r2Client = new S3Client({
@@ -190,6 +190,61 @@ export async function deleteFromR2(key: string): Promise<void> {
 /** Extrait la clé R2 depuis une URL publique complète */
 export function urlToR2Key(url: string): string {
   return url.replace(PUBLIC_URL + "/", "");
+}
+
+/**
+ * Copie un objet R2 vers une nouvelle clé (côté serveur, pas de download).
+ * Met à jour ContentType + CacheControl si fournis.
+ */
+export async function copyOnR2(
+  oldKey: string,
+  newKey: string,
+  contentType?: string,
+): Promise<void> {
+  await r2Client.send(
+    new CopyObjectCommand({
+      Bucket:            BUCKET,
+      Key:               newKey,
+      CopySource:        `${BUCKET}/${oldKey}`,
+      ContentType:       contentType,
+      CacheControl:      "public, max-age=31536000, immutable",
+      MetadataDirective: contentType ? "REPLACE" : "COPY",
+    }),
+  );
+}
+
+/** Renomme un objet R2 (copy puis delete de l'ancien). Idempotent côté DB. */
+export async function renameOnR2(
+  oldKey: string,
+  newKey: string,
+  contentType?: string,
+): Promise<{ newKey: string; newUrl: string }> {
+  if (oldKey === newKey) {
+    return { newKey, newUrl: `${PUBLIC_URL}/${newKey}` };
+  }
+  await copyOnR2(oldKey, newKey, contentType);
+  await deleteFromR2(oldKey);
+  return { newKey, newUrl: `${PUBLIC_URL}/${newKey}` };
+}
+
+/** Construit une clé R2 SEO-friendly : `<folder>/<ts>-<random>-<slug>.<ext>` */
+export function buildSeoKey(
+  folder: R2Folder,
+  slug: string,
+  ext: string,
+): string {
+  const timestamp = Date.now();
+  const random    = randomBytes(6).toString("hex");
+  const clean     = slug
+    .toLowerCase()
+    .normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9-]/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")
+    .substring(0, 80);
+  const safeSlug  = clean || "image";
+  const safeExt   = (ext || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "");
+  return `${folder}/${timestamp}-${random}-${safeSlug}.${safeExt}`;
 }
 
 // ─── Rétrocompatibilité (ancienne signature utilisée par adminBlog.ts) ────────
