@@ -11,6 +11,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
 import { RelatedProducts } from "@/components/RelatedProducts";
+import ZoomImage from "@/components/ZoomImage";
 
 const ledImages = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/cNgCebtnqSvVUvmF.webp", alt: "Écran LED gonflable Hallucine de 5m pour projection de jour comme de nuit" },
@@ -60,12 +61,7 @@ export default function EcransLED() {
         <div className="container">
           <div className="grid md:grid-cols-3 gap-6">
             {ledImages.map((img, i) => (
-              <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden group">
-                <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading={i === 0 ? "eager" : "lazy"} fetchPriority={i === 0 ? "high" : undefined} decoding="async" width={800} height={500} />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-end">
-                  <p className="text-white text-xs p-3 opacity-0 group-hover:opacity-100 transition-opacity">{img.alt}</p>
-                </div>
-              </div>
+              <ZoomImage key={i} src={img.src} alt={img.alt} wrapperClassName="relative aspect-[4/3] rounded-lg" className="w-full h-full object-cover" loading={i === 0 ? "eager" : "lazy"} width={800} height={500} />
             ))}
           </div>
         </div>

@@ -11,6 +11,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
+import ZoomImage from "@/components/ZoomImage";
 
 const ETANCHE_3M = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/hIDMieDLnUJYNHGY.webp";
 const ETANCHE_5M_RITZ = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/IzUUAouVxqDCjGMh.webp";
@@ -157,15 +158,12 @@ export default function Histoire() {
 
               {chapter.image && (
                 <div className="flex-1 lg:max-w-[45%] w-full">
-                  <div className="overflow-hidden rounded-lg border border-white/10">
-                    <img
-                      src={chapter.image}
-                      alt={chapter.title}
-                      className="w-full h-64 md:h-80 object-cover hover:scale-105 transition-transform duration-700"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
+                  <ZoomImage
+                    src={chapter.image}
+                    alt={chapter.title}
+                    wrapperClassName="rounded-lg border border-white/10"
+                    className="w-full h-64 md:h-80 object-cover"
+                  />
                 </div>
               )}
             </motion.div>

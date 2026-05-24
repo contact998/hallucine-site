@@ -15,6 +15,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
 import { RelatedProducts } from "@/components/RelatedProducts";
 import { useProductImages } from "@/hooks/useProductImages";
+import ZoomImage from "@/components/ZoomImage";
 
 // ─── Fallback hardcodé — ne jamais supprimer ──────────────────────────────────
 
@@ -217,7 +218,7 @@ export default function Mobilier() {
           <div className="mt-16 grid md:grid-cols-2 gap-8 lg:gap-12">
             {mobilierProducts.map((product, i) => (
               <motion.div key={product.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={i} className="bg-background rounded-lg overflow-hidden border border-white/10 flex flex-col">
-                <img loading="lazy" src={product.img} alt={product.imgAlt} className="w-full aspect-[4/3] object-cover bg-black" decoding="async" />
+                <ZoomImage src={product.img} alt={product.imgAlt} className="w-full aspect-[4/3] object-cover bg-black" />
                 <div className="p-6 lg:p-8 flex-grow flex flex-col">
                   <h3 className="text-xl font-bold text-white">{product.title}</h3>
                   <p className="text-white/60 mt-3 leading-relaxed flex-grow">{product.desc}</p>
@@ -249,7 +250,7 @@ export default function Mobilier() {
               <div className="mt-8 space-y-6">
                 {transportProducts.map(product => (
                   <div key={product.title} className="bg-background-darker p-6 rounded-lg border border-white/10 flex gap-6 items-start">
-                    <img loading="lazy" src={product.img} alt={product.imgAlt} className="w-24 h-24 object-cover rounded-md flex-shrink-0" decoding="async" />
+                    <ZoomImage src={product.img} alt={product.imgAlt} className="w-24 h-24 object-cover rounded-md" wrapperClassName="flex-shrink-0" />
                     <div>
                       <h4 className="font-bold text-white">{product.title}</h4>
                       <p className="text-white/60 text-sm mt-1">{product.desc}</p>
