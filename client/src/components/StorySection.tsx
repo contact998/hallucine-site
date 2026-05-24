@@ -17,7 +17,7 @@ const ECRANS_ETANCHE_5_6 = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/
 const REPAS_CHINOIS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587900924-b22ae92f259c-hallucine-shenzhen-covid-fabrication-ecran.webp";
 const TROIS_ECRANS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587902974-6a126291762f-trois-ecrans-cinema-gonflables-hallucine-innovation.webp";
 
-const CHAPTER_IMAGES: { image: string | null; smallImage?: boolean; extraSmall?: boolean }[] = [
+const CHAPTER_IMAGES: { image: string | null; smallImage?: boolean; extraSmall?: boolean; containImage?: boolean }[] = [
   { image: ECRAN_8M_ALUMINIUM },
   { image: ECOLE_FORAINS },
   { image: ERREUR_FATALE },
@@ -26,7 +26,7 @@ const CHAPTER_IMAGES: { image: string | null; smallImage?: boolean; extraSmall?:
   { image: ECLATE_ETANCHE, smallImage: true },
   { image: ECRANS_ETANCHE_5_6 },
   { image: REPAS_CHINOIS },
-  { image: TROIS_ECRANS },
+  { image: TROIS_ECRANS, containImage: true },
 ];
 
 const CHAPTER_KEYS = ["ch1992", "ch1993", "ch1994", "ch1995", "ch2004", "ch2005", "ch2010", "ch2020", "chToday"];
@@ -86,7 +86,7 @@ export default function StorySection() {
                       <img loading="lazy"
                         src={imgData.image}
                         alt={t(`story.${key}_alt`, { defaultValue: t(`story.${key}_title`) })}
-                        className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                        className={`absolute inset-0 w-full h-full ${imgData.containImage ? "object-contain" : "object-cover"} hover:scale-105 transition-transform duration-700`}
                         width={800} height={500}
                         decoding="async" />
                     )
