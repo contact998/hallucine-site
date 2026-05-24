@@ -223,7 +223,7 @@ export function serveStatic(app: Express) {
       res.status(200).set({
         "Content-Type": "text/html; charset=utf-8",
         "Vary": "Host",
-        "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
+        "Cache-Control": "no-cache, max-age=0, must-revalidate",
       }).end(prerenderedHtml);
       return;
     }
@@ -295,7 +295,7 @@ export function serveStatic(app: Express) {
           res.status(200).set({
             "Content-Type": "text/html",
             "Vary": "Host",
-            "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
+            "Cache-Control": "no-cache, max-age=0, must-revalidate",
           }).end(html);
           return;
         }

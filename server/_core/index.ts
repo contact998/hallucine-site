@@ -29,42 +29,6 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
   throw new Error(`No available port found starting from ${startPort}`);
 }
 
-// Zones Cloudflare des 5 domaines hallucinecran.*
-const CLOUDFLARE_ZONE_IDS = [
-  "22fac02d282c684505dc37a7dcdf5a87", // hallucinecran.fr
-  "a82e055b4f1f095056ad80293d2e2b98", // hallucinecran.com
-  "5dc2ef69ab644faae7ca44202c4351a6", // hallucinecran.de
-  "216b1fa34584273eda1d6af152e76ee6", // hallucinecran.es
-  "ae0cd00c24123a9fd2ed0bfb53279f82", // hallucinecran.it
-];
-
-// Purge le cache Cloudflare au démarrage du serveur. Chaque déploiement crée un
-// nouveau conteneur → cette purge garantit que le CDN ne sert plus un ancien HTML
-// pointant vers des bundles JS supprimés par le build. No-op si le token est absent.
-async function purgeCloudflareCache(): Promise<void> {
-  const token = process.env.CF_PURGE_TOKEN;
-  if (!token) {
-    console.log("[CF Purge] CF_PURGE_TOKEN absent — purge du cache ignorée");
-    return;
-  }
-  for (const zoneId of CLOUDFLARE_ZONE_IDS) {
-    try {
-      const res = await fetch(`https://api.cloudflare.com/client/v4/zones/${zoneId}/purge_cache`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ purge_everything: true }),
-      });
-      const json = (await res.json()) as { success?: boolean; errors?: unknown };
-      console.log(`[CF Purge] ${zoneId}: ${json.success ? "OK" : "ÉCHEC " + JSON.stringify(json.errors)}`);
-    } catch (err) {
-      console.warn(`[CF Purge] ${zoneId}: erreur réseau`, err);
-    }
-  }
-}
-
 async function startServer() {
   console.log("AUTH BUILD MARKER 2026-04-28");
   const app = express();
@@ -382,9 +346,6 @@ async function startServer() {
   server.listen(port, () => {
     console.log(`Server running on http://localhost:${port}/`);
   });
-
-  // Purge du cache Cloudflare à chaque démarrage (= à chaque déploiement).
-  void purgeCloudflareCache();
 }
 
 startServer().catch(console.error);
