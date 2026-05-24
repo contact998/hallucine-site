@@ -297,6 +297,45 @@ async function startServer() {
     })
   );
 
+  // ─── Download proxy (admin) — bypass CORS sur R2 ─────────────────────────
+  // Permet de télécharger une image depuis l'admin/media avec un vrai
+  // Content-Disposition: attachment + filename propre, même cross-origin.
+  app.get("/api/admin/media-download/:id", async (req, res) => {
+    try {
+      const { sdk } = await import("./sdk");
+      let user;
+      try {
+        user = await sdk.authenticateRequest(req as any);
+      } catch {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+      if (!user || user.role !== "admin") {
+        return res.status(403).json({ error: "Forbidden" });
+      }
+      const id = parseInt(req.params.id, 10);
+      if (!Number.isFinite(id)) return res.status(400).json({ error: "Bad id" });
+
+      const { getMediaById } = await import("../mediaLibrary");
+      const item = await getMediaById(id);
+      if (!item) return res.status(404).json({ error: "Not found" });
+
+      const r = await fetch(item.url);
+      if (!r.ok) return res.status(502).json({ error: `R2 fetch ${r.status}` });
+      const buf = Buffer.from(await r.arrayBuffer());
+
+      res.setHeader("Content-Type", item.mimeType ?? "application/octet-stream");
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename="${encodeURIComponent(item.filename)}"`,
+      );
+      res.setHeader("Content-Length", String(buf.length));
+      res.send(buf);
+    } catch (err: any) {
+      console.error("[media-download]", err);
+      res.status(500).json({ error: err.message || "Server error" });
+    }
+  });
+
   // ─── Upload image blog vers R2 ───────────────────────────────
   app.post("/api/upload-blog-image", express.raw({ type: "image/*", limit: "10mb" }), async (req, res) => {
     try {

@@ -111,26 +111,20 @@ function formatDate(d: string | Date | null | undefined): string {
 }
 
 /**
- * Télécharge une image en forçant un nom de fichier propre.
- * Passe par fetch(blob) car l'attribut HTML5 `download` est ignoré cross-origin.
+ * Télécharge une image via le proxy serveur (Content-Disposition: attachment).
+ * Passe par /api/admin/media-download/:id pour bypasser CORS R2 et garantir
+ * que le navigateur sauvegarde dans ~/Downloads avec le nom propre.
  */
-async function downloadImage(url: string, suggestedName: string): Promise<void> {
-  try {
-    const r = await fetch(url);
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    const blob = await r.blob();
-    const objectUrl = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = objectUrl;
-    a.download = suggestedName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
-  } catch (err) {
-    console.error("[Media] download error:", err);
-    toast.error("Téléchargement échoué");
-  }
+function downloadImageById(id: number, _filename?: string): void {
+  // Lien direct : le serveur renvoie un Content-Disposition: attachment qui
+  // déclenche le download natif du navigateur (vers ~/Downloads sur macOS).
+  const a = document.createElement("a");
+  a.href = `/api/admin/media-download/${id}`;
+  // Hint au navigateur — ignoré si le serveur fournit déjà filename, mais utile en backup
+  if (_filename) a.download = _filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }
 
 // ─── Composant principal ──────────────────────────────────────────────────────
@@ -311,7 +305,7 @@ function GaleriePanel() {
       else if (e.key === "d" || e.key === "D") {
         if (lightboxIndex !== null) {
           const it = displayedItems[lightboxIndex];
-          if (it) downloadImage(it.url, it.filename);
+          if (it) downloadImageById(it.id, it.filename);
         }
       }
     };
@@ -482,7 +476,7 @@ function GaleriePanel() {
           onDownload={async () => {
             const sel = displayedItems.filter(i => selected.has(i.id));
             for (const it of sel) {
-              await downloadImage(it.url, it.filename);
+              await downloadImageById(it.id, it.filename);
               await new Promise(r => setTimeout(r, 150));
             }
             toast.success(`${sel.length} téléchargement(s) lancé(s)`);
@@ -600,7 +594,7 @@ function SortableMediaCard(props: {
         <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-2 pointer-events-none">
           <p className="text-white text-[10px] font-medium line-clamp-2 pointer-events-none">{item.title}</p>
           <div className="flex gap-1 justify-end pointer-events-auto" onPointerDown={(e) => e.stopPropagation()}>
-            <ActionBtn title="Télécharger" onClick={(e) => { e.stopPropagation(); downloadImage(item.url, item.filename); }} color="bg-emerald-500/30 hover:bg-emerald-500/50">
+            <ActionBtn title="Télécharger" onClick={(e) => { e.stopPropagation(); downloadImageById(item.id, item.filename); }} color="bg-emerald-500/30 hover:bg-emerald-500/50">
               <Download className="w-3 h-3 text-emerald-300" />
             </ActionBtn>
             <ActionBtn title="Détails et utilisation" onClick={(e) => { e.stopPropagation(); onOpenDetail(); }} color="bg-cyan-500/30 hover:bg-cyan-500/50">
@@ -763,7 +757,7 @@ function DetailDrawer(props: { itemId: number; onClose: () => void }) {
 
             <div className="space-y-2">
               <button
-                onClick={() => downloadImage(item.url, item.filename)}
+                onClick={() => downloadImageById(item.id, item.filename)}
                 className="w-full flex items-center justify-center gap-2 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 rounded text-sm font-semibold text-emerald-300"
               >
                 <Download className="w-4 h-4" /> Télécharger
@@ -862,7 +856,7 @@ function AdminLightbox(props: {
 
       {/* Download */}
       <button
-        onClick={(e) => { e.stopPropagation(); downloadImage(item.url, item.filename); }}
+        onClick={(e) => { e.stopPropagation(); downloadImageById(item.id, item.filename); }}
         className="absolute top-4 right-16 text-white/60 hover:text-emerald-300 flex items-center gap-1.5"
         title="Télécharger (raccourci : D)"
       >
