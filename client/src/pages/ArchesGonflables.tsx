@@ -29,10 +29,9 @@ const archesData = [
 ];
 
 const FALLBACK_IMAGES_ARCHES = [
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vbfbnQBVCUGrWUOw.webp", alt: "Arche gonflable cinéma en plein air avec écran de projection" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/eqdRLmacrGAlLxMw.webp", alt: "Arche gonflable colorée pour arrivée de course sportive" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/yuLqkYzSuwxDVzhu.webp", alt: "Arche gonflable bleue et rouge pour entrée de projection" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/tZPYCxQHEVFUCaJD.webp", alt: "Arche gonflable blanche décorée motifs floraux" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/1779598775656-fc81abf1ffda-arche-arrivee-course-coureurs-medailles.png", alt: "Arche gonflable colorée arrivée de course avec coureurs et médailles" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/1779598801205-e8f080a6d539-arche-hallucine-grise-personnalisee-even.jpg", alt: "Arche gonflable Hallucine grise personnalisable pour événement professionnel" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/1779598798314-49b23fc891cb-arche-entree-projection-cinema-plein-air.webp", alt: "Arche gonflable Entrée Projection pour cinéma en plein air" },
 ];
 
 export default function ArchesGonflables() {
@@ -262,7 +261,7 @@ export default function ArchesGonflables() {
               </ul>
             </div>
             <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
-              <img src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/eqdRLmacrGAlLxMw.webp" alt="Détails techniques d'une arche gonflable" className="w-full h-full object-cover" loading="lazy" decoding="async" width={800} height={500} />
+              <img src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/1779598801205-e8f080a6d539-arche-hallucine-grise-personnalisee-even.jpg" alt="Arche gonflable Hallucine grise personnalisable pour événement professionnel" className="w-full h-full object-cover" loading="lazy" decoding="async" width={800} height={500} />
             </div>
           </div>
         </div>
