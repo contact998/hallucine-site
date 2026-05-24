@@ -217,7 +217,7 @@ export default function Mobilier() {
           <div className="mt-16 grid md:grid-cols-2 gap-8 lg:gap-12">
             {mobilierProducts.map((product, i) => (
               <motion.div key={product.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={i} className="bg-background rounded-lg overflow-hidden border border-white/10 flex flex-col">
-                <img loading="lazy" src={product.img} alt={product.imgAlt} className="w-full h-64 object-cover" decoding="async" />
+                <img loading="lazy" src={product.img} alt={product.imgAlt} className="w-full aspect-[4/3] object-cover bg-black" decoding="async" />
                 <div className="p-6 lg:p-8 flex-grow flex flex-col">
                   <h3 className="text-xl font-bold text-white">{product.title}</h3>
                   <p className="text-white/60 mt-3 leading-relaxed flex-grow">{product.desc}</p>
