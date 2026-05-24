@@ -742,12 +742,19 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                 <div className="flex items-center gap-2">
                   <input
                     id="sf-email"
+                    ref={(el) => {
+                      // Focus seulement si la page est /contact (où le form
+                      // est attendu) — sinon le scroll-into-view auto du
+                      // browser ferait sauter la page d'accueil en bas.
+                      if (el && typeof window !== "undefined" && window.location.pathname.includes("contact")) {
+                        el.focus({ preventScroll: true });
+                      }
+                    }}
                     type="email"
                     value={email}
                     onChange={(e) => { setEmail(e.target.value); setFieldErrors(prev => ({ ...prev, email: "" })); }}
                     placeholder={t("step1_emailPlaceholder")}
                     className={`${inputRequiredClass} flex-1 ${fieldErrors.email ? "border-red-500" : ""}`}
-                    autoFocus
                     onKeyDown={handleKeyDown}
                   />
                   <VoiceMicButton
