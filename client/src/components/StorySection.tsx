@@ -35,8 +35,23 @@ const CHAPTER_KEYS = ["ch1992", "ch1993", "ch1994", "ch1995", "ch2004", "ch2005"
 export default function StorySection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
-  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
+  const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
   const { t } = useTranslation("home");
+
+  // Liste plate des chapitres ayant une image (pour la navigation prev/next dans la lightbox)
+  const lightboxImages = CHAPTER_KEYS
+    .map((key, i) => ({ key, img: CHAPTER_IMAGES[i] }))
+    .filter((c) => !!c.img.image)
+    .map((c) => ({
+      src: c.img.image!,
+      alt: t(`story.${c.key}_alt`, { defaultValue: t(`story.${c.key}_title`) }),
+    }));
+  const openLightboxFor = (key: string) => {
+    const idx = lightboxImages.findIndex(
+      (it) => it.alt === t(`story.${key}_alt`, { defaultValue: t(`story.${key}_title`) })
+    );
+    setLightboxIdx(idx >= 0 ? idx : 0);
+  };
 
   return (
     <section id="histoire" className="relative py-32 overflow-hidden">
@@ -77,10 +92,7 @@ export default function StorySection() {
                 {/* Image (ou placeholder) */}
                 <div
                   className={`${imageLeft ? "order-1" : "order-1 lg:order-2"} relative ${imgData.smallImage ? "min-h-[200px] lg:min-h-[280px]" : "min-h-[300px] lg:min-h-[400px]"} overflow-hidden flex items-center justify-center bg-black/20 ${imgData.image ? "cursor-pointer" : ""}`}
-                  onClick={imgData.image ? () => setLightbox({
-                    src: imgData.image!,
-                    alt: t(`story.${key}_alt`, { defaultValue: t(`story.${key}_title`) }),
-                  }) : undefined}
+                  onClick={imgData.image ? () => openLightboxFor(key) : undefined}
                 >
                   {imgData.image ? (
                     imgData.smallImage ? (
@@ -120,12 +132,14 @@ export default function StorySection() {
       </div>
 
       {/* Lightbox */}
-      {lightbox && (
+      {lightboxIdx !== null && (
         <Lightbox
-          src={lightbox.src}
-          alt={lightbox.alt}
-          onClose={() => setLightbox(null)}
+          src={lightboxImages[lightboxIdx].src}
+          alt={lightboxImages[lightboxIdx].alt}
+          onClose={() => setLightboxIdx(null)}
           closeLabel={t("story.close_photo")}
+          onPrev={lightboxIdx > 0 ? () => setLightboxIdx(lightboxIdx - 1) : undefined}
+          onNext={lightboxIdx < lightboxImages.length - 1 ? () => setLightboxIdx(lightboxIdx + 1) : undefined}
         />
       )}
     </section>
