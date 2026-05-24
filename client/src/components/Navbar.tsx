@@ -246,9 +246,9 @@ export default function Navbar() {
           <img
             src={LOGO_URL}
             alt="Hallucine"
-            className="h-11 w-auto"
-            width={48}
-            height={48}
+            className="h-14 w-auto [filter:drop-shadow(0_0_10px_rgba(255,255,255,0.35))]"
+            width={64}
+            height={64}
             decoding="async"
           />
         </Link>
