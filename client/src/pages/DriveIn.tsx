@@ -133,7 +133,7 @@ export default function DriveIn() {
             </div>
             <div className="relative overflow-hidden rounded-xl min-h-[300px] lg:min-h-0">
               <img
-                src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779589688540-cc4404c27d95-ecran-cinema-drive-in-gonflable-10m-voitures-coucher-soleil.webp"
+                src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779595463304-e2eb8155e2c1-ecran-cinema-drive-in-gonflable-17m-hallucine.webp"
                 alt={t("card_photo_alt")}
                 className="absolute inset-0 w-full h-full object-cover"
                 loading="lazy"

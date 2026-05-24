@@ -56,9 +56,9 @@ const FALLBACK_PHOTOS = [
     span: "col-span-1 row-span-1",
   },
   {
-    src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/WQZRfvSatJJIbSob.webp",
-    alt: "Écran de cinéma gonflable de 10m par Hallucine pour un événement de cinéma drive-in",
-    caption: "Écran 10m — Drive-in",
+    src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779595463304-e2eb8155e2c1-ecran-cinema-drive-in-gonflable-17m-hallucine.webp",
+    alt: "Écran de cinéma gonflable Hallucine 17m pour drive-in — projection plein air grand format",
+    caption: "Écran 17m — Drive-in",
     span: "col-span-1 row-span-1",
   },
   {
