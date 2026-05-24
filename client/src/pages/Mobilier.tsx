@@ -24,7 +24,7 @@ const FALLBACK_MOBILIER = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ufvprHQgVPbbyBlI.webp",   alt: "Bar gonflable" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/yUqGwSVTzsTRviNh.webp",   alt: "Table mange-debout gonflable" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/1779605638497-5fdb1a6325dc-chariot-transport-ecrans-soufflerie-roue.webp",   alt: "Chariot de transport gonflable pliable à roues pour écrans Hallucine" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/CYlbsneVJDOkGOhF.webp",   alt: "Flycase professionnel" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/1779607200855-44c3611663e3-flycase-professionnel-roulettes-ecrans-m.webp",   alt: "Flycase professionnel rigide à roulettes pour transport et stockage écrans Hallucine" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/efvnhrOKvRVMyuHr.webp",   alt: "Structure étanche mobilier" },
 ];
 
