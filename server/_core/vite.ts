@@ -181,6 +181,9 @@ export function serveStatic(app: Express) {
     const [pathOnly, query] = req.originalUrl.split("?");
     const decision = resolveLocalePrefixRedirect(pathOnly, req.hostname);
     if (!decision) return next();
+    // Cloudflare cache par défaut les 301 ~30min — ce qui rend invisibles les
+    // changements de cette table pendant longtemps après un deploy.
+    res.set("Cache-Control", "no-store");
     if (decision.status === 404) {
       res.status(404).set({ "Content-Type": "text/plain" }).end("Not Found");
       return;
