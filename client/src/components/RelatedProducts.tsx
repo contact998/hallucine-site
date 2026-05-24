@@ -106,8 +106,8 @@ const PRODUCTS_CONFIG: Partial<Record<RouteKey, ProductMeta>> = {
   "arches": {
     titleKey: "related_arches_title",
     descKey: "related_arches_desc",
-    image: `${CDN}/vbfbnQBVCUGrWUOw.webp`,
-    imageAlt: "Arche gonflable publicitaire Hallucine",
+    image: `${CDN}/1779597023203-1536c42d3fc1-arche-gonflable-entree-cinema-plein-air-hallucine.webp`,
+    imageAlt: "Arche gonflable Hallucine annonçant un cinéma plein air — entrée d'événement",
   },
   "mobilier": {
     titleKey: "related_mobilier_title",
