@@ -23,7 +23,7 @@ const FALLBACK_MOBILIER = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/VUhsCVHmnpGqweWv.webp",   alt: "Fauteuil gonflable" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ufvprHQgVPbbyBlI.webp",   alt: "Bar gonflable" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/yUqGwSVTzsTRviNh.webp",   alt: "Table mange-debout gonflable" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/efvnhrOKvRVMyuHr.webp",   alt: "Support/chariot de transport" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/1779605638497-5fdb1a6325dc-chariot-transport-ecrans-soufflerie-roue.webp",   alt: "Chariot de transport gonflable pliable à roues pour écrans Hallucine" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/CYlbsneVJDOkGOhF.webp",   alt: "Flycase professionnel" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/efvnhrOKvRVMyuHr.webp",   alt: "Structure étanche mobilier" },
 ];
