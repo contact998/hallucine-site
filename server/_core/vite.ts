@@ -70,6 +70,40 @@ function getLocaleFromHost(hostname: string): string {
   return DOMAIN_LOCALE_MAP[hostname] || "fr";
 }
 
+// Origine canonique par langue (un TLD par locale).
+const LOCALE_ORIGINS: Record<string, string> = {
+  fr: "https://hallucinecran.fr",
+  en: "https://hallucinecran.com",
+  de: "https://hallucinecran.de",
+  es: "https://hallucinecran.es",
+  it: "https://hallucinecran.it",
+};
+
+const VALID_LANG_PREFIXES = new Set(["fr", "en", "de", "es", "it"]);
+
+// Décide quoi faire d'un path qui commence par /xx ou /xx/... :
+//  - préfixe inconnu (/sv, /nl, /pt…)  → 404 propre (bots SEO)
+//  - préfixe = langue du TLD courant   → 301 canonique sans préfixe
+//  - préfixe d'une autre langue valide → 301 vers la home du TLD correspondant
+//  - aucun préfixe 2-lettres           → null (laisser passer)
+export function resolveLocalePrefixRedirect(
+  pathOnly: string,
+  hostname: string
+): { status: 301; location: string } | { status: 404 } | null {
+  const m = pathOnly.match(/^\/([a-z]{2})(\/|$)/);
+  if (!m) return null;
+  const lang = m[1];
+  if (!VALID_LANG_PREFIXES.has(lang)) {
+    return { status: 404 };
+  }
+  const currentLocale = getLocaleFromHost(hostname);
+  if (lang === currentLocale) {
+    const rest = pathOnly.replace(/^\/[a-z]{2}/, "") || "/";
+    return { status: 301, location: rest };
+  }
+  return { status: 301, location: LOCALE_ORIGINS[lang] + "/" };
+}
+
 const OG_LOCALES: Record<string, string> = {
   fr: "fr_FR",
   en: "en_US",
@@ -139,17 +173,25 @@ export function serveStatic(app: Express) {
   // canonique sans slash (évite un saut de redirection sur les liens internes).
   app.use(express.static(distPath, { index: false, redirect: false }));
 
-  // Bloquer les patterns /xx (préfixes de langue invalides testés par bots SEO)
-  // Ex: /sv, /da, /nl, /pt, /pl, /ru, /zh, /ja, /ko...
-  // Ces URLs n'existent pas sur le site — retourner 404 propre pour GSC
-  const VALID_LANG_PREFIXES = new Set(["fr", "en", "de", "es", "it"]);
-  app.use(/^\/([a-z]{2})\/?$/, (req, res, next) => {
-    const lang = req.params[0];
-    if (!VALID_LANG_PREFIXES.has(lang)) {
+  // Préfixes de langue dans l'URL (/en, /fr, /de, /es, /it ou /sv, /nl…).
+  // Chaque langue est sur son propre TLD ; les chemins préfixés sont donc
+  // soit canonisés (strip du préfixe), soit redirigés vers le bon TLD,
+  // soit refusés (404 pour les codes inconnus testés par bots SEO).
+  app.use((req, res, next) => {
+    const [pathOnly, query] = req.originalUrl.split("?");
+    const decision = resolveLocalePrefixRedirect(pathOnly, req.hostname);
+    if (!decision) return next();
+    if (decision.status === 404) {
       res.status(404).set({ "Content-Type": "text/plain" }).end("Not Found");
       return;
     }
-    next();
+    // Préserver la query sur le strip canonique (URL relative).
+    // Pour le cross-locale on retombe sur la home du TLD : on ne propage pas
+    // la query (un /en/?utm=… provenant du .fr n'a pas de sens côté .com).
+    const isCanonicalStrip = decision.location.startsWith("/");
+    const target =
+      decision.location + (isCanonicalStrip && query ? "?" + query : "");
+    res.redirect(301, target);
   });
 
   // Redirections 301 d'anciennes URLs publiques fusionnées dans
