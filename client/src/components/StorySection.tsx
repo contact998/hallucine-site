@@ -11,11 +11,11 @@ const ECOLE_FORAINS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/asset
 const ERREUR_FATALE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779584723959-a9169ab7bfc6-histoire-ecran-anglais.jpg";
 const ECRAN_TUBULAIRE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/JlNlzGmvIyCrQHIY.webp";
 const VOILERIE_BRETAGNE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587607712-ce2b14189c08-ecran-cinema-gonflable-voilerie-bretonne.webp";
-const KYTEA_HK = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ihAHJqPuCbLEmeIQ.webp";
-const ECLATE_ETANCHE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ORYwRnlcyusmCmpC.webp";
-const ECRANS_ETANCHE_5_6 = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/VDWrGjsVLLnZNbTR.webp";
-const REPAS_CHINOIS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/VGMyogZBklEVINLW.webp";
-const TROIS_ECRANS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/fGEhAORVzMgloRQI.webp";
+const KYTEA_HK = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587893638-07ef453d5255-kitesurf-hong-kong-inspiration-ecran-gonflable.webp";
+const ECLATE_ETANCHE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587896624-615d7348493d-vue-eclatee-ecran-cinema-gonflable-etanche-tissu-airbag.webp";
+const ECRANS_ETANCHE_5_6 = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587898704-f934a4160b12-ecran-cinema-gonflable-etanche-5m-6m-hallucine.webp";
+const REPAS_CHINOIS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587900924-b22ae92f259c-hallucine-shenzhen-covid-fabrication-ecran.webp";
+const TROIS_ECRANS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587902974-6a126291762f-trois-ecrans-cinema-gonflables-hallucine-innovation.webp";
 
 const CHAPTER_IMAGES: { image: string | null; smallImage?: boolean; extraSmall?: boolean }[] = [
   { image: ECRAN_8M_ALUMINIUM },
