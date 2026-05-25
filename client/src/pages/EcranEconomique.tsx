@@ -4,16 +4,13 @@
  */
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import FilmCountdown from "@/components/FilmCountdown";
 import { Link } from "wouter";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import ProductPageShell from "@/components/product/ProductPageShell";
 import { useRoutes } from "@/i18n/useRoutes";
-import { RelatedProducts } from "@/components/RelatedProducts";
 import { useProductImages } from "@/hooks/useProductImages";
 import EmailLink from "@/components/EmailLink";
 import ZoomImage from "@/components/ZoomImage";
@@ -91,10 +88,8 @@ export default function EcranEconomique() {
   const imagesSansSouffleur = allDbImages.length > 0 ? allDbImages.slice(2, 4) : FALLBACK_SANS_SOUFFLEUR;
   const imagesFinales = allDbImages.length > 0 ? allDbImages.slice(4) : FALLBACK_FINALES;
 
-  const [showCountdown, setShowCountdown] = useState(true);
-
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <ProductPageShell withCountdown relatedProductsKey="ecran-economique">
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -115,8 +110,6 @@ export default function EcranEconomique() {
           category: "Ecrans Gonflables",
         }}
       />
-      {showCountdown && <FilmCountdown onComplete={() => setShowCountdown(false)} />}
-      <Navbar />
 
       {/* Hero */}
       <section className="pt-32 pb-16 bg-charcoal-light">
@@ -314,8 +307,6 @@ export default function EcranEconomique() {
         </div>
       </section>
 
-      <RelatedProducts currentPage="ecran-economique" />
-      <Footer />
-    </div>
+    </ProductPageShell>
   );
 }

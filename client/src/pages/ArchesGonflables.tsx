@@ -3,15 +3,14 @@
  * Contenu i18n via namespace "arches-gonflables"
  */
 import { useTranslation } from "react-i18next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { Link } from "wouter";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import ProductPageShell from "@/components/product/ProductPageShell";
+import ProductHero from "@/components/product/ProductHero";
+import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
-import { RelatedProducts } from "@/components/RelatedProducts";
 import { useProductImages } from "@/hooks/useProductImages";
 import ZoomImage from "@/components/ZoomImage";
 
@@ -56,7 +55,7 @@ export default function ArchesGonflables() {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <ProductPageShell relatedProductsKey="arches">
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -72,19 +71,14 @@ export default function ArchesGonflables() {
         }}
         faqs={faqItems.map(item => ({ question: item.q, answer: item.a }))}
       />
-      <Navbar />
 
-      {/* Hero */}
-      <section className="relative overflow-hidden pt-32 pb-16 bg-charcoal-light">
-        <div className="container">
-          <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">{t("section_label")}</p>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight mb-6">
-            {t("hero_title")}{" "}<br />
-            <span className="text-warm">{t("hero_colored")}</span>
-          </h1>
-          <p className="text-white/70 text-lg max-w-3xl leading-relaxed">{t("hero_desc")}</p>
-        </div>
-      </section>
+      <ProductHero
+        eyebrow={t("section_label")}
+        title={t("hero_title")}
+        coloredPart={t("hero_colored")}
+      >
+        <p>{t("hero_desc")}</p>
+      </ProductHero>
 
       {/* Galerie photos */}
       <section className="py-16 bg-background">
@@ -278,14 +272,11 @@ export default function ArchesGonflables() {
         <div className="container text-center">
           <h2 className="text-3xl font-bold text-ivory mb-4">{t("cta_title")}</h2>
           <p className="text-white/70 max-w-2xl mx-auto mb-8">{t("cta_desc")}</p>
-          <Link href={route('contact')} className="inline-block bg-warm text-charcoal-dark font-semibold py-3 px-8 rounded-lg hover:bg-warm/90 transition-colors">
+          <ProductButton href={route('contact')} variant="primary">
             {t("cta_devis")}
-          </Link>
+          </ProductButton>
         </div>
       </section>
-
-      <RelatedProducts currentPage="arches" />
-      <Footer />
-    </div>
+    </ProductPageShell>
   );
 }

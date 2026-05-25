@@ -2,18 +2,17 @@
  * Page Hub Écrans Gonflables
  * Redirige vers les 3 sous-pages : Géant (soufflerie), Étanche, Économique
  */
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import FilmCountdown from "@/components/FilmCountdown";
 import { Link } from "wouter";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import PagePhoto from "@/components/PagePhoto";
+import ProductPageShell from "@/components/product/ProductPageShell";
+import ProductHero from "@/components/product/ProductHero";
+import ProductButton from "@/components/product/ProductButton";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
-import { RelatedProducts } from "@/components/RelatedProducts";
 
 export default function Ecrans() {
   const route = useRoutes();
@@ -46,12 +45,11 @@ export default function Ecrans() {
   ];
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [showCountdown, setShowCountdown] = useState(true);
 
   const ecransFaqs = faqItems.map(f => ({ question: f.q, answer: f.a }));
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <ProductPageShell withCountdown relatedProductsKey="ecrans">
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -66,22 +64,14 @@ export default function Ecrans() {
         }}
         faqs={ecransFaqs}
       />
-      {showCountdown && <FilmCountdown onComplete={() => setShowCountdown(false)} />}
-      <Navbar />
 
-      {/* Hero */}
-      <section className="pt-32 pb-16 bg-charcoal-light">
-        <div className="container">
-          <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">{t("section_label")}</p>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight mb-6">
-            {t("hero_title")}{" "}<br />
-            <span className="text-warm">{t("hero_colored")}</span>
-          </h1>
-          <p className="text-white/70 text-lg max-w-3xl leading-relaxed">
-            {t("hero_desc")}
-          </p>
-        </div>
-      </section>
+      <ProductHero
+        eyebrow={t("section_label")}
+        title={t("hero_title")}
+        coloredPart={t("hero_colored")}
+      >
+        <p>{t("hero_desc")}</p>
+      </ProductHero>
 
       <PagePhoto src="/img/ecrans-seance.jpg" alt={t("photo_alt")} />
 
@@ -156,18 +146,11 @@ export default function Ecrans() {
           <h2 className="text-3xl font-bold text-ivory mb-4">{t("cta_title")}</h2>
           <p className="text-white/60 mb-8">{t("cta_desc")}</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href={route('contact')} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
-              {t("cta_contact")}
-            </Link>
-            <Link href={route('contact')} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
-              {t("cta_prix")}
-            </Link>
+            <ProductButton href={route('contact')} variant="primary">{t("cta_contact")}</ProductButton>
+            <ProductButton href={route('contact')} variant="secondary">{t("cta_prix")}</ProductButton>
           </div>
         </div>
       </section>
-
-      <RelatedProducts currentPage="ecrans" />
-      <Footer />
-    </div>
+    </ProductPageShell>
   );
 }

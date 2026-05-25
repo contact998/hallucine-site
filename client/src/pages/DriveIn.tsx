@@ -2,13 +2,13 @@
  * Page Drive-in — l'écran gonflable Hallucine dédié au cinéma drive-in.
  * Contenu i18n via le namespace « drive-in ».
  */
-import { Link } from "wouter";
 import { useTranslation } from "react-i18next";
 import { ArrowRight, Eye, Wind, Anchor, Clock, Radio } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import PageStructuredData from "@/components/PageStructuredData";
 import PagePhoto from "@/components/PagePhoto";
+import ProductPageShell from "@/components/product/ProductPageShell";
+import ProductHero from "@/components/product/ProductHero";
+import ProductButton from "@/components/product/ProductButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useRoutes } from "@/i18n/useRoutes";
 import { ECRAN_DRIVE_IN } from "@/data/ecransConfigurateur";
@@ -39,7 +39,7 @@ export default function DriveIn() {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <ProductPageShell>
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -50,36 +50,24 @@ export default function DriveIn() {
           description: t("meta_desc"),
         }}
       />
-      <Navbar />
 
-      {/* Hero */}
-      <section className="pt-32 pb-16 bg-charcoal-light">
-        <div className="container">
-          <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">
-            {t("section_label")}
-          </p>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight mb-6">
-            {t("hero_title")}
-          </h1>
-          <p className="text-white/70 text-lg max-w-2xl leading-relaxed mb-8">{t("hero_desc")}</p>
-          <div className="flex flex-wrap gap-4">
-            <Link
-              href={route("contact")}
-              className="inline-flex items-center gap-2 px-7 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors"
-            >
+      <ProductHero
+        eyebrow={t("section_label")}
+        title={t("hero_title")}
+        actions={
+          <>
+            <ProductButton href={route("contact")} variant="primary">
               {t("cta_devis")} <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              href={route("configurateur")}
-              className="inline-flex items-center px-7 py-3 border border-warm/40 text-warm font-semibold rounded hover:bg-warm/10 transition-colors"
-            >
+            </ProductButton>
+            <ProductButton href={route("configurateur")} variant="secondary">
               {t("cta_config")}
-            </Link>
-          </div>
-        </div>
-      </section>
+            </ProductButton>
+          </>
+        }
+      >
+        <p>{t("hero_desc")}</p>
+      </ProductHero>
 
-      {/* Photo */}
       <PagePhoto src="/img/ecran-drive-in.jpg" alt={t("photo_alt")} />
 
       {/* Pourquoi un écran spécifique */}
@@ -100,7 +88,7 @@ export default function DriveIn() {
         </div>
       </section>
 
-      {/* Fiche écran Drive-In */}
+      {/* Fiche écran drive-in */}
       <section className="py-20 bg-charcoal-light">
         <div className="container">
           <h2 className="text-3xl font-bold text-ivory mb-2">{t("card_title")}</h2>
@@ -124,12 +112,9 @@ export default function DriveIn() {
                 <Radio className="w-4 h-4 text-warm shrink-0 mt-0.5" />
                 {t("audio_note")}
               </p>
-              <Link
-                href={route("contact")}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors"
-              >
+              <ProductButton href={route("contact")} variant="primary">
                 {t("cta_devis")} <ArrowRight className="w-4 h-4" />
-              </Link>
+              </ProductButton>
             </div>
             <div className="relative overflow-hidden rounded-xl min-h-[300px] lg:min-h-0">
               <img
@@ -184,29 +169,21 @@ export default function DriveIn() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* CTA final */}
       <section className="py-20 bg-charcoal-light">
         <div className="container text-center">
           <h2 className="text-3xl font-bold text-ivory mb-4">{t("cta_title")}</h2>
           <p className="text-white/65 mb-8 max-w-xl mx-auto">{t("cta_desc")}</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link
-              href={route("contact")}
-              className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors"
-            >
+            <ProductButton href={route("contact")} variant="primary">
               {t("cta_devis")}
-            </Link>
-            <Link
-              href={route("ecran-geant")}
-              className="px-8 py-3 border border-warm/40 text-warm font-semibold rounded hover:bg-warm/10 transition-colors"
-            >
+            </ProductButton>
+            <ProductButton href={route("ecran-geant")} variant="secondary">
               {t("cta_gamme")}
-            </Link>
+            </ProductButton>
           </div>
         </div>
       </section>
-
-      <Footer />
-    </div>
+    </ProductPageShell>
   );
 }

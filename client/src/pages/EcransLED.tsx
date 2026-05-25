@@ -2,15 +2,14 @@
  * Page Écrans LED — En construction
  * Design: cinéma vintage — fond sombre, accents dorés
  */
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { Link } from "wouter";
 import { Construction } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import ProductPageShell from "@/components/product/ProductPageShell";
+import ProductHero from "@/components/product/ProductHero";
+import ProductButton from "@/components/product/ProductButton";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
-import { RelatedProducts } from "@/components/RelatedProducts";
 import ZoomImage from "@/components/ZoomImage";
 
 const ledImages = [
@@ -26,7 +25,7 @@ export default function EcransLED() {
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/cNgCebtnqSvVUvmF.webp");
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <ProductPageShell relatedProductsKey="ecrans-led">
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -40,21 +39,14 @@ export default function EcransLED() {
           minPrice: 4990,
         }}
       />
-      <Navbar />
 
-      {/* Hero */}
-      <section className="pt-32 pb-16 bg-charcoal-light">
-        <div className="container">
-          <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">{t("badge")}</p>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight mb-6">
-            {t("hero_title")}{" "}<br />
-            <span className="text-warm">{t("hero_subtitle")}</span>
-          </h1>
-          <p className="text-white/70 text-lg max-w-3xl leading-relaxed">
-            {t("hero_desc")}
-          </p>
-        </div>
-      </section>
+      <ProductHero
+        eyebrow={t("badge")}
+        title={t("hero_title")}
+        coloredPart={t("hero_subtitle")}
+      >
+        <p>{t("hero_desc")}</p>
+      </ProductHero>
 
       {/* Images */}
       <section className="py-16 bg-background">
@@ -76,18 +68,11 @@ export default function EcransLED() {
             {t("wip_desc")}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href={route('contact')} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
-              {t("btn_contact")}
-            </Link>
-            <Link href={route('contact')} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
-              {t("btn_devis")}
-            </Link>
+            <ProductButton href={route('contact')} variant="primary">{t("btn_contact")}</ProductButton>
+            <ProductButton href={route('contact')} variant="secondary">{t("btn_devis")}</ProductButton>
           </div>
         </div>
       </section>
-
-      <RelatedProducts currentPage="ecrans-led" />
-      <Footer />
-    </div>
+    </ProductPageShell>
   );
 }

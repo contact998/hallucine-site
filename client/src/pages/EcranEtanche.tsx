@@ -5,16 +5,14 @@
  */
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import FilmCountdown from "@/components/FilmCountdown";
-import { Link } from "wouter";
 import { VolumeX, Droplets, Clock, Feather, ChevronDown, Shield, Wind, Zap } from "lucide-react";
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import ProductPageShell from "@/components/product/ProductPageShell";
+import ProductHero from "@/components/product/ProductHero";
+import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
-import { RelatedProducts } from "@/components/RelatedProducts";
 import { useProductImages } from "@/hooks/useProductImages";
 import EmailLink from "@/components/EmailLink";
 import ZoomImage from "@/components/ZoomImage";
@@ -44,7 +42,6 @@ export default function EcranEtanche() {
 
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-ecran-etanche-k4ys7FMgpDwS9DpudndmpB.png");
   const galleryImages = useProductImages("ecran-etanche", FALLBACK_IMAGES_ECRAN_ETANCHE);
-  const [showCountdown, setShowCountdown] = useState(true);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const avantages = [
@@ -77,7 +74,7 @@ export default function EcranEtanche() {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <ProductPageShell withCountdown relatedProductsKey="ecran-etanche">
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -93,34 +90,22 @@ export default function EcranEtanche() {
         }}
         faqs={faqItems.map(item => ({ question: item.q, answer: item.a }))}
       />
-      {showCountdown && <FilmCountdown onComplete={() => setShowCountdown(false)} />}
-      <Navbar />
 
-      {/* Hero */}
-      <section className="pt-32 pb-16 bg-charcoal-light">
-        <div className="container">
-          <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">{t("section_label")}</p>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight mb-6">
-            {t("hero_title")}{" "}<br />
-            <span className="text-warm">{t("hero_title_colored")}</span>
-          </h1>
-          <p className="text-white/70 text-lg max-w-3xl leading-relaxed mb-6">
-            {t("hero_p1")} <strong className="text-ivory">{t("hero_p1_bold")}</strong>, {t("hero_p1_end")}
-          </p>
-          <p className="text-white/70 text-lg max-w-3xl leading-relaxed mb-8">
-            {t("hero_p2_before")} <strong className="text-ivory">{t("hero_p2_bold1")}</strong> {t("hero_p2_mid")} <strong className="text-ivory">{t("hero_p2_bold2")}</strong> {t("hero_p2_end")} <strong className="text-warm">{t("hero_p2_guarantee")}</strong> {t("hero_p2_end2")}
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <Link href={route('contact')} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
-              {t("hero_cta_devis")}
-            </Link>
-            <Link href={route('contact')} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
-              {t("hero_cta_contact")}
-            </Link>
+      <ProductHero
+        eyebrow={t("section_label")}
+        title={t("hero_title")}
+        coloredPart={t("hero_title_colored")}
+        actions={
+          <>
+            <ProductButton href={route('contact')} variant="primary">{t("hero_cta_devis")}</ProductButton>
+            <ProductButton href={route('contact')} variant="secondary">{t("hero_cta_contact")}</ProductButton>
             <BrochureDownloadButton productSlug="ecran-etanche" productName="Écran Étanche" variant="compact" />
-          </div>
-        </div>
-      </section>
+          </>
+        }
+      >
+        <p>{t("hero_p1")} <strong className="text-ivory">{t("hero_p1_bold")}</strong>, {t("hero_p1_end")}</p>
+        <p>{t("hero_p2_before")} <strong className="text-ivory">{t("hero_p2_bold1")}</strong> {t("hero_p2_mid")} <strong className="text-ivory">{t("hero_p2_bold2")}</strong> {t("hero_p2_end")} <strong className="text-warm">{t("hero_p2_guarantee")}</strong> {t("hero_p2_end2")}</p>
+      </ProductHero>
 
       {/* Technologie */}
       <section className="py-20 bg-background">
@@ -261,21 +246,12 @@ export default function EcranEtanche() {
           <h2 className="text-3xl font-bold text-ivory mb-4">{t("cta_title")}</h2>
           <p className="text-white/60 mb-8 max-w-xl mx-auto">{t("cta_desc")}</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href={route('contact')} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
-              {t("cta_contact")}
-            </Link>
-            <Link href={route('contact')} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
-              {t("cta_devis")}
-            </Link>
-            <Link href={route('contact')} className="px-8 py-3 border border-white/20 text-white/70 font-semibold rounded hover:bg-white/5 transition-colors">
-              {t("cta_tarifs")}
-            </Link>
+            <ProductButton href={route('contact')} variant="primary">{t("cta_contact")}</ProductButton>
+            <ProductButton href={route('contact')} variant="secondary">{t("cta_devis")}</ProductButton>
+            <ProductButton href={route('contact')} variant="tertiary">{t("cta_tarifs")}</ProductButton>
           </div>
         </div>
       </section>
-
-      <RelatedProducts currentPage="ecran-etanche" />
-      <Footer />
-    </div>
+    </ProductPageShell>
   );
 }
