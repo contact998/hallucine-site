@@ -3,15 +3,14 @@
  * Contenu i18n via namespace "tente-araignee"
  */
 import { useTranslation } from "react-i18next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { Link } from "wouter";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import ProductPageShell from "@/components/product/ProductPageShell";
+import ProductHero from "@/components/product/ProductHero";
+import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
-import { RelatedProducts } from "@/components/RelatedProducts";
 import { useProductImages } from "@/hooks/useProductImages";
 import ZoomImage from "@/components/ZoomImage";
 
@@ -43,7 +42,7 @@ export default function TentesAraignees() {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <ProductPageShell relatedProductsKey="tente-araignee">
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -59,20 +58,15 @@ export default function TentesAraignees() {
         }}
         faqs={faqItems.map(item => ({ question: item.q, answer: item.a }))}
       />
-      <Navbar />
 
-      {/* Hero */}
-      <section className="relative overflow-hidden pt-32 pb-16 bg-charcoal-light">
-        <div className="container relative z-10">
-          <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">{t("section_label")}</p>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight mb-6">
-            {t("hero_title")}{" "}<br />
-            <span className="text-warm">{t("hero_colored")}</span>
-          </h1>
-          <p className="text-white/70 text-lg max-w-3xl leading-relaxed mb-4">{t("hero_p1")}</p>
-          <p className="text-white/50 text-base max-w-3xl leading-relaxed">{t("hero_p2")}</p>
-        </div>
-      </section>
+      <ProductHero
+        eyebrow={t("section_label")}
+        title={t("hero_title")}
+        coloredPart={t("hero_colored")}
+      >
+        <p>{t("hero_p1")}</p>
+        <p className="text-white/50 text-base">{t("hero_p2")}</p>
+      </ProductHero>
 
       {/* Galerie photos */}
       <section className="py-16 bg-background">
@@ -215,18 +209,11 @@ export default function TentesAraignees() {
           <h2 className="text-3xl font-bold text-ivory mb-4">{t("cta_title")}</h2>
           <p className="text-white/60 mb-8">{t("cta_desc")}</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href={route('contact')} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
-              {t("cta_devis")}
-            </Link>
-            <Link href={route('contact')} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
-              {t("cta_tarifs")}
-            </Link>
+            <ProductButton href={route('contact')} variant="primary">{t("cta_devis")}</ProductButton>
+            <ProductButton href={route('contact')} variant="secondary">{t("cta_tarifs")}</ProductButton>
           </div>
         </div>
       </section>
-
-      <RelatedProducts currentPage="tente-araignee" />
-      <Footer />
-    </div>
+    </ProductPageShell>
   );
 }

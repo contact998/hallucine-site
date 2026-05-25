@@ -3,14 +3,12 @@
  * Contenu i18n via namespace "tente-n"
  */
 import { useTranslation } from "react-i18next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import ZoomImage from "@/components/ZoomImage";
-import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import ProductPageShell from "@/components/product/ProductPageShell";
+import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
-import { RelatedProducts } from "@/components/RelatedProducts";
 import { useProductImages } from "@/hooks/useProductImages";
 
 const FALLBACK_IMAGES_TENTE_N = [
@@ -31,7 +29,7 @@ export default function TentesN() {
   const heroImages = useProductImages("tente-n", FALLBACK_IMAGES_TENTE_N);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <ProductPageShell relatedProductsKey="tente-n">
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -46,7 +44,6 @@ export default function TentesN() {
           minPrice: 1990,
         }}
       />
-      <Navbar />
 
       {/* Hero */}
       <section className="pt-32 pb-16 bg-charcoal-light">
@@ -174,18 +171,11 @@ export default function TentesN() {
           <p className="text-white/70 text-lg leading-relaxed mb-8">{t("conclusion_p1")}</p>
           <p className="text-white/60 leading-relaxed mb-10">{t("conclusion_p2")}</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href={route('contact')} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
-              {t("cta_contact")}
-            </Link>
-            <Link href={route('contact')} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
-              {t("cta_devis")}
-            </Link>
+            <ProductButton href={route('contact')} variant="primary">{t("cta_contact")}</ProductButton>
+            <ProductButton href={route('contact')} variant="secondary">{t("cta_devis")}</ProductButton>
           </div>
         </div>
       </section>
-
-      <RelatedProducts currentPage="tente-n" />
-      <Footer />
-    </div>
+    </ProductPageShell>
   );
 }

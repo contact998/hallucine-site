@@ -5,15 +5,13 @@
  */
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import { Check, ChevronRight, ChevronDown, Feather, Clock, Shield, Palette, ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import ProductPageShell from "@/components/product/ProductPageShell";
 import { useRoutes } from "@/i18n/useRoutes";
-import { RelatedProducts } from "@/components/RelatedProducts";
 import { useProductImages } from "@/hooks/useProductImages";
 import ZoomImage from "@/components/ZoomImage";
 
@@ -142,7 +140,7 @@ export default function Mobilier() {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <ProductPageShell relatedProductsKey="mobilier">
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -157,7 +155,6 @@ export default function Mobilier() {
         }}
         faqs={faqItems.map(item => ({ question: item.q, answer: item.a }))}
       />
-      <Navbar />
 
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center overflow-hidden">
@@ -315,8 +312,6 @@ export default function Mobilier() {
         </div>
       </section>
 
-      <RelatedProducts currentPage="mobilier" />
-      <Footer />
-    </div>
+    </ProductPageShell>
   );
 }

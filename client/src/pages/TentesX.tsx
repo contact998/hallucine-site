@@ -4,16 +4,14 @@
  */
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import ZoomImage from "@/components/ZoomImage";
-import { Link } from "wouter";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import ProductPageShell from "@/components/product/ProductPageShell";
+import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
-import { RelatedProducts } from "@/components/RelatedProducts";
 import { useProductImages } from "@/hooks/useProductImages";
 import EmailLink from "@/components/EmailLink";
 
@@ -61,7 +59,7 @@ export default function TentesX() {
   const heroImages = useProductImages("tente-x", FALLBACK_IMAGES_TENTE_X);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <ProductPageShell relatedProductsKey="tente-x">
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -76,7 +74,6 @@ export default function TentesX() {
           minPrice: 1490,
         }}
       />
-      <Navbar />
 
       {/* Hero */}
       <section className="pt-32 pb-12 bg-charcoal-light">
@@ -246,19 +243,12 @@ export default function TentesX() {
           <h2 className="text-3xl font-bold text-ivory mb-4">{t("cta_title")}</h2>
           <p className="text-white/60 mb-8 max-w-xl mx-auto">{t("cta_desc")}</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href={route('contact')} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
-              {t("cta_contact")}
-            </Link>
-            <Link href={route('contact')} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
-              {t("cta_devis")}
-            </Link>
+            <ProductButton href={route('contact')} variant="primary">{t("cta_contact")}</ProductButton>
+            <ProductButton href={route('contact')} variant="secondary">{t("cta_devis")}</ProductButton>
             <BrochureDownloadButton productSlug="tente-x" productName="Tente X" variant="compact" />
           </div>
         </div>
       </section>
-
-      <RelatedProducts currentPage="tente-x" />
-      <Footer />
-    </div>
+    </ProductPageShell>
   );
 }

@@ -3,15 +3,14 @@
  * Images chargées depuis media_library (category: "produits", subcategory: "accessoires")
  * Fallback automatique sur les URLs hardcodées si la DB ne répond pas
  */
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { Link } from "wouter";
 import { Headphones, Armchair, Radio, Sofa, Monitor, Package } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
+import ProductPageShell from "@/components/product/ProductPageShell";
+import ProductHero from "@/components/product/ProductHero";
+import ProductButton from "@/components/product/ProductButton";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
-import { RelatedProducts } from "@/components/RelatedProducts";
 import { useProductImages } from "@/hooks/useProductImages";
 
 // ─── Fallback hardcodé — ne jamais supprimer ──────────────────────────────────
@@ -81,7 +80,7 @@ export default function Accessoires() {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <ProductPageShell relatedProductsKey="accessoires">
       <PageStructuredData
         breadcrumbs={[{ name: "Accueil", routeKey: "home" }, { name: t("meta_title"), routeKey: "accessoires" }]}
         product={{
@@ -92,21 +91,14 @@ export default function Accessoires() {
           minPrice: 99,
         }}
       />
-      <Navbar />
 
-      {/* Hero */}
-      <section className="relative overflow-hidden pt-32 pb-16 bg-charcoal-light">
-        <div className="container">
-          <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">{t("section_label")}</p>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight mb-6">
-            {t("hero_title")}{" "}<br />
-            <span className="text-warm">{t("hero_colored")}</span>
-          </h1>
-          <p className="text-white/70 text-lg max-w-3xl leading-relaxed">
-            {t("hero_desc")}
-          </p>
-        </div>
-      </section>
+      <ProductHero
+        eyebrow={t("section_label")}
+        title={t("hero_title")}
+        coloredPart={t("hero_colored")}
+      >
+        <p>{t("hero_desc")}</p>
+      </ProductHero>
 
       {/* Grille accessoires */}
       <section className="py-20 bg-background">
@@ -165,18 +157,11 @@ export default function Accessoires() {
             {t("cta_desc")}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href={route('contact')} className="px-8 py-3 bg-warm text-charcoal font-semibold rounded hover:bg-warm-light transition-colors">
-              {t("cta_contact")}
-            </Link>
-            <Link href={route('contact')} className="px-8 py-3 border border-warm text-warm font-semibold rounded hover:bg-warm/10 transition-colors">
-              {t("cta_devis")}
-            </Link>
+            <ProductButton href={route('contact')} variant="primary">{t("cta_contact")}</ProductButton>
+            <ProductButton href={route('contact')} variant="secondary">{t("cta_devis")}</ProductButton>
           </div>
         </div>
       </section>
-
-      <RelatedProducts currentPage="accessoires" />
-      <Footer />
-    </div>
+    </ProductPageShell>
   );
 }
