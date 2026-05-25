@@ -21,6 +21,7 @@ export type RouteKey =
   | "location"
   | "etudes-cas"
   | "cas-velodrome"
+  | "cas-oran"
   | "ecrans-led"
   | "tentes"
   | "tente-x"
@@ -59,6 +60,7 @@ export const ROUTES: Record<string, LangRoutes> = {
     location: "/location-ecran-gonflable",
     "etudes-cas": "/etudes-de-cas",
     "cas-velodrome": "/realisation-velodrome-orange-stade-marseille",
+    "cas-oran": "/realisation-festival-oran-ecran-12m-algerie",
     "ecrans-led": "/ecrans-led",
     tentes: "/tente-gonflable",
     "tente-x": "/tente-gonflable-x",
@@ -94,6 +96,7 @@ export const ROUTES: Record<string, LangRoutes> = {
     location: "/inflatable-screen-rental",
     "etudes-cas": "/case-studies",
     "cas-velodrome": "/case-velodrome-orange-marseille-stadium",
+    "cas-oran": "/case-oran-festival-12m-screen-algeria",
     "ecrans-led": "/led-screens",
     tentes: "/inflatable-tent",
     "tente-x": "/inflatable-tent-x",
@@ -129,6 +132,7 @@ export const ROUTES: Record<string, LangRoutes> = {
     location: "/aufblasbarer-bildschirm-mieten",
     "etudes-cas": "/fallstudien",
     "cas-velodrome": "/fallstudie-velodrome-orange-marseille-stadion",
+    "cas-oran": "/fallstudie-oran-festival-12m-leinwand-algerien",
     "ecrans-led": "/led-bildschirme",
     tentes: "/aufblasbares-zelt",
     "tente-x": "/aufblasbares-zelt-x",
@@ -164,6 +168,7 @@ export const ROUTES: Record<string, LangRoutes> = {
     location: "/alquiler-pantalla-inflable",
     "etudes-cas": "/casos-de-exito",
     "cas-velodrome": "/caso-velodrome-orange-estadio-marsella",
+    "cas-oran": "/caso-oran-festival-pantalla-12m-argelia",
     "ecrans-led": "/pantallas-led",
     tentes: "/tienda-inflable",
     "tente-x": "/tienda-inflable-x",
@@ -199,6 +204,7 @@ export const ROUTES: Record<string, LangRoutes> = {
     location: "/noleggio-schermo-gonfiabile",
     "etudes-cas": "/casi-studio",
     "cas-velodrome": "/caso-velodrome-orange-stadio-marsiglia",
+    "cas-oran": "/caso-oran-festival-schermo-12m-algeria",
     "ecrans-led": "/schermi-led",
     tentes: "/tenda-gonfiabile",
     "tente-x": "/tenda-gonfiabile-x",

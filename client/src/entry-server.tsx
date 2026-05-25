@@ -72,7 +72,7 @@ const VALID_LANGS = ["fr", "en", "de", "es", "it"] as const;
 const NS = [
   "common", "home", "products", "contact", "legal", "nav",
   "ecran-geant", "ecran-etanche", "ecran-economique", "comparaison",
-  "configurateur", "drive-in", "packs", "location", "etudes-cas", "cas-velodrome", "ecrans-led", "ecrans", "tentes", "tente-x", "tente-n", "tente-v",
+  "configurateur", "drive-in", "packs", "location", "etudes-cas", "cas-velodrome", "cas-oran", "ecrans-led", "ecrans", "tentes", "tente-x", "tente-n", "tente-v",
   "tente-araignee", "arches-gonflables", "mobilier", "accessoires",
   "a-propos", "mode-emploi", "mentions-legales", "devenir-distributeur",
   "galerie", "galerie-video", "politique-cookies",

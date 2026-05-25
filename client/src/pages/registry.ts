@@ -51,6 +51,7 @@ const F = {
   Location:            () => import("./Location"),
   EtudesCas:           () => import("./EtudesCas"),
   CasVelodrome:        () => import("./CasVelodrome"),
+  CasOran:             () => import("./CasOran"),
   EcransLED:           () => import("./EcransLED"),
   Tentes:              () => import("./Tentes"),
   TentesX:             () => import("./TentesX"),
@@ -100,6 +101,7 @@ export const Packs = lazyPage(F.Packs);
 export const Location = lazyPage(F.Location);
 export const EtudesCas = lazyPage(F.EtudesCas);
 export const CasVelodrome = lazyPage(F.CasVelodrome);
+export const CasOran = lazyPage(F.CasOran);
 export const EcransLED = lazyPage(F.EcransLED);
 export const Tentes = lazyPage(F.Tentes);
 export const TentesX = lazyPage(F.TentesX);
@@ -135,7 +137,7 @@ export const NotFound = lazyPage(F.NotFound);
 
 const ALL_LAZY_PAGES: readonly PageComponent[] = [
   Home, Ecrans, EcranGeant, EcranEtanche, EcranEconomique, Comparaison,
-  Configurateur, DriveIn, Packs, Location, EtudesCas, CasVelodrome, EcransLED,
+  Configurateur, DriveIn, Packs, Location, EtudesCas, CasVelodrome, CasOran, EcransLED,
   Tentes, TentesX, TentesN, TentesV, TentesAraignees,
   ArchesGonflables, Mobilier, Accessoires, Galerie, GalerieVideo, Contact,
   APropos, Histoire, ModeEmploi, Blog, BlogPost, DevenirDistributeur,
@@ -171,6 +173,7 @@ const ROUTE_KEY_TO_PAGE: Record<string, PageComponent> = {
   location:               Location,
   "etudes-cas":           EtudesCas,
   "cas-velodrome":        CasVelodrome,
+  "cas-oran":             CasOran,
   "ecrans-led":           EcransLED,
   tentes:                 Tentes,
   "tente-x":              TentesX,
