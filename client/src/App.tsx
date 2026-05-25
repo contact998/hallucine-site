@@ -18,7 +18,7 @@ import { ROUTES } from "./i18n/routes";
 // Pages — composants lazy via le registre (source unique partagée avec main.tsx)
 import {
   Home, Ecrans, EcranGeant, EcranEtanche, EcranEconomique, Comparaison,
-  Configurateur, DriveIn, Packs, Location, EtudesCas, EcransLED, Tentes, TentesX, TentesN, TentesV, TentesAraignees,
+  Configurateur, DriveIn, Packs, Location, EtudesCas, CasVelodrome, EcransLED, Tentes, TentesX, TentesN, TentesV, TentesAraignees,
   ArchesGonflables, Mobilier, Accessoires, Galerie, GalerieVideo, Contact,
   APropos, Histoire, ModeEmploi, Blog, BlogPost, DevenirDistributeur,
   MentionsLegales, Confidentialite, PolitiqueCookies,
@@ -65,6 +65,7 @@ function RoutesSwitch() {
         <Route path={r["packs"]} component={Packs} />
         <Route path={r["location"]} component={Location} />
         <Route path={r["etudes-cas"]} component={EtudesCas} />
+        <Route path={r["cas-velodrome"]} component={CasVelodrome} />
         <Route path={r["ecrans-led"]} component={EcransLED} />
         {/* Tentes */}
         <Route path={r["tentes"]} component={Tentes} />

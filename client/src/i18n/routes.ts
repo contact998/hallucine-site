@@ -20,6 +20,7 @@ export type RouteKey =
   | "packs"
   | "location"
   | "etudes-cas"
+  | "cas-velodrome"
   | "ecrans-led"
   | "tentes"
   | "tente-x"
@@ -57,6 +58,7 @@ export const ROUTES: Record<string, LangRoutes> = {
     packs: "/pack-cinema-plein-air",
     location: "/location-ecran-gonflable",
     "etudes-cas": "/etudes-de-cas",
+    "cas-velodrome": "/realisation-velodrome-orange-stade-marseille",
     "ecrans-led": "/ecrans-led",
     tentes: "/tente-gonflable",
     "tente-x": "/tente-gonflable-x",
@@ -91,6 +93,7 @@ export const ROUTES: Record<string, LangRoutes> = {
     packs: "/outdoor-cinema-package",
     location: "/inflatable-screen-rental",
     "etudes-cas": "/case-studies",
+    "cas-velodrome": "/case-velodrome-orange-marseille-stadium",
     "ecrans-led": "/led-screens",
     tentes: "/inflatable-tent",
     "tente-x": "/inflatable-tent-x",
@@ -125,6 +128,7 @@ export const ROUTES: Record<string, LangRoutes> = {
     packs: "/freiluftkino-paket",
     location: "/aufblasbarer-bildschirm-mieten",
     "etudes-cas": "/fallstudien",
+    "cas-velodrome": "/fallstudie-velodrome-orange-marseille-stadion",
     "ecrans-led": "/led-bildschirme",
     tentes: "/aufblasbares-zelt",
     "tente-x": "/aufblasbares-zelt-x",
@@ -159,6 +163,7 @@ export const ROUTES: Record<string, LangRoutes> = {
     packs: "/paquete-cine-aire-libre",
     location: "/alquiler-pantalla-inflable",
     "etudes-cas": "/casos-de-exito",
+    "cas-velodrome": "/caso-velodrome-orange-estadio-marsella",
     "ecrans-led": "/pantallas-led",
     tentes: "/tienda-inflable",
     "tente-x": "/tienda-inflable-x",
@@ -193,6 +198,7 @@ export const ROUTES: Record<string, LangRoutes> = {
     packs: "/pacchetto-cinema-all-aperto",
     location: "/noleggio-schermo-gonfiabile",
     "etudes-cas": "/casi-studio",
+    "cas-velodrome": "/caso-velodrome-orange-stadio-marsiglia",
     "ecrans-led": "/schermi-led",
     tentes: "/tenda-gonfiabile",
     "tente-x": "/tenda-gonfiabile-x",
