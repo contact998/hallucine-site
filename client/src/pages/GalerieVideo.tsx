@@ -41,7 +41,7 @@ export default function GalerieVideo() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative bg-[#1a1a2e] text-white py-20 md:py-28">
+      <section className="relative bg-card text-white py-20 md:py-28">
         <div className="container max-w-5xl text-center">
           <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
             {t("hero_title")}
@@ -82,7 +82,7 @@ export default function GalerieVideo() {
                   </div>
                 </div>
                 <div className="p-4">
-                  <span className="inline-block text-xs font-medium bg-[#DAA520]/10 text-[#DAA520] px-2 py-1 rounded mb-2">
+                  <span className="inline-block text-xs font-medium bg-primary/10 text-primary px-2 py-1 rounded mb-2">
                     {video.category}
                   </span>
                   <h2 className="font-semibold text-base">{video.title}</h2>

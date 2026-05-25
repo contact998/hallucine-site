@@ -411,7 +411,7 @@ export default function AdminBlog() {
                   onChange={handleField("title")}
                   maxLength={60}
                   placeholder="Titre de l'article (max 48 car.)"
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-white/20 focus:outline-none focus:border-amber-500/50 text-sm"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-white/20 focus:outline-none focus:border-primary/50 text-sm"
                 />
               </div>
 
@@ -429,7 +429,7 @@ export default function AdminBlog() {
                   maxLength={160}
                   rows={3}
                   placeholder="Résumé de l'article (50-160 car., obligatoire pour publier)"
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-white/20 focus:outline-none focus:border-amber-500/50 text-sm resize-none"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-white/20 focus:outline-none focus:border-primary/50 text-sm resize-none"
                 />
               </div>
 
@@ -443,7 +443,7 @@ export default function AdminBlog() {
                   onChange={handleField("content")}
                   rows={16}
                   placeholder="<h2>Introduction</h2><p>Contenu de l'article en HTML...</p>"
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-white/20 focus:outline-none focus:border-amber-500/50 text-sm resize-y font-mono text-xs leading-relaxed"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-white/20 focus:outline-none focus:border-primary/50 text-sm resize-y font-mono text-xs leading-relaxed"
                 />
               </div>
 
@@ -459,7 +459,7 @@ export default function AdminBlog() {
                   <select
                     value={form.status}
                     onChange={handleField("status")}
-                    className="w-full bg-[#1a1a2e] border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-amber-500/50 text-sm"
+                    className="w-full bg-card border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-primary/50 text-sm"
                   >
                     <option value="draft">Brouillon</option>
                     <option value="published">Publié</option>
@@ -472,7 +472,7 @@ export default function AdminBlog() {
                     value={form.lang}
                     onChange={handleField("lang")}
                     disabled={!!editingPost}
-                    className="w-full bg-[#1a1a2e] border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-amber-500/50 text-sm disabled:opacity-40"
+                    className="w-full bg-card border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-primary/50 text-sm disabled:opacity-40"
                   >
                     <option value="fr">Français</option>
                     <option value="en">English</option>
@@ -488,7 +488,7 @@ export default function AdminBlog() {
                     value={form.author}
                     onChange={handleField("author")}
                     placeholder="Hallucine"
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-white/20 focus:outline-none focus:border-amber-500/50 text-sm"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-white/20 focus:outline-none focus:border-primary/50 text-sm"
                   />
                 </div>
                 <div>
@@ -498,7 +498,7 @@ export default function AdminBlog() {
                     value={form.category}
                     onChange={handleField("category")}
                     placeholder="ex : écrans gonflables"
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-white/20 focus:outline-none focus:border-amber-500/50 text-sm"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-white/20 focus:outline-none focus:border-primary/50 text-sm"
                   />
                 </div>
               </div>
@@ -535,7 +535,7 @@ export default function AdminBlog() {
                   value={form.imageUrl}
                   onChange={handleField("imageUrl")}
                   placeholder="https://..."
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-white/20 focus:outline-none focus:border-amber-500/50 text-xs mb-2"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-white/20 focus:outline-none focus:border-primary/50 text-xs mb-2"
                 />
 
                 <button
@@ -563,7 +563,7 @@ export default function AdminBlog() {
                     rows={2}
                     maxLength={160}
                     placeholder="Si différente de l'excerpt"
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-white/20 focus:outline-none focus:border-amber-500/50 text-xs resize-none"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-white/20 focus:outline-none focus:border-primary/50 text-xs resize-none"
                   />
                 </div>
                 <div>
@@ -573,7 +573,7 @@ export default function AdminBlog() {
                     value={form.metaKeywords}
                     onChange={handleField("metaKeywords")}
                     placeholder="écran gonflable, cinéma plein air..."
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-white/20 focus:outline-none focus:border-amber-500/50 text-xs"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-white/20 focus:outline-none focus:border-primary/50 text-xs"
                   />
                 </div>
               </div>
@@ -609,7 +609,7 @@ export default function AdminBlog() {
           className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
           onClick={(e) => { if (e.target === e.currentTarget) setShowMediaPicker(false); }}
         >
-          <div className="bg-[#1a1a2e] border border-white/10 rounded-2xl w-full max-w-4xl max-h-[80vh] flex flex-col">
+          <div className="bg-card border border-white/10 rounded-2xl w-full max-w-4xl max-h-[80vh] flex flex-col">
             <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
               <div>
                 <h2 className="text-white font-semibold">Médiathèque — Blog</h2>

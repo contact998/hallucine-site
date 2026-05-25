@@ -43,7 +43,7 @@ export default function FaqSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.1 + i * 0.05 }}
-              className="border border-[#D4AF37]/30 rounded-xl overflow-hidden bg-white/[0.04]"
+              className="border border-primary/30 rounded-xl overflow-hidden bg-white/[0.04]"
             >
               <button
                 onClick={() => setOpenFaq(openFaq === i ? null : i)}

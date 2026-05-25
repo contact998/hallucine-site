@@ -52,7 +52,7 @@ export default function BlogPost() {
       <div className="min-h-screen bg-background text-foreground">
         <Navbar />
         <div className="flex items-center justify-center min-h-[60vh]">
-          <div className="w-10 h-10 border-2 border-[#DAA520] border-t-transparent rounded-full animate-spin" />
+          <div className="w-10 h-10 border-2 border-primary border-t-transparent rounded-full animate-spin" />
         </div>
         <Footer />
       </div>
@@ -70,7 +70,7 @@ export default function BlogPost() {
           </p>
           <Link
             href={route("blog")}
-            className="inline-flex items-center gap-2 text-[#DAA520] hover:underline"
+            className="inline-flex items-center gap-2 text-primary hover:underline"
           >
             <ArrowLeft className="w-4 h-4" />
             Retour au blog
@@ -86,17 +86,17 @@ export default function BlogPost() {
       <Navbar />
 
       {/* Hero */}
-      <section className="bg-[#1a1a2e] text-white py-16 md:py-24">
+      <section className="bg-card text-white py-16 md:py-24">
         <div className="container max-w-3xl">
           <Link
             href={route("blog")}
-            className="inline-flex items-center gap-2 text-[#DAA520] hover:underline mb-6 text-sm"
+            className="inline-flex items-center gap-2 text-primary hover:underline mb-6 text-sm"
           >
             <ArrowLeft className="w-4 h-4" />
             Retour au blog
           </Link>
           {post.category && (
-            <span className="inline-block text-xs font-medium bg-[#DAA520]/10 text-[#DAA520] px-3 py-1 rounded-full mb-4">
+            <span className="inline-block text-xs font-medium bg-primary/10 text-primary px-3 py-1 rounded-full mb-4">
               {post.category}
             </span>
           )}
@@ -148,14 +148,14 @@ export default function BlogPost() {
               prose-headings:font-display prose-headings:text-foreground
               prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
               prose-p:text-muted-foreground prose-p:leading-relaxed
-              prose-a:text-[#DAA520] prose-a:no-underline hover:prose-a:underline
+              prose-a:text-primary prose-a:no-underline hover:prose-a:underline
               prose-strong:text-foreground
               prose-ul:text-muted-foreground prose-ol:text-muted-foreground"
             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
           />
 
           {/* CTA */}
-          <div className="mt-16 p-8 bg-[#1a1a2e] rounded-xl text-white text-center">
+          <div className="mt-16 p-8 bg-card rounded-xl text-white text-center">
             <h2 className="font-display text-2xl font-bold mb-3">
               Vous avez un projet ?
             </h2>
@@ -164,7 +164,7 @@ export default function BlogPost() {
             </p>
             <Link
               href={route("contact")}
-              className="inline-block bg-[#DAA520] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#B8860B] transition-colors"
+              className="inline-block bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-hover transition-colors"
             >
               Demander un devis
             </Link>
@@ -174,7 +174,7 @@ export default function BlogPost() {
           <div className="mt-12 pt-8 border-t border-border">
             <Link
               href={route("blog")}
-              className="inline-flex items-center gap-2 text-[#DAA520] hover:underline"
+              className="inline-flex items-center gap-2 text-primary hover:underline"
             >
               <ArrowLeft className="w-4 h-4" />
               Tous les articles

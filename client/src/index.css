@@ -51,6 +51,7 @@
   --color-warm: oklch(0.72 0.10 55);
   --color-warm-light: oklch(0.82 0.08 55);
   --color-warm-dark: oklch(0.58 0.12 55);
+  --color-primary-hover: oklch(0.58 0.12 55);
   --color-slate: oklch(0.35 0.02 260);
   --color-slate-light: oklch(0.50 0.015 260);
 }
@@ -184,51 +185,49 @@
     background-clip: text;
   }
 
-  /* === Gold / Cinéma utilities === */
+  /* === Gold / Cinéma utilities === alias sur --color-warm (palette OKLCH canonique) */
   .bg-gold {
-    background-color: #D4AF37;
+    background-color: var(--color-warm);
   }
   .bg-gold-light {
-    background-color: #E8C84A;
+    background-color: var(--color-warm-light);
   }
   .text-gold {
-    color: #D4AF37;
+    color: var(--color-warm);
   }
   .text-gold-light {
-    color: #E8C84A;
+    color: var(--color-warm-light);
   }
   .text-navy-deep {
-    color: #0A0E1A;
+    color: var(--background);
   }
   .border-gold {
-    border-color: #D4AF37;
+    border-color: var(--color-warm);
   }
   .text-gradient-gold {
-    background: linear-gradient(135deg, #FFD700, #D4AF37, #B8860B);
+    background: linear-gradient(135deg, var(--color-warm-light), var(--color-warm), var(--color-warm-dark));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   .glow-gold {
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), 0 0 40px rgba(212, 175, 55, 0.1);
+    box-shadow: 0 0 20px oklch(0.72 0.10 55 / 0.3), 0 0 40px oklch(0.72 0.10 55 / 0.1);
   }
   .glow-gold:hover {
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.45), 0 0 60px rgba(212, 175, 55, 0.15);
+    box-shadow: 0 0 30px oklch(0.72 0.10 55 / 0.45), 0 0 60px oklch(0.72 0.10 55 / 0.15);
   }
-  /* 💫 Text glow renforcé pour titres principaux */
   .text-glow-gold {
-    text-shadow: 0 0 30px rgba(255, 215, 0, 0.25), 0 0 60px rgba(212, 175, 55, 0.12), 0 0 90px rgba(212, 175, 55, 0.06);
+    text-shadow: 0 0 30px oklch(0.82 0.08 55 / 0.25), 0 0 60px oklch(0.72 0.10 55 / 0.12), 0 0 90px oklch(0.72 0.10 55 / 0.06);
   }
   .text-glow-gold-intense {
-    text-shadow: 0 0 40px rgba(255, 215, 0, 0.4), 0 0 80px rgba(212, 175, 55, 0.2), 0 0 120px rgba(212, 175, 55, 0.1);
+    text-shadow: 0 0 40px oklch(0.82 0.08 55 / 0.4), 0 0 80px oklch(0.72 0.10 55 / 0.2), 0 0 120px oklch(0.72 0.10 55 / 0.1);
   }
-  /* 🌟 Golden shadow for cards */
   .shadow-gold {
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.08), 0 0 40px rgba(212, 175, 55, 0.03);
+    box-shadow: 0 0 20px oklch(0.72 0.10 55 / 0.08), 0 0 40px oklch(0.72 0.10 55 / 0.03);
     transition: box-shadow 0.5s ease;
   }
   .shadow-gold:hover {
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.2), 0 0 60px rgba(212, 175, 55, 0.1), 0 0 90px rgba(212, 175, 55, 0.05);
+    box-shadow: 0 0 30px oklch(0.72 0.10 55 / 0.2), 0 0 60px oklch(0.72 0.10 55 / 0.1), 0 0 90px oklch(0.72 0.10 55 / 0.05);
   }
 
   /* Section divider line */

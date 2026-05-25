@@ -95,7 +95,7 @@ export default function Blog() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative bg-[#1a1a2e] text-white py-20 md:py-28">
+      <section className="relative bg-card text-white py-20 md:py-28">
         <div className="container max-w-5xl text-center">
           <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
             {t("hero_title")}
@@ -143,7 +143,7 @@ export default function Blog() {
                     ) : null}
                     <div className="p-6 md:p-8">
                       <div className="flex items-center gap-3 mb-4">
-                        <span className="inline-block text-xs font-medium bg-[#DAA520]/10 text-[#DAA520] px-3 py-1 rounded-full">
+                        <span className="inline-block text-xs font-medium bg-primary/10 text-primary px-3 py-1 rounded-full">
                           {article.categorie}
                         </span>
                         <span className="text-sm text-muted-foreground">
@@ -159,7 +159,7 @@ export default function Blog() {
                       <div className="flex items-center justify-between">
                         <Link
                           href={`/blog/${article.slug}`}
-                          className="inline-flex items-center gap-2 text-[#DAA520] font-medium hover:underline"
+                          className="inline-flex items-center gap-2 text-primary font-medium hover:underline"
                         >
                           {t("read_more")}
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
@@ -186,7 +186,7 @@ export default function Blog() {
                               <div key={idx} className="flex gap-4">
                                 <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
                                   commentaire.auteur === "Hallucine" 
-                                    ? "bg-[#DAA520] text-white" 
+                                    ? "bg-primary text-white" 
                                     : "bg-white/10 text-white/70"
                                 }`}>
                                   {commentaire.auteur === "Hallucine" ? (
@@ -198,12 +198,12 @@ export default function Blog() {
                                 <div className="flex-1 min-w-0">
                                   <div className="flex items-center gap-2 mb-1">
                                     <span className={`text-sm font-semibold ${
-                                      commentaire.auteur === "Hallucine" ? "text-[#DAA520]" : ""
+                                      commentaire.auteur === "Hallucine" ? "text-primary" : ""
                                     }`}>
                                       {commentaire.auteur}
                                     </span>
                                     {commentaire.auteur === "Hallucine" && (
-                                      <span className="text-[10px] bg-[#DAA520]/20 text-[#DAA520] px-1.5 py-0.5 rounded font-medium">
+                                      <span className="text-[10px] bg-primary/20 text-primary px-1.5 py-0.5 rounded font-medium">
                                         {t("team_label")}
                                       </span>
                                     )}
@@ -215,7 +215,7 @@ export default function Blog() {
                                     {commentaire.texte}
                                   </p>
                                   <div className="flex items-center gap-4 mt-2">
-                                    <button className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-[#DAA520] transition-colors">
+                                    <button className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors">
                                       <ThumbsUp className="w-3.5 h-3.5" />
                                       {commentaire.likes}
                                     </button>
@@ -240,20 +240,20 @@ export default function Blog() {
                                   <input
                                     type="text"
                                     placeholder={t("your_name")}
-                                    className="px-3 py-2 bg-background border border-border rounded-lg text-sm placeholder:text-muted-foreground focus:border-[#DAA520] focus:outline-none transition-colors"
+                                    className="px-3 py-2 bg-background border border-border rounded-lg text-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none transition-colors"
                                   />
                                   <input
                                     type="email"
                                     placeholder={t("your_email")}
-                                    className="px-3 py-2 bg-background border border-border rounded-lg text-sm placeholder:text-muted-foreground focus:border-[#DAA520] focus:outline-none transition-colors"
+                                    className="px-3 py-2 bg-background border border-border rounded-lg text-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none transition-colors"
                                   />
                                 </div>
                                 <textarea
                                   rows={3}
                                   placeholder={t("your_comment")}
-                                  className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm placeholder:text-muted-foreground focus:border-[#DAA520] focus:outline-none transition-colors resize-none"
+                                  className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none transition-colors resize-none"
                                 />
-                                <button className="px-5 py-2 bg-[#DAA520] text-white text-sm font-semibold rounded-lg hover:bg-[#B8860B] transition-colors">
+                                <button className="px-5 py-2 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary-hover transition-colors">
                                   {t("publish")}
                                 </button>
                               </div>
@@ -279,7 +279,7 @@ export default function Blog() {
                       onClick={() => setCategorieActive(cat)}
                       className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                         categorieActive === cat
-                          ? "bg-[#DAA520] text-white font-medium"
+                          ? "bg-primary text-white font-medium"
                           : "hover:bg-muted text-muted-foreground"
                       }`}
                     >
@@ -302,14 +302,14 @@ export default function Blog() {
               </div>
 
               {/* CTA */}
-              <div className="bg-[#1a1a2e] text-white rounded-lg p-6">
+              <div className="bg-card text-white rounded-lg p-6">
                 <h3 className="font-display text-lg font-bold mb-3">
                   {t("cta_title")}
                 </h3>
                 <p className="text-sm opacity-80 mb-4">
                   {t("cta_desc")}
                 </p>
-                <Link href={route('contact')} className="inline-block w-full text-center bg-[#DAA520] text-white px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#B8860B] transition-colors">
+                <Link href={route('contact')} className="inline-block w-full text-center bg-primary text-white px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-primary-hover transition-colors">
                   {t("cta_btn")}
                 </Link>
               </div>

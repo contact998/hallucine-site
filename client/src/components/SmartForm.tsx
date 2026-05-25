@@ -599,7 +599,7 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
     exit: { opacity: 0, x: -30 },
   };
 
-  const inputRequiredClass = "w-full p-3 bg-white/[0.15] border border-[#D4AF37]/60 rounded-lg text-white text-base placeholder:text-white/50 focus:border-gold focus:outline-none transition-colors";
+  const inputRequiredClass = "w-full p-3 bg-white/[0.15] border border-primary/60 rounded-lg text-white text-base placeholder:text-white/50 focus:border-gold focus:outline-none transition-colors";
   const inputOptionalClass = "w-full p-3 bg-white/[0.10] border border-white/15 rounded-lg text-white text-base placeholder:text-white/40 focus:border-gold focus:outline-none transition-colors";
   const labelClass = "text-white text-sm font-medium mb-1.5 block";
 
@@ -1133,10 +1133,10 @@ export default function SmartForm({ preselectedProduct, preselectedSize, mode = 
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
                       className={`${inputOptionalClass} cursor-pointer`}
-                      style={{ backgroundColor: "#1a1a2e", color: "#fff" }}
+                      style={{ backgroundColor: "var(--card)", color: "var(--card-foreground)" }}
                     >
                       {citySuggestions.map((c) => (
-                        <option key={c} value={c} style={{ backgroundColor: "#1a1a2e", color: "#fff" }}>{c}</option>
+                        <option key={c} value={c} style={{ backgroundColor: "var(--card)", color: "var(--card-foreground)" }}>{c}</option>
                       ))}
                     </select>
                   ) : postalCodeManualMode ? (
