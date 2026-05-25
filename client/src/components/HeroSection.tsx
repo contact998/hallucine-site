@@ -82,10 +82,20 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="text-xl sm:text-2xl lg:text-3xl font-semibold tracking-wide uppercase text-white/70 mb-12"
+            className="text-xl sm:text-2xl lg:text-3xl font-semibold tracking-wide uppercase text-white/70 mb-4"
           >
             {t("hero.subtitle_before")} <span className="text-gradient-gold">{t("hero.subtitle_highlight")}</span> {t("hero.subtitle_after")}
           </motion.h1>
+
+          {/* Tagline "gamme complète" — différenciateur vs Airscreen / Open Air Cinema */}
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.65 }}
+            className="text-base sm:text-lg text-white/80 mb-12 max-w-2xl leading-relaxed"
+          >
+            {t("hero.tagline_full_range")}
+          </motion.p>
 
           {/* CTAs */}
           <motion.div
