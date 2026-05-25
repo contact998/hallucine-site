@@ -1,5 +1,5 @@
 /*
- * Page Témoignages — retours clients réels sur les écrans Hallucine.
+ * Page Études de cas — hub des réalisations signature + témoignages clients.
  * Contenu i18n via le namespace « etudes-cas ».
  */
 import { Link } from "wouter";
@@ -11,8 +11,22 @@ import PageStructuredData from "@/components/PageStructuredData";
 import PagePhoto from "@/components/PagePhoto";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useRoutes } from "@/i18n/useRoutes";
+import type { RouteKey } from "@/i18n/routes";
 
 const TEMOIGNAGES = ["t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8"];
+
+const SIGNATURE_CASES: { key: "velodrome" | "oran"; route: RouteKey; img: string }[] = [
+  {
+    key: "velodrome",
+    route: "cas-velodrome",
+    img: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/nRCfDZHKAKZaVovJ.webp",
+  },
+  {
+    key: "oran",
+    route: "cas-oran",
+    img: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ibUxsSdoHUCVTWXC.webp",
+  },
+];
 
 export default function EtudesCas() {
   const { t } = useTranslation("etudes-cas");
@@ -49,9 +63,63 @@ export default function EtudesCas() {
       {/* Photo */}
       <PagePhoto src="/img/etudes-cas-projection.jpg" alt={t("photo_alt")} />
 
-      {/* Témoignages */}
-      <section className="py-16 bg-background">
+      {/* Réalisations signature */}
+      <section className="py-20 bg-background">
         <div className="container">
+          <p className="text-warm text-sm font-medium tracking-widest uppercase mb-3">
+            {t("signature_section_label")}
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-ivory mb-4">
+            {t("signature_title")}
+          </h2>
+          <p className="text-white/65 max-w-3xl leading-relaxed mb-12">
+            {t("signature_desc")}
+          </p>
+          <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+            {SIGNATURE_CASES.map((c) => (
+              <Link
+                key={c.key}
+                href={route(c.route)}
+                className="group block bg-card border border-border rounded-xl overflow-hidden hover:border-warm/40 transition-colors"
+              >
+                <div className="aspect-[16/10] overflow-hidden bg-black">
+                  <img
+                    src={c.img}
+                    alt={t(`signature_${c.key}_title`)}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
+                    width={800}
+                    height={500}
+                  />
+                </div>
+                <div className="p-6 lg:p-8">
+                  <h3 className="text-2xl font-bold text-ivory mb-3 group-hover:text-warm transition-colors">
+                    {t(`signature_${c.key}_title`)}
+                  </h3>
+                  <p className="text-white/70 leading-relaxed mb-5">
+                    {t(`signature_${c.key}_teaser`)}
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-warm font-semibold text-sm">
+                    {t("signature_cta")}{" "}
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Témoignages */}
+      <section className="py-16 bg-charcoal-light">
+        <div className="container">
+          <p className="text-warm text-sm font-medium tracking-widest uppercase mb-3">
+            {t("testimonials_section_label")}
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-ivory mb-4">
+            {t("testimonials_title")}
+          </h2>
           <p className="text-white/60 mb-10 max-w-2xl leading-relaxed">{t("intro")}</p>
           <div className="grid md:grid-cols-2 gap-6">
             {TEMOIGNAGES.map((id) => (
