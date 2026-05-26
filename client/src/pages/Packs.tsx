@@ -4,10 +4,9 @@
  * pack complet sur devis. Contenu i18n via le namespace « packs ».
  */
 import { Link } from "wouter";
+import PageShell from "@/components/PageShell";
 import { useTranslation } from "react-i18next";
 import { ArrowRight, Check } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import PageStructuredData from "@/components/PageStructuredData";
 import PagePhoto from "@/components/PagePhoto";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -28,7 +27,7 @@ export default function Packs() {
   useDocumentMeta(t("meta_title"), t("meta_desc"));
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <PageShell>
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -39,7 +38,6 @@ export default function Packs() {
           description: t("meta_desc"),
         }}
       />
-      <Navbar />
 
       {/* Hero */}
       <section className="pt-32 pb-16 bg-charcoal-light">
@@ -136,7 +134,6 @@ export default function Packs() {
         </div>
       </section>
 
-      <Footer />
-    </div>
+      </PageShell>
   );
 }

@@ -1,8 +1,7 @@
 import { useState } from "react";
+import PageShell from "@/components/PageShell";
 import { Link } from "wouter";
 import { MessageSquare, ThumbsUp, User } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { trpc } from "@/lib/trpc";
 import { detectLanguage } from "@/i18n/domains";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -79,7 +78,7 @@ export default function Blog() {
     : allArticles.filter(a => a.categorie === categorieActive);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <PageShell>
       <PageStructuredData
         breadcrumbs={[{ name: "Accueil", routeKey: "home" }, { name: "Blog", routeKey: "blog" }]}
         page={{
@@ -92,7 +91,6 @@ export default function Blog() {
           image: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp"
         }}
       />
-      <Navbar />
 
       {/* Hero */}
       <section className="relative bg-card text-white py-20 md:py-28">
@@ -318,7 +316,6 @@ export default function Blog() {
         </div>
       </section>
 
-      <Footer />
-    </div>
+      </PageShell>
   );
 }

@@ -3,9 +3,8 @@
  * Affiche les informations du compte et la liste des devis/demandes
  * Permet d'annuler les demandes en attente
  */
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { useAuth } from "@/_core/hooks/useAuth";
+import PageShell from "@/components/PageShell";
 import { trpc } from "@/lib/trpc";
 import { getLoginUrl } from "@/const";
 import { useState, useMemo } from "react";
@@ -154,8 +153,7 @@ export default function Profil() {
   /* ── Non connecté ── */
   if (!authLoading && !isAuthenticated) {
     return (
-      <div className="min-h-screen bg-background text-foreground">
-        <Navbar />
+      <PageShell>
         <section className="pt-32 pb-20">
           <div className="container max-w-lg text-center">
             <User className="w-16 h-16 text-warm mx-auto mb-6" />
@@ -171,29 +169,25 @@ export default function Profil() {
             </a>
           </div>
         </section>
-        <Footer />
-      </div>
+        </PageShell>
     );
   }
 
   /* ── Chargement ── */
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-background text-foreground">
-        <Navbar />
+      <PageShell>
         <section className="pt-32 pb-20">
           <div className="container flex justify-center">
             <Loader2 className="w-8 h-8 text-warm animate-spin" />
           </div>
         </section>
-        <Footer />
-      </div>
+        </PageShell>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <Navbar />
+    <PageShell>
 
       <section className="pt-32 pb-8 bg-charcoal-light">
         <div className="container">
@@ -407,7 +401,6 @@ export default function Profil() {
         </div>
       </section>
 
-      <Footer />
-    </div>
+      </PageShell>
   );
 }

@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { ArrowRight, Eye, Wind, Anchor, Clock, Radio } from "lucide-react";
 import PageStructuredData from "@/components/PageStructuredData";
 import PagePhoto from "@/components/PagePhoto";
-import ProductPageShell from "@/components/product/ProductPageShell";
+import PageShell from "@/components/PageShell";
 import ProductHero from "@/components/product/ProductHero";
 import ProductButton from "@/components/product/ProductButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -39,7 +39,7 @@ export default function DriveIn() {
   ];
 
   return (
-    <ProductPageShell>
+    <PageShell>
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -184,6 +184,6 @@ export default function DriveIn() {
           </div>
         </div>
       </section>
-    </ProductPageShell>
+    </PageShell>
   );
 }

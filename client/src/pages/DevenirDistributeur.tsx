@@ -3,9 +3,8 @@
  * Fusion des anciennes pages « Devenir distributeur » et « Trouver un distributeur ».
  * Design : cinéma vintage — fond sombre, accents dorés.
  */
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { Link } from "wouter";
+import PageShell from "@/components/PageShell";
 import { Award, TrendingUp, Users, Phone, Mail, MessageCircle } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
@@ -30,7 +29,7 @@ export default function DevenirDistributeur() {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <PageShell>
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -38,7 +37,6 @@ export default function DevenirDistributeur() {
         ]}
         page={{ name: t("meta_title"), description: t("meta_desc") }}
       />
-      <Navbar />
 
       {/* Hero */}
       <section className="pt-32 pb-16 bg-charcoal-light">
@@ -136,7 +134,6 @@ export default function DevenirDistributeur() {
         </div>
       </section>
 
-      <Footer />
-    </div>
+      </PageShell>
   );
 }

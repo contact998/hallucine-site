@@ -8,7 +8,7 @@ import ZoomImage from "@/components/ZoomImage";
 import { Play } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import ProductPageShell from "@/components/product/ProductPageShell";
+import PageShell from "@/components/PageShell";
 import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
 import { useProductImages } from "@/hooks/useProductImages";
@@ -30,7 +30,7 @@ export default function TentesV() {
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
 
   return (
-    <ProductPageShell
+    <PageShell
       relatedProductsKey="tente-v"
       activeVideo={activeVideo}
       onCloseVideo={() => setActiveVideo(null)}
@@ -229,6 +229,6 @@ export default function TentesV() {
           </div>
         </div>
       </section>
-    </ProductPageShell>
+    </PageShell>
   );
 }

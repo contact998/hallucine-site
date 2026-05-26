@@ -4,10 +4,9 @@
  * sur la pelouse d'un stade sans engin de levage, sans dommage.
  */
 import { useTranslation } from "react-i18next";
+import PageShell from "@/components/PageShell";
 import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import ZoomImage from "@/components/ZoomImage";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -35,7 +34,7 @@ export default function CasVelodrome() {
   const gallery = PHOTOS.map((p) => ({ src: p.src, alt: t(p.altKey) }));
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <PageShell>
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -47,7 +46,6 @@ export default function CasVelodrome() {
           description: t("meta_desc"),
         }}
       />
-      <Navbar />
 
       {/* Hero */}
       <section className="relative pt-32 pb-20 bg-charcoal-light overflow-hidden">
@@ -195,7 +193,6 @@ export default function CasVelodrome() {
         </div>
       </section>
 
-      <Footer />
-    </div>
+      </PageShell>
   );
 }

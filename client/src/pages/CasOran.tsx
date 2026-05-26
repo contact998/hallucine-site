@@ -7,10 +7,9 @@
  *    de vraies photos du Festival d'Oran quand disponibles.
  */
 import { useTranslation } from "react-i18next";
+import PageShell from "@/components/PageShell";
 import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import ZoomImage from "@/components/ZoomImage";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -38,7 +37,7 @@ export default function CasOran() {
   const gallery = PHOTOS.map((p) => ({ src: p.src, alt: t(p.altKey) }));
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <PageShell>
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -50,7 +49,6 @@ export default function CasOran() {
           description: t("meta_desc"),
         }}
       />
-      <Navbar />
 
       {/* Hero */}
       <section className="relative pt-32 pb-20 bg-charcoal-light overflow-hidden">
@@ -198,7 +196,6 @@ export default function CasOran() {
         </div>
       </section>
 
-      <Footer />
-    </div>
+      </PageShell>
   );
 }

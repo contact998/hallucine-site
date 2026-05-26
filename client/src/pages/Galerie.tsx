@@ -5,9 +5,8 @@
  * Fallback automatique sur les URLs hardcodées si la DB ne répond pas
  */
 import { useState } from "react";
+import PageShell from "@/components/PageShell";
 import React from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { Video } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -153,7 +152,7 @@ export default function Galerie() {
   const filtered = filter === "all" ? photos : photos.filter((p) => p.cat === filter);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <PageShell>
       <PageStructuredData
         breadcrumbs={[{ name: "Accueil", routeKey: "home" }, { name: t("page_title"), routeKey: "galerie" }]}
         page={{
@@ -161,7 +160,6 @@ export default function Galerie() {
           description: t("meta_desc"),
         }}
       />
-      <Navbar />
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-black">
@@ -274,7 +272,6 @@ export default function Galerie() {
         )}
       </AnimatePresence>
 
-      <Footer />
-    </div>
+      </PageShell>
   );
 }

@@ -1,7 +1,6 @@
 import { useParams, Link } from "wouter";
+import PageShell from "@/components/PageShell";
 import DOMPurify from "dompurify";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { trpc } from "@/lib/trpc";
 import { useRoutes } from "@/i18n/useRoutes";
@@ -49,20 +48,17 @@ export default function BlogPost() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background text-foreground">
-        <Navbar />
+      <PageShell>
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="w-10 h-10 border-2 border-primary border-t-transparent rounded-full animate-spin" />
         </div>
-        <Footer />
-      </div>
+        </PageShell>
     );
   }
 
   if (error || !post) {
     return (
-      <div className="min-h-screen bg-background text-foreground">
-        <Navbar />
+      <PageShell>
         <div className="container max-w-3xl py-24 text-center">
           <h1 className="text-3xl font-bold mb-4">Article introuvable</h1>
           <p className="text-muted-foreground mb-8">
@@ -76,14 +72,12 @@ export default function BlogPost() {
             Retour au blog
           </Link>
         </div>
-        <Footer />
-      </div>
+        </PageShell>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <Navbar />
+    <PageShell>
 
       {/* Hero */}
       <section className="bg-card text-white py-16 md:py-24">
@@ -183,7 +177,6 @@ export default function BlogPost() {
         </div>
       </section>
 
-      <Footer />
-    </div>
+      </PageShell>
   );
 }

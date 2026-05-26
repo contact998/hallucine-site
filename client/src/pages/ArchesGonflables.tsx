@@ -7,7 +7,7 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import ProductPageShell from "@/components/product/ProductPageShell";
+import PageShell from "@/components/PageShell";
 import ProductHero from "@/components/product/ProductHero";
 import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
@@ -55,7 +55,7 @@ export default function ArchesGonflables() {
   ];
 
   return (
-    <ProductPageShell relatedProductsKey="arches">
+    <PageShell relatedProductsKey="arches">
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -277,6 +277,6 @@ export default function ArchesGonflables() {
           </ProductButton>
         </div>
       </section>
-    </ProductPageShell>
+    </PageShell>
   );
 }

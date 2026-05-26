@@ -3,9 +3,8 @@
  * Formulaire intelligent + infos pratiques + réassurance + FAQ
  */
 import { useState } from "react";
-import Navbar from "@/components/Navbar";
+import PageShell from "@/components/PageShell";
 import ContactSection from "@/components/ContactSection";
-import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import { ChevronDown, Clock, Globe, Shield, Truck, HelpCircle } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -41,7 +40,7 @@ export default function Contact() {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <PageShell>
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -53,7 +52,6 @@ export default function Contact() {
         }}
         faqs={faqContact.map(f => ({ question: f.q, answer: f.a }))}
       />
-      <Navbar />
       <h1 className="sr-only">{t("meta_title")}</h1>
       <div className="pt-24">
         <ContactSection />
@@ -160,7 +158,6 @@ export default function Contact() {
         </div>
       </section>
 
-      <Footer />
-    </div>
+      </PageShell>
   );
 }

@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import ZoomImage from "@/components/ZoomImage";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import ProductPageShell from "@/components/product/ProductPageShell";
+import PageShell from "@/components/PageShell";
 import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
 import { useProductImages } from "@/hooks/useProductImages";
@@ -29,7 +29,7 @@ export default function TentesN() {
   const heroImages = useProductImages("tente-n", FALLBACK_IMAGES_TENTE_N);
 
   return (
-    <ProductPageShell relatedProductsKey="tente-n">
+    <PageShell relatedProductsKey="tente-n">
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -176,6 +176,6 @@ export default function TentesN() {
           </div>
         </div>
       </section>
-    </ProductPageShell>
+    </PageShell>
   );
 }

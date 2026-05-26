@@ -3,8 +3,7 @@
  * Contenu i18n via namespace "comparaison"
  */
 import { useTranslation } from "react-i18next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import PageShell from "@/components/PageShell";
 import FilmCountdown from "@/components/FilmCountdown";
 import { Link } from "wouter";
 import { useState } from "react";
@@ -50,7 +49,7 @@ export default function Comparaison() {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <PageShell>
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -63,7 +62,6 @@ export default function Comparaison() {
         faqs={arguments7.map((arg) => ({ question: arg.title, answer: arg.text }))}
       />
       {showCountdown && <FilmCountdown onComplete={() => setShowCountdown(false)} />}
-      <Navbar />
 
       {/* Hero */}
       <section className="pt-32 pb-16 bg-charcoal-light">
@@ -214,7 +212,6 @@ export default function Comparaison() {
         </div>
       </section>
 
-      <Footer />
-    </div>
+      </PageShell>
   );
 }

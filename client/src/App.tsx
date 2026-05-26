@@ -38,7 +38,7 @@ function PageLoader() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="flex flex-col items-center gap-4">
-        <div className="w-10 h-10 border-2 border-[#DAA520] border-t-transparent rounded-full animate-spin" />
+        <div className="w-10 h-10 border-2 border-warm border-t-transparent rounded-full animate-spin" />
         <span className="text-muted-foreground text-sm">Chargement…</span>
       </div>
     </div>

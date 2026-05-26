@@ -2,9 +2,8 @@
  * Page Mentions Légales — Contenu texte structuré
  * Informations officielles du site d'origine hallucinecran.com
  */
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { ArrowLeft } from "lucide-react";
+import PageShell from "@/components/PageShell";
 import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
@@ -19,7 +18,7 @@ export default function MentionsLegales() {
   useDocumentMeta(t("meta_title"), t("meta_desc"));
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <PageShell>
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -30,7 +29,6 @@ export default function MentionsLegales() {
           description: t("meta_desc"),
         }}
       />
-      <Navbar />
 
       <section className="pt-32 pb-24">
         <div className="container max-w-3xl">
@@ -124,7 +122,6 @@ export default function MentionsLegales() {
         </div>
       </section>
 
-      <Footer />
-    </div>
+      </PageShell>
   );
 }

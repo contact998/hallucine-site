@@ -1,8 +1,7 @@
 import { useState } from "react";
+import PageShell from "@/components/PageShell";
 import { Link } from "wouter";
 import { Play } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import VideoLightbox from "@/components/VideoLightbox";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
@@ -27,7 +26,7 @@ export default function GalerieVideo() {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <PageShell>
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -38,7 +37,6 @@ export default function GalerieVideo() {
           description: t("meta_desc"),
         }}
       />
-      <Navbar />
 
       {/* Hero */}
       <section className="relative bg-card text-white py-20 md:py-28">
@@ -113,7 +111,7 @@ export default function GalerieVideo() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-[#8B7500] text-white text-center">
+      <section className="py-16 bg-warm text-white text-center">
         <div className="container max-w-3xl">
           <h2 className="font-display text-3xl font-bold mb-4">
             {t("cta_title")}
@@ -121,13 +119,12 @@ export default function GalerieVideo() {
           <p className="text-lg opacity-90 mb-8">
             {t("cta_desc")}
           </p>
-          <Link href={route('mode-emploi')} className="inline-block bg-white text-[#8B7500] px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+          <Link href={route('mode-emploi')} className="inline-block bg-white text-warm px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
             {t("cta_btn")}
           </Link>
         </div>
       </section>
 
-      <Footer />
 
       {/* Lightbox vidéo */}
       {activeVideo && (
@@ -138,6 +135,6 @@ export default function GalerieVideo() {
           onClose={() => setActiveVideo(null)}
         />
       )}
-    </div>
+    </PageShell>
   );
 }

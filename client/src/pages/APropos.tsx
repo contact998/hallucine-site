@@ -3,9 +3,8 @@
  * Contenu fidèle au site d'origine hallucinecran.com
  * Design: cinéma vintage — fond sombre, accents dorés
  */
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { Link } from "wouter";
+import PageShell from "@/components/PageShell";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import PagePhoto from "@/components/PagePhoto";
@@ -26,7 +25,7 @@ export default function APropos() {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <PageShell>
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -43,7 +42,6 @@ export default function APropos() {
           datePublished: "1992-01-01T00:00:00Z",
         }}
       />
-      <Navbar />
 
       {/* Hero */}
       <section className="pt-32 pb-16 bg-charcoal-light">
@@ -171,7 +169,6 @@ export default function APropos() {
         </div>
       </section>
 
-      <Footer />
-    </div>
+      </PageShell>
   );
 }

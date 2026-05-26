@@ -7,7 +7,7 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import ProductPageShell from "@/components/product/ProductPageShell";
+import PageShell from "@/components/PageShell";
 import ProductHero from "@/components/product/ProductHero";
 import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
@@ -42,7 +42,7 @@ export default function TentesAraignees() {
   ];
 
   return (
-    <ProductPageShell relatedProductsKey="tente-araignee">
+    <PageShell relatedProductsKey="tente-araignee">
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -214,6 +214,6 @@ export default function TentesAraignees() {
           </div>
         </div>
       </section>
-    </ProductPageShell>
+    </PageShell>
   );
 }

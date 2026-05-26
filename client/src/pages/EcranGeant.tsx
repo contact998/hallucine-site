@@ -9,7 +9,7 @@ import { Wind, Clock, Shield, Feather, Users, ArrowRight, Film, Trophy, Music, P
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import ProductPageShell from "@/components/product/ProductPageShell";
+import PageShell from "@/components/PageShell";
 import ProductHero from "@/components/product/ProductHero";
 import ProductButton from "@/components/product/ProductButton";
 import { useTranslation } from "react-i18next";
@@ -66,7 +66,7 @@ export default function EcranGeant() {
   ];
 
   return (
-    <ProductPageShell
+    <PageShell
       withCountdown
       relatedProductsKey="ecran-geant"
       activeVideo={activeVideo}
@@ -373,6 +373,6 @@ export default function EcranGeant() {
         </div>
       </section>
 
-    </ProductPageShell>
+    </PageShell>
   );
 }

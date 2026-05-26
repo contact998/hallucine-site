@@ -2,9 +2,8 @@
  * Page Histoire — Contenu texte complet et enrichi
  * Timeline narrative + chiffres clés + fondateur + valeurs développées
  */
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
+import PageShell from "@/components/PageShell";
 import { ArrowLeft, Globe, Award, Feather, Users, ChevronRight } from "lucide-react";
 import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -59,7 +58,7 @@ export default function Histoire() {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <PageShell>
       <PageStructuredData
         breadcrumbs={[{ name: "Accueil", routeKey: "home" }, { name: t("breadcrumb"), routeKey: "histoire" }]}
         article={{
@@ -74,7 +73,6 @@ export default function Histoire() {
           description: t("meta_desc"),
         }}
       />
-      <Navbar />
 
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center overflow-hidden">
@@ -250,7 +248,6 @@ export default function Histoire() {
         </div>
       </section>
 
-      <Footer />
-    </div>
+      </PageShell>
   );
 }

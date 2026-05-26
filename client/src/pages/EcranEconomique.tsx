@@ -9,7 +9,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import ProductPageShell from "@/components/product/ProductPageShell";
+import PageShell from "@/components/PageShell";
 import { useRoutes } from "@/i18n/useRoutes";
 import { useProductImages } from "@/hooks/useProductImages";
 import EmailLink from "@/components/EmailLink";
@@ -89,7 +89,7 @@ export default function EcranEconomique() {
   const imagesFinales = allDbImages.length > 0 ? allDbImages.slice(4) : FALLBACK_FINALES;
 
   return (
-    <ProductPageShell withCountdown relatedProductsKey="ecran-economique">
+    <PageShell withCountdown relatedProductsKey="ecran-economique">
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -307,6 +307,6 @@ export default function EcranEconomique() {
         </div>
       </section>
 
-    </ProductPageShell>
+    </PageShell>
   );
 }

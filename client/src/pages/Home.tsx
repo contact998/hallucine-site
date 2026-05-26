@@ -3,7 +3,6 @@
  * Contenu texte enrichi, sections complètes
  * Focus sur le contenu, pas sur les images
  */
-import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import ProductsSection from "@/components/ProductsSection";
 import TechnologySection from "@/components/TechnologySection";
@@ -13,8 +12,8 @@ import RealisationsSection from "@/components/RealisationsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import FaqSection from "@/components/FaqSection";
 import ContactSection from "@/components/ContactSection";
-import Footer from "@/components/Footer";
 import CinemaRideau from "@/components/CinemaRideau";
+import PageShell from "@/components/PageShell";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -33,7 +32,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <PageShell>
       <PageStructuredData
         breadcrumbs={[{ name: "Accueil", routeKey: "home" }]}
         faqs={HOME_FAQS}
@@ -43,7 +42,6 @@ export default function Home() {
         }}
       />
       <CinemaRideau />
-      <Navbar />
       <HeroSection />
       <ProductsSection />
       <TechnologySection />
@@ -53,7 +51,6 @@ export default function Home() {
       <TestimonialsSection />
       <FaqSection />
       <ContactSection />
-      <Footer />
-    </div>
+    </PageShell>
   );
 }

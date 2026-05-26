@@ -1,9 +1,8 @@
 /*
  * Page Politique de Cookies — Contenu du site d'origine
  */
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { ArrowLeft } from "lucide-react";
+import PageShell from "@/components/PageShell";
 import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
@@ -15,7 +14,7 @@ export default function PolitiqueCookies() {
   useDocumentMeta(t("meta_title"), t("meta_desc"));
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <PageShell>
       <PageStructuredData
         page={{
           name: t("meta_title"),
@@ -26,7 +25,6 @@ export default function PolitiqueCookies() {
           { name: t("meta_title"), routeKey: "cookies" },
         ]}
       />
-      <Navbar />
 
       <section className="pt-32 pb-24">
         <div className="container max-w-3xl">
@@ -86,7 +84,6 @@ export default function PolitiqueCookies() {
         </div>
       </section>
 
-      <Footer />
-    </div>
+      </PageShell>
   );
 }

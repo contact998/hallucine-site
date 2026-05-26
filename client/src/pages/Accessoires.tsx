@@ -6,7 +6,7 @@
 import { Headphones, Armchair, Radio, Sofa, Monitor, Package } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import ProductPageShell from "@/components/product/ProductPageShell";
+import PageShell from "@/components/PageShell";
 import ProductHero from "@/components/product/ProductHero";
 import ProductButton from "@/components/product/ProductButton";
 import { useTranslation } from "react-i18next";
@@ -80,7 +80,7 @@ export default function Accessoires() {
   ];
 
   return (
-    <ProductPageShell relatedProductsKey="accessoires">
+    <PageShell relatedProductsKey="accessoires">
       <PageStructuredData
         breadcrumbs={[{ name: "Accueil", routeKey: "home" }, { name: t("meta_title"), routeKey: "accessoires" }]}
         product={{
@@ -162,6 +162,6 @@ export default function Accessoires() {
           </div>
         </div>
       </section>
-    </ProductPageShell>
+    </PageShell>
   );
 }

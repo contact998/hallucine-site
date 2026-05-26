@@ -5,8 +5,7 @@
 import { useLocation } from "wouter";
 import { Link } from "wouter";
 import { Home, Search, Film, ArrowLeft } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import PageShell from "@/components/PageShell";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
@@ -19,9 +18,7 @@ export default function NotFound() {
   const [, setLocation] = useLocation();
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
-      <Navbar />
-
+    <PageShell className="flex flex-col">
       <main className="flex-1 flex items-center justify-center py-20">
         <div className="container text-center max-w-2xl">
           {/* Bobine de film animée */}
@@ -115,8 +112,6 @@ export default function NotFound() {
           </div>
         </div>
       </main>
-
-      <Footer />
-    </div>
+    </PageShell>
   );
 }

@@ -9,7 +9,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import ProductPageShell from "@/components/product/ProductPageShell";
+import PageShell from "@/components/PageShell";
 import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
 import { useProductImages } from "@/hooks/useProductImages";
@@ -59,7 +59,7 @@ export default function TentesX() {
   const heroImages = useProductImages("tente-x", FALLBACK_IMAGES_TENTE_X);
 
   return (
-    <ProductPageShell relatedProductsKey="tente-x">
+    <PageShell relatedProductsKey="tente-x">
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -249,6 +249,6 @@ export default function TentesX() {
           </div>
         </div>
       </section>
-    </ProductPageShell>
+    </PageShell>
   );
 }

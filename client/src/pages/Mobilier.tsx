@@ -10,7 +10,7 @@ import { Check, ChevronRight, ChevronDown, Feather, Clock, Shield, Palette, Arro
 import { Link } from "wouter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import ProductPageShell from "@/components/product/ProductPageShell";
+import PageShell from "@/components/PageShell";
 import { useRoutes } from "@/i18n/useRoutes";
 import { useProductImages } from "@/hooks/useProductImages";
 import ZoomImage from "@/components/ZoomImage";
@@ -140,7 +140,7 @@ export default function Mobilier() {
   ];
 
   return (
-    <ProductPageShell relatedProductsKey="mobilier">
+    <PageShell relatedProductsKey="mobilier">
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -312,6 +312,6 @@ export default function Mobilier() {
         </div>
       </section>
 
-    </ProductPageShell>
+    </PageShell>
   );
 }

@@ -7,7 +7,7 @@ import { ArrowRight } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import PagePhoto from "@/components/PagePhoto";
-import ProductPageShell from "@/components/product/ProductPageShell";
+import PageShell from "@/components/PageShell";
 import ProductHero from "@/components/product/ProductHero";
 import ProductButton from "@/components/product/ProductButton";
 import { useTranslation } from "react-i18next";
@@ -36,7 +36,7 @@ export default function Tentes() {
   ];
 
   return (
-    <ProductPageShell relatedProductsKey="tentes">
+    <PageShell relatedProductsKey="tentes">
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -109,6 +109,6 @@ export default function Tentes() {
           </div>
         </div>
       </section>
-    </ProductPageShell>
+    </PageShell>
   );
 }

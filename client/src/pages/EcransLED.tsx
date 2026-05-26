@@ -5,7 +5,7 @@
 import { Construction } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import ProductPageShell from "@/components/product/ProductPageShell";
+import PageShell from "@/components/PageShell";
 import ProductHero from "@/components/product/ProductHero";
 import ProductButton from "@/components/product/ProductButton";
 import { useTranslation } from "react-i18next";
@@ -25,7 +25,7 @@ export default function EcransLED() {
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/cNgCebtnqSvVUvmF.webp");
 
   return (
-    <ProductPageShell relatedProductsKey="ecrans-led">
+    <PageShell relatedProductsKey="ecrans-led">
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -73,6 +73,6 @@ export default function EcransLED() {
           </div>
         </div>
       </section>
-    </ProductPageShell>
+    </PageShell>
   );
 }

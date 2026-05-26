@@ -5,11 +5,10 @@
  * Contenu i18n via le namespace « configurateur ».
  */
 import { useState } from "react";
+import PageShell from "@/components/PageShell";
 import { Link } from "wouter";
 import { useTranslation } from "react-i18next";
 import { Home, Sun, Car, ArrowRight } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import PageStructuredData from "@/components/PageStructuredData";
 import PagePhoto from "@/components/PagePhoto";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -52,7 +51,7 @@ export default function Configurateur() {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <PageShell>
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -63,7 +62,6 @@ export default function Configurateur() {
           description: t("meta_desc"),
         }}
       />
-      <Navbar />
 
       {/* Hero */}
       <section className="pt-32 pb-12 bg-charcoal-light">
@@ -230,7 +228,6 @@ export default function Configurateur() {
         </div>
       </section>
 
-      <Footer />
-    </div>
+      </PageShell>
   );
 }

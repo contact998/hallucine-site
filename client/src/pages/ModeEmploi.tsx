@@ -1,6 +1,5 @@
 import { useState } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import PageShell from "@/components/PageShell";
 import GearsEffect from "@/components/GearsEffect";
 import VideoLightbox from "@/components/VideoLightbox";
 import { Play, Package, AlertTriangle, Wrench } from "lucide-react";
@@ -111,7 +110,7 @@ export default function ModeEmploi() {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <PageShell>
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -122,7 +121,6 @@ export default function ModeEmploi() {
           description: t("meta_desc"),
         }}
       />
-      <Navbar />
 
       {/* Hero */}
       <section className="relative overflow-hidden pt-32 pb-16 bg-charcoal-light">
@@ -310,7 +308,6 @@ export default function ModeEmploi() {
         </div>
       </section>
 
-      <Footer />
 
       {/* Lightbox vidéo */}
       {activeVideo && (
@@ -343,6 +340,6 @@ export default function ModeEmploi() {
           <p className="absolute bottom-6 text-white/70 text-sm">{lightboxImg.alt}</p>
         </div>
       )}
-    </div>
+    </PageShell>
   );
 }

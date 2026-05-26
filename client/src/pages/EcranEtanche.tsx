@@ -9,7 +9,7 @@ import { VolumeX, Droplets, Clock, Feather, ChevronDown, Shield, Wind, Zap } fro
 import BrochureDownloadButton from "@/components/BrochureDownloadButton";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
-import ProductPageShell from "@/components/product/ProductPageShell";
+import PageShell from "@/components/PageShell";
 import ProductHero from "@/components/product/ProductHero";
 import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
@@ -74,7 +74,7 @@ export default function EcranEtanche() {
   ];
 
   return (
-    <ProductPageShell withCountdown relatedProductsKey="ecran-etanche">
+    <PageShell withCountdown relatedProductsKey="ecran-etanche">
       <PageStructuredData
         breadcrumbs={[
           { name: "Accueil", routeKey: "home" },
@@ -252,6 +252,6 @@ export default function EcranEtanche() {
           </div>
         </div>
       </section>
-    </ProductPageShell>
+    </PageShell>
   );
 }
