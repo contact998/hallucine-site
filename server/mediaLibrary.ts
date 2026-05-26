@@ -155,11 +155,19 @@ export async function getMediaByCategory(
   ];
   if (subcategory) conditions.push(eq(mediaLibrary.subcategory, subcategory));
 
-  return db
-    .select()
-    .from(mediaLibrary)
-    .where(and(...conditions))
-    .orderBy(asc(mediaLibrary.sortOrder), desc(mediaLibrary.createdAt));
+  try {
+    return await db
+      .select()
+      .from(mediaLibrary)
+      .where(and(...conditions))
+      .orderBy(asc(mediaLibrary.sortOrder), desc(mediaLibrary.createdAt));
+  } catch (err) {
+    // Si la DB est injoignable (dev sans DATABASE_URL, incident transitoire),
+    // on dégrade gracieusement vers un tableau vide plutôt que de propager
+    // un 500. Les pages affichent leurs images statiques de fallback.
+    console.error("[mediaLibrary] getMediaByCategory failed, returning empty:", err instanceof Error ? err.message : err);
+    return [];
+  }
 }
 
 // ─── Mettre à jour ────────────────────────────────────────────────────────────

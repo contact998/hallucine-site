@@ -51,7 +51,15 @@ export default function VoiceMicButton({
     };
   }, []);
 
-  const startListening = useCallback(() => {
+  // Auto-clear de l'erreur après 4s — sinon le message rouge persiste et donne
+  // l'impression que le micro est définitivement cassé alors qu'un retry suffit.
+  useEffect(() => {
+    if (!error) return;
+    const t = setTimeout(() => setError(null), 4000);
+    return () => clearTimeout(t);
+  }, [error]);
+
+  const startListening = useCallback(async () => {
     if (!isSupported) return;
 
     // Arrêter l'instance précédente
@@ -61,6 +69,22 @@ export default function VoiceMicButton({
 
     setError(null);
     setInterimText("");
+
+    // Demander explicitement la permission micro AVANT de démarrer la
+    // reconnaissance — certains navigateurs (notamment Chrome iOS) échouent
+    // silencieusement si on appelle directement recognition.start() sans avoir
+    // déclenché getUserMedia. On ferme aussitôt le stream, on n'en avait besoin
+    // que pour le prompt de permission.
+    if (typeof navigator !== "undefined" && navigator.mediaDevices?.getUserMedia) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        stream.getTracks().forEach((t) => t.stop());
+      } catch (permErr: any) {
+        const msg = permErr?.name === "NotAllowedError" ? "Micro refuse" : "Pas de micro";
+        setError(msg);
+        return;
+      }
+    }
 
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     const recognition = new SpeechRecognition();

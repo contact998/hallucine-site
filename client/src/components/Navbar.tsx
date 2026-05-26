@@ -13,6 +13,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import { LANGUAGE_DOMAINS, detectLanguage } from "@/i18n/domains";
 import { ROUTES, getRouteKey, getHreflangUrls } from "@/i18n/routes";
+import { AvailabilityBadge } from "./AvailabilityIndicator";
 
 const LOGO_URL = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ySiqVkOsMSzWfHfu.webp";
 
@@ -378,6 +379,8 @@ export default function Navbar() {
         {/* ─── Actions desktop ────────────────────────────────────────────── */}
         <div className="hidden xl:flex items-center gap-4 shrink-0">
           <SocialLinks />
+          <div className="w-px h-5 bg-white/10" />
+          <AvailabilityBadge />
           <div className="w-px h-5 bg-white/10" />
           <LanguageSwitcher />
           {isAuthenticated && user?.role === "admin" && (
