@@ -11,18 +11,23 @@ import ZoomImage from "@/components/ZoomImage";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useRoutes } from "@/i18n/useRoutes";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
 
-const PHOTOS = [
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/nRCfDZHKAKZaVovJ.webp", altKey: "img1_alt" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/yOODHxsfnoySvIeF.webp", altKey: "img4_alt" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/OWMdZNnUOoKKIQbm.webp", altKey: "img2_alt" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/KyASvJooCSwRBpRc.webp", altKey: "img3_alt" },
+/* ── Fallbacks CDN (filet de sécurité) ── */
+const FALLBACK_GALERIE = [
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/nRCfDZHKAKZaVovJ.webp", alt: "Écran géant gonflable 24m au Stade Vélodrome" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/yOODHxsfnoySvIeF.webp", alt: "Vue de côté de l'écran Hallucine au Vélodrome" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/OWMdZNnUOoKKIQbm.webp", alt: "Projection cinéma sur écran gonflable au Vélodrome" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/KyASvJooCSwRBpRc.webp", alt: "Ambiance cinéma plein air au Stade Vélodrome" },
 ];
 
 export default function CasVelodrome() {
   const route = useRoutes();
   const { t } = useTranslation("cas-velodrome");
-  useDocumentMeta(t("meta_title"), t("meta_desc"), PHOTOS[0].src);
+
+  const galerieImgs = useMediaByPage("cas-velodrome", "galerie", FALLBACK_GALERIE);
+
+  useDocumentMeta(t("meta_title"), t("meta_desc"), galerieImgs[0]?.src ?? FALLBACK_GALERIE[0].src);
 
   const stats = [
     { value: t("stat1_value"), suffix: t("stat1_suffix"), label: t("stat1_label") },
@@ -31,7 +36,7 @@ export default function CasVelodrome() {
     { value: t("stat4_value"), suffix: t("stat4_suffix"), label: t("stat4_label") },
   ];
 
-  const gallery = PHOTOS.map((p) => ({ src: p.src, alt: t(p.altKey) }));
+  const gallery = galerieImgs.length > 0 ? galerieImgs : FALLBACK_GALERIE;
 
   return (
     <PageShell>
