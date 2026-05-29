@@ -11,7 +11,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import PageShell from "@/components/PageShell";
 import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useProductImages } from "@/hooks/useProductImages";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
 
 const FALLBACK_IMAGES_TENTE_V = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/HiOAOTLZaOhqpcQk.webp", alt: "Tente gonflable V blanche vue de face" },
@@ -20,13 +20,16 @@ const FALLBACK_IMAGES_TENTE_V = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/deVDPczivrfxEEVT.webp", alt: "Tente gonflable V stand événement extérieur" },
 ];
 
-const schemaEclate = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/qSTOOwNPJJIAFgwe.webp";
+const FALLBACK_SCHEMA = [
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/qSTOOwNPJJIAFgwe.webp", alt: "Schéma éclaté des composants de la Tente Gonflable V" },
+];
 
 export default function TentesV() {
   const route = useRoutes();
   const { t } = useTranslation("tente-v");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/HiOAOTLZaOhqpcQk.webp");
-  const heroImages = useProductImages("tente-v", FALLBACK_IMAGES_TENTE_V);
+  const heroImages = useMediaByPage("tente-v", "galerie", FALLBACK_IMAGES_TENTE_V);
+  const schemaImages = useMediaByPage("tente-v", "schema", FALLBACK_SCHEMA);
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
 
   return (
@@ -51,6 +54,7 @@ export default function TentesV() {
       />
 
       {/* Hero */}
+      {heroImages.length > 0 && (
       <section className="pt-32 pb-16 bg-charcoal-light">
         <div className="container">
           <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">{t("section_label")}</p>
@@ -65,6 +69,7 @@ export default function TentesV() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Intro */}
       <section className="py-16 bg-background">
@@ -177,15 +182,17 @@ export default function TentesV() {
       </section>
 
       {/* Schéma éclaté */}
+      {schemaImages.length > 0 && (
       <section className="py-20 bg-background">
         <div className="container">
           <h2 className="text-3xl font-bold text-ivory mb-8 text-center">
             {t("schema_title")} <span className="text-warm">{t("schema_colored")}</span>
           </h2>
-          <ZoomImage src={schemaEclate} alt="Schéma éclaté des composants de la Tente Gonflable V" wrapperClassName="max-w-4xl mx-auto rounded-lg shadow-lg" className="w-full" />
+          <ZoomImage src={schemaImages[0]?.src ?? FALLBACK_SCHEMA[0].src} alt={schemaImages[0]?.alt ?? FALLBACK_SCHEMA[0].alt} wrapperClassName="max-w-4xl mx-auto rounded-lg shadow-lg" className="w-full" />
           <p className="text-white/50 text-sm text-center mt-4">{t("schema_zoom")}</p>
         </div>
       </section>
+      )}
 
       {/* Caractéristiques techniques */}
       <section className="py-20 bg-charcoal-light">
