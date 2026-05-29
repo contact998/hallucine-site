@@ -1,0 +1,33 @@
+name: CI
+
+# Garde-fou de déploiement : Railway (avec « Wait for CI » activé) ne déploie
+# que si ce workflow passe. On vérifie les étapes ENV-INDÉPENDANTES qui ont
+# cassé des déploiements par le passé :
+#   - install gelé (détecte un pnpm-lock désynchronisé)
+#   - tsc --noEmit (détecte les erreurs de types, ex. isLoading vs isPending)
+#   - build client (vite) + build serveur (esbuild)
+# On NE fait PAS le prerender (build:ssr) ni translate ici : ils ont besoin de
+# la base de données / clés API, indisponibles en CI.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.4.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm build:client
+      - run: pnpm build:server
