@@ -6,28 +6,33 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Lightbox from "@/components/Lightbox";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import type { MediaImage } from "@/hooks/useMediaByCategory";
 
-const ECRAN_8M_ALUMINIUM = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779578749911-c9425a005493-ecran-8-m-cadre-aluminium.jpg";
-const ECOLE_FORAINS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779578888369-951ff08bc2f1-ecran-structure-1-1.jpg";
-const ERREUR_FATALE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779584723959-a9169ab7bfc6-histoire-ecran-anglais.jpg";
-const ECRAN_TUBULAIRE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/JlNlzGmvIyCrQHIY.webp";
-const VOILERIE_BRETAGNE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587607712-ce2b14189c08-ecran-cinema-gonflable-voilerie-bretonne.webp";
-const KYTEA_HK = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587893638-07ef453d5255-kitesurf-hong-kong-inspiration-ecran-gonflable.webp";
-const ECLATE_ETANCHE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587896624-615d7348493d-vue-eclatee-ecran-cinema-gonflable-etanche-tissu-airbag.webp";
-const ECRANS_ETANCHE_5_6 = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587898704-f934a4160b12-ecran-cinema-gonflable-etanche-5m-6m-hallucine.webp";
-const REPAS_CHINOIS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587900924-b22ae92f259c-hallucine-shenzhen-covid-fabrication-ecran.webp";
-const TROIS_ECRANS = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587902974-6a126291762f-trois-ecrans-cinema-gonflables-hallucine-innovation.webp";
+// Fallbacks — ordre identique à CHAPTER_IMAGES
+const FALLBACK_HISTOIRE: MediaImage[] = [
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779578749911-c9425a005493-ecran-8-m-cadre-aluminium.jpg", alt: "Écran 8m cadre aluminium" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779578888369-951ff08bc2f1-ecran-structure-1-1.jpg", alt: "Écran structure école foraine" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779584723959-a9169ab7bfc6-histoire-ecran-anglais.jpg", alt: "Erreur fatale écran anglais" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587607712-ce2b14189c08-ecran-cinema-gonflable-voilerie-bretonne.webp", alt: "Écran cinéma gonflable voilerie bretonne" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587893638-07ef453d5255-kitesurf-hong-kong-inspiration-ecran-gonflable.webp", alt: "Kitesurf Hong Kong inspiration écran gonflable" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587896624-615d7348493d-vue-eclatee-ecran-cinema-gonflable-etanche-tissu-airbag.webp", alt: "Vue éclatée écran gonflable étanche tissu airbag" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587898704-f934a4160b12-ecran-cinema-gonflable-etanche-5m-6m-hallucine.webp", alt: "Écran cinéma gonflable étanche 5m 6m Hallucine" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587900924-b22ae92f259c-hallucine-shenzhen-covid-fabrication-ecran.webp", alt: "Hallucine Shenzhen Covid fabrication écran" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779587902974-6a126291762f-trois-ecrans-cinema-gonflables-hallucine-innovation.webp", alt: "Trois écrans cinéma gonflables Hallucine innovation" },
+];
 
-const CHAPTER_IMAGES: { image: string | null; smallImage?: boolean; extraSmall?: boolean; containImage?: boolean }[] = [
-  { image: ECRAN_8M_ALUMINIUM },
-  { image: ECOLE_FORAINS },
-  { image: ERREUR_FATALE },
-  { image: VOILERIE_BRETAGNE },
-  { image: KYTEA_HK, smallImage: true, extraSmall: true },
-  { image: ECLATE_ETANCHE, smallImage: true },
-  { image: ECRANS_ETANCHE_5_6 },
-  { image: REPAS_CHINOIS },
-  { image: TROIS_ECRANS, containImage: true },
+// Métadonnées de disposition — indépendantes de l'URL de l'image
+const CHAPTER_LAYOUT: { smallImage?: boolean; extraSmall?: boolean; containImage?: boolean }[] = [
+  {},
+  {},
+  {},
+  {},
+  { smallImage: true, extraSmall: true },
+  { smallImage: true },
+  {},
+  {},
+  { containImage: true },
 ];
 
 const CHAPTER_KEYS = ["ch1992", "ch1993", "ch1994", "ch1995", "ch2004", "ch2005", "ch2010", "ch2020", "chToday"];
@@ -37,6 +42,14 @@ export default function StorySection() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
   const { t } = useTranslation("home");
+
+  const histoireImages = useMediaByPage("accueil", "histoire", FALLBACK_HISTOIRE);
+
+  // Reconstruire CHAPTER_IMAGES depuis la DB (fallback sur les URLs hardcodées)
+  const CHAPTER_IMAGES = CHAPTER_LAYOUT.map((layout, i) => ({
+    ...layout,
+    image: histoireImages[i]?.src ?? FALLBACK_HISTOIRE[i]?.src ?? null,
+  }));
 
   // Liste plate des chapitres ayant une image (pour la navigation prev/next dans la lightbox)
   const lightboxImages = CHAPTER_KEYS
