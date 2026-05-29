@@ -170,6 +170,29 @@ export async function getMediaByCategory(
   }
 }
 
+/** Récupère toutes les images d'une page (et optionnellement section) triées par sortOrder (pour le frontend) */
+export async function getMediaByPage(
+  page: string,
+  section?: string
+): Promise<MediaItem[]> {
+  const conditions = [
+    eq(mediaLibrary.page, page),
+    eq(mediaLibrary.active, true),
+  ];
+  if (section) conditions.push(eq(mediaLibrary.section, section));
+
+  try {
+    return await db
+      .select()
+      .from(mediaLibrary)
+      .where(and(...conditions))
+      .orderBy(asc(mediaLibrary.sortOrder), desc(mediaLibrary.createdAt));
+  } catch (err) {
+    console.error("[mediaLibrary] getMediaByPage failed, returning empty:", err instanceof Error ? err.message : err);
+    return [];
+  }
+}
+
 // ─── Mettre à jour ────────────────────────────────────────────────────────────
 
 export async function updateMediaItem(

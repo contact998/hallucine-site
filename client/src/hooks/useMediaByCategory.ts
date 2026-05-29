@@ -13,7 +13,7 @@
  */
 import { trpc } from "@/lib/trpc";
 import type { MediaCategory } from "../../../drizzle/schema";
-import { getBakedMedia } from "./ssrMedia";
+import { getBakedMedia, getBakedMediaByPage } from "./ssrMedia";
 
 export interface MediaImage {
   src: string;
@@ -53,6 +53,70 @@ export function useMediaByCategory(
             subcategory: subcategory ?? null,
             page:        null,
             section:     null,
+            sortOrder:   0,
+            active:      true,
+            source:      "migration" as const,
+            uploadedBy:  null,
+            usageCount:  0,
+            createdAt:   new Date(),
+            updatedAt:   new Date(),
+          })),
+          staleTime:            0,
+          initialDataUpdatedAt: 0,
+          retry:                1,
+        }
+  );
+
+  if (baked) {
+    return baked.map(img => ({
+      src:         img.url,
+      alt:         img.alt ?? "",
+      title:       img.title ?? "",
+      subcategory: img.subcategory,
+      width:       img.width,
+      height:      img.height,
+    }));
+  }
+
+  return (data ?? fallback).map(img => ({
+    src:         "url" in img ? img.url : (img as MediaImage).src,
+    alt:         img.alt ?? "",
+    title:       img.title ?? "",
+    subcategory: "subcategory" in img ? img.subcategory : undefined,
+    width:       img.width ?? null,
+    height:      img.height ?? null,
+  }));
+}
+
+export function useMediaByPage(
+  page: string,
+  section: string | undefined,
+  fallback: MediaImage[]
+): MediaImage[] {
+  const baked = getBakedMediaByPage(page, section);
+
+  const { data } = trpc.media.byPage.useQuery(
+    { page, section },
+    baked
+      ? // Images bakées dispo : aucune requête, le rendu sort des données figées
+        { enabled: false }
+      : {
+          // Dev local : fallback hardcodé immédiat + revalidation DB
+          initialData: fallback.map(img => ({
+            id:          0,
+            url:         img.src,
+            filename:    img.src.split("/").pop() ?? "",
+            alt:         img.alt,
+            title:       img.title ?? img.alt,
+            tags:        null,
+            filesize:    null,
+            width:       null,
+            height:      null,
+            mimeType:    null,
+            category:    "autre" as MediaCategory,
+            subcategory: null,
+            page:        page,
+            section:     section ?? null,
             sortOrder:   0,
             active:      true,
             source:      "migration" as const,

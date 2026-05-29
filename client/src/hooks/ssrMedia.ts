@@ -53,3 +53,25 @@ export function getBakedMedia(
   const rows = store[mediaKey(category, subcategory)];
   return rows && rows.length > 0 ? rows : null;
 }
+
+/** Clé d'indexation pour page/section — doit rester identique côté scripts/prerender.mjs */
+export function mediaPageKey(page: string, section?: string | null): string {
+  return `page|${page}|${section ?? ""}`;
+}
+
+/**
+ * Retourne les images bakées au build pour une page/section,
+ * ou `null` si rien n'a été baké (dev local, page sans image en DB).
+ */
+export function getBakedMediaByPage(
+  page: string,
+  section?: string | null
+): BakedMedia[] | null {
+  const store =
+    (typeof window !== "undefined" ? window.__SSR_MEDIA__ : undefined) ??
+    (typeof globalThis !== "undefined" ? globalThis.__SSR_MEDIA__ : undefined);
+  if (!store) return null;
+
+  const rows = store[mediaPageKey(page, section)];
+  return rows && rows.length > 0 ? rows : null;
+}

@@ -19,6 +19,7 @@ import {
   getMediaByUrl,
   getMediaByIds,
   getMediaByCategory,
+  getMediaByPage,
   listMedia,
   updateMediaItem,
   updateMediaR2Key,
@@ -148,6 +149,15 @@ export const adminMediaRouter = router({
     }))
     .query(async ({ input }) =>
       getMediaByCategory(input.category, input.subcategory)
+    ),
+
+  byPage: publicProcedure
+    .input(z.object({
+      page:    z.string(),
+      section: z.string().optional(),
+    }))
+    .query(async ({ input }) =>
+      getMediaByPage(input.page, input.section)
     ),
 
   // ─── Upload ─────────────────────────────────────────────────────────────────
