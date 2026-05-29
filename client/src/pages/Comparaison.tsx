@@ -11,6 +11,7 @@ import { Check, X, Trophy, Feather, Clock, Shield, Wind, Truck, Wrench, Leaf, Us
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
 
 export default function Comparaison() {
   const route = useRoutes();
@@ -18,6 +19,11 @@ export default function Comparaison() {
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
 
   const [showCountdown, setShowCountdown] = useState(true);
+
+  const comparatif = useMediaByPage("comparaison", "comparatif", [
+    { src: "/img/comparaison-transport.jpg", alt: t("visuel1_alt") },
+    { src: "/img/comparaison-poids.jpg", alt: t("visuel2_alt") },
+  ]);
 
   const comparisonData = [
     { carac: t("crit_weight"), hallucine: t("hall_weight"), concurrent: t("comp_weight"), icon: Feather },
@@ -134,15 +140,15 @@ export default function Comparaison() {
           <p className="text-white/60 mb-10 max-w-3xl">{t("visuels_desc")}</p>
           <div className="grid md:grid-cols-2 gap-6">
             <img
-              src="/img/comparaison-transport.jpg"
-              alt={t("visuel1_alt")}
+              src={comparatif[0]?.src ?? "/img/comparaison-transport.jpg"}
+              alt={comparatif[0]?.alt ?? t("visuel1_alt")}
               className="w-full rounded-lg border border-border"
               loading="lazy"
               decoding="async"
             />
             <img
-              src="/img/comparaison-poids.jpg"
-              alt={t("visuel2_alt")}
+              src={comparatif[1]?.src ?? "/img/comparaison-poids.jpg"}
+              alt={comparatif[1]?.alt ?? t("visuel2_alt")}
               className="w-full rounded-lg border border-border"
               loading="lazy"
               decoding="async"
