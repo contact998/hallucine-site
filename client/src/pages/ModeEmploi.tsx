@@ -8,22 +8,26 @@ import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { Link } from "wouter";
 import { useRoutes } from "@/i18n/useRoutes";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
 
-/* ── CDN URLs des images ── */
-const IMG = {
-  schema1: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/mFJdqwHyuGSCOGql.webp",
-  schema2: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/hrqKmxfHNvgXMiOR.webp",
-  schema3: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/SfMhjnmMPXmhTnCY.webp",
-  schema4: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/DWWkArXVCSsUOgpF.webp",
-  schema5: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ACzhHDDdRqtMviLu.webp",
-  schema6: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ozHATmEmVSUnLoJf.webp",
-  schema7: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/eZAZdCzUqjLNowGy.webp",
-  masse: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/padxqxWNBzlFMRNx.webp",
-  piquet: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/SJRhdXcYkpvRGhjf.webp",
-  bache: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/SMGpaxEIHhmFEQHN.webp",
-  metre: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/MniFNdyEykjxHKpc.webp",
-  souffleur: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/othGWDTuMAfyXByS.webp",
-};
+/* ── Fallbacks CDN (filet de sécurité) ── */
+const FALLBACK_MONTAGE = [
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/mFJdqwHyuGSCOGql.webp", alt: "Schéma montage étape 1" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/hrqKmxfHNvgXMiOR.webp", alt: "Schéma montage étape 2" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/SfMhjnmMPXmhTnCY.webp", alt: "Schéma montage étape 3" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/DWWkArXVCSsUOgpF.webp", alt: "Schéma montage étape 4" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ACzhHDDdRqtMviLu.webp", alt: "Schéma montage étape 5" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ozHATmEmVSUnLoJf.webp", alt: "Schéma montage étape 6" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/eZAZdCzUqjLNowGy.webp", alt: "Schéma montage étape 7" },
+];
+
+const FALLBACK_MATERIEL = [
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/padxqxWNBzlFMRNx.webp", alt: "Masse" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/SJRhdXcYkpvRGhjf.webp", alt: "Piquet" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/SMGpaxEIHhmFEQHN.webp", alt: "Bâche" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/MniFNdyEykjxHKpc.webp", alt: "Mètre" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/othGWDTuMAfyXByS.webp", alt: "Souffleur" },
+];
 
 export default function ModeEmploi() {
   const route = useRoutes();
@@ -33,6 +37,9 @@ export default function ModeEmploi() {
 
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
   const [lightboxImg, setLightboxImg] = useState<{ src: string; alt: string } | null>(null);
+
+  const montageImgs = useMediaByPage("mode-emploi", "montage", FALLBACK_MONTAGE);
+  const materielImgs = useMediaByPage("mode-emploi", "materiel", FALLBACK_MATERIEL);
 
   const videos = [
     { id: "bAxDUrxFUXw", title: t("v1_title"), description: t("v1_desc") },
@@ -44,66 +51,66 @@ export default function ModeEmploi() {
   ];
 
   const contenuLivraison = [
-    { nom: t("l1_nom"), description: t("l1_desc"), img: IMG.metre },
-    { nom: t("l2_nom"), description: t("l2_desc"), img: IMG.souffleur },
+    { nom: t("l1_nom"), description: t("l1_desc"), img: materielImgs[3]?.src },
+    { nom: t("l2_nom"), description: t("l2_desc"), img: materielImgs[4]?.src },
     { nom: t("l3_nom"), description: t("l3_desc") },
     { nom: t("l4_nom"), description: t("l4_desc") },
   ];
 
   const materielNonInclus = [
-    { nom: t("m1_nom"), img: IMG.piquet },
-    { nom: t("m2_nom"), img: IMG.metre },
-    { nom: t("m3_nom"), img: IMG.masse },
-    { nom: t("m4_nom"), img: IMG.bache },
+    { nom: t("m1_nom"), img: materielImgs[1]?.src ?? FALLBACK_MATERIEL[1].src },
+    { nom: t("m2_nom"), img: materielImgs[3]?.src ?? FALLBACK_MATERIEL[3].src },
+    { nom: t("m3_nom"), img: materielImgs[0]?.src ?? FALLBACK_MATERIEL[0].src },
+    { nom: t("m4_nom"), img: materielImgs[2]?.src ?? FALLBACK_MATERIEL[2].src },
   ];
 
   const etapes = [
     {
       numero: 1,
       titre: t("e1_titre"),
-      schema: IMG.schema1,
+      schema: montageImgs[0]?.src ?? FALLBACK_MONTAGE[0].src,
       schemaCaption: t("e1_caption"),
       instructions: [t("e1_i1"), t("e1_i2")],
     },
     {
       numero: 2,
       titre: t("e2_titre"),
-      schema: IMG.schema2,
+      schema: montageImgs[1]?.src ?? FALLBACK_MONTAGE[1].src,
       schemaCaption: t("e2_caption"),
       instructions: [t("e2_i1"), t("e2_i2"), t("e2_i3"), t("e2_i4")],
     },
     {
       numero: 3,
       titre: t("e3_titre"),
-      schema: IMG.schema3,
+      schema: montageImgs[2]?.src ?? FALLBACK_MONTAGE[2].src,
       schemaCaption: t("e3_caption"),
       instructions: [t("e3_i1")],
     },
     {
       numero: 4,
       titre: t("e4_titre"),
-      schema: IMG.schema4,
+      schema: montageImgs[3]?.src ?? FALLBACK_MONTAGE[3].src,
       schemaCaption: t("e4_caption"),
       instructions: [t("e4_i1")],
     },
     {
       numero: 5,
       titre: t("e5_titre"),
-      schema: IMG.schema5,
+      schema: montageImgs[4]?.src ?? FALLBACK_MONTAGE[4].src,
       schemaCaption: t("e5_caption"),
       instructions: [t("e5_i1"), t("e5_i2"), t("e5_i3"), t("e5_i4")],
     },
     {
       numero: 6,
       titre: t("e6_titre"),
-      schema: IMG.schema6,
+      schema: montageImgs[5]?.src ?? FALLBACK_MONTAGE[5].src,
       schemaCaption: t("e6_caption"),
       instructions: [t("e6_i1")],
     },
     {
       numero: 7,
       titre: t("e7_titre"),
-      schema: IMG.schema7,
+      schema: montageImgs[6]?.src ?? FALLBACK_MONTAGE[6].src,
       schemaCaption: t("e7_caption"),
       instructions: [t("e7_i1"), t("e7_i2"), t("e7_i3")],
     },
