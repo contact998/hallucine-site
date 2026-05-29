@@ -23,7 +23,7 @@ import {
   APropos, Histoire, ModeEmploi, Blog, BlogPost, DevenirDistributeur,
   MentionsLegales, Confidentialite, PolitiqueCookies,
   Profil, Admin, AdminDashboard, AdminAuditHistory, AdminCalculateurs,
-  AdminMedia, AdminBlog, Login, NotFound,
+  AdminMedia, AdminMediaV2, AdminBlog, Login, NotFound,
 } from "./pages/registry";
 
 function PageLoader() {
@@ -114,6 +114,7 @@ function RoutesSwitch() {
         <Route path={"/admin/audits"} component={AdminAuditHistory} />
         <Route path={"/admin/calculateurs"} component={AdminCalculateurs} />
         <Route path={"/admin/media"} component={AdminMedia} />
+        <Route path={"/admin-v2"} component={AdminMediaV2} />
         <Route path={"/admin/blog"} component={AdminBlog} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />

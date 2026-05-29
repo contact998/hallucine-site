@@ -225,6 +225,31 @@ export const adminMediaRouter = router({
       return { success: true, item };
     }),
 
+  /** Remplacer le fichier d'une image existante (upload R2 + repointage de la ligne). */
+  replaceImage: adminProcedure
+    .input(z.object({
+      id:       z.number().int().positive(),
+      filename: z.string().min(1).max(500),
+      fileData: z.string().min(1),  // Base64
+      mimeType: z.string().refine(
+        (v) => (ALLOWED_MIME as readonly string[]).includes(v),
+        { message: "Format non supporté (JPEG, PNG, WebP, GIF)" }
+      ),
+    }))
+    .mutation(async ({ input }) => {
+      const item = await getMediaById(input.id);
+      if (!item) throw new Error("Image introuvable");
+      let buffer: Buffer;
+      try { buffer = Buffer.from(input.fileData, "base64"); }
+      catch { throw new Error("Données Base64 invalides"); }
+      if (buffer.length > MAX_SIZE_BYTES) {
+        throw new Error(`Fichier trop volumineux (max ${MAX_SIZE_BYTES / 1024 / 1024} Mo)`);
+      }
+      const r2 = await uploadToR2(buffer, input.mimeType, input.filename, "media");
+      await updateMediaItem(input.id, { url: r2.url, filename: r2.filename, mimeType: r2.mimeType });
+      return { success: true, url: r2.url };
+    }),
+
   // ─── Modifier ───────────────────────────────────────────────────────────────
 
   update: adminProcedure
@@ -238,6 +263,9 @@ export const adminMediaRouter = router({
       active:      z.boolean().optional(),
       page:        z.string().max(100).nullable().optional(),
       section:     z.string().max(100).nullable().optional(),
+      url:         z.string().url().optional(),       // remplacer l'image par une autre
+      filename:    z.string().max(500).optional(),
+      mimeType:    z.string().max(100).optional(),
     }))
     .mutation(async ({ input }) => {
       const { id, ...data } = input;

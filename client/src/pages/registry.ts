@@ -79,6 +79,7 @@ const F = {
   AdminAuditHistory:   () => import("./AdminAuditHistory"),
   AdminCalculateurs:   () => import("./AdminCalculateurs"),
   AdminMedia:          () => import("./AdminMedia"),
+  AdminMediaV2:        () => import("./AdminMediaV2"),
   AdminBlog:           () => import("./AdminBlog"),
   Login:               () => import("./Login"),
   NotFound:            () => import("./NotFound"),
@@ -129,6 +130,7 @@ export const AdminDashboard = lazyPage(F.AdminDashboard);
 export const AdminAuditHistory = lazyPage(F.AdminAuditHistory);
 export const AdminCalculateurs = lazyPage(F.AdminCalculateurs);
 export const AdminMedia = lazyPage(F.AdminMedia);
+export const AdminMediaV2 = lazyPage(F.AdminMediaV2);
 export const AdminBlog = lazyPage(F.AdminBlog);
 export const Login = lazyPage(F.Login);
 export const NotFound = lazyPage(F.NotFound);
@@ -143,7 +145,7 @@ const ALL_LAZY_PAGES: readonly PageComponent[] = [
   APropos, Histoire, ModeEmploi, Blog, BlogPost, DevenirDistributeur,
   MentionsLegales, Confidentialite, PolitiqueCookies,
   Profil, Admin, AdminDashboard, AdminAuditHistory, AdminCalculateurs,
-  AdminMedia, AdminBlog, Login, NotFound,
+  AdminMedia, AdminMediaV2, AdminBlog, Login, NotFound,
 ];
 
 /**
@@ -215,6 +217,7 @@ export async function preloadCurrentPage(): Promise<void> {
     "/admin/audits":       AdminAuditHistory,
     "/admin/calculateurs": AdminCalculateurs,
     "/admin/media":        AdminMedia,
+    "/admin-v2":           AdminMediaV2,
     "/admin/blog":         AdminBlog,
   };
 

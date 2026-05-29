@@ -3,7 +3,7 @@
  * Fonctions DB pour la médiathèque centrale.
  * Utilise le `db` partagé de server/db.ts.
  */
-import { eq, ne, desc, and, sql, asc, or, like, inArray } from "drizzle-orm";
+import { eq, ne, desc, and, sql, asc, or, like, inArray, isNull } from "drizzle-orm";
 import { db } from "./db";
 import { mediaLibrary } from "../drizzle/schema";
 import type { MediaItem, InsertMediaItem, MediaCategory } from "../drizzle/schema";
@@ -119,6 +119,7 @@ export async function listMedia(options: {
 
   // Construire les conditions dynamiquement
   const conditions = [];
+  conditions.push(isNull(mediaLibrary.deletedAt)); // jamais montrer les images retirées (soft delete)
   if (category)    conditions.push(eq(mediaLibrary.category, category));
   if (subcategory) conditions.push(eq(mediaLibrary.subcategory, subcategory));
   if (activeOnly)  conditions.push(eq(mediaLibrary.active, true));
@@ -169,6 +170,7 @@ export async function getMediaByCategory(
   const conditions = [
     eq(mediaLibrary.category, category),
     eq(mediaLibrary.active, true),
+    isNull(mediaLibrary.deletedAt),
   ];
   if (subcategory) conditions.push(eq(mediaLibrary.subcategory, subcategory));
 
@@ -195,6 +197,7 @@ export async function getMediaByPage(
   const conditions = [
     eq(mediaLibrary.page, page),
     eq(mediaLibrary.active, true),
+    isNull(mediaLibrary.deletedAt),
   ];
   if (section) conditions.push(eq(mediaLibrary.section, section));
 
@@ -224,10 +227,16 @@ export async function updateMediaItem(
     active: boolean;
     page: string | null;
     section: string | null;
+    url: string;
+    filename: string;
+    mimeType: string;
   }>
 ): Promise<void> {
   const patch: Record<string, unknown> = {};
 
+  if (data.url         !== undefined) patch.url         = data.url;
+  if (data.filename    !== undefined) patch.filename    = data.filename;
+  if (data.mimeType    !== undefined) patch.mimeType    = data.mimeType;
   if (data.alt         !== undefined) patch.alt         = data.alt;
   if (data.title       !== undefined) patch.title       = data.title;
   if (data.category    !== undefined) patch.category    = data.category;
@@ -398,4 +407,87 @@ export async function countByUrl(url: string): Promise<number> {
     .from(mediaLibrary)
     .where(eq(mediaLibrary.url, url));
   return Number(r?.n ?? 0);
+}
+
+// ─── Convention « ressource » (dataProvider Refine) ─────────────────────────────
+// Forme générique partagée par toutes les futures ressources admin :
+// list({ pagination, sort, filters }) -> { data, total } · soft delete via deletedAt.
+
+export type ResourceFilter = { field: string; operator: string; value: unknown };
+export type ResourceSort   = { field: string; order: "asc" | "desc" };
+
+/** Liste paginée/filtrée/triée pour l'admin (exclut les soft-deleted). */
+export async function listMediaResource(opts: {
+  pagination: { page: number; perPage: number };
+  sort?: ResourceSort[];
+  filters?: ResourceFilter[];
+}): Promise<{ data: MediaItem[]; total: number }> {
+  const { pagination, sort, filters } = opts;
+
+  const conditions = [isNull(mediaLibrary.deletedAt)];
+
+  for (const f of filters ?? []) {
+    const v = f.value;
+    if (v === undefined || v === "" || v === null) {
+      // valeur vide = filtre ignoré, SAUF page=null explicite (« à ranger »)
+      if (f.field === "page" && v === null) conditions.push(isNull(mediaLibrary.page));
+      continue;
+    }
+    switch (f.field) {
+      case "page":    conditions.push(eq(mediaLibrary.page, String(v))); break;
+      case "section": conditions.push(eq(mediaLibrary.section, String(v))); break;
+      case "active":  conditions.push(eq(mediaLibrary.active, Boolean(v))); break;
+      case "category":conditions.push(eq(mediaLibrary.category, String(v) as MediaCategory)); break;
+      case "q":
+      case "search": {
+        const q = `%${String(v).trim().replace(/[%_]/g, "\\$&")}%`;
+        conditions.push(or(
+          like(mediaLibrary.title, q),
+          like(mediaLibrary.alt, q),
+          like(mediaLibrary.filename, q),
+        )!);
+        break;
+      }
+    }
+  }
+
+  const where = and(...conditions);
+
+  const sortCol = (field?: string) =>
+    field === "createdAt"  ? mediaLibrary.createdAt  :
+    field === "filesize"   ? mediaLibrary.filesize   :
+    field === "title"      ? mediaLibrary.title      :
+    field === "usageCount" ? mediaLibrary.usageCount :
+    mediaLibrary.sortOrder;
+
+  const s = sort?.[0];
+  const order = s
+    ? (s.order === "desc" ? desc(sortCol(s.field)) : asc(sortCol(s.field)))
+    : asc(mediaLibrary.sortOrder);
+
+  const perPage = Math.min(Math.max(pagination.perPage, 1), 200);
+  const page    = Math.max(pagination.page, 1);
+
+  const [{ count }] = await db
+    .select({ count: sql<number>`count(*)` })
+    .from(mediaLibrary)
+    .where(where);
+
+  const data = await db
+    .select()
+    .from(mediaLibrary)
+    .where(where)
+    .orderBy(order, desc(mediaLibrary.createdAt))
+    .limit(perPage)
+    .offset((page - 1) * perPage);
+
+  return { data, total: Number(count) };
+}
+
+/** Soft delete : pose deletedAt = NOW(). Le fichier R2 reste intact. */
+export async function softDeleteMediaItem(id: number): Promise<void> {
+  await db
+    .update(mediaLibrary)
+    .set({ deletedAt: new Date() })
+    .where(eq(mediaLibrary.id, id));
 }

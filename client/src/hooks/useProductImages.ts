@@ -52,6 +52,7 @@ export function useProductImages(
             source:      "migration" as const,
             uploadedBy:  null,
             usageCount:  0,
+            deletedAt:   null,
             createdAt:   new Date(),
             updatedAt:   new Date(),
           })),

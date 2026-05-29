@@ -244,6 +244,9 @@ export const mediaLibrary = mysqlTable("media_library", {
   uploadedBy:  int("uploadedBy"),
   /** Nombre de fois que cette image est référencée en DB */
   usageCount:  int("usageCount").default(0).notNull(),
+  /** Soft delete : date de retrait. NULL = active. Le fichier R2 reste intact
+   *  (suppression physique R2 = action séparée, plus tard). */
+  deletedAt:   timestamp("deletedAt"),
   createdAt:   timestamp("createdAt").defaultNow().notNull(),
   updatedAt:   timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
