@@ -11,7 +11,7 @@ import PageShell from "@/components/PageShell";
 import ProductHero from "@/components/product/ProductHero";
 import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useProductImages } from "@/hooks/useProductImages";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
 import ZoomImage from "@/components/ZoomImage";
 
 const archesData = [
@@ -38,7 +38,7 @@ export default function ArchesGonflables() {
   const route = useRoutes();
   const { t } = useTranslation("arches-gonflables");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-accueil-KjTW2K29SHyinVRpsNcnQC.png");
-  const galleryImages = useProductImages("arches-gonflables", FALLBACK_IMAGES_ARCHES);
+  const galleryImages = useMediaByPage("arches", "galerie", FALLBACK_IMAGES_ARCHES);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const faqItems = [
@@ -81,6 +81,7 @@ export default function ArchesGonflables() {
       </ProductHero>
 
       {/* Galerie photos */}
+      {galleryImages.length > 0 && (
       <section className="py-16 bg-background">
         <div className="container">
           <h2 className="text-3xl font-bold text-ivory mb-8">{t("gallery_title")}</h2>
@@ -101,6 +102,7 @@ export default function ArchesGonflables() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Modèles */}
       <section className="py-20 bg-charcoal-light">
