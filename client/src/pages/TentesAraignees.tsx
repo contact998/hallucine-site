@@ -11,7 +11,7 @@ import PageShell from "@/components/PageShell";
 import ProductHero from "@/components/product/ProductHero";
 import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useProductImages } from "@/hooks/useProductImages";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
 import ZoomImage from "@/components/ZoomImage";
 
 const tailles = [
@@ -32,7 +32,7 @@ export default function TentesAraignees() {
   const route = useRoutes();
   const { t } = useTranslation("tente-araignee");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-tente-araignee-R3y9ti6qL9e3JFNFGvHjoG.png");
-  const images = useProductImages("tente-araignee", FALLBACK_IMAGES_TENTE_ARAIGNEE);
+  const images = useMediaByPage("tente-araignee", "galerie", FALLBACK_IMAGES_TENTE_ARAIGNEE);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const faqItems = [
@@ -69,6 +69,7 @@ export default function TentesAraignees() {
       </ProductHero>
 
       {/* Galerie photos */}
+      {images.length > 0 && (
       <section className="py-16 bg-background">
         <div className="container">
           <h2 className="text-3xl font-bold text-ivory mb-8">{t("gallery_title")}</h2>
@@ -79,6 +80,7 @@ export default function TentesAraignees() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Pourquoi choisir */}
       <section className="py-20 bg-charcoal-light">
