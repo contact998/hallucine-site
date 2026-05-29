@@ -13,19 +13,12 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useNoIndex } from "@/hooks/useNoIndex";
 import { toast } from "sonner";
 import {
-  Upload, Image as ImageIcon, Trash2, Edit2, Copy, Loader2,
+  Upload, Trash2, Edit2, Copy, Loader2,
   AlertTriangle, ChevronLeft, ChevronRight, ChevronDown, X, Check,
   EyeOff, Eye, Search, Download, Info, Tag,
-  ArrowUpDown, MousePointer2,
+  MousePointer2,
 } from "lucide-react";
-import {
-  DndContext, DragEndEvent, PointerSensor, KeyboardSensor,
-  useSensor, useSensors, closestCenter,
-} from "@dnd-kit/core";
-import {
-  SortableContext, useSortable, arrayMove,
-  sortableKeyboardCoordinates, rectSortingStrategy,
-} from "@dnd-kit/sortable";
+import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { MEDIA_PAGES } from "@shared/mediaPages";
 import type { MediaPage } from "@shared/mediaPages";
@@ -33,8 +26,6 @@ import type { MediaPage } from "@shared/mediaPages";
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type Category = "blog" | "realisations" | "galerie" | "produits" | "ui" | "og" | "autre";
-type SortField = "sortOrder" | "createdAt" | "filesize" | "title" | "usageCount";
-type SortDir   = "asc" | "desc";
 
 type MediaItem = {
   id: number;
@@ -77,19 +68,7 @@ const SUBCATEGORIES_PRODUITS = [
   "arches-gonflables", "mobilier", "accessoires", "drive-in",
 ];
 
-const SORT_OPTIONS: { value: SortField; dir: SortDir; label: string }[] = [
-  { value: "sortOrder",  dir: "asc",  label: "Ordre manuel" },
-  { value: "createdAt",  dir: "desc", label: "Plus récentes" },
-  { value: "createdAt",  dir: "asc",  label: "Plus anciennes" },
-  { value: "title",      dir: "asc",  label: "Nom A→Z" },
-  { value: "title",      dir: "desc", label: "Nom Z→A" },
-  { value: "filesize",   dir: "desc", label: "Taille décroissante" },
-  { value: "filesize",   dir: "asc",  label: "Taille croissante" },
-  { value: "usageCount", dir: "desc", label: "Plus utilisées" },
-];
-
 const ALLOWED_MIME = ["image/jpeg", "image/png", "image/webp", "image/gif"];
-const PAGE_SIZE = 24;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -188,56 +167,34 @@ export default function AdminMedia() {
 // ─── Panneau Galerie ──────────────────────────────────────────────────────────
 
 function GaleriePanel() {
-  const [viewMode, setViewMode]           = useState<"pages" | "categories">("pages");
-  const [category, setCategory]           = useState<Category | "all">("all");
   const [search, setSearch]               = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
-  const [sortBy, setSortBy]               = useState<SortField>("sortOrder");
-  const [sortDir, setSortDir]             = useState<SortDir>("asc");
-  const [offset, setOffset]               = useState(0);
   const [editItem, setEditItem]           = useState<number | null>(null);
   const [detailItemId, setDetailItemId]   = useState<number | null>(null);
   const [lightboxItems, setLightboxItems] = useState<MediaItem[]>([]);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [selectMode, setSelectMode]       = useState(false);
   const [selected, setSelected]           = useState<Set<number>>(new Set());
-  const [localOrder, setLocalOrder]       = useState<number[] | null>(null);
 
   useEffect(() => {
     const t = setTimeout(() => setDebouncedSearch(search.trim()), 300);
     return () => clearTimeout(t);
   }, [search]);
 
-  // Reset offset + sélection quand on change un filtre
+  // Reset sélection quand on change la recherche
   useEffect(() => {
-    setOffset(0);
     setSelected(new Set());
-    setLocalOrder(null);
-  }, [category, debouncedSearch, sortBy, sortDir, viewMode]);
-
-  // Vue catégories : pagination normale
-  const { data: catData, isLoading: catLoading, refetch: catRefetch } = trpc.media.list.useQuery({
-    category:   category === "all" ? undefined : category,
-    activeOnly: false,
-    search:     debouncedSearch || undefined,
-    sortBy,
-    sortDir,
-    limit:      PAGE_SIZE,
-    offset,
-  }, { enabled: viewMode === "categories" });
+  }, [debouncedSearch]);
 
   // Vue pages : charge tout (sans pagination) pour regrouper
-  const { data: pageData, isLoading: pageLoading, refetch: pageRefetch } = trpc.media.list.useQuery({
+  const { data: pageData, isLoading, refetch } = trpc.media.list.useQuery({
     activeOnly: false,
     search:     debouncedSearch || undefined,
     sortBy:     "sortOrder",
     sortDir:    "asc",
     limit:      1000,
     offset:     0,
-  }, { enabled: viewMode === "pages" });
-
-  const refetch = viewMode === "pages" ? pageRefetch : catRefetch;
-  const isLoading = viewMode === "pages" ? pageLoading : catLoading;
+  });
 
   const deactivate = trpc.media.deactivate.useMutation({
     onSuccess: () => { toast.success("Image masquée"); refetch(); },
@@ -259,30 +216,8 @@ function GaleriePanel() {
     onSuccess: (r) => { toast.success(`${r.count} supprimée(s)`); setSelected(new Set()); refetch(); },
     onError:   (e) => toast.error(e.message),
   });
-  const reorder = trpc.media.reorder.useMutation({
-    onSuccess: () => { /* déjà optimiste */ },
-    onError:   (e) => { toast.error(e.message); refetch(); },
-  });
-
-  const catItems: MediaItem[] = catData?.items ?? [];
-  const total       = catData?.total ?? 0;
-  const totalPages  = Math.ceil(total / PAGE_SIZE);
-  const currentPage = Math.floor(offset / PAGE_SIZE) + 1;
 
   const allPageItems: MediaItem[] = pageData?.items ?? [];
-
-  // Ordre affiché (vue catégories) = localOrder (optimiste) si défini, sinon ordre serveur
-  const displayedCatItems: MediaItem[] = useMemo(() => {
-    if (!localOrder) return catItems;
-    const byId = new Map(catItems.map(i => [i.id, i] as const));
-    const ordered: MediaItem[] = [];
-    for (const id of localOrder) {
-      const it = byId.get(id);
-      if (it) ordered.push(it);
-    }
-    for (const it of catItems) if (!localOrder.includes(it.id)) ordered.push(it);
-    return ordered;
-  }, [catItems, localOrder]);
 
   // ─── Sélection ─────────────────────────────────────────────────────────────
   const toggleSelect = (id: number) => {
@@ -293,28 +228,8 @@ function GaleriePanel() {
       return next;
     });
   };
-  const displayedItems = viewMode === "pages" ? allPageItems : displayedCatItems;
-  const selectAll = () => setSelected(new Set(displayedItems.map(i => i.id)));
+  const selectAll = () => setSelected(new Set(allPageItems.map(i => i.id)));
   const clearSelection = () => setSelected(new Set());
-
-  // ─── DnD (vue catégories uniquement) ───────────────────────────────────────
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
-    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
-  );
-  const dndEnabled = viewMode === "categories" && sortBy === "sortOrder" && !selectMode && debouncedSearch === "" && category !== "all";
-
-  const handleDragEnd = (e: DragEndEvent) => {
-    const { active, over } = e;
-    if (!over || active.id === over.id) return;
-    const ids = displayedCatItems.map(i => i.id);
-    const oldIdx = ids.indexOf(active.id as number);
-    const newIdx = ids.indexOf(over.id as number);
-    if (oldIdx < 0 || newIdx < 0) return;
-    const newOrder = arrayMove(ids, oldIdx, newIdx);
-    setLocalOrder(newOrder);
-    reorder.mutate(newOrder.map((id, i) => ({ id, sortOrder: offset + i })));
-  };
 
   // ─── Lightbox keyboard ──────────────────────────────────────────────────────
   useEffect(() => {
@@ -359,53 +274,12 @@ function GaleriePanel() {
         deleteMedia.mutate({ id: item.id, deleteOnR2: true });
       }
     },
-    dndEnabled,
+    dndEnabled: false,
   });
 
   return (
     <div className="space-y-4">
-      {/* Toggle vue */}
-      <div className="flex gap-2">
-        <button
-          onClick={() => setViewMode("pages")}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
-            viewMode === "pages"
-              ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-              : "bg-white/5 border-white/10 text-white/40 hover:text-white"
-          }`}
-        >
-          Par page du site
-        </button>
-        <button
-          onClick={() => setViewMode("categories")}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
-            viewMode === "categories"
-              ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
-              : "bg-white/5 border-white/10 text-white/40 hover:text-white"
-          }`}
-        >
-          Par catégorie
-        </button>
-      </div>
-
-      {/* Filtres catégories (vue catégories uniquement) */}
-      {viewMode === "categories" && (
-        <div className="flex flex-wrap gap-2">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat.key}
-              onClick={() => setCategory(cat.key)}
-              className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                category === cat.key ? cat.color + " ring-2 ring-white/20" : "bg-white/5 text-white/40 hover:bg-white/10"
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
-      )}
-
-      {/* Recherche + tri + mode sélection */}
+      {/* Recherche + mode sélection */}
       <div className="flex flex-wrap items-center gap-2">
         <div className="relative flex-1 min-w-[200px]">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
@@ -426,24 +300,6 @@ function GaleriePanel() {
           )}
         </div>
 
-        {viewMode === "categories" && (
-          <select
-            value={`${sortBy}:${sortDir}`}
-            onChange={(e) => {
-              const [f, d] = e.target.value.split(":");
-              setSortBy(f as SortField);
-              setSortDir(d as SortDir);
-            }}
-            className="bg-white/5 border border-white/15 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-500/50"
-          >
-            {SORT_OPTIONS.map(o => (
-              <option key={`${o.value}:${o.dir}`} value={`${o.value}:${o.dir}`}>
-                {o.label}
-              </option>
-            ))}
-          </select>
-        )}
-
         <button
           onClick={() => { setSelectMode(m => !m); setSelected(new Set()); }}
           className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold border transition-all ${
@@ -459,101 +315,30 @@ function GaleriePanel() {
       </div>
 
       {/* Stats */}
-      <div className="flex items-center justify-between text-xs text-white/40">
-        {viewMode === "categories" ? (
-          <>
-            <span>
-              {total} image{total !== 1 ? "s" : ""}
-              {debouncedSearch && ` correspondant à « ${debouncedSearch} »`}
-            </span>
-            {!dndEnabled && sortBy === "sortOrder" && (
-              <span className="text-amber-400/60 text-[10px]">
-                Drag&drop désactivé (recherche / mode sélection / catégorie « Tout »)
-              </span>
-            )}
-            {totalPages > 1 && <span>Page {currentPage} / {totalPages}</span>}
-          </>
-        ) : (
-          <span>
-            {allPageItems.length} image{allPageItems.length !== 1 ? "s" : ""} au total
-            {debouncedSearch && ` — filtre « ${debouncedSearch} »`}
-            {" · "}
-            <span className="text-amber-400/60">Drag&drop désactivé en vue pages</span>
-          </span>
-        )}
+      <div className="text-xs text-white/40">
+        <span>
+          {allPageItems.length} image{allPageItems.length !== 1 ? "s" : ""} au total
+          {debouncedSearch && ` — filtre « ${debouncedSearch} »`}
+        </span>
       </div>
 
-      {/* ─── Vue Par Page ─── */}
-      {viewMode === "pages" && (
-        isLoading ? (
-          <div className="space-y-3">
-            {[1,2,3].map(i => <div key={i} className="h-12 bg-white/5 animate-pulse rounded-lg" />)}
-          </div>
-        ) : (
-          <PagedMediaView
-            items={allPageItems}
-            onCardProps={commonCardProps}
-          />
-        )
-      )}
-
-      {/* ─── Vue Par Catégorie ─── */}
-      {viewMode === "categories" && (
-        <>
-          {isLoading ? (
-            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
-              {Array.from({ length: 12 }).map((_, i) => (
-                <div key={i} className="aspect-square bg-white/5 animate-pulse rounded-lg" />
-              ))}
-            </div>
-          ) : displayedCatItems.length === 0 ? (
-            <div className="py-16 text-center text-white/30">
-              <ImageIcon className="w-12 h-12 mx-auto mb-3 opacity-30" />
-              <p>Aucune image{debouncedSearch ? " trouvée" : " dans cette catégorie"}</p>
-            </div>
-          ) : (
-            <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-              <SortableContext items={displayedCatItems.map(i => i.id)} strategy={rectSortingStrategy} disabled={!dndEnabled}>
-                <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
-                  {displayedCatItems.map((item) => (
-                    <SortableMediaCard
-                      key={item.id}
-                      {...commonCardProps(item, displayedCatItems)}
-                    />
-                  ))}
-                </div>
-              </SortableContext>
-            </DndContext>
-          )}
-
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="flex items-center justify-center gap-3 pt-2">
-              <button
-                className="p-2 bg-white/5 hover:bg-white/10 rounded disabled:opacity-30 transition-colors"
-                disabled={currentPage === 1}
-                onClick={() => setOffset(o => Math.max(0, o - PAGE_SIZE))}
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <span className="text-sm text-white/50">{currentPage} / {totalPages}</span>
-              <button
-                className="p-2 bg-white/5 hover:bg-white/10 rounded disabled:opacity-30 transition-colors"
-                disabled={currentPage >= totalPages}
-                onClick={() => setOffset(o => o + PAGE_SIZE)}
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          )}
-        </>
+      {/* Vue Par Page (unique) */}
+      {isLoading ? (
+        <div className="space-y-3">
+          {[1,2,3].map(i => <div key={i} className="h-12 bg-white/5 animate-pulse rounded-lg" />)}
+        </div>
+      ) : (
+        <PagedMediaView
+          items={allPageItems}
+          onCardProps={commonCardProps}
+        />
       )}
 
       {/* Barre actions multi-sélection */}
       {selectMode && selected.size > 0 && (
         <BulkActionBar
           count={selected.size}
-          totalShown={displayedItems.length}
+          totalShown={allPageItems.length}
           onSelectAll={selectAll}
           onClear={clearSelection}
           onDeactivate={() => bulkDeactivate.mutate({ ids: Array.from(selected) })}
@@ -563,7 +348,7 @@ function GaleriePanel() {
             }
           }}
           onDownload={async () => {
-            const sel = displayedItems.filter(i => selected.has(i.id));
+            const sel = allPageItems.filter(i => selected.has(i.id));
             for (const it of sel) {
               await downloadImageById(it.id, it.filename);
               await new Promise(r => setTimeout(r, 150));
