@@ -1,4 +1,4 @@
-import { eq, desc, and, sql, isNull, asc, or, like } from "drizzle-orm";
+import { eq, desc, and, sql, asc, or, like } from "drizzle-orm";
 import { blogPosts, InsertBlogPost, BlogPost } from "../drizzle/schema";
 import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
@@ -193,9 +193,7 @@ export async function deleteBlogPost(id: number): Promise<void> {
 
 /** Récupérer un article par slug */
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
-  const [post] = await db.select().from(blogPosts)
-    .where(and(eq(blogPosts.slug, slug), isNull(blogPosts.deletedAt)))
-    .limit(1);
+  const [post] = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug)).limit(1);
   return post ?? null;
 }
 
@@ -211,7 +209,6 @@ export async function getPublishedPosts(lang: string = "fr", limit: number = 20,
     .where(and(
       eq(blogPosts.status, "published"),
       eq(blogPosts.lang, lang),
-      isNull(blogPosts.deletedAt),
     ))
     .orderBy(desc(blogPosts.publishedAt))
     .limit(limit)
@@ -221,7 +218,6 @@ export async function getPublishedPosts(lang: string = "fr", limit: number = 20,
 /** Lister tous les articles (admin) */
 export async function getAllBlogPosts(limit: number = 100): Promise<BlogPost[]> {
   return db.select().from(blogPosts)
-    .where(isNull(blogPosts.deletedAt))
     .orderBy(desc(blogPosts.createdAt))
     .limit(limit);
 }
@@ -238,7 +234,7 @@ export async function publishBlogPost(id: number): Promise<void> {
 export async function countPublishedPosts(lang: string = "fr"): Promise<number> {
   const [result] = await db.select({ count: sql<number>`count(*)` })
     .from(blogPosts)
-    .where(and(eq(blogPosts.status, "published"), eq(blogPosts.lang, lang), isNull(blogPosts.deletedAt)));
+    .where(and(eq(blogPosts.status, "published"), eq(blogPosts.lang, lang)));
   return Number(result?.count ?? 0);
 }
 
@@ -255,7 +251,7 @@ export async function listBlogResource(opts: {
   filters?: BlogResourceFilter[];
 }): Promise<{ data: BlogPost[]; total: number }> {
   const { pagination, sort, filters } = opts;
-  const conditions = [isNull(blogPosts.deletedAt)];
+  const conditions: any[] = [];
 
   for (const f of filters ?? []) {
     const v = f.value;
@@ -273,7 +269,7 @@ export async function listBlogResource(opts: {
     }
   }
 
-  const where = and(...conditions);
+  const where = conditions.length ? and(...conditions) : undefined;
 
   const sortCol = (field?: string) =>
     field === "title"       ? blogPosts.title :
@@ -294,7 +290,8 @@ export async function listBlogResource(opts: {
   return { data, total: Number(count) };
 }
 
-/** Soft delete : pose deletedAt = NOW(). */
-export async function softDeleteBlogPost(id: number): Promise<void> {
-  await db.update(blogPosts).set({ deletedAt: new Date() }).where(eq(blogPosts.id, id));
+/** Soft delete blog — DÉSACTIVÉ tant que la colonne deletedAt n'existe pas sur la
+ *  base du blog (BLOG_DATABASE_URL ≠ DATABASE_URL). Réactiver après ALTER. */
+export async function softDeleteBlogPost(_id: number): Promise<void> {
+  throw new Error("Retrait d'article temporairement indisponible (colonne deletedAt à ajouter sur la base blog).");
 }
