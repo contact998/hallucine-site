@@ -14,7 +14,7 @@ import ProductHero from "@/components/product/ProductHero";
 import ProductButton from "@/components/product/ProductButton";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useProductImages } from "@/hooks/useProductImages";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
 import EmailLink from "@/components/EmailLink";
 import ZoomImage from "@/components/ZoomImage";
 
@@ -28,7 +28,7 @@ const specsData = [
   { taille: "24m × 14m", toile: "22m × 12m", poids: "280 kg", montage: "1h", personnes: "4" },
 ];
 
-const FALLBACK_IMAGES_ECRAN_GEANT = [
+const FALLBACK_GALLERY = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ibUxsSdoHUCVTWXC.webp", alt: "Écran de cinéma géant gonflable installé en plein centre-ville de Paris" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ceZNJOsztxIyhJFR.webp", alt: "Écran de cinéma géant gonflable de 17m sur 12m installé au Château de Vincennes" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/nRCfDZHKAKZaVovJ.webp", alt: "Écran de cinéma géant gonflable de 24m sur 15m au Stade Vélodrome de Marseille" },
@@ -47,7 +47,7 @@ export default function EcranGeant() {
   const route = useRoutes();
   const { t } = useTranslation("ecran-geant");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-ecran-geant-7MA2E4Zp6zEeYzcaWGEV5o.png");
-  const galleryImages = useProductImages("ecran-geant", FALLBACK_IMAGES_ECRAN_GEANT);
+  const galleryImages = useMediaByPage("ecran-geant", "galerie", FALLBACK_GALLERY);
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
 
   const avantages = [
@@ -106,6 +106,7 @@ export default function EcranGeant() {
       </ProductHero>
 
       {/* Galerie photos */}
+      {galleryImages.length > 0 && (
       <section className="py-16 bg-background">
         <div className="container">
           <h2 className="text-3xl font-bold text-ivory mb-8">{t("gallery_title")}</h2>
@@ -116,6 +117,7 @@ export default function EcranGeant() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Section Montage simplifié */}
       <section className="py-20 bg-charcoal-light relative overflow-hidden">
