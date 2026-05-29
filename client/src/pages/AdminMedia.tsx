@@ -118,6 +118,19 @@ export default function AdminMedia() {
 
   const { user, loading: authLoading, isAuthenticated } = useAuth();
 
+  // ⚠️ Tous les hooks AVANT les return conditionnels (règle des hooks React).
+  const [uploadPage,    setUploadPage]    = useState<string>("");
+  const [uploadSection, setUploadSection] = useState<string>("");
+  const uploadPanelRef = useRef<HTMLDivElement>(null);
+
+  const handleUploadTarget = useCallback((page: string, section: string) => {
+    setUploadPage(page);
+    setUploadSection(section);
+    setTimeout(() => {
+      uploadPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+  }, []);
+
   if (authLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -142,18 +155,6 @@ export default function AdminMedia() {
       </div>
     );
   }
-
-  const [uploadPage,    setUploadPage]    = useState<string>("");
-  const [uploadSection, setUploadSection] = useState<string>("");
-  const uploadPanelRef = useRef<HTMLDivElement>(null);
-
-  const handleUploadTarget = useCallback((page: string, section: string) => {
-    setUploadPage(page);
-    setUploadSection(section);
-    setTimeout(() => {
-      uploadPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 50);
-  }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
