@@ -110,9 +110,12 @@ async function startServer() {
     hidePoweredBy: true,
   }));
 
-  // Configure body parser with larger size limit for file uploads
-  app.use(express.json({ limit: "1mb" }));
-  app.use(express.urlencoded({ limit: "1mb", extended: true }));
+  // Body parser : limite assez large pour l'upload média en base64.
+  // Une image de 10 Mo (plafond de media.upload) ≈ 13,4 Mo une fois encodée
+  // en base64 dans le JSON tRPC → 15 Mo couvre le cas + l'overhead JSON.
+  // (À 1 Mo, toute photo > ~700 Ko était rejetée en 413 HTML → "Unexpected token '<'".)
+  app.use(express.json({ limit: "15mb" }));
+  app.use(express.urlencoded({ limit: "15mb", extended: true }));
 
   // Redirection 301 www → non-www (SEO : évite les pages en double)
   app.use((req, res, next) => {
