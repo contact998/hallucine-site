@@ -11,7 +11,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import PageShell from "@/components/PageShell";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useProductImages } from "@/hooks/useProductImages";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
 import EmailLink from "@/components/EmailLink";
 import ZoomImage from "@/components/ZoomImage";
 
@@ -43,7 +43,6 @@ const FALLBACK_SANS_SOUFFLEUR = [
 const FALLBACK_FINALES = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/QClDxPadLVEYKlxM.webp", alt: "Écran économique comparaison de taille humaine" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/hzkcpmfnpyIExDbf.webp", alt: "Écran économique vue de derrière" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/WXsnQMOOUttRbUlr.webp", alt: "Écran économique installé en extérieur" },
 ];
 
 // ─── Mini carousel ─────────────────────────────────────────────────────────────
@@ -79,14 +78,9 @@ export default function EcranEconomique() {
   const route = useRoutes();
   const { t } = useTranslation("ecran-economique");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/WXsnQMOOUttRbUlr.webp");
-  const allDbImages = useProductImages("ecran-economique", [
-    ...FALLBACK_AVEC_SOUFFLEUR,
-    ...FALLBACK_SANS_SOUFFLEUR,
-    ...FALLBACK_FINALES,
-  ]);
-  const imagesAvecSouffleur = allDbImages.length > 0 ? allDbImages.slice(0, 2) : FALLBACK_AVEC_SOUFFLEUR;
-  const imagesSansSouffleur = allDbImages.length > 0 ? allDbImages.slice(2, 4) : FALLBACK_SANS_SOUFFLEUR;
-  const imagesFinales = allDbImages.length > 0 ? allDbImages.slice(4) : FALLBACK_FINALES;
+  const imagesAvecSouffleur = useMediaByPage("ecran-economique", "galerie-avec-souffleur", FALLBACK_AVEC_SOUFFLEUR);
+  const imagesSansSouffleur = useMediaByPage("ecran-economique", "galerie-sans-souffleur", FALLBACK_SANS_SOUFFLEUR);
+  const imagesFinales = useMediaByPage("ecran-economique", "galerie-finale", FALLBACK_FINALES);
 
   return (
     <PageShell withCountdown relatedProductsKey="ecran-economique">
@@ -293,6 +287,7 @@ export default function EcranEconomique() {
       </section>
 
       {/* Section finale */}
+      {imagesFinales.length > 0 && (
       <section className="py-20 bg-background">
         <div className="container">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
@@ -306,6 +301,7 @@ export default function EcranEconomique() {
           </div>
         </div>
       </section>
+      )}
 
     </PageShell>
   );
