@@ -51,6 +51,8 @@ export function useMediaByCategory(
             mimeType:    null,
             category,
             subcategory: subcategory ?? null,
+            page:        null,
+            section:     null,
             sortOrder:   0,
             active:      true,
             source:      "migration" as const,

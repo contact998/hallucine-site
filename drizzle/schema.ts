@@ -224,6 +224,10 @@ export const mediaLibrary = mysqlTable("media_library", {
                ]).notNull().default("autre"),
   /** Sous-catégorie libre — ex: "ecran-geant", "tente-x", "events" */
   subcategory: varchar("subcategory", { length: 100 }),
+  /** Page du site associée — ex: "ecrans", "accueil", "realisations" */
+  page:        varchar("page", { length: 40 }),
+  /** Section dans la page — ex: "hero", "galerie", "caracteristiques" */
+  section:     varchar("section", { length: 40 }),
   // ─── Tri et visibilité ────────────────────────────────────────────────────
   /** Ordre d'affichage dans les galeries (plus petit = premier) */
   sortOrder:   int("sortOrder").default(0).notNull(),

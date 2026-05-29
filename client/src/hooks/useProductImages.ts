@@ -45,6 +45,8 @@ export function useProductImages(
             mimeType:    null,
             category:    "produits" as const,
             subcategory,
+            page:        null,
+            section:     null,
             sortOrder:   0,
             active:      true,
             source:      "migration" as const,
