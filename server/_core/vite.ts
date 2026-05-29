@@ -357,6 +357,7 @@ export function serveStatic(app: Express) {
     // contenu SSR et bascule sur createRoot (CSR propre).
     const SPA_ROUTES = [
       /^\/admin(\/.*)?$/,
+      /^\/admin-v2(\/.*)?$/,
       /^\/profil$/,
       /^\/login$/
     ];
