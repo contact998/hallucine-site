@@ -994,8 +994,6 @@ function EditInline({
 }) {
   const [title,       setTitle]       = useState(item.title ?? "");
   const [alt,         setAlt]         = useState(item.alt ?? "");
-  const [category,    setCategory]    = useState(item.category as Category);
-  const [subcategory, setSubcategory] = useState(item.subcategory ?? "");
   const [active,      setActive]      = useState(item.active);
   const [page,        setPage]        = useState<string>(item.page ?? "");
   const [section,     setSection]     = useState<string>(item.section ?? "");
@@ -1022,6 +1020,16 @@ function EditInline({
       onClick={(e) => e.stopPropagation()}
       onPointerDown={(e) => e.stopPropagation()}
     >
+      <div className="flex items-center justify-between mb-1">
+        <span className="text-[10px] uppercase tracking-wider text-white/40">Modifier</span>
+        <button
+          onClick={onClose}
+          aria-label="Fermer"
+          className="p-1 -mr-1 -mt-1 text-white/60 hover:text-white"
+        >
+          <X className="w-4 h-4" />
+        </button>
+      </div>
       <input
         value={title}
         onChange={e => setTitle(e.target.value)}
@@ -1034,30 +1042,6 @@ function EditInline({
         placeholder="Alt text (SEO)"
         className="w-full text-xs bg-white/10 border border-white/20 rounded px-2 py-1.5 text-white placeholder-white/30 focus:outline-none focus:border-amber-500/50"
       />
-      <select
-        value={category}
-        onChange={e => setCategory(e.target.value as Category)}
-        className="w-full text-xs bg-white/10 border border-white/20 rounded px-2 py-1.5 text-white focus:outline-none focus:border-amber-500/50"
-      >
-        <option value="blog">Blog</option>
-        <option value="produits">Produits</option>
-        <option value="galerie">Galerie</option>
-        <option value="realisations">Réalisations</option>
-        <option value="ui">UI</option>
-        <option value="og">OG</option>
-        <option value="autre">Autre</option>
-      </select>
-      <input
-        list={`subcat-${item.id}`}
-        value={subcategory}
-        onChange={e => setSubcategory(e.target.value)}
-        placeholder="Sous-catégorie"
-        className="w-full text-xs bg-white/10 border border-white/20 rounded px-2 py-1.5 text-white placeholder-white/30 focus:outline-none focus:border-amber-500/50"
-      />
-      <datalist id={`subcat-${item.id}`}>
-        {SUBCATEGORIES_PRODUITS.map(s => <option key={s} value={s} />)}
-      </datalist>
-
       {/* Page du site */}
       <select
         value={page}
@@ -1125,8 +1109,8 @@ function EditInline({
             id: item.id,
             title,
             alt,
-            category,
-            subcategory: subcategory || undefined,
+            category: item.category as Category,
+            subcategory: item.subcategory ?? undefined,
             active,
             page: page || null,
             section: section || null,
