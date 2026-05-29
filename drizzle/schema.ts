@@ -254,4 +254,25 @@ export const mediaLibrary = mysqlTable("media_library", {
 export type MediaItem = typeof mediaLibrary.$inferSelect;
 export type InsertMediaItem = typeof mediaLibrary.$inferInsert;
 export type MediaCategory = "blog" | "realisations" | "galerie" | "produits" | "ui" | "og" | "autre";
+
+// ─── SEO overrides (appliqués au runtime par le serveur, par chemin d'URL) ──────
+export const seoOverrides = mysqlTable("seo_overrides", {
+  id:          int("id").autoincrement().primaryKey(),
+  /** Chemin d'URL exact, sans domaine ni slash final — ex "/ecran-geant", "/" pour l'accueil */
+  path:        varchar("path", { length: 255 }).notNull().unique(),
+  /** Balise <title> complète (telle quelle) — null = ne pas surcharger */
+  title:       varchar("title", { length: 255 }),
+  /** meta description — null = ne pas surcharger */
+  description: varchar("description", { length: 500 }),
+  /** Image Open Graph — null = ne pas surcharger */
+  ogImage:     varchar("ogImage", { length: 1000 }),
+  /** true = injecte <meta name="robots" content="noindex, nofollow"> */
+  noindex:     boolean("noindex").default(false).notNull(),
+  /** false = override ignoré (page sert ses metas d'origine) */
+  active:      boolean("active").default(true).notNull(),
+  deletedAt:   timestamp("deletedAt"),
+  createdAt:   timestamp("createdAt").defaultNow().notNull(),
+  updatedAt:   timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+export type SeoOverride = typeof seoOverrides.$inferSelect;
 export type MediaSource = "upload_web" | "upload_cli" | "migration" | "external";

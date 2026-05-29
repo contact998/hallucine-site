@@ -15,6 +15,7 @@ import { MEDIA_PAGES, pageLabel } from "@shared/mediaPages";
 import type { MediaItem } from "../../../drizzle/schema";
 import { dataProvider, authProvider, notificationProvider } from "../admin-v2/providers";
 import { BlogPanel } from "../admin-v2/BlogPanel";
+import { SeoPanel } from "../admin-v2/SeoPanel";
 
 const PER_PAGE = 24;
 const ALLOWED_MIME = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -34,7 +35,7 @@ function sectionsFor(pageKey: string) {
 
 // ─── Page (wrapper Refine) ──────────────────────────────────────────────────────
 export default function AdminMediaV2() {
-  const [tab, setTab] = useState<"media" | "blog">("media");
+  const [tab, setTab] = useState<"media" | "blog" | "seo">("media");
   return (
     <Refine
       dataProvider={dataProvider}
@@ -43,6 +44,7 @@ export default function AdminMediaV2() {
       resources={[
         { name: "mediaResource", meta: { label: "Médiathèque" } },
         { name: "blogResource", meta: { label: "Blog" } },
+        { name: "seoResource", meta: { label: "SEO" } },
       ]}
       options={{ disableTelemetry: true, warnWhenUnsavedChanges: false }}
     >
@@ -51,9 +53,10 @@ export default function AdminMediaV2() {
           <div className="flex items-center gap-1 mb-6 border-b border-white/10">
             <TabBtn active={tab === "media"} onClick={() => setTab("media")}>Médiathèque</TabBtn>
             <TabBtn active={tab === "blog"} onClick={() => setTab("blog")}>Blog</TabBtn>
+            <TabBtn active={tab === "seo"} onClick={() => setTab("seo")}>SEO</TabBtn>
             <span className="ml-auto text-xs text-white/30 pb-2">admin v2</span>
           </div>
-          {tab === "media" ? <MediaAdmin /> : <BlogPanel />}
+          {tab === "media" ? <MediaAdmin /> : tab === "blog" ? <BlogPanel /> : <SeoPanel />}
         </div>
       </div>
     </Refine>

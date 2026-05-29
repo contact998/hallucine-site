@@ -15,6 +15,7 @@ import { indexnowRouter } from "./routers/indexnow";
 import { adminMediaRouter } from "./routers/adminMedia";
 import { mediaResourceRouter } from "./routers/mediaResource";
 import { blogResourceRouter } from "./routers/blogResource";
+import { seoResourceRouter } from "./routers/seoResource";
 
 export const appRouter = router({
   system: systemRouter,
@@ -33,6 +34,7 @@ export const appRouter = router({
   media: adminMediaRouter,
   mediaResource: mediaResourceRouter,
   blogResource: blogResourceRouter,
+  seoResource: seoResourceRouter,
 });
 
 export type AppRouter = typeof appRouter;

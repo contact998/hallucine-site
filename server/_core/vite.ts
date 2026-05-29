@@ -6,6 +6,7 @@ import path from "path";
 import { createServer as createViteServer } from "vite";
 import viteConfig from "../../vite.config";
 import { sdk } from "./sdk";
+import { getSeoOverrideForPath, applySeoOverride } from "../seo";
 
 export async function setupVite(app: Express, server: Server) {
   const serverOptions = {
@@ -262,9 +263,16 @@ export function serveStatic(app: Express) {
 
     if (fs.existsSync(prerenderedPath)) {
       // Servir la page pré-rendue avec la bonne locale injectée
-      const prerenderedHtml = injectNavWidget(
+      let prerenderedHtml = injectNavWidget(
         fs.readFileSync(prerenderedPath, "utf-8").replace(/__LOCALE__/g, locale)
       );
+      // Override SEO runtime (admin) — tolérant : en cas d'erreur, on sert l'original
+      try {
+        const ov = await getSeoOverrideForPath(reqPath, Date.now());
+        if (ov) prerenderedHtml = applySeoOverride(prerenderedHtml, ov);
+      } catch (e) {
+        console.error("[seo] override non appliqué:", e instanceof Error ? e.message : e);
+      }
       res.status(200).set({
         "Content-Type": "text/html; charset=utf-8",
         "Vary": "Host",
