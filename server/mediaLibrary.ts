@@ -3,7 +3,7 @@
  * Fonctions DB pour la médiathèque centrale.
  * Utilise le `db` partagé de server/db.ts.
  */
-import { eq, desc, and, sql, asc, or, like, inArray } from "drizzle-orm";
+import { eq, ne, desc, and, sql, asc, or, like, inArray } from "drizzle-orm";
 import { db } from "./db";
 import { mediaLibrary } from "../drizzle/schema";
 import type { MediaItem, InsertMediaItem, MediaCategory } from "../drizzle/schema";
@@ -22,6 +22,8 @@ export async function createMediaItem(data: {
   tags?: string[];
   category?: MediaCategory;
   subcategory?: string;
+  page?: string | null;
+  section?: string | null;
   sortOrder?: number;
   source?: "upload_web" | "upload_cli" | "migration" | "external";
   uploadedBy?: number;
@@ -40,6 +42,8 @@ export async function createMediaItem(data: {
     tags,
     category:    data.category ?? "autre",
     subcategory: data.subcategory ?? null,
+    page:        data.page ?? null,
+    section:     data.section ?? null,
     sortOrder:   data.sortOrder ?? 0,
     active:      true,
     source:      data.source ?? "upload_web",
@@ -47,13 +51,26 @@ export async function createMediaItem(data: {
     usageCount:  0,
   });
 
-  const [item] = await db
+  // Après l'INSERT, on récupère par url + page + section pour éviter
+  // d'attraper une autre ligne ayant la même url (contrainte UNIQUE retirée)
+  const rows = await db
     .select()
     .from(mediaLibrary)
-    .where(eq(mediaLibrary.url, data.url))
+    .where(
+      and(
+        eq(mediaLibrary.url, data.url),
+        data.page != null
+          ? eq(mediaLibrary.page, data.page)
+          : sql`${mediaLibrary.page} IS NULL`,
+        data.section != null
+          ? eq(mediaLibrary.section, data.section)
+          : sql`${mediaLibrary.section} IS NULL`,
+      )
+    )
+    .orderBy(desc(mediaLibrary.id))
     .limit(1);
 
-  return item;
+  return rows[0];
 }
 
 // ─── Lire ─────────────────────────────────────────────────────────────────────
@@ -356,4 +373,29 @@ export async function deleteMediaItem(id: number): Promise<{ key: string }> {
   const r2PublicUrl = (process.env.R2_PUBLIC_URL ?? "").replace(/\/$/, "");
   const key = item.url.replace(r2PublicUrl + "/", "");
   return { key };
+}
+
+/**
+ * Autres occurrences d'une même image (même `url`) sur d'AUTRES lignes.
+ * Sert à avertir « utilisée aussi sur X, Y » et à savoir si on peut supprimer
+ * le fichier R2 sans casser une autre page. (URL n'est plus unique.)
+ */
+export async function listSharingUrl(
+  id: number,
+): Promise<{ id: number; page: string | null; section: string | null; active: boolean }[]> {
+  const item = await getMediaById(id);
+  if (!item) return [];
+  return db
+    .select({ id: mediaLibrary.id, page: mediaLibrary.page, section: mediaLibrary.section, active: mediaLibrary.active })
+    .from(mediaLibrary)
+    .where(and(eq(mediaLibrary.url, item.url), ne(mediaLibrary.id, id)));
+}
+
+/** Combien de lignes référencent encore cette url (pour protéger le fichier R2). */
+export async function countByUrl(url: string): Promise<number> {
+  const [r] = await db
+    .select({ n: sql<number>`count(*)` })
+    .from(mediaLibrary)
+    .where(eq(mediaLibrary.url, url));
+  return Number(r?.n ?? 0);
 }

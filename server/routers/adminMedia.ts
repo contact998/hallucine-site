@@ -29,6 +29,8 @@ import {
   bulkDeactivateMedia,
   bulkDeleteMedia,
   bulkUpdateCategory,
+  listSharingUrl,
+  countByUrl,
 } from "../mediaLibrary";
 
 // ─── Validation ───────────────────────────────────────────────────────────────
@@ -175,6 +177,8 @@ export const adminMediaRouter = router({
       tags:        z.array(z.string()).optional(),
       category:    categoryEnum.default("autre"),
       subcategory: z.string().max(100).optional(),
+      page:        z.string().max(40).optional(),  // page du site (null = à ranger)
+      section:     z.string().max(40).optional(),
     }))
     .mutation(async ({ input, ctx }) => {
       // Décoder Base64
@@ -212,6 +216,8 @@ export const adminMediaRouter = router({
         tags:        input.tags,
         category:    input.category,
         subcategory: input.subcategory,
+        page:        input.page ?? null,
+        section:     input.section ?? null,
         source:      "upload_web",
         uploadedBy:  ctx.user.id,
       });
@@ -309,7 +315,11 @@ export const adminMediaRouter = router({
     .mutation(async ({ input }) => {
       const { keys } = await bulkDeleteMedia(input.ids);
       if (input.deleteOnR2) {
+        const pub = (process.env.R2_PUBLIC_URL ?? "").replace(/\/$/, "");
         for (const key of keys) {
+          // Ne supprimer le fichier R2 que s'il n'est plus référencé ailleurs
+          const stillUsed = await countByUrl(`${pub}/${key}`);
+          if (stillUsed > 0) continue;
           try {
             await deleteFromR2(key);
           } catch (err) {
@@ -340,19 +350,31 @@ export const adminMediaRouter = router({
       deleteOnR2:  z.boolean().default(true), // false = garder le fichier sur R2
     }))
     .mutation(async ({ input }) => {
+      // Protéger le fichier R2 : ne le supprimer que si AUCUNE autre ligne
+      // (autre page) ne référence la même image. Sinon on casserait l'autre page.
+      const others = await listSharingUrl(input.id);
       const { key } = await deleteMediaItem(input.id);
 
-      if (input.deleteOnR2) {
+      let r2Deleted = false;
+      if (input.deleteOnR2 && others.length === 0) {
         try {
           await deleteFromR2(key);
+          r2Deleted = true;
         } catch (err) {
-          // Log mais ne bloque pas — la ligne DB est déjà supprimée
           console.error("[Media] Échec suppression R2 (fichier déjà supprimé ?):", err);
         }
       }
 
-      return { success: true };
+      return { success: true, r2Deleted, stillUsedBy: others.length };
     }),
+
+  /**
+   * Autres pages/sections qui utilisent la MÊME image (même fichier).
+   * Pour avertir avant suppression et éviter de casser une autre page.
+   */
+  otherUsages: adminProcedure
+    .input(z.object({ id: z.number().int().positive() }))
+    .query(async ({ input }) => listSharingUrl(input.id)),
 });
 
 export type AdminMediaRouter = typeof adminMediaRouter;
