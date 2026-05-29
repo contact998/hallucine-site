@@ -425,7 +425,10 @@ function PagedMediaView({ items, onCardProps, onUploadTarget }: {
   onCardProps: CardPropsFactory;
   onUploadTarget: (page: string, section: string) => void;
 }) {
-  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+  // Toutes les sections repliées par défaut (init avec chaque clé à true).
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>(
+    () => ({ ...Object.fromEntries(MEDIA_PAGES.map(p => [p.key, true])), __unassigned__: true })
+  );
 
   const toggle = (key: string) => setCollapsed(prev => ({ ...prev, [key]: !prev[key] }));
 
