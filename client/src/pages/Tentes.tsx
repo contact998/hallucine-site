@@ -12,6 +12,7 @@ import ProductHero from "@/components/product/ProductHero";
 import ProductButton from "@/components/product/ProductButton";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
 
 export default function Tentes() {
   const route = useRoutes();
@@ -27,6 +28,10 @@ export default function Tentes() {
     { title: t("c5_title"), desc: t("c5_desc"), href: route("arches") },
     { title: t("c6_title"), desc: t("c6_desc"), href: route("mobilier") },
   ];
+
+  const bandeau = useMediaByPage("tentes", "bandeau", [
+    { src: "/img/tente-salon.jpg", alt: t("photo_alt") },
+  ]);
 
   const avantages = [
     { title: t("av1_title"), desc: t("av1_desc") },
@@ -56,7 +61,7 @@ export default function Tentes() {
         <p>{t("hero_desc")}</p>
       </ProductHero>
 
-      <PagePhoto src="/img/tente-salon.jpg" alt={t("photo_alt")} />
+      <PagePhoto src={bandeau[0]?.src ?? "/img/tente-salon.jpg"} alt={bandeau[0]?.alt ?? t("photo_alt")} />
 
       {/* Grille des catégories */}
       <section className="py-20 bg-background">
