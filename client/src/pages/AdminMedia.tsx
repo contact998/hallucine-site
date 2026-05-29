@@ -3,7 +3,7 @@
  * Médiathèque admin — galerie, upload, recherche, tri, sélection multi,
  * lightbox navigable, slide-over détail, drag&drop tri, rename R2 SEO.
  */
-import { useState, useRef, useCallback, useEffect, useMemo, type ComponentProps } from "react";
+import { useState, useRef, useCallback, useEffect, useMemo, forwardRef, type ComponentProps } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { trpc } from "@/lib/trpc";
@@ -16,7 +16,7 @@ import {
   Upload, Trash2, Edit2, Copy, Loader2,
   AlertTriangle, ChevronLeft, ChevronRight, ChevronDown, X, Check,
   EyeOff, Eye, Search, Download, Info, Tag,
-  MousePointer2,
+  MousePointer2, LogOut, Plus,
 } from "lucide-react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -143,6 +143,18 @@ export default function AdminMedia() {
     );
   }
 
+  const [uploadPage,    setUploadPage]    = useState<string>("");
+  const [uploadSection, setUploadSection] = useState<string>("");
+  const uploadPanelRef = useRef<HTMLDivElement>(null);
+
+  const handleUploadTarget = useCallback((page: string, section: string) => {
+    setUploadPage(page);
+    setUploadSection(section);
+    setTimeout(() => {
+      uploadPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
@@ -155,8 +167,12 @@ export default function AdminMedia() {
         </div>
 
         <div className="grid lg:grid-cols-[1fr_380px] gap-8">
-          <GaleriePanel />
-          <UploadPanel />
+          <GaleriePanel onUploadTarget={handleUploadTarget} />
+          <UploadPanel
+            ref={uploadPanelRef}
+            initialPage={uploadPage}
+            initialSection={uploadSection}
+          />
         </div>
       </div>
       <Footer />
@@ -166,7 +182,7 @@ export default function AdminMedia() {
 
 // ─── Panneau Galerie ──────────────────────────────────────────────────────────
 
-function GaleriePanel() {
+function GaleriePanel({ onUploadTarget }: { onUploadTarget: (page: string, section: string) => void }) {
   const [search, setSearch]               = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [editItem, setEditItem]           = useState<number | null>(null);
@@ -208,6 +224,7 @@ function GaleriePanel() {
     onSuccess: () => { toast.success("Image supprimée"); refetch(); },
     onError:   (e) => toast.error(e.message),
   });
+  const utils = trpc.useUtils();
   const bulkDeactivate = trpc.media.bulkDeactivate.useMutation({
     onSuccess: (r) => { toast.success(`${r.count} masquée(s)`); setSelected(new Set()); refetch(); },
     onError:   (e) => toast.error(e.message),
@@ -269,9 +286,22 @@ function GaleriePanel() {
     onCloseEdit:    () => setEditItem(null),
     onDeactivate:   () => deactivate.mutate({ id: item.id }),
     onReactivate:   () => update.mutate({ id: item.id, active: true }),
-    onDelete:       () => {
-      if (confirm(`Supprimer "${item.title ?? item.filename}" ? Cette action est irréversible.`)) {
+    onRemoveFromPage: item.page ? () => {
+      update.mutate({ id: item.id, page: null, section: null });
+    } : undefined,
+    onDelete: async () => {
+      try {
+        const others = await utils.media.otherUsages.fetch({ id: item.id });
+        if (others.length > 0) {
+          if (!confirm(`Cette image est aussi utilisée sur d'autres pages. Elle sera retirée seulement d'ici ; le fichier est conservé. Continuer ?`)) return;
+        } else {
+          if (!confirm(`Dernière occurrence de cette image. Supprimer définitivement le fichier ? (irréversible)`)) return;
+        }
         deleteMedia.mutate({ id: item.id, deleteOnR2: true });
+      } catch {
+        if (confirm(`Supprimer "${item.title ?? item.filename}" ? Cette action est irréversible.`)) {
+          deleteMedia.mutate({ id: item.id, deleteOnR2: true });
+        }
       }
     },
     dndEnabled: false,
@@ -331,6 +361,7 @@ function GaleriePanel() {
         <PagedMediaView
           items={allPageItems}
           onCardProps={commonCardProps}
+          onUploadTarget={onUploadTarget}
         />
       )}
 
@@ -385,12 +416,13 @@ function GaleriePanel() {
 
 type CardPropsFactory = (item: MediaItem, contextItems: MediaItem[]) => ComponentProps<typeof SortableMediaCard>;
 
-function PagedMediaView({ items, onCardProps }: {
+function PagedMediaView({ items, onCardProps, onUploadTarget }: {
   items: MediaItem[];
   selectMode?: boolean;
   selected?: Set<number>;
   editItem?: number | null;
   onCardProps: CardPropsFactory;
+  onUploadTarget: (page: string, section: string) => void;
 }) {
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
 
@@ -410,38 +442,60 @@ function PagedMediaView({ items, onCardProps }: {
         return (
           <div key={page.key} className="border border-white/10 rounded-xl overflow-hidden">
             {/* En-tête page */}
-            <button
-              onClick={() => toggle(page.key)}
-              className="w-full flex items-center justify-between px-4 py-3 bg-white/5 hover:bg-white/8 transition-colors text-left"
-            >
-              <span className="text-white/80 text-sm font-semibold">
-                {page.label}
-                <span className="ml-2 text-white/30 text-xs font-normal">
-                  ({pageItems.length} photo{pageItems.length !== 1 ? "s" : ""})
+            <div className="flex items-center bg-white/5 hover:bg-white/8 transition-colors">
+              <button
+                onClick={() => toggle(page.key)}
+                className="flex-1 flex items-center justify-between px-4 py-3 text-left"
+              >
+                <span className="text-white/80 text-sm font-semibold">
+                  {page.label}
+                  <span className="ml-2 text-white/30 text-xs font-normal">
+                    ({pageItems.length} photo{pageItems.length !== 1 ? "s" : ""})
+                  </span>
                 </span>
-              </span>
-              <ChevronDown className={`w-4 h-4 text-white/40 transition-transform ${isCollapsed ? "" : "rotate-180"}`} />
-            </button>
+                <ChevronDown className={`w-4 h-4 text-white/40 transition-transform ${isCollapsed ? "" : "rotate-180"}`} />
+              </button>
+              <button
+                onClick={(e) => { e.stopPropagation(); onUploadTarget(page.key, ""); }}
+                className="px-3 py-3 text-white/40 hover:text-amber-400 transition-colors flex items-center gap-1 text-xs"
+                title={`Uploader dans ${page.label}`}
+              >
+                <Plus className="w-3.5 h-3.5" />
+              </button>
+            </div>
 
             {!isCollapsed && (
               <div className="p-3 space-y-4">
                 {page.sections.map(section => {
                   const sectionItems = pageItems.filter(it => it.section === section.key);
-                  if (sectionItems.length === 0) return null;
                   return (
                     <div key={section.key}>
-                      <p className="text-white/40 text-[10px] uppercase tracking-wider mb-2">
-                        {section.label}
-                        <span className="ml-1 text-white/20">({sectionItems.length})</span>
-                      </p>
-                      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
-                        {sectionItems.map(item => (
-                          <SortableMediaCard
-                            key={item.id}
-                            {...onCardProps(item, sectionItems)}
-                          />
-                        ))}
+                      <div className="flex items-center gap-2 mb-2">
+                        <p className="text-white/40 text-[10px] uppercase tracking-wider flex-1">
+                          {section.label}
+                          {sectionItems.length > 0 && (
+                            <span className="ml-1 text-white/20">({sectionItems.length})</span>
+                          )}
+                        </p>
+                        <button
+                          onClick={() => onUploadTarget(page.key, section.key)}
+                          className="flex items-center gap-0.5 text-[10px] text-white/30 hover:text-amber-400 transition-colors px-1.5 py-0.5 rounded hover:bg-amber-500/10"
+                          title={`Uploader dans ${section.label}`}
+                        >
+                          <Plus className="w-3 h-3" />
+                          Ajouter
+                        </button>
                       </div>
+                      {sectionItems.length > 0 && (
+                        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+                          {sectionItems.map(item => (
+                            <SortableMediaCard
+                              key={item.id}
+                              {...onCardProps(item, sectionItems)}
+                            />
+                          ))}
+                        </div>
+                      )}
                     </div>
                   );
                 })}
@@ -479,18 +533,27 @@ function PagedMediaView({ items, onCardProps }: {
         const isCollapsed = collapsed[key] ?? false;
         return (
           <div className="border border-amber-500/20 rounded-xl overflow-hidden">
-            <button
-              onClick={() => toggle(key)}
-              className="w-full flex items-center justify-between px-4 py-3 bg-amber-500/5 hover:bg-amber-500/10 transition-colors text-left"
-            >
-              <span className="text-amber-300/80 text-sm font-semibold">
-                À ranger
-                <span className="ml-2 text-amber-300/40 text-xs font-normal">
-                  ({unassigned.length} photo{unassigned.length !== 1 ? "s" : ""} sans page)
+            <div className="flex items-center bg-amber-500/5 hover:bg-amber-500/10 transition-colors">
+              <button
+                onClick={() => toggle(key)}
+                className="flex-1 flex items-center justify-between px-4 py-3 text-left"
+              >
+                <span className="text-amber-300/80 text-sm font-semibold">
+                  À ranger
+                  <span className="ml-2 text-amber-300/40 text-xs font-normal">
+                    ({unassigned.length} photo{unassigned.length !== 1 ? "s" : ""} sans page)
+                  </span>
                 </span>
-              </span>
-              <ChevronDown className={`w-4 h-4 text-amber-400/40 transition-transform ${isCollapsed ? "" : "rotate-180"}`} />
-            </button>
+                <ChevronDown className={`w-4 h-4 text-amber-400/40 transition-transform ${isCollapsed ? "" : "rotate-180"}`} />
+              </button>
+              <button
+                onClick={(e) => { e.stopPropagation(); onUploadTarget("", ""); }}
+                className="px-3 py-3 text-amber-400/40 hover:text-amber-400 transition-colors flex items-center gap-1 text-xs"
+                title="Uploader sans page assignée"
+              >
+                <Plus className="w-3.5 h-3.5" />
+              </button>
+            </div>
             {!isCollapsed && (
               <div className="p-3">
                 {unassigned.length === 0 ? (
@@ -527,10 +590,12 @@ function SortableMediaCard(props: {
   onDeactivate: () => void;
   onReactivate: () => void;
   onDelete: () => void;
+  onRemoveFromPage?: () => void;
   dndEnabled: boolean;
 }) {
   const { item, selectMode, selected, onToggleSelect, onOpenLightbox, onOpenDetail,
-          onEdit, editing, onSavedEdit, onCloseEdit, onDeactivate, onReactivate, onDelete, dndEnabled } = props;
+          onEdit, editing, onSavedEdit, onCloseEdit, onDeactivate, onReactivate, onDelete,
+          onRemoveFromPage, dndEnabled } = props;
   const sortable = useSortable({ id: item.id, disabled: !dndEnabled });
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = sortable;
 
@@ -614,6 +679,11 @@ function SortableMediaCard(props: {
             <ActionBtn title="Modifier" onClick={(e) => { e.stopPropagation(); onEdit(); }} color="bg-blue-500/30 hover:bg-blue-500/50">
               <Edit2 className="w-3 h-3 text-blue-300" />
             </ActionBtn>
+            {onRemoveFromPage && item.page && (
+              <ActionBtn title="Retirer de la page" onClick={(e) => { e.stopPropagation(); onRemoveFromPage(); }} color="bg-orange-500/30 hover:bg-orange-500/50">
+                <LogOut className="w-3 h-3 text-orange-300" />
+              </ActionBtn>
+            )}
             {item.active ? (
               <ActionBtn title="Masquer" onClick={(e) => { e.stopPropagation(); onDeactivate(); }} color="bg-yellow-500/30 hover:bg-yellow-500/50">
                 <EyeOff className="w-3 h-3 text-yellow-300" />
@@ -624,8 +694,7 @@ function SortableMediaCard(props: {
               </ActionBtn>
             )}
             <ActionBtn
-              title={item.usageCount > 0 ? `Utilisée ${item.usageCount}x — masquer d'abord` : "Supprimer"}
-              disabled={item.usageCount > 0}
+              title="Supprimer"
               onClick={(e) => { e.stopPropagation(); onDelete(); }}
               color="bg-red-500/30 hover:bg-red-500/50"
             >
@@ -1077,15 +1146,27 @@ function EditInline({
 
 // ─── Panneau Upload ───────────────────────────────────────────────────────────
 
-function UploadPanel() {
-  const [files,       setFiles]       = useState<File[]>([]);
-  const [previews,    setPreviews]    = useState<string[]>([]);
-  const [category,    setCategory]    = useState<Category>("autre");
-  const [subcategory, setSubcategory] = useState("");
-  const [dragging,    setDragging]    = useState(false);
-  const [uploading,   setUploading]   = useState(false);
-  const [results,     setResults]     = useState<{ name: string; ok: boolean; msg?: string }[]>([]);
+const UploadPanel = forwardRef<HTMLDivElement, {
+  initialPage?: string;
+  initialSection?: string;
+}>(function UploadPanel({ initialPage = "", initialSection = "" }, ref) {
+  const [files,    setFiles]    = useState<File[]>([]);
+  const [previews, setPreviews] = useState<string[]>([]);
+  const [uploadPage,    setUploadPage]    = useState<string>(initialPage);
+  const [uploadSection, setUploadSection] = useState<string>(initialSection);
+  const [dragging, setDragging] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [results,  setResults]  = useState<{ name: string; ok: boolean; msg?: string }[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Sync when parent changes initial values (from + button click)
+  useEffect(() => { setUploadPage(initialPage); }, [initialPage]);
+  useEffect(() => { setUploadSection(initialSection); }, [initialSection]);
+
+  const availableSections = useMemo(
+    () => MEDIA_PAGES.find(p => p.key === uploadPage)?.sections ?? [],
+    [uploadPage]
+  );
 
   const upload = trpc.media.upload.useMutation();
 
@@ -1124,12 +1205,13 @@ function UploadPanel() {
       try {
         const fileData = await fileToBase64(file);
         await upload.mutateAsync({
-          filename:    file.name,
+          filename: file.name,
           fileData,
-          mimeType:    file.type,
-          title:       file.name.replace(/\.[^.]+$/, "").replace(/[-_]/g, " "),
-          category,
-          subcategory: subcategory.trim() || undefined,
+          mimeType: file.type,
+          title:    file.name.replace(/\.[^.]+$/, "").replace(/[-_]/g, " "),
+          category: "autre",
+          ...(uploadPage    ? { page: uploadPage }       : {}),
+          ...(uploadSection ? { section: uploadSection } : {}),
         });
         newResults.push({ name: file.name, ok: true });
       } catch (err: any) {
@@ -1148,13 +1230,34 @@ function UploadPanel() {
     }
   };
 
+  const selectedPageLabel = MEDIA_PAGES.find(p => p.key === uploadPage)?.label;
+  const selectedSectionLabel = availableSections.find(s => s.key === uploadSection)?.label;
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" ref={ref}>
       <div className="bg-white/3 border border-white/10 rounded-xl p-5 space-y-4">
         <h2 className="text-lg font-semibold text-white flex items-center gap-2">
           <Upload className="w-5 h-5 text-amber-400" />
           Uploader des images
         </h2>
+
+        {/* Destination page/section pré-remplie */}
+        {uploadPage && (
+          <div className="flex items-center gap-2 px-3 py-2 bg-amber-500/10 border border-amber-500/30 rounded-lg text-xs text-amber-300">
+            <Tag className="w-3.5 h-3.5 flex-shrink-0" />
+            <span>
+              Destination : <strong>{selectedPageLabel}</strong>
+              {selectedSectionLabel && <> — {selectedSectionLabel}</>}
+            </span>
+            <button
+              onClick={() => { setUploadPage(""); setUploadSection(""); }}
+              className="ml-auto text-amber-300/50 hover:text-amber-300"
+              title="Effacer la destination"
+            >
+              <X className="w-3 h-3" />
+            </button>
+          </div>
+        )}
 
         {/* Zone drag & drop */}
         <div
@@ -1202,39 +1305,37 @@ function UploadPanel() {
           </div>
         )}
 
-        {/* Catégorie */}
+        {/* Sélecteur Page */}
         <div>
-          <label className="text-xs font-medium text-white/60 mb-1.5 block">Catégorie</label>
+          <label className="text-xs font-medium text-white/60 mb-1.5 block">Page</label>
           <select
-            value={category}
-            onChange={e => setCategory(e.target.value as Category)}
+            value={uploadPage}
+            onChange={e => { setUploadPage(e.target.value); setUploadSection(""); }}
             className="w-full bg-white/5 border border-white/20 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-500/50"
           >
-            {CATEGORIES.filter(c => c.key !== "all").map(cat => (
-              <option key={cat.key} value={cat.key}>{cat.label}</option>
+            <option value="">(À ranger)</option>
+            {MEDIA_PAGES.map(p => (
+              <option key={p.key} value={p.key}>{p.label}</option>
             ))}
           </select>
         </div>
 
-        {/* Sous-catégorie avec datalist */}
+        {/* Sélecteur Section */}
         <div>
           <label className="text-xs font-medium text-white/60 mb-1.5 block">
-            Sous-catégorie <span className="text-white/30">(optionnel)</span>
+            Section <span className="text-white/30">(optionnel)</span>
           </label>
-          <input
-            list="upload-subcat"
-            type="text"
-            value={subcategory}
-            onChange={e => setSubcategory(e.target.value)}
-            placeholder="ex: ecran-geant, tente-x, drive-in…"
-            className="w-full bg-white/5 border border-white/20 rounded-lg px-3 py-2 text-sm text-white placeholder-white/30 focus:outline-none focus:border-amber-500/50"
-          />
-          <datalist id="upload-subcat">
-            {SUBCATEGORIES_PRODUITS.map(s => <option key={s} value={s} />)}
-          </datalist>
-          <p className="text-xs text-white/30 mt-1">
-            Détermine quelle page du site utilisera ces images.
-          </p>
+          <select
+            value={uploadSection}
+            onChange={e => setUploadSection(e.target.value)}
+            disabled={availableSections.length === 0}
+            className="w-full bg-white/5 border border-white/20 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-500/50 disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            <option value="">(sans section)</option>
+            {availableSections.map(s => (
+              <option key={s.key} value={s.key}>{s.label}</option>
+            ))}
+          </select>
         </div>
 
         {/* Bouton upload */}
@@ -1267,38 +1368,6 @@ function UploadPanel() {
           </div>
         )}
       </div>
-
-      {/* Guide sous-catégories */}
-      <div className="bg-white/3 border border-white/10 rounded-xl p-4">
-        <h3 className="text-xs font-semibold text-white/60 uppercase tracking-wider mb-3">
-          Sous-catégories produits
-        </h3>
-        <div className="space-y-1 text-xs text-white/40">
-          {[
-            ["ecran-geant",      "Page Écran Géant"],
-            ["ecran-etanche",    "Page Écran Étanche"],
-            ["ecran-economique", "Page Écran Économique"],
-            ["drive-in",         "Page Drive-In"],
-            ["tente-x",          "Page Tente X"],
-            ["tente-n",          "Page Tente N"],
-            ["tente-v",          "Page Tente V"],
-            ["tente-araignee",   "Page Tente Araignée"],
-            ["arches-gonflables","Page Arches"],
-            ["mobilier",         "Page Mobilier"],
-            ["accessoires",      "Page Accessoires"],
-          ].map(([sub, label]) => (
-            <button
-              key={sub}
-              type="button"
-              onClick={() => { setCategory("produits"); setSubcategory(sub); }}
-              className="w-full flex justify-between rounded px-2 py-1 text-left hover:bg-white/10 transition-colors"
-            >
-              <code className="text-amber-400/80">{sub}</code>
-              <span>{label}</span>
-            </button>
-          ))}
-        </div>
-      </div>
     </div>
   );
-}
+});
