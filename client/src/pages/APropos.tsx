@@ -10,12 +10,17 @@ import PageStructuredData from "@/components/PageStructuredData";
 import PagePhoto from "@/components/PagePhoto";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
 
 export default function APropos() {
   const route = useRoutes();
   const { t } = useTranslation("a-propos");
 
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
+
+  const bandeau = useMediaByPage("a-propos", "bandeau", [
+    { src: "/img/a-propos-projection.jpg", alt: t("photo_alt") },
+  ]);
 
   const chiffres = [
     { value: "25+", label: t("stat1_label") },
@@ -57,7 +62,7 @@ export default function APropos() {
         </div>
       </section>
 
-      <PagePhoto src="/img/a-propos-projection.jpg" alt={t("photo_alt")} />
+      <PagePhoto src={bandeau[0]?.src ?? "/img/a-propos-projection.jpg"} alt={bandeau[0]?.alt ?? t("photo_alt")} />
 
       {/* Chiffres clés */}
       <section className="py-16 bg-background">
