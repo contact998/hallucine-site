@@ -13,7 +13,7 @@ import PageShell from "@/components/PageShell";
 import ProductHero from "@/components/product/ProductHero";
 import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useProductImages } from "@/hooks/useProductImages";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
 import EmailLink from "@/components/EmailLink";
 import ZoomImage from "@/components/ZoomImage";
 
@@ -30,10 +30,10 @@ const specsData = [
 ];
 
 const FALLBACK_IMAGES_ECRAN_ETANCHE = [
-  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/Ecran6mpartenvacances_264eeb1d.png", alt: "Écran gonflable étanche de 6m en sac de transport" },
-  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/ecran5mRitz_e1a4b8d3.jpg", alt: "Écran gonflable étanche de 5m au Ritz avec chaises longues" },
-  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/5MPROFILS_3db17625.jpg", alt: "Profil latéral d'un écran gonflable étanche de 5m" },
-  { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/2ECRANSIFAUTEUIL_7d030a1f.jpeg", alt: "Deux écrans gonflables étanches avec fauteuils gonflables rouges" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/1779249008260-5b585a5c0495-ecran6mpartenvacances-264eeb1d.webp", alt: "Écran gonflable étanche de 6m en sac de transport" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/1779249010339-980bff54569e-ecran5mritz-e1a4b8d3.webp", alt: "Écran gonflable étanche de 5m au Ritz avec chaises longues" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/1779249012257-50cc2f3c121b-5mprofils-3db17625.webp", alt: "Profil latéral d'un écran gonflable étanche de 5m" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/1779249014579-6c6945e23be0-2ecransifauteuil-7d030a1f.webp", alt: "Deux écrans gonflables étanches avec fauteuils gonflables rouges" },
 ];
 
 export default function EcranEtanche() {
@@ -41,7 +41,7 @@ export default function EcranEtanche() {
   const { t } = useTranslation("ecran-etanche");
 
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-ecran-etanche-k4ys7FMgpDwS9DpudndmpB.png");
-  const galleryImages = useProductImages("ecran-etanche", FALLBACK_IMAGES_ECRAN_ETANCHE);
+  const galleryImages = useMediaByPage("ecran-etanche", "galerie", FALLBACK_IMAGES_ECRAN_ETANCHE);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const avantages = [
@@ -132,6 +132,7 @@ export default function EcranEtanche() {
       </section>
 
       {/* Galerie photos */}
+      {galleryImages.length > 0 && (
       <section className="py-16 bg-charcoal-light">
         <div className="container">
           <h2 className="text-3xl font-bold text-ivory mb-8">{t("gallery_title")}</h2>
@@ -147,6 +148,7 @@ export default function EcranEtanche() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Avantages */}
       <section className="py-20 bg-background">
