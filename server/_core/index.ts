@@ -203,26 +203,26 @@ async function startServer() {
       res.status(500).json({ error: "Erreur interne" });
     }
   });
-  // Endpoint de diagnostic temporaire — désactivé en production
-  if (process.env.NODE_ENV !== "production") {
-    app.get("/api/debug-db", async (_req, res) => {
-      const info = {
-        MYSQLHOST: process.env.MYSQLHOST || "NOT SET",
-        MYSQLPORT: process.env.MYSQLPORT || "NOT SET",
-        MYSQLDATABASE: process.env.MYSQLDATABASE || "NOT SET",
-        MYSQLUSER: process.env.MYSQLUSER || "NOT SET",
-        MYSQLPASSWORD: process.env.MYSQLPASSWORD ? "***SET***" : "NOT SET",
-        DATABASE_URL: process.env.DATABASE_URL ? process.env.DATABASE_URL.replace(/:([^:@]+)@/, ":***@").substring(0, 60) : "NOT SET",
-      };
-      try {
-        const { db } = await import("../db");
-        const result = await (db as any).execute("SELECT 1 as ok");
-        res.json({ status: "ok", env: info, result: result[0] });
-      } catch (err: any) {
-        res.status(500).json({ status: "error", env: info, error: err.message });
-      }
-    });
-  }
+  // Endpoint de diagnostic temporaire — accessible en prod via token (à retirer après).
+  app.get("/api/debug-db", async (req, res) => {
+    if (process.env.NODE_ENV === "production" && req.query.token !== "diag-7h3k9x2") {
+      return res.status(404).send("Not Found");
+    }
+    try {
+      const { db } = await import("../db");
+      const [cur] = await (db as any).execute("SELECT DATABASE() as db, @@hostname as host");
+      const [bp]  = await (db as any).execute("SELECT count(*) as n FROM blog_posts");
+      const [ml]  = await (db as any).execute("SELECT count(*) as n FROM media_library");
+      res.json({
+        databaseUrlPrefix: (process.env.DATABASE_URL || "").replace(/:([^:@]+)@/, ":***@").substring(0, 55),
+        current: cur[0],
+        blog_posts: bp[0]?.n,
+        media_library: ml[0]?.n,
+      });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message });
+    }
+  });
   // GET /api/blog/meta/:slug — metas publiques d'un article pour le SSR
   app.get("/api/blog/meta/:slug", async (req, res) => {
     try {
