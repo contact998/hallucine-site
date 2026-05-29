@@ -11,8 +11,9 @@ import ProductButton from "@/components/product/ProductButton";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
 import ZoomImage from "@/components/ZoomImage";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
 
-const ledImages = [
+const FALLBACK_LED = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/cNgCebtnqSvVUvmF.webp", alt: "Écran LED gonflable Hallucine de 5m pour projection de jour comme de nuit" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/dAPzbTqdeJCYzZGT.webp", alt: "Écran LED gonflable Hallucine de 4m avec haute luminosité pour événements" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/eqozEqSIUbdLwesq.webp", alt: "Démonstration du montage rapide d'un écran LED gonflable Hallucine en extérieur" },
@@ -23,6 +24,7 @@ export default function EcransLED() {
   const { t } = useTranslation("ecrans-led");
 
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/cNgCebtnqSvVUvmF.webp");
+  const ledImages = useMediaByPage("ecrans-led", "galerie", FALLBACK_LED);
 
   return (
     <PageShell relatedProductsKey="ecrans-led">
@@ -49,6 +51,7 @@ export default function EcransLED() {
       </ProductHero>
 
       {/* Images */}
+      {ledImages.length > 0 && (
       <section className="py-16 bg-background">
         <div className="container">
           <div className="grid md:grid-cols-3 gap-6">
@@ -58,6 +61,7 @@ export default function EcransLED() {
           </div>
         </div>
       </section>
+      )}
 
       {/* En construction */}
       <section className="py-20 bg-charcoal-light">
