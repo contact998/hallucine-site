@@ -9,7 +9,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import PageShell from "@/components/PageShell";
 import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useProductImages } from "@/hooks/useProductImages";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
 
 const FALLBACK_IMAGES_TENTE_N = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/TVmrusoKmXcTvkKP.webp", alt: "Tente gonflable N Hallucine blanche dans la neige" },
@@ -18,15 +18,16 @@ const FALLBACK_IMAGES_TENTE_N = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/WMxgFPZnUaijiyGz.webp", alt: "Tente gonflable N Croix-Rouge verte" },
 ];
 
-const contentImages = {
-  schemaEclate: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/BhBEducothOIuNNg.webp",
-};
+const FALLBACK_SCHEMA = [
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/BhBEducothOIuNNg.webp", alt: "Schéma éclaté des éléments techniques de la tente gonflable N" },
+];
 
 export default function TentesN() {
   const route = useRoutes();
   const { t } = useTranslation("tente-n");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/TVmrusoKmXcTvkKP.webp");
-  const heroImages = useProductImages("tente-n", FALLBACK_IMAGES_TENTE_N);
+  const heroImages = useMediaByPage("tente-n", "galerie", FALLBACK_IMAGES_TENTE_N);
+  const schemaImages = useMediaByPage("tente-n", "schema", FALLBACK_SCHEMA);
 
   return (
     <PageShell relatedProductsKey="tente-n">
@@ -46,6 +47,7 @@ export default function TentesN() {
       />
 
       {/* Hero */}
+      {heroImages.length > 0 && (
       <section className="pt-32 pb-16 bg-charcoal-light">
         <div className="container">
           <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">{t("section_label")}</p>
@@ -59,6 +61,7 @@ export default function TentesN() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Intro */}
       <section className="py-16 bg-background">
@@ -150,10 +153,11 @@ export default function TentesN() {
       </section>
 
       {/* Caractéristiques techniques */}
+      {schemaImages.length > 0 && (
       <section className="py-16 bg-background">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-10 items-start">
-            <ZoomImage src={contentImages.schemaEclate} alt="Schéma éclaté des éléments techniques de la tente gonflable N" wrapperClassName="rounded-lg shadow-lg" className="w-full" />
+            <ZoomImage src={schemaImages[0]?.src ?? FALLBACK_SCHEMA[0].src} alt={schemaImages[0]?.alt ?? FALLBACK_SCHEMA[0].alt} wrapperClassName="rounded-lg shadow-lg" className="w-full" />
             <div>
               <h2 className="text-3xl font-bold text-ivory mb-6">
                 {t("specs_title")}<br />
@@ -164,6 +168,7 @@ export default function TentesN() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Conclusion + CTA */}
       <section className="py-16 bg-charcoal-light">
