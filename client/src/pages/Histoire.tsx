@@ -11,14 +11,22 @@ import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
 import ZoomImage from "@/components/ZoomImage";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
 
-const ETANCHE_3M = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/hIDMieDLnUJYNHGY.webp";
-const ETANCHE_5M_RITZ = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/IzUUAouVxqDCjGMh.webp";
-const SOUFFLERIE_13M = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ATgcmLVpJkJrnbvK.webp";
-const SOUFFLERIE_24M = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/eEXwXGCYYCdjehRy.webp";
-const SOUFFLERIE_15M = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/VWHPufHDlQZZyhyU.webp";
-const SOUFFLERIE_12M = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ZsaxtYrqVuqTZtAv.webp";
-const TENTE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/sEPwifSRENrYAMaz.webp";
+/* ── Fallbacks CDN (filet de sécurité) ── */
+const FALLBACK_BANDEAU = [
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/sEPwifSRENrYAMaz.webp", alt: "Tente gonflable Hallucine lors d'un événement en plein air" },
+];
+
+// Ordre : ETANCHE_3M, ETANCHE_5M_RITZ, SOUFFLERIE_13M, SOUFFLERIE_24M, SOUFFLERIE_15M, SOUFFLERIE_12M
+const FALLBACK_TIMELINE = [
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/hIDMieDLnUJYNHGY.webp", alt: "Écran gonflable étanche 3m" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/IzUUAouVxqDCjGMh.webp", alt: "Écran gonflable étanche 5m Ritz" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ATgcmLVpJkJrnbvK.webp", alt: "Soufflerie 13m" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/eEXwXGCYYCdjehRy.webp", alt: "Soufflerie 24m" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/VWHPufHDlQZZyhyU.webp", alt: "Soufflerie 15m" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ZsaxtYrqVuqTZtAv.webp", alt: "Soufflerie 12m" },
+];
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -31,17 +39,20 @@ export default function Histoire() {
 
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
 
+  const bandeauImgs = useMediaByPage("histoire", "bandeau", FALLBACK_BANDEAU);
+  const timelineImgs = useMediaByPage("histoire", "timeline", FALLBACK_TIMELINE);
+
   const chapters = [
     { year: t("ch1_year"), title: t("ch1_title"), text: t("ch1_text"), image: null, quote: null },
-    { year: t("ch2_year"), title: t("ch2_title"), text: t("ch2_text"), image: ETANCHE_3M, quote: null },
+    { year: t("ch2_year"), title: t("ch2_title"), text: t("ch2_text"), image: timelineImgs[0]?.src ?? FALLBACK_TIMELINE[0].src, quote: null },
     { year: t("ch3_year"), title: t("ch3_title"), text: t("ch3_text"), image: null, quote: t("ch3_quote") },
-    { year: t("ch4_year"), title: t("ch4_title"), text: t("ch4_text"), image: SOUFFLERIE_12M, quote: null },
-    { year: t("ch5_year"), title: t("ch5_title"), text: t("ch5_text"), image: SOUFFLERIE_24M, quote: t("ch5_quote") },
-    { year: t("ch6_year"), title: t("ch6_title"), text: t("ch6_text"), image: ETANCHE_5M_RITZ, quote: null },
+    { year: t("ch4_year"), title: t("ch4_title"), text: t("ch4_text"), image: timelineImgs[5]?.src ?? FALLBACK_TIMELINE[5].src, quote: null },
+    { year: t("ch5_year"), title: t("ch5_title"), text: t("ch5_text"), image: timelineImgs[3]?.src ?? FALLBACK_TIMELINE[3].src, quote: t("ch5_quote") },
+    { year: t("ch6_year"), title: t("ch6_title"), text: t("ch6_text"), image: timelineImgs[1]?.src ?? FALLBACK_TIMELINE[1].src, quote: null },
     { year: t("ch7_year"), title: t("ch7_title"), text: t("ch7_text"), image: null, quote: null },
-    { year: t("ch8_year"), title: t("ch8_title"), text: t("ch8_text"), image: SOUFFLERIE_13M, quote: null },
+    { year: t("ch8_year"), title: t("ch8_title"), text: t("ch8_text"), image: timelineImgs[2]?.src ?? FALLBACK_TIMELINE[2].src, quote: null },
     { year: t("ch9_year"), title: t("ch9_title"), text: t("ch9_text"), image: null, quote: t("ch9_quote") },
-    { year: t("ch10_year"), title: t("ch10_title"), text: t("ch10_text"), image: SOUFFLERIE_15M, quote: null },
+    { year: t("ch10_year"), title: t("ch10_title"), text: t("ch10_text"), image: timelineImgs[4]?.src ?? FALLBACK_TIMELINE[4].src, quote: null },
   ];
 
   const keyFigures = [
@@ -77,7 +88,7 @@ export default function Histoire() {
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <img loading="lazy" src={TENTE} alt="Tente gonflable Hallucine lors d'un événement en plein air" className="w-full h-full object-cover" decoding="async" />
+          {bandeauImgs.length > 0 && <img loading="lazy" src={bandeauImgs[0].src} alt={bandeauImgs[0].alt || "Tente gonflable Hallucine lors d'un événement en plein air"} className="w-full h-full object-cover" decoding="async" />}
           <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.10_0.03_260_/_0.95)] via-[oklch(0.12_0.03_260_/_0.80)] to-[oklch(0.10_0.03_260_/_0.6)]" />
           <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260)] via-transparent to-transparent" />
         </div>
