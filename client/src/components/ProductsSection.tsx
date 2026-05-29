@@ -9,17 +9,39 @@ import { Link } from "wouter";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { getRoute } from "@/i18n/routes";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import type { MediaImage } from "@/hooks/useMediaByCategory";
 
-const ECRAN_ETANCHE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/tWHlxkXeLyoqBOzz.webp";
-const ECRAN_SOUFFLERIE = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/HpSkkCcPrajdeXOF.webp";
-const TENTE_IMG = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/zisRVgFNBpzCScJO.webp";
-const MOBILIER_IMG = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/yLbqpriBLKZrILqt.webp";
+// Fallbacks hardcodés — utilisés si la DB ne retourne rien
+const FALLBACK_PRODUITS: MediaImage[] = [
+  {
+    src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/tWHlxkXeLyoqBOzz.webp",
+    alt: "Trois écrans gonflables Hallucine avec canapé gonflable rouge",
+  },
+  {
+    src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/HpSkkCcPrajdeXOF.webp",
+    alt: "Écran gonflable soufflerie Hallucine 9m en extérieur avec équipe technique",
+  },
+  {
+    src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/zisRVgFNBpzCScJO.webp",
+    alt: "Tente gonflable Hallucine",
+  },
+  {
+    src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/yLbqpriBLKZrILqt.webp",
+    alt: "Mobilier gonflable Hallucine",
+  },
+];
 
 export default function ProductsSection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const { t, i18n } = useTranslation("home");
   const lang = (i18n.language || "fr") as "fr" | "en" | "de" | "es";
+  const produitsImages = useMediaByPage("accueil", "produits", FALLBACK_PRODUITS);
+  const ecranEtanche  = produitsImages[0]?.src ?? FALLBACK_PRODUITS[0].src;
+  const ecranSoufflerie = produitsImages[1]?.src ?? FALLBACK_PRODUITS[1].src;
+  const tenteImg      = produitsImages[2]?.src ?? FALLBACK_PRODUITS[2].src;
+  const mobilierImg   = produitsImages[3]?.src ?? FALLBACK_PRODUITS[3].src;
 
   return (
     <section id="produits" className="relative py-32 bg-background overflow-hidden">
@@ -61,8 +83,8 @@ export default function ProductsSection() {
             <Link href={getRoute("ecran-etanche", lang)} className="group block relative overflow-hidden border border-white/[0.06] bg-white/[0.02] hover:border-gold/30 transition-all duration-700 h-full" style={{ boxShadow: '0 0 20px rgba(212, 175, 55, 0.08), 0 0 40px rgba(212, 175, 55, 0.03)' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 0 30px rgba(212, 175, 55, 0.2), 0 0 60px rgba(212, 175, 55, 0.1), 0 0 90px rgba(212, 175, 55, 0.05)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 0 20px rgba(212, 175, 55, 0.08), 0 0 40px rgba(212, 175, 55, 0.03)'}>
               <div className="relative h-72 overflow-hidden">
                 <img loading="lazy"
-                  src={ECRAN_ETANCHE}
-                  alt="Trois écrans gonflables Hallucine avec canapé gonflable rouge"
+                  src={ecranEtanche}
+                  alt={produitsImages[0]?.alt || "Trois écrans gonflables Hallucine avec canapé gonflable rouge"}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   width={800} height={450}
                 decoding="async" />
@@ -107,8 +129,8 @@ export default function ProductsSection() {
             <Link href={getRoute("ecran-geant", lang)} className="group block relative overflow-hidden border border-white/[0.06] bg-white/[0.02] hover:border-gold/30 transition-all duration-700 h-full" style={{ boxShadow: '0 0 20px rgba(212, 175, 55, 0.08), 0 0 40px rgba(212, 175, 55, 0.03)' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 0 30px rgba(212, 175, 55, 0.2), 0 0 60px rgba(212, 175, 55, 0.1), 0 0 90px rgba(212, 175, 55, 0.05)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 0 20px rgba(212, 175, 55, 0.08), 0 0 40px rgba(212, 175, 55, 0.03)'}>
               <div className="relative h-72 overflow-hidden">
                 <img loading="lazy"
-                  src={ECRAN_SOUFFLERIE}
-                  alt="Écran gonflable soufflerie Hallucine 9m en extérieur avec équipe technique"
+                  src={ecranSoufflerie}
+                  alt={produitsImages[1]?.alt || "Écran gonflable soufflerie Hallucine 9m en extérieur avec équipe technique"}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   width={800} height={450}
                 decoding="async" />
@@ -154,7 +176,7 @@ export default function ProductsSection() {
           >
             <Link href={getRoute("tentes", lang)} className="group flex gap-6 p-6 border border-white/[0.06] bg-white/[0.02] hover:border-gold/30 transition-all duration-700 h-full" style={{ boxShadow: '0 0 15px rgba(212, 175, 55, 0.06), 0 0 30px rgba(212, 175, 55, 0.02)' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 0 25px rgba(212, 175, 55, 0.18), 0 0 50px rgba(212, 175, 55, 0.08), 0 0 80px rgba(212, 175, 55, 0.04)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 0 15px rgba(212, 175, 55, 0.06), 0 0 30px rgba(212, 175, 55, 0.02)'}>
               <div className="w-28 h-28 shrink-0 overflow-hidden">
-                <img loading="lazy" src={TENTE_IMG} alt="Tente gonflable Hallucine" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" width={200} height={200} decoding="async" />
+                <img loading="lazy" src={tenteImg} alt={produitsImages[2]?.alt || "Tente gonflable Hallucine"} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" width={200} height={200} decoding="async" />
               </div>
               <div className="flex flex-col justify-center min-w-0">
                 <h3 className="text-lg font-bold text-white group-hover:text-gold transition-colors duration-500">
@@ -178,7 +200,7 @@ export default function ProductsSection() {
           >
             <Link href={getRoute("mobilier", lang)} className="group flex gap-6 p-6 border border-white/[0.06] bg-white/[0.02] hover:border-gold/30 transition-all duration-700 h-full" style={{ boxShadow: '0 0 15px rgba(212, 175, 55, 0.06), 0 0 30px rgba(212, 175, 55, 0.02)' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 0 25px rgba(212, 175, 55, 0.18), 0 0 50px rgba(212, 175, 55, 0.08), 0 0 80px rgba(212, 175, 55, 0.04)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 0 15px rgba(212, 175, 55, 0.06), 0 0 30px rgba(212, 175, 55, 0.02)'}>
               <div className="w-28 h-28 shrink-0 overflow-hidden">
-                <img loading="lazy" src={MOBILIER_IMG} alt="Mobilier gonflable Hallucine" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" width={200} height={200} decoding="async" />
+                <img loading="lazy" src={mobilierImg} alt={produitsImages[3]?.alt || "Mobilier gonflable Hallucine"} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" width={200} height={200} decoding="async" />
               </div>
               <div className="flex flex-col justify-center min-w-0">
                 <h3 className="text-lg font-bold text-white group-hover:text-gold transition-colors duration-500">
