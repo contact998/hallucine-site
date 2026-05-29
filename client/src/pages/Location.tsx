@@ -11,6 +11,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import PagePhoto from "@/components/PagePhoto";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useRoutes } from "@/i18n/useRoutes";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
 import { formatNombre } from "@/lib/ecranFormat";
 
 const RAISONS = [
@@ -34,6 +35,10 @@ export default function Location() {
   const { t } = useTranslation("location");
   const route = useRoutes();
   useDocumentMeta(t("meta_title"), t("meta_desc"));
+
+  const bandeau = useMediaByPage("location", "bandeau", [
+    { src: "/img/location-evenement.jpg", alt: t("photo_alt") },
+  ]);
 
   return (
     <PageShell>
@@ -67,7 +72,7 @@ export default function Location() {
         </div>
       </section>
 
-      <PagePhoto src="/img/location-evenement.jpg" alt={t("photo_alt")} />
+      <PagePhoto src={bandeau[0]?.src ?? "/img/location-evenement.jpg"} alt={bandeau[0]?.alt ?? t("photo_alt")} />
 
       {/* Louer ou acheter */}
       <section className="py-20 bg-background">
