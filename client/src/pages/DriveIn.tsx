@@ -13,11 +13,23 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useRoutes } from "@/i18n/useRoutes";
 import { ECRAN_DRIVE_IN } from "@/data/ecransConfigurateur";
 import { formatNombre, formatMontage, formatPersonnes } from "@/lib/ecranFormat";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
+
+/* ── Fallbacks CDN (filet de sécurité) ── */
+const FALLBACK_FICHE = [
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779595463304-e2eb8155e2c1-ecran-cinema-drive-in-gonflable-17m-hallucine.webp", alt: "Écran cinéma drive-in gonflable 17m Hallucine" },
+];
+const FALLBACK_GALERIE = [
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779595757312-e1fe30ef9365-ecran-cinema-drive-in-foret-soir-hallucine.webp", alt: "Écran cinéma drive-in en forêt le soir" },
+];
 
 export default function DriveIn() {
   const { t } = useTranslation("drive-in");
   const route = useRoutes();
   useDocumentMeta(t("meta_title"), t("meta_desc"));
+
+  const ficheProduitImgs = useMediaByPage("drive-in", "fiche-produit", FALLBACK_FICHE);
+  const galerieImgs = useMediaByPage("drive-in", "galerie", FALLBACK_GALERIE);
 
   const ecran = ECRAN_DRIVE_IN;
   const prix = `${formatNombre(ecran.prixHT)} € ${t("ht")}`;
@@ -116,17 +128,19 @@ export default function DriveIn() {
                 {t("cta_devis")} <ArrowRight className="w-4 h-4" />
               </ProductButton>
             </div>
-            <div className="relative overflow-hidden rounded-xl min-h-[300px] lg:min-h-0">
-              <img
-                src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779595463304-e2eb8155e2c1-ecran-cinema-drive-in-gonflable-17m-hallucine.webp"
-                alt={t("card_photo_alt")}
-                className="absolute inset-0 w-full h-full object-cover"
-                loading="lazy"
-                width={1200}
-                height={800}
-                decoding="async"
-              />
-            </div>
+            {(ficheProduitImgs.length > 0) && (
+              <div className="relative overflow-hidden rounded-xl min-h-[300px] lg:min-h-0">
+                <img
+                  src={ficheProduitImgs[0].src}
+                  alt={ficheProduitImgs[0].alt || t("card_photo_alt")}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  loading="lazy"
+                  width={1200}
+                  height={800}
+                  decoding="async"
+                />
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -153,21 +167,23 @@ export default function DriveIn() {
       </section>
 
       {/* Photo pleine largeur — drive-in en forêt */}
-      <section className="bg-background">
-        <div className="container">
-          <div className="relative w-full aspect-[16/9] overflow-hidden rounded-xl">
-            <img
-              src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/1779595757312-e1fe30ef9365-ecran-cinema-drive-in-foret-soir-hallucine.webp"
-              alt={t("foret_photo_alt")}
-              className="absolute inset-0 w-full h-full object-cover"
-              loading="lazy"
-              width={1600}
-              height={900}
-              decoding="async"
-            />
+      {galerieImgs.length > 0 && (
+        <section className="bg-background">
+          <div className="container">
+            <div className="relative w-full aspect-[16/9] overflow-hidden rounded-xl">
+              <img
+                src={galerieImgs[0].src}
+                alt={galerieImgs[0].alt || t("foret_photo_alt")}
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+                width={1600}
+                height={900}
+                decoding="async"
+              />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* CTA final */}
       <section className="py-20 bg-charcoal-light">
