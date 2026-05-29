@@ -6,7 +6,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useMediaByCategory } from "@/hooks/useMediaByCategory";
 import Lightbox from "@/components/Lightbox";
 
 // ─── Fallback hardcodé — affiché si la DB est indisponible ───────────────────
@@ -105,26 +104,6 @@ const FALLBACK_PHOTOS = [
   },
 ];
 
-// ─── Spans par défaut pour les images venant de la DB (sans span stocké) ─────
-// Reproduit le pattern visuel original : grande / petite / large / petite...
-const DEFAULT_SPANS = [
-  "col-span-2 row-span-2",
-  "col-span-1 row-span-1",
-  "col-span-2 row-span-1",
-  "col-span-1 row-span-1",
-  "col-span-1 row-span-1",
-  "col-span-2 row-span-2",
-  "col-span-1 row-span-1",
-  "col-span-1 row-span-1",
-  "col-span-1 row-span-1",
-  "col-span-1 row-span-1",
-  "col-span-1 row-span-1",
-  "col-span-2 row-span-1",
-  "col-span-1 row-span-1",
-  "col-span-1 row-span-1",
-  "col-span-2 row-span-1",
-];
-
 // ─── Composant ────────────────────────────────────────────────────────────────
 
 export default function RealisationsSection() {
@@ -133,14 +112,14 @@ export default function RealisationsSection() {
   const [lightbox, setLightbox] = useState<number | null>(null);
   const { t } = useTranslation("home");
 
-  // Charger les images depuis la DB avec fallback intégré
-  const dbImages = useMediaByCategory("realisations", FALLBACK_PHOTOS);
-
-  const photos = dbImages.map((img, i) => ({
+  // Accueil : on fige les 4 réalisations phares — les 4 dernières de l'ordre
+  // canonique : Festival Constantine, Nouvelle-Calédonie, Tchad, Hyundai Ostende.
+  // Sélection explicite (pas un slice d'ordre DB, qui plaçait ces photos en tête)
+  // pour afficher exactement ces photos. La galerie complète reste sur sa page.
+  const photos = FALLBACK_PHOTOS.slice(-4).map((img) => ({
     src:     img.src,
     alt:     img.alt,
-    caption: img.title ?? "",
-    span:    FALLBACK_PHOTOS[i]?.span ?? DEFAULT_SPANS[i % DEFAULT_SPANS.length],
+    caption: img.caption,
   }));
 
   return (
@@ -174,7 +153,7 @@ export default function RealisationsSection() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={inView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.5, delay: 0.1 + i * 0.05 }}
-              className={`${photo.span} group relative overflow-hidden cursor-pointer`}
+              className="group relative overflow-hidden cursor-pointer"
               onClick={() => setLightbox(i)}
             >
               <img

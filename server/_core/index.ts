@@ -1,4 +1,4 @@
-import "dotenv/config";
+import "./loadEnv"; // DOIT rester le tout premier import : charge .env.local avant la DB
 import express from "express";
 import compression from "compression";
 import helmet from "helmet";
