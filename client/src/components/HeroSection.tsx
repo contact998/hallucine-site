@@ -8,8 +8,15 @@ import { Link } from "wouter";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import type { MediaImage } from "@/hooks/useMediaByCategory";
 
-const HERO_IMG = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp";
+const FALLBACK_BANDEAU: MediaImage[] = [
+  {
+    src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp",
+    alt: "Écran de cinéma gonflable Hallucine en plein air",
+  },
+];
 
 export default function HeroSection() {
   const route = useRoutes();
@@ -18,6 +25,9 @@ export default function HeroSection() {
   const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
   const { t } = useTranslation("home");
+  const bandeauImages = useMediaByPage("accueil", "bandeau", FALLBACK_BANDEAU);
+  const heroImg = bandeauImages[0]?.src ?? FALLBACK_BANDEAU[0].src;
+  const heroAlt = bandeauImages[0]?.alt || t("hero.img_alt");
 
   const stats = [
     { value: "30", suffix: t("hero.stats.expertise_suffix"), label: t("hero.stats.expertise") },
@@ -31,8 +41,8 @@ export default function HeroSection() {
       {/* Parallax Background */}
       <motion.div style={{ y: imgY }} className="absolute inset-0 -top-[10%] -bottom-[10%]">
         <img
-          src={HERO_IMG}
-          alt={t("hero.img_alt")}
+          src={heroImg}
+          alt={heroAlt}
           className="w-full h-full object-cover scale-110"
           width={1920}
           height={1080}
