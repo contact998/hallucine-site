@@ -6,6 +6,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useMediaByCategory } from "@/hooks/useMediaByCategory";
 import Lightbox from "@/components/Lightbox";
 
 // ─── Fallback hardcodé — affiché si la DB est indisponible ───────────────────
@@ -112,14 +113,13 @@ export default function RealisationsSection() {
   const [lightbox, setLightbox] = useState<number | null>(null);
   const { t } = useTranslation("home");
 
-  // Accueil : on fige les 4 réalisations phares — les 4 dernières de l'ordre
-  // canonique : Festival Constantine, Nouvelle-Calédonie, Tchad, Hyundai Ostende.
-  // Sélection explicite (pas un slice d'ordre DB, qui plaçait ces photos en tête)
-  // pour afficher exactement ces photos. La galerie complète reste sur sa page.
-  const photos = FALLBACK_PHOTOS.slice(-4).map((img) => ({
+  // Charger les images depuis la DB avec fallback intégré
+  const dbImages = useMediaByCategory("realisations", FALLBACK_PHOTOS);
+
+  const photos = dbImages.map((img) => ({
     src:     img.src,
     alt:     img.alt,
-    caption: img.caption,
+    caption: img.title ?? "",
   }));
 
   return (
