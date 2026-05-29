@@ -159,7 +159,7 @@ export default function AdminMedia() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
-      <div className="container py-8 max-w-7xl">
+      <div className="container pt-28 pb-8 max-w-7xl">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-white">Médiathèque</h1>
           <p className="text-white/50 mt-1 text-sm">

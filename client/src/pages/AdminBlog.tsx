@@ -237,7 +237,7 @@ export default function AdminBlog() {
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
 
-      <div className="container py-8 max-w-6xl">
+      <div className="container pt-28 pb-8 max-w-6xl">
 
         {/* ── Header ── */}
         <div className="flex items-center justify-between mb-8">
