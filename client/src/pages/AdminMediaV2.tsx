@@ -242,7 +242,7 @@ function EditModal({ item, onClose, onChanged }: { item: MediaItem; onClose: () 
   const [sortOrder, setSortOrder] = useState(item.sortOrder);
   const [showReplace, setShowReplace] = useState(false);
 
-  const { mutate: update, isLoading: saving } = useUpdate();
+  const { mutate: update, isPending: saving } = useUpdate();
   const { mutate: remove } = useDelete();
 
   function save() {
