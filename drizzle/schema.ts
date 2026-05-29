@@ -183,6 +183,8 @@ export const blogPosts = mysqlTable("blog_posts", {
   author: varchar("author", { length: 100 }).default("OpenClaw"),
   /** Catégorie */
   category: varchar("category", { length: 100 }),
+  /** Soft delete : date de retrait. NULL = actif (cohérent avec media_library). */
+  deletedAt: timestamp("deletedAt"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });

@@ -1,4 +1,4 @@
-import { eq, desc, and, sql } from "drizzle-orm";
+import { eq, desc, and, sql, isNull, asc, or, like } from "drizzle-orm";
 import { blogPosts, InsertBlogPost, BlogPost } from "../drizzle/schema";
 import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
@@ -193,7 +193,9 @@ export async function deleteBlogPost(id: number): Promise<void> {
 
 /** Récupérer un article par slug */
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
-  const [post] = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug)).limit(1);
+  const [post] = await db.select().from(blogPosts)
+    .where(and(eq(blogPosts.slug, slug), isNull(blogPosts.deletedAt)))
+    .limit(1);
   return post ?? null;
 }
 
@@ -208,7 +210,8 @@ export async function getPublishedPosts(lang: string = "fr", limit: number = 20,
   return db.select().from(blogPosts)
     .where(and(
       eq(blogPosts.status, "published"),
-      eq(blogPosts.lang, lang)
+      eq(blogPosts.lang, lang),
+      isNull(blogPosts.deletedAt),
     ))
     .orderBy(desc(blogPosts.publishedAt))
     .limit(limit)
@@ -218,6 +221,7 @@ export async function getPublishedPosts(lang: string = "fr", limit: number = 20,
 /** Lister tous les articles (admin) */
 export async function getAllBlogPosts(limit: number = 100): Promise<BlogPost[]> {
   return db.select().from(blogPosts)
+    .where(isNull(blogPosts.deletedAt))
     .orderBy(desc(blogPosts.createdAt))
     .limit(limit);
 }
@@ -234,6 +238,63 @@ export async function publishBlogPost(id: number): Promise<void> {
 export async function countPublishedPosts(lang: string = "fr"): Promise<number> {
   const [result] = await db.select({ count: sql<number>`count(*)` })
     .from(blogPosts)
-    .where(and(eq(blogPosts.status, "published"), eq(blogPosts.lang, lang)));
+    .where(and(eq(blogPosts.status, "published"), eq(blogPosts.lang, lang), isNull(blogPosts.deletedAt)));
   return Number(result?.count ?? 0);
+}
+
+// ─── Convention « ressource » (dataProvider Refine) ─────────────────────────────
+// Même forme que mediaResource : list({pagination,sort,filters})→{data,total}.
+
+export type BlogResourceFilter = { field: string; operator: string; value: unknown };
+export type BlogResourceSort   = { field: string; order: "asc" | "desc" };
+
+/** Liste paginée/filtrée/triée des articles pour l'admin (exclut les soft-deleted). */
+export async function listBlogResource(opts: {
+  pagination: { page: number; perPage: number };
+  sort?: BlogResourceSort[];
+  filters?: BlogResourceFilter[];
+}): Promise<{ data: BlogPost[]; total: number }> {
+  const { pagination, sort, filters } = opts;
+  const conditions = [isNull(blogPosts.deletedAt)];
+
+  for (const f of filters ?? []) {
+    const v = f.value;
+    if (v === undefined || v === "" || v === null) continue;
+    switch (f.field) {
+      case "lang":     conditions.push(eq(blogPosts.lang, String(v))); break;
+      case "status":   conditions.push(eq(blogPosts.status, String(v) as "draft" | "published" | "scheduled")); break;
+      case "category": conditions.push(eq(blogPosts.category, String(v))); break;
+      case "q":
+      case "search": {
+        const q = `%${String(v).trim().replace(/[%_]/g, "\\$&")}%`;
+        conditions.push(or(like(blogPosts.title, q), like(blogPosts.excerpt, q), like(blogPosts.slug, q))!);
+        break;
+      }
+    }
+  }
+
+  const where = and(...conditions);
+
+  const sortCol = (field?: string) =>
+    field === "title"       ? blogPosts.title :
+    field === "publishedAt" ? blogPosts.publishedAt :
+    field === "status"      ? blogPosts.status :
+    blogPosts.createdAt;
+  const s = sort?.[0];
+  const order = s ? (s.order === "asc" ? asc(sortCol(s.field)) : desc(sortCol(s.field))) : desc(blogPosts.createdAt);
+
+  const perPage = Math.min(Math.max(pagination.perPage, 1), 200);
+  const page    = Math.max(pagination.page, 1);
+
+  const [{ count }] = await db.select({ count: sql<number>`count(*)` }).from(blogPosts).where(where);
+  const data = await db.select().from(blogPosts).where(where)
+    .orderBy(order, desc(blogPosts.createdAt))
+    .limit(perPage).offset((page - 1) * perPage);
+
+  return { data, total: Number(count) };
+}
+
+/** Soft delete : pose deletedAt = NOW(). */
+export async function softDeleteBlogPost(id: number): Promise<void> {
+  await db.update(blogPosts).set({ deletedAt: new Date() }).where(eq(blogPosts.id, id));
 }

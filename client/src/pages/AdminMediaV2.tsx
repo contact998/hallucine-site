@@ -14,6 +14,7 @@ import { trpc } from "@/lib/trpc";
 import { MEDIA_PAGES, pageLabel } from "@shared/mediaPages";
 import type { MediaItem } from "../../../drizzle/schema";
 import { dataProvider, authProvider, notificationProvider } from "../admin-v2/providers";
+import { BlogPanel } from "../admin-v2/BlogPanel";
 
 const PER_PAGE = 24;
 const ALLOWED_MIME = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -33,16 +34,42 @@ function sectionsFor(pageKey: string) {
 
 // ─── Page (wrapper Refine) ──────────────────────────────────────────────────────
 export default function AdminMediaV2() {
+  const [tab, setTab] = useState<"media" | "blog">("media");
   return (
     <Refine
       dataProvider={dataProvider}
       authProvider={authProvider}
       notificationProvider={notificationProvider}
-      resources={[{ name: "mediaResource", meta: { label: "Médiathèque" } }]}
+      resources={[
+        { name: "mediaResource", meta: { label: "Médiathèque" } },
+        { name: "blogResource", meta: { label: "Blog" } },
+      ]}
       options={{ disableTelemetry: true, warnWhenUnsavedChanges: false }}
     >
-      <MediaAdmin />
+      <div className="min-h-screen bg-background text-white">
+        <div className="container mx-auto px-4 pt-28 pb-16 max-w-7xl">
+          <div className="flex items-center gap-1 mb-6 border-b border-white/10">
+            <TabBtn active={tab === "media"} onClick={() => setTab("media")}>Médiathèque</TabBtn>
+            <TabBtn active={tab === "blog"} onClick={() => setTab("blog")}>Blog</TabBtn>
+            <span className="ml-auto text-xs text-white/30 pb-2">admin v2</span>
+          </div>
+          {tab === "media" ? <MediaAdmin /> : <BlogPanel />}
+        </div>
+      </div>
     </Refine>
+  );
+}
+
+function TabBtn({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px transition-colors ${
+        active ? "border-amber-400 text-white" : "border-transparent text-white/50 hover:text-white/80"
+      }`}
+    >
+      {children}
+    </button>
   );
 }
 
@@ -102,11 +129,10 @@ function MediaAdmin() {
   const canUploadHere = pageFilter && pageFilter !== "__none__";
 
   return (
-    <div className="min-h-screen bg-background text-white">
-      <div className="container mx-auto px-4 pt-28 pb-16 max-w-7xl">
+    <>
         {/* En-tête */}
         <div className="flex items-center justify-between mb-2">
-          <h1 className="text-2xl font-bold">Médiathèque <span className="text-amber-400">v2</span></h1>
+          <h1 className="text-2xl font-bold">Médiathèque</h1>
           <span className="text-xs text-white/40">{total} image{total > 1 ? "s" : ""}</span>
         </div>
         <p className="text-sm text-white/50 mb-6">
@@ -223,12 +249,11 @@ function MediaAdmin() {
             >Suivant</button>
           </div>
         )}
-      </div>
 
       {editing && (
         <EditModal item={editing} onClose={() => setEditing(null)} onChanged={refresh} />
       )}
-    </div>
+    </>
   );
 }
 
