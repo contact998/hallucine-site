@@ -230,6 +230,8 @@ export const adminMediaRouter = router({
       category:    categoryEnum.optional(),
       subcategory: z.string().max(100).optional(),
       active:      z.boolean().optional(),
+      page:        z.string().max(100).nullable().optional(),
+      section:     z.string().max(100).nullable().optional(),
     }))
     .mutation(async ({ input }) => {
       const { id, ...data } = input;

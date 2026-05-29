@@ -205,6 +205,8 @@ export async function updateMediaItem(
     subcategory: string;
     sortOrder: number;
     active: boolean;
+    page: string | null;
+    section: string | null;
   }>
 ): Promise<void> {
   const patch: Record<string, unknown> = {};
@@ -215,6 +217,8 @@ export async function updateMediaItem(
   if (data.subcategory !== undefined) patch.subcategory = data.subcategory;
   if (data.sortOrder   !== undefined) patch.sortOrder   = data.sortOrder;
   if (data.active      !== undefined) patch.active      = data.active;
+  if (data.page        !== undefined) patch.page        = data.page;
+  if (data.section     !== undefined) patch.section     = data.section;
   if (data.tags        !== undefined) {
     patch.tags = data.tags.length ? JSON.stringify(data.tags) : null;
   }

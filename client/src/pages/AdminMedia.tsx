@@ -3,7 +3,7 @@
  * Médiathèque admin — galerie, upload, recherche, tri, sélection multi,
  * lightbox navigable, slide-over détail, drag&drop tri, rename R2 SEO.
  */
-import { useState, useRef, useCallback, useEffect, useMemo } from "react";
+import { useState, useRef, useCallback, useEffect, useMemo, type ComponentProps } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { trpc } from "@/lib/trpc";
@@ -14,7 +14,7 @@ import { useNoIndex } from "@/hooks/useNoIndex";
 import { toast } from "sonner";
 import {
   Upload, Image as ImageIcon, Trash2, Edit2, Copy, Loader2,
-  AlertTriangle, ChevronLeft, ChevronRight, X, Check,
+  AlertTriangle, ChevronLeft, ChevronRight, ChevronDown, X, Check,
   EyeOff, Eye, Search, Download, Info, Tag,
   ArrowUpDown, MousePointer2,
 } from "lucide-react";
@@ -27,6 +27,8 @@ import {
   sortableKeyboardCoordinates, rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { MEDIA_PAGES } from "@shared/mediaPages";
+import type { MediaPage } from "@shared/mediaPages";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -54,6 +56,8 @@ type MediaItem = {
   usageCount: number;
   createdAt: string | Date;
   updatedAt: string | Date | null;
+  page: string | null;
+  section: string | null;
 };
 
 const CATEGORIES: { key: Category | "all"; label: string; color: string }[] = [
@@ -184,6 +188,7 @@ export default function AdminMedia() {
 // ─── Panneau Galerie ──────────────────────────────────────────────────────────
 
 function GaleriePanel() {
+  const [viewMode, setViewMode]           = useState<"pages" | "categories">("pages");
   const [category, setCategory]           = useState<Category | "all">("all");
   const [search, setSearch]               = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
@@ -192,6 +197,7 @@ function GaleriePanel() {
   const [offset, setOffset]               = useState(0);
   const [editItem, setEditItem]           = useState<number | null>(null);
   const [detailItemId, setDetailItemId]   = useState<number | null>(null);
+  const [lightboxItems, setLightboxItems] = useState<MediaItem[]>([]);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [selectMode, setSelectMode]       = useState(false);
   const [selected, setSelected]           = useState<Set<number>>(new Set());
@@ -207,9 +213,10 @@ function GaleriePanel() {
     setOffset(0);
     setSelected(new Set());
     setLocalOrder(null);
-  }, [category, debouncedSearch, sortBy, sortDir]);
+  }, [category, debouncedSearch, sortBy, sortDir, viewMode]);
 
-  const { data, isLoading, refetch } = trpc.media.list.useQuery({
+  // Vue catégories : pagination normale
+  const { data: catData, isLoading: catLoading, refetch: catRefetch } = trpc.media.list.useQuery({
     category:   category === "all" ? undefined : category,
     activeOnly: false,
     search:     debouncedSearch || undefined,
@@ -217,7 +224,20 @@ function GaleriePanel() {
     sortDir,
     limit:      PAGE_SIZE,
     offset,
-  });
+  }, { enabled: viewMode === "categories" });
+
+  // Vue pages : charge tout (sans pagination) pour regrouper
+  const { data: pageData, isLoading: pageLoading, refetch: pageRefetch } = trpc.media.list.useQuery({
+    activeOnly: false,
+    search:     debouncedSearch || undefined,
+    sortBy:     "sortOrder",
+    sortDir:    "asc",
+    limit:      1000,
+    offset:     0,
+  }, { enabled: viewMode === "pages" });
+
+  const refetch = viewMode === "pages" ? pageRefetch : catRefetch;
+  const isLoading = viewMode === "pages" ? pageLoading : catLoading;
 
   const deactivate = trpc.media.deactivate.useMutation({
     onSuccess: () => { toast.success("Image masquée"); refetch(); },
@@ -244,24 +264,25 @@ function GaleriePanel() {
     onError:   (e) => { toast.error(e.message); refetch(); },
   });
 
-  const items: MediaItem[] = data?.items ?? [];
-  const total       = data?.total ?? 0;
+  const catItems: MediaItem[] = catData?.items ?? [];
+  const total       = catData?.total ?? 0;
   const totalPages  = Math.ceil(total / PAGE_SIZE);
   const currentPage = Math.floor(offset / PAGE_SIZE) + 1;
 
-  // Ordre affiché = localOrder (optimiste) si défini, sinon ordre serveur
-  const displayedItems: MediaItem[] = useMemo(() => {
-    if (!localOrder) return items;
-    const byId = new Map(items.map(i => [i.id, i] as const));
+  const allPageItems: MediaItem[] = pageData?.items ?? [];
+
+  // Ordre affiché (vue catégories) = localOrder (optimiste) si défini, sinon ordre serveur
+  const displayedCatItems: MediaItem[] = useMemo(() => {
+    if (!localOrder) return catItems;
+    const byId = new Map(catItems.map(i => [i.id, i] as const));
     const ordered: MediaItem[] = [];
     for (const id of localOrder) {
       const it = byId.get(id);
       if (it) ordered.push(it);
     }
-    // Append any items not in localOrder (defensif)
-    for (const it of items) if (!localOrder.includes(it.id)) ordered.push(it);
+    for (const it of catItems) if (!localOrder.includes(it.id)) ordered.push(it);
     return ordered;
-  }, [items, localOrder]);
+  }, [catItems, localOrder]);
 
   // ─── Sélection ─────────────────────────────────────────────────────────────
   const toggleSelect = (id: number) => {
@@ -272,26 +293,26 @@ function GaleriePanel() {
       return next;
     });
   };
+  const displayedItems = viewMode === "pages" ? allPageItems : displayedCatItems;
   const selectAll = () => setSelected(new Set(displayedItems.map(i => i.id)));
   const clearSelection = () => setSelected(new Set());
 
-  // ─── DnD ───────────────────────────────────────────────────────────────────
+  // ─── DnD (vue catégories uniquement) ───────────────────────────────────────
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
   );
-  const dndEnabled = sortBy === "sortOrder" && !selectMode && debouncedSearch === "" && category !== "all";
+  const dndEnabled = viewMode === "categories" && sortBy === "sortOrder" && !selectMode && debouncedSearch === "" && category !== "all";
 
   const handleDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;
     if (!over || active.id === over.id) return;
-    const ids = displayedItems.map(i => i.id);
+    const ids = displayedCatItems.map(i => i.id);
     const oldIdx = ids.indexOf(active.id as number);
     const newIdx = ids.indexOf(over.id as number);
     if (oldIdx < 0 || newIdx < 0) return;
     const newOrder = arrayMove(ids, oldIdx, newIdx);
     setLocalOrder(newOrder);
-    // Pousse le nouvel ordre vers le serveur
     reorder.mutate(newOrder.map((id, i) => ({ id, sortOrder: offset + i })));
   };
 
@@ -301,34 +322,88 @@ function GaleriePanel() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape")     setLightboxIndex(null);
       else if (e.key === "ArrowLeft")  setLightboxIndex(i => (i !== null && i > 0 ? i - 1 : i));
-      else if (e.key === "ArrowRight") setLightboxIndex(i => (i !== null && i < displayedItems.length - 1 ? i + 1 : i));
+      else if (e.key === "ArrowRight") setLightboxIndex(i => (i !== null && i < lightboxItems.length - 1 ? i + 1 : i));
       else if (e.key === "d" || e.key === "D") {
         if (lightboxIndex !== null) {
-          const it = displayedItems[lightboxIndex];
+          const it = lightboxItems[lightboxIndex];
           if (it) downloadImageById(it.id, it.filename);
         }
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [lightboxIndex, displayedItems]);
+  }, [lightboxIndex, lightboxItems]);
+
+  // Helper pour ouvrir la lightbox dans un contexte de liste
+  const openLightbox = (items: MediaItem[], id: number) => {
+    const idx = items.findIndex(i => i.id === id);
+    if (idx >= 0) { setLightboxItems(items); setLightboxIndex(idx); }
+  };
+
+  // Props communes pour MediaCard
+  const commonCardProps = (item: MediaItem, contextItems: MediaItem[]) => ({
+    item,
+    selectMode,
+    selected: selected.has(item.id),
+    onToggleSelect: () => toggleSelect(item.id),
+    onOpenLightbox: () => openLightbox(contextItems, item.id),
+    onOpenDetail:   () => setDetailItemId(item.id),
+    onEdit:         () => setEditItem(item.id === editItem ? null : item.id),
+    editing:        editItem === item.id,
+    onSavedEdit:    () => { setEditItem(null); refetch(); },
+    onCloseEdit:    () => setEditItem(null),
+    onDeactivate:   () => deactivate.mutate({ id: item.id }),
+    onReactivate:   () => update.mutate({ id: item.id, active: true }),
+    onDelete:       () => {
+      if (confirm(`Supprimer "${item.title ?? item.filename}" ? Cette action est irréversible.`)) {
+        deleteMedia.mutate({ id: item.id, deleteOnR2: true });
+      }
+    },
+    dndEnabled,
+  });
 
   return (
     <div className="space-y-4">
-      {/* Filtres catégories */}
-      <div className="flex flex-wrap gap-2">
-        {CATEGORIES.map((cat) => (
-          <button
-            key={cat.key}
-            onClick={() => setCategory(cat.key)}
-            className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
-              category === cat.key ? cat.color + " ring-2 ring-white/20" : "bg-white/5 text-white/40 hover:bg-white/10"
-            }`}
-          >
-            {cat.label}
-          </button>
-        ))}
+      {/* Toggle vue */}
+      <div className="flex gap-2">
+        <button
+          onClick={() => setViewMode("pages")}
+          className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
+            viewMode === "pages"
+              ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
+              : "bg-white/5 border-white/10 text-white/40 hover:text-white"
+          }`}
+        >
+          Par page du site
+        </button>
+        <button
+          onClick={() => setViewMode("categories")}
+          className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
+            viewMode === "categories"
+              ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
+              : "bg-white/5 border-white/10 text-white/40 hover:text-white"
+          }`}
+        >
+          Par catégorie
+        </button>
       </div>
+
+      {/* Filtres catégories (vue catégories uniquement) */}
+      {viewMode === "categories" && (
+        <div className="flex flex-wrap gap-2">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat.key}
+              onClick={() => setCategory(cat.key)}
+              className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                category === cat.key ? cat.color + " ring-2 ring-white/20" : "bg-white/5 text-white/40 hover:bg-white/10"
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Recherche + tri + mode sélection */}
       <div className="flex flex-wrap items-center gap-2">
@@ -351,21 +426,23 @@ function GaleriePanel() {
           )}
         </div>
 
-        <select
-          value={`${sortBy}:${sortDir}`}
-          onChange={(e) => {
-            const [f, d] = e.target.value.split(":");
-            setSortBy(f as SortField);
-            setSortDir(d as SortDir);
-          }}
-          className="bg-white/5 border border-white/15 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-500/50"
-        >
-          {SORT_OPTIONS.map(o => (
-            <option key={`${o.value}:${o.dir}`} value={`${o.value}:${o.dir}`}>
-              {o.label}
-            </option>
-          ))}
-        </select>
+        {viewMode === "categories" && (
+          <select
+            value={`${sortBy}:${sortDir}`}
+            onChange={(e) => {
+              const [f, d] = e.target.value.split(":");
+              setSortBy(f as SortField);
+              setSortDir(d as SortDir);
+            }}
+            className="bg-white/5 border border-white/15 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-500/50"
+          >
+            {SORT_OPTIONS.map(o => (
+              <option key={`${o.value}:${o.dir}`} value={`${o.value}:${o.dir}`}>
+                {o.label}
+              </option>
+            ))}
+          </select>
+        )}
 
         <button
           onClick={() => { setSelectMode(m => !m); setSelected(new Set()); }}
@@ -383,81 +460,93 @@ function GaleriePanel() {
 
       {/* Stats */}
       <div className="flex items-center justify-between text-xs text-white/40">
-        <span>
-          {total} image{total !== 1 ? "s" : ""}
-          {debouncedSearch && ` correspondant à « ${debouncedSearch} »`}
-        </span>
-        {!dndEnabled && sortBy === "sortOrder" && (
-          <span className="text-amber-400/60 text-[10px]">
-            Drag&drop désactivé (recherche / mode sélection / catégorie « Tout »)
+        {viewMode === "categories" ? (
+          <>
+            <span>
+              {total} image{total !== 1 ? "s" : ""}
+              {debouncedSearch && ` correspondant à « ${debouncedSearch} »`}
+            </span>
+            {!dndEnabled && sortBy === "sortOrder" && (
+              <span className="text-amber-400/60 text-[10px]">
+                Drag&drop désactivé (recherche / mode sélection / catégorie « Tout »)
+              </span>
+            )}
+            {totalPages > 1 && <span>Page {currentPage} / {totalPages}</span>}
+          </>
+        ) : (
+          <span>
+            {allPageItems.length} image{allPageItems.length !== 1 ? "s" : ""} au total
+            {debouncedSearch && ` — filtre « ${debouncedSearch} »`}
+            {" · "}
+            <span className="text-amber-400/60">Drag&drop désactivé en vue pages</span>
           </span>
         )}
-        {totalPages > 1 && <span>Page {currentPage} / {totalPages}</span>}
       </div>
 
-      {/* Grille */}
-      {isLoading ? (
-        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <div key={i} className="aspect-square bg-white/5 animate-pulse rounded-lg" />
-          ))}
-        </div>
-      ) : displayedItems.length === 0 ? (
-        <div className="py-16 text-center text-white/30">
-          <ImageIcon className="w-12 h-12 mx-auto mb-3 opacity-30" />
-          <p>Aucune image{debouncedSearch ? " trouvée" : " dans cette catégorie"}</p>
-        </div>
-      ) : (
-        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-          <SortableContext items={displayedItems.map(i => i.id)} strategy={rectSortingStrategy} disabled={!dndEnabled}>
-            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
-              {displayedItems.map((item) => (
-                <SortableMediaCard
-                  key={item.id}
-                  item={item}
-                  selectMode={selectMode}
-                  selected={selected.has(item.id)}
-                  onToggleSelect={() => toggleSelect(item.id)}
-                  onOpenLightbox={() => setLightboxIndex(displayedItems.findIndex(i => i.id === item.id))}
-                  onOpenDetail={() => setDetailItemId(item.id)}
-                  onEdit={() => setEditItem(item.id === editItem ? null : item.id)}
-                  editing={editItem === item.id}
-                  onSavedEdit={() => { setEditItem(null); refetch(); }}
-                  onCloseEdit={() => setEditItem(null)}
-                  onDeactivate={() => deactivate.mutate({ id: item.id })}
-                  onReactivate={() => update.mutate({ id: item.id, active: true })}
-                  onDelete={() => {
-                    if (confirm(`Supprimer "${item.title ?? item.filename}" ? Cette action est irréversible.`)) {
-                      deleteMedia.mutate({ id: item.id, deleteOnR2: true });
-                    }
-                  }}
-                  dndEnabled={dndEnabled}
-                />
-              ))}
-            </div>
-          </SortableContext>
-        </DndContext>
+      {/* ─── Vue Par Page ─── */}
+      {viewMode === "pages" && (
+        isLoading ? (
+          <div className="space-y-3">
+            {[1,2,3].map(i => <div key={i} className="h-12 bg-white/5 animate-pulse rounded-lg" />)}
+          </div>
+        ) : (
+          <PagedMediaView
+            items={allPageItems}
+            onCardProps={commonCardProps}
+          />
+        )
       )}
 
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-3 pt-2">
-          <button
-            className="p-2 bg-white/5 hover:bg-white/10 rounded disabled:opacity-30 transition-colors"
-            disabled={currentPage === 1}
-            onClick={() => setOffset(o => Math.max(0, o - PAGE_SIZE))}
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-          <span className="text-sm text-white/50">{currentPage} / {totalPages}</span>
-          <button
-            className="p-2 bg-white/5 hover:bg-white/10 rounded disabled:opacity-30 transition-colors"
-            disabled={currentPage >= totalPages}
-            onClick={() => setOffset(o => o + PAGE_SIZE)}
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
+      {/* ─── Vue Par Catégorie ─── */}
+      {viewMode === "categories" && (
+        <>
+          {isLoading ? (
+            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div key={i} className="aspect-square bg-white/5 animate-pulse rounded-lg" />
+              ))}
+            </div>
+          ) : displayedCatItems.length === 0 ? (
+            <div className="py-16 text-center text-white/30">
+              <ImageIcon className="w-12 h-12 mx-auto mb-3 opacity-30" />
+              <p>Aucune image{debouncedSearch ? " trouvée" : " dans cette catégorie"}</p>
+            </div>
+          ) : (
+            <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+              <SortableContext items={displayedCatItems.map(i => i.id)} strategy={rectSortingStrategy} disabled={!dndEnabled}>
+                <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+                  {displayedCatItems.map((item) => (
+                    <SortableMediaCard
+                      key={item.id}
+                      {...commonCardProps(item, displayedCatItems)}
+                    />
+                  ))}
+                </div>
+              </SortableContext>
+            </DndContext>
+          )}
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-3 pt-2">
+              <button
+                className="p-2 bg-white/5 hover:bg-white/10 rounded disabled:opacity-30 transition-colors"
+                disabled={currentPage === 1}
+                onClick={() => setOffset(o => Math.max(0, o - PAGE_SIZE))}
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <span className="text-sm text-white/50">{currentPage} / {totalPages}</span>
+              <button
+                className="p-2 bg-white/5 hover:bg-white/10 rounded disabled:opacity-30 transition-colors"
+                disabled={currentPage >= totalPages}
+                onClick={() => setOffset(o => o + PAGE_SIZE)}
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          )}
+        </>
       )}
 
       {/* Barre actions multi-sélection */}
@@ -494,15 +583,145 @@ function GaleriePanel() {
       )}
 
       {/* Lightbox plein écran avec nav */}
-      {lightboxIndex !== null && displayedItems[lightboxIndex] && (
+      {lightboxIndex !== null && lightboxItems[lightboxIndex] && (
         <AdminLightbox
-          items={displayedItems}
+          items={lightboxItems}
           index={lightboxIndex}
           onClose={() => setLightboxIndex(null)}
           onPrev={() => setLightboxIndex(i => (i !== null && i > 0 ? i - 1 : i))}
-          onNext={() => setLightboxIndex(i => (i !== null && i < displayedItems.length - 1 ? i + 1 : i))}
+          onNext={() => setLightboxIndex(i => (i !== null && i < lightboxItems.length - 1 ? i + 1 : i))}
         />
       )}
+    </div>
+  );
+}
+
+// ─── Vue regroupée par page/section ──────────────────────────────────────────
+
+type CardPropsFactory = (item: MediaItem, contextItems: MediaItem[]) => ComponentProps<typeof SortableMediaCard>;
+
+function PagedMediaView({ items, onCardProps }: {
+  items: MediaItem[];
+  selectMode?: boolean;
+  selected?: Set<number>;
+  editItem?: number | null;
+  onCardProps: CardPropsFactory;
+}) {
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+
+  const toggle = (key: string) => setCollapsed(prev => ({ ...prev, [key]: !prev[key] }));
+
+  const knownPageKeys = new Set(MEDIA_PAGES.map(p => p.key));
+
+  // Groupe « À ranger » : page null, vide, ou clé inconnue
+  const unassigned = items.filter(it => !it.page || !knownPageKeys.has(it.page));
+
+  return (
+    <div className="space-y-3">
+      {MEDIA_PAGES.map((page: MediaPage) => {
+        const pageItems = items.filter(it => it.page === page.key);
+        const isCollapsed = collapsed[page.key] ?? false;
+
+        return (
+          <div key={page.key} className="border border-white/10 rounded-xl overflow-hidden">
+            {/* En-tête page */}
+            <button
+              onClick={() => toggle(page.key)}
+              className="w-full flex items-center justify-between px-4 py-3 bg-white/5 hover:bg-white/8 transition-colors text-left"
+            >
+              <span className="text-white/80 text-sm font-semibold">
+                {page.label}
+                <span className="ml-2 text-white/30 text-xs font-normal">
+                  ({pageItems.length} photo{pageItems.length !== 1 ? "s" : ""})
+                </span>
+              </span>
+              <ChevronDown className={`w-4 h-4 text-white/40 transition-transform ${isCollapsed ? "" : "rotate-180"}`} />
+            </button>
+
+            {!isCollapsed && (
+              <div className="p-3 space-y-4">
+                {page.sections.map(section => {
+                  const sectionItems = pageItems.filter(it => it.section === section.key);
+                  if (sectionItems.length === 0) return null;
+                  return (
+                    <div key={section.key}>
+                      <p className="text-white/40 text-[10px] uppercase tracking-wider mb-2">
+                        {section.label}
+                        <span className="ml-1 text-white/20">({sectionItems.length})</span>
+                      </p>
+                      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+                        {sectionItems.map(item => (
+                          <SortableMediaCard
+                            key={item.id}
+                            {...onCardProps(item, sectionItems)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+                {/* Photos de la page sans section connue */}
+                {(() => {
+                  const knownSectionKeys = new Set(page.sections.map(s => s.key));
+                  const noSection = pageItems.filter(it => !it.section || !knownSectionKeys.has(it.section));
+                  if (noSection.length === 0) return null;
+                  return (
+                    <div>
+                      <p className="text-white/40 text-[10px] uppercase tracking-wider mb-2">
+                        Sans section
+                        <span className="ml-1 text-white/20">({noSection.length})</span>
+                      </p>
+                      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+                        {noSection.map(item => (
+                          <SortableMediaCard key={item.id} {...onCardProps(item, noSection)} />
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })()}
+                {pageItems.length === 0 && (
+                  <p className="text-white/20 text-xs italic py-2">Aucune image pour cette page.</p>
+                )}
+              </div>
+            )}
+          </div>
+        );
+      })}
+
+      {/* Bloc « À ranger » */}
+      {(() => {
+        const key = "__unassigned__";
+        const isCollapsed = collapsed[key] ?? false;
+        return (
+          <div className="border border-amber-500/20 rounded-xl overflow-hidden">
+            <button
+              onClick={() => toggle(key)}
+              className="w-full flex items-center justify-between px-4 py-3 bg-amber-500/5 hover:bg-amber-500/10 transition-colors text-left"
+            >
+              <span className="text-amber-300/80 text-sm font-semibold">
+                À ranger
+                <span className="ml-2 text-amber-300/40 text-xs font-normal">
+                  ({unassigned.length} photo{unassigned.length !== 1 ? "s" : ""} sans page)
+                </span>
+              </span>
+              <ChevronDown className={`w-4 h-4 text-amber-400/40 transition-transform ${isCollapsed ? "" : "rotate-180"}`} />
+            </button>
+            {!isCollapsed && (
+              <div className="p-3">
+                {unassigned.length === 0 ? (
+                  <p className="text-white/20 text-xs italic py-2">Toutes les images sont rangées.</p>
+                ) : (
+                  <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+                    {unassigned.map(item => (
+                      <SortableMediaCard key={item.id} {...onCardProps(item, unassigned)} />
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        );
+      })()}
     </div>
   );
 }
@@ -920,7 +1139,15 @@ function EditInline({
   const [category,    setCategory]    = useState(item.category as Category);
   const [subcategory, setSubcategory] = useState(item.subcategory ?? "");
   const [active,      setActive]      = useState(item.active);
+  const [page,        setPage]        = useState<string>(item.page ?? "");
+  const [section,     setSection]     = useState<string>(item.section ?? "");
   const [newSlug,     setNewSlug]     = useState("");
+
+  // Sections disponibles selon la page sélectionnée
+  const availableSections = useMemo(
+    () => MEDIA_PAGES.find(p => p.key === page)?.sections ?? [],
+    [page]
+  );
 
   const update = trpc.media.update.useMutation({
     onSuccess: () => { toast.success("Modifié"); onSaved(); },
@@ -972,6 +1199,33 @@ function EditInline({
       <datalist id={`subcat-${item.id}`}>
         {SUBCATEGORIES_PRODUITS.map(s => <option key={s} value={s} />)}
       </datalist>
+
+      {/* Page du site */}
+      <select
+        value={page}
+        onChange={e => { setPage(e.target.value); setSection(""); }}
+        className="w-full text-xs bg-white/10 border border-white/20 rounded px-2 py-1.5 text-white focus:outline-none focus:border-amber-500/50"
+      >
+        <option value="">(à ranger)</option>
+        {MEDIA_PAGES.map(p => (
+          <option key={p.key} value={p.key}>{p.label}</option>
+        ))}
+      </select>
+
+      {/* Section */}
+      {availableSections.length > 0 && (
+        <select
+          value={section}
+          onChange={e => setSection(e.target.value)}
+          className="w-full text-xs bg-white/10 border border-white/20 rounded px-2 py-1.5 text-white focus:outline-none focus:border-amber-500/50"
+        >
+          <option value="">(sans section)</option>
+          {availableSections.map(s => (
+            <option key={s.key} value={s.key}>{s.label}</option>
+          ))}
+        </select>
+      )}
+
       <label className="flex items-center gap-2 text-xs text-white/70 cursor-pointer">
         <input
           type="checkbox"
@@ -1009,7 +1263,16 @@ function EditInline({
 
       <div className="flex gap-2 mt-auto">
         <button
-          onClick={() => update.mutate({ id: item.id, title, alt, category, subcategory: subcategory || undefined, active })}
+          onClick={() => update.mutate({
+            id: item.id,
+            title,
+            alt,
+            category,
+            subcategory: subcategory || undefined,
+            active,
+            page: page || null,
+            section: section || null,
+          })}
           disabled={update.isPending}
           className="flex-1 flex items-center justify-center gap-1 bg-amber-500/80 hover:bg-amber-500 rounded py-1.5 text-xs font-semibold text-black transition-colors disabled:opacity-50"
         >
