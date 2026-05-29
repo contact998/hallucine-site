@@ -11,7 +11,7 @@ import ProductHero from "@/components/product/ProductHero";
 import ProductButton from "@/components/product/ProductButton";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useProductImages } from "@/hooks/useProductImages";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
 
 // ─── Fallback hardcodé — ne jamais supprimer ──────────────────────────────────
 
@@ -31,7 +31,7 @@ export default function Accessoires() {
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/wNIxhZRwHKCxifIM.webp");
 
   // Charger les images depuis la DB
-  const images = useProductImages("accessoires", FALLBACK_ACCESSOIRES);
+  const images = useMediaByPage("accessoires", "produits", FALLBACK_ACCESSOIRES);
 
   const accessoires = [
     {
@@ -101,6 +101,7 @@ export default function Accessoires() {
       </ProductHero>
 
       {/* Grille accessoires */}
+      {images.length > 0 && (
       <section className="py-20 bg-background">
         <div className="container">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -121,6 +122,7 @@ export default function Accessoires() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Forfaits détaillés */}
       <section className="py-20 bg-charcoal-light">
