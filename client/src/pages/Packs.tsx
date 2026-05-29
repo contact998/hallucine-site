@@ -11,6 +11,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import PagePhoto from "@/components/PagePhoto";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useRoutes } from "@/i18n/useRoutes";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
 import { formatNombre } from "@/lib/ecranFormat";
 
 /* Prix de pack = AIRSCREEN Outdoor Movie System (Economy) + 7 %.
@@ -25,6 +26,10 @@ export default function Packs() {
   const { t } = useTranslation("packs");
   const route = useRoutes();
   useDocumentMeta(t("meta_title"), t("meta_desc"));
+
+  const bandeau = useMediaByPage("packs", "bandeau", [
+    { src: "/img/pack-cinema-plein-air.jpg", alt: t("photo_alt") },
+  ]);
 
   return (
     <PageShell>
@@ -52,7 +57,7 @@ export default function Packs() {
         </div>
       </section>
 
-      <PagePhoto src="/img/pack-cinema-plein-air.jpg" alt={t("photo_alt")} />
+      <PagePhoto src={bandeau[0]?.src ?? "/img/pack-cinema-plein-air.jpg"} alt={bandeau[0]?.alt ?? t("photo_alt")} />
 
       {/* Intro */}
       <section className="py-16 bg-background">
