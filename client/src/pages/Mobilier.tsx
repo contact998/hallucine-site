@@ -12,19 +12,26 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import PageShell from "@/components/PageShell";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useProductImages } from "@/hooks/useProductImages";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
 import ZoomImage from "@/components/ZoomImage";
 
 // ─── Fallback hardcodé — ne jamais supprimer ──────────────────────────────────
 
-const FALLBACK_MOBILIER = [
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/CYlbsneVJDOkGOhF.webp",   alt: "Canapé gonflable" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/VUhsCVHmnpGqweWv.webp",   alt: "Fauteuil gonflable" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ufvprHQgVPbbyBlI.webp",   alt: "Bar gonflable" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/yUqGwSVTzsTRviNh.webp",   alt: "Table mange-debout gonflable" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/1779605638497-5fdb1a6325dc-chariot-transport-ecrans-soufflerie-roue.webp",   alt: "Chariot de transport gonflable pliable à roues pour écrans Hallucine" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/1779607200855-44c3611663e3-flycase-professionnel-roulettes-ecrans-m.webp",   alt: "Flycase professionnel rigide à roulettes pour transport et stockage écrans Hallucine" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/efvnhrOKvRVMyuHr.webp",   alt: "Structure étanche mobilier" },
+const FALLBACK_BANDEAU = [
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/jCghaPHMczbtTjIn.webp", alt: "Mobilier gonflable Hallucine en plein air" },
+];
+
+const FALLBACK_PRODUITS = [
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/CYlbsneVJDOkGOhF.webp", alt: "Canapé gonflable" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/VUhsCVHmnpGqweWv.webp", alt: "Fauteuil gonflable" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ufvprHQgVPbbyBlI.webp", alt: "Bar gonflable" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/yUqGwSVTzsTRviNh.webp", alt: "Table mange-debout gonflable" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/efvnhrOKvRVMyuHr.webp", alt: "Structure étanche mobilier" },
+];
+
+const FALLBACK_TRANSPORT = [
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/1779605638497-5fdb1a6325dc-chariot-transport-ecrans-soufflerie-roue.webp", alt: "Chariot de transport gonflable pliable à roues pour écrans Hallucine" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/1779607200855-44c3611663e3-flycase-professionnel-roulettes-ecrans-m.webp", alt: "Flycase professionnel rigide à roulettes pour transport et stockage écrans Hallucine" },
 ];
 
 const fadeIn = {
@@ -42,18 +49,16 @@ export default function Mobilier() {
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  // Charger les images depuis la DB
-  const images = useProductImages("mobilier", FALLBACK_MOBILIER);
-
-  // Mapper les images aux slots : 0=canapé, 1=fauteuil, 2=bar, 3=mange-debout, 4=chariot, 5=flycase, 6=support
-  const img = (index: number) => images[index]?.src ?? FALLBACK_MOBILIER[index]?.src ?? "";
-  const imgAlt = (index: number) => images[index]?.alt ?? FALLBACK_MOBILIER[index]?.alt ?? "";
+  // Charger les images depuis la médiathèque (par page/section)
+  const bandeauImages = useMediaByPage("mobilier", "bandeau", FALLBACK_BANDEAU);
+  const produitsImages = useMediaByPage("mobilier", "produits", FALLBACK_PRODUITS);
+  const transportImages = useMediaByPage("mobilier", "transport", FALLBACK_TRANSPORT);
 
   const mobilierProducts = [
     {
       title: t("prod1_title"),
-      img: img(0),
-      imgAlt: imgAlt(0),
+      img: produitsImages[0]?.src ?? FALLBACK_PRODUITS[0].src,
+      imgAlt: produitsImages[0]?.alt ?? FALLBACK_PRODUITS[0].alt,
       desc: t("prod1_desc"),
       specs: [
         { label: t("prod1_spec1_label"), value: t("prod1_spec1_value") },
@@ -65,8 +70,8 @@ export default function Mobilier() {
     },
     {
       title: t("prod2_title"),
-      img: img(1),
-      imgAlt: imgAlt(1),
+      img: produitsImages[1]?.src ?? FALLBACK_PRODUITS[1].src,
+      imgAlt: produitsImages[1]?.alt ?? FALLBACK_PRODUITS[1].alt,
       desc: t("prod2_desc"),
       specs: [
         { label: t("prod2_spec1_label"), value: t("prod2_spec1_value") },
@@ -78,8 +83,8 @@ export default function Mobilier() {
     },
     {
       title: t("prod3_title"),
-      img: img(2),
-      imgAlt: imgAlt(2),
+      img: produitsImages[2]?.src ?? FALLBACK_PRODUITS[2].src,
+      imgAlt: produitsImages[2]?.alt ?? FALLBACK_PRODUITS[2].alt,
       desc: t("prod3_desc"),
       specs: [
         { label: t("prod3_spec1_label"), value: t("prod3_spec1_value") },
@@ -91,8 +96,8 @@ export default function Mobilier() {
     },
     {
       title: t("prod4_title"),
-      img: img(3),
-      imgAlt: imgAlt(3),
+      img: produitsImages[3]?.src ?? FALLBACK_PRODUITS[3].src,
+      imgAlt: produitsImages[3]?.alt ?? FALLBACK_PRODUITS[3].alt,
       desc: t("prod4_desc"),
       specs: [
         { label: t("prod4_spec1_label"), value: t("prod4_spec1_value") },
@@ -107,8 +112,8 @@ export default function Mobilier() {
   const transportProducts = [
     {
       title: t("trans1_title"),
-      img: img(4),
-      imgAlt: imgAlt(4),
+      img: transportImages[0]?.src ?? FALLBACK_TRANSPORT[0].src,
+      imgAlt: transportImages[0]?.alt ?? FALLBACK_TRANSPORT[0].alt,
       desc: t("trans1_desc"),
       specs: [
         { label: t("trans1_spec1_label"), value: t("trans1_spec1_value") },
@@ -119,8 +124,8 @@ export default function Mobilier() {
     },
     {
       title: t("trans2_title"),
-      img: img(5),
-      imgAlt: imgAlt(5),
+      img: transportImages[1]?.src ?? FALLBACK_TRANSPORT[1].src,
+      imgAlt: transportImages[1]?.alt ?? FALLBACK_TRANSPORT[1].alt,
       desc: t("trans2_desc"),
       specs: [
         { label: t("trans2_spec1_label"), value: t("trans2_spec1_value") },
@@ -157,9 +162,10 @@ export default function Mobilier() {
       />
 
       {/* Hero */}
+      {bandeauImages.length > 0 && (
       <section className="relative min-h-[60vh] flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <img loading="lazy" src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/jCghaPHMczbtTjIn.webp" alt="Mobilier gonflable Hallucine en plein air" className="w-full h-full object-cover" style={{ objectPosition: 'center 20%' }} decoding="async" />
+          <img loading="lazy" src={bandeauImages[0]?.src ?? FALLBACK_BANDEAU[0].src} alt={bandeauImages[0]?.alt ?? FALLBACK_BANDEAU[0].alt} className="w-full h-full object-cover" style={{ objectPosition: 'center 20%' }} decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.10_0.03_260_/_0.5)] via-[oklch(0.12_0.03_260_/_0.3)] to-[oklch(0.10_0.03_260_/_0.05)]" />
           <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.14_0.03_260_/_0.6)] via-transparent to-transparent" />
         </div>
@@ -177,13 +183,14 @@ export default function Mobilier() {
           </motion.div>
         </div>
       </section>
+      )}
 
       {/* Intro technologie */}
       <section className="py-24 md:py-32">
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={0} className="order-2 lg:order-1">
-              <img loading="lazy" src={img(6)} alt={imgAlt(6)} className="w-full rounded-lg border border-white/10" decoding="async" />
+              <img loading="lazy" src={produitsImages[4]?.src ?? FALLBACK_PRODUITS[4].src} alt={produitsImages[4]?.alt ?? FALLBACK_PRODUITS[4].alt} className="w-full rounded-lg border border-white/10" decoding="async" />
               <p className="text-white/40 text-xs mt-3 text-center italic">{t("tech_img_caption")}</p>
             </motion.div>
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={1} className="order-1 lg:order-2">
@@ -257,8 +264,8 @@ export default function Mobilier() {
               </div>
             </motion.div>
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} custom={1} className="relative h-[500px] hidden lg:block">
-              <img loading="lazy" src={img(4)} alt={imgAlt(4)} className="absolute top-0 left-0 w-3/4 rounded-lg border border-white/10 transform -rotate-6" decoding="async" />
-              <img loading="lazy" src={img(5)} alt={imgAlt(5)} className="absolute bottom-0 right-0 w-3/4 rounded-lg border border-white/10 transform rotate-3" decoding="async" />
+              <img loading="lazy" src={transportImages[0]?.src ?? FALLBACK_TRANSPORT[0].src} alt={transportImages[0]?.alt ?? FALLBACK_TRANSPORT[0].alt} className="absolute top-0 left-0 w-3/4 rounded-lg border border-white/10 transform -rotate-6" decoding="async" />
+              <img loading="lazy" src={transportImages[1]?.src ?? FALLBACK_TRANSPORT[1].src} alt={transportImages[1]?.alt ?? FALLBACK_TRANSPORT[1].alt} className="absolute bottom-0 right-0 w-3/4 rounded-lg border border-white/10 transform rotate-3" decoding="async" />
             </motion.div>
           </div>
         </div>
