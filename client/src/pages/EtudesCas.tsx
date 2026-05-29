@@ -10,6 +10,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import PagePhoto from "@/components/PagePhoto";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useRoutes } from "@/i18n/useRoutes";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
 import type { RouteKey } from "@/i18n/routes";
 
 const TEMOIGNAGES = ["t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8"];
@@ -31,6 +32,10 @@ export default function EtudesCas() {
   const { t } = useTranslation("etudes-cas");
   const route = useRoutes();
   useDocumentMeta(t("meta_title"), t("meta_desc"));
+
+  const bandeau = useMediaByPage("etudes-cas", "bandeau", [
+    { src: "/img/etudes-cas-projection.jpg", alt: t("photo_alt") },
+  ]);
 
   return (
     <PageShell>
@@ -59,7 +64,7 @@ export default function EtudesCas() {
       </section>
 
       {/* Photo */}
-      <PagePhoto src="/img/etudes-cas-projection.jpg" alt={t("photo_alt")} />
+      <PagePhoto src={bandeau[0]?.src ?? "/img/etudes-cas-projection.jpg"} alt={bandeau[0]?.alt ?? t("photo_alt")} />
 
       {/* Réalisations signature */}
       <section className="py-20 bg-background">
