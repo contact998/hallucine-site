@@ -12,7 +12,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import PageShell from "@/components/PageShell";
 import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useProductImages } from "@/hooks/useProductImages";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
 import EmailLink from "@/components/EmailLink";
 
 const FALLBACK_IMAGES_TENTE_X = [
@@ -22,9 +22,9 @@ const FALLBACK_IMAGES_TENTE_X = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ZgESYNaQchclOBaW.webp", alt: "Tente gonflable X Ealing Eagles personnalisée" },
 ];
 
-const contentImages = {
-  tentePerso: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/YDVeZvrXTWvHTZKL.webp",
-};
+const FALLBACK_PERSONNALISATION = [
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/YDVeZvrXTWvHTZKL.webp", alt: "Tentes gonflables X personnalisées avec différentes couleurs et logos" },
+];
 
 function ImageCarousel({ images }: { images: { src: string; alt: string }[] }) {
   const [idx, setIdx] = useState(0);
@@ -56,7 +56,8 @@ export default function TentesX() {
   const route = useRoutes();
   const { t } = useTranslation("tente-x");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-tente-x-AET6EuZJEbKcpbEmxnmWTB.png");
-  const heroImages = useProductImages("tente-x", FALLBACK_IMAGES_TENTE_X);
+  const heroImages = useMediaByPage("tente-x", "galerie", FALLBACK_IMAGES_TENTE_X);
+  const personnalisationImages = useMediaByPage("tente-x", "personnalisation", FALLBACK_PERSONNALISATION);
 
   return (
     <PageShell relatedProductsKey="tente-x">
@@ -76,6 +77,7 @@ export default function TentesX() {
       />
 
       {/* Hero */}
+      {heroImages.length > 0 && (
       <section className="pt-32 pb-12 bg-charcoal-light">
         <div className="container">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory text-center mb-10">
@@ -88,6 +90,7 @@ export default function TentesX() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Intro */}
       <section className="py-16 bg-background">
@@ -158,10 +161,11 @@ export default function TentesX() {
       </section>
 
       {/* Personnalisation */}
+      {personnalisationImages.length > 0 && (
       <section className="py-16 bg-background">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-10 items-start">
-            <ZoomImage src={contentImages.tentePerso} alt="Tentes gonflables X personnalisées avec différentes couleurs et logos" wrapperClassName="rounded-lg shadow-lg order-2 md:order-1" className="w-full" />
+            <ZoomImage src={personnalisationImages[0]?.src ?? FALLBACK_PERSONNALISATION[0].src} alt={personnalisationImages[0]?.alt ?? FALLBACK_PERSONNALISATION[0].alt} wrapperClassName="rounded-lg shadow-lg order-2 md:order-1" className="w-full" />
             <div className="order-1 md:order-2">
               <h2 className="text-3xl font-bold text-ivory mb-6">{t("custom_title")}</h2>
               <p className="text-white/70 leading-relaxed mb-6">{t("custom_desc")}</p>
@@ -173,6 +177,7 @@ export default function TentesX() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Caractéristiques techniques */}
       <section className="py-16 bg-charcoal-light">
