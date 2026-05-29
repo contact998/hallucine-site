@@ -7,11 +7,20 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Feather, Shield, Zap, Award } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import type { MediaImage } from "@/hooks/useMediaByCategory";
+
+const FALLBACK_TECHNO: MediaImage[] = [
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/zjGTWRUKMYDyOTDz.webp", alt: "Ecran 24m gonfle au Stade Velodrome" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/fVlIGWRbdtnxnbtQ.webp", alt: "Ecran 24m a plat au Stade Velodrome" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ahSYgICnXZOUogFE.webp", alt: "Equipe portant l ecran 24m a dos d homme" },
+];
 
 export default function TechnologySection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const { t } = useTranslation("home");
+  const technoImages = useMediaByPage("accueil", "techno", FALLBACK_TECHNO);
 
   return (
     <section id="technologie" className="relative py-32 overflow-hidden">
@@ -42,22 +51,22 @@ export default function TechnologySection() {
         >
           <div className="overflow-hidden rounded-lg">
             <img loading="lazy"
-              src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/zjGTWRUKMYDyOTDz.webp"
-              alt="Ecran 24m gonfle au Stade Velodrome"
+              src={technoImages[0]?.src ?? FALLBACK_TECHNO[0].src}
+              alt={technoImages[0]?.alt || FALLBACK_TECHNO[0].alt}
               className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
               width={600} height={400} decoding="async" />
           </div>
           <div className="overflow-hidden rounded-lg">
             <img loading="lazy"
-              src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/fVlIGWRbdtnxnbtQ.webp"
-              alt="Ecran 24m a plat au Stade Velodrome"
+              src={technoImages[1]?.src ?? FALLBACK_TECHNO[1].src}
+              alt={technoImages[1]?.alt || FALLBACK_TECHNO[1].alt}
               className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
               width={600} height={400} decoding="async" />
           </div>
           <div className="overflow-hidden rounded-lg">
             <img loading="lazy"
-              src="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ahSYgICnXZOUogFE.webp"
-              alt="Equipe portant l ecran 24m a dos d homme"
+              src={technoImages[2]?.src ?? FALLBACK_TECHNO[2].src}
+              alt={technoImages[2]?.alt || FALLBACK_TECHNO[2].alt}
               className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
               width={600} height={400} decoding="async" />
           </div>
