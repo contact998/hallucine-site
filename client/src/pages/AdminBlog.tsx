@@ -94,7 +94,7 @@ export default function AdminBlog() {
 
   const { data: mediaData, isLoading: loadingMedia } =
     trpc.media.list.useQuery(
-      { category: "blog", activeOnly: true, limit: 100, offset: 0 },
+      { activeOnly: true, limit: 300, offset: 0 },
       { enabled: showMediaPicker }
     );
 

@@ -203,26 +203,20 @@ async function startServer() {
       res.status(500).json({ error: "Erreur interne" });
     }
   });
-  // Endpoint de diagnostic temporaire — accessible en prod via token (à retirer après).
-  app.get("/api/debug-db", async (req, res) => {
-    if (process.env.NODE_ENV === "production" && req.query.token !== "diag-7h3k9x2") {
-      return res.status(404).send("Not Found");
-    }
-    try {
-      const { db } = await import("../db");
-      const [cur] = await (db as any).execute("SELECT DATABASE() as db, @@hostname as host");
-      const [bp]  = await (db as any).execute("SELECT count(*) as n FROM blog_posts");
-      const [ml]  = await (db as any).execute("SELECT count(*) as n FROM media_library");
-      res.json({
-        databaseUrlPrefix: (process.env.DATABASE_URL || "").replace(/:([^:@]+)@/, ":***@").substring(0, 55),
-        current: cur[0],
-        blog_posts: bp[0]?.n,
-        media_library: ml[0]?.n,
-      });
-    } catch (err: any) {
-      res.status(500).json({ error: err.message });
-    }
-  });
+  // Endpoint de diagnostic — désactivé en production.
+  if (process.env.NODE_ENV !== "production") {
+    app.get("/api/debug-db", async (_req, res) => {
+      try {
+        const { db } = await import("../db");
+        const [cur] = await (db as any).execute("SELECT DATABASE() as db");
+        const [bp]  = await (db as any).execute("SELECT count(*) as n FROM blog_posts");
+        const [ml]  = await (db as any).execute("SELECT count(*) as n FROM media_library");
+        res.json({ current: cur[0], blog_posts: bp[0]?.n, media_library: ml[0]?.n });
+      } catch (err: any) {
+        res.status(500).json({ error: err.message });
+      }
+    });
+  }
   // GET /api/blog/meta/:slug — metas publiques d'un article pour le SSR
   app.get("/api/blog/meta/:slug", async (req, res) => {
     try {

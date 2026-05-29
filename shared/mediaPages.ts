@@ -112,6 +112,9 @@ export const MEDIA_PAGES: MediaPage[] = [
     { key: "bandeau",    label: "Bandeau" },
     { key: "galerie",    label: "Galerie" },
   ]},
+  { key: "blog",             label: "Blog",                sections: [
+    { key: "couvertures", label: "Couvertures d'articles" },
+  ]},
 ];
 
 export const MEDIA_PAGE_KEYS = MEDIA_PAGES.map(p => p.key);
