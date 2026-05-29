@@ -6,7 +6,7 @@
  * Le PUBLISH passe par l'endpoint existant `blog.publish` (pipeline traduction/cache).
  */
 import { useState, useMemo } from "react";
-import { useList, useCreate, useUpdate, useDelete, useInvalidate } from "@refinedev/core";
+import { useList, useCreate, useUpdate, useInvalidate } from "@refinedev/core";
 import { Loader2, Pencil, Trash2, X, Plus, ImageOff, Send } from "lucide-react";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
@@ -151,7 +151,10 @@ function BlogEditModal({ item, onClose, onChanged }: { item: BlogPost | null; on
 
   const { mutate: create, isPending: creating } = useCreate();
   const { mutate: update, isPending: saving } = useUpdate();
-  const { mutate: remove } = useDelete();
+  const del = trpc.blog.delete.useMutation({
+    onSuccess: () => { toast.success("Article supprimé"); onChanged(); onClose(); },
+    onError: (e) => toast.error(e.message),
+  });
 
   const publish = trpc.blog.publish.useMutation({
     onSuccess: () => { toast.success("Article publié (traduction DeepL lancée)"); onChanged(); onClose(); },
@@ -176,11 +179,10 @@ function BlogEditModal({ item, onClose, onChanged }: { item: BlogPost | null; on
     }
   }
 
-  function softDelete() {
+  function deletePost() {
     if (!item) return;
-    if (!confirm("Retirer cet article ? Il disparaît du site et de l'admin (réversible en base).")) return;
-    remove({ resource: "blogResource", id: item.id, successNotification: () => ({ type: "success", message: "Article retiré" }) },
-      { onSuccess: () => { onChanged(); onClose(); } });
+    if (!confirm("Supprimer définitivement cet article ? Cette action est irréversible.")) return;
+    del.mutate({ id: item.id });
   }
 
   const busy = creating || saving;
@@ -250,8 +252,8 @@ function BlogEditModal({ item, onClose, onChanged }: { item: BlogPost | null; on
         {/* Pied */}
         <div className="flex items-center justify-between gap-3 px-5 py-4 border-t border-white/10 sticky bottom-0 bg-neutral-900">
           {!isNew ? (
-            <button onClick={softDelete} className="flex items-center gap-1.5 text-sm text-red-400 hover:text-red-300">
-              <Trash2 className="w-4 h-4" /> Retirer
+            <button onClick={deletePost} disabled={del.isPending} className="flex items-center gap-1.5 text-sm text-red-400 hover:text-red-300 disabled:opacity-50">
+              <Trash2 className="w-4 h-4" /> Supprimer
             </button>
           ) : <span />}
           <div className="flex items-center gap-2">

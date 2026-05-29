@@ -11,7 +11,7 @@ import {
   getBlogPostById,
   createBlogPost,
   updateBlogPost,
-  softDeleteBlogPost,
+  deleteBlogPost,
 } from "../blog";
 
 const listInput = z.object({
@@ -92,7 +92,7 @@ export const blogResourceRouter = router({
     .mutation(async ({ input }) => {
       const post = await getBlogPostById(input.id);
       if (!post) throw new Error("Article introuvable");
-      await softDeleteBlogPost(input.id);
+      await deleteBlogPost(input.id);   // réutilise la suppression métier existante (physique)
       return { id: input.id };
     }),
 });
