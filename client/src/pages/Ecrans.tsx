@@ -13,6 +13,7 @@ import ProductHero from "@/components/product/ProductHero";
 import ProductButton from "@/components/product/ProductButton";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
+import { useMediaByPage } from "@/hooks/useMediaByCategory";
 
 export default function Ecrans() {
   const route = useRoutes();
@@ -48,6 +49,10 @@ export default function Ecrans() {
 
   const ecransFaqs = faqItems.map(f => ({ question: f.q, answer: f.a }));
 
+  const bandeau = useMediaByPage("ecrans", "bandeau", [
+    { src: "/img/ecrans-seance.jpg", alt: t("photo_alt") },
+  ]);
+
   return (
     <PageShell withCountdown relatedProductsKey="ecrans">
       <PageStructuredData
@@ -73,7 +78,7 @@ export default function Ecrans() {
         <p>{t("hero_desc")}</p>
       </ProductHero>
 
-      <PagePhoto src="/img/ecrans-seance.jpg" alt={t("photo_alt")} />
+      <PagePhoto src={bandeau[0]?.src ?? "/img/ecrans-seance.jpg"} alt={bandeau[0]?.alt ?? t("photo_alt")} />
 
       {/* Les gammes */}
       <section className="py-20 bg-background">
