@@ -7,8 +7,28 @@ import { useState, useMemo } from "react";
 import { useList, useCreate, useUpdate, useDelete, useInvalidate } from "@refinedev/core";
 import { Loader2, Pencil, Trash2, X, Plus, ImageOff } from "lucide-react";
 import type { SeoOverride } from "../../../drizzle/schema";
+import { ROUTES, type RouteKey } from "../i18n/routes";
 
 const PER_PAGE = 50;
+
+// Pages publiques : libellé lisible → chemin FR réel (résolu via le registre de routes).
+const PAGE_LABELS: Record<RouteKey, string> = {
+  home: "Accueil", ecrans: "Écrans (hub)", "ecran-geant": "Écran Géant",
+  "ecran-etanche": "Écran Étanche", "ecran-economique": "Écran Économique",
+  comparaison: "Comparaison", configurateur: "Configurateur", "drive-in": "Drive-in",
+  packs: "Packs", location: "Location", "etudes-cas": "Études de cas",
+  "cas-velodrome": "Cas — Vélodrome", "cas-oran": "Cas — Oran", "ecrans-led": "Écrans LED",
+  tentes: "Tentes (hub)", "tente-x": "Tente X", "tente-n": "Tente N", "tente-v": "Tente V",
+  "tente-araignee": "Tente Araignée", arches: "Arches", mobilier: "Mobilier",
+  accessoires: "Accessoires", galerie: "Galerie", "galerie-video": "Galerie vidéo",
+  contact: "Contact", "a-propos": "À propos", histoire: "Histoire", blog: "Blog",
+  "mode-emploi": "Mode d'emploi", "devenir-distributeur": "Devenir distributeur",
+  "trouver-distributeur": "Trouver un distributeur", "mentions-legales": "Mentions légales",
+  confidentialite: "Confidentialité", cookies: "Cookies",
+};
+const SEO_PAGES = (Object.keys(PAGE_LABELS) as RouteKey[])
+  .map((k) => ({ path: ROUTES.fr[k], label: PAGE_LABELS[k] }))
+  .filter((p) => p.path);
 
 export function SeoPanel() {
   const [search, setSearch] = useState("");
@@ -153,8 +173,18 @@ function SeoEditModal({ item, onClose, onChanged }: { item: SeoOverride | null; 
           <button onClick={onClose} className="text-white/50 hover:text-white"><X className="w-5 h-5" /></button>
         </div>
         <div className="p-5 space-y-4">
-          <Field label="Chemin d'URL (ex: /ecran-geant — « / » pour l'accueil)">
-            <input value={path} onChange={(e) => setPath(e.target.value)} placeholder="/ecran-geant" className={inputCls} />
+          <Field label="Page">
+            <select
+              value={SEO_PAGES.some((p) => p.path === path) ? path : ""}
+              onChange={(e) => { if (e.target.value) setPath(e.target.value); }}
+              className={inputCls}
+            >
+              <option value="">— Choisir une page (ou chemin libre ci-dessous) —</option>
+              {SEO_PAGES.map((p) => <option key={p.path} value={p.path}>{p.label} — {p.path}</option>)}
+            </select>
+          </Field>
+          <Field label="Chemin d'URL (rempli automatiquement, modifiable — « / » = accueil)">
+            <input value={path} onChange={(e) => setPath(e.target.value)} placeholder="/mon-chemin" className={inputCls} />
           </Field>
           <Field label={`Title (${titleLen} car. — ~60 max conseillé · vide = inchangé)`}>
             <input value={title} onChange={(e) => setTitle(e.target.value)} className={inputCls} />
