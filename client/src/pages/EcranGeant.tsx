@@ -259,9 +259,9 @@ export default function EcranGeant() {
           <div className="mt-8 p-6 bg-card border border-warm/20 rounded-lg flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8">
             <p className="text-ivory font-medium">{t("specs_note")}</p>
             <EmailLink className="flex items-center gap-2 text-warm hover:text-warm-light transition-colors" />
-            <a href="tel:+33458212010" className="flex items-center gap-2 text-warm hover:text-warm-light transition-colors">
+            <a href="tel:+33458210048" className="flex items-center gap-2 text-warm hover:text-warm-light transition-colors">
               <Phone className="w-4 h-4" />
-              +33 4 58 21 20 10
+              +33 4 58 21 00 48
             </a>
           </div>
         </div>

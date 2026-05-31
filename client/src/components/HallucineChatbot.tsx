@@ -125,7 +125,7 @@ export default function HallucineChatbot() {
         {
           role: "assistant",
           content:
-            "Désolé, une erreur est survenue. Vous pouvez nous contacter directement au +33 4 58 21 20 10 ou via contact [at] hallucine.fr.",
+            "Désolé, une erreur est survenue. Vous pouvez nous contacter directement au +33 4 58 21 00 48 ou via contact [at] hallucine.fr.",
         },
       ]);
     },

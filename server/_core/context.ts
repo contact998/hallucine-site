@@ -20,6 +20,13 @@ export async function createContext(
     user = null;
   }
 
+  // DEV UNIQUEMENT — admin local sans login Google (jamais en prod : le build
+  // prod fixe NODE_ENV="production"). Pour prévisualiser l'admin sur localhost
+  // sans déployer. À NE PAS committer/pousser.
+  if (!user && process.env.NODE_ENV !== "production") {
+    user = { id: 0, email: "dev@local", role: "admin", name: "Dev Admin" } as unknown as User;
+  }
+
   return {
     req: opts.req,
     res: opts.res,

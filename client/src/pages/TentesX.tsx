@@ -236,7 +236,7 @@ export default function TentesX() {
         <div className="container text-center">
           <p className="text-white/60 text-sm">
             Mail : <EmailLink className="text-warm hover:underline" />
-            {" / "}Tel : <a href="tel:+33458212010" className="text-warm hover:underline">+33 4 58 21 20 10</a>
+            {" / "}Tel : <a href="tel:+33458210048" className="text-warm hover:underline">+33 4 58 21 00 48</a>
             {" / "}<a href="https://wa.me/33680147694" target="_blank" rel="noopener noreferrer" className="text-warm hover:underline">WhatsApp</a>
           </p>
         </div>

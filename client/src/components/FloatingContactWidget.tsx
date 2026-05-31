@@ -9,7 +9,7 @@ import { Link } from "wouter";
 import { Home, Phone, Mail, MessageCircle, ChevronUp } from "lucide-react";
 import { useRoutes } from "@/i18n/useRoutes";
 
-const TEL_FIXE = "+33458212010";
+const TEL_FIXE = "+33458210048";
 const WHATSAPP = "33680147694";
 const EMAIL    = "contact@hallucine.fr";
 
@@ -40,7 +40,7 @@ export default function FloatingContactWidget() {
         href={`tel:${TEL_FIXE}`}
         icon={<Phone className="w-4 h-4" />}
         label="Téléphone fixe"
-        tooltip="+33 4 58 21 20 10"
+        tooltip="+33 4 58 21 00 48"
       />
       <ActionItem
         as="a"

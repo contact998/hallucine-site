@@ -212,7 +212,7 @@ export default function EcranEtanche() {
             </table>
           </div>
           <p className="text-white/40 text-xs mt-4">
-            Contact : <EmailLink asText /> · Tél : <a href="tel:+33458212010" className="hover:text-warm">+33 4 58 21 20 10</a> · <a href="https://wa.me/33680147694" target="_blank" rel="noopener noreferrer" className="hover:text-warm">WhatsApp</a>
+            Contact : <EmailLink asText /> · Tél : <a href="tel:+33458210048" className="hover:text-warm">+33 4 58 21 00 48</a> · <a href="https://wa.me/33680147694" target="_blank" rel="noopener noreferrer" className="hover:text-warm">WhatsApp</a>
           </p>
         </div>
       </section>

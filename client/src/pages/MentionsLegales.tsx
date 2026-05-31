@@ -115,7 +115,7 @@ export default function MentionsLegales() {
                 <EmailLink className="text-gold hover:underline" />
               </p>
               <p className="mt-2">
-                <strong className="text-white/80">{t("s9_tel")}</strong> +33 4 58 21 20 10
+                <strong className="text-white/80">{t("s9_tel")}</strong> +33 4 58 21 00 48
               </p>
             </div>
           </div>

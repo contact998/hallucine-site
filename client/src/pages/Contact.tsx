@@ -88,7 +88,7 @@ export default function Contact() {
               <div className="space-y-4 text-white/60 text-sm leading-relaxed">
                 <h3 className="text-white font-semibold text-base mb-2">{t("coords_title")}</h3>
                 <p>
-                  <strong className="text-white/80">{t("phone_label_long")}</strong> +33 4 58 21 20 10
+                  <strong className="text-white/80">{t("phone_label_long")}</strong> +33 4 58 21 00 48
                 </p>
                 <p>
                   <strong className="text-white/80">{t("whatsapp_label")}</strong>{" "}
