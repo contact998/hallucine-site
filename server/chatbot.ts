@@ -274,20 +274,41 @@ export async function chatWithAssistant(
   ];
 
   try {
-    const result = await invokeLLM({ messages });
-    const content = result.choices?.[0]?.message?.content;
-    if (typeof content === "string") {
-      return content;
+    // MiniMax (OpenAI-compatible API). Stays independent from server/_core/llm.ts
+    // which is wired to Anthropic; the on-site chatbot uses MiniMax directly.
+    const apiKey = process.env.MINIMAX_API_KEY;
+    const baseUrl = (process.env.MINIMAX_BASE_URL || "https://api.minimaxi.com/v1").replace(/\/$/, "");
+    const model = process.env.MINIMAX_MODEL || "MiniMax-M2.7";
+    if (!apiKey) {
+      throw new Error("MINIMAX_API_KEY is not configured");
     }
-    if (Array.isArray(content)) {
-      return content
-        .filter((p) => p.type === "text")
-        .map((p) => (p as { type: "text"; text: string }).text)
-        .join("\n");
+    const response = await fetch(`${baseUrl}/chat/completions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model,
+        messages,
+        temperature: 0.7,
+        max_tokens: 1024,
+      }),
+    });
+    if (!response.ok) {
+      const errBody = await response.text().catch(() => "");
+      throw new Error(`MiniMax API ${response.status}: ${errBody.slice(0, 300)}`);
+    }
+    const data = (await response.json()) as {
+      choices?: Array<{ message?: { content?: string } }>;
+    };
+    const content = data.choices?.[0]?.message?.content;
+    if (typeof content === "string" && content.trim()) {
+      return content;
     }
     return FALLBACK_MESSAGES[lang] ?? FALLBACK_MESSAGES["fr"];
   } catch (error) {
-    console.error("Chatbot LLM error:", error);
+    console.error("Chatbot LLM error (MiniMax):", error);
     return ERROR_MESSAGES[lang] ?? ERROR_MESSAGES["fr"];
   }
 }
