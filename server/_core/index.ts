@@ -63,7 +63,8 @@ async function startServer() {
           // 'unsafe-eval' supprimé — risque XSS (surveiller les erreurs console)
           "https://www.googletagmanager.com",
           "https://www.google-analytics.com",
-                            ],
+          "https://chat.hallucine.fr",   // Chatwoot widget SDK
+        ],
         styleSrc: [
           "'self'",
           "'unsafe-inline'",   // Tailwind + styled-components injectent du CSS inline
@@ -74,6 +75,24 @@ async function startServer() {
           "https://fonts.gstatic.com",
           "data:",
         ],
+        connectSrc: [
+          "'self'",
+          "https://api.zippopotam.us",
+          "https://recherche-entreprises.api.gouv.fr",
+          "https://open.er-api.com",
+          "https://www.google-analytics.com",
+          "https://www.googletagmanager.com",
+          "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev",
+          "https://chat.hallucine.fr",   // Chatwoot REST API
+          "wss://chat.hallucine.fr",     // Chatwoot ActionCable realtime
+          "wss:",              // WebSocket HMR
+        ],
+        frameSrc: [
+          "'self'",
+          "https://www.youtube.com",
+          "https://youtube.com",
+          "https://chat.hallucine.fr",   // Chatwoot widget iframe
+        ],
         imgSrc: [
           "'self'",
           "data:",
@@ -83,22 +102,7 @@ async function startServer() {
           "https://img.youtube.com",
           "https://www.googletagmanager.com",
           "https://www.google-analytics.com",
-                    "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev",
-        ],
-        connectSrc: [
-          "'self'",
-          "https://api.zippopotam.us",
-          "https://recherche-entreprises.api.gouv.fr",
-          "https://open.er-api.com",
-          "https://www.google-analytics.com",
-          "https://www.googletagmanager.com",
-                              "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev",
-          "wss:",              // WebSocket HMR
-        ],
-        frameSrc: [
-          "'self'",
-          "https://www.youtube.com",
-          "https://youtube.com",
+          "https://chat.hallucine.fr",   // Chatwoot avatars + attachments
         ],
         mediaSrc: ["'self'", "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev", "https://d2xsxph8kpxj0f.cloudfront.net"],
         objectSrc: ["'none'"],
