@@ -5,9 +5,6 @@ import { Route, Switch, Redirect } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import PageFrame from "./components/PageFrame";
 import ScrollToTop from "./components/ScrollToTop";
-import WhatsAppButton from "./components/WhatsAppButton";
-import FloatingContactWidget from "./components/FloatingContactWidget";
-const HallucineChatbot = lazy(() => import("./components/HallucineChatbot"));
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { usePageTracking } from "./hooks/useAnalytics";
 import { useCanonical } from "./hooks/useCanonical";
@@ -157,11 +154,6 @@ function App() {
           {mounted && (
             <>
               <Toaster />
-              <FloatingContactWidget />
-              <WhatsAppButton />
-              <Suspense fallback={null}>
-                <HallucineChatbot />
-              </Suspense>
             </>
           )}
         </TooltipProvider>

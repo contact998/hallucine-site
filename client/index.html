@@ -58,6 +58,29 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 
+    <!-- Chatwoot live chat widget (self-hosted, same-site domain to avoid 3rd-party cookie blocking) -->
+    <script>
+      (function (d, t) {
+        var hostMap = {
+          "hallucinecran.fr": "chat.hallucinecran.fr",
+          "www.hallucinecran.fr": "chat.hallucinecran.fr"
+        };
+        var host = window.location.hostname;
+        var BASE_URL = "https://" + (hostMap[host] || "chat.hallucine.fr");
+        var g = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+        g.src = BASE_URL + "/packs/js/sdk.js";
+        g.defer = true;
+        g.async = true;
+        s.parentNode.insertBefore(g, s);
+        g.onload = function () {
+          window.chatwootSDK.run({
+            websiteToken: "msdo66GfzwuNM29FGSkfmXfK",
+            baseUrl: BASE_URL,
+          });
+        };
+      })(document, "script");
+    </script>
   </body>
 
 </html>
