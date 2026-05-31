@@ -6,7 +6,6 @@ import { createServer } from "http";
 import net from "net";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { registerGoogleAuthRoutes } from "../googleAuth";
-import { handleChatwootWebhook } from "../chatwootBot";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
@@ -154,9 +153,6 @@ async function startServer() {
 
   // Authentification : Google OAuth (admin uniquement)
   registerGoogleAuthRoutes(app);
-
-  // Chatwoot Agent Bot — répond aux visiteurs via LLM Hallucine
-  app.post("/api/chatwoot/webhook", handleChatwootWebhook);
 
   // Route sendBeacon pour la detection d'abandon (ne passe pas par tRPC)
   app.post("/api/abandon-partial", async (req, res) => {
