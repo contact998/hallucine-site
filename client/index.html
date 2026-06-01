@@ -58,8 +58,20 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 
-    <!-- Chatwoot live chat widget (self-hosted, same-site domain chat.hallucinecran.fr). -->
+    <!-- Chatwoot live chat widget (self-hosted, same-site domain chat.hallucinecran.fr).
+         chatwootSettings est lu AVANT le chargement du SDK pour overrider les
+         textes "We are away" — l'IA Captain AI répond 24/7 derrière, donc
+         on affiche un message positif unique en ligne / hors-ligne. -->
     <script>
+      window.chatwootSettings = {
+        type: "standard",
+        launcherTitle: "Besoin d'aide ?",
+        welcomeTitle: "Bonjour, comment pouvons-nous vous aider ?",
+        welcomeTagline: "Laissez votre nom, votre email et votre message. Notre assistant répond tout de suite.",
+        availableMessage: "Assistant disponible",
+        unavailableMessage: "Assistant disponible",
+        showPopoutButton: false,
+      };
       (function (d, t) {
         var hostMap = {
           "hallucinecran.fr": "chat.hallucinecran.fr",
