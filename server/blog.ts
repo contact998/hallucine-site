@@ -238,6 +238,25 @@ export async function countPublishedPosts(lang: string = "fr"): Promise<number> 
   return Number(result?.count ?? 0);
 }
 
+/**
+ * Articles publiés (TOUTES langues) projetés pour le sitemap dynamique.
+ * Renvoie de quoi construire les <loc> par TLD et les hreflang croisés (parentId).
+ */
+export async function getAllPublishedForSitemap(): Promise<
+  { id: number; slug: string; lang: string; parentId: number | null; updatedAt: Date }[]
+> {
+  return db.select({
+    id: blogPosts.id,
+    slug: blogPosts.slug,
+    lang: blogPosts.lang,
+    parentId: blogPosts.parentId,
+    updatedAt: blogPosts.updatedAt,
+  })
+    .from(blogPosts)
+    .where(eq(blogPosts.status, "published"))
+    .orderBy(desc(blogPosts.publishedAt));
+}
+
 // ─── Convention « ressource » (dataProvider Refine) ─────────────────────────────
 // Même forme que mediaResource : list({pagination,sort,filters})→{data,total}.
 

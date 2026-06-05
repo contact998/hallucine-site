@@ -274,69 +274,19 @@ if (!existsSync(relatedConfigPath)) {
 
 // ─── 4. Vérification du sitemap ───────────────────────────────────────────
 
-section("4. Sitemap");
+section("4. Sitemap (servi dynamiquement, un par TLD)");
 
-const sitemapPath = join(DIST, "sitemap.xml");
-
-if (!existsSync(sitemapPath)) {
-  fail("sitemap.xml absent dans dist/public/");
+// Plus de fichier statique : le sitemap est généré au runtime par la route
+// GET /sitemap.xml (server/sitemap.ts), un par TLD avec hreflang. Sa structure
+// (loc par domaine, hreflang, articles via parentId) est validée par le test
+// unitaire server/sitemap.test.ts — `npx vitest run server/sitemap.test.ts`.
+const sitemapModule = join(ROOT, "server", "sitemap.ts");
+if (existsSync(sitemapModule)) {
+  ok("Générateur présent (server/sitemap.ts) — sitemap servi dynamiquement, un par TLD");
 } else {
-  const sitemap = readFileSync(sitemapPath, "utf-8");
-
-  // Compter les URLs
-  const locUrls = sitemap.match(/<loc>([^<]+)<\/loc>/g) || [];
-  info(`${locUrls.length} URLs dans le sitemap`);
-
-  // Vérifier l'absence de trailing slash (convention : URL canonique sans slash,
-  // sauf les homes dont le path est "/")
-  const withSlash = locUrls.filter(u => {
-    const url = u.replace(/<\/?loc>/g, "");
-    return new URL(url).pathname !== "/" && url.endsWith("/");
-  });
-
-  if (withSlash.length === 0) {
-    ok(`Aucune URL du sitemap n'a de trailing slash superflu`);
-  } else {
-    for (const u of withSlash.slice(0, 5)) {
-      fail(`URL avec trailing slash : ${u}`);
-    }
-    if (withSlash.length > 5) {
-      fail(`... et ${withSlash.length - 5} autres URLs avec trailing slash`);
-    }
-  }
-
-  // Vérifier domaines cohérents
-  const validDomains = [
-    "hallucinecran.fr", "hallucinecran.com",
-    "hallucinecran.de", "hallucinecran.es", "hallucinecran.it",
-  ];
-  const badDomains = locUrls.filter(u =>
-    !validDomains.some(d => u.includes(d))
-  );
-
-  if (badDomains.length === 0) {
-    ok(`Tous les domaines du sitemap sont valides`);
-  } else {
-    for (const u of badDomains.slice(0, 3)) {
-      fail(`Domaine inconnu dans le sitemap : ${u}`);
-    }
-  }
-
-  // Vérifier présence de hreflang dans le sitemap
-  const hreflangCount = (sitemap.match(/xhtml:link/g) || []).length;
-  if (hreflangCount > 0) {
-    ok(`hreflang présents dans le sitemap (${hreflangCount} balises)`);
-  } else {
-    warn("Aucun hreflang dans le sitemap");
-  }
-
-  // Vérifier domaines hardcodés indésirables
-  if (sitemap.includes("hallucine.ai") || sitemap.includes("hallucine.fr/")) {
-    fail("Domaine indésirable (hallucine.ai ou hallucine.fr) dans le sitemap");
-  } else {
-    ok("Aucun domaine indésirable dans le sitemap");
-  }
+  fail("server/sitemap.ts introuvable — la route /sitemap.xml ne peut pas fonctionner");
 }
+info("Articles blog : lus au runtime depuis la base blog (non disponibles au build).");
 
 // ─── 5. Vérification robots.txt ───────────────────────────────────────────
 

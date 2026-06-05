@@ -9,6 +9,8 @@ import { registerGoogleAuthRoutes } from "../googleAuth";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
+import { buildSitemapXml, type SitemapPost } from "../sitemap";
+import { DOMAIN_LANG_MAP } from "../../client/src/i18n/domains";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -137,6 +139,40 @@ async function startServer() {
   app.get("/robots.txt", (_req, res) => {
     res.setHeader("Content-Type", "text/plain");
     res.send("User-agent: *\nAllow: /\n\nSitemap: https://hallucinecran.fr/sitemap.xml\nSitemap: https://hallucinecran.com/sitemap.xml\nSitemap: https://hallucinecran.de/sitemap.xml\nSitemap: https://hallucinecran.es/sitemap.xml\nSitemap: https://hallucinecran.it/sitemap.xml\n\nDisallow: /admin\nDisallow: /profil\nDisallow: /api/\n");
+  });
+
+  // Sitemap dynamique, UN PAR TLD (host-aware) : chaque domaine ne liste que les
+  // URLs de sa langue en <loc>, avec les hreflang vers les autres TLD. Les articles
+  // de blog sont lus au runtime (base blog joignable), avec un cache mémoire de 1 h.
+  // Enregistré AVANT serveStatic/setupVite pour primer sur tout fichier statique.
+  const SITEMAP_TTL_MS = 60 * 60 * 1000;
+  const sitemapCache = new Map<string, { xml: string; at: number }>();
+  app.get("/sitemap.xml", async (req, res) => {
+    const lang = DOMAIN_LANG_MAP[req.hostname] ?? "fr";
+    res.setHeader("Content-Type", "application/xml; charset=utf-8");
+
+    const cached = sitemapCache.get(lang);
+    if (cached && Date.now() - cached.at < SITEMAP_TTL_MS) {
+      res.send(cached.xml);
+      return;
+    }
+
+    let posts: SitemapPost[] = [];
+    try {
+      const { getAllPublishedForSitemap } = await import("../blog");
+      posts = await getAllPublishedForSitemap();
+      if (posts.length === 0) {
+        console.warn("[sitemap] 0 article publié récupéré — sitemap limité aux routes statiques");
+      }
+    } catch (err) {
+      // Garde-fou : ne JAMAIS servir un sitemap silencieusement vide. En cas d'échec
+      // base, on log explicitement et on sert au moins les routes statiques.
+      console.error("[sitemap] Échec récupération des articles blog :", err);
+    }
+
+    const xml = buildSitemapXml(lang, posts);
+    sitemapCache.set(lang, { xml, at: Date.now() });
+    res.send(xml);
   });
 
   // security.txt (RFC 9116) — contact pour le signalement de failles.
