@@ -5,21 +5,36 @@
  * Réutilise la logique testée de server/blog.ts (decodeHtmlEntities + slugify).
  * Le titre stocké contient encore l'entité, donc on peut recalculer un slug propre.
  *
- * Usage (là où BLOG_DATABASE_URL est joignable — ex. `railway run`) :
+ * Usage (en local via .env.local — blog_posts vit dans la base `railway`, donc
+ * DATABASE_URL suffit ; ou via `railway run` en prod) :
  *   npx tsx scripts/fix-blog-slugs.mjs           # DRY-RUN : liste ce qui changerait
  *   npx tsx scripts/fix-blog-slugs.mjs --apply   # applique les mises à jour
  *
- * Sortie : les couples ancien_slug → nouveau_slug (utile si on veut poser des 301).
+ * Sortie : les couples ancien_slug → nouveau_slug. Ces couples sont figés dans
+ * server/blogSlugRedirects.ts (301 servies par server/_core/index.ts).
  */
 
-import { getAllBlogPosts, updateBlogPost, slugify, decodeHtmlEntities } from "../server/blog.ts";
+import { config } from "dotenv";
+config({ path: ".env.local" });
+config();
+
+// blog_posts vit dans la base `railway`. En prod, BLOG_DATABASE_URL la pointe ;
+// en local seul DATABASE_URL est présent (.env.local) → on retombe dessus (même
+// base). DOIT être défini AVANT d'importer server/blog.ts (le pool y est créé à
+// l'import, il capturerait sinon une URL vide).
+if (!process.env.BLOG_DATABASE_URL && process.env.DATABASE_URL) {
+  process.env.BLOG_DATABASE_URL = process.env.DATABASE_URL;
+  console.log("ℹ️  BLOG_DATABASE_URL absent → fallback sur DATABASE_URL (même base).");
+}
+if (!process.env.BLOG_DATABASE_URL) {
+  console.error("❌ Ni BLOG_DATABASE_URL ni DATABASE_URL trouvée — lance via `railway run` ou ajoute-la dans .env.local.");
+  process.exit(1);
+}
 
 const APPLY = process.argv.includes("--apply");
 
-if (!process.env.BLOG_DATABASE_URL) {
-  console.error("❌ BLOG_DATABASE_URL absent de l'environnement — lance via `railway run` ou exporte la variable.");
-  process.exit(1);
-}
+// Import dynamique APRÈS config() (cf. note ci-dessus sur l'ordre d'init du pool).
+const { getAllBlogPosts, updateBlogPost, slugify, decodeHtmlEntities } = await import("../server/blog.ts");
 
 const posts = await getAllBlogPosts(5000);
 console.log(`ℹ️  ${posts.length} article(s) chargé(s).`);

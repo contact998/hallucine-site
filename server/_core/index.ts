@@ -10,6 +10,7 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { buildSitemapXml, type SitemapPost } from "../sitemap";
+import { BLOG_SLUG_REDIRECTS } from "../blogSlugRedirects";
 import { DOMAIN_LANG_MAP } from "../../client/src/i18n/domains";
 
 function isPortAvailable(port: number): Promise<boolean> {
@@ -287,6 +288,21 @@ async function startServer() {
   // Redirection 301 : /devis → /contactez-nous (filet de sécurité pour liens externes)
   app.get("/devis", (_req, res) => {
     res.redirect(301, "/contactez-nous");
+  });
+
+  // Redirection 301 des anciens slugs de blog pollués par des entités HTML
+  // (résidu « x27 » d'avant le correctif decodeHtmlEntities — cf.
+  // server/blogSlugRedirects.ts). Ici plutôt que dans serveStatic pour
+  // s'appliquer aussi en dev. Ne touche QUE les slugs historiques connus ;
+  // tout le reste retombe sur le SPA / l'injection de metas blog.
+  app.get("/blog/:slug", (req, res, next) => {
+    const slug = req.params.slug.replace(/\/+$/, "");
+    const target = BLOG_SLUG_REDIRECTS[slug];
+    if (target && target !== slug) {
+      const query = req.originalUrl.split("?")[1];
+      return res.redirect(301, `/blog/${target}${query ? "?" + query : ""}`);
+    }
+    return next();
   });
 
   // tRPC API
