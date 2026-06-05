@@ -381,5 +381,17 @@ if (errors > 0) {
 // de blog y sont lus au runtime via server/blog.ts (base BLOG_DATABASE_URL), ce qui
 // corrige leur absence quand le build interrogeait la mauvaise base (DATABASE_URL).
 
+// ─── Génération de llms-full.txt (markdown GEO, depuis les locales) ───────────
+// Servi en statique depuis dist/public (le conteneur runtime n'a pas les locales).
+try {
+  const { bundledResources } = await import("../client/src/i18n/locales-bundled.node.ts");
+  const { buildLlmsFull } = await import("../server/llmsFull.ts");
+  const md = buildLlmsFull("fr", bundledResources.fr ?? {});
+  writeFileSync(join(DIST, "llms-full.txt"), md, "utf-8");
+  console.log(`📄 llms-full.txt généré (${md.length} caractères)`);
+} catch (err) {
+  console.warn("⚠️  llms-full.txt non généré :", err.message);
+}
+
 // Forcer la fermeture du pool MySQL (évite que le process reste bloqué)
 process.exit(0);

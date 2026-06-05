@@ -2,6 +2,8 @@
 
 > Hallucine est le fabricant français d'écrans gonflables géants, de tentes événementielles et d'arches publicitaires gonflables. Basé en France, livraison internationale.
 
+> Version markdown complète (toutes les pages avec descriptions) : https://hallucinecran.fr/llms-full.txt
+
 ## Produits
 
 - [Écrans Gonflables — Catalogue complet](https://hallucinecran.fr/ecran-gonflable/)
