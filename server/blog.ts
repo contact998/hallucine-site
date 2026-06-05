@@ -56,20 +56,25 @@ export async function translateAndPublishPost(originalPost: BlogPost): Promise<v
         originalPost.metaDescription ? translateWithDeepL(originalPost.metaDescription, deeplLang) : Promise.resolve(null),
       ]);
 
-      const slug = await uniqueSlug(slugify(translatedTitle));
+      // DeepL renvoie des entités HTML (&#x27; …) : on décode les champs texte
+      // (titre, extrait, meta) avant stockage — le contenu reste du HTML.
+      const cleanTitle = decodeHtmlEntities(translatedTitle);
+      const cleanExcerpt = translatedExcerpt ? decodeHtmlEntities(translatedExcerpt) : null;
+      const cleanMeta = translatedMeta ? decodeHtmlEntities(translatedMeta) : null;
+      const slug = await uniqueSlug(slugify(cleanTitle));
 
       await db.insert(blogPosts).values({
-        title: translatedTitle,
+        title: cleanTitle,
         slug,
         content: translatedContent,
-        excerpt: translatedExcerpt ?? null,
+        excerpt: cleanExcerpt,
         imageUrl: originalPost.imageUrl ?? null,
         lang,
         parentId: originalPost.id,
         status: "published",
         publishedAt: new Date(),
         metaKeywords: originalPost.metaKeywords ?? null,
-        metaDescription: translatedMeta ?? null,
+        metaDescription: cleanMeta,
         author: originalPost.author ?? "Hallucine",
         category: originalPost.category ?? null,
       });
@@ -85,9 +90,26 @@ export async function translateAndPublishPost(originalPost: BlogPost): Promise<v
 
 // ─── Helpers ────────────────────────────────────────────────────
 
-/** Génère un slug URL propre depuis un titre */
+/**
+ * Décode les entités HTML courantes. DeepL (tag_handling:"html") renvoie les
+ * apostrophes en `&#x27;`, ce qui polluait les slugs en « x27 » (et `&amp;` → « amp »).
+ */
+export function decodeHtmlEntities(input: string): string {
+  if (!input) return input;
+  return input
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(parseInt(d, 10)))
+    .replace(/&apos;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&"); // en dernier, pour ne pas re-décoder une entité déjà décodée
+}
+
+/** Génère un slug URL propre depuis un titre (décode d'abord les entités HTML). */
 export function slugify(title: string): string {
-  return title
+  return decodeHtmlEntities(title)
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "") // supprime les accents
