@@ -25,7 +25,7 @@ import { uploadToR2, urlToR2Key } from "../server/r2Upload.ts";
 // ─── Configuration ─────────────────────────────────────────────────────────
 
 const DRY_RUN     = process.argv.includes("--dry-run");
-const CATEGORIES  = ["produits", "galerie", "realisations"];
+const CATEGORIES  = ["produits", "galerie", "realisations", "autre", "blog"];
 const QUALITY     = 80;
 const HEAVY_BYTES = 90 * 1024;                       // au-delà → recompression
 const MAX_EDGE    = { galerie: 1920, default: 1600 };// bord le plus long max
