@@ -13,6 +13,7 @@ import { useCanonical } from "./hooks/useCanonical";
 import GlobalStructuredData from "./components/GlobalStructuredData";
 import { detectLanguage } from "./i18n/domains";
 import { ROUTES } from "./i18n/routes";
+import { registerWebMcpTools } from "./lib/webmcp";
 
 // Pages — composants lazy via le registre (source unique partagée avec main.tsx)
 import {
@@ -132,6 +133,14 @@ function CanonicalUpdater() {
   return null;
 }
 
+// WebMCP : expose les actions du site aux agents navigateur (no-op si l'API absente).
+function WebMcpRegistrar() {
+  useEffect(() => {
+    registerWebMcpTools();
+  }, []);
+  return null;
+}
+
 function App() {
   // Les widgets purement client (Toaster, WhatsApp) ne sont PAS dans
   // le HTML pré-rendu. On les monte après l'hydratation pour que le 1er rendu
@@ -148,6 +157,7 @@ function App() {
           {/* Contenu hydraté — identique au SSR */}
           <AnalyticsTracker />
           <CanonicalUpdater />
+          <WebMcpRegistrar />
           <ScrollToTop />
           <GlobalStructuredData />
           <RoutesSwitch />
