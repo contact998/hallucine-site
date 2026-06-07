@@ -275,6 +275,31 @@
   50%     { opacity: 0.85; }
 }
 
+/* Hero — animations d'entrée en CSS pur : démarrent au paint, sans attendre
+   l'hydratation du bundle JS. Évite que le contenu above-the-fold reste en
+   opacity:0 jusqu'au JS (ce qui plombait le LCP). Remplace les variants
+   framer-motion d'entrée du hero — cf. HeroSection.tsx. */
+@keyframes hero-in-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-in-left {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.hero-anim {
+  animation-duration: 0.8s;
+  animation-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+  animation-fill-mode: both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-anim {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;

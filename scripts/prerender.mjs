@@ -161,6 +161,14 @@ function injectIntoTemplate(tmpl, { html, lang, canonicalUrl, hreflangTags, loca
   result = result.replace(/__PAGE_URL__/g, escapeHtml(canonicalUrl));
   result = result.replace(/<!--__OG_LOCALE_TAGS__-->/g, buildOgLocaleTags(lang));
 
+  // 3b. Preload de l'image hero (LCP) : découverte précoce + priorité haute,
+  //     sur la connexion R2 déjà ouverte par le <link rel="preconnect">.
+  //     meta.image = image représentative de la page (= bandeau hero sur l'accueil).
+  if (meta.image) {
+    const heroPreload = `  <link rel="preload" as="image" fetchpriority="high" href="${escapeHtml(meta.image)}" />`;
+    result = result.replace("</head>", `${heroPreload}\n</head>`);
+  }
+
   // 4. Contenu pré-rendu dans #root
   result = result.replace(
     '<div id="root"></div>',

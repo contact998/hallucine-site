@@ -65,54 +65,44 @@ export default function HeroSection() {
       <motion.div style={{ opacity, zIndex: 5 }} className="relative container pb-32 pt-48">
         <div className="max-w-3xl">
           {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="flex items-center gap-3 mb-10"
+          <div
+            className="hero-anim flex items-center gap-3 mb-10"
+            style={{ animationName: "hero-in-left" }}
           >
             <div className="w-12 h-[1px] bg-gold" />
             <span className="text-gold text-sm font-semibold tracking-[0.3em] uppercase">{t("hero.badge")}</span>
-          </motion.div>
+          </div>
 
           {/* Citation principale */}
-          <motion.blockquote
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="mb-10 max-w-4xl"
+          <blockquote
+            className="hero-anim mb-10 max-w-4xl"
+            style={{ animationName: "hero-in-up", animationDelay: "0.2s" }}
           >
             <p className="text-3xl sm:text-4xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-white font-serif italic">
               «&nbsp;{t("hero.quote_before")}&nbsp;<span className="text-gradient-gold text-glow-gold-intense">{t("hero.quote_highlight")}</span>&nbsp;{t("hero.quote_after")}&nbsp;»
             </p>
-          </motion.blockquote>
+          </blockquote>
 
           {/* Sous-titre */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="text-xl sm:text-2xl lg:text-3xl font-semibold tracking-wide uppercase text-white/70 mb-4"
+          <h1
+            className="hero-anim text-xl sm:text-2xl lg:text-3xl font-semibold tracking-wide uppercase text-white/70 mb-4"
+            style={{ animationName: "hero-in-up", animationDelay: "0.5s" }}
           >
             {t("hero.subtitle_before")} <span className="text-gradient-gold">{t("hero.subtitle_highlight")}</span> {t("hero.subtitle_after")}
-          </motion.h1>
+          </h1>
 
           {/* Tagline "gamme complète" — différenciateur vs Airscreen / Open Air Cinema */}
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.65 }}
-            className="text-base sm:text-lg text-white/80 mb-12 max-w-2xl leading-relaxed"
+          <p
+            className="hero-anim text-base sm:text-lg text-white/80 mb-12 max-w-2xl leading-relaxed"
+            style={{ animationName: "hero-in-up", animationDelay: "0.65s" }}
           >
             {t("hero.tagline_full_range")}
-          </motion.p>
+          </p>
 
           {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-            className="flex flex-wrap gap-5"
+          <div
+            className="hero-anim flex flex-wrap gap-5"
+            style={{ animationName: "hero-in-up", animationDelay: "0.7s" }}
           >
             <Link
               href={route('contact')}
@@ -128,15 +118,13 @@ export default function HeroSection() {
               <Play className="w-4 h-4" />
               {t("hero.cta_discover")}
             </Link>
-          </motion.div>
+          </div>
         </div>
 
         {/* Stats Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1 }}
-          className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-0 divide-x divide-white/20 bg-black/40 backdrop-blur-sm rounded-lg border border-white/10"
+        <div
+          className="hero-anim mt-24 grid grid-cols-2 md:grid-cols-4 gap-0 divide-x divide-white/20 bg-black/40 backdrop-blur-sm rounded-lg border border-white/10"
+          style={{ animationName: "hero-in-up", animationDelay: "1s" }}
         >
           {stats.map((stat, i) => (
             <div key={i} className="text-center py-6 px-4">
@@ -147,7 +135,7 @@ export default function HeroSection() {
               <div className="text-xs text-white/70 mt-2 tracking-[0.2em] uppercase font-medium">{stat.label}</div>
             </div>
           ))}
-        </motion.div>
+        </div>
       </motion.div>
 
       {/* Scroll indicator */}
