@@ -161,16 +161,10 @@ function injectIntoTemplate(tmpl, { html, lang, canonicalUrl, hreflangTags, loca
   result = result.replace(/__PAGE_URL__/g, escapeHtml(canonicalUrl));
   result = result.replace(/<!--__OG_LOCALE_TAGS__-->/g, buildOgLocaleTags(lang));
 
-  // 3b. Preload de l'image hero (LCP) : découverte précoce + priorité haute,
-  //     sur la connexion R2 déjà ouverte par le <link rel="preconnect">.
-  //     On cible l'image RÉELLEMENT affichée dans la section #hero (1ʳᵉ <img>),
-  //     pas meta.image (= og:image / carte sociale, distincte du bandeau).
-  //     Les pages sans section #hero ne reçoivent pas de preload (correct).
-  const heroImgMatch = html.match(/id="hero"[\s\S]*?<img[^>]*?\ssrc="([^"]+)"/);
-  if (heroImgMatch) {
-    const heroPreload = `  <link rel="preload" as="image" fetchpriority="high" href="${heroImgMatch[1]}" />`;
-    result = result.replace("</head>", `${heroPreload}\n</head>`);
-  }
+  // NB : pas de preload hero manuel — React 19 préload déjà automatiquement
+  // les <img fetchPriority="high"> au SSR (vérifié en prod : <link rel=preload
+  // as=image imageSizes=100vw> du bandeau dans la sortie prérendue). Ajouter un
+  // preload ici ferait doublon. Le gain réel = preconnect R2 (client/index.html).
 
   // 4. Contenu pré-rendu dans #root
   result = result.replace(
