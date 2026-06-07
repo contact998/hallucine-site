@@ -3,7 +3,8 @@
  * Pas de fond noir : le rideau s'ouvre directement sur la page d'accueil.
  * Le logo s'efface progressivement (fade-out) pendant l'ouverture.
  * Le clic initial contourne la politique autoplay des navigateurs.
- * Détection des bots (Lighthouse/Googlebot) → pas de rideau pour eux
+ * Détection des bots (Lighthouse/Googlebot/Cloudflare Observatory) → pas de rideau.
+ * Bypass explicite pour le monitoring synthétique : ?norideau dans l'URL.
  */
 import { useState, useEffect, useLayoutEffect, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
@@ -31,9 +32,21 @@ function isBot(): boolean {
     ua.includes("pagespeed") ||
     ua.includes("headlesschrome") ||
     ua.includes("chrome-lighthouse") ||
+    ua.includes("cloudflareobservatory") ||
     ua.includes("gtmetrix") ||
     ua.includes("pingdom")
   );
+}
+
+// Bypass explicite via ?norideau (Cloudflare Observatory en IPv6 utilise un UA
+// de Chrome normal, indétectable — le paramètre est le contournement fiable)
+function hasBypassParam(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    return new URLSearchParams(window.location.search).has("norideau");
+  } catch {
+    return false;
+  }
 }
 
 // Vérifie si le rideau a déjà été vu dans cette session
@@ -59,7 +72,7 @@ export default function CinemaRideau() {
   const [phase, setPhase] = useState<Phase>("waiting");
 
   useEffect(() => {
-    if (isBot() || hasSeenCurtain()) {
+    if (isBot() || hasBypassParam() || hasSeenCurtain()) {
       setPhase("done");
     }
   }, []);
