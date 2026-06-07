@@ -206,6 +206,23 @@ function injectIntoTemplate(tmpl, { html, lang, canonicalUrl, hreflangTags, loca
     result = result.replace("</head>", `${meta.headExtra}\n</head>`);
   }
 
+  // 9. Inline le bundle CSS app dans le <head> → supprime la requête CSS
+  //    render-blocking (le rouge Lighthouse « render blocking requests »).
+  //    CSP-safe : <style> est autorisé par style-src 'unsafe-inline', alors que
+  //    le pattern async classique (onload=) est bloqué par script-src-attr 'none'.
+  //    Zéro FOUC (tout le CSS est présent au paint). Coût : +~18 Ko brotli/page,
+  //    CSS non mutualisé entre pages — acceptable pour un site vitrine.
+  result = result.replace(
+    /<link rel="stylesheet"[^>]*href="(\/assets\/[^"]+\.css)"[^>]*>/,
+    (m, href) => {
+      try {
+        return `<style>${readFileSync(join(DIST, href), "utf-8")}</style>`;
+      } catch {
+        return m; // lecture impossible → on garde le <link> (jamais de page cassée)
+      }
+    }
+  );
+
   return result;
 }
 
