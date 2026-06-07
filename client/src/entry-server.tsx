@@ -205,7 +205,7 @@ export async function render(
   }
 
   // ✅ Arbre SSR strictement identique à l'arbre client.
-  // Les widgets client-only (Toaster, WhatsApp, HallucineChatbot) sont gated
+  // Les widgets client-only (Toaster, WhatsApp) sont gated
   // par `mounted` dans App.tsx → false en SSR ET au 1er rendu client (avant
   // hydratation), donc invisibles des deux côtés. Le Switch fait le matching
   // d'URL via le hook ssrLocationHook → la bonne page est rendue.

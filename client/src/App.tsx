@@ -133,7 +133,7 @@ function CanonicalUpdater() {
 }
 
 function App() {
-  // Les widgets purement client (Toaster, WhatsApp, chatbot) ne sont PAS dans
+  // Les widgets purement client (Toaster, WhatsApp) ne sont PAS dans
   // le HTML pré-rendu. On les monte après l'hydratation pour que le 1er rendu
   // client corresponde exactement au rendu serveur (GlobalStructuredData + page).
   const [mounted, setMounted] = useState(false);
