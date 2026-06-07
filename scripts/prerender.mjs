@@ -163,9 +163,12 @@ function injectIntoTemplate(tmpl, { html, lang, canonicalUrl, hreflangTags, loca
 
   // 3b. Preload de l'image hero (LCP) : découverte précoce + priorité haute,
   //     sur la connexion R2 déjà ouverte par le <link rel="preconnect">.
-  //     meta.image = image représentative de la page (= bandeau hero sur l'accueil).
-  if (meta.image) {
-    const heroPreload = `  <link rel="preload" as="image" fetchpriority="high" href="${escapeHtml(meta.image)}" />`;
+  //     On cible l'image RÉELLEMENT affichée dans la section #hero (1ʳᵉ <img>),
+  //     pas meta.image (= og:image / carte sociale, distincte du bandeau).
+  //     Les pages sans section #hero ne reçoivent pas de preload (correct).
+  const heroImgMatch = html.match(/id="hero"[\s\S]*?<img[^>]*?\ssrc="([^"]+)"/);
+  if (heroImgMatch) {
+    const heroPreload = `  <link rel="preload" as="image" fetchpriority="high" href="${heroImgMatch[1]}" />`;
     result = result.replace("</head>", `${heroPreload}\n</head>`);
   }
 
