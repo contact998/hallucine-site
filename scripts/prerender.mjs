@@ -68,6 +68,8 @@ function buildOgLocaleTags(lang) {
 
 const { render } = await import("../client/src/entry-server.tsx");
 const { ROUTES } = await import("../client/src/i18n/routes.ts");
+const { buildMarkdownForRoute, buildLlmsFull } = await import("../server/llmsFull.ts");
+const { bundledResources } = await import("../client/src/i18n/locales-bundled.node.ts");
 
 // ─── Bake build-time : images figées depuis scripts/media-cache.json ───────
 //
@@ -309,6 +311,16 @@ for (const lang of VALID_LANGS) {
       writeFileSync(outputPath, pageHtml, "utf-8");
       total++;
 
+      // Markdown for Agents : version markdown de la page, servie sur
+      // `Accept: text/markdown` (cf. server/_core/vite.ts). Même contenu que le
+      // HTML, depuis la source de vérité i18n. Non bloquant.
+      try {
+        const md = buildMarkdownForRoute(lang, routeKey, bundledResources[lang] ?? {});
+        writeFileSync(join(dirname(outputPath), "index.md"), md, "utf-8");
+      } catch (mdErr) {
+        console.warn(`  ⚠️  [md] [${lang}] ${url} → ${mdErr.message}`);
+      }
+
       const shortPath = outputPath.replace(DIST + "/", "dist/");
       console.log(`  ✅ [${lang}] ${url} → ${shortPath}`);
     } catch (err) {
@@ -406,8 +418,6 @@ if (errors > 0) {
 // ─── Génération de llms-full.txt (markdown GEO, depuis les locales) ───────────
 // Servi en statique depuis dist/public (le conteneur runtime n'a pas les locales).
 try {
-  const { bundledResources } = await import("../client/src/i18n/locales-bundled.node.ts");
-  const { buildLlmsFull } = await import("../server/llmsFull.ts");
   const md = buildLlmsFull("fr", bundledResources.fr ?? {});
   writeFileSync(join(DIST, "llms-full.txt"), md, "utf-8");
   console.log(`📄 llms-full.txt généré (${md.length} caractères)`);

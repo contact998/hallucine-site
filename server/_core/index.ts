@@ -10,6 +10,8 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { buildSitemapXml, type SitemapPost } from "../sitemap";
+import { buildRobotsTxt } from "../robots";
+import { buildAgentSkillsIndex, getSkillMd } from "../agentSkills";
 import { BLOG_SLUG_REDIRECTS } from "../blogSlugRedirects";
 import { DOMAIN_LANG_MAP } from "../../client/src/i18n/domains";
 
@@ -119,6 +121,21 @@ async function startServer() {
     hidePoweredBy: true,
   }));
 
+  // ─── Link header (RFC 8288) — découverte par les agents ──────────────────────
+  // Pointe les agents vers la description machine du site (llms.txt) via la
+  // relation enregistrée « describedby ». Posé sur les navigations de page
+  // uniquement (pas les assets, l'API, ni les fichiers à extension).
+  app.use((req, res, next) => {
+    if (
+      (req.method === "GET" || req.method === "HEAD") &&
+      !req.path.startsWith("/api") &&
+      !/\.[a-zA-Z0-9]+$/.test(req.path)
+    ) {
+      res.setHeader("Link", '</llms.txt>; rel="describedby"; type="text/plain"');
+    }
+    next();
+  });
+
   // Body parser : limite assez large pour l'upload média en base64.
   // Une image de 10 Mo (plafond de media.upload) ≈ 13,4 Mo une fois encodée
   // en base64 dans le JSON tRPC → 15 Mo couvre le cas + l'overhead JSON.
@@ -140,8 +157,8 @@ async function startServer() {
 
 
   app.get("/robots.txt", (_req, res) => {
-    res.setHeader("Content-Type", "text/plain");
-    res.send("User-agent: *\nAllow: /\n\nSitemap: https://hallucinecran.fr/sitemap.xml\nSitemap: https://hallucinecran.com/sitemap.xml\nSitemap: https://hallucinecran.de/sitemap.xml\nSitemap: https://hallucinecran.es/sitemap.xml\nSitemap: https://hallucinecran.it/sitemap.xml\n\nDisallow: /admin\nDisallow: /profil\nDisallow: /api/\n");
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.send(buildRobotsTxt());
   });
 
   // Sitemap dynamique, UN PAR TLD (host-aware) : chaque domaine ne liste que les
@@ -188,6 +205,29 @@ async function startServer() {
       `Expires: ${expires}\n` +
       `Preferred-Languages: fr, en\n`
     );
+  });
+
+  // Agent Skills Discovery (agentskills.io, RFC v0.2.0) — index + artefacts.
+  // Routes dynamiques : express.static est en dotfiles:'ignore' et ne sert
+  // donc pas /.well-known (cf. serveStatic). URLs absolues basées sur l'hôte
+  // de la requête → l'index est correct sur chaque TLD.
+  app.get("/.well-known/agent-skills/index.json", (req, res) => {
+    const proto = (req.headers["x-forwarded-proto"] as string) || "https";
+    const origin = `${proto}://${req.hostname}`;
+    res.setHeader("Content-Type", "application/json; charset=utf-8");
+    res.setHeader("Cache-Control", "public, max-age=3600");
+    res.send(JSON.stringify(buildAgentSkillsIndex(origin), null, 2));
+  });
+  app.get("/.well-known/agent-skills/:name/SKILL.md", (req, res) => {
+    const md = getSkillMd(req.params.name);
+    if (!md) {
+      res.status(404).setHeader("Content-Type", "text/plain");
+      res.send("Not Found");
+      return;
+    }
+    res.setHeader("Content-Type", "text/markdown; charset=utf-8");
+    res.setHeader("Cache-Control", "public, max-age=3600");
+    res.send(md);
   });
 
   // Authentification : Google OAuth (admin uniquement)

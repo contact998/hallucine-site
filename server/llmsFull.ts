@@ -86,3 +86,86 @@ export function buildLlmsFull(lang: string, resources: LocaleResources): string 
 
   return out.join("\n");
 }
+
+// ─── Markdown par page (négociation « text/markdown » pour les agents) ─────────
+//
+// `buildPageMarkdown` produit un markdown du contenu RÉEL d'UNE page, extrait des
+// mêmes ressources i18n que le rendu HTML (source de vérité). Servi au runtime
+// quand un agent envoie `Accept: text/markdown` (cf. server/_core/vite.ts), à
+// partir des fichiers `index.md` pré-générés au build (scripts/prerender.mjs).
+
+/** Clés i18n purement décoratives / UI — exclues du markdown de contenu. */
+const PAGE_SKIP_KEY = /(^|_)(alt|label|badge|scroll|cta|button|highlight|colored|placeholder|aria|img|icon)(_|$)/i;
+
+/** Parcourt récursivement un namespace i18n et pousse ses chaînes de contenu. */
+function pushPageLines(obj: Record<string, unknown>, out: string[]): void {
+  for (const [k, v] of Object.entries(obj)) {
+    if (k === "meta_title" || k === "meta_desc") continue; // déjà en en-tête
+    if (PAGE_SKIP_KEY.test(k)) continue;
+    if (typeof v === "string") {
+      const s = v.trim();
+      if (!s) continue;
+      if (/(^|_)title(_\d+)?$/.test(k) || /^section_title/.test(k)) {
+        out.push("", `## ${s}`, "");
+      } else if (/(^|_)q\d+$/.test(k)) {
+        out.push("", `### ${s}`, ""); // questions de FAQ
+      } else {
+        out.push(s, "");
+      }
+    } else if (v && typeof v === "object") {
+      pushPageLines(v as Record<string, unknown>, out);
+    }
+  }
+}
+
+/** Markdown du contenu d'une page, depuis ses ressources i18n. */
+export function buildPageMarkdown(
+  lang: string,
+  routeKey: RouteKey,
+  resources: LocaleResources,
+): string {
+  const domain = LANGUAGE_DOMAINS[lang as keyof typeof LANGUAGE_DOMAINS] ?? LANGUAGE_DOMAINS.fr;
+  const ns = NS_OVERRIDE[routeKey] ?? routeKey;
+  const page = (resources[ns] ?? {}) as Record<string, unknown>;
+  const langRoutes = ROUTES[lang] ?? ROUTES.fr;
+  const path = langRoutes[routeKey] ?? "/";
+  const url = `${domain}${path}`;
+
+  const title = str(page.meta_title) || str(page.hero_title) || "Hallucine";
+  const desc = str(page.meta_desc);
+
+  const out: string[] = [`# ${title}`, ""];
+  if (desc) out.push(`> ${desc}`, "");
+  pushPageLines(page, out);
+  out.push("", `— Page : ${url}`);
+
+  // Compacte les lignes vides multiples + termine par un seul newline.
+  return out.join("\n").replace(/\n{3,}/g, "\n\n").trim() + "\n";
+}
+
+/**
+ * Markdown servi pour une route donnée : la home réutilise l'aperçu de site
+ * complet (`buildLlmsFull`, propre car son i18n est fragmenté), les autres pages
+ * leur propre contenu (`buildPageMarkdown`).
+ */
+export function buildMarkdownForRoute(
+  lang: string,
+  routeKey: RouteKey,
+  resources: LocaleResources,
+): string {
+  return routeKey === "home"
+    ? buildLlmsFull(lang, resources)
+    : buildPageMarkdown(lang, routeKey, resources);
+}
+
+/**
+ * Chemin RELATIF (depuis dist/public) du fichier markdown pré-généré pour une
+ * requête — calque la résolution des pages pré-rendues de serveStatic :
+ *   `[_lang_xx/]<path>/index.md`. Pur (pas de fs) → testable.
+ */
+export function markdownFileForRequest(reqPath: string, lang: string): string {
+  const clean = (reqPath || "/").split("?")[0];
+  const urlPath = clean.replace(/^\/+/, "").replace(/\/+$/, "");
+  const langPrefix = lang !== "fr" && (VALID_LANGS as readonly string[]).includes(lang) ? `_lang_${lang}` : "";
+  return [langPrefix, urlPath, "index.md"].filter(Boolean).join("/");
+}

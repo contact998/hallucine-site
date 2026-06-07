@@ -7,6 +7,7 @@ import { createServer as createViteServer } from "vite";
 import viteConfig from "../../vite.config";
 import { sdk } from "./sdk";
 import { getSeoOverrideForPath, applySeoOverride } from "../seo";
+import { markdownFileForRequest } from "../llmsFull";
 
 export async function setupVite(app: Express, server: Server) {
   const serverOptions = {
@@ -157,6 +158,44 @@ export function serveStatic(app: Express) {
   // Image par défaut pour les articles sans imageUrl
   const DEFAULT_OG_IMAGE =
     "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-accueil-KjTW2K29SHyinVRpsNcnQC.png";
+
+  // Markdown for Agents — négociation de contenu (Accept: text/markdown).
+  // Sert le markdown pré-généré (index.md, cf. scripts/prerender.mjs) de la page
+  // demandée. HTML reste le défaut pour les navigateurs. Placé en tête pour
+  // primer sur le statique et le SSG.
+  app.use((req, res, next) => {
+    if (req.method !== "GET") return next();
+    const accept = String(req.headers["accept"] || "").toLowerCase();
+    if (!accept.includes("text/markdown")) return next();
+
+    const locale = getLocaleFromHost(req.hostname);
+    const reqPath = req.originalUrl.split("?")[0];
+    const rel = markdownFileForRequest(reqPath, locale);
+    if (rel.includes("..")) return next(); // garde anti-traversée
+
+    const mdPath = path.resolve(distPath, rel);
+    if (!mdPath.startsWith(path.resolve(distPath) + path.sep)) return next();
+
+    try {
+      if (fs.existsSync(mdPath)) {
+        const md = fs.readFileSync(mdPath, "utf-8");
+        res
+          .status(200)
+          .set({
+            "Content-Type": "text/markdown; charset=utf-8",
+            // Vary: ne pas servir ce markdown à un navigateur (qui demande du HTML).
+            Vary: "Accept, Host",
+            "X-Markdown-Tokens": String(Math.ceil(md.length / 4)),
+            "Cache-Control": "no-cache, max-age=0, must-revalidate",
+          })
+          .end(md);
+        return;
+      }
+    } catch (e) {
+      console.error("[md-agents]", e instanceof Error ? e.message : e);
+    }
+    next(); // pas de markdown pour cette route → HTML normal
+  });
 
   // Assets versionnés Vite (JS, CSS, images) — cache 1 an
   app.use(
