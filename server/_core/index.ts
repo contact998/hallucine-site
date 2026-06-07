@@ -65,6 +65,7 @@ async function startServer() {
           // 'unsafe-eval' supprimé — risque XSS (surveiller les erreurs console)
           "https://www.googletagmanager.com",
           "https://www.google-analytics.com",
+          "https://static.cloudflareinsights.com",   // Cloudflare Web Analytics — beacon RUM
           "https://chat.hallucine.fr", "https://chat.hallucinecran.fr",   // Chatwoot widget SDK
         ],
         styleSrc: [
@@ -84,6 +85,7 @@ async function startServer() {
           "https://open.er-api.com",
           "https://www.google-analytics.com",
           "https://www.googletagmanager.com",
+          "https://cloudflareinsights.com",   // Cloudflare Web Analytics — envoi RUM (/cdn-cgi/rum)
           "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev",
           "https://chat.hallucine.fr", "https://chat.hallucinecran.fr",   // Chatwoot REST API
           "wss://chat.hallucine.fr", "wss://chat.hallucinecran.fr",     // Chatwoot ActionCable realtime
