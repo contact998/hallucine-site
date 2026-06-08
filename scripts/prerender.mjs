@@ -30,6 +30,14 @@ if (process.env.DATABASE_PUBLIC_URL) {
   process.env.DATABASE_URL = process.env.DATABASE_PUBLIC_URL;
 }
 
+// Idem pour la base du BLOG (BLOG_DATABASE_URL ≠ DATABASE_URL). Les articles sont
+// lus via server/blog.ts (pool dédié) pour être pré-rendus. Au build, basculer sur
+// l'URL publique du blog (réseau privé indisponible). Sans ça : 0 article trouvé
+// → /blog/:slug servi en coquille CSR (corps vide) → SEO faible (audit Ahrefs).
+if (process.env.BLOG_DATABASE_PUBLIC_URL) {
+  process.env.BLOG_DATABASE_URL = process.env.BLOG_DATABASE_PUBLIC_URL;
+}
+
 // ─── Configuration ─────────────────────────────────────────────────────────
 
 const VALID_LANGS = ["fr", "en", "de", "es", "it"];
@@ -93,6 +101,16 @@ function loadMediaCache() {
 }
 
 const mediaCache = loadMediaCache();
+
+// ─── API blog (base BLOG_DATABASE_URL, ≠ base principale) ────────────────────
+// Import paresseux + tolérant : si la base blog est injoignable au build, on
+// continue sans pré-rendre le blog (les pages statiques ne doivent jamais échouer).
+let blogApi = null;
+try {
+  blogApi = await import("../server/blog.ts");
+} catch (e) {
+  console.warn(`⚠️  server/blog.ts indisponible — blog non pré-rendu : ${e.message}`);
+}
 
 /** JSON sûr pour injection dans un <script> inline */
 const mediaCacheJson = JSON.stringify(mediaCache)
@@ -250,8 +268,22 @@ for (const lang of VALID_LANGS) {
     // Route de redirection seule — pas de page réelle à prérendre
     if (routeKey === "trouver-distributeur") continue;
     try {
+      // Page liste /blog : pré-charger les articles publiés (base blog) → la
+      // liste est rendue en SSR avec ses liens → les articles ne sont plus orphelins.
+      let initialData;
+      if (routeKey === "blog" && blogApi) {
+        try {
+          const [posts, totalCount] = await Promise.all([
+            blogApi.getPublishedPosts(lang, 50, 0),
+            blogApi.countPublishedPosts(lang),
+          ]);
+          initialData = { blogList: { lang, limit: 50, data: { posts, total: totalCount } } };
+        } catch (e) {
+          console.warn(`  ⚠️  liste blog [${lang}] non pré-chargée : ${e.message}`);
+        }
+      }
       // Rendre la page (récupère aussi les metas collectées en SSR)
-      const { html, meta } = await render(url, lang, mediaCache);
+      const { html, meta } = await render(url, lang, mediaCache, initialData);
       console.log(`[META] [${lang}] ${url} → "${meta.title}"`);
 
       // URL canonique — sans trailing slash : le serveur sert l'URL canonique
@@ -334,69 +366,89 @@ for (const lang of VALID_LANGS) {
   console.log(`\n📦 Langue ${lang.toUpperCase()} terminée\n`);
 }
 
-// ─── Pré-rendu des articles de blog ──────────────────────────────────────────
-// Chaque article publié × 5 langues → HTML statique avec le contenu complet.
-// Sans ça, /blog/:slug serait servi en CSR (template vide + metas seulement),
-// Google ne verrait pas le corps de l'article → SEO faible.
-try {
-  const { db } = await import("../server/db.ts");
-  const { blogPosts } = await import("../drizzle/schema.ts");
-  const { eq } = await import("drizzle-orm");
-
-  const posts = await db
-    .select()
-    .from(blogPosts)
-    .where(eq(blogPosts.status, "published"));
-
-  if (posts.length > 0) {
-    console.log(`\n📝 Pré-rendu de ${posts.length} article(s) de blog × ${VALID_LANGS.length} langues...`);
-  }
-
-  for (const post of posts) {
-    const slug = post.slug;
-    const url = `/blog/${slug}`;
+// ─── Pré-rendu des articles de blog (base BLOG_DATABASE_URL) ──────────────────
+// Chaque article publié → HTML statique avec le contenu complet + hreflang croisés.
+// Les articles vivent dans BLOG_DATABASE_URL (≠ DATABASE_URL), lus via
+// server/blog.ts. Sans ça, /blog/:slug était servi en coquille CSR (metas
+// seulement, corps vide) → Google/crawlers ne voyaient pas l'article (23 pages
+// "thin/orphan" à l'audit Ahrefs). Chaque langue a son propre slug + contenu
+// (traductions liées par parentId) → hreflang construits par cluster.
+let blogErrors = 0;
+if (blogApi) {
+  try {
+    // 1) Articles publiés par langue (chaque langue : slug + contenu propres).
+    const byLang = {};
+    let totalPosts = 0;
     for (const lang of VALID_LANGS) {
-      try {
-        const domain = DOMAINS[lang];
-        const { html, meta } = await render(url, lang, mediaCache, {
-          blogPost: { slug, data: post },
-        });
-        const canonicalUrl = `${domain}${url}`;
-        meta.url = canonicalUrl;
+      byLang[lang] = await blogApi.getPublishedPosts(lang, 1000, 0);
+      totalPosts += byLang[lang].length;
+    }
 
-        // hreflangTags pour blog : même URL sur tous les domaines (le slug
-        // n'est pas traduit) → toutes les versions pointent vers l'URL
-        // localisée du domaine de la langue cible.
-        const hreflangTags = VALID_LANGS.map(
-          (l) => `<link rel="alternate" hreflang="${l}" href="${DOMAINS[l]}${url}" />`
-        ).join("\n    ") + `\n    <link rel="alternate" hreflang="x-default" href="${DOMAINS.fr}${url}" />`;
-
-        const finalHtml = injectIntoTemplate(template, {
-          html,
-          lang,
-          canonicalUrl,
-          hreflangTags,
-          locale: lang,
-          meta,
-          mediaScript: mediaScriptTag,
-        });
-
-        const langPrefix = lang === "fr" ? "" : `_lang_${lang}`;
-        const outputDir = join(DIST, langPrefix, "blog", slug);
-        mkdirSync(outputDir, { recursive: true });
-        const outputPath = join(outputDir, "index.html");
-        writeFileSync(outputPath, finalHtml, "utf-8");
-        total++;
-        console.log(`  ✅ [${lang}] ${url} → ${outputPath.replace(DIST + "/", "dist/")}`);
-      } catch (err) {
-        errors++;
-        console.error(`  ❌ [${lang}] ${url} → ${err.message}`);
-        if (process.env.DEBUG_SSR) console.error(err.stack);
+    // 2) Clusters de traductions par parentId (ou id propre) → { lang: slug }
+    //    pour des hreflang croisés corrects (slugs différents selon la langue).
+    const clusters = new Map();
+    for (const lang of VALID_LANGS) {
+      for (const post of byLang[lang]) {
+        const key = post.parentId ?? post.id;
+        if (!clusters.has(key)) clusters.set(key, {});
+        clusters.get(key)[lang] = post.slug;
       }
     }
+
+    if (totalPosts > 0) {
+      console.log(`\n📝 Pré-rendu de ${totalPosts} article(s) de blog publiés (base blog)...`);
+    } else {
+      console.warn(`\n⚠️  0 article publié dans la base blog — vérifie BLOG_DATABASE_URL / BLOG_DATABASE_PUBLIC_URL au build.`);
+    }
+
+    // 3) Rendre chaque article dans sa langue, avec son contenu et ses hreflang.
+    for (const lang of VALID_LANGS) {
+      const domain = DOMAINS[lang];
+      for (const post of byLang[lang]) {
+        const slug = post.slug;
+        const url = `/blog/${slug}`;
+        try {
+          const { html, meta } = await render(url, lang, mediaCache, {
+            blogPost: { slug, data: post },
+          });
+          const canonicalUrl = `${domain}${url}`;
+          meta.url = canonicalUrl;
+
+          // hreflang croisés via le cluster (slug par langue) + x-default → FR.
+          const sib = clusters.get(post.parentId ?? post.id) ?? {};
+          const hl = [];
+          for (const l of VALID_LANGS) {
+            if (sib[l]) hl.push(`<link rel="alternate" hreflang="${l}" href="${DOMAINS[l]}/blog/${sib[l]}" />`);
+          }
+          hl.push(`<link rel="alternate" hreflang="x-default" href="${DOMAINS.fr}/blog/${sib.fr ?? slug}" />`);
+          const hreflangTags = hl.join("\n    ");
+
+          const finalHtml = injectIntoTemplate(template, {
+            html, lang, canonicalUrl, hreflangTags, locale: lang, meta,
+            mediaScript: mediaScriptTag,
+          });
+
+          const langPrefix = lang === "fr" ? "" : `_lang_${lang}`;
+          const outputDir = join(DIST, langPrefix, "blog", slug);
+          mkdirSync(outputDir, { recursive: true });
+          writeFileSync(join(outputDir, "index.html"), finalHtml, "utf-8");
+          total++;
+          console.log(`  ✅ [${lang}] ${url}`);
+        } catch (err) {
+          // Non bloquant : un article qui échoue retombe en CSR (statu quo), sans
+          // faire échouer tout le build (≠ pages statiques dont errors est fatal).
+          blogErrors++;
+          console.error(`  ⚠️  [${lang}] ${url} → ${err.message}`);
+          if (process.env.DEBUG_SSR) console.error(err.stack);
+        }
+      }
+    }
+    if (blogErrors > 0) {
+      console.warn(`⚠️  ${blogErrors} article(s) de blog non pré-rendu(s) — non bloquant.`);
+    }
+  } catch (err) {
+    console.warn(`⚠️  Pré-rendu blog ignoré (base blog injoignable au build ?) : ${err.message}`);
   }
-} catch (err) {
-  console.warn(`⚠️  Impossible de pré-rendre les articles de blog : ${err.message}`);
 }
 
 const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);

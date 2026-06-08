@@ -102,6 +102,9 @@ function ensurePagesPreloaded(): Promise<void> {
  */
 export interface SSRInitialData {
   blogPost?: { slug: string; data: unknown };
+  /** Liste d'articles pré-chargée pour la page /blog → pré-peuple trpc.blog.list
+   *  pour que la liste (et ses liens vers les articles) soit rendue en SSR. */
+  blogList?: { lang: string; limit: number; data: unknown };
 }
 
 /**
@@ -203,6 +206,14 @@ export async function render(
       initialData.blogPost.data,
     );
   }
+  // Idem pour la page liste /blog : la clé tRPC doit correspondre EXACTEMENT à
+  // l'appel client `trpc.blog.list.useQuery({ lang, limit })` (sans offset).
+  if (initialData?.blogList) {
+    queryClient.setQueryData(
+      [["blog", "list"], { input: { lang: initialData.blogList.lang, limit: initialData.blogList.limit }, type: "query" }],
+      initialData.blogList.data,
+    );
+  }
 
   // ✅ Arbre SSR strictement identique à l'arbre client.
   // Les widgets client-only (Toaster, WhatsApp) sont gated
@@ -249,7 +260,7 @@ export async function render(
     // mêmes données (sinon refetch → tree différent → mismatch). Le
     // template (cf. prerender.mjs injectIntoTemplate) insère ce HTML dans
     // le <head> du template, pas dans `html` (qui est juste le body React).
-    if (initialData?.blogPost) {
+    if (initialData?.blogPost || initialData?.blogList) {
       const json = JSON.stringify(initialData).replace(/</g, "\\u003c");
       ssrMeta.headExtra = `<script>window.__SSR_INITIAL_DATA__=${json}</script>`;
     }

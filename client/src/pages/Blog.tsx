@@ -28,6 +28,15 @@ interface Article {
   commentaires: Commentaire[];
 }
 
+/** Lit la liste d'articles pré-rendue (SSR) pour hydrater sans refetch/mismatch.
+ *  Calqué sur readSsrBlogPost de BlogPost.tsx. */
+function readSsrBlogList(lang: string): unknown | undefined {
+  if (typeof window === "undefined") return undefined;
+  const ssr = (window as unknown as { __SSR_INITIAL_DATA__?: { blogList?: { lang: string; data: unknown } } })
+    .__SSR_INITIAL_DATA__;
+  return ssr?.blogList?.lang === lang ? ssr.blogList.data : undefined;
+}
+
 export default function Blog() {
   const route = useRoutes();
   const { t } = useTranslation("blog");
@@ -38,7 +47,10 @@ export default function Blog() {
 
   // Charger les articles depuis la DB
   const lang = detectLanguage();
-  const { data: dbData } = trpc.blog.list.useQuery({ lang, limit: 50 });
+  const { data: dbData } = trpc.blog.list.useQuery(
+    { lang, limit: 50 },
+    { initialData: readSsrBlogList(lang) as never },
+  );
   const dbArticles = dbData?.posts ?? [];
 
   const toggleComments = (id: string) => {
