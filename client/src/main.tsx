@@ -138,8 +138,13 @@ preloadCurrentPage().finally(() => {
   // (/admin/*, /profil, /login, /blog/:slug, /404), le HTML servi a un
   // <div id="root"> vide → createRoot.render() pour éviter le mismatch
   // d'hydratation.
+  // Les articles /blog/:slug reçoivent un corps injecté au runtime à but SEO
+  // (cf. server/_core/vite.ts) qui ne correspond pas au markup exact de BlogPost.
+  // → createRoot (le client re-rend depuis __SSR_INITIAL_DATA__, instantané) pour
+  // éviter un mismatch d'hydratation. Les autres pages prérendues hydratent.
+  const isBlogArticle = /^\/blog\/[^/]+$/.test(window.location.pathname);
   const hasSsrContent = rootEl.firstElementChild !== null;
-  if (hasSsrContent) {
+  if (hasSsrContent && !isBlogArticle) {
     hydrateRoot(rootEl, tree);
   } else {
     createRoot(rootEl).render(tree);

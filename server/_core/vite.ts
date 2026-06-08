@@ -320,34 +320,75 @@ export function serveStatic(app: Express) {
       return;
     }
 
-    // 2. Articles de blog : /blog/:slug — injecter les metas depuis la DB
+    // 2. Articles de blog : /blog/:slug — rendu serveur du contenu + metas depuis la DB.
+    //    Le build n'a PAS accès à la base (réseau privé indisponible au build) → on rend
+    //    au runtime, où la base EST joignable. Crawlers : corps d'article visible,
+    //    hreflang par-article, canonical/OG https, maillage interne (anti-orphelin).
+    //    Le client reprend en createRoot (cf. main.tsx) avec __SSR_INITIAL_DATA__.
     const blogMatch = reqPath.match(/^\/blog\/([^\/]+)\/?$/);
     if (blogMatch) {
       const slug = decodeURIComponent(blogMatch[1]);
       try {
-        const { getBlogPostBySlug } = await import("../blog");
+        const { getBlogPostBySlug, getPublishedPosts, getAllPublishedForSitemap } = await import("../blog");
         const post = await getBlogPostBySlug(slug);
         if (post && post.status === "published") {
           const title = post.title;
           const description = post.metaDescription || post.excerpt || "";
 
-          // Image d'en-tête / og:image fixe de l'article.
-          // Priorité à headerImageUrl si ce champ est ajouté au modèle,
-          // sinon fallback sur imageUrl puis sur l'image par défaut.
           const postRecord = post as Record<string, unknown>;
           const headerImageUrl =
-            typeof postRecord.headerImageUrl === "string"
-              ? postRecord.headerImageUrl
-              : undefined;
+            typeof postRecord.headerImageUrl === "string" ? postRecord.headerImageUrl : undefined;
           const headerImage = headerImageUrl || post.imageUrl || DEFAULT_OG_IMAGE;
 
-          const domain = `${req.protocol}://${req.hostname}`;
-          // Canonical sans slash final — cohérent avec le sitemap, les autres
-          // canonicals du site et la redirection 301 trailing slash.
+          // Origine canonique HTTPS par langue (TLD). Évite le http derrière le
+          // proxy (req.protocol) et l'og:url ≠ canonical signalés par l'audit.
+          const origin = LOCALE_ORIGINS[locale] ?? LOCALE_ORIGINS.fr;
           const canonicalPath = reqPath.replace(/\/+$/, "");
-          const canonicalUrl = `${domain}${canonicalPath}`;
+          const canonicalUrl = `${origin}${canonicalPath}`;
 
-          // JSON-LD BlogPosting
+          // hreflang croisés via le cluster de traductions (parentId). Auto-référence
+          // garantie → corrige « self-reference hreflang missing ».
+          let hreflangTags = `  <link rel="alternate" hreflang="${post.lang}" href="${canonicalUrl}" />`;
+          try {
+            const key = post.parentId ?? post.id;
+            const byLang: Record<string, string> = { [post.lang]: post.slug };
+            for (const r of await getAllPublishedForSitemap()) {
+              if ((r.parentId ?? r.id) === key) byLang[r.lang] = r.slug;
+            }
+            const lines: string[] = [];
+            for (const [lg, og] of Object.entries(LOCALE_ORIGINS)) {
+              if (byLang[lg]) lines.push(`  <link rel="alternate" hreflang="${lg}" href="${og}/blog/${byLang[lg]}" />`);
+            }
+            lines.push(`  <link rel="alternate" hreflang="x-default" href="${LOCALE_ORIGINS.fr}/blog/${byLang.fr ?? post.slug}" />`);
+            hreflangTags = lines.join("\n");
+          } catch { /* fallback = auto-référence seule */ }
+
+          // Maillage interne : autres articles de la même langue (anti-orphelin + liens sortants).
+          let relatedHtml = "";
+          try {
+            const related = (await getPublishedPosts(locale, 8, 0))
+              .filter((p) => p.slug !== post.slug).slice(0, 6);
+            if (related.length) {
+              relatedHtml =
+                `<aside><h2>Autres articles</h2><ul>` +
+                related.map((p) => `<li><a href="/blog/${p.slug}">${escapeHtml(p.title)}</a></li>`).join("") +
+                `</ul></aside>`;
+            }
+          } catch { /* non bloquant */ }
+
+          // Corps rendu serveur (contenu de confiance — auteurs internes ; on retire
+          // tout de même script/style/handlers par prudence). Remplacé par le client.
+          const safeContent = String(post.content || "")
+            .replace(/<script[\s\S]*?<\/script>/gi, "")
+            .replace(/<style[\s\S]*?<\/style>/gi, "")
+            .replace(/ on[a-z]+\s*=\s*"[^"]*"/gi, "")
+            .replace(/ on[a-z]+\s*=\s*'[^']*'/gi, "")
+            .replace(/javascript:/gi, "");
+          const rootContent =
+            `<main><p><a href="/blog">← Blog</a></p>` +
+            `<article><h1>${escapeHtml(title)}</h1>${safeContent}</article>` +
+            relatedHtml + `</main>`;
+
           const jsonLd = JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BlogPosting",
@@ -356,34 +397,34 @@ export function serveStatic(app: Express) {
             "image": headerImage,
             "datePublished": post.publishedAt ?? post.createdAt,
             "dateModified": post.updatedAt ?? post.publishedAt ?? post.createdAt,
-            "author": {
-              "@type": "Person",
-              "name": post.author ?? "Hallucine"
-            },
-            "publisher": {
-              "@type": "Organization",
-              "name": "Hallucine",
-              "url": "https://hallucinecran.fr"
-            },
+            "author": { "@type": "Person", "name": post.author ?? "Hallucine" },
+            "publisher": { "@type": "Organization", "name": "Hallucine", "url": "https://hallucinecran.fr" },
             "mainEntityOfPage": canonicalUrl,
           }).replace(/</g, "\\u003c");
 
-          let html = injectNavWidget(
-            cleanTemplate
-              .replace(/__LOCALE__/g, locale)
-              .replace(/<!--__OG_LOCALE_TAGS__-->/g, buildOgLocaleTags(locale))
-              .replace(/__PAGE_TITLE__/g, escapeHtml(`${title} | Hallucine`))
-              .replace(/__PAGE_DESCRIPTION__/g, escapeHtml(description))
-              .replace(/__PAGE_IMAGE__/g, escapeHtml(headerImage))
-              .replace(/__PAGE_URL__/g, escapeHtml(canonicalUrl))
-          );
-          // Injecter canonical + JSON-LD dans le <head>
-          html = html.replace(
-            "</head>",
-            `  <link rel="canonical" href="${canonicalUrl}" />\n` +
+          // Données SSR pour le client : BlogPost lit __SSR_INITIAL_DATA__.blogPost
+          // → premier rendu identique, pas de spinner (cf. readSsrBlogPost).
+          const ssrData = JSON.stringify({ blogPost: { slug: post.slug, data: post } }).replace(/</g, "\\u003c");
+
+          let html = cleanTemplate
+            .replace(/__LOCALE__/g, locale)
+            .replace(/<!--__OG_LOCALE_TAGS__-->/g, buildOgLocaleTags(locale))
+            .replace(/__PAGE_TITLE__/g, escapeHtml(`${title} | Hallucine`))
+            .replace(/__PAGE_DESCRIPTION__/g, escapeHtml(description))
+            .replace(/__PAGE_IMAGE__/g, escapeHtml(headerImage))
+            .replace(/__PAGE_URL__/g, escapeHtml(canonicalUrl));
+          // Retirer les hreflang/canonical par défaut du template (homepages) pour
+          // les remplacer par ceux de l'article.
+          html = html.replace(/[ \t]*<link rel="alternate" hreflang="[^"]*"[^>]*>\n?/g, "");
+          html = html.replace(/[ \t]*<link rel="canonical"[^>]*>\n?/g, "");
+          // Corps dans #root
+          html = html.replace('<div id="root"></div>', `<div id="root">${rootContent}</div>`);
+          // canonical + hreflang + JSON-LD + données SSR avant </head>
+          html = html.replace("</head>",
+            `  <link rel="canonical" href="${canonicalUrl}" />\n${hreflangTags}\n` +
             `  <script type="application/ld+json">${jsonLd}</script>\n` +
-            `</head>`
-          );
+            `  <script>window.__SSR_INITIAL_DATA__=${ssrData}</script>\n</head>`);
+          html = injectNavWidget(html);
           res.status(200).set({
             "Content-Type": "text/html",
             "Vary": "Host",
@@ -392,7 +433,7 @@ export function serveStatic(app: Express) {
           return;
         }
       } catch (err) {
-        console.warn("[blog-og] Erreur récupération article:", err);
+        console.warn("[blog-ssr] Erreur rendu article:", err);
       }
     }
 
