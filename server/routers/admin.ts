@@ -149,6 +149,7 @@ Réponds en JSON : { "recommendations": [{ "title": "...", "description": "...",
 
       try {
         const response = await invokeLLM({
+          usage: "audit",
           messages: [
             { role: "system", content: "Tu es un expert en marketing digital et optimisation de conversion. Réponds uniquement en JSON valide." },
             { role: "user", content: prompt },

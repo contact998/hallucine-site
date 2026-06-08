@@ -38,7 +38,9 @@ export interface AvailabilityResult {
 // ─── Configuration ────────────────────────────────────────────────
 
 // URL du CRM — route tRPC publique, pas de token nécessaire
-const CRM_BASE_URL = "https://hallucine-crm-production.up.railway.app";
+const CRM_BASE_URL = (
+  process.env.CRM_BASE_URL ?? "https://hallucine-crm-production-4bcc.up.railway.app"
+).replace(/\/+$/, "");
 const CRM_TIMEZONES_URL = `${CRM_BASE_URL}/api/trpc/commercials.timezones`;
 
 // Fallback si le CRM est inaccessible (DC et JB sont en Chine)
@@ -298,6 +300,7 @@ Génère un message court (2 phrases max) et chaleureux pour le visiteur du site
 
   try {
     const result = await invokeLLM({
+      usage: "chatbot",
       messages: [
         {
           role: "system",

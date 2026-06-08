@@ -121,6 +121,7 @@ export async function generateAuditReport(metrics: AuditMetrics): Promise<AuditR
   const metricsContext = buildMetricsContext(metrics);
 
   const result = await invokeLLM({
+    usage: "audit",
     messages: [
       {
         role: "system",
