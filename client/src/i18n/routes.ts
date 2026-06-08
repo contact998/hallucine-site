@@ -19,6 +19,10 @@ export type RouteKey =
   | "drive-in"
   | "packs"
   | "cinema-plein-air"
+  | "prix"
+  | "mairie"
+  | "hotel"
+  | "evenement"
   | "location"
   | "etudes-cas"
   | "cas-velodrome"
@@ -59,6 +63,10 @@ export const ROUTES: Record<string, LangRoutes> = {
     "drive-in": "/ecran-gonflable-drive-in",
     packs: "/pack-cinema-plein-air",
     "cinema-plein-air": "/cinema-plein-air",
+    prix: "/prix-ecran-gonflable",
+    mairie: "/cinema-plein-air-mairie",
+    hotel: "/cinema-plein-air-hotel",
+    evenement: "/ecran-geant-evenement",
     location: "/location-ecran-gonflable",
     "etudes-cas": "/etudes-de-cas",
     "cas-velodrome": "/realisation-velodrome-orange-stade-marseille",
@@ -96,6 +104,10 @@ export const ROUTES: Record<string, LangRoutes> = {
     "drive-in": "/inflatable-drive-in-screen",
     packs: "/outdoor-cinema-package",
     "cinema-plein-air": "/open-air-cinema",
+    prix: "/inflatable-screen-price",
+    mairie: "/open-air-cinema-for-councils",
+    hotel: "/open-air-cinema-for-hotels",
+    evenement: "/giant-screen-for-events",
     location: "/inflatable-screen-rental",
     "etudes-cas": "/case-studies",
     "cas-velodrome": "/case-velodrome-orange-marseille-stadium",
@@ -133,6 +145,10 @@ export const ROUTES: Record<string, LangRoutes> = {
     "drive-in": "/aufblasbarer-drive-in-bildschirm",
     packs: "/freiluftkino-paket",
     "cinema-plein-air": "/freiluftkino",
+    prix: "/aufblasbarer-bildschirm-preis",
+    mairie: "/freiluftkino-fuer-gemeinden",
+    hotel: "/freiluftkino-fuer-hotels",
+    evenement: "/grossleinwand-fuer-events",
     location: "/aufblasbarer-bildschirm-mieten",
     "etudes-cas": "/fallstudien",
     "cas-velodrome": "/fallstudie-velodrome-orange-marseille-stadion",
@@ -170,6 +186,10 @@ export const ROUTES: Record<string, LangRoutes> = {
     "drive-in": "/pantalla-inflable-autocine",
     packs: "/paquete-cine-aire-libre",
     "cinema-plein-air": "/cine-al-aire-libre",
+    prix: "/precio-pantalla-inflable",
+    mairie: "/cine-al-aire-libre-ayuntamientos",
+    hotel: "/cine-al-aire-libre-hoteles",
+    evenement: "/pantalla-gigante-para-eventos",
     location: "/alquiler-pantalla-inflable",
     "etudes-cas": "/casos-de-exito",
     "cas-velodrome": "/caso-velodrome-orange-estadio-marsella",
@@ -207,6 +227,10 @@ export const ROUTES: Record<string, LangRoutes> = {
     "drive-in": "/schermo-gonfiabile-drive-in",
     packs: "/pacchetto-cinema-all-aperto",
     "cinema-plein-air": "/cinema-all-aperto",
+    prix: "/prezzo-schermo-gonfiabile",
+    mairie: "/cinema-all-aperto-comuni",
+    hotel: "/cinema-all-aperto-hotel",
+    evenement: "/maxischermo-per-eventi",
     location: "/noleggio-schermo-gonfiabile",
     "etudes-cas": "/casi-studio",
     "cas-velodrome": "/caso-velodrome-orange-stadio-marsiglia",

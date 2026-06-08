@@ -18,7 +18,7 @@ import { registerWebMcpTools } from "./lib/webmcp";
 // Pages — composants lazy via le registre (source unique partagée avec main.tsx)
 import {
   Home, Ecrans, EcranGeant, EcranEtanche, EcranEconomique, Comparaison,
-  Configurateur, DriveIn, Packs, CinemaPleinAir, Location, EtudesCas, CasVelodrome, CasOran, EcransLED, Tentes, TentesX, TentesN, TentesV, TentesAraignees,
+  Configurateur, DriveIn, Packs, CinemaPleinAir, Prix, Mairie, Hotel, Evenement, Location, EtudesCas, CasVelodrome, CasOran, EcransLED, Tentes, TentesX, TentesN, TentesV, TentesAraignees,
   ArchesGonflables, Mobilier, Accessoires, Galerie, GalerieVideo, Contact,
   APropos, Histoire, ModeEmploi, Blog, BlogPost, DevenirDistributeur,
   MentionsLegales, Confidentialite, PolitiqueCookies,
@@ -64,6 +64,10 @@ function RoutesSwitch() {
         <Route path={r["drive-in"]} component={DriveIn} />
         <Route path={r["packs"]} component={Packs} />
         <Route path={r["cinema-plein-air"]} component={CinemaPleinAir} />
+        <Route path={r["prix"]} component={Prix} />
+        <Route path={r["mairie"]} component={Mairie} />
+        <Route path={r["hotel"]} component={Hotel} />
+        <Route path={r["evenement"]} component={Evenement} />
         <Route path={r["location"]} component={Location} />
         <Route path={r["etudes-cas"]} component={EtudesCas} />
         <Route path={r["cas-velodrome"]} component={CasVelodrome} />
