@@ -41,7 +41,7 @@ const DEEPL_HOST = apiKey.endsWith(":fx") ? "api-free.deepl.com" : "api.deepl.co
 
 const LOCALES = join(ROOT, "client/src/locales");
 const FR_DIR = join(LOCALES, "fr");
-const DEEPL_LANGS = { en: "EN-GB", de: "DE", es: "ES", it: "IT" };
+const DEEPL_LANGS = { en: "EN-GB", de: "DE", es: "ES", it: "IT", pt: "PT-PT" };
 
 // ── Protection des placeholders {{...}} : DeepL ne doit pas les traduire ──
 function protect(text) {

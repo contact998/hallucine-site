@@ -51,7 +51,7 @@ i18n
   .init({
     lng: detectedLang,
     fallbackLng: "fr",
-    supportedLngs: ["fr", "en", "de", "es", "it"],
+    supportedLngs: ["fr", "en", "de", "es", "it", "pt"],
     resources,
     ns: [
       "common", "home", "products", "contact", "legal", "nav",

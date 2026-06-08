@@ -40,7 +40,7 @@ if (process.env.BLOG_DATABASE_PUBLIC_URL) {
 
 // ─── Configuration ─────────────────────────────────────────────────────────
 
-const VALID_LANGS = ["fr", "en", "de", "es", "it"];
+const VALID_LANGS = ["fr", "en", "de", "es", "it", "pt"];
 
 /** Domaine de production par langue */
 const DOMAINS = {
@@ -49,6 +49,7 @@ const DOMAINS = {
   de: "https://hallucinecran.de",
   es: "https://hallucinecran.es",
   it: "https://hallucinecran.it",
+  pt: "https://hallucinecran.pt",
 };
 
 /** Mapping langue → og:locale (BCP-47 → OG format) */
@@ -58,6 +59,7 @@ const OG_LOCALES = {
   de: "de_DE",
   es: "es_ES",
   it: "it_IT",
+  pt: "pt_PT",
 };
 
 /** Construit le bloc <meta og:locale> + alternates pour la langue courante */

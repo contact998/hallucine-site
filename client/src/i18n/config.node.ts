@@ -22,7 +22,7 @@ export {
   type SupportedLanguage,
 } from "./domains.ts";
 
-const VALID_LANGS_ARRAY = ["fr", "en", "de", "es", "it"] as const;
+const VALID_LANGS_ARRAY = ["fr", "en", "de", "es", "it", "pt"] as const;
 
 const resources: Resource = {};
 for (const lang of VALID_LANGS_ARRAY) {

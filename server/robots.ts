@@ -17,6 +17,7 @@ const SITEMAPS = [
   "https://hallucinecran.de/sitemap.xml",
   "https://hallucinecran.es/sitemap.xml",
   "https://hallucinecran.it/sitemap.xml",
+  "https://hallucinecran.pt/sitemap.xml",
 ] as const;
 
 /** Préférences Content-Signal déclarées (politique validée : train refusé). */

@@ -159,7 +159,7 @@ for (const page of LANG_PAGES_TO_CHECK) {
 
 section("2. Longueur des métadonnées dans les locales");
 
-const LANGS = ["fr", "en", "de", "es", "it"];
+const LANGS = ["fr", "en", "de", "es", "it", "pt"];
 const TITLE_MAX = 60;
 const DESC_MAX  = 160;
 

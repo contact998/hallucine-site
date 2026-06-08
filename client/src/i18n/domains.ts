@@ -10,7 +10,7 @@
  * - config.node.ts
  */
 
-export const SUPPORTED_LANGUAGES = ["fr", "en", "de", "es", "it"] as const;
+export const SUPPORTED_LANGUAGES = ["fr", "en", "de", "es", "it", "pt"] as const;
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 
 export const LANGUAGE_NAMES: Record<SupportedLanguage, string> = {
@@ -19,6 +19,7 @@ export const LANGUAGE_NAMES: Record<SupportedLanguage, string> = {
   de: "Deutsch",
   es: "Español",
   it: "Italiano",
+  pt: "Português",
 };
 
 export const LANGUAGE_FLAGS: Record<SupportedLanguage, string> = {
@@ -27,6 +28,7 @@ export const LANGUAGE_FLAGS: Record<SupportedLanguage, string> = {
   de: "🇩🇪",
   es: "🇪🇸",
   it: "🇮🇹",
+  pt: "🇵🇹",
 };
 
 // Code locale BCP-47 par langue — pour le champ inLanguage des données structurées
@@ -36,6 +38,7 @@ export const LANGUAGE_LOCALES: Record<SupportedLanguage, string> = {
   de: "de-DE",
   es: "es-ES",
   it: "it-IT",
+  pt: "pt-PT",
 };
 
 export const LANGUAGE_DOMAINS: Record<SupportedLanguage, string> = {
@@ -44,6 +47,7 @@ export const LANGUAGE_DOMAINS: Record<SupportedLanguage, string> = {
   de: "https://hallucinecran.de",
   es: "https://hallucinecran.es",
   it: "https://hallucinecran.it",
+  pt: "https://hallucinecran.pt",
 };
 
 // Mapping domaine → langue
@@ -58,9 +62,11 @@ export const DOMAIN_LANG_MAP: Record<string, string> = {
   "www.hallucinecran.es": "es",
   "hallucinecran.it": "it",
   "www.hallucinecran.it": "it",
+  "hallucinecran.pt": "pt",
+  "www.hallucinecran.pt": "pt",
 };
 
-export const VALID_LANGS = ["fr", "en", "de", "es", "it"] as const;
+export const VALID_LANGS = ["fr", "en", "de", "es", "it", "pt"] as const;
 
 /**
  * Construit l'URL canonique absolue : domaine de la langue + chemin normalisé

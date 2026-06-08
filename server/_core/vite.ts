@@ -66,6 +66,8 @@ const DOMAIN_LOCALE_MAP: Record<string, string> = {
   "www.hallucinecran.es": "es",
   "hallucinecran.it": "it",
   "www.hallucinecran.it": "it",
+  "hallucinecran.pt": "pt",
+  "www.hallucinecran.pt": "pt",
 };
 
 function getLocaleFromHost(hostname: string): string {
@@ -79,9 +81,10 @@ const LOCALE_ORIGINS: Record<string, string> = {
   de: "https://hallucinecran.de",
   es: "https://hallucinecran.es",
   it: "https://hallucinecran.it",
+  pt: "https://hallucinecran.pt",
 };
 
-const VALID_LANG_PREFIXES = new Set(["fr", "en", "de", "es", "it"]);
+const VALID_LANG_PREFIXES = new Set(["fr", "en", "de", "es", "it", "pt"]);
 
 // Décide quoi faire d'un path qui commence par /xx ou /xx/... :
 //  - préfixe inconnu (/sv, /nl, /pt…)  → 404 propre (bots SEO)
@@ -112,6 +115,7 @@ const OG_LOCALES: Record<string, string> = {
   de: "de_DE",
   es: "es_ES",
   it: "it_IT",
+  pt: "pt_PT",
 };
 
 function buildOgLocaleTags(lang: string): string {
