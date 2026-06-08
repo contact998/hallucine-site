@@ -11,19 +11,25 @@ import { Menu, X, ChevronDown, User } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { useTranslation } from "react-i18next";
-import { LANGUAGE_DOMAINS, detectLanguage } from "@/i18n/domains";
+import {
+  LANGUAGE_DOMAINS,
+  LANGUAGE_FLAGS,
+  SUPPORTED_LANGUAGES,
+  detectLanguage,
+} from "@/i18n/domains";
 import { ROUTES, getRouteKey, getHreflangUrls } from "@/i18n/routes";
 import { AvailabilityBadge } from "./AvailabilityIndicator";
 
 const LOGO_URL = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/ySiqVkOsMSzWfHfu.webp";
 
-const languages = [
-  { code: "fr", label: "FR", flag: "🇫🇷", url: LANGUAGE_DOMAINS.fr },
-  { code: "en", label: "EN", flag: "🇬🇧", url: LANGUAGE_DOMAINS.en },
-  { code: "de", label: "DE", flag: "🇩🇪", url: LANGUAGE_DOMAINS.de },
-  { code: "es", label: "ES", flag: "🇪🇸", url: LANGUAGE_DOMAINS.es },
-  { code: "it", label: "IT", flag: "🇮🇹", url: LANGUAGE_DOMAINS.it },
-];
+// Dérivé de la source unique (SUPPORTED_LANGUAGES) pour qu'aucune langue
+// — pt inclus — ne puisse être oubliée du sélecteur.
+const languages = SUPPORTED_LANGUAGES.map((code) => ({
+  code,
+  label: code.toUpperCase(),
+  flag: LANGUAGE_FLAGS[code],
+  url: LANGUAGE_DOMAINS[code],
+}));
 
 function LanguageSwitcher({ mobile = false }: { mobile?: boolean }) {
   const [open, setOpen] = useState(false);

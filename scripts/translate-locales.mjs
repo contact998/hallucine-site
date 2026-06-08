@@ -2,11 +2,15 @@
  * translate-locales.mjs — Traduction automatique des locales via DeepL.
  *
  * Le français (client/src/locales/fr/*.json) est la SOURCE UNIQUE.
- * Pour chaque autre langue (en, de, es, it), ce script complète les clés
+ * Pour chaque autre langue (en, de, es, it, pt), ce script complète les clés
  * manquantes en les traduisant via l'API DeepL — le même DeepL que le blog.
  *
- * Incrémental : ne traduit QUE les clés absentes. Les traductions déjà
- * présentes ne sont jamais retouchées (corrections manuelles préservées).
+ * Descend récursivement dans les objets imbriqués et les tableaux : home.json
+ * (hero, products, faq…) est presque entièrement nesté ; un traitement à plat
+ * ne traduirait que meta_title/meta_desc et laisserait le corps en français.
+ *
+ * Incrémental : ne traduit QUE les feuilles (chaînes) absentes. Les traductions
+ * déjà présentes ne sont jamais retouchées (corrections manuelles préservées).
  *
  * Sans DEEPL_API_KEY : avertit et s'arrête proprement (exit 0) — le build
  * continue, les pages non traduites retombent simplement sur le français.
@@ -42,6 +46,44 @@ const DEEPL_HOST = apiKey.endsWith(":fx") ? "api-free.deepl.com" : "api.deepl.co
 const LOCALES = join(ROOT, "client/src/locales");
 const FR_DIR = join(LOCALES, "fr");
 const DEEPL_LANGS = { en: "EN-GB", de: "DE", es: "ES", it: "IT", pt: "PT-PT" };
+
+// DeepL accepte au plus 50 textes par requête : on découpe en lots.
+const BATCH = 45;
+
+// ── Aplatissement / reconstruction de structures imbriquées ────────────
+// flatten : { hero: { quote: "x" }, tags: ["a"] } → Map { "hero.quote"→"x", "tags.0"→"a" }
+// (feuilles chaînes uniquement ; les autres primitives sont ignorées ici et
+//  recopiées telles quelles depuis le FR lors de la reconstruction).
+function flattenStrings(node, prefix, out) {
+  if (typeof node === "string") {
+    out.set(prefix, node);
+  } else if (Array.isArray(node)) {
+    node.forEach((v, i) => flattenStrings(v, prefix ? `${prefix}.${i}` : String(i), out));
+  } else if (node && typeof node === "object") {
+    for (const k of Object.keys(node)) {
+      flattenStrings(node[k], prefix ? `${prefix}.${k}` : k, out);
+    }
+  }
+}
+
+// rebuild : reconstruit en suivant la structure et l'ordre des clés du FR,
+// en tirant chaque feuille chaîne depuis `resolved` (existant + traductions).
+function rebuild(frNode, prefix, resolved) {
+  if (typeof frNode === "string") {
+    return resolved.has(prefix) ? resolved.get(prefix) : frNode;
+  }
+  if (Array.isArray(frNode)) {
+    return frNode.map((v, i) => rebuild(v, prefix ? `${prefix}.${i}` : String(i), resolved));
+  }
+  if (frNode && typeof frNode === "object") {
+    const obj = {};
+    for (const k of Object.keys(frNode)) {
+      obj[k] = rebuild(frNode[k], prefix ? `${prefix}.${k}` : k, resolved);
+    }
+    return obj;
+  }
+  return frNode; // primitive non-chaîne : recopiée telle quelle
+}
 
 // ── Protection des placeholders {{...}} : DeepL ne doit pas les traduire ──
 function protect(text) {
@@ -99,30 +141,34 @@ try {
         ? JSON.parse(readFileSync(targetPath, "utf8"))
         : {};
 
-      // Clés présentes en FR (chaînes) mais absentes dans la langue cible.
-      const missing = Object.keys(fr).filter(
-        (k) => typeof fr[k] === "string" && !(k in target)
-      );
+      // Feuilles (chaînes) présentes en FR mais absentes dans la langue cible.
+      const frFlat = new Map();
+      flattenStrings(fr, "", frFlat);
+      const targetFlat = new Map();
+      flattenStrings(target, "", targetFlat);
+      const missing = [...frFlat.keys()].filter((p) => !targetFlat.has(p));
       if (missing.length === 0) continue;
 
       try {
-        const protectedTexts = [];
-        const tokenSets = [];
-        for (const k of missing) {
-          const { out, tokens } = protect(fr[k]);
-          protectedTexts.push(out);
-          tokenSets.push(tokens);
+        // Conserve l'existant (traductions/corrections déjà en place).
+        const resolved = new Map(targetFlat);
+
+        for (let i = 0; i < missing.length; i += BATCH) {
+          const batch = missing.slice(i, i + BATCH);
+          const protectedTexts = [];
+          const tokenSets = [];
+          for (const p of batch) {
+            const { out, tokens } = protect(frFlat.get(p));
+            protectedTexts.push(out);
+            tokenSets.push(tokens);
+          }
+          const translated = await deepl(protectedTexts, DEEPL_LANGS[lang]);
+          batch.forEach((p, j) => resolved.set(p, restore(translated[j], tokenSets[j])));
         }
 
-        const translated = await deepl(protectedTexts, DEEPL_LANGS[lang]);
-        missing.forEach((k, i) => {
-          target[k] = restore(translated[i], tokenSets[i]);
-        });
-
-        // Réécrit le fichier dans l'ordre des clés du FR.
-        const ordered = {};
-        for (const k of Object.keys(fr)) if (k in target) ordered[k] = target[k];
-        writeFileSync(targetPath, JSON.stringify(ordered, null, 2) + "\n");
+        // Réécrit en suivant la structure et l'ordre des clés du FR.
+        const rebuilt = rebuild(fr, "", resolved);
+        writeFileSync(targetPath, JSON.stringify(rebuilt, null, 2) + "\n");
 
         total += missing.length;
         console.log(`[i18n] ${lang}/${file} — ${missing.length} clé(s) traduite(s)`);

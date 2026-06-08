@@ -38,6 +38,36 @@
   "indisponible": "Ausente",
   "whatsapp_message": "Olá, estou interessado nos vossos ecrãs de cinema insufláveis.",
   "scroll": "ROLAR",
+  "footer": {
+    "description": "Fabricante de ecrãs de cinema insufláveis desde 1992. Os ecrãs mais leves do mundo, com tamanhos entre 2 e 24 metros. Tendas, arcos e mobiliário insuflável.",
+    "copyright": "Todos os direitos reservados. Fabricante de ecrãs de cinema insufláveis desde 1992.",
+    "menu": {
+      "title": "Menu",
+      "contact": "Contacte-nos",
+      "devis": "Orçamento gratuito",
+      "cinema_plein_air": "Cinema ao ar livre",
+      "a_propos": "Sobre",
+      "galerie": "Galeria",
+      "accessoires": "Acessórios",
+      "mode_emploi": "Instruções de utilização",
+      "galerie_video": "Galeria de vídeos",
+      "blog": "Blog",
+      "devenir_distributeur": "Torne-se distribuidor",
+      "confidentialite": "Política de Privacidade",
+      "mentions_legales": "Aviso Legal",
+      "cookies": "Cookies"
+    },
+    "contact": {
+      "title": "Mantenha-se em contacto"
+    },
+    "newsletter": {
+      "title": "Fiquem atentos",
+      "subtitle": "Inscreva-se na nossa newsletter para receber as últimas novidades e ofertas.",
+      "placeholder": "O seu e-mail",
+      "submit": "Enviar",
+      "thanks": "Obrigado pela sua inscrição!"
+    }
+  },
   "related_discover_also": "Descubra também",
   "related_discover": "Descobrir",
   "related_ecrans_title": "Ecrãs insufláveis",
