@@ -20,6 +20,13 @@ const HUB: { id: string; icon: typeof Monitor; to: RouteKey }[] = [
   { id: "c3", icon: CalendarClock, to: "location" },
   { id: "c4", icon: Volume2, to: "accessoires" },
 ];
+// Segments d'intention du cluster (maillage interne : pilier → segments).
+const SEGMENTS: { id: string; to: RouteKey }[] = [
+  { id: "seg_mairie", to: "mairie" },
+  { id: "seg_hotel", to: "hotel" },
+  { id: "seg_evenement", to: "evenement" },
+  { id: "seg_prix", to: "prix" },
+];
 const STEPS = ["s1", "s2", "s3", "s4"];
 const FAQ = ["1", "2", "3", "4"];
 
@@ -84,6 +91,22 @@ export default function CinemaPleinAir() {
                 <p className="text-white/60 text-sm leading-relaxed">{t(`${id}_desc`)}</p>
               </Link>
             ))}
+          </div>
+
+          {/* Par profil — maillage interne vers les pages segment */}
+          <div className="mt-12 pt-8 border-t border-white/10">
+            <h3 className="text-xl font-bold text-ivory mb-4">{t("seg_title")}</h3>
+            <div className="flex flex-wrap gap-3">
+              {SEGMENTS.map(({ id, to }) => (
+                <Link
+                  key={id}
+                  href={route(to)}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-card border border-border rounded-lg text-ivory text-sm hover:border-warm/40 transition-colors"
+                >
+                  {t(id)} <ChevronRight className="w-4 h-4 text-warm" />
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>

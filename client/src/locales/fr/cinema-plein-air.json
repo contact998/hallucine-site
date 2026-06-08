@@ -41,5 +41,11 @@
 
   "cta_title": "Prêt à projeter en plein air ?",
   "cta_desc": "Décrivez-nous votre événement — lieu, public, date — et on vous prépare un devis gratuit et sur mesure.",
-  "cta_explore": "Voir les écrans"
+  "cta_explore": "Voir les écrans",
+
+  "seg_title": "Cinéma plein air : par profil",
+  "seg_mairie": "Mairies & collectivités",
+  "seg_hotel": "Hôtels & resorts",
+  "seg_evenement": "Festivals & événementiel",
+  "seg_prix": "Prix & devis"
 }

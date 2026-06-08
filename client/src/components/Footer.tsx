@@ -34,6 +34,7 @@ export default function Footer() {
   const menuLinks = [
     { labelKey: "footer.menu.contact", href: route("contact") },
     { labelKey: "footer.menu.devis", href: route("contact") },
+    { labelKey: "footer.menu.cinema_plein_air", href: route("cinema-plein-air") },
     { labelKey: "footer.menu.a_propos", href: route("a-propos") },
     { labelKey: "footer.menu.galerie", href: route("galerie") },
     { labelKey: "footer.menu.accessoires", href: route("accessoires") },

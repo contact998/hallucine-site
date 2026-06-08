@@ -40,6 +40,7 @@ export default function IntentLandingPage({
   faqCount = 4,
 }: Props) {
   const { t } = useTranslation(namespace);
+  const { t: tc } = useTranslation("common");
   const route = useRoutes();
   useDocumentMeta(t("meta_title"), t("meta_desc"));
 
@@ -60,6 +61,9 @@ export default function IntentLandingPage({
       {/* Hero */}
       <section className="pt-32 pb-16 bg-charcoal-light">
         <div className="container">
+          <Link href={route("cinema-plein-air")} className="inline-flex items-center gap-1 text-white/50 text-sm hover:text-warm transition-colors mb-4">
+            ← {tc("footer.menu.cinema_plein_air")}
+          </Link>
           <p className="text-warm text-sm font-medium tracking-widest uppercase mb-4">{t("section_label")}</p>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-ivory leading-tight mb-6">{t("hero_title")}</h1>
           <p className="text-white/70 text-lg max-w-2xl leading-relaxed mb-8">{t("hero_desc")}</p>
