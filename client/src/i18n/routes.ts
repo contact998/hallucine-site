@@ -18,6 +18,7 @@ export type RouteKey =
   | "configurateur"
   | "drive-in"
   | "packs"
+  | "cinema-plein-air"
   | "location"
   | "etudes-cas"
   | "cas-velodrome"
@@ -57,6 +58,7 @@ export const ROUTES: Record<string, LangRoutes> = {
     configurateur: "/configurateur-ecran-gonflable",
     "drive-in": "/ecran-gonflable-drive-in",
     packs: "/pack-cinema-plein-air",
+    "cinema-plein-air": "/cinema-plein-air",
     location: "/location-ecran-gonflable",
     "etudes-cas": "/etudes-de-cas",
     "cas-velodrome": "/realisation-velodrome-orange-stade-marseille",
@@ -93,6 +95,7 @@ export const ROUTES: Record<string, LangRoutes> = {
     configurateur: "/inflatable-screen-configurator",
     "drive-in": "/inflatable-drive-in-screen",
     packs: "/outdoor-cinema-package",
+    "cinema-plein-air": "/open-air-cinema",
     location: "/inflatable-screen-rental",
     "etudes-cas": "/case-studies",
     "cas-velodrome": "/case-velodrome-orange-marseille-stadium",
@@ -129,6 +132,7 @@ export const ROUTES: Record<string, LangRoutes> = {
     configurateur: "/aufblasbarer-bildschirm-konfigurator",
     "drive-in": "/aufblasbarer-drive-in-bildschirm",
     packs: "/freiluftkino-paket",
+    "cinema-plein-air": "/freiluftkino",
     location: "/aufblasbarer-bildschirm-mieten",
     "etudes-cas": "/fallstudien",
     "cas-velodrome": "/fallstudie-velodrome-orange-marseille-stadion",
@@ -165,6 +169,7 @@ export const ROUTES: Record<string, LangRoutes> = {
     configurateur: "/configurador-pantalla-inflable",
     "drive-in": "/pantalla-inflable-autocine",
     packs: "/paquete-cine-aire-libre",
+    "cinema-plein-air": "/cine-al-aire-libre",
     location: "/alquiler-pantalla-inflable",
     "etudes-cas": "/casos-de-exito",
     "cas-velodrome": "/caso-velodrome-orange-estadio-marsella",
@@ -201,6 +206,7 @@ export const ROUTES: Record<string, LangRoutes> = {
     configurateur: "/configuratore-schermo-gonfiabile",
     "drive-in": "/schermo-gonfiabile-drive-in",
     packs: "/pacchetto-cinema-all-aperto",
+    "cinema-plein-air": "/cinema-all-aperto",
     location: "/noleggio-schermo-gonfiabile",
     "etudes-cas": "/casi-studio",
     "cas-velodrome": "/caso-velodrome-orange-stadio-marsiglia",

@@ -16,7 +16,7 @@ const PAGE_LABELS: Record<RouteKey, string> = {
   home: "Accueil", ecrans: "Écrans (hub)", "ecran-geant": "Écran Géant",
   "ecran-etanche": "Écran Étanche", "ecran-economique": "Écran Économique",
   comparaison: "Comparaison", configurateur: "Configurateur", "drive-in": "Drive-in",
-  packs: "Packs", location: "Location", "etudes-cas": "Études de cas",
+  packs: "Packs", "cinema-plein-air": "Cinéma plein air", location: "Location", "etudes-cas": "Études de cas",
   "cas-velodrome": "Cas — Vélodrome", "cas-oran": "Cas — Oran", "ecrans-led": "Écrans LED",
   tentes: "Tentes (hub)", "tente-x": "Tente X", "tente-n": "Tente N", "tente-v": "Tente V",
   "tente-araignee": "Tente Araignée", arches: "Arches", mobilier: "Mobilier",
