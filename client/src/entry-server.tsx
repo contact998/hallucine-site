@@ -67,16 +67,16 @@ if (!(import.meta as unknown as Record<string, unknown>).env) {
   };
 }
 
-const VALID_LANGS = ["fr", "en", "de", "es", "it"] as const;
+const VALID_LANGS = ["fr", "en", "de", "es", "it", "pt"] as const;
 
 const NS = [
   "common", "home", "products", "contact", "legal", "nav",
   "ecran-geant", "ecran-etanche", "ecran-economique", "comparaison",
-  "configurateur", "drive-in", "packs", "location", "etudes-cas", "cas-velodrome", "cas-oran", "ecrans-led", "ecrans", "tentes", "tente-x", "tente-n", "tente-v",
+  "configurateur", "drive-in", "packs", "cinema-plein-air", "prix", "mairie", "hotel", "evenement", "location", "etudes-cas", "cas-velodrome", "cas-oran", "ecrans-led", "ecrans", "tentes", "tente-x", "tente-n", "tente-v",
   "tente-araignee", "arches-gonflables", "mobilier", "accessoires",
   "a-propos", "mode-emploi", "mentions-legales", "devenir-distributeur",
   "galerie", "galerie-video", "politique-cookies",
-  "confidentialite", "blog", "histoire", "not-found"
+  "confidentialite", "blog", "histoire", "not-found", "smartform"
 ];
 
 // Préparer les ressources i18n une seule fois (lecture disque)
@@ -111,7 +111,7 @@ export interface SSRInitialData {
  * Rend une page en HTML statique pour une URL et une langue données
  *
  * @param url - URL de la page (ex: "/ecran-gonflable")
- * @param lang - Code langue (ex: "fr", "en", "de", "es", "it")
+ * @param lang - Code langue (ex: "fr", "en", "de", "es", "it", "pt")
  * @param mediaCache - Images bakées depuis la DB (clé "categorie|souscategorie")
  * @param initialData - Données pré-chargées (ex: article de blog par slug)
  * @returns HTML statique + metas collectées pendant le rendu
