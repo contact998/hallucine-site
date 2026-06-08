@@ -363,11 +363,13 @@ export function serveStatic(app: Express) {
             hreflangTags = lines.join("\n");
           } catch { /* fallback = auto-référence seule */ }
 
-          // Maillage interne : autres articles de la même langue (anti-orphelin + liens sortants).
+          // Maillage interne : TOUS les autres articles de la même langue. Lier
+          // tout le monde garantit qu'aucun article n'est orphelin (chacun est lié
+          // depuis tous les autres). Bloc serveur uniquement (le client le remplace).
           let relatedHtml = "";
           try {
-            const related = (await getPublishedPosts(locale, 8, 0))
-              .filter((p) => p.slug !== post.slug).slice(0, 6);
+            const related = (await getPublishedPosts(locale, 100, 0))
+              .filter((p) => p.slug !== post.slug);
             if (related.length) {
               relatedHtml =
                 `<aside><h2>Autres articles</h2><ul>` +
