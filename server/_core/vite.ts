@@ -415,7 +415,7 @@ export function serveStatic(app: Express) {
           let html = cleanTemplate
             .replace(/__LOCALE__/g, locale)
             .replace(/<!--__OG_LOCALE_TAGS__-->/g, buildOgLocaleTags(locale))
-            .replace(/__PAGE_TITLE__/g, escapeHtml(`${title} | Hallucine`))
+            .replace(/__PAGE_TITLE__/g, escapeHtml(title.length <= 48 ? `${title} | Hallucine` : title))
             .replace(/__PAGE_DESCRIPTION__/g, escapeHtml(description))
             .replace(/__PAGE_IMAGE__/g, escapeHtml(headerImage))
             .replace(/__PAGE_URL__/g, escapeHtml(canonicalUrl));
