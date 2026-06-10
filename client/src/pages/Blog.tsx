@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { MessageSquare, ThumbsUp, User } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { detectLanguage } from "@/i18n/domains";
+import { formatPostDate } from "@/i18n/formatPostDate";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
@@ -42,7 +43,7 @@ export default function Blog() {
   const { t } = useTranslation("blog");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
 
-  const [categorieActive, setCategorieActive] = useState("Toutes");
+  const [categorieActive, setCategorieActive] = useState<string | null>(null);
   const [expandedComments, setExpandedComments] = useState<Record<string, boolean>>({});
 
   // Charger les articles depuis la DB
@@ -57,11 +58,7 @@ export default function Blog() {
     setExpandedComments(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const formatDate = (dateStr: string | Date | null) => {
-    if (!dateStr) return "";
-    const date = new Date(dateStr);
-    return date.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
-  };
+  const formatDate = (dateStr: string | Date | null) => formatPostDate(dateStr, lang);
 
   // Articles DB uniquement — les articles statiques de fallback ont été supprimés
   // car leurs slugs pointaient vers des pages inexistantes (404 Semrush)
@@ -83,9 +80,13 @@ export default function Blog() {
     ...staticArticles.map(a => ({ ...a, fromDb: false })),
   ];
 
-  const categories = ["Toutes", ...Array.from(new Set(allArticles.map(a => a.categorie)))];
+  // null = « toutes les catégories » (libellé localisé all_categories au rendu)
+  const categories: (string | null)[] = [null, ...Array.from(new Set(allArticles.map(a => a.categorie)))];
 
-  const articlesFiltres = categorieActive === "Toutes"
+  const rawTags = t("tags", { returnObjects: true });
+  const tags: string[] = Array.isArray(rawTags) ? rawTags : [];
+
+  const articlesFiltres = categorieActive === null
     ? allArticles
     : allArticles.filter(a => a.categorie === categorieActive);
 
@@ -179,7 +180,7 @@ export default function Blog() {
                           className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
                         >
                           <MessageSquare className="w-4 h-4" />
-                          {article.commentaires.length} commentaire{article.commentaires.length > 1 ? "s" : ""}
+                          {article.commentaires.length} {article.commentaires.length > 1 ? t("comments_label_plural") : t("comments_label")}
                         </button>
                       </div>
                     </div>
@@ -189,7 +190,7 @@ export default function Blog() {
                       <div className="border-t border-border bg-muted/30">
                         <div className="p-6 md:p-8">
                           <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-6">
-                            {article.commentaires.length} commentaire{article.commentaires.length > 1 ? "s" : ""}
+                            {article.commentaires.length} {article.commentaires.length > 1 ? t("comments_label_plural") : t("comments_label")}
                           </h3>
                           <div className="space-y-6">
                             {article.commentaires.map((commentaire, idx) => (
@@ -230,7 +231,7 @@ export default function Blog() {
                                       {commentaire.likes}
                                     </button>
                                     <button className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-                                      Répondre
+                                      {t("reply")}
                                     </button>
                                   </div>
                                 </div>
@@ -285,7 +286,7 @@ export default function Blog() {
                 <div className="space-y-2">
                   {categories.map((cat) => (
                     <button
-                      key={cat}
+                      key={cat ?? "all"}
                       onClick={() => setCategorieActive(cat)}
                       className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                         categorieActive === cat
@@ -293,7 +294,7 @@ export default function Blog() {
                           : "hover:bg-muted text-muted-foreground"
                       }`}
                     >
-                      {cat}
+                      {cat ?? t("all_categories")}
                     </button>
                   ))}
                 </div>
@@ -303,7 +304,7 @@ export default function Blog() {
               <div className="bg-card rounded-lg border border-border p-6 mb-6">
                 <h3 className="font-display text-lg font-bold mb-4">{t("tags_title")}</h3>
                 <div className="flex flex-wrap gap-2">
-                  {["Écrans Gonflables", "Cinéma en Plein Air", "Planification d'Événements", "Événements d'Entreprise", "Solutions pour Festivals", "Guides de Produits", "Tentes Gonflables", "Mobilier pour Événements"].map((tag) => (
+                  {tags.map((tag) => (
                     <span key={tag} className="text-xs bg-muted px-3 py-1.5 rounded-full text-muted-foreground">
                       {tag}
                     </span>

@@ -4,6 +4,8 @@ import DOMPurify from "dompurify";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { trpc } from "@/lib/trpc";
 import { useRoutes } from "@/i18n/useRoutes";
+import { detectLanguage } from "@/i18n/domains";
+import { formatPostDate } from "@/i18n/formatPostDate";
 import { ArrowLeft, Calendar, User, Tag } from "lucide-react";
 
 /**
@@ -37,14 +39,7 @@ export default function BlogPost() {
     post?.imageUrl ?? undefined
   );
 
-  const formatDate = (dateStr: string | Date | null) => {
-    if (!dateStr) return "";
-    return new Date(dateStr).toLocaleDateString("fr-FR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-  };
+  const formatDate = (dateStr: string | Date | null) => formatPostDate(dateStr, detectLanguage());
 
   if (isLoading) {
     return (
