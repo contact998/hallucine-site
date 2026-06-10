@@ -48,7 +48,8 @@ function createAnonContext(): TrpcContext {
 }
 
 describe("profile.mySubmissions", () => {
-  it("returns an array for authenticated user", async () => {
+  // Intégration : lit la base (DATABASE_URL) — skip propre quand l'env est absente.
+  it.skipIf(!process.env.DATABASE_URL)("returns an array for authenticated user", async () => {
     const ctx = createAuthContext(999);
     const caller = appRouter.createCaller(ctx);
 
@@ -89,7 +90,8 @@ describe("contact.submit", () => {
     ).rejects.toThrow();
   });
 
-  it("accepts valid devis submission", async () => {
+  // Intégration : écrit en base (DATABASE_URL) — skip propre quand l'env est absente.
+  it.skipIf(!process.env.DATABASE_URL)("accepts valid devis submission", async () => {
     const ctx = createAuthContext(1);
     const caller = appRouter.createCaller(ctx);
 

@@ -1,10 +1,12 @@
 /**
- * Test de validation de la connexion à la base de données du CRM
+ * Test de validation de la connexion à la base de données du CRM.
+ * Intégration : ne tourne que si CRM_DATABASE_URL est définie — skip propre
+ * en local sans la base (un échec ici ne signalerait que l'env, pas le code).
  */
 import { describe, it, expect } from "vitest";
 import mysql from "mysql2/promise";
 
-describe("CRM Database Connection", () => {
+describe.skipIf(!process.env.CRM_DATABASE_URL)("CRM Database Connection", () => {
   it("should connect to the CRM database and find the prospects table", async () => {
     const crmUrl = process.env.CRM_DATABASE_URL;
     expect(crmUrl).toBeTruthy();

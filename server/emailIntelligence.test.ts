@@ -278,9 +278,12 @@ describe("getDomainName", () => {
 });
 
 // ─── Tests pour la route d'abandon ──────────────────────────────────
-describe("abandon partial route", () => {
+// Intégration : nécessite un serveur lancé. Opt-in explicite :
+//   TEST_BASE_URL=http://localhost:3000 pnpm test
+const ABANDON_BASE = process.env.TEST_BASE_URL ?? "http://localhost:3000";
+describe.skipIf(!process.env.TEST_BASE_URL)("abandon partial route", () => {
   it("la route /api/abandon-partial accepte un POST valide", { timeout: 15000 }, async () => {
-    const response = await fetch("http://localhost:3000/api/abandon-partial", {
+    const response = await fetch(`${ABANDON_BASE}/api/abandon-partial`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -297,7 +300,7 @@ describe("abandon partial route", () => {
   });
 
   it("la route /api/abandon-partial rejette un POST sans email", async () => {
-    const response = await fetch("http://localhost:3000/api/abandon-partial", {
+    const response = await fetch(`${ABANDON_BASE}/api/abandon-partial`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -310,7 +313,7 @@ describe("abandon partial route", () => {
   });
 
   it("la route /api/abandon-partial rejette un email invalide", async () => {
-    const response = await fetch("http://localhost:3000/api/abandon-partial", {
+    const response = await fetch(`${ABANDON_BASE}/api/abandon-partial`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

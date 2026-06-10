@@ -8,6 +8,12 @@ import viteConfig from "../../vite.config";
 import { sdk } from "./sdk";
 import { getSeoOverrideForPath, applySeoOverride } from "../seo";
 import { markdownFileForRequest } from "../llmsFull";
+import {
+  blogListPath,
+  buildBlogListHtml,
+  extractListMeta,
+  pageTitleWithBrand,
+} from "./blogListSsr";
 
 export async function setupVite(app: Express, server: Server) {
   const serverOptions = {
@@ -304,6 +310,57 @@ export function serveStatic(app: Express) {
     const langPrefix = locale !== "fr" ? `_lang_${locale}` : "";
     const prerenderedPath = path.join(distPath, langPrefix, urlPath, "index.html");
 
+    // 0-bis. Liste /blog — le build n'a pas d'accès à la base (cf. section articles
+    // plus bas) : la version pré-rendue ne contient AUCUN article (squelettes).
+    // Rendu au runtime : liens crawlables + __SSR_INITIAL_DATA__.blogList (Blog.tsx
+    // hydrate sans refetch, main.tsx force createRoot). Métadonnées localisées
+    // reprises du HTML pré-rendu. En cas d'erreur DB ou de liste vide → fallthrough
+    // vers la page pré-rendue (squelette + fetch client = comportement d'avant).
+    if (reqPath === blogListPath(locale)) {
+      try {
+        const { getPublishedPosts, countPublishedPosts } = await import("../blog");
+        const [posts, total] = await Promise.all([
+          getPublishedPosts(locale, 50, 0),
+          countPublishedPosts(locale),
+        ]);
+        if (posts.length > 0) {
+          let pre: ReturnType<typeof extractListMeta> = {};
+          try {
+            if (fs.existsSync(prerenderedPath)) {
+              pre = extractListMeta(fs.readFileSync(prerenderedPath, "utf-8"));
+            }
+          } catch { /* métadonnées par défaut */ }
+          let html = buildBlogListHtml({
+            cleanTemplate,
+            locale,
+            posts,
+            total,
+            meta: {
+              title: pre.title ?? "Blog | Hallucine",
+              description: pre.description ?? "",
+              image: pre.image ?? DEFAULT_OG_IMAGE,
+              h1: pre.h1 ?? "Blog",
+            },
+            ogLocaleTags: buildOgLocaleTags(locale),
+          });
+          try {
+            const ov = await getSeoOverrideForPath(reqPath, Date.now());
+            if (ov) html = applySeoOverride(html, ov);
+          } catch (e) {
+            console.error("[seo] override non appliqué:", e instanceof Error ? e.message : e);
+          }
+          res.status(200).set({
+            "Content-Type": "text/html; charset=utf-8",
+            "Vary": "Host",
+            "Cache-Control": "no-cache, max-age=0, must-revalidate",
+          }).end(injectNavWidget(html));
+          return;
+        }
+      } catch (err) {
+        console.warn("[blog-ssr] Erreur rendu liste:", err);
+      }
+    }
+
     if (fs.existsSync(prerenderedPath)) {
       // Servir la page pré-rendue avec la bonne locale injectée
       let prerenderedHtml = injectNavWidget(
@@ -415,7 +472,7 @@ export function serveStatic(app: Express) {
           let html = cleanTemplate
             .replace(/__LOCALE__/g, locale)
             .replace(/<!--__OG_LOCALE_TAGS__-->/g, buildOgLocaleTags(locale))
-            .replace(/__PAGE_TITLE__/g, escapeHtml(title.length <= 48 ? `${title} | Hallucine` : title))
+            .replace(/__PAGE_TITLE__/g, escapeHtml(pageTitleWithBrand(title)))
             .replace(/__PAGE_DESCRIPTION__/g, escapeHtml(description))
             .replace(/__PAGE_IMAGE__/g, escapeHtml(headerImage))
             .replace(/__PAGE_URL__/g, escapeHtml(canonicalUrl));

@@ -13,7 +13,7 @@ describe("resolveLocalePrefixRedirect", () => {
     expect(resolveLocalePrefixRedirect("/sv", "hallucinecran.fr")).toEqual({ status: 404 });
     expect(resolveLocalePrefixRedirect("/nl/foo", "hallucinecran.fr")).toEqual({ status: 404 });
     expect(resolveLocalePrefixRedirect("/zh", "hallucinecran.com")).toEqual({ status: 404 });
-    expect(resolveLocalePrefixRedirect("/pt/anything", "hallucinecran.de")).toEqual({ status: 404 });
+    expect(resolveLocalePrefixRedirect("/ru/anything", "hallucinecran.de")).toEqual({ status: 404 });
   });
 
   it("préfixe = langue du TLD courant → 301 vers le chemin sans préfixe", () => {
@@ -45,6 +45,9 @@ describe("resolveLocalePrefixRedirect", () => {
     // depuis le .es
     expect(resolveLocalePrefixRedirect("/de/whatever", "hallucinecran.es"))
       .toEqual({ status: 301, location: "https://hallucinecran.de/" });
+    // pt = langue valide depuis le rollout du TLD .pt (2026-06-08)
+    expect(resolveLocalePrefixRedirect("/pt/qualquer-coisa", "hallucinecran.fr"))
+      .toEqual({ status: 301, location: "https://hallucinecran.pt/" });
   });
 
   it("traite www.* comme le domaine de base", () => {
