@@ -1,4 +1,4 @@
-import { eq, desc, and, sql, asc, or, like } from "drizzle-orm";
+import { eq, desc, and, sql, asc, or, like, isNotNull } from "drizzle-orm";
 import { blogPosts, InsertBlogPost, BlogPost } from "../drizzle/schema";
 import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
@@ -12,18 +12,25 @@ const db = drizzle(blogPool, { mode: "default" });
 
 // ─── DeepL ───────────────────────────────────────────────────────
 
-const DEEPL_LANGS: Record<string, string> = {
+export const DEEPL_LANGS: Record<string, string> = {
   en: "EN-GB",
   de: "DE",
   es: "ES",
   it: "IT",
+  pt: "PT-PT",
 };
+
+/** Les clés DeepL Free se terminent par ":fx" et utilisent api-free.deepl.com ;
+ *  les clés Pro utilisent api.deepl.com. Même détection que translate-locales.mjs. */
+export function deeplHostForKey(apiKey: string): string {
+  return apiKey.endsWith(":fx") ? "api-free.deepl.com" : "api.deepl.com";
+}
 
 async function translateWithDeepL(text: string, targetLang: string): Promise<string> {
   const apiKey = process.env.DEEPL_API_KEY;
   if (!apiKey) throw new Error("DEEPL_API_KEY not configured");
 
-  const res = await fetch("https://api-free.deepl.com/v2/translate", {
+  const res = await fetch(`https://${deeplHostForKey(apiKey)}/v2/translate`, {
     method: "POST",
     headers: { "Content-Type": "application/json", "Authorization": `DeepL-Auth-Key ${apiKey}` },
     body: JSON.stringify({
@@ -39,6 +46,43 @@ async function translateWithDeepL(text: string, targetLang: string): Promise<str
   return data.translations[0].text;
 }
 
+/** Traduit un article vers UNE langue et publie la traduction. Renvoie le slug créé. */
+async function translatePostToLang(originalPost: BlogPost, lang: string, deeplLang: string): Promise<string> {
+  const [translatedTitle, translatedContent, translatedExcerpt, translatedMeta] = await Promise.all([
+    translateWithDeepL(originalPost.title, deeplLang),
+    translateWithDeepL(originalPost.content, deeplLang),
+    originalPost.excerpt ? translateWithDeepL(originalPost.excerpt, deeplLang) : Promise.resolve(null),
+    originalPost.metaDescription ? translateWithDeepL(originalPost.metaDescription, deeplLang) : Promise.resolve(null),
+  ]);
+
+  // DeepL renvoie des entités HTML (&#x27; …) : on décode les champs texte
+  // (titre, extrait, meta) avant stockage — le contenu reste du HTML.
+  const cleanTitle = decodeHtmlEntities(translatedTitle);
+  const cleanExcerpt = translatedExcerpt ? decodeHtmlEntities(translatedExcerpt) : null;
+  const cleanMeta = translatedMeta ? decodeHtmlEntities(translatedMeta) : null;
+  const slug = await uniqueSlug(slugify(cleanTitle));
+
+  await db.insert(blogPosts).values({
+    title: cleanTitle,
+    slug,
+    content: translatedContent,
+    excerpt: cleanExcerpt,
+    imageUrl: originalPost.imageUrl ?? null,
+    lang,
+    parentId: originalPost.id,
+    status: "published",
+    // La traduction garde la date de l'original : l'ordre chronologique des
+    // blogs étrangers reste celui du blog FR, y compris lors d'un rattrapage.
+    publishedAt: originalPost.publishedAt ?? new Date(),
+    metaKeywords: originalPost.metaKeywords ?? null,
+    metaDescription: cleanMeta,
+    author: originalPost.author ?? "Hallucine",
+    category: originalPost.category ?? null,
+  });
+
+  return slug;
+}
+
 /** Traduit et publie un article dans toutes les langues via DeepL */
 export async function translateAndPublishPost(originalPost: BlogPost): Promise<void> {
   const apiKey = process.env.DEEPL_API_KEY;
@@ -49,36 +93,7 @@ export async function translateAndPublishPost(originalPost: BlogPost): Promise<v
 
   for (const [lang, deeplLang] of Object.entries(DEEPL_LANGS)) {
     try {
-      const [translatedTitle, translatedContent, translatedExcerpt, translatedMeta] = await Promise.all([
-        translateWithDeepL(originalPost.title, deeplLang),
-        translateWithDeepL(originalPost.content, deeplLang),
-        originalPost.excerpt ? translateWithDeepL(originalPost.excerpt, deeplLang) : Promise.resolve(null),
-        originalPost.metaDescription ? translateWithDeepL(originalPost.metaDescription, deeplLang) : Promise.resolve(null),
-      ]);
-
-      // DeepL renvoie des entités HTML (&#x27; …) : on décode les champs texte
-      // (titre, extrait, meta) avant stockage — le contenu reste du HTML.
-      const cleanTitle = decodeHtmlEntities(translatedTitle);
-      const cleanExcerpt = translatedExcerpt ? decodeHtmlEntities(translatedExcerpt) : null;
-      const cleanMeta = translatedMeta ? decodeHtmlEntities(translatedMeta) : null;
-      const slug = await uniqueSlug(slugify(cleanTitle));
-
-      await db.insert(blogPosts).values({
-        title: cleanTitle,
-        slug,
-        content: translatedContent,
-        excerpt: cleanExcerpt,
-        imageUrl: originalPost.imageUrl ?? null,
-        lang,
-        parentId: originalPost.id,
-        status: "published",
-        publishedAt: new Date(),
-        metaKeywords: originalPost.metaKeywords ?? null,
-        metaDescription: cleanMeta,
-        author: originalPost.author ?? "Hallucine",
-        category: originalPost.category ?? null,
-      });
-
+      const slug = await translatePostToLang(originalPost, lang, deeplLang);
       console.log(`[Blog] Traduction ${lang} publiée : ${slug}`);
     } catch (err) {
       console.error(`[Blog] Erreur traduction ${lang}:`, err);
@@ -258,6 +273,77 @@ export async function countPublishedPosts(lang: string = "fr"): Promise<number> 
     .from(blogPosts)
     .where(and(eq(blogPosts.status, "published"), eq(blogPosts.lang, lang)));
   return Number(result?.count ?? 0);
+}
+
+// ─── Rattrapage traductions ──────────────────────────────────────
+
+export type BackfillReport = {
+  processed: { parentId: number; lang: string; slug: string }[];
+  errors: { parentId: number; lang: string; error: string }[];
+  skippedNonPublished: { parentId: number; lang: string; status: string }[];
+  remaining: number;
+};
+
+/**
+ * Traduit les articles FR publiés dans les langues où la traduction MANQUE
+ * (aucune ligne enfant, quel que soit son statut). Batché (`maxItems`) pour
+ * rester sous le timeout HTTP Cloudflare (100 s) — relancer jusqu'à remaining=0.
+ */
+export async function backfillMissingTranslations(maxItems: number = 8): Promise<BackfillReport> {
+  const frPosts = await db.select().from(blogPosts)
+    .where(and(eq(blogPosts.status, "published"), eq(blogPosts.lang, "fr")))
+    .orderBy(asc(blogPosts.id));
+
+  const todo: { post: BlogPost; lang: string; deeplLang: string }[] = [];
+  const skippedNonPublished: BackfillReport["skippedNonPublished"] = [];
+
+  for (const post of frPosts) {
+    const existing = await db.select({ lang: blogPosts.lang, status: blogPosts.status })
+      .from(blogPosts)
+      .where(eq(blogPosts.parentId, post.id));
+    const statusByLang = new Map(existing.map(r => [r.lang, r.status]));
+    for (const [lang, deeplLang] of Object.entries(DEEPL_LANGS)) {
+      const status = statusByLang.get(lang);
+      if (status === undefined) todo.push({ post, lang, deeplLang });
+      else if (status !== "published") skippedNonPublished.push({ parentId: post.id, lang, status });
+    }
+  }
+
+  const processed: BackfillReport["processed"] = [];
+  const errors: BackfillReport["errors"] = [];
+
+  for (const item of todo.slice(0, maxItems)) {
+    try {
+      const slug = await translatePostToLang(item.post, item.lang, item.deeplLang);
+      processed.push({ parentId: item.post.id, lang: item.lang, slug });
+      console.log(`[Blog] Rattrapage ${item.lang} : ${slug} (parent ${item.post.id})`);
+    } catch (err) {
+      errors.push({
+        parentId: item.post.id,
+        lang: item.lang,
+        error: err instanceof Error ? err.message : String(err),
+      });
+      console.error(`[Blog] Erreur rattrapage ${item.lang} (parent ${item.post.id}):`, err);
+    }
+  }
+
+  return { processed, errors, skippedNonPublished, remaining: Math.max(0, todo.length - maxItems) };
+}
+
+/** Aligne l'image de chaque traduction sur celle de son article parent (source FR). */
+export async function harmonizeTranslationImages(): Promise<{ checked: number; updated: number }> {
+  const translations = await db.select().from(blogPosts).where(isNotNull(blogPosts.parentId));
+  let updated = 0;
+  for (const t of translations) {
+    const parent = t.parentId ? await getBlogPostById(t.parentId) : null;
+    if (!parent) continue;
+    const target = parent.imageUrl ?? null;
+    if ((t.imageUrl ?? null) !== target) {
+      await db.update(blogPosts).set({ imageUrl: target }).where(eq(blogPosts.id, t.id));
+      updated++;
+    }
+  }
+  return { checked: translations.length, updated };
 }
 
 /**

@@ -11,6 +11,8 @@ import {
   publishBlogPost,
   countPublishedPosts,
   translateAndPublishPost,
+  backfillMissingTranslations,
+  harmonizeTranslationImages,
 } from "../blog";
 
 /** Clé read/write : update, delete, adminList, publish (BLOG_API_KEY_2) */
@@ -204,6 +206,28 @@ export const blogRouter = router({
       const { id, apiKey: _apiKey, ...data } = input;
       await updateBlogPost(id, data as any);
       return { success: true };
+    }),
+
+  /** Rattrapage : traduit les articles FR publiés dans les langues manquantes (admin ou apiKey write).
+   *  Batché — relancer tant que remaining > 0. */
+  backfillTranslations: publicProcedure
+    .input(z.object({
+      apiKey: z.string().optional(),
+      maxItems: z.number().min(1).max(50).default(8),
+    }))
+    .mutation(async ({ input, ctx }) => {
+      const isAdmin = (ctx as any).user?.role === "admin";
+      if (!isAdmin && !isValidBlogWriteKey(input.apiKey)) throw new Error("Non autorise");
+      return backfillMissingTranslations(input.maxItems);
+    }),
+
+  /** Aligne l'image des traductions sur celle de leur parent FR (admin ou apiKey write) */
+  harmonizeImages: publicProcedure
+    .input(z.object({ apiKey: z.string().optional() }))
+    .mutation(async ({ input, ctx }) => {
+      const isAdmin = (ctx as any).user?.role === "admin";
+      if (!isAdmin && !isValidBlogWriteKey(input.apiKey)) throw new Error("Non autorise");
+      return harmonizeTranslationImages();
     }),
 
   /** Supprimer un article (admin ou apiKey write) */
