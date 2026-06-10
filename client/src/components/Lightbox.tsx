@@ -9,6 +9,7 @@
  */
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 type LightboxProps = {
   src: string;
@@ -31,6 +32,7 @@ export default function Lightbox({
   onPrev,
   onNext,
 }: LightboxProps) {
+  const { t } = useTranslation("common");
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -55,7 +57,7 @@ export default function Lightbox({
         <button
           onClick={(e) => { stop(e); onPrev(); }}
           className="shrink-0 w-11 h-11 md:w-12 md:h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white text-3xl leading-none transition-colors"
-          aria-label="Image précédente"
+          aria-label={t("lightbox_prev")}
         >‹</button>
       ) : (
         <div className="shrink-0 w-11 md:w-12" aria-hidden="true" />
@@ -82,7 +84,7 @@ export default function Lightbox({
         <button
           onClick={(e) => { stop(e); onNext(); }}
           className="shrink-0 w-11 h-11 md:w-12 md:h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white text-3xl leading-none transition-colors"
-          aria-label="Image suivante"
+          aria-label={t("lightbox_next")}
         >›</button>
       ) : (
         <div className="shrink-0 w-11 md:w-12" aria-hidden="true" />

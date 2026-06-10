@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   blogListPath,
+  blogLocaleString,
   pageTitleWithBrand,
   extractListMeta,
   buildBlogListHtml,
@@ -49,6 +50,17 @@ describe("pageTitleWithBrand — title tag ≤ 60 caractères", () => {
   it("titre > 48 car. → servi sans suffixe (jamais > 60 par notre faute)", () => {
     const t49 = "a".repeat(49);
     expect(pageTitleWithBrand(t49)).toBe(t49);
+  });
+});
+
+describe("blogLocaleString — chaînes blog côté serveur", () => {
+  it("sert la chaîne de la locale demandée (même source que le client)", () => {
+    expect(blogLocaleString("fr", "other_articles", "x")).toBe("Autres articles");
+    expect(blogLocaleString("pt", "other_articles", "x")).not.toBe("x");
+  });
+  it("locale inconnue → FR ; clé inconnue → fallback", () => {
+    expect(blogLocaleString("zz", "other_articles", "x")).toBe("Autres articles");
+    expect(blogLocaleString("fr", "cle_inexistante", "repli")).toBe("repli");
   });
 });
 

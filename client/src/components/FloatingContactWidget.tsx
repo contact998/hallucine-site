@@ -7,6 +7,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { Home, Phone, Mail, MessageCircle, ChevronUp } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
 
 const TEL_FIXE = "+33458210048";
@@ -15,6 +16,7 @@ const EMAIL    = "contact@hallucine.fr";
 
 export default function FloatingContactWidget() {
   const route = useRoutes();
+  const { t } = useTranslation("common");
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -26,20 +28,20 @@ export default function FloatingContactWidget() {
 
   return (
     <aside
-      aria-label="Contact rapide"
+      aria-label={t("widget_contact_label")}
       className="fixed right-3 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col items-center gap-1 rounded-full bg-black/40 backdrop-blur-md border border-white/10 p-1.5 shadow-lg"
     >
       <ActionItem
         as="link"
         href={route("home")}
         icon={<Home className="w-4 h-4" />}
-        label="Accueil"
+        label={t("widget_home")}
       />
       <ActionItem
         as="a"
         href={`tel:${TEL_FIXE}`}
         icon={<Phone className="w-4 h-4" />}
-        label="Téléphone fixe"
+        label={t("widget_landline")}
         tooltip="+33 4 58 21 00 48"
       />
       <ActionItem
@@ -63,7 +65,7 @@ export default function FloatingContactWidget() {
           as="button"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           icon={<ChevronUp className="w-4 h-4" />}
-          label="Retour en haut"
+          label={t("widget_back_to_top")}
           accent
         />
       )}

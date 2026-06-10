@@ -15,6 +15,11 @@
   "publish": "Post comment",
   "categories_title": "Categories",
   "all_categories": "All",
+  "other_articles": "Other articles",
+  "category_blog": "Blog",
+  "category_ecrans_gonflables": "Inflatable screens",
+  "category_cinema_plein_air": "Open-air cinema",
+  "category_drive_in_cinema": "Drive-in",
   "tags_title": "Tags",
   "tags": [
     "Inflatable Screens",

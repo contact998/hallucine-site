@@ -14,6 +14,23 @@
 import { ROUTES } from "../../client/src/i18n/routes";
 import { LANGUAGE_DOMAINS } from "../../client/src/i18n/domains";
 import type { BlogPost } from "../../drizzle/schema";
+import frBlog from "../../client/src/locales/fr/blog.json";
+import enBlog from "../../client/src/locales/en/blog.json";
+import deBlog from "../../client/src/locales/de/blog.json";
+import esBlog from "../../client/src/locales/es/blog.json";
+import itBlog from "../../client/src/locales/it/blog.json";
+import ptBlog from "../../client/src/locales/pt/blog.json";
+
+const BLOG_LOCALES: Record<string, Record<string, unknown>> = {
+  fr: frBlog, en: enBlog, de: deBlog, es: esBlog, it: itBlog, pt: ptBlog,
+};
+
+/** Chaîne du namespace blog pour le rendu SERVEUR — même source que le client
+ *  (locales générées par translate-locales.mjs, jamais traduites à la main). */
+export function blogLocaleString(locale: string, key: string, fallback: string): string {
+  const v = (BLOG_LOCALES[locale] ?? BLOG_LOCALES.fr)[key];
+  return typeof v === "string" ? v : fallback;
+}
 
 /** Chemin de la page liste blog pour une langue ("/blog" partout aujourd'hui). */
 export function blogListPath(locale: string): string {

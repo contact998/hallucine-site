@@ -83,6 +83,15 @@ export default function Blog() {
   // null = « toutes les catégories » (libellé localisé all_categories au rendu)
   const categories: (string | null)[] = [null, ...Array.from(new Set(allArticles.map(a => a.categorie)))];
 
+  /** Libellé localisé d'une catégorie — la valeur DB (française) reste la clé
+   *  canonique de filtrage ; seule l'ÉTIQUETTE est traduite (clés category_*),
+   *  fallback = valeur brute pour toute nouvelle catégorie non encore mappée. */
+  const categoryLabel = (cat: string) => {
+    const key = cat.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "");
+    return t(`category_${key}`, { defaultValue: cat });
+  };
+
   const rawTags = t("tags", { returnObjects: true });
   const tags: string[] = Array.isArray(rawTags) ? rawTags : [];
 
@@ -155,7 +164,7 @@ export default function Blog() {
                     <div className="p-6 md:p-8">
                       <div className="flex items-center gap-3 mb-4">
                         <span className="inline-block text-xs font-medium bg-primary/10 text-primary px-3 py-1 rounded-full">
-                          {article.categorie}
+                          {categoryLabel(article.categorie)}
                         </span>
                         <span className="text-sm text-muted-foreground">
                           {formatDate(article.date)}
@@ -294,7 +303,7 @@ export default function Blog() {
                           : "hover:bg-muted text-muted-foreground"
                       }`}
                     >
-                      {cat ?? t("all_categories")}
+                      {cat === null ? t("all_categories") : categoryLabel(cat)}
                     </button>
                   ))}
                 </div>

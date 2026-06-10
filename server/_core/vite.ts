@@ -10,6 +10,7 @@ import { getSeoOverrideForPath, applySeoOverride } from "../seo";
 import { markdownFileForRequest } from "../llmsFull";
 import {
   blogListPath,
+  blogLocaleString,
   buildBlogListHtml,
   extractListMeta,
   pageTitleWithBrand,
@@ -433,7 +434,7 @@ export function serveStatic(app: Express) {
               .filter((p) => p.slug !== post.slug);
             if (related.length) {
               relatedHtml =
-                `<aside><h2>Autres articles</h2><ul>` +
+                `<aside><h2>${escapeHtml(blogLocaleString(locale, "other_articles", "Autres articles"))}</h2><ul>` +
                 related.map((p) => `<li><a href="/blog/${p.slug}">${escapeHtml(p.title)}</a></li>`).join("") +
                 `</ul></aside>`;
             }
