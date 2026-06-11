@@ -13,7 +13,7 @@ import {
   ArrowUpDown, ArrowUp, ArrowDown, Download, Trash2, MessageSquare,
   Search, Filter, RefreshCw, Clock, CheckCircle, XCircle, Loader2,
   AlertTriangle, ChevronDown, X, FileText, Mail, Phone, Building2, User,
-  Send, ExternalLink, Wifi, WifiOff
+  Send, ExternalLink, Wifi, WifiOff, Newspaper
 } from "lucide-react";
 import { useTimezone } from "@/hooks/useTimezone";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -306,6 +306,12 @@ export default function Admin() {
                 className="flex items-center gap-2 px-4 py-2 border border-cyan-500/30 text-cyan-400 rounded hover:bg-cyan-500/10 text-sm transition-colors"
               >
                 <ExternalLink className="w-4 h-4" /> Ouvrir CRM
+              </a>
+              <a
+                href="/admin/blog"
+                className="flex items-center gap-2 px-4 py-2 border border-rose-500/30 text-rose-400 rounded hover:bg-rose-500/10 text-sm transition-colors"
+              >
+                <Newspaper className="w-4 h-4" /> Blog
               </a>
               <a
                 href="/admin/media"
