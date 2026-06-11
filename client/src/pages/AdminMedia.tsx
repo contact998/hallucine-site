@@ -13,10 +13,10 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useNoIndex } from "@/hooks/useNoIndex";
 import { toast } from "sonner";
 import {
-  Upload, Trash2, Edit2, Copy, Loader2,
+  Upload, Trash2, Copy, Loader2,
   AlertTriangle, ChevronLeft, ChevronRight, ChevronDown, X, Check,
   EyeOff, Eye, Search, Download, Info, Tag,
-  MousePointer2, LogOut, Plus,
+  MousePointer2, LogOut, Plus, Maximize2,
 } from "lucide-react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -186,7 +186,6 @@ export default function AdminMedia() {
 function GaleriePanel({ onUploadTarget }: { onUploadTarget: (page: string, section: string) => void }) {
   const [search, setSearch]               = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
-  const [editItem, setEditItem]           = useState<number | null>(null);
   const [detailItemId, setDetailItemId]   = useState<number | null>(null);
   const [lightboxItems, setLightboxItems] = useState<MediaItem[]>([]);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
@@ -279,12 +278,7 @@ function GaleriePanel({ onUploadTarget }: { onUploadTarget: (page: string, secti
     selectMode,
     selected: selected.has(item.id),
     onToggleSelect: () => toggleSelect(item.id),
-    onOpenLightbox: () => openLightbox(contextItems, item.id),
     onOpenDetail:   () => setDetailItemId(item.id),
-    onEdit:         () => setEditItem(item.id === editItem ? null : item.id),
-    editing:        editItem === item.id,
-    onSavedEdit:    () => { setEditItem(null); refetch(); },
-    onCloseEdit:    () => setEditItem(null),
     onDeactivate:   () => deactivate.mutate({ id: item.id }),
     onReactivate:   () => update.mutate({ id: item.id, active: true }),
     onRemoveFromPage: item.page ? () => {
@@ -391,11 +385,13 @@ function GaleriePanel({ onUploadTarget }: { onUploadTarget: (page: string, secti
         />
       )}
 
-      {/* Slide-over détail */}
+      {/* Fiche média (grande modale) */}
       {detailItemId !== null && (
-        <DetailDrawer
+        <MediaModal
           itemId={detailItemId}
           onClose={() => setDetailItemId(null)}
+          onChanged={refetch}
+          onLightbox={() => openLightbox(allPageItems, detailItemId)}
         />
       )}
 
@@ -585,20 +581,15 @@ function SortableMediaCard(props: {
   selectMode: boolean;
   selected: boolean;
   onToggleSelect: () => void;
-  onOpenLightbox: () => void;
   onOpenDetail: () => void;
-  onEdit: () => void;
-  editing: boolean;
-  onSavedEdit: () => void;
-  onCloseEdit: () => void;
   onDeactivate: () => void;
   onReactivate: () => void;
   onDelete: () => void;
   onRemoveFromPage?: () => void;
   dndEnabled: boolean;
 }) {
-  const { item, selectMode, selected, onToggleSelect, onOpenLightbox, onOpenDetail,
-          onEdit, editing, onSavedEdit, onCloseEdit, onDeactivate, onReactivate, onDelete,
+  const { item, selectMode, selected, onToggleSelect, onOpenDetail,
+          onDeactivate, onReactivate, onDelete,
           onRemoveFromPage, dndEnabled } = props;
   const sortable = useSortable({ id: item.id, disabled: !dndEnabled });
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = sortable;
@@ -626,7 +617,7 @@ function SortableMediaCard(props: {
         onClick={(e) => {
           e.stopPropagation();
           if (selectMode) onToggleSelect();
-          else onOpenLightbox();
+          else onOpenDetail();
         }}
       />
 
@@ -670,18 +661,12 @@ function SortableMediaCard(props: {
             <ActionBtn title="Télécharger" onClick={(e) => { e.stopPropagation(); downloadImageById(item.id, item.filename); }} color="bg-emerald-500/30 hover:bg-emerald-500/50">
               <Download className="w-3 h-3 text-emerald-300" />
             </ActionBtn>
-            <ActionBtn title="Détails et utilisation" onClick={(e) => { e.stopPropagation(); onOpenDetail(); }} color="bg-cyan-500/30 hover:bg-cyan-500/50">
-              <Info className="w-3 h-3 text-cyan-300" />
-            </ActionBtn>
             <ActionBtn title="Copier l'URL" onClick={(e) => {
               e.stopPropagation();
               navigator.clipboard.writeText(item.url);
               toast.success("URL copiée");
             }} color="bg-white/10 hover:bg-white/20">
               <Copy className="w-3 h-3 text-white" />
-            </ActionBtn>
-            <ActionBtn title="Modifier" onClick={(e) => { e.stopPropagation(); onEdit(); }} color="bg-blue-500/30 hover:bg-blue-500/50">
-              <Edit2 className="w-3 h-3 text-blue-300" />
             </ActionBtn>
             {onRemoveFromPage && item.page && (
               <ActionBtn title="Retirer de la page" onClick={(e) => { e.stopPropagation(); onRemoveFromPage(); }} color="bg-orange-500/30 hover:bg-orange-500/50">
@@ -708,10 +693,6 @@ function SortableMediaCard(props: {
         </div>
       )}
 
-      {/* Panneau d'édition inline */}
-      {editing && (
-        <EditInline item={item} onClose={onCloseEdit} onSaved={onSavedEdit} />
-      )}
     </div>
   );
 }
@@ -794,12 +775,67 @@ function BulkActionBar(props: {
 
 // ─── Slide-over détail ───────────────────────────────────────────────────────
 
-function DetailDrawer(props: { itemId: number; onClose: () => void }) {
+function MediaModal(props: { itemId: number; onClose: () => void; onChanged: () => void; onLightbox: () => void }) {
   const { data: item } = trpc.media.get.useQuery({ id: props.itemId });
   const { data: usage, isLoading: usageLoading } = trpc.media.findUsage.useQuery(
     { url: item?.url ?? "" },
     { enabled: !!item?.url },
   );
+  const utils = trpc.useUtils();
+
+  const [title,   setTitle]   = useState("");
+  const [alt,     setAlt]     = useState("");
+  const [active,  setActive]  = useState(true);
+  const [page,    setPage]    = useState<string>("");
+  const [section, setSection] = useState<string>("");
+  const [newSlug, setNewSlug] = useState("");
+
+  useEffect(() => {
+    if (!item) return;
+    setTitle(item.title ?? "");
+    setAlt(item.alt ?? "");
+    setActive(item.active);
+    setPage(item.page ?? "");
+    setSection(item.section ?? "");
+    setNewSlug("");
+  }, [item]);
+
+  const availableSections = useMemo(
+    () => MEDIA_PAGES.find(p => p.key === page)?.sections ?? [],
+    [page],
+  );
+
+  const update = trpc.media.update.useMutation({
+    onSuccess: () => { toast.success("Modifié"); props.onChanged(); },
+    onError:   (e) => toast.error(e.message),
+  });
+  const renameR2 = trpc.media.renameR2.useMutation({
+    onSuccess: () => { toast.success("Renommé sur R2"); setNewSlug(""); props.onChanged(); },
+    onError:   (e) => toast.error(e.message),
+  });
+  const deactivate = trpc.media.deactivate.useMutation({
+    onSuccess: () => { toast.success("Image masquée"); props.onChanged(); },
+    onError:   (e) => toast.error(e.message),
+  });
+  const deleteMedia = trpc.media.delete.useMutation({
+    onSuccess: () => { toast.success("Image supprimée"); props.onChanged(); props.onClose(); },
+    onError:   (e) => toast.error(e.message),
+  });
+
+  const handleDelete = async () => {
+    if (!item) return;
+    try {
+      const others = await utils.media.otherUsages.fetch({ id: item.id });
+      if (others.length > 0) {
+        if (!confirm("Cette image est aussi utilisée sur d'autres pages. Elle sera retirée seulement d'ici ; le fichier est conservé. Continuer ?")) return;
+      } else {
+        if (!confirm("Dernière occurrence de cette image. Supprimer définitivement le fichier ? (irréversible)")) return;
+      }
+    } catch {
+      if (!confirm(`Supprimer "${item.title ?? item.filename}" ? Action irréversible.`)) return;
+    }
+    deleteMedia.mutate({ id: item.id, deleteOnR2: true });
+  };
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") props.onClose(); };
@@ -808,17 +844,16 @@ function DetailDrawer(props: { itemId: number; onClose: () => void }) {
   }, [props]);
 
   return (
-    <div className="fixed inset-0 z-50 flex" onClick={props.onClose}>
-      <div className="flex-1 bg-black/60" />
+    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" onClick={props.onClose}>
       <div
-        className="w-full max-w-md bg-charcoal-light border-l border-white/10 overflow-y-auto"
+        className="w-full max-w-3xl max-h-[90vh] bg-charcoal-light border border-white/10 rounded-2xl overflow-y-auto flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="sticky top-0 bg-charcoal-light border-b border-white/10 px-5 py-3 flex items-center justify-between z-10">
           <h2 className="text-white font-semibold flex items-center gap-2">
-            <Info className="w-4 h-4 text-cyan-400" /> Détails
+            <Info className="w-4 h-4 text-cyan-400" /> Fiche média
           </h2>
-          <button onClick={props.onClose} className="p-1 text-white/40 hover:text-white">
+          <button onClick={props.onClose} className="p-1 text-white/40 hover:text-white" aria-label="Fermer">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -827,61 +862,191 @@ function DetailDrawer(props: { itemId: number; onClose: () => void }) {
             <Loader2 className="w-6 h-6 animate-spin mx-auto" />
           </div>
         ) : (
-          <div className="p-5 space-y-5">
-            <div className="aspect-video bg-black/40 rounded-lg overflow-hidden flex items-center justify-center">
-              <img src={item.url} alt={item.alt ?? ""} className="w-full h-full object-contain" />
+          <div className="p-5 grid md:grid-cols-2 gap-5">
+            {/* Colonne gauche : aperçu + métadonnées + usage */}
+            <div className="space-y-4">
+              <button
+                onClick={props.onLightbox}
+                className="group relative block w-full aspect-video bg-black/40 rounded-lg overflow-hidden"
+                title="Voir en plein écran"
+              >
+                <img src={item.url} alt={item.alt ?? ""} className="w-full h-full object-contain" />
+                <span className="absolute bottom-2 right-2 flex items-center gap-1 px-2 py-1 rounded bg-black/60 text-white/80 text-[11px] opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Maximize2 className="w-3 h-3" /> Plein écran
+                </span>
+              </button>
+
+              <div className="flex gap-2">
+                <button
+                  onClick={() => downloadImageById(item.id, item.filename)}
+                  className="flex-1 flex items-center justify-center gap-2 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 rounded-lg text-sm font-semibold text-emerald-300"
+                >
+                  <Download className="w-4 h-4" /> Télécharger
+                </button>
+                <button
+                  onClick={() => { navigator.clipboard.writeText(item.url); toast.success("URL copiée"); }}
+                  className="flex-1 flex items-center justify-center gap-2 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-sm text-white/70"
+                >
+                  <Copy className="w-4 h-4" /> Copier l'URL
+                </button>
+              </div>
+
+              <div className="space-y-2 pt-1">
+                <DetailRow label="Catégorie"   value={`${item.category}${item.subcategory ? " / " + item.subcategory : ""}`} />
+                <DetailRow label="Dimensions"  value={item.width && item.height ? `${item.width} × ${item.height} px` : "—"} />
+                <DetailRow label="Poids"       value={formatBytes(item.filesize)} />
+                <DetailRow label="Format"      value={item.mimeType || "—"} />
+                <DetailRow label="Nom fichier" value={item.filename} mono />
+                <DetailRow label="Date upload" value={formatDate(item.createdAt)} />
+                <DetailRow label="Source"      value={item.source} />
+                <DetailRow label="Usage compteur" value={String(item.usageCount)} />
+              </div>
+
+              <div className="pt-3 border-t border-white/10">
+                <h3 className="text-white/80 text-sm font-semibold mb-2 flex items-center gap-2">
+                  <Tag className="w-4 h-4 text-amber-400" /> Où elle est utilisée
+                </h3>
+                {usageLoading ? (
+                  <div className="text-white/40 text-xs">
+                    <Loader2 className="w-3 h-3 animate-spin inline mr-1" /> scan du code en cours…
+                  </div>
+                ) : !usage || usage.matches.length === 0 ? (
+                  <p className="text-white/30 text-xs italic">Aucune référence trouvée dans le code source.</p>
+                ) : (
+                  <div className="space-y-1 max-h-48 overflow-y-auto pr-2">
+                    {usage.matches.map((m, i) => (
+                      <div key={i} className="bg-white/5 rounded p-2 text-[10px]">
+                        <div className="text-amber-300 font-mono">{m.file}<span className="text-white/30">:{m.line}</span></div>
+                        <div className="text-white/50 font-mono mt-0.5 break-all line-clamp-2">{m.snippet}</div>
+                      </div>
+                    ))}
+                    {usage.truncated && <p className="text-white/30 text-[10px] italic">(résultats tronqués à 50)</p>}
+                  </div>
+                )}
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <button
-                onClick={() => downloadImageById(item.id, item.filename)}
-                className="w-full flex items-center justify-center gap-2 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 rounded text-sm font-semibold text-emerald-300"
-              >
-                <Download className="w-4 h-4" /> Télécharger
-              </button>
-              <button
-                onClick={() => { navigator.clipboard.writeText(item.url); toast.success("URL copiée"); }}
-                className="w-full flex items-center justify-center gap-2 py-2 bg-white/5 hover:bg-white/10 rounded text-sm text-white/70"
-              >
-                <Copy className="w-4 h-4" /> Copier l'URL
-              </button>
-            </div>
-
-            <DetailRow label="Titre"       value={item.title || "—"} />
-            <DetailRow label="Alt"         value={item.alt || "—"} mono={false} multiline />
-            <DetailRow label="Catégorie"   value={`${item.category}${item.subcategory ? " / " + item.subcategory : ""}`} />
-            <DetailRow label="Tags"        value={item.tags ? JSON.parse(item.tags).join(", ") : "—"} />
-            <DetailRow label="Dimensions"  value={item.width && item.height ? `${item.width} × ${item.height} px` : "—"} />
-            <DetailRow label="Poids"       value={formatBytes(item.filesize)} />
-            <DetailRow label="Format"      value={item.mimeType || "—"} />
-            <DetailRow label="Nom fichier" value={item.filename} mono />
-            <DetailRow label="Date upload" value={formatDate(item.createdAt)} />
-            <DetailRow label="Source"      value={item.source} />
-            <DetailRow label="Visible"     value={item.active ? "Oui" : "Non (masquée)"} />
-            <DetailRow label="Usage compteur" value={String(item.usageCount)} />
-
-            <div className="pt-4 border-t border-white/10">
-              <h3 className="text-white/80 text-sm font-semibold mb-2 flex items-center gap-2">
-                <Tag className="w-4 h-4 text-amber-400" />
-                Où elle est utilisée
-              </h3>
-              {usageLoading ? (
-                <div className="text-white/40 text-xs">
-                  <Loader2 className="w-3 h-3 animate-spin inline mr-1" /> scan du code en cours…
+            {/* Colonne droite : édition */}
+            <div className="space-y-3">
+              <div>
+                <label className="block text-[11px] uppercase tracking-wider text-white/40 mb-1">Titre</label>
+                <input
+                  value={title}
+                  onChange={e => setTitle(e.target.value)}
+                  placeholder="Titre"
+                  className="w-full text-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white placeholder-white/30 focus:outline-none focus:border-amber-500/50"
+                />
+              </div>
+              <div>
+                <label className="block text-[11px] uppercase tracking-wider text-white/40 mb-1">Alt (SEO)</label>
+                <textarea
+                  value={alt}
+                  onChange={e => setAlt(e.target.value)}
+                  placeholder="Description de l'image pour le SEO"
+                  rows={2}
+                  className="w-full text-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white placeholder-white/30 focus:outline-none focus:border-amber-500/50 resize-none"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block text-[11px] uppercase tracking-wider text-white/40 mb-1">Page</label>
+                  <select
+                    value={page}
+                    onChange={e => { setPage(e.target.value); setSection(""); }}
+                    className="w-full text-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-amber-500/50"
+                  >
+                    <option value="">(à ranger)</option>
+                    {MEDIA_PAGES.map(p => (
+                      <option key={p.key} value={p.key}>{p.label}</option>
+                    ))}
+                  </select>
                 </div>
-              ) : !usage || usage.matches.length === 0 ? (
-                <p className="text-white/30 text-xs italic">Aucune référence trouvée dans le code source.</p>
-              ) : (
-                <div className="space-y-1 max-h-64 overflow-y-auto pr-2">
-                  {usage.matches.map((m, i) => (
-                    <div key={i} className="bg-white/5 rounded p-2 text-[10px]">
-                      <div className="text-amber-300 font-mono">{m.file}<span className="text-white/30">:{m.line}</span></div>
-                      <div className="text-white/50 font-mono mt-0.5 break-all line-clamp-2">{m.snippet}</div>
-                    </div>
-                  ))}
-                  {usage.truncated && <p className="text-white/30 text-[10px] italic">(résultats tronqués à 50)</p>}
+                <div>
+                  <label className="block text-[11px] uppercase tracking-wider text-white/40 mb-1">Section</label>
+                  <select
+                    value={section}
+                    onChange={e => setSection(e.target.value)}
+                    disabled={availableSections.length === 0}
+                    className="w-full text-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-amber-500/50 disabled:opacity-40"
+                  >
+                    <option value="">(sans section)</option>
+                    {availableSections.map(s => (
+                      <option key={s.key} value={s.key}>{s.label}</option>
+                    ))}
+                  </select>
                 </div>
-              )}
+              </div>
+
+              <label className="flex items-center gap-2 text-sm text-white/70 cursor-pointer py-1">
+                <input type="checkbox" checked={active} onChange={e => setActive(e.target.checked)} className="rounded" />
+                Visible sur le site
+              </label>
+
+              <button
+                onClick={() => update.mutate({
+                  id: item.id,
+                  title,
+                  alt,
+                  category: item.category as Category,
+                  subcategory: item.subcategory ?? undefined,
+                  active,
+                  page: page || null,
+                  section: section || null,
+                })}
+                disabled={update.isPending}
+                className="w-full flex items-center justify-center gap-2 bg-amber-500/90 hover:bg-amber-500 rounded-lg py-2.5 text-sm font-semibold text-black transition-colors disabled:opacity-50"
+              >
+                {update.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
+                Enregistrer
+              </button>
+
+              <div className="grid grid-cols-2 gap-2">
+                {item.active ? (
+                  <button
+                    onClick={() => deactivate.mutate({ id: item.id })}
+                    className="flex items-center justify-center gap-1.5 py-2 bg-yellow-500/20 hover:bg-yellow-500/30 rounded-lg text-sm font-semibold text-yellow-300"
+                  >
+                    <EyeOff className="w-4 h-4" /> Masquer
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => update.mutate({ id: item.id, active: true })}
+                    className="flex items-center justify-center gap-1.5 py-2 bg-green-500/20 hover:bg-green-500/30 rounded-lg text-sm font-semibold text-green-300"
+                  >
+                    <Eye className="w-4 h-4" /> Réactiver
+                  </button>
+                )}
+                <button
+                  onClick={handleDelete}
+                  className="flex items-center justify-center gap-1.5 py-2 bg-red-500/20 hover:bg-red-500/30 rounded-lg text-sm font-semibold text-red-300"
+                >
+                  <Trash2 className="w-4 h-4" /> Supprimer
+                </button>
+              </div>
+
+              <div className="border-t border-white/10 pt-3 mt-1">
+                <label className="block text-[11px] uppercase tracking-wider text-white/40 mb-1">Renommer le fichier (SEO)</label>
+                <div className="flex gap-2">
+                  <input
+                    value={newSlug}
+                    onChange={e => setNewSlug(e.target.value)}
+                    placeholder="ex: ecran-cinema-jardin"
+                    className="flex-1 text-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white placeholder-white/30 focus:outline-none focus:border-amber-500/50"
+                  />
+                  <button
+                    disabled={!newSlug.trim() || renameR2.isPending}
+                    onClick={() => {
+                      if (item.usageCount > 0) {
+                        if (!confirm(`Cette image est utilisée ${item.usageCount}x — renommer va casser les références. Continuer ?`)) return;
+                      }
+                      renameR2.mutate({ id: item.id, slug: newSlug.trim() });
+                    }}
+                    className="px-3 py-2 bg-purple-500/30 hover:bg-purple-500/50 rounded-lg text-sm font-semibold text-purple-200 disabled:opacity-40"
+                  >
+                    {renameR2.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : "Renommer"}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         )}
@@ -977,157 +1142,6 @@ function AdminLightbox(props: {
           <ChevronRight className="w-6 h-6" />
         </button>
       )}
-    </div>
-  );
-}
-
-// ─── Édition inline (avec rename R2 SEO) ─────────────────────────────────────
-
-function EditInline({
-  item,
-  onClose,
-  onSaved,
-}: {
-  item: MediaItem;
-  onClose: () => void;
-  onSaved: () => void;
-}) {
-  const [title,       setTitle]       = useState(item.title ?? "");
-  const [alt,         setAlt]         = useState(item.alt ?? "");
-  const [active,      setActive]      = useState(item.active);
-  const [page,        setPage]        = useState<string>(item.page ?? "");
-  const [section,     setSection]     = useState<string>(item.section ?? "");
-  const [newSlug,     setNewSlug]     = useState("");
-
-  // Sections disponibles selon la page sélectionnée
-  const availableSections = useMemo(
-    () => MEDIA_PAGES.find(p => p.key === page)?.sections ?? [],
-    [page]
-  );
-
-  const update = trpc.media.update.useMutation({
-    onSuccess: () => { toast.success("Modifié"); onSaved(); },
-    onError:   (e) => toast.error(e.message),
-  });
-  const renameR2 = trpc.media.renameR2.useMutation({
-    onSuccess: () => { toast.success("Renommé sur R2"); setNewSlug(""); onSaved(); },
-    onError:   (e) => toast.error(e.message),
-  });
-
-  return (
-    <div
-      className="absolute inset-0 bg-black/95 p-3 flex flex-col gap-2 z-10 overflow-y-auto"
-      onClick={(e) => e.stopPropagation()}
-      onPointerDown={(e) => e.stopPropagation()}
-    >
-      <div className="flex items-center justify-between mb-1">
-        <span className="text-[10px] uppercase tracking-wider text-white/40">Modifier</span>
-        <button
-          onClick={onClose}
-          aria-label="Fermer"
-          className="p-1 -mr-1 -mt-1 text-white/60 hover:text-white"
-        >
-          <X className="w-4 h-4" />
-        </button>
-      </div>
-      <input
-        value={title}
-        onChange={e => setTitle(e.target.value)}
-        placeholder="Titre"
-        className="w-full text-xs bg-white/10 border border-white/20 rounded px-2 py-1.5 text-white placeholder-white/30 focus:outline-none focus:border-amber-500/50"
-      />
-      <input
-        value={alt}
-        onChange={e => setAlt(e.target.value)}
-        placeholder="Alt text (SEO)"
-        className="w-full text-xs bg-white/10 border border-white/20 rounded px-2 py-1.5 text-white placeholder-white/30 focus:outline-none focus:border-amber-500/50"
-      />
-      {/* Page du site */}
-      <select
-        value={page}
-        onChange={e => { setPage(e.target.value); setSection(""); }}
-        className="w-full text-xs bg-white/10 border border-white/20 rounded px-2 py-1.5 text-white focus:outline-none focus:border-amber-500/50"
-      >
-        <option value="">(à ranger)</option>
-        {MEDIA_PAGES.map(p => (
-          <option key={p.key} value={p.key}>{p.label}</option>
-        ))}
-      </select>
-
-      {/* Section */}
-      {availableSections.length > 0 && (
-        <select
-          value={section}
-          onChange={e => setSection(e.target.value)}
-          className="w-full text-xs bg-white/10 border border-white/20 rounded px-2 py-1.5 text-white focus:outline-none focus:border-amber-500/50"
-        >
-          <option value="">(sans section)</option>
-          {availableSections.map(s => (
-            <option key={s.key} value={s.key}>{s.label}</option>
-          ))}
-        </select>
-      )}
-
-      <label className="flex items-center gap-2 text-xs text-white/70 cursor-pointer">
-        <input
-          type="checkbox"
-          checked={active}
-          onChange={e => setActive(e.target.checked)}
-          className="rounded"
-        />
-        Visible
-      </label>
-
-      {/* Rename R2 slug */}
-      <div className="border-t border-white/10 pt-2 mt-1">
-        <p className="text-[9px] text-white/40 mb-1 uppercase tracking-wider">Renommer le fichier (SEO)</p>
-        <div className="flex gap-1">
-          <input
-            value={newSlug}
-            onChange={e => setNewSlug(e.target.value)}
-            placeholder="ex: ecran-cinema-jardin"
-            className="flex-1 text-[10px] bg-white/10 border border-white/20 rounded px-2 py-1 text-white placeholder-white/30 focus:outline-none focus:border-amber-500/50"
-          />
-          <button
-            disabled={!newSlug.trim() || renameR2.isPending}
-            onClick={() => {
-              if (item.usageCount > 0) {
-                if (!confirm(`Cette image est utilisée ${item.usageCount}x — renommer va casser les références. Continuer ?`)) return;
-              }
-              renameR2.mutate({ id: item.id, slug: newSlug.trim() });
-            }}
-            className="px-2 py-1 bg-purple-500/30 hover:bg-purple-500/50 rounded text-[10px] font-semibold text-purple-200 disabled:opacity-40"
-          >
-            {renameR2.isPending ? <Loader2 className="w-3 h-3 animate-spin" /> : "Renommer"}
-          </button>
-        </div>
-      </div>
-
-      <div className="flex gap-2 mt-auto">
-        <button
-          onClick={() => update.mutate({
-            id: item.id,
-            title,
-            alt,
-            category: item.category as Category,
-            subcategory: item.subcategory ?? undefined,
-            active,
-            page: page || null,
-            section: section || null,
-          })}
-          disabled={update.isPending}
-          className="flex-1 flex items-center justify-center gap-1 bg-amber-500/80 hover:bg-amber-500 rounded py-1.5 text-xs font-semibold text-black transition-colors disabled:opacity-50"
-        >
-          {update.isPending ? <Loader2 className="w-3 h-3 animate-spin" /> : <Check className="w-3 h-3" />}
-          Sauver
-        </button>
-        <button
-          onClick={onClose}
-          className="px-3 bg-white/10 hover:bg-white/20 rounded py-1.5 text-xs text-white/70 transition-colors"
-        >
-          <X className="w-3 h-3" />
-        </button>
-      </div>
     </div>
   );
 }
