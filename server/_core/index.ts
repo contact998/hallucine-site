@@ -73,14 +73,10 @@ async function startServer() {
         styleSrc: [
           "'self'",
           "'unsafe-inline'",   // Tailwind + styled-components injectent du CSS inline
-          // Conservé UNIQUEMENT pour la brochure (blob: hérite de cette CSP,
-          // son HTML @import Inter). Les pages du site = fonts auto-hébergées.
-          "https://fonts.googleapis.com",
         ],
         fontSrc: [
           "'self'",            // woff2 auto-hébergés (/fonts/)
-          "https://fonts.gstatic.com",   // brochure (Inter) uniquement
-          "data:",
+          "data:",             // Inter inline de la brochure (blob: hérite de cette CSP)
         ],
         connectSrc: [
           "'self'",

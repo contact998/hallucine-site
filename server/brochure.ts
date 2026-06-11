@@ -2,8 +2,48 @@
  * Générateur de brochures HTML pour les produits Hallucine
  * Génère un document HTML imprimable avec les specs du produit
  */
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const LOGO_URL = "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/tWSEvNLkFkmjxAXj.png";
+
+/* Inter embarquée en data: URI — la brochure s'ouvre en `blob:` (elle hérite
+ * de la CSP de la page) ; une police inline = zéro requête externe (RGPD,
+ * plus de Google Fonts) et un rendu identique sur les 6 TLD comme hors
+ * ligne. Fichier variable latin (wght 300-700), ~48 Ko → ~65 Ko en base64. */
+let interFontCss: string | null = null;
+function getInterFontCss(): string {
+  if (interFontCss !== null) return interFontCss;
+  // import.meta.dirname n'existe pas dans tous les contextes (eval/CJS) →
+  // repli sur import.meta.url puis sur le cwd du process.
+  let dir: string;
+  if (typeof import.meta.dirname === "string") dir = import.meta.dirname;
+  else {
+    try { dir = path.dirname(fileURLToPath(import.meta.url)); }
+    catch { dir = process.cwd(); }
+  }
+  const f = "inter-latin.woff2";
+  const candidates = [
+    // prod : bundle serveur dans dist/, fonts copiées dans dist/public/
+    path.resolve(dir, "public", "fonts", f),
+    // dev (tsx depuis server/) : dist déjà construit, sinon source client
+    path.resolve(dir, "..", "dist", "public", "fonts", f),
+    path.resolve(dir, "..", "client", "public", "fonts", f),
+    // filets : depuis la racine du repo
+    path.resolve(process.cwd(), "dist", "public", "fonts", f),
+    path.resolve(process.cwd(), "client", "public", "fonts", f),
+  ];
+  const file = candidates.find((p) => fs.existsSync(p));
+  if (!file) {
+    console.error("[brochure] inter-latin.woff2 introuvable — police système en secours");
+    interFontCss = "";
+    return interFontCss;
+  }
+  const b64 = fs.readFileSync(file).toString("base64");
+  interFontCss = `@font-face { font-family: 'Inter'; font-style: normal; font-weight: 300 700; font-display: swap; src: url(data:font/woff2;base64,${b64}) format('woff2'); }`;
+  return interFontCss;
+}
 
 interface ProductData {
   name: string;
@@ -150,7 +190,7 @@ function generateBrochureHTML(product: ProductData): string {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hallucine — ${product.name}</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    ${getInterFontCss()}
     
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
