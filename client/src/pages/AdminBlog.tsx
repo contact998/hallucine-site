@@ -3,7 +3,7 @@
  * Interface admin : liste articles, créer/éditer, publier, supprimer.
  * Sélecteur d'image depuis la médiathèque (catégorie blog).
  */
-import { useState, useCallback } from "react";
+import { useState, useCallback, Fragment } from "react";
 import { Link } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
@@ -15,7 +15,7 @@ import { useNoIndex } from "@/hooks/useNoIndex";
 import { toast } from "sonner";
 import {
   Loader2, AlertTriangle, Plus, Edit2, Trash2,
-  Globe, FileText, Eye, X, Check, Image, ChevronLeft,
+  Globe, FileText, Eye, X, Check, Image, ChevronLeft, ChevronRight,
 } from "lucide-react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -29,6 +29,7 @@ interface BlogPost {
   excerpt: string | null;
   imageUrl: string | null;
   lang: string;
+  parentId: number | null;
   status: Status;
   author: string | null;
   category: string | null;
@@ -84,6 +85,13 @@ export default function AdminBlog() {
   const [form, setForm]           = useState<FormState>(EMPTY_FORM);
   const [showMediaPicker, setShowMediaPicker] = useState(false);
   const [confirmDelete, setConfirmDelete]     = useState<number | null>(null);
+  const [expandedLangs, setExpandedLangs]     = useState<Set<number>>(new Set());
+  const toggleLangs = (id: number) =>
+    setExpandedLangs((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
 
   // ─── tRPC ────────────────────────────────────────────────────────────────
 
@@ -297,18 +305,41 @@ export default function AdminBlog() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/5">
-                    {(posts as BlogPost[]).map((post) => {
+                    {(() => {
+                      const all = posts as BlogPost[];
+                      const byParent = new Map<number, BlogPost[]>();
+                      for (const p of all) if (p.parentId != null) {
+                        const arr = byParent.get(p.parentId) ?? [];
+                        arr.push(p);
+                        byParent.set(p.parentId, arr);
+                      }
+                      const sources = all.filter((p) => p.parentId == null);
+                      return sources.map((post) => {
                       const st = STATUS_LABELS[post.status] ?? STATUS_LABELS.draft;
+                      const translations = (byParent.get(post.id) ?? []).slice().sort((a, b) => a.lang.localeCompare(b.lang));
+                      const isOpen = expandedLangs.has(post.id);
                       return (
-                        <tr key={post.id} className="hover:bg-white/[0.03] transition-colors">
+                        <Fragment key={post.id}>
+                        <tr className="hover:bg-white/[0.03] transition-colors">
                           <td className="px-4 py-3 max-w-xs">
-                            <div className="font-medium text-white truncate">{post.title}</div>
-                            <div className="text-white/30 text-xs truncate">/blog/{post.slug}</div>
+                            <div className="flex items-start gap-2">
+                              {translations.length > 0 ? (
+                                <button onClick={() => toggleLangs(post.id)} title={isOpen ? "Replier les langues" : "Voir les traductions"} className="mt-0.5 text-white/40 hover:text-white shrink-0">
+                                  <ChevronRight className={`w-4 h-4 transition-transform ${isOpen ? "rotate-90" : ""}`} />
+                                </button>
+                              ) : (
+                                <span className="w-4 shrink-0" />
+                              )}
+                              <div className="min-w-0">
+                                <div className="font-medium text-white truncate">{post.title}</div>
+                                <div className="text-white/30 text-xs truncate">/blog/{post.slug}</div>
+                              </div>
+                            </div>
                           </td>
                           <td className="px-4 py-3">
                             <span className="flex items-center gap-1 text-white/60">
                               <Globe className="w-3 h-3" />
-                              {post.lang.toUpperCase()}
+                              FR{translations.length > 0 && <span className="text-white/30 text-xs ml-0.5">+{translations.length}</span>}
                             </span>
                           </td>
                           <td className="px-4 py-3">
@@ -381,8 +412,51 @@ export default function AdminBlog() {
                             </div>
                           </td>
                         </tr>
+                        {isOpen && translations.map((t) => {
+                          const tst = STATUS_LABELS[t.status] ?? STATUS_LABELS.draft;
+                          return (
+                            <tr key={t.id} className="bg-white/[0.02]">
+                              <td className="px-4 py-2 pl-12 max-w-xs">
+                                <div className="text-white/70 text-sm truncate">{t.title}</div>
+                                <div className="text-white/25 text-xs truncate">/blog/{t.slug}</div>
+                              </td>
+                              <td className="px-4 py-2">
+                                <span className="flex items-center gap-1 text-white/45">
+                                  <Globe className="w-3 h-3" />
+                                  {t.lang.toUpperCase()}
+                                </span>
+                              </td>
+                              <td className="px-4 py-2">
+                                <span className={`inline-block text-xs px-2 py-0.5 rounded-full font-medium ${tst.color}`}>
+                                  {tst.label}
+                                </span>
+                              </td>
+                              <td className="px-4 py-2 text-white/30 text-xs whitespace-nowrap">
+                                {t.publishedAt
+                                  ? new Date(t.publishedAt).toLocaleDateString("fr-FR")
+                                  : t.createdAt
+                                  ? new Date(t.createdAt).toLocaleDateString("fr-FR")
+                                  : "—"}
+                              </td>
+                              <td className="px-4 py-2 text-white/20 text-xs">—</td>
+                              <td className="px-4 py-2">
+                                <div className="flex items-center justify-end">
+                                  <button
+                                    onClick={() => openEdit(t)}
+                                    title="Éditer la traduction"
+                                    className="p-1.5 rounded hover:bg-amber-500/20 text-amber-400 transition-colors"
+                                  >
+                                    <Edit2 className="w-3.5 h-3.5" />
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                        </Fragment>
                       );
-                    })}
+                      });
+                    })()}
                   </tbody>
                 </table>
               </div>
