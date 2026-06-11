@@ -20,7 +20,13 @@ export function organizationSchema(siteUrl: string) {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Hallucine",
-    alternateName: "Halluciné",
+    alternateName: [
+      "Halluciné",
+      "Hallucinecran",
+      "Hallucinécran",
+      "Hallucine Écran",
+      "Hallucine Ecran",
+    ],
     url: siteUrl,
     logo: LOGO_URL,
     image: LOGO_URL,
@@ -58,7 +64,10 @@ export function websiteSchema(siteUrl: string, inLanguage: string) {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Hallucine — Écrans de Cinéma Gonflables",
+    // Google "site name" : name concis = le nom affiché au-dessus des
+    // résultats ; les variantes vont dans alternateName.
+    name: "Hallucine",
+    alternateName: ["Hallucinecran", "Hallucine — Écrans de Cinéma Gonflables"],
     url: siteUrl,
     description:
       "Fabricant français d'écrans de cinéma gonflables ultra-légers. De 2m à 24m, technologie étanche et soufflerie. Garantie 10 ans.",
@@ -214,13 +223,9 @@ export function productSchema(product: ProductData) {
         returnFees: "https://schema.org/FreeReturn",
       },
     },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "52",
-      bestRating: "5",
-      worstRating: "1",
-    },
+    // Pas d'aggregateRating : interdit sans avis réels affichés sur la page
+    // (balisage abusif Google + pratique trompeuse L121-2). À rebrancher
+    // uniquement sur une vraie source d'avis (fiche Google Business).
   };
 }
 
