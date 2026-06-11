@@ -13,7 +13,7 @@ import PageShell from "@/components/PageShell";
 import ProductHero from "@/components/product/ProductHero";
 import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 import EmailLink from "@/components/EmailLink";
 import ZoomImage from "@/components/ZoomImage";
 
@@ -41,7 +41,7 @@ export default function EcranEtanche() {
   const { t } = useTranslation("ecran-etanche");
 
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-ecran-etanche-k4ys7FMgpDwS9DpudndmpB.png");
-  const galleryImages = useMediaByPage("ecran-etanche", "galerie", FALLBACK_IMAGES_ECRAN_ETANCHE);
+  const galleryImages = useGallery("ecran-etanche:galerie", FALLBACK_IMAGES_ECRAN_ETANCHE);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const avantages = [

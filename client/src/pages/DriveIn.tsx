@@ -13,7 +13,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useRoutes } from "@/i18n/useRoutes";
 import { ECRAN_DRIVE_IN } from "@/data/ecransConfigurateur";
 import { formatNombre, formatMontage, formatPersonnes } from "@/lib/ecranFormat";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 
 /* ── Fallbacks CDN (filet de sécurité) ── */
 const FALLBACK_FICHE = [
@@ -28,8 +28,8 @@ export default function DriveIn() {
   const route = useRoutes();
   useDocumentMeta(t("meta_title"), t("meta_desc"));
 
-  const ficheProduitImgs = useMediaByPage("drive-in", "fiche-produit", FALLBACK_FICHE);
-  const galerieImgs = useMediaByPage("drive-in", "galerie", FALLBACK_GALERIE);
+  const ficheProduitImgs = useGallery("drive-in:fiche-produit", FALLBACK_FICHE);
+  const galerieImgs = useGallery("drive-in:galerie", FALLBACK_GALERIE);
 
   const ecran = ECRAN_DRIVE_IN;
   const prix = `${formatNombre(ecran.prixHT)} € ${t("ht")}`;

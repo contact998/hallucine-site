@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
 import Lightbox from "@/components/Lightbox";
 import { AnimatePresence } from "framer-motion";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 
 // ─── Fallback hardcodé — ne jamais supprimer ──────────────────────────────────
 
@@ -140,7 +140,7 @@ export default function Galerie() {
   }, []);
 
   // Charger depuis la DB avec fallback intégré
-  const dbImages = useMediaByPage("galerie", "principale", FALLBACK_PHOTOS);
+  const dbImages = useGallery("galerie:principale", FALLBACK_PHOTOS);
 
   const photos = dbImages.map((img) => ({
     src: img.src,

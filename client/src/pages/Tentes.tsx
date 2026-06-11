@@ -12,7 +12,7 @@ import ProductHero from "@/components/product/ProductHero";
 import ProductButton from "@/components/product/ProductButton";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 
 export default function Tentes() {
   const route = useRoutes();
@@ -29,7 +29,7 @@ export default function Tentes() {
     { title: t("c6_title"), desc: t("c6_desc"), href: route("mobilier") },
   ];
 
-  const bandeau = useMediaByPage("tentes", "bandeau", [
+  const bandeau = useGallery("tentes:bandeau", [
     { src: "/img/tente-salon.jpg", alt: t("photo_alt") },
   ]);
 

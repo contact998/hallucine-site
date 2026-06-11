@@ -6,7 +6,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 import Lightbox from "@/components/Lightbox";
 
 // ─── Fallback hardcodé — affiché si la DB est indisponible ───────────────────
@@ -108,7 +108,7 @@ export default function RealisationsSection() {
   const { t } = useTranslation("home");
 
   // Charger les images depuis la DB avec fallback intégré
-  const dbImages = useMediaByPage("accueil", "realisations", FALLBACK_PHOTOS);
+  const dbImages = useGallery("accueil:realisations", FALLBACK_PHOTOS);
 
   const photos = dbImages.map((img) => ({
     src:     img.src,

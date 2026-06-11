@@ -11,7 +11,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import PagePhoto from "@/components/PagePhoto";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 import { formatNombre } from "@/lib/ecranFormat";
 
 const RAISONS = [
@@ -36,7 +36,7 @@ export default function Location() {
   const route = useRoutes();
   useDocumentMeta(t("meta_title"), t("meta_desc"));
 
-  const bandeau = useMediaByPage("location", "bandeau", [
+  const bandeau = useGallery("location:bandeau", [
     { src: "/img/location-evenement.jpg", alt: t("photo_alt") },
   ]);
 

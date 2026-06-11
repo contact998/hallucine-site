@@ -14,7 +14,7 @@ import ZoomImage from "@/components/ZoomImage";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 
 /* ── Fallbacks CDN (filet de sécurité) ── */
 const FALLBACK_GALERIE = [
@@ -27,7 +27,7 @@ export default function CasOran() {
   const route = useRoutes();
   const { t } = useTranslation("cas-oran");
 
-  const galerieImgs = useMediaByPage("cas-oran", "galerie", FALLBACK_GALERIE);
+  const galerieImgs = useGallery("cas-oran:galerie", FALLBACK_GALERIE);
 
   useDocumentMeta(t("meta_title"), t("meta_desc"), galerieImgs[0]?.src ?? FALLBACK_GALERIE[0].src);
 

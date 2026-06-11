@@ -10,7 +10,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import PagePhoto from "@/components/PagePhoto";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 
 export default function APropos() {
   const route = useRoutes();
@@ -18,7 +18,7 @@ export default function APropos() {
 
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
 
-  const bandeau = useMediaByPage("a-propos", "bandeau", [
+  const bandeau = useGallery("a-propos:bandeau", [
     { src: "/img/a-propos-projection.jpg", alt: t("photo_alt") },
   ]);
 

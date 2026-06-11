@@ -12,7 +12,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import PageShell from "@/components/PageShell";
 import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 import EmailLink from "@/components/EmailLink";
 
 const FALLBACK_IMAGES_TENTE_X = [
@@ -56,8 +56,8 @@ export default function TentesX() {
   const route = useRoutes();
   const { t } = useTranslation("tente-x");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-tente-x-AET6EuZJEbKcpbEmxnmWTB.png");
-  const heroImages = useMediaByPage("tente-x", "galerie", FALLBACK_IMAGES_TENTE_X);
-  const personnalisationImages = useMediaByPage("tente-x", "personnalisation", FALLBACK_PERSONNALISATION);
+  const heroImages = useGallery("tente-x:galerie", FALLBACK_IMAGES_TENTE_X);
+  const personnalisationImages = useGallery("tente-x:personnalisation", FALLBACK_PERSONNALISATION);
 
   return (
     <PageShell relatedProductsKey="tente-x">

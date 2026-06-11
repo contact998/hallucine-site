@@ -11,7 +11,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import PageShell from "@/components/PageShell";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 import EmailLink from "@/components/EmailLink";
 import ZoomImage from "@/components/ZoomImage";
 
@@ -78,9 +78,9 @@ export default function EcranEconomique() {
   const route = useRoutes();
   const { t } = useTranslation("ecran-economique");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/WXsnQMOOUttRbUlr.webp");
-  const imagesAvecSouffleur = useMediaByPage("ecran-economique", "galerie-avec-souffleur", FALLBACK_AVEC_SOUFFLEUR);
-  const imagesSansSouffleur = useMediaByPage("ecran-economique", "galerie-sans-souffleur", FALLBACK_SANS_SOUFFLEUR);
-  const imagesFinales = useMediaByPage("ecran-economique", "galerie-finale", FALLBACK_FINALES);
+  const imagesAvecSouffleur = useGallery("ecran-economique:galerie-avec-souffleur", FALLBACK_AVEC_SOUFFLEUR);
+  const imagesSansSouffleur = useGallery("ecran-economique:galerie-sans-souffleur", FALLBACK_SANS_SOUFFLEUR);
+  const imagesFinales = useGallery("ecran-economique:galerie-finale", FALLBACK_FINALES);
 
   return (
     <PageShell withCountdown relatedProductsKey="ecran-economique">

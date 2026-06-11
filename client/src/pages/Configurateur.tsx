@@ -13,7 +13,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import PagePhoto from "@/components/PagePhoto";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 import {
   PALIERS_AUDIENCE,
   recommander,
@@ -32,7 +32,7 @@ export default function Configurateur() {
   const route = useRoutes();
   useDocumentMeta(t("meta_title"), t("meta_desc"));
 
-  const bandeau = useMediaByPage("configurateur", "bandeau", [
+  const bandeau = useGallery("configurateur:bandeau", [
     { src: "/img/configurateur-ecran.jpg", alt: t("photo_alt") },
   ]);
 

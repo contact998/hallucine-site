@@ -7,7 +7,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Feather, Shield, Zap, Award } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 import type { MediaImage } from "@/hooks/useMediaByCategory";
 
 const FALLBACK_TECHNO: MediaImage[] = [
@@ -20,7 +20,7 @@ export default function TechnologySection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const { t } = useTranslation("home");
-  const technoImages = useMediaByPage("accueil", "techno", FALLBACK_TECHNO);
+  const technoImages = useGallery("accueil:techno", FALLBACK_TECHNO);
 
   return (
     <section id="technologie" className="relative py-32 overflow-hidden">

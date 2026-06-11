@@ -11,7 +11,7 @@ import PageShell from "@/components/PageShell";
 import ProductHero from "@/components/product/ProductHero";
 import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 import ZoomImage from "@/components/ZoomImage";
 
 const tailles = [
@@ -32,7 +32,7 @@ export default function TentesAraignees() {
   const route = useRoutes();
   const { t } = useTranslation("tente-araignee");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-tente-araignee-R3y9ti6qL9e3JFNFGvHjoG.png");
-  const images = useMediaByPage("tente-araignee", "galerie", FALLBACK_IMAGES_TENTE_ARAIGNEE);
+  const images = useGallery("tente-araignee:galerie", FALLBACK_IMAGES_TENTE_ARAIGNEE);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const faqItems = [

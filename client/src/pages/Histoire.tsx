@@ -11,7 +11,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
 import ZoomImage from "@/components/ZoomImage";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 
 /* ── Fallbacks CDN (filet de sécurité) ── */
 const FALLBACK_BANDEAU = [
@@ -39,8 +39,8 @@ export default function Histoire() {
 
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vajzfoYsbBMsDfIq.webp");
 
-  const bandeauImgs = useMediaByPage("histoire", "bandeau", FALLBACK_BANDEAU);
-  const timelineImgs = useMediaByPage("histoire", "timeline", FALLBACK_TIMELINE);
+  const bandeauImgs = useGallery("histoire:bandeau", FALLBACK_BANDEAU);
+  const timelineImgs = useGallery("histoire:timeline", FALLBACK_TIMELINE);
 
   const chapters = [
     { year: t("ch1_year"), title: t("ch1_title"), text: t("ch1_text"), image: null, quote: null },

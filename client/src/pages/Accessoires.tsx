@@ -11,7 +11,7 @@ import ProductHero from "@/components/product/ProductHero";
 import ProductButton from "@/components/product/ProductButton";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 
 // ─── Fallback hardcodé — ne jamais supprimer ──────────────────────────────────
 
@@ -31,7 +31,7 @@ export default function Accessoires() {
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/wNIxhZRwHKCxifIM.webp");
 
   // Charger les images depuis la DB
-  const images = useMediaByPage("accessoires", "produits", FALLBACK_ACCESSOIRES);
+  const images = useGallery("accessoires:produits", FALLBACK_ACCESSOIRES);
 
   const accessoires = [
     {

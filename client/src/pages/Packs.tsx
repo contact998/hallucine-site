@@ -11,7 +11,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import PagePhoto from "@/components/PagePhoto";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 import { formatNombre } from "@/lib/ecranFormat";
 
 /* Prix de pack = AIRSCREEN Outdoor Movie System (Economy) + 7 %.
@@ -27,7 +27,7 @@ export default function Packs() {
   const route = useRoutes();
   useDocumentMeta(t("meta_title"), t("meta_desc"));
 
-  const bandeau = useMediaByPage("packs", "bandeau", [
+  const bandeau = useGallery("packs:bandeau", [
     { src: "/img/pack-cinema-plein-air.jpg", alt: t("photo_alt") },
   ]);
 

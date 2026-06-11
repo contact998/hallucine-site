@@ -9,7 +9,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import PageShell from "@/components/PageShell";
 import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 
 const FALLBACK_IMAGES_TENTE_N = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/TVmrusoKmXcTvkKP.webp", alt: "Tente gonflable N Hallucine blanche dans la neige" },
@@ -26,8 +26,8 @@ export default function TentesN() {
   const route = useRoutes();
   const { t } = useTranslation("tente-n");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/TVmrusoKmXcTvkKP.webp");
-  const heroImages = useMediaByPage("tente-n", "galerie", FALLBACK_IMAGES_TENTE_N);
-  const schemaImages = useMediaByPage("tente-n", "schema", FALLBACK_SCHEMA);
+  const heroImages = useGallery("tente-n:galerie", FALLBACK_IMAGES_TENTE_N);
+  const schemaImages = useGallery("tente-n:schema", FALLBACK_SCHEMA);
 
   return (
     <PageShell relatedProductsKey="tente-n">

@@ -10,7 +10,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import PagePhoto from "@/components/PagePhoto";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 import type { RouteKey } from "@/i18n/routes";
 
 const TEMOIGNAGES = ["t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8"];
@@ -33,7 +33,7 @@ export default function EtudesCas() {
   const route = useRoutes();
   useDocumentMeta(t("meta_title"), t("meta_desc"));
 
-  const bandeau = useMediaByPage("etudes-cas", "bandeau", [
+  const bandeau = useGallery("etudes-cas:bandeau", [
     { src: "/img/etudes-cas-projection.jpg", alt: t("photo_alt") },
   ]);
 

@@ -13,7 +13,7 @@ import ProductHero from "@/components/product/ProductHero";
 import ProductButton from "@/components/product/ProductButton";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 
 export default function Ecrans() {
   const route = useRoutes();
@@ -49,7 +49,7 @@ export default function Ecrans() {
 
   const ecransFaqs = faqItems.map(f => ({ question: f.q, answer: f.a }));
 
-  const bandeau = useMediaByPage("ecrans", "bandeau", [
+  const bandeau = useGallery("ecrans:bandeau", [
     { src: "/img/ecrans-seance.jpg", alt: t("photo_alt") },
   ]);
 

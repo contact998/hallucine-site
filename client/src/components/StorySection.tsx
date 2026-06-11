@@ -6,7 +6,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Lightbox from "@/components/Lightbox";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 import type { MediaImage } from "@/hooks/useMediaByCategory";
 
 // Fallbacks — ordre identique à CHAPTER_IMAGES
@@ -43,7 +43,7 @@ export default function StorySection() {
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
   const { t } = useTranslation("home");
 
-  const histoireImages = useMediaByPage("accueil", "histoire", FALLBACK_HISTOIRE);
+  const histoireImages = useGallery("accueil:histoire", FALLBACK_HISTOIRE);
 
   // Reconstruire CHAPTER_IMAGES depuis la DB (fallback sur les URLs hardcodées)
   const CHAPTER_IMAGES = CHAPTER_LAYOUT.map((layout, i) => ({

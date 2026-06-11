@@ -8,7 +8,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import { useTranslation } from "react-i18next";
 import { Link } from "wouter";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 
 /* ── Fallbacks CDN (filet de sécurité) ── */
 const FALLBACK_MONTAGE = [
@@ -38,8 +38,8 @@ export default function ModeEmploi() {
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
   const [lightboxImg, setLightboxImg] = useState<{ src: string; alt: string } | null>(null);
 
-  const montageImgs = useMediaByPage("mode-emploi", "montage", FALLBACK_MONTAGE);
-  const materielImgs = useMediaByPage("mode-emploi", "materiel", FALLBACK_MATERIEL);
+  const montageImgs = useGallery("mode-emploi:montage", FALLBACK_MONTAGE);
+  const materielImgs = useGallery("mode-emploi:materiel", FALLBACK_MATERIEL);
 
   const videos = [
     { id: "bAxDUrxFUXw", title: t("v1_title"), description: t("v1_desc") },

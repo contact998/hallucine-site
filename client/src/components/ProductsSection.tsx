@@ -9,7 +9,7 @@ import { Link } from "wouter";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { getRoute } from "@/i18n/routes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 import type { MediaImage } from "@/hooks/useMediaByCategory";
 
 // Fallbacks hardcodés — utilisés si la DB ne retourne rien
@@ -37,7 +37,7 @@ export default function ProductsSection() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const { t, i18n } = useTranslation("home");
   const lang = (i18n.language || "fr") as "fr" | "en" | "de" | "es";
-  const produitsImages = useMediaByPage("accueil", "produits", FALLBACK_PRODUITS);
+  const produitsImages = useGallery("accueil:produits", FALLBACK_PRODUITS);
   const ecranEtanche  = produitsImages[0]?.src ?? FALLBACK_PRODUITS[0].src;
   const ecranSoufflerie = produitsImages[1]?.src ?? FALLBACK_PRODUITS[1].src;
   const tenteImg      = produitsImages[2]?.src ?? FALLBACK_PRODUITS[2].src;

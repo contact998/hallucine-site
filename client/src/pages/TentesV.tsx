@@ -11,7 +11,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import PageShell from "@/components/PageShell";
 import ProductButton from "@/components/product/ProductButton";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 
 const FALLBACK_IMAGES_TENTE_V = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/HiOAOTLZaOhqpcQk.webp", alt: "Tente gonflable V blanche vue de face" },
@@ -28,8 +28,8 @@ export default function TentesV() {
   const route = useRoutes();
   const { t } = useTranslation("tente-v");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/HiOAOTLZaOhqpcQk.webp");
-  const heroImages = useMediaByPage("tente-v", "galerie", FALLBACK_IMAGES_TENTE_V);
-  const schemaImages = useMediaByPage("tente-v", "schema", FALLBACK_SCHEMA);
+  const heroImages = useGallery("tente-v:galerie", FALLBACK_IMAGES_TENTE_V);
+  const schemaImages = useGallery("tente-v:schema", FALLBACK_SCHEMA);
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
 
   return (

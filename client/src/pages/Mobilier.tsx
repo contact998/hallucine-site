@@ -12,7 +12,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import PageShell from "@/components/PageShell";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 import ZoomImage from "@/components/ZoomImage";
 
 // ─── Fallback hardcodé — ne jamais supprimer ──────────────────────────────────
@@ -50,9 +50,9 @@ export default function Mobilier() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   // Charger les images depuis la médiathèque (par page/section)
-  const bandeauImages = useMediaByPage("mobilier", "bandeau", FALLBACK_BANDEAU);
-  const produitsImages = useMediaByPage("mobilier", "produits", FALLBACK_PRODUITS);
-  const transportImages = useMediaByPage("mobilier", "transport", FALLBACK_TRANSPORT);
+  const bandeauImages = useGallery("mobilier:bandeau", FALLBACK_BANDEAU);
+  const produitsImages = useGallery("mobilier:produits", FALLBACK_PRODUITS);
+  const transportImages = useGallery("mobilier:transport", FALLBACK_TRANSPORT);
 
   const mobilierProducts = [
     {

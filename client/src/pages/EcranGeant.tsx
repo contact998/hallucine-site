@@ -14,7 +14,7 @@ import ProductHero from "@/components/product/ProductHero";
 import ProductButton from "@/components/product/ProductButton";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 import EmailLink from "@/components/EmailLink";
 import ZoomImage from "@/components/ZoomImage";
 
@@ -47,7 +47,7 @@ export default function EcranGeant() {
   const route = useRoutes();
   const { t } = useTranslation("ecran-geant");
   useDocumentMeta(t("meta_title"), t("meta_desc"), "https://d2xsxph8kpxj0f.cloudfront.net/310519663291384825/e2MtNjHsQcTUTnWGsGBMg7/og-ecran-geant-7MA2E4Zp6zEeYzcaWGEV5o.png");
-  const galleryImages = useMediaByPage("ecran-geant", "galerie", FALLBACK_GALLERY);
+  const galleryImages = useGallery("ecran-geant:galerie", FALLBACK_GALLERY);
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
 
   const avantages = [

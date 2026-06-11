@@ -8,7 +8,7 @@ import { Link } from "wouter";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 import type { MediaImage } from "@/hooks/useMediaByCategory";
 
 const FALLBACK_BANDEAU: MediaImage[] = [
@@ -25,7 +25,7 @@ export default function HeroSection() {
   const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
   const { t } = useTranslation("home");
-  const bandeauImages = useMediaByPage("accueil", "bandeau", FALLBACK_BANDEAU);
+  const bandeauImages = useGallery("accueil:bandeau", FALLBACK_BANDEAU);
   const heroImg = bandeauImages[0]?.src ?? FALLBACK_BANDEAU[0].src;
   const heroAlt = bandeauImages[0]?.alt || t("hero.img_alt");
 

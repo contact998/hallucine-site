@@ -11,7 +11,7 @@ import { Check, X, Trophy, Feather, Clock, Shield, Wind, Truck, Wrench, Leaf, Us
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import PageStructuredData from "@/components/PageStructuredData";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 
 export default function Comparaison() {
   const route = useRoutes();
@@ -20,7 +20,7 @@ export default function Comparaison() {
 
   const [showCountdown, setShowCountdown] = useState(true);
 
-  const comparatif = useMediaByPage("comparaison", "comparatif", [
+  const comparatif = useGallery("comparaison:comparatif", [
     { src: "/img/comparaison-transport.jpg", alt: t("visuel1_alt") },
     { src: "/img/comparaison-poids.jpg", alt: t("visuel2_alt") },
   ]);

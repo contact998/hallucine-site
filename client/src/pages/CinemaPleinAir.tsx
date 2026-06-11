@@ -11,7 +11,7 @@ import PageStructuredData from "@/components/PageStructuredData";
 import PagePhoto from "@/components/PagePhoto";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useRoutes } from "@/i18n/useRoutes";
-import { useMediaByPage } from "@/hooks/useMediaByCategory";
+import { useGallery } from "@/hooks/useSlot";
 import type { RouteKey } from "@/i18n/routes";
 
 const HUB: { id: string; icon: typeof Monitor; to: RouteKey }[] = [
@@ -37,7 +37,7 @@ export default function CinemaPleinAir() {
   const route = useRoutes();
   useDocumentMeta(t("meta_title"), t("meta_desc"));
 
-  const bandeau = useMediaByPage("cinema-plein-air", "bandeau", [
+  const bandeau = useGallery("cinema-plein-air:bandeau", [
     { src: "/img/location-evenement.jpg", alt: t("photo_alt") },
   ]);
 
