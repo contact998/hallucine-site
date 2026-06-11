@@ -75,3 +75,21 @@ export function getBakedMediaByPage(
   const rows = store[mediaPageKey(page, section)];
   return rows && rows.length > 0 ? rows : null;
 }
+
+// ─── Refonte : emplacements (slots) ─────────────────────────────────────────────
+
+/** Clé d'indexation d'un emplacement — DOIT rester identique côté scripts/prerender.mjs */
+export function slotMediaKey(slotKey: string, entityId?: number | null): string {
+  return `slot|${slotKey}|${entityId ?? ""}`;
+}
+
+/** Images bakées au build pour un emplacement, ou null (dev / emplacement vide). */
+export function getBakedSlot(slotKey: string, entityId?: number | null): BakedMedia[] | null {
+  const store =
+    (typeof window !== "undefined" ? window.__SSR_MEDIA__ : undefined) ??
+    (typeof globalThis !== "undefined" ? globalThis.__SSR_MEDIA__ : undefined);
+  if (!store) return null;
+
+  const rows = store[slotMediaKey(slotKey, entityId)];
+  return rows && rows.length > 0 ? rows : null;
+}
