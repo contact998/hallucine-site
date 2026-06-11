@@ -1,8 +1,8 @@
 /* Page Vent & sécurité — répond à l'objection n°1 des mairies et
- * organisateurs : la tenue au vent. Chiffres = revendications déjà publiées
- * sur le site (étanche 40-50 km/h, soufflerie testée 60 km/h, dégonfler
- * au-delà) ; aucune certification inventée — les pièces de dossier renvoient
- * vers le devis. */
+ * organisateurs : la tenue au vent. Limite officielle UNIQUE : 38 km/h
+ * (6 Beaufort) toutes gammes, dégonfler au-delà (décision 2026-06-11) ;
+ * aucune certification inventée — les pièces de dossier renvoient vers
+ * le devis. */
 import IntentLandingPage from "./IntentLandingPage";
 import { Wind, Fan, Anchor, FileCheck } from "lucide-react";
 
