@@ -98,6 +98,7 @@ export default function AdminBlog() {
   const [showMediaPicker, setShowMediaPicker] = useState(false);
   const [confirmDelete, setConfirmDelete]     = useState<number | null>(null);
   const [langFilter, setLangFilter]           = useState<string>("all");
+  const [sortDir, setSortDir]                 = useState<"desc" | "asc">("desc");
   const [expandedLangs, setExpandedLangs]     = useState<Set<number>>(new Set());
   const toggleLangs = (id: number) =>
     setExpandedLangs((prev) => {
@@ -313,6 +314,14 @@ export default function AdminBlog() {
                   {label}
                 </button>
               ))}
+              <span className="ml-auto text-xs text-white/40">
+                {(() => {
+                  const n = ((posts ?? []) as BlogPost[]).filter((p) =>
+                    langFilter === "all" ? p.parentId == null : p.lang === langFilter
+                  ).length;
+                  return `${n} article${n > 1 ? "s" : ""}`;
+                })()}
+              </span>
             </div>
             {loadingPosts ? (
               <div className="flex justify-center py-20">
@@ -331,7 +340,15 @@ export default function AdminBlog() {
                       <th className="text-left px-4 py-3">Titre</th>
                       <th className="text-left px-4 py-3">Langue</th>
                       <th className="text-left px-4 py-3">Statut</th>
-                      <th className="text-left px-4 py-3">Date</th>
+                      <th className="text-left px-4 py-3">
+                        <button
+                          onClick={() => setSortDir((d) => (d === "desc" ? "asc" : "desc"))}
+                          className="inline-flex items-center gap-1 hover:text-white transition-colors"
+                          title="Trier par date"
+                        >
+                          Date {sortDir === "desc" ? "↓" : "↑"}
+                        </button>
+                      </th>
                       <th className="text-left px-4 py-3">Image</th>
                       <th className="text-right px-4 py-3">Actions</th>
                     </tr>
@@ -349,9 +366,14 @@ export default function AdminBlog() {
                           byParent.set(p.parentId, arr);
                         }
                       }
-                      const sources = langFilter === "all"
+                      const sources = (langFilter === "all"
                         ? all.filter((p) => p.parentId == null)
-                        : all.filter((p) => p.lang === langFilter);
+                        : all.filter((p) => p.lang === langFilter)
+                      ).slice().sort((a, b) => {
+                        const da = new Date(a.publishedAt ?? a.createdAt ?? 0).getTime();
+                        const db = new Date(b.publishedAt ?? b.createdAt ?? 0).getTime();
+                        return sortDir === "desc" ? db - da : da - db;
+                      });
                       return sources.map((post) => {
                       const st = STATUS_LABELS[post.status] ?? STATUS_LABELS.draft;
                       const translations = (byParent.get(post.id) ?? []).slice().sort((a, b) => a.lang.localeCompare(b.lang));
