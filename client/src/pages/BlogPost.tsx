@@ -1,18 +1,19 @@
 import { useParams, Link } from "wouter";
 import PageShell from "@/components/PageShell";
+import BlogArticleView from "@/components/BlogArticleView";
 import DOMPurify from "dompurify";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { trpc } from "@/lib/trpc";
 import { useRoutes } from "@/i18n/useRoutes";
 import { detectLanguage } from "@/i18n/domains";
 import { formatPostDate } from "@/i18n/formatPostDate";
-import { ArrowLeft, Calendar, User, Tag } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 /**
- * Lit les données SSR injectées dans le HTML par le pre-rendering blog.
- * Cf. entry-server.tsx → meta.headExtra → prerender.mjs injectIntoTemplate.
- * Permet à useQuery de renvoyer la donnée dès le 1er rendu client →
- * hydratation propre, pas de mismatch avec le SSR.
+ * Lit les données SSR injectées dans le HTML par le rendu blog (runtime ou
+ * pré-rendu). Cf. server/_core/vite.ts (handler /blog/:slug) et entry-server.
+ * Permet à useQuery de renvoyer la donnée dès le 1er rendu client → pas de
+ * spinner, rendu identique au HTML serveur (même composant BlogArticleView).
  */
 function readSsrBlogPost(slug: string): unknown | undefined {
   if (typeof window === "undefined") return undefined;
@@ -38,8 +39,6 @@ export default function BlogPost() {
     post?.metaDescription ?? post?.excerpt ?? "",
     post?.imageUrl ?? undefined
   );
-
-  const formatDate = (dateStr: string | Date | null) => formatPostDate(dateStr, detectLanguage());
 
   if (isLoading) {
     return (
@@ -73,105 +72,19 @@ export default function BlogPost() {
 
   return (
     <PageShell>
-
-      {/* Hero */}
-      <section className="bg-card text-white py-16 md:py-24">
-        <div className="container max-w-3xl">
-          <Link
-            href={route("blog")}
-            className="inline-flex items-center gap-2 text-primary hover:underline mb-6 text-sm"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Retour au blog
-          </Link>
-          {post.category && (
-            <span className="inline-block text-xs font-medium bg-primary/10 text-primary px-3 py-1 rounded-full mb-4">
-              {post.category}
-            </span>
-          )}
-          <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6">
-            {post.title}
-          </h1>
-          <div className="flex flex-wrap items-center gap-4 text-sm text-white/60">
-            {post.author && (
-              <span className="flex items-center gap-1.5">
-                <User className="w-4 h-4" />
-                {post.author}
-              </span>
-            )}
-            {post.publishedAt && (
-              <span className="flex items-center gap-1.5">
-                <Calendar className="w-4 h-4" />
-                {formatDate(post.publishedAt)}
-              </span>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* Contenu */}
-      <section className="py-16">
-        <div className="container max-w-3xl">
-          {/* Image principale */}
-          {post.imageUrl && (
-            <div className="mb-8 rounded-xl overflow-hidden">
-              <img
-                src={post.imageUrl}
-                alt={post.title}
-                className="w-full h-64 md:h-96 object-cover"
-                width={1200} height={600}
-                decoding="async"
-              />
-            </div>
-          )}
-
-          {post.excerpt && (
-            <p className="text-lg text-muted-foreground leading-relaxed mb-8 pb-8 border-b border-border font-medium">
-              {post.excerpt}
-            </p>
-          )}
-
-          {/* Article HTML */}
-          <div
-            className="prose prose-invert prose-lg max-w-none
-              prose-headings:font-display prose-headings:text-foreground
-              prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
-              prose-p:text-muted-foreground prose-p:leading-relaxed
-              prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-              prose-strong:text-foreground
-              prose-ul:text-muted-foreground prose-ol:text-muted-foreground"
-            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
-          />
-
-          {/* CTA */}
-          <div className="mt-16 p-8 bg-card rounded-xl text-white text-center">
-            <h2 className="font-display text-2xl font-bold mb-3">
-              Vous avez un projet ?
-            </h2>
-            <p className="text-white/70 mb-6">
-              Demandez un devis gratuit — réponse sous 24h.
-            </p>
-            <Link
-              href={route("contact")}
-              className="inline-block bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-hover transition-colors"
-            >
-              Demander un devis
-            </Link>
-          </div>
-
-          {/* Retour */}
-          <div className="mt-12 pt-8 border-t border-border">
-            <Link
-              href={route("blog")}
-              className="inline-flex items-center gap-2 text-primary hover:underline"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Tous les articles
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      </PageShell>
+      <BlogArticleView
+        title={post.title}
+        category={post.category}
+        author={post.author}
+        dateLabel={formatPostDate(post.publishedAt, detectLanguage())}
+        coverImageUrl={post.imageUrl}
+        excerpt={post.excerpt}
+        contentHtml={DOMPurify.sanitize(post.content)}
+        blogHref={route("blog")}
+        contactHref={route("contact")}
+        coverPriority
+        linkComponent={Link}
+      />
+    </PageShell>
   );
 }

@@ -8,6 +8,7 @@ import viteConfig from "../../vite.config";
 import { sdk } from "./sdk";
 import { getSeoOverrideForPath, applySeoOverride } from "../seo";
 import { markdownFileForRequest } from "../llmsFull";
+import { renderBlogArticleHtml } from "./renderBlogArticle";
 import {
   blogListPath,
   blogLocaleString,
@@ -459,10 +460,29 @@ export function serveStatic(app: Express) {
             .replace(/ on[a-z]+\s*=\s*"[^"]*"/gi, "")
             .replace(/ on[a-z]+\s*=\s*'[^']*'/gi, "")
             .replace(/javascript:/gi, "");
-          const rootContent =
-            `<main><p><a href="/blog">← Blog</a></p>` +
-            `<article><h1>${escapeHtml(title)}</h1>${safeContent}</article>` +
-            relatedHtml + `</main>`;
+          // Rendu serveur du MÊME composant React que le client (BlogArticleView)
+          // → premier paint déjà stylé + image de couverture, plus de « flash »
+          // texte-brut. Repli sur le rendu brut si le rendu React échoue (on ne
+          // sert jamais une page cassée — SEO préservé).
+          let articleHtml: string;
+          try {
+            articleHtml = renderBlogArticleHtml({
+              locale,
+              title,
+              category: post.category,
+              author: post.author,
+              publishedAt: post.publishedAt ?? post.createdAt,
+              coverImageUrl: post.imageUrl,
+              excerpt: post.excerpt,
+              contentHtml: safeContent,
+            });
+          } catch (err) {
+            console.warn(`  ⚠️  rendu SSR article échoué [${slug}] : ${(err as Error).message}`);
+            articleHtml =
+              `<p><a href="/blog">← Blog</a></p>` +
+              `<article><h1>${escapeHtml(title)}</h1>${safeContent}</article>`;
+          }
+          const rootContent = `<main>${articleHtml}${relatedHtml}</main>`;
 
           const jsonLd = JSON.stringify({
             "@context": "https://schema.org",
