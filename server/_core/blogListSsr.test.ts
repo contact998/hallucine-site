@@ -41,15 +41,19 @@ function post(over: Record<string, unknown> = {}) {
 
 const META = { title: "Blog | Hallucine", description: "Desc.", image: "https://img.example/x.webp", h1: "Le Blog" };
 
-describe("pageTitleWithBrand — title tag ≤ 60 caractères", () => {
-  it("titre ≤ 48 car. → suffixe « | Hallucine » (total ≤ 60)", () => {
+describe("pageTitleWithBrand — suffixe marque systématique (title ≠ H1)", () => {
+  it("titre court → suffixe « | Hallucine »", () => {
     const t48 = "a".repeat(48);
     expect(pageTitleWithBrand(t48)).toBe(`${t48} | Hallucine`);
-    expect(pageTitleWithBrand(t48).length).toBe(60);
   });
-  it("titre > 48 car. → servi sans suffixe (jamais > 60 par notre faute)", () => {
-    const t49 = "a".repeat(49);
-    expect(pageTitleWithBrand(t49)).toBe(t49);
+  it("titre long → suffixe quand même (différencie title/H1, Google tronque l'affichage)", () => {
+    const t70 = "a".repeat(70);
+    expect(pageTitleWithBrand(t70)).toBe(`${t70} | Hallucine`);
+  });
+  it("titre mentionnant déjà la marque → servi tel quel (pas de « Hallucine | Hallucine »)", () => {
+    expect(pageTitleWithBrand("Hallucine la Mure Fabricant d'Ecrans Gonflables")).toBe(
+      "Hallucine la Mure Fabricant d'Ecrans Gonflables",
+    );
   });
 });
 

@@ -74,12 +74,6 @@ const FALLBACK_PHOTOS = [
     span: "col-span-1 row-span-1",
   },
   {
-    src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vbfbnQBVCUGrWUOw.webp",
-    alt: "Arche gonflable 'Cinéma sous les étoiles' par Hallucine, pour une expérience cinématographique en plein air",
-    caption: "Arche — Cinéma sous les étoiles",
-    span: "col-span-1 row-span-1",
-  },
-  {
     src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/JbCcWecqyORanBUN.webp",
     alt: "Écran de cinéma gonflable Hallucine au Festival International du Film de Constantine, Algérie",
     caption: "Festival du Film — Constantine",

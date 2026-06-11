@@ -66,7 +66,6 @@ const FALLBACK_PHOTOS = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/xIcftkrBZrhnUDtQ.webp", alt: "Tente gonflable blanche en forme de V — autre vue", cat: "tents" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/kiWJObYQcRsDjmVd.webp", alt: "Tentes gonflables bleues en forme d'araignée", cat: "tents" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/LalbLaLjfhTWtCQX.webp", alt: "Tentes gonflables en forme d'araignée noire et jaune", cat: "tents" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/vbfbnQBVCUGrWUOw.webp", alt: "Arche gonflable pour festival de cinéma en plein air", cat: "arches" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/eqdRLmacrGAlLxMw.webp", alt: "Arche gonflable ligne d'arrivée course sportive", cat: "arches" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/yuLqkYzSuwxDVzhu.webp", alt: "Arche gonflable personnalisée pour projection en plein air", cat: "arches" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/RwlUZIhnbBNsLqCd.webp", alt: "Arche gonflable de bienvenue pour événement", cat: "arches" },

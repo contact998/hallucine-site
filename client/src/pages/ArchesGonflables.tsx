@@ -29,8 +29,8 @@ const archesData = [
 ];
 
 const FALLBACK_IMAGES_ARCHES = [
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/1779598775656-fc81abf1ffda-arche-arrivee-course-coureurs-medailles.png", alt: "Arche gonflable colorée arrivée de course avec coureurs et médailles" },
-  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/1779598801205-e8f080a6d539-arche-hallucine-grise-personnalisee-even.jpg", alt: "Arche gonflable Hallucine grise personnalisable pour événement professionnel" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/1780791620822-63d2553f9c41-1779598775656-fc81abf1ffda-arche-arrivee.webp", alt: "Arche gonflable colorée arrivée de course avec coureurs et médailles" },
+  { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/1780791622486-2e9145fd01e9-1779598801205-e8f080a6d539-arche-halluci.webp", alt: "Arche gonflable Hallucine grise personnalisable pour événement professionnel" },
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/media/1779598798314-49b23fc891cb-arche-entree-projection-cinema-plein-air.webp", alt: "Arche gonflable Entrée Projection pour cinéma en plein air" },
 ];
 

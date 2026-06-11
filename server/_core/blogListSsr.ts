@@ -38,9 +38,12 @@ export function blogListPath(locale: string): string {
   return routes[locale]?.blog ?? routes.fr?.blog ?? "/blog";
 }
 
-/** Title tag ≤ 60 car. : suffixe « | Hallucine » (12 car.) seulement si le titre tient (≤ 48). */
+/** Title tag : suffixe « | Hallucine » systématique pour différencier <title> et H1
+ *  (audit « Identical Title and H1 tags »), sauf si le titre mentionne déjà la marque.
+ *  Au-delà de ~60 car. Google tronque l'affichage sans pénalité : la marque
+ *  systématique prime sur la limite stricte de longueur. */
 export function pageTitleWithBrand(title: string): string {
-  return title.length <= 48 ? `${title} | Hallucine` : title;
+  return /hallucine/i.test(title) ? title : `${title} | Hallucine`;
 }
 
 const escapeHtml = (str: string = "") =>
