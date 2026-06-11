@@ -221,10 +221,19 @@ export async function createBlogPost(data: {
 /** Mettre à jour un article */
 export async function updateBlogPost(id: number, data: Partial<InsertBlogPost>): Promise<void> {
   await db.update(blogPosts).set(data).where(eq(blogPosts.id, id));
+  // L'image est partagée : les traductions héritent de la couverture du parent FR.
+  // Donc si on change l'image d'un article, on la répercute sur ses traductions
+  // (where parentId = id). Si `id` est une traduction, aucun enfant → no-op.
+  if (data.imageUrl !== undefined) {
+    await db.update(blogPosts).set({ imageUrl: data.imageUrl }).where(eq(blogPosts.parentId, id));
+  }
 }
 
-/** Supprimer un article */
+/** Supprimer un article — et ses traductions (sinon elles restent orphelines). */
 export async function deleteBlogPost(id: number): Promise<void> {
+  // Cascade : on retire d'abord les traductions (parentId = id), puis l'article lui-même.
+  // Si `id` est déjà une traduction, le 1er delete ne touche rien → seul l'article part.
+  await db.delete(blogPosts).where(eq(blogPosts.parentId, id));
   await db.delete(blogPosts).where(eq(blogPosts.id, id));
 }
 
