@@ -161,6 +161,15 @@ export default function Footer() {
             <Link href={route('cookies')} className="text-white/50 text-xs hover:text-warm transition-colors">{t("footer.menu.cookies")}</Link>
           </div>
         </div>
+
+        {/* Accès admin — point d'entrée discret pour se (re)connecter, même
+            déconnecté (le bouton « Panneau Admin » de la nav disparaît alors).
+            /admin → l'admin si connecté, sinon l'écran « Se connecter avec Google ». */}
+        <div className="mt-4 text-center">
+          <Link href="/admin" className="text-white/30 text-xs hover:text-warm transition-colors">
+            Connexion
+          </Link>
+        </div>
       </div>
 
     </footer>
