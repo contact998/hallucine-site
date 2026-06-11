@@ -10,7 +10,7 @@ import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { getRoute } from "@/i18n/routes";
 import { useGallery } from "@/hooks/useSlot";
-import type { MediaImage } from "@/hooks/useMediaByCategory";
+import type { MediaImage } from "@/hooks/useSlot";
 
 // Fallbacks hardcodés — utilisés si la DB ne retourne rien
 const FALLBACK_PRODUITS: MediaImage[] = [

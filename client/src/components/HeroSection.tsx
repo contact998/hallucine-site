@@ -9,7 +9,7 @@ import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useRoutes } from "@/i18n/useRoutes";
 import { useGallery } from "@/hooks/useSlot";
-import type { MediaImage } from "@/hooks/useMediaByCategory";
+import type { MediaImage } from "@/hooks/useSlot";
 
 const FALLBACK_BANDEAU: MediaImage[] = [
   {

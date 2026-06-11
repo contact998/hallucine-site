@@ -314,7 +314,7 @@ export default function Admin() {
                 <Newspaper className="w-4 h-4" /> Blog
               </a>
               <a
-                href="/admin/media"
+                href="/admin-v2"
                 className="flex items-center gap-2 px-4 py-2 border border-purple-500/30 text-purple-400 rounded hover:bg-purple-500/10 text-sm transition-colors"
               >
                 <FileText className="w-4 h-4" /> Médiathèque

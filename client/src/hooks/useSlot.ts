@@ -11,7 +11,16 @@
  */
 import { trpc } from "@/lib/trpc";
 import { getBakedSlot } from "./ssrMedia";
-import type { MediaImage } from "./useMediaByCategory";
+
+/** Image rendue par le site (forme commune renvoyée par useSlot/useGallery). */
+export interface MediaImage {
+  src: string;
+  alt: string;
+  title?: string;
+  subcategory?: string | null;
+  width?: number | null;
+  height?: number | null;
+}
 
 type SlotRow = {
   url: string;

@@ -7,7 +7,7 @@ import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Lightbox from "@/components/Lightbox";
 import { useGallery } from "@/hooks/useSlot";
-import type { MediaImage } from "@/hooks/useMediaByCategory";
+import type { MediaImage } from "@/hooks/useSlot";
 
 // Fallbacks — ordre identique à CHAPTER_IMAGES
 const FALLBACK_HISTOIRE: MediaImage[] = [

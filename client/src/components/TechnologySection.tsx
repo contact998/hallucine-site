@@ -8,7 +8,7 @@ import { useRef } from "react";
 import { Feather, Shield, Zap, Award } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useGallery } from "@/hooks/useSlot";
-import type { MediaImage } from "@/hooks/useMediaByCategory";
+import type { MediaImage } from "@/hooks/useSlot";
 
 const FALLBACK_TECHNO: MediaImage[] = [
   { src: "https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev/assets/zjGTWRUKMYDyOTDz.webp", alt: "Ecran 24m gonfle au Stade Velodrome" },
