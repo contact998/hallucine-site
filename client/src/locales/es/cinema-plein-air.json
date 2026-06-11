@@ -1,5 +1,5 @@
 {
-  "meta_title": "Cine al aire libre: cómo organizar una proyección al aire libre",
+  "meta_title": "Cine al aire libre: cómo organizar tu proyección",
   "meta_desc": "Todo lo que necesitas para tu cine al aire libre: pantallas gigantes hinchables, paquetes llave en mano, alquiler y accesorios. Fabricante francés desde 1992 — presupuesto gratuito.",
   "breadcrumb": "Cine al aire libre",
   "section_label": "Cine al aire libre",
@@ -42,5 +42,7 @@
   "seg_mairie": "Ayuntamientos y administraciones locales",
   "seg_hotel": "Hoteles y complejos turísticos",
   "seg_evenement": "Festivales y eventos",
-  "seg_prix": "Precios y presupuestos"
+  "seg_prix": "Precios y presupuestos",
+  "seg_taille": "¿Qué tamaño de pantalla?",
+  "seg_securite": "Viento y seguridad"
 }

@@ -8,6 +8,8 @@
  * - Construire les sitemaps
  */
 
+import { LANGUAGE_DOMAINS } from "./domains";
+
 export type RouteKey =
   | "home"
   | "ecrans"
@@ -16,6 +18,8 @@ export type RouteKey =
   | "ecran-economique"
   | "comparaison"
   | "configurateur"
+  | "taille-ecran"
+  | "securite-vent"
   | "drive-in"
   | "packs"
   | "cinema-plein-air"
@@ -60,6 +64,8 @@ export const ROUTES: Record<string, LangRoutes> = {
     "ecran-economique": "/ecran-gonflable-economique",
     comparaison: "/comparaison-ecran-gonflable",
     configurateur: "/configurateur-ecran-gonflable",
+    "taille-ecran": "/taille-ecran-cinema-plein-air",
+    "securite-vent": "/ecran-gonflable-vent-securite",
     "drive-in": "/ecran-gonflable-drive-in",
     packs: "/pack-cinema-plein-air",
     "cinema-plein-air": "/cinema-plein-air",
@@ -101,6 +107,8 @@ export const ROUTES: Record<string, LangRoutes> = {
     "ecran-economique": "/budget-inflatable-screen",
     comparaison: "/inflatable-screen-comparison",
     configurateur: "/inflatable-screen-configurator",
+    "taille-ecran": "/outdoor-cinema-screen-size",
+    "securite-vent": "/inflatable-screen-wind-safety",
     "drive-in": "/inflatable-drive-in-screen",
     packs: "/outdoor-cinema-package",
     "cinema-plein-air": "/open-air-cinema",
@@ -142,6 +150,8 @@ export const ROUTES: Record<string, LangRoutes> = {
     "ecran-economique": "/guenstiger-aufblasbarer-bildschirm",
     comparaison: "/aufblasbarer-bildschirm-vergleich",
     configurateur: "/aufblasbarer-bildschirm-konfigurator",
+    "taille-ecran": "/leinwandgroesse-freiluftkino",
+    "securite-vent": "/aufblasbare-leinwand-wind-sicherheit",
     "drive-in": "/aufblasbarer-drive-in-bildschirm",
     packs: "/freiluftkino-paket",
     "cinema-plein-air": "/freiluftkino",
@@ -183,6 +193,8 @@ export const ROUTES: Record<string, LangRoutes> = {
     "ecran-economique": "/pantalla-inflable-economica",
     comparaison: "/comparacion-pantalla-inflable",
     configurateur: "/configurador-pantalla-inflable",
+    "taille-ecran": "/tamano-pantalla-cine-aire-libre",
+    "securite-vent": "/pantalla-inflable-viento-seguridad",
     "drive-in": "/pantalla-inflable-autocine",
     packs: "/paquete-cine-aire-libre",
     "cinema-plein-air": "/cine-al-aire-libre",
@@ -224,6 +236,8 @@ export const ROUTES: Record<string, LangRoutes> = {
     "ecran-economique": "/schermo-gonfiabile-economico",
     comparaison: "/confronto-schermo-gonfiabile",
     configurateur: "/configuratore-schermo-gonfiabile",
+    "taille-ecran": "/dimensioni-schermo-cinema-all-aperto",
+    "securite-vent": "/schermo-gonfiabile-vento-sicurezza",
     "drive-in": "/schermo-gonfiabile-drive-in",
     packs: "/pacchetto-cinema-all-aperto",
     "cinema-plein-air": "/cinema-all-aperto",
@@ -265,6 +279,8 @@ export const ROUTES: Record<string, LangRoutes> = {
     "ecran-economique": "/ecra-insuflavel-economico",
     comparaison: "/comparacao-ecra-insuflavel",
     configurateur: "/configurador-ecra-insuflavel",
+    "taille-ecran": "/tamanho-ecra-cinema-ao-ar-livre",
+    "securite-vent": "/ecra-insuflavel-vento-seguranca",
     "drive-in": "/ecra-insuflavel-drive-in",
     packs: "/pacote-cinema-ao-ar-livre",
     "cinema-plein-air": "/cinema-ao-ar-livre",
@@ -318,18 +334,13 @@ export function getRouteKey(path: string, lang: string): RouteKey | null {
 }
 
 /**
- * Retourne toutes les URLs hreflang pour une route donnée
+ * Retourne toutes les URLs hreflang pour une route donnée.
+ * Dérivé de LANGUAGE_DOMAINS (source unique) — une map locale dupliquée ici
+ * avait oublié `pt` → hreflang="pt" href="undefined" dans tous les sitemaps.
  */
 export function getHreflangUrls(routeKey: RouteKey): Record<string, string> {
-  const domains: Record<string, string> = {
-    fr: "https://hallucinecran.fr",
-    en: "https://hallucinecran.com",
-    de: "https://hallucinecran.de",
-    es: "https://hallucinecran.es",
-    it: "https://hallucinecran.it",
-  };
   return Object.fromEntries(
-    Object.entries(domains).map(([lang, domain]) => [
+    Object.entries(LANGUAGE_DOMAINS).map(([lang, domain]) => [
       lang,
       `${domain}${ROUTES[lang][routeKey]}`,
     ])

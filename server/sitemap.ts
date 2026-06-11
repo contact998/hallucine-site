@@ -90,7 +90,7 @@ export function buildSitemapXml(lang: string, posts: SitemapPost[] = []): string
   for (const key of Object.keys(langRoutes) as RouteKey[]) {
     if (REDIRECT_ONLY.includes(key)) continue;
     const meta = ROUTE_META[key] ?? DEFAULT_META;
-    const hreflangs = getHreflangUrls(key); // { fr, en, de, es, it }
+    const hreflangs = getHreflangUrls(key); // une URL par langue de LANGUAGE_DOMAINS (pt inclus)
 
     lines.push("  <url>");
     lines.push(`    <loc>${domain}${langRoutes[key]}</loc>`);

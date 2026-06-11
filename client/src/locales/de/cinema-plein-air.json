@@ -1,5 +1,5 @@
 {
-  "meta_title": "Open-Air-Kino: Eine Filmvorführung im Freien organisieren",
+  "meta_title": "Open-Air-Kino & Sommerkino: Vorführung im Freien organisieren",
   "meta_desc": "Alles für Ihr Open-Air-Kino: aufblasbare Großbildleinwände, Komplettpakete, Vermietung und Zubehör. Französischer Hersteller seit 1992 – kostenloser Kostenvoranschlag.",
   "breadcrumb": "Freiluftkino",
   "section_label": "Freiluftkino",
@@ -42,5 +42,7 @@
   "seg_mairie": "Rathäuser & Kommunen",
   "seg_hotel": "Hotels & Resorts",
   "seg_evenement": "Festivals & Veranstaltungen",
-  "seg_prix": "Preise & Kostenvoranschläge"
+  "seg_prix": "Preise & Kostenvoranschläge",
+  "seg_taille": "Welche Bildschirmgröße?",
+  "seg_securite": "Wind & Sicherheit"
 }

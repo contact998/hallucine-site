@@ -42,5 +42,7 @@
   "seg_mairie": "Comuni e enti locali",
   "seg_hotel": "Alberghi e resort",
   "seg_evenement": "Festival ed eventi",
-  "seg_prix": "Prezzi e preventivi"
+  "seg_prix": "Prezzi e preventivi",
+  "seg_taille": "Che dimensioni deve avere lo schermo?",
+  "seg_securite": "Vento e sicurezza"
 }

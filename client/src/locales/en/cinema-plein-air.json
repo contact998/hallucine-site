@@ -42,5 +42,7 @@
   "seg_mairie": "Local councils & local authorities",
   "seg_hotel": "Hotels & resorts",
   "seg_evenement": "Festivals & events",
-  "seg_prix": "Prices & quotes"
+  "seg_prix": "Prices & quotes",
+  "seg_taille": "What screen size?",
+  "seg_securite": "Wind & safety"
 }

@@ -26,6 +26,8 @@ const SEGMENTS: { id: string; to: RouteKey }[] = [
   { id: "seg_hotel", to: "hotel" },
   { id: "seg_evenement", to: "evenement" },
   { id: "seg_prix", to: "prix" },
+  { id: "seg_taille", to: "taille-ecran" },
+  { id: "seg_securite", to: "securite-vent" },
 ];
 const STEPS = ["s1", "s2", "s3", "s4"];
 const FAQ = ["1", "2", "3", "4"];

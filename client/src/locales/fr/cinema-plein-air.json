@@ -47,5 +47,7 @@
   "seg_mairie": "Mairies & collectivités",
   "seg_hotel": "Hôtels & resorts",
   "seg_evenement": "Festivals & événementiel",
-  "seg_prix": "Prix & devis"
+  "seg_prix": "Prix & devis",
+  "seg_taille": "Quelle taille d'écran ?",
+  "seg_securite": "Vent & sécurité"
 }

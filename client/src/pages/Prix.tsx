@@ -9,7 +9,7 @@ export default function Prix() {
       namespace="prix"
       routeKey="prix"
       cards={[
-        { id: "c1", icon: Ruler },
+        { id: "c1", icon: Ruler, to: "taille-ecran" },
         { id: "c2", icon: Cpu },
         { id: "c3", icon: Package },
         { id: "c4", icon: CalendarClock, to: "location" },
