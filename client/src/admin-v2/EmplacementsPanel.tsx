@@ -24,7 +24,7 @@ type Placed = MediaItem & { placementId: number; placementOrder: number };
 
 export function EmplacementsPanel() {
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>(
-    () => ({ ...Object.fromEntries(SLOT_GROUPS.map(g => [g.key, true])), blog: true })
+    () => Object.fromEntries(SLOT_GROUPS.map(g => [g.key, true]))
   );
   const toggle = (key: string) => setCollapsed(p => ({ ...p, [key]: !p[key] }));
 
@@ -55,9 +55,6 @@ export function EmplacementsPanel() {
           </Group>
         ))}
 
-        <Group title="Blog — couvertures d'articles" open={!collapsed.blog} onToggle={() => toggle("blog")}>
-          <BlogCovers />
-        </Group>
       </div>
     </>
   );
@@ -225,49 +222,4 @@ function SortableThumb({ id, asset, onRemove }: { id: number; asset: MediaItem; 
   );
 }
 
-// ─── Blog : 1 couverture par article ────────────────────────────────────────────
-function BlogCovers() {
-  const { data: posts, isLoading } = trpc.blog.adminList.useQuery(undefined);
-  if (isLoading) return <Loader2 className="w-5 h-5 animate-spin text-white/40" />;
-  const frPosts = (posts ?? []).filter((p) => p.lang === "fr");
-  if (frPosts.length === 0) return <p className="text-white/30 text-xs italic">Aucun article.</p>;
-  return (
-    <div className="space-y-3">
-      {frPosts.map((p) => <ArticleCover key={p.id} id={p.id} title={p.title} />)}
-    </div>
-  );
-}
-
-function ArticleCover({ id, title }: { id: number; title: string }) {
-  const utils = trpc.useUtils();
-  const { data: cover, isLoading } = trpc.placements.single.useQuery({ slotKey: "blog:cover", entityId: id });
-  const [picking, setPicking] = useState(false);
-  const setSingle = trpc.placements.setSingle.useMutation({
-    onSuccess: () => { utils.placements.invalidate(); },
-    onError: (e) => toast.error(e.message),
-  });
-
-  return (
-    <div className="flex items-center gap-3">
-      <div className="w-28 h-16 rounded-lg overflow-hidden border border-white/10 bg-black/30 flex items-center justify-center shrink-0">
-        {isLoading ? <Loader2 className="w-4 h-4 animate-spin text-white/40" />
-          : cover ? <img src={cover.url} alt="" className="w-full h-full object-cover" />
-          : <ImageOff className="w-5 h-5 text-white/20" />}
-      </div>
-      <span className="text-sm text-white/80 flex-1 truncate">{title}</span>
-      <button
-        onClick={() => setPicking(true)}
-        className="text-sm bg-amber-500 hover:bg-amber-400 text-black font-semibold rounded-lg px-3 py-1.5 shrink-0"
-      >
-        {cover ? "Changer" : "Définir"}
-      </button>
-      {picking && (
-        <MediaPicker
-          title="Choisir la couverture de l'article"
-          onClose={() => setPicking(false)}
-          onPick={(a) => { setSingle.mutate({ slotKey: "blog:cover", entityId: id, assetId: a.id }); setPicking(false); }}
-        />
-      )}
-    </div>
-  );
-}
+// Couvertures blog : gérées via /admin/blog (picker → blog_posts.imageUrl, mono-base).
