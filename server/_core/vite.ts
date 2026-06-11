@@ -218,6 +218,17 @@ export function serveStatic(app: Express) {
     })
   );
 
+  // Polices auto-hébergées (client/public/fonts) — pas de hash Vite mais
+  // quasi immuables : cache 1 an ; toute mise à jour passe par un RENOMMAGE.
+  app.use(
+    "/fonts",
+    express.static(path.join(distPath, "fonts"), {
+      maxAge: "1y",
+      immutable: true,
+      index: false,
+    })
+  );
+
   // Reste des fichiers statiques — cache court.
   // redirect:false → pas de 301 /chemin → /chemin/ sur les répertoires :
   // le handler SSG ci-dessous sert la page pré-rendue directement sur l'URL

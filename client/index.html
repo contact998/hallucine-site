@@ -45,29 +45,17 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
     <!-- Preconnect domaines critiques -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://d2xsxph8kpxj0f.cloudfront.net" crossorigin />
     <!-- R2 = origine de l'image hero (LCP) + tous les médias. Sans crossorigin : les <img> sont chargées sans CORS. -->
     <link rel="preconnect" href="https://pub-dc19082f8e054e8b8a192d8d29df2aa0.r2.dev" />
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
     <link rel="dns-prefetch" href="https://recherche-entreprises.api.gouv.fr" />
-    <!-- Polices Google Fonts — chargement NON bloquant. Bascule media=print→all via <script>
-         (et non onload= inline, bloqué par la CSP helmet script-src-attr 'none'). display=swap.
-         Self-host des .woff2 = étape suivante recommandée (perf + RGPD : plus d'IP visiteur chez Google). -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" />
-    <link id="hf-fonts" rel="stylesheet" media="print" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" />
-    <script>
-      (function () {
-        var l = document.getElementById("hf-fonts");
-        if (!l) return;
-        var apply = function () { l.media = "all"; };
-        if (l.sheet) apply(); else l.addEventListener("load", apply);
-      })();
-    </script>
-    <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" />
-    </noscript>
+    <!-- Polices auto-hébergées : @font-face dans index.css (inliné au prerender),
+         woff2 servis depuis /fonts/. Plus aucune requête Google Fonts (RGPD).
+         Preload des 2 fichiers romans latin = les seuls quasi certains d'être
+         utilisés au premier paint (latin-ext/italic chargés à la demande). -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/dm-sans-latin.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/source-serif-4-latin.woff2" />
   </head>
 
   <body>
