@@ -1,6 +1,8 @@
+import type { MouseEventHandler } from "react";
 import { useParams, Link } from "wouter";
 import PageShell from "@/components/PageShell";
 import BlogArticleView from "@/components/BlogArticleView";
+import { getPreviousPath } from "@/components/ScrollToTop";
 import DOMPurify from "dompurify";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { trpc } from "@/lib/trpc";
@@ -70,6 +72,20 @@ export default function BlogPost() {
     );
   }
 
+  const blogHref = route("blog");
+
+  // « Retour au blog » : si on vient de la liste, revenir en arrière (POP →
+  // ScrollToTop restaure la position). Sinon (accès direct à l'article), laisser
+  // le lien naviguer normalement (push → haut de page). On n'intercepte pas les
+  // clics modifiés (cmd/ctrl/milieu → nouvel onglet).
+  const handleBackToBlog: MouseEventHandler = (e) => {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (typeof window !== "undefined" && getPreviousPath() === blogHref && window.history.length > 1) {
+      e.preventDefault();
+      window.history.back();
+    }
+  };
+
   return (
     <PageShell>
       <BlogArticleView
@@ -80,10 +96,11 @@ export default function BlogPost() {
         coverImageUrl={post.imageUrl}
         excerpt={post.excerpt}
         contentHtml={DOMPurify.sanitize(post.content)}
-        blogHref={route("blog")}
+        blogHref={blogHref}
         contactHref={route("contact")}
         coverPriority
         linkComponent={Link}
+        onBackToBlog={handleBackToBlog}
       />
     </PageShell>
   );

@@ -1,4 +1,4 @@
-import type { ElementType } from "react";
+import type { ElementType, MouseEventHandler } from "react";
 import { ArrowLeft, Calendar, User } from "lucide-react";
 
 /**
@@ -52,6 +52,9 @@ export interface BlogArticleViewProps {
   coverPriority?: boolean;
   /** Composant lien : wouter <Link> côté client, "a" (défaut) côté serveur. */
   linkComponent?: ElementType;
+  /** Clic sur un lien « Retour au blog » — permet de restaurer la position de
+   *  la liste (history.back) plutôt que d'y revenir en haut. */
+  onBackToBlog?: MouseEventHandler;
   labels?: Partial<BlogArticleLabels>;
 }
 
@@ -67,6 +70,7 @@ export default function BlogArticleView({
   contactHref,
   coverPriority = false,
   linkComponent,
+  onBackToBlog,
   labels,
 }: BlogArticleViewProps) {
   const A: ElementType = linkComponent ?? "a";
@@ -95,6 +99,7 @@ export default function BlogArticleView({
         <div className="container max-w-3xl">
           <A
             href={blogHref}
+            onClick={onBackToBlog}
             className="inline-flex items-center gap-2 text-primary hover:underline mb-6 text-sm"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -161,6 +166,7 @@ export default function BlogArticleView({
           <div className="mt-12 pt-8 border-t border-border">
             <A
               href={blogHref}
+              onClick={onBackToBlog}
               className="inline-flex items-center gap-2 text-primary hover:underline"
             >
               <ArrowLeft className="w-4 h-4" />

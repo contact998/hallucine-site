@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@plugin "@tailwindcss/typography";
 
 /* ── Polices auto-hébergées (ex-Google Fonts) ─────────────────────────────────
    Self-host = plus aucune requête fonts.googleapis/gstatic au chargement des

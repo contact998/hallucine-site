@@ -28,6 +28,16 @@ function key(): string {
 let navAction: "push" | "pop" = "pop";
 let patched = false;
 
+// Route précédente (pathname), pour les liens « Retour au blog » intelligents :
+// si on vient de la liste, le lien fait un history.back() (→ POP → scroll
+// restauré) au lieu d'un push (→ haut de page).
+let previousPath: string | null = null;
+let lastPath: string | null = null;
+
+export function getPreviousPath(): string | null {
+  return previousPath;
+}
+
 function ensureHistoryPatched() {
   if (patched || typeof window === "undefined") return;
   patched = true;
@@ -61,6 +71,13 @@ export default function ScrollToTop() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+
+    // Mémoriser la route précédente.
+    const path = window.location.pathname;
+    if (path !== lastPath) {
+      if (lastPath !== null) previousPath = lastPath;
+      lastPath = path;
+    }
 
     const isPop = navAction === "pop";
     navAction = "pop"; // réarmer : la prochaine nav est un POP sauf pushState
