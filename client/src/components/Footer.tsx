@@ -31,7 +31,7 @@ export default function Footer() {
     setEmail("");
   };
 
-  const menuLinks = [
+  const menuLinks: Array<{ href: string; labelKey?: string; label?: string }> = [
     { labelKey: "footer.menu.contact", href: route("contact") },
     { labelKey: "footer.menu.devis", href: route("contact") },
     { labelKey: "footer.menu.cinema_plein_air", href: route("cinema-plein-air") },
@@ -44,6 +44,7 @@ export default function Footer() {
     { labelKey: "footer.menu.devenir_distributeur", href: route("devenir-distributeur") },
     { labelKey: "footer.menu.confidentialite", href: route("confidentialite") },
     { labelKey: "footer.menu.mentions_legales", href: route("mentions-legales") },
+    { label: "Connexion", href: "/admin" },
     { labelKey: "footer.menu.cookies", href: route("cookies") },
   ];
 
@@ -66,9 +67,9 @@ export default function Footer() {
             <h4 className="text-white font-semibold text-sm mb-4 tracking-wide uppercase">{t("footer.menu.title")}</h4>
             <ul className="space-y-2.5 text-sm">
               {menuLinks.map((link) => (
-                <li key={link.labelKey}>
+                <li key={link.label ?? link.labelKey}>
                   <Link href={link.href} className="text-white/70 hover:text-warm transition-colors">
-                    {t(link.labelKey)}
+                    {link.label ?? t(link.labelKey!)}
                   </Link>
                 </li>
               ))}
@@ -160,15 +161,6 @@ export default function Footer() {
             <Link href={route('confidentialite')} className="text-white/50 text-xs hover:text-warm transition-colors">{t("footer.menu.confidentialite")}</Link>
             <Link href={route('cookies')} className="text-white/50 text-xs hover:text-warm transition-colors">{t("footer.menu.cookies")}</Link>
           </div>
-        </div>
-
-        {/* Accès admin — point d'entrée discret pour se (re)connecter, même
-            déconnecté (le bouton « Panneau Admin » de la nav disparaît alors).
-            /admin → l'admin si connecté, sinon l'écran « Se connecter avec Google ». */}
-        <div className="mt-4 text-center">
-          <Link href="/admin" className="text-white/30 text-xs hover:text-warm transition-colors">
-            Connexion
-          </Link>
         </div>
       </div>
 
