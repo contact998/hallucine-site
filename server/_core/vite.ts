@@ -155,9 +155,23 @@ export function serveStatic(app: Express) {
 
   // Charger le template "propre" avec placeholders pour les pages dynamiques (blog)
   const cleanTemplatePath = path.resolve(distPath, "_template.html");
-  const cleanTemplate = fs.existsSync(cleanTemplatePath)
+  let cleanTemplate = fs.existsSync(cleanTemplatePath)
     ? fs.readFileSync(cleanTemplatePath, "utf-8")
     : baseIndexHtml;
+  // Inliner le CSS (parité avec scripts/prerender.mjs) → pas de flash « contenu non
+  // stylé » sur les pages rendues par le serveur (blog). Le <link> externe impose un
+  // fetch avant le style (surtout après déploiement, CSS pas encore en cache) ;
+  // inliné = stylé dès le 1er paint. Repli sur le <link> si lecture du CSS impossible.
+  cleanTemplate = cleanTemplate.replace(
+    /<link rel="stylesheet"[^>]*href="(\/assets\/[^"]+\.css)"[^>]*>/,
+    (full, href) => {
+      try {
+        return `<style>${fs.readFileSync(path.join(distPath, href), "utf-8")}</style>`;
+      } catch {
+        return full;
+      }
+    },
+  );
 
   // Échappe les caractères spéciaux HTML pour injection sûre dans les attributs
   const escapeHtml = (str: string = "") =>
