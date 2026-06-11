@@ -97,6 +97,7 @@ export default function AdminBlog() {
   const [form, setForm]           = useState<FormState>(EMPTY_FORM);
   const [showMediaPicker, setShowMediaPicker] = useState(false);
   const [confirmDelete, setConfirmDelete]     = useState<number | null>(null);
+  const [langFilter, setLangFilter]           = useState<string>("all");
   const [expandedLangs, setExpandedLangs]     = useState<Set<number>>(new Set());
   const toggleLangs = (id: number) =>
     setExpandedLangs((prev) => {
@@ -294,6 +295,25 @@ export default function AdminBlog() {
         {/* ══ VUE LISTE ══════════════════════════════════════════════════════ */}
         {view === "list" && (
           <>
+            {/* Filtre par langue */}
+            <div className="flex flex-wrap items-center gap-1.5 mb-4">
+              {([
+                ["all", "Toutes"], ["fr", "FR"], ["en", "EN"], ["de", "DE"],
+                ["es", "ES"], ["it", "IT"], ["pt", "PT"],
+              ] as const).map(([key, label]) => (
+                <button
+                  key={key}
+                  onClick={() => setLangFilter(key)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors ${
+                    langFilter === key
+                      ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
+                      : "bg-white/5 border-white/10 text-white/50 hover:text-white/80"
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
             {loadingPosts ? (
               <div className="flex justify-center py-20">
                 <Loader2 className="w-8 h-8 animate-spin text-amber-500" />
@@ -320,12 +340,18 @@ export default function AdminBlog() {
                     {(() => {
                       const all = posts as BlogPost[];
                       const byParent = new Map<number, BlogPost[]>();
-                      for (const p of all) if (p.parentId != null) {
-                        const arr = byParent.get(p.parentId) ?? [];
-                        arr.push(p);
-                        byParent.set(p.parentId, arr);
+                      // « Toutes » : traductions pliées sous le parent FR.
+                      // Langue précise : liste à plat des articles de cette langue.
+                      if (langFilter === "all") {
+                        for (const p of all) if (p.parentId != null) {
+                          const arr = byParent.get(p.parentId) ?? [];
+                          arr.push(p);
+                          byParent.set(p.parentId, arr);
+                        }
                       }
-                      const sources = all.filter((p) => p.parentId == null);
+                      const sources = langFilter === "all"
+                        ? all.filter((p) => p.parentId == null)
+                        : all.filter((p) => p.lang === langFilter);
                       return sources.map((post) => {
                       const st = STATUS_LABELS[post.status] ?? STATUS_LABELS.draft;
                       const translations = (byParent.get(post.id) ?? []).slice().sort((a, b) => a.lang.localeCompare(b.lang));
@@ -351,7 +377,7 @@ export default function AdminBlog() {
                           <td className="px-4 py-3">
                             <span className="flex items-center gap-1 text-white/60">
                               <Globe className="w-3 h-3" />
-                              FR{translations.length > 0 && <span className="text-white/30 text-xs ml-0.5">+{translations.length}</span>}
+                              {post.lang.toUpperCase()}{translations.length > 0 && <span className="text-white/30 text-xs ml-0.5">+{translations.length}</span>}
                             </span>
                           </td>
                           <td className="px-4 py-3">
