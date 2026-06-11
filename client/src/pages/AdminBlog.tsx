@@ -487,8 +487,8 @@ export default function AdminBlog() {
               <div>
                 <label className="block text-xs font-medium text-white/60 mb-1.5 uppercase tracking-wider">
                   Titre <span className="text-red-400">*</span>
-                  <span className={`ml-2 font-mono ${form.title.length > 48 ? "text-red-400" : "text-white/30"}`}>
-                    {form.title.length}/48
+                  <span className={`ml-2 font-mono ${form.title.length > 60 ? "text-red-400" : "text-white/30"}`}>
+                    {form.title.length}/60
                   </span>
                 </label>
                 <input

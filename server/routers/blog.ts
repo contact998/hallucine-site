@@ -54,7 +54,7 @@ export const blogRouter = router({
       apiKey: z.string().optional(),
       title: z.string()
         .min(1, "Le titre est requis")
-        .max(48, "Titre trop long (max 48 car. — le titre HTML final sera '${title} | Hallucine' soit 60 car. max)"),
+        .max(60, "Titre trop long (max 60 caractères)"),
       content: z.string().min(1, "Le contenu est requis"),
       excerpt: z.string()
         .max(160, "L'excerpt ne peut pas dépasser 160 caractères (meta description SEO)")
@@ -131,11 +131,9 @@ export const blogRouter = router({
           "Il sera utilisé comme meta description SEO sur Google."
         );
       }
-      if (post.title.length > 48) {
+      if (post.title.length > 60) {
         throw new Error(
-          `Impossible de publier : le titre est trop long (${post.title.length}/48 car.). ` +
-          `Le titre HTML final sera '${post.title} | Hallucine' soit ${post.title.length + 12} car. ` +
-          "(max 60 car. recommandé par Google)."
+          `Impossible de publier : titre trop long (${post.title.length}/60 car.).`
         );
       }
       const isAdmin2 = (ctx as any).user?.role === "admin";
@@ -175,7 +173,7 @@ export const blogRouter = router({
       id: z.number(),
       title: z.string()
         .min(1)
-        .max(48, "Titre trop long (max 48 car. — le titre HTML final sera '${title} | Hallucine' soit 60 car. max)")
+        .max(60, "Titre trop long (max 60 caractères)")
         .optional(),
       content: z.string().optional(),
       excerpt: z.string()
