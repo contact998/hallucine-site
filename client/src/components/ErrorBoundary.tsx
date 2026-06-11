@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { isChunkLoadError, reloadOnceForStaleChunk } from "@/lib/chunkReload";
 import { AlertTriangle, RotateCcw } from "lucide-react";
 import { Component, ReactNode } from "react";
 
@@ -21,8 +22,33 @@ class ErrorBoundary extends Component<Props, State> {
     return { hasError: true, error };
   }
 
+  componentDidCatch(error: Error) {
+    // Build périmé après un déploiement (chunk lazy introuvable) → on récupère
+    // automatiquement la dernière version au lieu de rester bloqué.
+    if (isChunkLoadError(error)) reloadOnceForStaleChunk();
+  }
+
   render() {
     if (this.state.hasError) {
+      // Chunk périmé : écran neutre « mise à jour » (le reload est déjà lancé
+      // par componentDidCatch) + bouton manuel si jamais le reload est bloqué.
+      if (isChunkLoadError(this.state.error)) {
+        return (
+          <div className="flex flex-col items-center justify-center min-h-screen gap-5 bg-background p-8 text-center">
+            <div className="w-10 h-10 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+            <p className="text-muted-foreground text-sm">
+              Nouvelle version du site — mise à jour…
+            </p>
+            <button
+              onClick={() => window.location.reload()}
+              className="inline-flex items-center gap-2 text-primary text-sm hover:underline"
+            >
+              <RotateCcw size={14} />
+              Recharger maintenant
+            </button>
+          </div>
+        );
+      }
       return (
         <div className="flex items-center justify-center min-h-screen p-8 bg-background">
           <div className="flex flex-col items-center w-full max-w-2xl p-8">

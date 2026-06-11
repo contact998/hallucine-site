@@ -12,7 +12,12 @@ import App from "./App";
 import { preloadCurrentPage } from "./pages/registry";
 import { SSRMetaContext } from "./context/SSRMetaContext";
 import { getLoginUrl, initLoginUrl } from "./const";
+import { installChunkReloadGuard } from "@/lib/chunkReload";
 import "./index.css";
+
+// Récupération auto des chunks périmés après un déploiement (build hashé) —
+// évite « plus d'accès »/écran blanc sur un onglet ouvert avant le déploiement.
+installChunkReloadGuard();
 
 // Pré-charger la config OAuth depuis /api/config au démarrage
 initLoginUrl();
