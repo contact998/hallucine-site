@@ -60,17 +60,20 @@ async function translatePostToLang(originalPost: BlogPost, lang: string, deeplLa
   const cleanTitle = decodeHtmlEntities(translatedTitle);
   const cleanExcerpt = translatedExcerpt ? decodeHtmlEntities(translatedExcerpt) : null;
   const cleanMeta = translatedMeta ? decodeHtmlEntities(translatedMeta) : null;
-  const slug = await uniqueSlug(slugify(cleanTitle));
+  // Upsert : UNE seule traduction par (parent, langue). Si elle existe déjà, on la
+  // met à jour (slug conservé → URL stable) au lieu d'en créer une 2e (= doublon).
+  const [existing] = await db
+    .select()
+    .from(blogPosts)
+    .where(and(eq(blogPosts.parentId, originalPost.id), eq(blogPosts.lang, lang)))
+    .limit(1);
 
-  await db.insert(blogPosts).values({
+  const fields = {
     title: cleanTitle,
-    slug,
     content: translatedContent,
     excerpt: cleanExcerpt,
     imageUrl: originalPost.imageUrl ?? null,
-    lang,
-    parentId: originalPost.id,
-    status: "published",
+    status: "published" as const,
     // La traduction garde la date de l'original : l'ordre chronologique des
     // blogs étrangers reste celui du blog FR, y compris lors d'un rattrapage.
     publishedAt: originalPost.publishedAt ?? new Date(),
@@ -78,8 +81,15 @@ async function translatePostToLang(originalPost: BlogPost, lang: string, deeplLa
     metaDescription: cleanMeta,
     author: originalPost.author ?? "Hallucine",
     category: originalPost.category ?? null,
-  });
+  };
 
+  if (existing) {
+    await db.update(blogPosts).set(fields).where(eq(blogPosts.id, existing.id));
+    return existing.slug;
+  }
+
+  const slug = await uniqueSlug(slugify(cleanTitle));
+  await db.insert(blogPosts).values({ ...fields, slug, lang, parentId: originalPost.id });
   return slug;
 }
 
