@@ -300,7 +300,7 @@ export default function Admin() {
                 <FileText className="w-4 h-4" /> Calculateurs
               </a>
               <a
-                href="https://hallucine-crm-production.up.railway.app"
+                href="https://hallucine-crm-production-4bcc.up.railway.app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 py-2 border border-cyan-500/30 text-cyan-400 rounded hover:bg-cyan-500/10 text-sm transition-colors"
@@ -343,7 +343,7 @@ export default function Admin() {
                 </span>
               </div>
               <a
-                href="https://hallucine-crm-production.up.railway.app"
+                href="https://hallucine-crm-production-4bcc.up.railway.app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 text-xs font-medium hover:underline"

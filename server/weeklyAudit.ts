@@ -348,7 +348,7 @@ export function formatAuditEmail(report: AuditReport): { subject: string; body: 
     "───────────────────────────────────────────────────────",
     "Liens rapides :",
     "  Dashboard admin : https://hallucinecran.fr/admin",
-    "  CRM Hallucine : https://hallucine-crm-production.up.railway.app",
+    "  CRM Hallucine : https://hallucine-crm-production-4bcc.up.railway.app",
     "",
     "---",
     "Rapport généré automatiquement par l'IA Hallucine.",
