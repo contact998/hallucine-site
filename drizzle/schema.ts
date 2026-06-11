@@ -255,6 +255,29 @@ export type MediaItem = typeof mediaLibrary.$inferSelect;
 export type InsertMediaItem = typeof mediaLibrary.$inferInsert;
 export type MediaCategory = "blog" | "realisations" | "galerie" | "produits" | "ui" | "og" | "autre";
 
+// ─── Emplacements média (refonte : un fond d'images → placements) ───────────────
+// Relie un emplacement (slot du registre shared/slots.ts) à un asset du fond
+// (media_library). single = au plus 1 ligne par (slotKey, entityId) ;
+// gallery = N lignes ordonnées par sortOrder. Une même image peut apparaître dans
+// plusieurs placements (réutilisation native). Table additive : rien n'est cassé
+// tant que le site lit encore l'ancien modèle ; bascule puis nettoyage ensuite.
+export const mediaPlacements = mysqlTable("media_placements", {
+  id:        int("id").autoincrement().primaryKey(),
+  /** Clé d'emplacement, ex. "accueil:bandeau" ou "blog:cover" (cf. shared/slots.ts). */
+  slotKey:   varchar("slot_key", { length: 80 }).notNull(),
+  /** Entité rattachée pour les slots perEntity (ex. id d'article blog FR). NULL sinon. */
+  entityId:  int("entity_id"),
+  /** Asset placé → media_library.id. */
+  assetId:   int("asset_id").notNull(),
+  /** Ordre dans une galerie (plus petit = premier). Ignoré pour un slot single. */
+  sortOrder: int("sort_order").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type MediaPlacement = typeof mediaPlacements.$inferSelect;
+export type InsertMediaPlacement = typeof mediaPlacements.$inferInsert;
+
 // ─── SEO overrides (appliqués au runtime par le serveur, par chemin d'URL) ──────
 export const seoOverrides = mysqlTable("seo_overrides", {
   id:          int("id").autoincrement().primaryKey(),
