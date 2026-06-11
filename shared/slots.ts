@@ -114,9 +114,12 @@ export const SLOT_GROUPS: SlotGroup[] = [
     { key: k("drive-in", "fiche-produit"), label: "Fiche produit", kind: "single" },
     { key: k("drive-in", "galerie"),       label: "Galerie",       kind: "gallery" },
   ]},
+  { key: "cinema-plein-air", label: "Cinéma plein air", slots: [
+    { key: k("cinema-plein-air", "bandeau"), label: "Bandeau", kind: "single" },
+  ]},
 
   { key: "galerie", label: "Galerie", slots: [
-    { key: k("galerie", "galerie"), label: "Galerie principale", kind: "gallery" },
+    { key: k("galerie", "principale"), label: "Galerie principale", kind: "gallery" },
   ]},
   { key: "histoire", label: "Histoire", slots: [
     { key: k("histoire", "bandeau"),  label: "Bandeau",            kind: "single" },
