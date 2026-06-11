@@ -18,6 +18,18 @@ import {
   Globe, FileText, Eye, X, Check, Image, ChevronLeft, ChevronRight,
 } from "lucide-react";
 
+/** Message lisible d'une erreur tRPC (les erreurs de validation Zod arrivent en JSON). */
+function readableError(err: any, fallback: string): string {
+  const raw = typeof err?.message === "string" ? err.message : "";
+  try {
+    const issues = JSON.parse(raw);
+    if (Array.isArray(issues) && issues.length && issues[0]?.message) {
+      return issues.map((i: any) => i.message).join(" · ");
+    }
+  } catch { /* message normal, pas du JSON Zod */ }
+  return raw || fallback;
+}
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type Status = "draft" | "published" | "scheduled";
@@ -181,7 +193,7 @@ export default function AdminBlog() {
       await utils.blog.adminList.invalidate();
       setView("list");
     } catch (err: any) {
-      toast.error(err?.message ?? "Erreur lors de la sauvegarde");
+      toast.error(readableError(err, "Erreur lors de la sauvegarde"));
     }
   }, [form, editingPost, createMutation, updateMutation, utils]);
 
@@ -191,7 +203,7 @@ export default function AdminBlog() {
       toast.success("Article publié");
       await utils.blog.adminList.invalidate();
     } catch (err: any) {
-      toast.error(err?.message ?? "Erreur lors de la publication");
+      toast.error(readableError(err, "Erreur lors de la publication"));
     }
   }, [publishMutation, utils]);
 
@@ -202,7 +214,7 @@ export default function AdminBlog() {
       setConfirmDelete(null);
       await utils.blog.adminList.invalidate();
     } catch (err: any) {
-      toast.error(err?.message ?? "Erreur lors de la suppression");
+      toast.error(readableError(err, "Erreur lors de la suppression"));
     }
   }, [deleteMutation, utils]);
 
