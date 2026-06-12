@@ -25,8 +25,8 @@ describe("resolveLocalePrefixRedirect", () => {
       .toEqual({ status: 301, location: "/ecran-gonflable" });
     expect(resolveLocalePrefixRedirect("/en/inflatable-screen", "hallucinecran.com"))
       .toEqual({ status: 301, location: "/inflatable-screen" });
-    expect(resolveLocalePrefixRedirect("/de/aufblasbarer-bildschirm", "hallucinecran.de"))
-      .toEqual({ status: 301, location: "/aufblasbarer-bildschirm" });
+    expect(resolveLocalePrefixRedirect("/de/aufblasbare-leinwand", "hallucinecran.de"))
+      .toEqual({ status: 301, location: "/aufblasbare-leinwand" });
   });
 
   it("préfixe d'une autre langue → 301 vers la home du TLD correspondant", () => {

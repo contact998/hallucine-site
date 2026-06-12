@@ -14,6 +14,7 @@ import { buildRobotsTxt } from "../robots";
 import { buildAgentSkillsIndex, getSkillMd } from "../agentSkills";
 import { BLOG_SLUG_REDIRECTS } from "../blogSlugRedirects";
 import { DOMAIN_LANG_MAP } from "../../client/src/i18n/domains";
+import { getLegacyRedirect } from "../../client/src/i18n/routes";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -330,6 +331,18 @@ async function startServer() {
   // Redirection 301 : /devis → /contactez-nous (filet de sécurité pour liens externes)
   app.get("/devis", (_req, res) => {
     res.redirect(301, "/contactez-nous");
+  });
+
+  // Redirection 301 des anciens slugs localisés (campagne lexique 2026-06-12 :
+  // bildschirm→leinwand, inflable→hinchable, waterproof→airtight…). La map vit
+  // dans i18n/routes.ts à côté de ROUTES pour suivre tout futur renommage.
+  app.use((req, res, next) => {
+    const target = getLegacyRedirect(req.path.replace(/\/+$/, "") || "/");
+    if (target) {
+      const query = req.originalUrl.split("?")[1];
+      return res.redirect(301, `${target}${query ? "?" + query : ""}`);
+    }
+    return next();
   });
 
   // Redirection 301 des anciens slugs de blog pollués par des entités HTML

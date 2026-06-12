@@ -103,7 +103,7 @@ export const ROUTES: Record<string, LangRoutes> = {
     home: "/",
     ecrans: "/inflatable-screen",
     "ecran-geant": "/giant-inflatable-screen",
-    "ecran-etanche": "/waterproof-inflatable-screen",
+    "ecran-etanche": "/airtight-inflatable-screen",
     "ecran-economique": "/budget-inflatable-screen",
     comparaison: "/inflatable-screen-comparison",
     configurateur: "/inflatable-screen-configurator",
@@ -144,22 +144,22 @@ export const ROUTES: Record<string, LangRoutes> = {
   },
   de: {
     home: "/",
-    ecrans: "/aufblasbarer-bildschirm",
-    "ecran-geant": "/grosser-aufblasbarer-bildschirm",
-    "ecran-etanche": "/wasserdichter-aufblasbarer-bildschirm",
-    "ecran-economique": "/guenstiger-aufblasbarer-bildschirm",
-    comparaison: "/aufblasbarer-bildschirm-vergleich",
-    configurateur: "/aufblasbarer-bildschirm-konfigurator",
+    ecrans: "/aufblasbare-leinwand",
+    "ecran-geant": "/grosse-aufblasbare-leinwand",
+    "ecran-etanche": "/luftdichte-aufblasbare-leinwand",
+    "ecran-economique": "/guenstige-aufblasbare-leinwand",
+    comparaison: "/aufblasbare-leinwand-vergleich",
+    configurateur: "/aufblasbare-leinwand-konfigurator",
     "taille-ecran": "/leinwandgroesse-freiluftkino",
     "securite-vent": "/aufblasbare-leinwand-wind-sicherheit",
-    "drive-in": "/aufblasbarer-drive-in-bildschirm",
+    "drive-in": "/aufblasbare-drive-in-leinwand",
     packs: "/freiluftkino-paket",
     "cinema-plein-air": "/freiluftkino",
-    prix: "/aufblasbarer-bildschirm-preis",
+    prix: "/aufblasbare-leinwand-preis",
     mairie: "/freiluftkino-fuer-gemeinden",
     hotel: "/freiluftkino-fuer-hotels",
     evenement: "/grossleinwand-fuer-events",
-    location: "/aufblasbarer-bildschirm-mieten",
+    location: "/aufblasbare-leinwand-mieten",
     "etudes-cas": "/fallstudien",
     "cas-velodrome": "/fallstudie-velodrome-orange-marseille-stadion",
     "cas-oran": "/fallstudie-oran-festival-12m-leinwand-algerien",
@@ -187,33 +187,33 @@ export const ROUTES: Record<string, LangRoutes> = {
   },
   es: {
     home: "/",
-    ecrans: "/pantalla-inflable",
-    "ecran-geant": "/pantalla-inflable-gigante",
-    "ecran-etanche": "/pantalla-inflable-impermeable",
-    "ecran-economique": "/pantalla-inflable-economica",
-    comparaison: "/comparacion-pantalla-inflable",
-    configurateur: "/configurador-pantalla-inflable",
+    ecrans: "/pantalla-hinchable",
+    "ecran-geant": "/pantalla-hinchable-gigante",
+    "ecran-etanche": "/pantalla-hinchable-estanca",
+    "ecran-economique": "/pantalla-hinchable-economica",
+    comparaison: "/comparacion-pantalla-hinchable",
+    configurateur: "/configurador-pantalla-hinchable",
     "taille-ecran": "/tamano-pantalla-cine-aire-libre",
-    "securite-vent": "/pantalla-inflable-viento-seguridad",
-    "drive-in": "/pantalla-inflable-autocine",
+    "securite-vent": "/pantalla-hinchable-viento-seguridad",
+    "drive-in": "/pantalla-hinchable-autocine",
     packs: "/paquete-cine-aire-libre",
     "cinema-plein-air": "/cine-al-aire-libre",
-    prix: "/precio-pantalla-inflable",
+    prix: "/precio-pantalla-hinchable",
     mairie: "/cine-al-aire-libre-ayuntamientos",
     hotel: "/cine-al-aire-libre-hoteles",
     evenement: "/pantalla-gigante-para-eventos",
-    location: "/alquiler-pantalla-inflable",
+    location: "/alquiler-pantalla-hinchable",
     "etudes-cas": "/casos-de-exito",
     "cas-velodrome": "/caso-velodrome-orange-estadio-marsella",
     "cas-oran": "/caso-oran-festival-pantalla-12m-argelia",
     "ecrans-led": "/pantallas-led",
-    tentes: "/tienda-inflable",
-    "tente-x": "/tienda-inflable-x",
-    "tente-n": "/tienda-inflable-n",
-    "tente-v": "/tienda-inflable-v",
-    "tente-araignee": "/tienda-inflable-arana",
-    arches: "/arco-inflable",
-    mobilier: "/mobiliario-inflable",
+    tentes: "/tienda-hinchable",
+    "tente-x": "/tienda-hinchable-x",
+    "tente-n": "/tienda-hinchable-n",
+    "tente-v": "/tienda-hinchable-v",
+    "tente-araignee": "/tienda-hinchable-arana",
+    arches: "/arco-hinchable",
+    mobilier: "/mobiliario-hinchable",
     accessoires: "/accesorios-cine-aire-libre",
     galerie: "/galeria-eventos",
     "galerie-video": "/galeria-video",
@@ -232,7 +232,7 @@ export const ROUTES: Record<string, LangRoutes> = {
     home: "/",
     ecrans: "/schermo-gonfiabile",
     "ecran-geant": "/schermo-gonfiabile-gigante",
-    "ecran-etanche": "/schermo-gonfiabile-impermeabile",
+    "ecran-etanche": "/schermo-gonfiabile-a-tenuta-stagna",
     "ecran-economique": "/schermo-gonfiabile-economico",
     comparaison: "/confronto-schermo-gonfiabile",
     configurateur: "/configuratore-schermo-gonfiabile",
@@ -315,6 +315,56 @@ export const ROUTES: Record<string, LangRoutes> = {
     cookies: "/politica-cookies",
   },
 };
+
+/**
+ * Anciens slugs → nouvelle URL (redirections 301 servies côté serveur).
+ * Campagne lexique 2026-06-12 : les slugs portaient les contresens DeepL
+ * (bildschirm, inflable, waterproof, impermeabile). On référence la langue
+ * + la clé de route pour que la cible suive ROUTES si un slug rebouge.
+ * Ne JAMAIS retirer une entrée : les anciens liens externes vivent longtemps.
+ */
+export const LEGACY_SLUG_REDIRECTS: Record<string, { lang: string; key: RouteKey }> = {
+  // EN
+  "/waterproof-inflatable-screen": { lang: "en", key: "ecran-etanche" },
+  // DE — bildschirm → leinwand
+  "/aufblasbarer-bildschirm": { lang: "de", key: "ecrans" },
+  "/grosser-aufblasbarer-bildschirm": { lang: "de", key: "ecran-geant" },
+  "/wasserdichter-aufblasbarer-bildschirm": { lang: "de", key: "ecran-etanche" },
+  "/guenstiger-aufblasbarer-bildschirm": { lang: "de", key: "ecran-economique" },
+  "/aufblasbarer-bildschirm-vergleich": { lang: "de", key: "comparaison" },
+  "/aufblasbarer-bildschirm-konfigurator": { lang: "de", key: "configurateur" },
+  "/aufblasbarer-drive-in-bildschirm": { lang: "de", key: "drive-in" },
+  "/aufblasbarer-bildschirm-preis": { lang: "de", key: "prix" },
+  "/aufblasbarer-bildschirm-mieten": { lang: "de", key: "location" },
+  // ES — inflable → hinchable
+  "/pantalla-inflable": { lang: "es", key: "ecrans" },
+  "/pantalla-inflable-gigante": { lang: "es", key: "ecran-geant" },
+  "/pantalla-inflable-impermeable": { lang: "es", key: "ecran-etanche" },
+  "/pantalla-inflable-economica": { lang: "es", key: "ecran-economique" },
+  "/comparacion-pantalla-inflable": { lang: "es", key: "comparaison" },
+  "/configurador-pantalla-inflable": { lang: "es", key: "configurateur" },
+  "/pantalla-inflable-viento-seguridad": { lang: "es", key: "securite-vent" },
+  "/pantalla-inflable-autocine": { lang: "es", key: "drive-in" },
+  "/precio-pantalla-inflable": { lang: "es", key: "prix" },
+  "/alquiler-pantalla-inflable": { lang: "es", key: "location" },
+  "/tienda-inflable": { lang: "es", key: "tentes" },
+  "/tienda-inflable-x": { lang: "es", key: "tente-x" },
+  "/tienda-inflable-n": { lang: "es", key: "tente-n" },
+  "/tienda-inflable-v": { lang: "es", key: "tente-v" },
+  "/tienda-inflable-arana": { lang: "es", key: "tente-araignee" },
+  "/arco-inflable": { lang: "es", key: "arches" },
+  "/mobiliario-inflable": { lang: "es", key: "mobilier" },
+  // IT — impermeabile → a tenuta stagna
+  "/schermo-gonfiabile-impermeabile": { lang: "it", key: "ecran-etanche" },
+};
+
+/** Résout un chemin legacy vers sa nouvelle URL, ou null. */
+export function getLegacyRedirect(path: string): string | null {
+  const entry = LEGACY_SLUG_REDIRECTS[path];
+  if (!entry) return null;
+  const target = ROUTES[entry.lang]?.[entry.key];
+  return target && target !== path ? target : null;
+}
 
 /**
  * Retourne l'URL traduite pour une route donnée dans une langue donnée

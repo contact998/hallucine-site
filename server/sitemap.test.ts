@@ -27,7 +27,7 @@ describe("buildSitemapXml — routes statiques (host-aware, un par TLD)", () => 
   it("inclut les hreflang vers les 5 TLD + x-default", () => {
     const xml = buildSitemapXml("fr", []);
     expect(xml).toContain('hreflang="en" href="https://hallucinecran.com/inflatable-screen"');
-    expect(xml).toContain('hreflang="de" href="https://hallucinecran.de/aufblasbarer-bildschirm"');
+    expect(xml).toContain('hreflang="de" href="https://hallucinecran.de/aufblasbare-leinwand"');
     expect(xml).toContain('hreflang="x-default"');
   });
 
