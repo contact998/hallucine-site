@@ -58,13 +58,27 @@
     <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/source-serif-4-latin.woff2" />
 
     <!-- Umami analytics (auto-hébergé Railway, cookieless — pas de bandeau requis).
-         data-domains limite l'envoi aux 6 TLD de prod : rien ne part depuis localhost. -->
-    <script
-      defer
-      src="https://umami-production-737a.up.railway.app/script.js"
-      data-website-id="bc788cfd-d429-44b2-876c-f2ecc9cad6eb"
-      data-domains="hallucinecran.fr,www.hallucinecran.fr,hallucinecran.com,www.hallucinecran.com,hallucinecran.de,www.hallucinecran.de,hallucinecran.es,www.hallucinecran.es,hallucinecran.it,www.hallucinecran.it,hallucinecran.pt,www.hallucinecran.pt"
-    ></script>
+         Un website Umami par TLD : l'ID est choisi selon le domaine, et rien
+         n'est chargé hors prod (localhost exclu). -->
+    <script>
+      (function (d) {
+        var ids = {
+          "hallucinecran.fr": "bc788cfd-d429-44b2-876c-f2ecc9cad6eb",
+          "hallucinecran.com": "b9f4877c-74da-4905-b78e-061a4ff157f7",
+          "hallucinecran.de": "348d33fe-bdfd-481a-ba8a-4676d1bff305",
+          "hallucinecran.es": "1dbc0307-ee05-491f-adc1-f0969f6a465c",
+          "hallucinecran.it": "abbc5955-3d4f-4160-8927-ef55cbeedd0b",
+          "hallucinecran.pt": "e89c549b-8fd3-4ef4-b600-e4d75ca717dc",
+        };
+        var id = ids[location.hostname.replace(/^www\./, "")];
+        if (!id) return;
+        var s = d.createElement("script");
+        s.defer = true;
+        s.src = "https://umami-production-737a.up.railway.app/script.js";
+        s.setAttribute("data-website-id", id);
+        d.head.appendChild(s);
+      })(document);
+    </script>
   </head>
 
   <body>
