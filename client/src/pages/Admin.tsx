@@ -316,6 +316,12 @@ export default function Admin() {
                 <ExternalLink className="w-4 h-4" /> Ouvrir CRM
               </a>
               <a
+                href="/admin/lexique"
+                className="flex items-center gap-2 px-4 py-2 border border-blue-500/30 text-blue-400 rounded hover:bg-blue-500/10 text-sm transition-colors"
+              >
+                <FileText className="w-4 h-4" /> Lexique i18n
+              </a>
+              <a
                 href="/admin/blog"
                 className="flex items-center gap-2 px-4 py-2 border border-rose-500/30 text-rose-400 rounded hover:bg-rose-500/10 text-sm transition-colors"
               >

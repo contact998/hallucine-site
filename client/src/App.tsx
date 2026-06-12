@@ -22,7 +22,7 @@ import {
   ArchesGonflables, Mobilier, Accessoires, Galerie, GalerieVideo, Contact,
   APropos, Histoire, ModeEmploi, Blog, BlogPost, DevenirDistributeur,
   MentionsLegales, Confidentialite, PolitiqueCookies,
-  Profil, Admin, AdminDashboard, AdminAuditHistory, AdminCalculateurs,
+  Profil, Admin, AdminDashboard, AdminAuditHistory, AdminCalculateurs, AdminLexique,
   AdminMedia, AdminMediaV2, AdminBlog, Login, NotFound,
 } from "./pages/registry";
 
@@ -120,6 +120,7 @@ function RoutesSwitch() {
         <Route path={"/admin/analytics"} component={AdminDashboard} />
         <Route path={"/admin/audits"} component={AdminAuditHistory} />
         <Route path={"/admin/calculateurs"} component={AdminCalculateurs} />
+        <Route path={"/admin/lexique"} component={AdminLexique} />
         <Route path={"/admin/media"} component={AdminMedia} />
         <Route path={"/admin-v2"} component={AdminMediaV2} />
         <Route path={"/admin/blog"} component={AdminBlog} />
