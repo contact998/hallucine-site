@@ -3,7 +3,7 @@
  * Fonctions DB pour la médiathèque centrale.
  * Utilise le `db` partagé de server/db.ts.
  */
-import { eq, ne, desc, and, sql, asc, or, like, inArray, isNull } from "drizzle-orm";
+import { eq, ne, desc, and, sql, asc, or, like, inArray, notInArray, isNull } from "drizzle-orm";
 import { db } from "./db";
 import { mediaLibrary } from "../drizzle/schema";
 import type { MediaItem, InsertMediaItem, MediaCategory } from "../drizzle/schema";
@@ -105,6 +105,10 @@ export async function listMedia(options: {
   sortDir?: ListSortDir;
   limit?: number;
   offset?: number;
+  /** Filtre utilisé/non utilisé (refonte). usedAssetIds = ids placés, fournis par
+   *  l'appelant (couche placements) pour ne pas coupler la médiathèque au registre. */
+  usageFilter?: "used" | "unused";
+  usedAssetIds?: number[];
 }): Promise<{ items: MediaItem[]; total: number }> {
   const {
     category,
@@ -115,6 +119,8 @@ export async function listMedia(options: {
     sortDir = "asc",
     limit  = 50,
     offset = 0,
+    usageFilter,
+    usedAssetIds = [],
   } = options;
 
   // Construire les conditions dynamiquement
@@ -132,6 +138,15 @@ export async function listMedia(options: {
       like(mediaLibrary.tags,        q),
       like(mediaLibrary.subcategory, q),
     )!);
+  }
+
+  // Filtre utilisé/non utilisé : présence (ou non) dans media_placements.
+  //  • "used" sans aucun id placé → ne renvoyer rien (1=0).
+  //  • "unused" sans aucun id placé → tout est non utilisé → pas de condition.
+  if (usageFilter === "used") {
+    conditions.push(usedAssetIds.length ? inArray(mediaLibrary.id, usedAssetIds) : sql`1 = 0`);
+  } else if (usageFilter === "unused" && usedAssetIds.length) {
+    conditions.push(notInArray(mediaLibrary.id, usedAssetIds));
   }
 
   const where = conditions.length > 0 ? and(...conditions) : undefined;

@@ -14,6 +14,9 @@ import { Loader2, Upload, X, Pencil, Trash2, ImageOff } from "lucide-react";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 import type { MediaItem } from "../../../drizzle/schema";
+import { slotFullLabel } from "../../../shared/slots";
+
+type UsageFilter = "all" | "used" | "unused";
 
 const PER_PAGE = 24;
 const ALLOWED_MIME = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -49,6 +52,7 @@ function textToTags(text: string): string[] {
 // ─── Panneau Bibliothèque ───────────────────────────────────────────────────────
 export function BibliothequePanel() {
   const [search, setSearch] = useState("");
+  const [usage, setUsage] = useState<UsageFilter>("all");
   const [current, setCurrent] = useState(1);
   const [editing, setEditing] = useState<MediaItem | null>(null);
 
@@ -59,6 +63,7 @@ export function BibliothequePanel() {
   const { data, isLoading, isError, error } = trpc.media.list.useQuery({
     activeOnly: false,
     search: search.trim() || undefined,
+    usage,
     limit: PER_PAGE,
     offset,
   });
@@ -70,6 +75,11 @@ export function BibliothequePanel() {
   // La recherche revient à la page 1
   function onSearch(value: string) {
     setSearch(value);
+    setCurrent(1);
+  }
+  // Changer de filtre utilisé/non utilisé revient aussi à la page 1
+  function onUsage(value: UsageFilter) {
+    setUsage(value);
     setCurrent(1);
   }
 
@@ -120,6 +130,30 @@ export function BibliothequePanel() {
             className="bg-black/40 border border-white/15 rounded-lg px-3 py-2 text-sm text-white"
           />
         </label>
+
+        {/* Filtre général : toutes / utilisées sur le site / non utilisées */}
+        <div className="flex flex-col gap-1 text-xs text-white/60">
+          Affichage
+          <div className="flex rounded-lg overflow-hidden border border-white/15">
+            {([
+              ["all", "Toutes"],
+              ["used", "Utilisées"],
+              ["unused", "Non utilisées"],
+            ] as const).map(([val, lbl]) => (
+              <button
+                key={val}
+                onClick={() => onUsage(val)}
+                className={`px-3 py-2 text-sm whitespace-nowrap transition-colors ${
+                  usage === val
+                    ? "bg-amber-500 text-black font-semibold"
+                    : "bg-black/40 text-white/70 hover:text-white"
+                }`}
+              >
+                {lbl}
+              </button>
+            ))}
+          </div>
+        </div>
 
         <div className="flex flex-col gap-1">
           <input
@@ -309,6 +343,9 @@ function EditModal({
             <img src={item.url} alt={alt} className="max-h-56 object-contain" />
           </div>
 
+          {/* Où cette image apparaît réellement sur le site (emplacements) */}
+          <PlacementsInfo assetId={item.id} />
+
           {/* Remplacer le fichier */}
           <div>
             <button
@@ -392,6 +429,38 @@ function EditModal({
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+// ─── Détail « où cette image est utilisée » (emplacements) ───────────────────────
+// Lit media_placements via trpc.placements.forAsset et traduit chaque slot_key en
+// libellé lisible (Groupe › Emplacement) grâce au registre shared/slots.
+function PlacementsInfo({ assetId }: { assetId: number }) {
+  const { data, isLoading } = trpc.placements.forAsset.useQuery({ assetId });
+  const placements = data ?? [];
+  return (
+    <div className="rounded-lg border border-white/10 bg-white/[0.03] p-3">
+      <div className="text-xs text-white/50 mb-1.5">Utilisée dans</div>
+      {isLoading ? (
+        <div className="text-sm text-white/40 flex items-center gap-2">
+          <Loader2 className="w-3.5 h-3.5 animate-spin" /> Recherche des emplacements…
+        </div>
+      ) : placements.length === 0 ? (
+        <div className="text-sm text-white/40">
+          Nulle part — cette image n'est utilisée sur aucune page.
+        </div>
+      ) : (
+        <ul className="space-y-1">
+          {placements.map((p) => (
+            <li key={p.placementId} className="text-sm text-white/85 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
+              <span>{slotFullLabel(p.slotKey)}</span>
+              {p.entityId != null && <span className="text-white/40 text-xs">· #{p.entityId}</span>}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

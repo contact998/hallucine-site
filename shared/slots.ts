@@ -183,6 +183,19 @@ export function isPerEntity(key: string): boolean {
   return slotByKey(key)?.perEntity === true;
 }
 
+const GROUP_BY_SLOT_KEY: Map<string, SlotGroup> = new Map(
+  ALL_GROUPS.flatMap(g => g.slots.map(s => [s.key, g] as [string, SlotGroup])),
+);
+
+/** Libellé lisible complet d'un emplacement : « Groupe › Emplacement ».
+ *  Utilisé par la Bibliothèque pour détailler où une image est visible. */
+export function slotFullLabel(key: string): string {
+  const slot = SLOT_BY_KEY.get(key);
+  if (!slot) return key;
+  const group = GROUP_BY_SLOT_KEY.get(key);
+  return group ? `${group.label} › ${slot.label}` : slot.label;
+}
+
 /** Mapping de reprise : ancien (page, section) → clé d'emplacement. Identité ici
  *  (les clés sont "page:section"), isolé pour que le script de migration s'appuie
  *  dessus et qu'on trace les sections orphelines. */

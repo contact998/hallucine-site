@@ -10,6 +10,7 @@ import { adminProcedure, publicProcedure, router } from "../_core/trpc";
 import {
   getPlacedAssets,
   getPlacedAsset,
+  getAssetPlacements,
   setSingle,
   addToGallery,
   removePlacement,
@@ -30,6 +31,11 @@ export const placementsRouter = router({
   single: publicProcedure
     .input(z.object({ slotKey, entityId }))
     .query(({ input }) => getPlacedAsset(input.slotKey, input.entityId ?? null)),
+
+  /** Tous les emplacements qui affichent cet asset (admin : « où est-ce visible »). */
+  forAsset: adminProcedure
+    .input(z.object({ assetId }))
+    .query(({ input }) => getAssetPlacements(input.assetId)),
 
   // ─── Gestion (admin) ───────────────────────────────────────────────────────
   setSingle: adminProcedure

@@ -50,6 +50,39 @@ export async function getPlacedAsset(slotKey: string, entityId?: number | null):
   return all[0] ?? null;
 }
 
+// ─── Usage (admin : « où cette image apparaît », « images utilisées ») ──────────
+
+/** Placement = un endroit du registre des slots. Sert à détailler, dans la
+ *  Bibliothèque, où un asset est réellement visible. */
+export interface AssetPlacement {
+  placementId: number;
+  slotKey: string;
+  entityId: number | null;
+  sortOrder: number;
+}
+
+/** Tous les emplacements qui pointent vers cet asset (toutes pages confondues). */
+export async function getAssetPlacements(assetId: number): Promise<AssetPlacement[]> {
+  return db
+    .select({
+      placementId: mediaPlacements.id,
+      slotKey:     mediaPlacements.slotKey,
+      entityId:    mediaPlacements.entityId,
+      sortOrder:   mediaPlacements.sortOrder,
+    })
+    .from(mediaPlacements)
+    .where(eq(mediaPlacements.assetId, assetId))
+    .orderBy(asc(mediaPlacements.slotKey), asc(mediaPlacements.sortOrder));
+}
+
+/** Ids des assets placés AU MOINS une fois (= « utilisés sur le site »).
+ *  Source de vérité du filtre utilisé/non utilisé. NB : c'est media_placements,
+ *  pas la colonne legacy media_library.usageCount (jamais mise à jour par la refonte). */
+export async function getUsedAssetIds(): Promise<number[]> {
+  const rows = await db.selectDistinct({ assetId: mediaPlacements.assetId }).from(mediaPlacements);
+  return rows.map((r) => r.assetId);
+}
+
 // ─── Écriture (admin / migration) ──────────────────────────────────────────────
 
 /** Placements bruts d'un slot (admin : inclut assets masqués, sans jointure). */

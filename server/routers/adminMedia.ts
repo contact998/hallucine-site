@@ -32,6 +32,7 @@ import {
   listSharingUrl,
   countByUrl,
 } from "../mediaLibrary";
+import { getUsedAssetIds } from "../placements";
 
 // ─── Validation ───────────────────────────────────────────────────────────────
 
@@ -59,21 +60,28 @@ export const adminMediaRouter = router({
       search:      z.string().optional(),
       sortBy:      sortFieldEnum.optional(),
       sortDir:     sortDirEnum.optional(),
+      // Filtre utilisé/non utilisé sur le site (présence dans media_placements).
+      usage:       z.enum(["all", "used", "unused"]).optional(),
       limit:       z.number().min(1).max(2000).default(50),
       offset:      z.number().min(0).default(0),
     }).optional())
-    .query(async ({ input }) =>
-      listMedia({
+    .query(async ({ input }) => {
+      const usageFilter = input?.usage && input.usage !== "all" ? input.usage : undefined;
+      // On ne charge les ids placés que si le filtre est actif (1 requête légère).
+      const usedAssetIds = usageFilter ? await getUsedAssetIds() : undefined;
+      return listMedia({
         category:    input?.category,
         subcategory: input?.subcategory,
         activeOnly:  input?.activeOnly ?? true,
         search:      input?.search,
         sortBy:      input?.sortBy,
         sortDir:     input?.sortDir,
+        usageFilter,
+        usedAssetIds,
         limit:       input?.limit ?? 50,
         offset:      input?.offset ?? 0,
-      })
-    ),
+      });
+    }),
 
   get: adminProcedure
     .input(z.object({ id: z.number().int().positive() }))
