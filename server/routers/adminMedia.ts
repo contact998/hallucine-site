@@ -32,7 +32,7 @@ import {
   listSharingUrl,
   countByUrl,
 } from "../mediaLibrary";
-import { getUsedAssetIds } from "../placements";
+import { getUsedAssetIds } from "../mediaUsage";
 
 // ─── Validation ───────────────────────────────────────────────────────────────
 

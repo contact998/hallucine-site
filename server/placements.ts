@@ -6,10 +6,11 @@
  * Contrat COMMUN à : lecture site (useSlot/useGallery via tRPC), admin, migration.
  * Utilise le `db` partagé de server/db.ts (même style que server/mediaLibrary.ts).
  */
-import { and, asc, eq, isNull } from "drizzle-orm";
+import { and, asc, eq, isNull, ne } from "drizzle-orm";
 import { db } from "./db";
 import { mediaLibrary, mediaPlacements } from "../drizzle/schema";
 import type { MediaItem } from "../drizzle/schema";
+import { BLOG_COVER_SLOT } from "../shared/slots";
 
 /** Asset enrichi de sa position dans l'emplacement. */
 export type PlacedAsset = MediaItem & { placementId: number; placementOrder: number };
@@ -71,15 +72,19 @@ export async function getAssetPlacements(assetId: number): Promise<AssetPlacemen
       sortOrder:   mediaPlacements.sortOrder,
     })
     .from(mediaPlacements)
-    .where(eq(mediaPlacements.assetId, assetId))
+    .where(and(eq(mediaPlacements.assetId, assetId), ne(mediaPlacements.slotKey, BLOG_COVER_SLOT.key)))
     .orderBy(asc(mediaPlacements.slotKey), asc(mediaPlacements.sortOrder));
 }
 
-/** Ids des assets placés AU MOINS une fois (= « utilisés sur le site »).
- *  Source de vérité du filtre utilisé/non utilisé. NB : c'est media_placements,
- *  pas la colonne legacy media_library.usageCount (jamais mise à jour par la refonte). */
+/** Ids des assets placés sur le SITE = emplacements hors `blog:cover` (placements de la
+ *  migration, périmés : la vraie couverture vit dans blog_posts.imageUrl). Les
+ *  couvertures réelles sont ajoutées par `server/mediaUsage.ts`. NB : on n'utilise PAS
+ *  la colonne legacy media_library.usageCount (jamais mise à jour par la refonte). */
 export async function getUsedAssetIds(): Promise<number[]> {
-  const rows = await db.selectDistinct({ assetId: mediaPlacements.assetId }).from(mediaPlacements);
+  const rows = await db
+    .selectDistinct({ assetId: mediaPlacements.assetId })
+    .from(mediaPlacements)
+    .where(ne(mediaPlacements.slotKey, BLOG_COVER_SLOT.key));
   return rows.map((r) => r.assetId);
 }
 

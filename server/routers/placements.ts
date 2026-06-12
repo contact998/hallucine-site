@@ -10,13 +10,13 @@ import { adminProcedure, publicProcedure, router } from "../_core/trpc";
 import {
   getPlacedAssets,
   getPlacedAsset,
-  getAssetPlacements,
   setSingle,
   addToGallery,
   removePlacement,
   reorderGallery,
   setGallery,
 } from "../placements";
+import { getAssetUsage } from "../mediaUsage";
 
 const slotKey  = z.string().min(1).max(80);
 const entityId = z.number().int().positive().nullish();
@@ -32,10 +32,10 @@ export const placementsRouter = router({
     .input(z.object({ slotKey, entityId }))
     .query(({ input }) => getPlacedAsset(input.slotKey, input.entityId ?? null)),
 
-  /** Tous les emplacements qui affichent cet asset (admin : « où est-ce visible »). */
+  /** Où cet asset est visible : emplacements site + couvertures d'article (admin). */
   forAsset: adminProcedure
     .input(z.object({ assetId }))
-    .query(({ input }) => getAssetPlacements(input.assetId)),
+    .query(({ input }) => getAssetUsage(input.assetId)),
 
   // ─── Gestion (admin) ───────────────────────────────────────────────────────
   setSingle: adminProcedure

@@ -1,4 +1,4 @@
-import { eq, desc, and, sql, asc, or, like, isNotNull } from "drizzle-orm";
+import { eq, desc, and, sql, asc, or, like, isNotNull, ne, isNull } from "drizzle-orm";
 import { blogPosts, InsertBlogPost, BlogPost } from "../drizzle/schema";
 import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
@@ -9,6 +9,28 @@ const blogPool = mysql.createPool({
   connectionLimit: 5,
 });
 const db = drizzle(blogPool, { mode: "default" });
+
+// ─── Couvertures (médiathèque : recenser les images servant de couverture) ───────
+// Les couvertures d'article vivent dans blog_posts.imageUrl (PAS dans media_placements).
+// Ces helpers permettent au fond de compter une image « utilisée » si elle sert de
+// couverture, et de le détailler dans la modale Bibliothèque.
+
+/** URLs distinctes utilisées comme couverture d'article. */
+export async function getBlogCoverUrls(): Promise<string[]> {
+  const rows = await db
+    .selectDistinct({ url: blogPosts.imageUrl })
+    .from(blogPosts)
+    .where(and(isNotNull(blogPosts.imageUrl), ne(blogPosts.imageUrl, "")));
+  return rows.map((r) => r.url).filter((u): u is string => !!u);
+}
+
+/** Articles FR (parents) dont la couverture = cette URL — pour détailler « Utilisée dans ». */
+export async function getBlogArticlesByCoverUrl(url: string): Promise<{ title: string; slug: string }[]> {
+  return db
+    .select({ title: blogPosts.title, slug: blogPosts.slug })
+    .from(blogPosts)
+    .where(and(eq(blogPosts.imageUrl, url), isNull(blogPosts.parentId)));
+}
 
 // ─── DeepL ───────────────────────────────────────────────────────
 

@@ -438,7 +438,9 @@ function EditModal({
 // libellé lisible (Groupe › Emplacement) grâce au registre shared/slots.
 function PlacementsInfo({ assetId }: { assetId: number }) {
   const { data, isLoading } = trpc.placements.forAsset.useQuery({ assetId });
-  const placements = data ?? [];
+  const placements = data?.placements ?? [];
+  const blogCovers = data?.blogCovers ?? [];
+  const empty = placements.length === 0 && blogCovers.length === 0;
   return (
     <div className="rounded-lg border border-white/10 bg-white/[0.03] p-3">
       <div className="text-xs text-white/50 mb-1.5">Utilisée dans</div>
@@ -446,17 +448,23 @@ function PlacementsInfo({ assetId }: { assetId: number }) {
         <div className="text-sm text-white/40 flex items-center gap-2">
           <Loader2 className="w-3.5 h-3.5 animate-spin" /> Recherche des emplacements…
         </div>
-      ) : placements.length === 0 ? (
+      ) : empty ? (
         <div className="text-sm text-white/40">
           Nulle part — cette image n'est utilisée sur aucune page.
         </div>
       ) : (
         <ul className="space-y-1">
           {placements.map((p) => (
-            <li key={p.placementId} className="text-sm text-white/85 flex items-center gap-2">
+            <li key={`p-${p.placementId}`} className="text-sm text-white/85 flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
               <span>{slotFullLabel(p.slotKey)}</span>
               {p.entityId != null && <span className="text-white/40 text-xs">· #{p.entityId}</span>}
+            </li>
+          ))}
+          {blogCovers.map((b, i) => (
+            <li key={`bc-${i}`} className="text-sm text-white/85 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
+              <span>Blog › Couverture&nbsp;: {b.title}</span>
             </li>
           ))}
         </ul>
