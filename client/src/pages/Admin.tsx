@@ -294,6 +294,14 @@ export default function Admin() {
                 <ExternalLink className="w-4 h-4" /> Analytics
               </a>
               <a
+                href="https://umami-production-737a.up.railway.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 border border-teal-500/30 text-teal-400 rounded hover:bg-teal-500/10 text-sm transition-colors"
+              >
+                <ExternalLink className="w-4 h-4" /> Umami
+              </a>
+              <a
                 href="/admin/calculateurs"
                 className="flex items-center gap-2 px-4 py-2 border border-amber-500/30 text-amber-400 rounded hover:bg-amber-500/10 text-sm transition-colors"
               >

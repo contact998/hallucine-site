@@ -56,6 +56,15 @@
          utilisés au premier paint (latin-ext/italic chargés à la demande). -->
     <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/dm-sans-latin.woff2" />
     <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/source-serif-4-latin.woff2" />
+
+    <!-- Umami analytics (auto-hébergé Railway, cookieless — pas de bandeau requis).
+         data-domains limite l'envoi aux 6 TLD de prod : rien ne part depuis localhost. -->
+    <script
+      defer
+      src="https://umami-production-737a.up.railway.app/script.js"
+      data-website-id="bc788cfd-d429-44b2-876c-f2ecc9cad6eb"
+      data-domains="hallucinecran.fr,www.hallucinecran.fr,hallucinecran.com,www.hallucinecran.com,hallucinecran.de,www.hallucinecran.de,hallucinecran.es,www.hallucinecran.es,hallucinecran.it,www.hallucinecran.it,hallucinecran.pt,www.hallucinecran.pt"
+    ></script>
   </head>
 
   <body>
