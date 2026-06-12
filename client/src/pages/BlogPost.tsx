@@ -11,6 +11,17 @@ import { detectLanguage } from "@/i18n/domains";
 import { formatPostDate } from "@/i18n/formatPostDate";
 import { ArrowLeft } from "lucide-react";
 
+// DOMPurify : en navigateur, l'export par défaut est déjà lié à window (.sanitize
+// dispo) — comportement inchangé. En SSR (rendu blog runtime via happy-dom),
+// l'export est une factory → on l'instancie avec le window courant.
+type DpFactory = (w: unknown) => { sanitize: (h: string) => string };
+function sanitizeHtml(html: string): string {
+  const dp = DOMPurify as unknown as { sanitize?: (h: string) => string } & DpFactory;
+  if (typeof dp.sanitize === "function") return dp.sanitize(html);
+  if (typeof window !== "undefined") return dp(window).sanitize(html);
+  return html;
+}
+
 /**
  * Lit les données SSR injectées dans le HTML par le rendu blog (runtime ou
  * pré-rendu). Cf. server/_core/vite.ts (handler /blog/:slug) et entry-server.
@@ -95,7 +106,7 @@ export default function BlogPost() {
         dateLabel={formatPostDate(post.publishedAt, detectLanguage())}
         coverImageUrl={post.imageUrl}
         excerpt={post.excerpt}
-        contentHtml={DOMPurify.sanitize(post.content)}
+        contentHtml={sanitizeHtml(post.content)}
         blogHref={blogHref}
         contactHref={route("contact")}
         coverPriority

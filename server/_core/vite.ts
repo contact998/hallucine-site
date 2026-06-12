@@ -17,6 +17,36 @@ import {
   pageTitleWithBrand,
 } from "./blogListSsr";
 
+// ─── Rendu SSR de l'app COMPLÈTE pour les articles de blog ───────────────────
+// entry-server.render() rend le MÊME arbre <App/> que le client (Navbar + article
+// + Footer), avec l'article semé dans le cache React Query. En l'utilisant au
+// runtime pour /blog/:slug, le 1er paint servi = exactement ce que createRoot
+// re-rend côté client → le re-render devient invisible (fini le « texte seul puis
+// page qui se stabilise »). Deux précautions :
+//  • import DYNAMIQUE : entry-server installe happy-dom à son chargement → on
+//    diffère à la 1ʳᵉ requête blog pour ne pas toucher le démarrage du serveur.
+//  • SÉRIALISATION (mutex) : render() mute des globaux partagés (window.location,
+//    locale) → on évite les races entre requêtes concurrentes. Blog = faible
+//    trafic, l'attente est négligeable.
+let _renderFullApp: typeof import("../../client/src/entry-server").render | null = null;
+let blogRenderQueue: Promise<unknown> = Promise.resolve();
+async function renderBlogFullApp(
+  url: string,
+  locale: string,
+  post: { slug: string },
+): Promise<{ html: string }> {
+  if (!_renderFullApp) {
+    const mod = await import("../../client/src/entry-server");
+    _renderFullApp = mod.render;
+  }
+  const render = _renderFullApp;
+  const run = blogRenderQueue.then(() =>
+    render(url, locale, undefined, { blogPost: { slug: post.slug, data: post } }),
+  );
+  blogRenderQueue = run.then(() => undefined, () => undefined);
+  return run;
+}
+
 export async function setupVite(app: Express, server: Server) {
   const serverOptions = {
     middlewareMode: true,
@@ -478,25 +508,35 @@ export function serveStatic(app: Express) {
           // → premier paint déjà stylé + image de couverture, plus de « flash »
           // texte-brut. Repli sur le rendu brut si le rendu React échoue (on ne
           // sert jamais une page cassée — SEO préservé).
-          let articleHtml: string;
+          // Rendu serveur de l'APP COMPLÈTE (Navbar + article + Footer) — même arbre
+          // React que le client → createRoot re-rend à l'identique, plus de « flash »
+          // (texte seul → page complète). Repli sur le rendu article seul si le rendu
+          // complet échoue (on ne sert jamais une page cassée — SEO préservé).
+          let rootContent: string;
           try {
-            articleHtml = renderBlogArticleHtml({
-              locale,
-              title,
-              category: post.category,
-              author: post.author,
-              publishedAt: post.publishedAt ?? post.createdAt,
-              coverImageUrl: post.imageUrl,
-              excerpt: post.excerpt,
-              contentHtml: safeContent,
-            });
+            const { html: appHtml } = await renderBlogFullApp(`/blog/${post.slug}`, locale, post);
+            rootContent = `${appHtml}${relatedHtml}`;
           } catch (err) {
-            console.warn(`  ⚠️  rendu SSR article échoué [${slug}] : ${(err as Error).message}`);
-            articleHtml =
-              `<p><a href="/blog">← Blog</a></p>` +
-              `<article><h1>${escapeHtml(title)}</h1>${safeContent}</article>`;
+            console.warn(`  ⚠️  rendu SSR app complet échoué [${slug}], repli article seul : ${(err as Error).message}`);
+            let articleHtml: string;
+            try {
+              articleHtml = renderBlogArticleHtml({
+                locale,
+                title,
+                category: post.category,
+                author: post.author,
+                publishedAt: post.publishedAt ?? post.createdAt,
+                coverImageUrl: post.imageUrl,
+                excerpt: post.excerpt,
+                contentHtml: safeContent,
+              });
+            } catch {
+              articleHtml =
+                `<p><a href="/blog">← Blog</a></p>` +
+                `<article><h1>${escapeHtml(title)}</h1>${safeContent}</article>`;
+            }
+            rootContent = `<main>${articleHtml}${relatedHtml}</main>`;
           }
-          const rootContent = `<main>${articleHtml}${relatedHtml}</main>`;
 
           const jsonLd = JSON.stringify({
             "@context": "https://schema.org",
