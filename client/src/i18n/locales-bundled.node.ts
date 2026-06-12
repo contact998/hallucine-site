@@ -8,13 +8,16 @@ import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-// Résolution robuste du dossier locales :
-//  • depuis les sources (prerender via tsx) → ../locales relatif à ce module.
-//  • bundlé dans dist/index.js (runtime serveur) → import.meta.url pointe sur
-//    dist/, le chemin relatif casse ; on retombe sur les sources via cwd.
+// Résolution robuste du dossier locales selon le contexte d'exécution :
+//  • prerender (tsx, sources)      → __dirname = client/src/i18n → ../locales
+//  • runtime serveur bundlé        → import.meta.url pointe sur dist/ ; les sources
+//    sont absentes sur Railway → on lit dist/locales (copié au build:server).
+//  • dev local bundlé              → les sources existent encore (cwd).
 const LOCALES_CANDIDATES = [
-  join(__dirname, '../locales'),
-  join(process.cwd(), 'client/src/locales'),
+  join(__dirname, '../locales'),             // sources (prerender)
+  join(__dirname, 'locales'),                // dist/locales (runtime bundlé)
+  join(process.cwd(), 'dist/locales'),       // dist/locales via cwd
+  join(process.cwd(), 'client/src/locales'), // sources via cwd (dev local)
 ];
 const LOCALES_DIR = LOCALES_CANDIDATES.find((p) => existsSync(p)) ?? LOCALES_CANDIDATES[0];
 

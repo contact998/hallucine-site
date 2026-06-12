@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "NODE_ENV=development tsx watch server/_core/index.ts",
     "build:client": "vite build && cp dist/public/index.html dist/public/_template.html",
-    "build:server": "esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
+    "build:server": "esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist && rm -rf dist/locales && cp -R client/src/locales dist/locales",
     "build:ssr": "npx tsx --tsconfig tsconfig.ssr.json scripts/prerender.mjs && node scripts/check-seo.mjs",
     "translate": "node scripts/translate-locales.mjs",
     "build": "pnpm translate && pnpm check && pnpm build:client && pnpm build:server && pnpm build:ssr",
